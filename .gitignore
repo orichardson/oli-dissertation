@@ -1,0 +1,67 @@
+# LaTeX compilation files
+*.log
+*.loe
+*.loc
+*.lof
+*.auxlock
+*.synctex.gz
+*.synctex(busy)
+*.aux
+*.swp
+*-blx.bib
+*.bcf
+*.blg
+*.bbl
+*.out
+*.run.xml
+figs/*
+**/tikz
+**/.*_cache*
+**/*.tar.gz
+# ignore conference template files
+**/*-template/*
+
+# ignore pdfs, because they'll create merge conflicts. Just recompile!
+**/*.pdf
+#... except if they're in folders called "feedback", "pdfs", or "reading"!
+!**/feedback/*.pdf
+!**/pdfs/*.pdf
+!reading/*.pdf
+
+# Powerpoint
+~$*.pptx
+
+# Beamer files
+*.snm
+*.toc
+*.nav
+
+# Python
+**/.ipynb_checkpoints
+**/__pycache__
+
+# Data
+code/expts/data
+code/**/*.pt
+
+# Emacs clutter
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+**/.auctex-auto
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# Latexmk
+*.fls
+*.fdb_latexmk
+
+# agda clutter
+*.agdai
