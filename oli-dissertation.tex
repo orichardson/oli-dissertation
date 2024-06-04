@@ -1,5 +1,6 @@
 % \documentclass{report}
 \documentclass[tocprelim,
+    11pt,
     % normalsizeheadings,
     % cornellheadings
     ]{cornellmodified}
@@ -28,15 +29,18 @@
 % \usepackage{moreverb}
 % \usepackage{subfigure}
 % \usepackage{hangcaption}
-\usepackage{txfonts}
+%
+% \usepackage{txfonts}
 \usepackage{palatino}
 
 %if you're having problems with overfull boxes, you may need to increase
 %the tolerance to 9999
 \tolerance=9999
 
-\bibliographystyle{plain}
-%\bibliographystyle{IEEEbib}
+% \bibliographystyle{plain}
+% \bibliographystyle{alpha}
+\bibliographystyle{plainnat}
+% \bibliographystyle{IEEEbib}
 
 \renewcommand{\caption}[1]{\singlespacing\hangcaption{#1}\normalspacing}
 \renewcommand{\topfraction}{0.85}
@@ -86,17 +90,25 @@ Your acknowledgements go here. Make sure it sits inside the brackets.
 
 
 \chapter{Introduction}
+    % \cite{KF09}
+    % \cite{kingma2013autoencoding}
+    \input{chapters/intro}
+\chapter{Preliminaries}
+    \input{chapters/prelim}
 
-\part{Modeling Language}
+\part{A Universal Modeling Language}
 
 \chapter{Probabilistic Dependency Graphs (PDGs)} 
     \input{chapters/pdg-repr}
+    
 \chapter{Qualitative Mecahnism Independence}
+    \input{chapters/qim}
 
 \part{A Universal Objective}
 
 \chapter{Loss as the Inconsistency of a PDG: 
     Choose your Model, not your Loss}
+    \input{chapters/loss}
 \chapter{ The Local Inconsistency Resolution (LIR) Algorithm }
 
 \part{Algorithms and Complexity}
@@ -112,9 +124,14 @@ Your acknowledgements go here. Make sure it sits inside the brackets.
 
 \chapter{Confidence}
 \chapter{The Category Theory of PDGs}
+    \input{chapters/cat}
 \chapter{Relative Entropy Soup}
 
 \part{Conclusions}
 
-\part{Appendices}
+% \part{Appendices}
+
+% \bibliography{pdg-aaai,z,qdg-refs,joe}
+\bibliography{pdg-aaai-refs,qdg-refs,joe,z}
+
 \end{document}

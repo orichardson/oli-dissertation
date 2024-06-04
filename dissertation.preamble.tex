@@ -1,16 +1,47 @@
 
-%% BIBLIO
-\usepackage{natbib}
+%%%%% BIBLIO AND STRUCTURE
+\usepackage[numbers]{natbib}
+\usepackage{appendix}
+% for sub-appendices
+% https://tex.stackexchange.com/questions/120716/appendix-after-each-chapter
+\AtBeginEnvironment{subappendices}{
+	\chapter*{Appendices for Chapter \thechapter}
+	% \addcontentsline{toc}{chapter}{Appendices}
+	% \addtocontents{toc}{\rule[.1\normalbaselineskip]{1.25in}{.15mm}\par}
+	% \addtocontents{toc}{APPENDICES}
+	\addtocontents{toc}{\medskip\relax
+	 	\rule[0.5ex]{1in}{.15mm}\hfill
+		Chapter \thechapter\ Appendices
+		\hfill \rule[0.5ex]{1in}{.15mm}
+	}
+	\counterwithin{figure}{section}
+	\counterwithin{table}{section}
+	}
+\AtEndEnvironment{subappendices}{%
+	\counterwithout{figure}{section}
+	\counterwithout{table}{section}
+	}
 
+
+%%%%% EXTRA COMMANDS TO HIDE STUFF;
+% ideally, it will be possible to delete all of this at the end.
 % \newcommand{\notation}[1]{\ignorespaces} % disable notation
-\newcommand{\notation}[1]{{\color{red}#1}} % enable notation
-%
+\newcommand{\notation}[1]{{\color{red}#1}~~} % enable notation
 \newcommand{\vfull}[1]{{\color{orange}#1}} % previously cut "full-version"; highlight
+\newcommand\fadeout[1]{{\color{gray!50}\small#1}}
+\newcommand\vjoe[1]{{\color{red!80!black}#1}}
+\newcommand\voli[1]{{\color{orange!80!black}#1}}
+\newcommand\commentout[1]{}
+\newcommand{\TODO}[1][INCOMPLETE]{{\centering\Large\color{red}$\langle$~\texttt{#1}~$\rangle$\par}}
 
-%% STANDARD PACKAGES
+
+%%%%% STANDARD PACKAGES
 \usepackage{mathtools}		%also loads amsmath
-\usepackage{amssymb, bbm}
+\usepackage{faktor}
+\usepackage{amssymb,bbm}
 \usepackage{booktabs}
+\usepackage{cancel}
+	\newcommand{\Cancel}[2][black]{{\color{#1}\cancel{\color{black}#2}}}
 \usepackage{nicefrac}
 \usepackage{algpseudocode}
 \usepackage[dvipsnames, cmyk]{xcolor} % must be loaded before tikz
@@ -33,25 +64,28 @@
 \crefname{fact}{Fact}{Facts}
 
 
-% visual appearance
+%%%%% visual appearance
 \colorlet{color1}{blue}
 \colorlet{color2}{color1>wheel,1,3}
 \colorlet{color3}{color1>wheel,2,3}
 \definecolor{deepgreen}{rgb}{0,0.5,0}
 \colorlet{pinkish}{color3!25!magenta}
 \usepackage{relsize}
+\usepackage{wrapfig}
+\usepackage{scalerel}
 % \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=magenta, citecolor=deepgreen}
 \hypersetup{colorlinks=true, linkcolor=color1, urlcolor=magenta, citecolor=color2}
-\usepackage{parskip}
+% \usepackage{parskip}
 \usepackage{microtype}      % microtypography
-\usepackage[format=plain,labelfont={sl},textfont={it,small},margin=1cm]{caption}
+% \usepackage[format=plain,labelfont={sl},textfont={it,small},margin=1cm]{caption}
+\usepackage[format=hang,labelfont={it},textfont={small}]{caption}
 \usepackage{subcaption}
 %\usepackage{subfig}
 %\captionsetup[subfigure]{subrefformat=simple,labelformat=simple}
 %\renewcommand\thesubfigure{(\alph{subfigure})}
 
 
-% PREPARING EXTRA SYMBOLS
+%%%%% PREPARING EXTRA SYMBOLS
 \usepackage{stmaryrd} % disable me for Joe
 \SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
 \makeatletter
@@ -84,7 +118,7 @@
 
 
 
-% GENERAL SYMBOLS
+%%% GENERAL SYMBOLS 
 \let\Horig\H
 \let\H\relax
 \def\nf{\nicefrac}
@@ -92,12 +126,17 @@
 \DeclareMathOperator{\I}{\mathrm{I}} % Information
 \DeclareMathOperator*{\Ex}{\mathbb{E}} % Expectation
 \DeclareMathOperator*{\argmin}{arg\;min}
+\DeclareMathOperator{\Supp}{\mathrm{Supp}}
+\DeclareMathOperator{\im}{\mathrm{im}} % image of a map
+\DeclareMathSymbol{\shortminus}{\mathbin}{AMSa}{"39}
+
 \newcommand\At[1]{\mathit{A\mkern-2mu t}(#1)} % boolean algebra atoms
 \newcommand\lang[1]{\mathcal L^{\mathit{#1}}} % languages
 \newcommand\geqc{\succcurlyeq}
 \newcommand\leqc{\preccurlyeq}
 \newcommand\mat[1]{\mathbf #1}
 \newcommand{\tto}{\rightarrow\mathrel{\mspace{-15mu}}\rightarrow}
+
 \newcommand{\indi}[1]{\mathbbm{1}_{\left[\vphantom{\big[}#1 \vphantom{\big]}\right]}}
 \newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}}
 
@@ -106,6 +145,9 @@
 \newcommand{\kldiv}{\thickD\infdivx} % D_\mathrm{KL}
 % \newcommand{\Div}[1][]{\thickD_{#1}\infdivx} % D_\mathrm{KL}
 
+\newcommand{\Pa}{\mathop{\mathbf{Pa}}}
+
+% (these are all defined in pdg-preamble.tex)
 % \DeclarePairedDelimiter{\cbbr}{\lBrace}{\rBrace}
 % \DeclarePairedDelimiter{\bbr}{\llbracket}{\rrbracket}
 % \DeclarePairedDelimiter{\ppr}{\llparenthesis}{\rrparenthesis}
@@ -113,95 +155,52 @@
 % 	{\mspace{3mu}\mathllap{\delimsize\langle}#1\mathrlap{\delimsize\rangle}\mspace{3mu}}
 % \DeclarePairedDelimiterXPP{\aard}[1]{}{\langle}{\rangle}{_{\!_\downarrow}}
 % 	{\mspace{-3.5mu}\delimsize\langle#1\delimsize\rangle\mspace{-3.5mu}}
-
-% STANDARD SETS / SPACES / CATEGORIES
-% \newcommand\Mon{\mathbb{M}\mskip-1.5mu\mathbf{o\mskip-1mun}}
-% \newcommand\Set{\ensuremath{\mathbb{S}\mathbf{et}}}
-% \newcommand\FinSet{\ensuremath{\mathbb{F}\mathbf{in}\mathbf{S}\mathbf{et}}}
-
-\newcommand\Set{\mathbb{S}\mathrm{et}}
-\newcommand\FinSet{\mathbb{F}\mathrm{in}\mathrm{S}\mathrm{et}}
-\newcommand\Meas{\mathbb{M}\mathrm{eas}}
-\newcommand\two{\mathbbm 2}
-\newcommand\PDG{\mathbb{P}\mathrm{DG}}
-
-
-% PDG SYMBOLS
-% \newcommand{\N}{\mathcal N}
-% \newcommand{\Ed}{\mathcal E}
-% \newcommand{\Ar}{\mathcal A}
-% \newcommand{\X}{\mathcal X}
-% \newcommand{\V}{\mathcal V}
-% \newcommand{\bp}[1][L]{\mathbf{p}_{\!_{#1}\!}}
 % 
-% \newcommand{\ssub}[1]{_{\!_{#1}\!}}
-% 
+
+
+\relax%%%%% STANDARD SETS / SPACES / CATEGORIES %%%%
+    % \newcommand{\Stoch}{\mathbf{Stoch}}
+    \newcommand{\Stoch}{\mathbb{S}\mathbf{toch}}
+    % \newcommand{\FinSet}{\mathbf{FinSet}}
+    % \newcommand{\Set}{\mathbf{Set}}
+    \newcommand\CMon{\mathbb{C\mskip-1.5muM}\mskip-1.3mu\mathbf{o\mskip-1mun}}
+    \newcommand\Mon{\mathbb{M}\mskip-1.5mu\mathbf{o\mskip-1mun}}
+    \newcommand\Set{\ensuremath{\mathbb{S}\mathbf{et}}}
+    \newcommand\Top{\ensuremath{\mathbb{T}\mathbf{op}}}
+    \newcommand\Rel{\ensuremath{\mathbb{R}\mathbf{el}}}
+    \newcommand\Diff{\ensuremath{\mathbb{D}\mathbf{iff}}}
+    \newcommand\Meas{\ensuremath{\mathbb{M}\mathbf{eas}}}
+    \newcommand\FinSet{\ensuremath{\mathbb{F}\mathbf{in}\mathbf{S}\mathbf{et}}}
+	\newcommand\Two{\mathbbm 2}
+	\newcommand\PDG{\mathbb{P}\mathrm{DG}}
+    \newcommand\Semiringoid{\mathbb S\mathbf{emiringoid}}
+    \newcommand\Mat{\mathop{\mathrm{Mat}}}
+    
+\relax %%% category theory macros %%%
+    %\newcommand\CMon{\mathbb{C}\!\mathrm{o}\mathbb{M}} \newcommand\ICMon{\mathbb{I\mskip-1muC\mskip-1.5muM}\mskip-1.3mu\mathbf{o\mskip-1mun}}
+    \DeclareMathOperator{\ob}{\mathop{\mathrm{ob}}}
+    \DeclareMathOperator{\id}{\mathrm{id}}
+    \DeclareMathOperator{\Hom}{\mathop{\mathrm{Hom}}}
+
+	
+	
+%%%%%  SPECIAL COMMANDS FOR PDG-AAAI  %%%%%
 \newcommand{\Gr}{\mathcal G}
-% \DeclareMathOperator\src{\mathbf{src}}
-% \DeclareMathOperator\tgt{\mathbf{tgt}}
-% \newcommand{\qq}{\triangleright}
-% 
-% \newcommand{\dg}[1]{\mathbdcal{#1}}
-% \newcommand{\var}[1]{\mathsf{#1}}
-% \newcommand{\bbeta}{\boldsymbol\beta}
-% \newcommand{\balpha}{\boldsymbol\alpha}
-% 
-% % \newcommand\Src[1]{X_{{#1}}}
-% % \newcommand\Tgt[1]{Y_{{#1}}}
-% % \newcommand{\Src}{\mathrm{Src}}
-% % \newcommand{\Tgt}{\mathrm{Tgt}}
-% % \newcommand\Src[1]{S\mskip-2mu\mathit{r\mskip-3muc}_{{#1}}}
-% % \newcommand\Tgt[1]{T\mskip-5mu\mathit{g\mskip-1mut}_{{#1}}}
-% % \newcommand\Src[1]{\mathsf{S}\mskip-2mu\vphantom{|}_{{#1}}}
-% % \newcommand\Tgt[1]{\mathsf{T}\mskip-3mu\vphantom{|}_{{#1}}}
-% \newcommand\Src[1]{S\mskip-2mu\vphantom{|}_{{#1}}}
-% \newcommand\Tgt[1]{T\mskip-3mu\vphantom{|}_{{#1}}}
-% 
-% \newcommand{\none}{\varobslash}
-% \newcommand{\ed}[3]{%
-% 	\mathchoice%
-% 	{#2\overset{\smash{\mskip-5mu\raisebox{-3pt}{${#1}$}}}{\xrightarrow{\hphantom{\scriptstyle {#1}}}} #3} %display style
-% 	{#2\overset{\smash{\mskip-5mu\raisebox{-3pt}{$\scriptstyle {#1}$}}}{\xrightarrow{\hphantom{\scriptstyle {#1}}}} #3}% text style
-% 	{#2\overset{\smash{\mskip-5mu\raisebox{-3pt}{$\scriptscriptstyle {#1}$}}}{\xrightarrow{\hphantom{\scriptscriptstyle {#1}}}} #3} %script style
-% 	{#2\overset{\smash{\mskip-5mu\raisebox{-3pt}{$\scriptscriptstyle {#1}$}}}{\xrightarrow{\hphantom{\scriptscriptstyle {#1}}}} #3}} %scriptscriptstyle
-% 
-% 
-% \newcommand{\alle}[1][L]{_{\ed {#1}XY}}
 \newcommand{\alle}[1][a]{_{\ed {#1}XY}}
-% 
-% \DeclareMathOperator\dcap{\mathop{\dot\cap}}
-% \DeclareMathOperator{\bundle}{\sqcup}
-% 
-% \newcommand\Inc{\mathit{Inc}}
-% \newcommand{\IDef}[1]{\mathit{IDef}_{#1}}
-
-% conversions
-%\newcommand{\PDGof}[1]{{\dg M}_{#1}}
-% \makeatletter
-% \newcommand{\PDGof}[1]{{\mathbdcal{p\kern-0.05em d\kern-0.125em g}} \ifx#1\@empty\else(#1)\fi}
-% \newcommand{\PDHof}[1]{{\mathbdcal{p\kern-0.05em d\kern-0.125em h}} \ifx#1\@empty\else(#1)\fi}
-% 
-% % \newcommand{\UPDGof}[1]{{\dg N}_{#1}}
-% \newcommand{\UPDGof}[1]{{\mathbdcal{u\kern-0.05em p\kern-0.05em d\kern-0.125em g}} \ifx#1\@empty\else(#1)\fi}
-% \makeatother
-
-% \DeclarePairedDelimiter{\SD}{\llbracket}{\rrbracket_{\text{sd}}
-% \DeclarePairedDelimiterXPP{\SD}[1]{}{\llbracket}{\rrbracket}{_{\text{sd}}}{#1}
-% \DeclarePairedDelimiterX{\SD}[1]{\{}{\}}{\delimsize\{#1\delimsize\}}
-% \DeclarePairedDelimiterX{\SD}[1]{\{}{\}}{\,\llap{\delimsize\{}#1\rlap{\delimsize\}}\,}
-% \def\SD{\cbbr}
-
-
-%% OTHER PGM SYMBOLS
 \newcommand\GFE{\mathit{G\mkern-4mu F\mkern-4.5mu E}}
-\newcommand\Pa{\mathbf{Pa}}
-
 % conversions
 \newcommand{\WFGof}[1]{\Psi_{{#1}}}
 \newcommand{\FGof}[1]{\Phi_{{#1}}}
 
 
-%% DATABASE SYMBOLS
+%%%%%  SPECIAL COMMANDS FOR QIM  %%%%%%%
+\newcommand{\derind}[2]{ {#1}^{+\tilde{#2}(\X^{\U})}}
+
+%%%%%  SPECIAL COMMANDS FOR ONE-TRUE-LOSS %%%%%%%
+\newcommand{\datadist}[1]{\Pr\nolimits_{#1}}
+		% \newcommand{\datadist}[1]{p_\text{data}}
+
+%%%%%  DATABASE SYMBOLS  %%%%%
 \newcommand{\D}{\mathbdcal D} % for a database
 \newcommand{\Attrs}{\mathdcal A}
 \newcommand{\Idx}{\mathcal J}
@@ -218,6 +217,10 @@
 \newcommand\Bmid{\mathrel{\Big|}}%
 \newcommand\vals{\mathbf{vals}}
 \newcommand\nj{\bowtie}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % before theorems I need this:
 \def\structurelevels{part,section,subsection,subsubsection,paragraph}%
@@ -240,7 +243,7 @@
 \usepackage{amsthm}
 \usepackage{thmtools} % asmsymb must be loaded also.
 \usepackage[framemethod=TikZ]{mdframed}
-\usepackage{restatelinks}
+\usepackage[nobox]{restatelinks}
 
 	\makeatletter\begingroup
 
@@ -351,6 +354,7 @@ innertopmargin=2pt, frametitlebelowskip=3pt, frametitleaboveskip=2pt, frametitle
 % 	\tikzset{archain/.style args={#1}{arr, every arrow subpath/.style={draw,arr, #1}, decoration=arrows, decorate}}
 % 
 % 
+	\usetikzlibrary{decorations.pathmorphing}
 	\tikzset{fgnode/.style={dpadded,inner sep=0.6em, circle},
 	factor/.style={light pad, fill=black}}
 % 
@@ -427,7 +431,9 @@ innertopmargin=2pt, frametitlebelowskip=3pt, frametitleaboveskip=2pt, frametitle
 % \tikzset{arr0/.style={draw, ->, thick, shorten <=0pt, shorten >=0pt}}
 % \tikzset{arr1/.style={draw, ->, thick, shorten <=1pt, shorten >=1pt}}
 % \tikzset{arr2/.style={draw, ->, thick, shorten <=2pt, shorten >=2pt}}
-% % \tikzset{is bn/.style={background rectangle/.style={fill=blue!35,opacity=0.3, rounded corners=5},show background rectangle}}
+
+\usetikzlibrary{patterns,backgrounds}
+\tikzset{is bn/.style={background rectangle/.style={fill=blue!35,opacity=0.3, rounded corners=5},show background rectangle}}
 % % \newcommand\lab[1]{(#1)(lab-#1)}
 % 
 % 

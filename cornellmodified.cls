@@ -67,12 +67,13 @@
  \fi%
 }
 \DeclareOption{11pt}{%
- \final%
-  \OptionNotUsed%
-  \ClassWarningNoLine{cornell}{Font size 11pt not allowed; using 12pt}%
- \else%
+%oli: see below: 11pt is fine according to grad school
+ % \iffinal%
+ %  \OptionNotUsed%
+ %  \ClassWarningNoLine{cornell}{Font size 11pt not allowed; using 12pt}%
+ % \else%
   \PassOptionsToClass{11pt}{report}%
- \fi
+ % \fi
 }
 \newcommand{\prelim@contents}[1]{}
 \DeclareOption{tocprelim}{%

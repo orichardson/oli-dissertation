@@ -26,7 +26,7 @@ for modeling beliefs,
 \emph{Probabilistic Dependency Graphs} (PDGs). There are already many
 such models in the literature, including Bayesian networks (BNs) and
 factor graphs. (For an overview, see 
-\cite{KF09}.)
+\citet{KF09}.)
 Why does the world need one more?  
 
 Our original motivation for introducing PDGs was to be able capture
@@ -46,8 +46,8 @@ with locals lead her to believe that, with probility .1, the law
 prohibits floomps.
 
 The obvious way to represent this as a BN is to use two random variables
-$F$ and $G$ (respectively taking values $\{f, \smash{\overline f}\}$ and $g,
-\overline g$),
+$F$ and $G$ (respectively taking values $\{f, \lnot f\}$ and
+$\{ g, \lnot g\}$),
 indicating whether  floomps and guns are prohibited.
 The semantics of a BN offer her two choices: either assume that $F$ and $G$
 to be independent and give (unconditional) probabilities of $F$ and $G$, or
@@ -65,7 +65,7 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 ~\vrule~
 	\raisebox{-0.5\height}{\includegraphics[scale=0.8]{figure-pdfs/fg-PDG.pdf}}
 \else
-	\scalebox{0.8}{
+	\scalebox{1.0}{
 \begin{tikzpicture}[center base, scale=0.7, AmpRep]
         \def\figtabledist{0.2}
         \def\fignodedist{1.4}
@@ -73,12 +73,15 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 
         \matrix [table with head, column 1/.style={leftrule}, anchor=south east,
              column 2/.style={rightrule}, row 2/.style={bottomrule}] at (-\figtabledist,\figtableheight) {
-            \vphantom{$\overline fg$} $f$ \& \vphantom{$\overline fg$}$\overline f$\\
+            % \vphantom{$\overline fg$} $f$ \& \vphantom{$\overline fg$}$\overline f$\\
+            % $f$ \& $\lnot f$\\
+            $\vphantom{fg}f$ \& $\vphantom{fg}\lnot f$\\
             .9 \& .1\\
         };
         \matrix [table with head, column 1/.style={leftrule}, anchor=south west,
              column 2/.style={rightrule}, row 2/.style={bottomrule}] at (\figtabledist,\figtableheight) {
-             \vphantom{$\overline fg$}$g$ \& \vphantom{$\overline fg$}$\overline g$\\
+             % \vphantom{$\overline fg$}$g$ \& \vphantom{$\overline fg$}$\overline g$\\
+            $\vphantom{fg}g$ \& $\vphantom{fg}\lnot g$\\
              .05 \& .95\\
         };
         \node[dpadded, circle, fill=black!08, fill opacity=1] (floomp) at (-\fignodedist,0) {$F$};
@@ -89,8 +92,8 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 
         \def\fignodedist{2.1}
         \def\fignodeheight{1.1}
-        \def\newcptX{-0.3}
-        \def\newcptY{-0.1}
+        \def\newcptX{-0.2}
+        \def\newcptY{-0.5}
                      
 		\node[dpadded, fill=white, draw=gray] (true)  at (0,1.8) {$\pdgunit$};
 		\node[dpadded] (floomp) at (-\fignodedist,\fignodeheight) {$F$};
@@ -100,12 +103,12 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 		\draw[arr] (true) to[bend right=0] coordinate(B) (gun);
 
 		\node[above left=2.0em and 1.5em of A, anchor=center] {
-			\begin{idxmat}[\color{black}\smalltext]{\!\!\!$\star$\;\;\;}{$f$, $\overline f$}
+			\begin{idxmat}[\color{black}\smalltext]{\!\!\!$\star$\;\;\;}{$f$, $\lnot f$}
 				.90 & .10 \\
 			\end{idxmat}
 		};
 		\node[above right=2.0em and 1.3em of B, anchor=center] {
-			\begin{idxmat}[\color{black}\smalltext]{\!\!\!$\star$}{$g$, $\overline g$}
+			\begin{idxmat}[\color{black}\smalltext]{\!\!\!$\star$}{$g$, $\lnot g$}
 				.05 & .95 \\
 			\end{idxmat}
 		};
@@ -115,7 +118,9 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 		\node[anchor=center] (newcpd) at (\newcptX,\newcptY) {
 			\color{heldout}
 		$p
-			=\!\!\!$\begin{idxmat}[\color{heldout}\smalltext]{$f$,$\overline f$}{$g$, $\overline g$}
+			=\!\!\!$\begin{idxmat}[\color{heldout}\smalltext]
+                % {$f$,$\overline f$}{$g$, $\overline g$}
+                {$\smash f$,$\smash{\lnot f}$}{$\smash g$, $\smash{\lnot g}$}
 			  .92 & .08 \\ .08 & .92 \\
           \end{idxmat}$~=~
 		    {(p')^{\textsf T}}$
@@ -124,7 +129,8 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 	}
 \fi
         \caption{A BN (left) and corresponding PDG (right), which can
-        include more cpds; $p$ or $p'$ make it inconsistent.} 
+        be augmented with additional cpds. The cpds $p$ and/or $p'$
+        make it inconsistent.} 
     \label{fig:gun-floomp-diagram}
 \end{figure}
 
@@ -460,16 +466,17 @@ Although it is possible to formalize PDGS with hyperedges directly,
     we opt for a different approach here, in which PDGs have only regular edges,
 and hyperedges are captured using a simple construction
 that involves adding an extra node.
-
-\vfull{\footnote{In the factor graph literature,
+%
+\vfull{\unskip\footnote{In the factor graph literature,
           especially with regard to loopy belief propagation
           \cite{wainwright2007graphical}, it is common to
           call a collection of marginals that are not
           necessarily all compatible with a distribution
           \emph{pseudomarginals}, making a PDG in some sense a
           collection of `conditional' pseudomarginals. This
-          gives an alternate, more technically precise
-          expansion of PDG as ``Pseudomarginal Dependency Graph''.}}
+          gives an alternate expansion of ``PDG'' 
+          as ``Pseudomarginal Dependency Graph'',
+          with nomenclature rooted in the literature.}}
 
 \begin{defn}\label{def:model}
 A \emph{Probabilistic Dependency Graph}
@@ -1318,12 +1325,7 @@ in future work.
 
 
 	
-	
-\clearpage
-{
-    \bibliography{allrefs,z,joe}        
-}
-
+\vfull{	
 \section*{Ethics Statement}
 
 Because PDGs are a recent theoretical development, there is a lot of
@@ -1363,6 +1365,10 @@ complicated than many existing methods. This will likely restrict their
 accessibility. To mitigate this, we commit to making sure our work is widely
 accessible to researchers of different
 backgrounds.
+}
+
+
+\begin{subappendices}
 
 \section{Proofs} \label{sec:proofs}
 For brevity, we use the standard notation and write $\mu(x, y)$
@@ -1381,7 +1387,7 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 % $\SD{\dg M} \!= \{ \mu : \bbr{\dg M}_0(\mu) \!=\! 0\}$ for all $\dg M$.
 % }
 \recall{prop:sd-is-zeroset}
-\begin{proof}
+\begin{lproof}\label{proof:sd-is-zeroset}
 	 By taking $\gamma = 0$, the score is just $\Inc$. By
 			 definition, a distribution $\mu \in \SD{\dg M}$ satisfies
 	  all the
@@ -1399,7 +1405,7 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 			 is non-negative, the sum of these terms over all
 			 edges must be positive as well, and so $\Inc_{\dg M}(
 			 \mu) \neq 0$. %
-\end{proof}
+\end{lproof}
 
 
 Before proving the remaining results, we prove a lemma that will be useful
@@ -1409,9 +1415,9 @@ in other contexts as well.
 	\label{theorem:inc-convex}
 	$\Inc_{\dg M}( \mu)$ is a convex function of $\mu$.
 \end{lemma}
-\begin{proof}
+\begin{lproof}\label{proof:inc-convex}
     It is well known that $\thickD$ is convex \cite[Theorem
-            2.7.2]{coverThomas}, in the sense that  
+            2.7.2]{CoverThomas}, in the sense that  
 	\[ \kldiv{\lambda q_1 + (1-\lambda) q_2 }{ \lambda p_1
 			  + (1-\lambda) p_2} \leq \lambda \kldiv {q_1}{ p_1} +
 							(1-\lambda) \kldiv{q_2}{p_2}. \] 
@@ -1443,7 +1449,7 @@ setting $q_1 = q_2 = \p_\ell(a)$, we get that
 					\Inc_{\dg M}(p_2). 
 	\end{align*}
 	Therefore, $\Inc_{\dg M}( \mu)$ is a convex function of $\mu$.
-\end{proof}
+\end{lproof}
 
 The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
 % \restate{prop:nice-score}{
@@ -1465,7 +1471,7 @@ The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
 % \end{equation*}
 % }
 \recall{prop:nice-score}
-\begin{proof}
+\begin{lproof}\label{proof:nice-score}
 We use the more general formulation of $\IDef_{}$ given
 in \Cref{sec:expfam}, in which each arc $a$'s conditional  
 information is weighted by $\alpha_a$.
@@ -1490,7 +1496,7 @@ information is weighted by $\alpha_a$.
 	                        \frac{1}{\mu(y \mid x)} \right] -
 	                        \gamma \log \frac{1}{\mu(\mat w)}  \Bigg\}.  
 	\end{align*}
-\end{proof}
+\end{lproof}
 
 We can now prove         Proposition~\ref{prop:sem3}.
 % \restate{prop:sem3}{
@@ -1498,7 +1504,7 @@ We can now prove         Proposition~\ref{prop:sem3}.
 % $\bbr{\dg M}_\gamma^*$ is a singleton. 
 % }
 \recall{prop:sem3}
-\begin{proof}
+\begin{lproof}\label{proof:sem3}
 It suffices to show that $\bbr{\dg
 			  M}_\gamma$ is a strictly convex function of $\mu$,
 since every strictly convex function has a unique minimum.
@@ -1542,7 +1548,7 @@ Finally, negative entropy is well known to be strictly convex.
 			long as $\beta_L \geq \gamma$ for all edges $L \in
 			\Ar^{\dg M}$, $\bbr{\dg M}_\gamma$ is
 strictly convex.  The result follows.
-\end{proof}
+\end{lproof}
 
 
 We next prove \Cref{prop:limit-uniq}.  The first step is provided by the
@@ -1550,7 +1556,7 @@ following lemma.
 \begin{lemma}\label{lem:gamma2zero}
  $\lim\limits_{\gamma\to0}\bbr{\dg M}_\gamma^* \subseteq \bbr{\dg M}_0^*$. 
 \end{lemma}
-\begin{proof}
+\begin{lproof}\label{proof:gamma2zero}
 \def\lb{k}
 \def\ub{K}  
 
@@ -1582,7 +1588,7 @@ $$\Inc(\dg M) +\gamma \lb \le \bbr{\dg M }_\gamma(\mu_\gamma) \le
 Now taking the limit as $\gamma\rightarrow 0$ from above, we get that
 $\Inc(\dg M) = \bbr{\dg M }_0(\mu^*)$.
 Thus, $\mu^* \in \bbr{\dg M}_0^*$, as desired.
-\end{proof}
+\end{lproof}
 
 We now apply Lemma~\ref{lem:gamma2zero} to show that the limit as
 $\gamma \to 
@@ -1591,7 +1597,7 @@ $\gamma \to
 % 	For all $\dg M$, $\lim_{\gamma\to0}\bbr{\dg M}_\gamma^*$ is a singleton.
 % }
 \recall{prop:limit-uniq}
-\begin{proof}
+\begin{lproof}\label{proof:limit-uniq}
 First we show that $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$ cannot be empty.
 Let $(\gamma_n) = \gamma_1, \gamma_2, \ldots$ be a sequence of
 positive reals 
@@ -1662,7 +1668,7 @@ again contradicting the assumption that $\mu_{i}$ minimizes
 $\bbr{\dg M}_{\gamma_{i}}$.
 Thus, our supposition that $\nu_1$ was distinct from $\nu_2$ cannot hold, and so
 $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$ must be a singleton, as desired.
-\end{proof}
+\end{lproof}
 
 Finally, \Cref{prop:consist} is a simple corollary of \Cref{lem:gamma2zero} and \Cref{prop:limit-uniq}, as we now show. 
 % \restate{prop:consist}{
@@ -1670,7 +1676,7 @@ Finally, \Cref{prop:consist} is a simple corollary of \Cref{lem:gamma2zero} and 
 % then $\bbr{\dg M}^* \in \SD{\dg  M}$.
 % }
 \recall{prop:consist}
-\begin{proof}
+\begin{lproof}\label{proof:consist}
 By \Cref{prop:limit-uniq}, $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$
 is a singleton. As in the body of the paper, we refer to its unique element by $\bbr{\dg M}^*$
 \Cref{lem:gamma2zero} therefore immediately gives us $\bbr{\dg M}^* \in \bbr{\dg M}_0^*$.  
@@ -1679,10 +1685,10 @@ If $\dg M$ is consistent, then by \Cref{prop:sd-is-zeroset},
 $\Inc({\dg M}) = 0$, so $\bbr{\dg M}_0(\bbr{\dg M}^*) = 0$, and thus
 $\bbr{\dg M}^* 
 \in \SD{\dg M}$. 
-\end{proof}
+\end{lproof}
 
 
-	\subsection{PDGs as Bayesian Networks}
+\subsection{PDGs as Bayesian Networks}
 In this section, we prove Theorem~\ref{theorem:bns-are-pdgs}.  
 We start by recounting some standard results and notation, all of
 which can be found in a standard introduction to information
@@ -1810,7 +1816,7 @@ distribution $\mu$.
 % and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.    
 % }
 \recall{theorem:bns-are-pdgs}
-\begin{proof}
+\begin{lproof}\label{proof:bns-are-pdgs}
   For the cpd $p(X_i \mid \Pa(X_i))$ associated to a node $X_i$ in 
 $\cal B$, we have that $\Pr_{\cal B}(X_i
 \mid \Pa(X_i)) = p(X_i \mid \Pa(X_i))$.  
@@ -1903,7 +1909,7 @@ its ancestors, and then add the remaining variables appropriately).
 Thus, it is not the case that $X_i$ is independent of $X_{\prec \rho,
   i}$, so by (\ref{eq:key}), $\IDef_{\PDGof{\mathcal B}}(\mu) > 0$.
 This completes the proof.
-\end{proof}
+\end{lproof}
 
 \subsection{Factor Graph Proofs}
 \cref{theorem:fg-is-pdg,theorem:pdg-is-fg} are immediate corolaries of their
@@ -1912,7 +1918,7 @@ we now prove.
 
 
 \recall{theorem:pdg-is-wfg}
-\begin{proof}
+\begin{lproof}\label{proof:pdg-is-wfg}
 	Let $\dg M := (\dg N, \mat v, \gamma \mat v)$ be the PDG in question.
 	Explicitly, $\alpha^{\dg M}_L = v_L$ and $\beta_L^{\dg M} =  \gamma v_L$.
 	By \Cref{prop:nice-score},
@@ -1939,7 +1945,7 @@ v_L \log \frac{1}{\phi(x,y)}
 	It immediately follows that the associated factor graph has 
 	$\bbr{\dg M}^*_\gamma
  	= \{\Pr_{\Phi(\dg M)}\}$, because the free energy is clearly a constant plus the KL divergence from its associated probability distribution.
-\end{proof}
+\end{lproof}
 
 % \restate{theorem:fg-is-pdg}{
 % 	For all WFGs $\Psi = (\Phi,\theta)$ and all $\gamma > 0$,
@@ -1952,7 +1958,7 @@ v_L \log \frac{1}{\phi(x,y)}
 % 	$\bbr{{\dg M}_{\Psi,\gamma}}_{\gamma}^*$.
 % }
 \recall{theorem:fg-is-pdg}
-\begin{proof}
+\begin{lproof}\label{proof:fg-is-pdg}
   In $\PDGof{\Psi,\gamma}$,  there is an edge $1 \to X_J$ for every $J
   \in \mathcal J$, and also edges 
   $X_J \tto X_j$ for each $X_j
@@ -2014,4 +2020,6 @@ so by \cref{prop:nice-score},
 which differs from $\GFE_{\Psi}$ by the value $\sum_J \theta_J \log Z_J$, which 
 is constant in $\mu$.
 
-\end{proof}
+\end{lproof}
+
+\end{subappendices}

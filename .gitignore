@@ -27,6 +27,8 @@ figs/*
 !**/feedback/*.pdf
 !**/pdfs/*.pdf
 !reading/*.pdf
+#... or if they're the main dissertation
+!oli-dissertation.pdf
 
 # Powerpoint
 ~$*.pptx
