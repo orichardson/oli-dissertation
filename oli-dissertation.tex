@@ -1,14 +1,14 @@
 % \documentclass{report}
 \documentclass[tocprelim,
-    11pt,
-    % normalsizeheadings,
+    % 11pt,
+    normalsizeheadings,
     % cornellheadings
     ]{cornellmodified}
 % \input{custom-cornell-preamble.tex}
 
 
 \input{dissertation.preamble}
-\input{pdg-preamble-v3}
+\input{pdg-preamble-v4}
 \input{labelmatrix}
 
 %%%%%%%%%%%%%%%% FLAGS %%%%%%%%%%%%%%%%%
@@ -41,6 +41,9 @@
 % \bibliographystyle{alpha}
 \bibliographystyle{plainnat}
 % \bibliographystyle{IEEEbib}
+
+
+\newsavebox\dpineqbox
 
 \renewcommand{\caption}[1]{\singlespacing\hangcaption{#1}\normalspacing}
 \renewcommand{\topfraction}{0.85}
@@ -82,7 +85,7 @@ Your acknowledgements go here. Make sure it sits inside the brackets.
 \end{acknowledgements}
 
 \contentspage
-\tablelistpage
+% \tablelistpage
 \figurelistpage
 
 \normalspacing \setcounter{page}{1} \pagenumbering{arabic}
@@ -101,6 +104,11 @@ Your acknowledgements go here. Make sure it sits inside the brackets.
 \chapter{Probabilistic Dependency Graphs (PDGs)} 
     \input{chapters/pdg-repr}
     
+% \chapter{Capturing Other Knowledge Representations}
+% \chapter{Everything is a PDG}
+\chapter{Representing Things with PDGs}
+    \input{chapters/kr}
+     
 \chapter{Qualitative Mecahnism Independence}
     \input{chapters/qim}
 
@@ -110,28 +118,37 @@ Your acknowledgements go here. Make sure it sits inside the brackets.
     Choose your Model, not your Loss}
     \input{chapters/loss}
 \chapter{ The Local Inconsistency Resolution (LIR) Algorithm }
-
-\part{Algorithms and Complexity}
+    \input{chapters/lir}
+    
+% \part{Algorithms and Complexity}
+\part{Algorithms, Logic, and Complexity%
+    % : Reasoning about (and with) PDGs
+    }
 
 \chapter{Inference for PDGs, via Exponential Conic Programming}
-\chapter{Equivalence between }
+    \input{chapters/infer}
+\chapter{Lower Bounds, and The Deep Connection between Inconsistency and Inference}
+    \input{chapters/infer-inconsist-connect}
 
-\part{Reasoning about PDGs}
+\chapter{Reasoning with PDGs}
+    \input{chapters/rwpdg}
 
-\chapter{}
 
 \part{Foundations}
 
 \chapter{Confidence}
+
+\chapter{Relative Entropy Soup}
+
 \chapter{The Category Theory of PDGs}
     \input{chapters/cat}
-\chapter{Relative Entropy Soup}
 
 \part{Conclusions}
 
 % \part{Appendices}
 
 % \bibliography{pdg-aaai,z,qdg-refs,joe}
-\bibliography{pdg-aaai-refs,qdg-refs,joe,z}
+% \bibliography{pdg-aaai-refs,qdg-refs,loss-refs,joe,z}
+\bibliography{merged}
 
 \end{document}

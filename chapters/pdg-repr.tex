@@ -128,7 +128,12 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 	\end{tikzpicture}
 	}
 \fi
-        \caption{A BN (left) and corresponding PDG (right), which can
+        \caption[
+        A BN without edges, its corresponding PDG, 
+            and an illustration of how the latter can be augmented
+            losslessly with additional cpds.
+        ]
+        {A BN (left) and corresponding PDG (right), which can
         be augmented with additional cpds. The cpds $p$ and/or $p'$
         make it inconsistent.} 
     \label{fig:gun-floomp-diagram}
@@ -1325,7 +1330,7 @@ in future work.
 
 
 	
-\vfull{	
+\commentout{	
 \section*{Ethics Statement}
 
 Because PDGs are a recent theoretical development, there is a lot of
@@ -1476,25 +1481,28 @@ We use the more general formulation of $\IDef_{}$ given
 in \Cref{sec:expfam}, in which each arc $a$'s conditional  
 information is weighted by $\alpha_a$.
   \begin{align*}
-	\bbr{\dg M}_\gamma(\mu) &:= \Inc_{\dg M}( \mu) + \gamma \IDef_{\dg M}(\mu) \\
-		&= \left[\sum\alle \beta_L \Ex_{x\sim \mu_X}\kldiv[\Big]{ \mu(Y | X {=} x) }{\p_a(x) } \right]  + \gamma \left[\sum\alle \alpha_L \H_\mu(Y\mid X) ~-\H(\mu)\right]\\
+	&\bbr{\dg M}_\gamma(\mu) := \Inc_{\dg M}( \mu) + \gamma \IDef_{\dg M}(\mu) \\
+		&= \left[\sum\alle \beta_a \Ex_{x\sim \mu_X}\kldiv[\Big]{ \mu(Y | X {=} x) }{\p_a(x) } \right]  + \gamma \left[\sum\alle \alpha_a \H_\mu(Y\mid X) ~-\H(\mu)\right]\\
 		&= \sum\alle 
-			\Ex_{x \sim \mu_{\!_X}}  \left[ \beta_L\; \kldiv[\Big]{ \mu(Y \mid x) }{\p_a(Y \mid x) } + \gamma \; \alpha_L \H(Y \mid X{=} x) \right]  - \gamma \H(\mu) \\ 
+			\Ex_{x \sim \mu_{\!_X}}  \left[ \beta_a\; \kldiv[\Big]{ \mu(Y \mid x) }{\p_a(Y \mid x) } + \gamma \; \alpha_a \H(Y \mid X{=} x) \right]  - \gamma \H(\mu) \\ 
 		&= \sum\alle 
-			\Ex_{x \sim \mu_{\!_X}}  \left[ \beta_L\; \left(\sum_{y \in \V(Y)} \mu(y \mid x) \log\frac{\mu(y\mid x)}{\p_a(y\mid x)}\right) + \alpha_L\gamma \; \left(\sum_{y \in \V(Y)} \mu(y\mid x) \log \frac{1}{\mu(y\mid x)} \right) \right]  - \gamma  \H(\mu) \\ 
+			\Ex_{x \sim \mu_{\!_X}}  \bigg[ \beta_a\; \bigg(\sum_{y \in \V(Y)} \mu(y \mid x) \log\frac{\mu(y\mid x)}{\p_a(y\mid x)}\bigg) 
+                \\&\qquad\qquad
+                + \alpha_a\gamma \; \bigg(\sum_{y \in \V(Y)} \mu(y\mid x) \log \frac{1}{\mu(y\mid x)} \bigg) \bigg]  - \gamma  \H(\mu) \\ 
 		&= \sum\alle 
-			\Ex_{x \sim \mu_{\!_X}}  \left[ \sum_{y \in \V(Y)} \mu(y \mid x) \left(  \beta_L\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_L \gamma \; \log \frac{1}{\mu(y\mid x)} \right) \right]  - \gamma  \H(\mu) \\
+			\Ex_{x \sim \mu_{\!_X}}  \left[ \sum_{y \in \V(Y)} \mu(y \mid x) \left(  \beta_a\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_a \gamma \; \log \frac{1}{\mu(y\mid x)} \right) \right]  - \gamma  \H(\mu) \\
 		&= \sum\alle 
-			\Ex_{x \sim \mu_{\!_X}}  \left[ \Ex_{y \sim \mu(Y \mid X=x)} \left(  \beta_L\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_L \gamma \; \log \frac{1}{\mu(y\mid x)} \right) \right]  - \gamma \sum_{\mat w \in \V(\dg M)} \mu(\mat w) \log \frac{1}{\mu(\mat w)} \\  
+			\Ex_{x \sim \mu_{\!_X}}  \left[ \Ex_{y \sim \mu(Y \mid X=x)} \left(  \beta_a\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_a \gamma \; \log \frac{1}{\mu(y\mid x)} \right) \right]  - \gamma \sum_{\mathclap{\mat w \in \V\!\X}} \mu(\mat w) \log \frac{1}{\mu(\mat w)} \\  
 		&= \sum\alle 
-			\Ex_{x,y \sim \mu_{\!_{XY}}}  \left[ \beta_L\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_L\gamma \; \log \frac{1}{\mu(y\mid x)}  \right]  - \gamma  \Ex_{\mat w \sim \mu} \left[ \log \frac{1}{\mu(\mat w)}\right] \\
-		&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-			\beta_L \log \frac{1}{\p_a(y\mid x)}   - \beta_L  \log \frac{1}{\mu(y \mid x)}+ \alpha_L\gamma \log \frac{1}{\mu(y \mid x)} \right]\Bigg\}  -  \gamma  \Ex_{\mat w \sim \mu} \left[\log \frac{1}{\mu(\mat w)}\right] \\
-		&=  \Ex_{\mat w \sim \mu} \Bigg\{ \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-			\beta_L \log \frac{1}{\p_a(y\mid x)} +
-	                        (\alpha_L\gamma - \beta_L ) \log
+			\Ex_{x,y \sim \mu_{\!_{XY}}}  \left[ \beta_a\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_a\gamma \; \log \frac{1}{\mu(y\mid x)}  \right]  - \gamma  \Ex_{\mat w \sim \mu} \left[ \log \frac{1}{\mu(\mat w)}\right] \\
+		&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+			\beta_a \log \frac{1}{\p_a(y\mid x)}   - \beta_a  \log \frac{1}{\mu(y \mid x)}+ \alpha_a\gamma \log \frac{1}{\mu(y \mid x)} \right]\Bigg\}  -  \gamma  \Ex_{\mat w \sim \mu} \left[\log \frac{1}{\mu(\mat w)}\right] \\
+		&=  \Ex_{\mat w \sim \mu} \Bigg\{ \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+			\beta_a \log \frac{1}{\p_a(y\mid x)} +
+	                        (\alpha_a\gamma - \beta_a ) \log
 	                        \frac{1}{\mu(y \mid x)} \right] -
 	                        \gamma \log \frac{1}{\mu(\mat w)}  \Bigg\}.  
+                \qedhere
 	\end{align*}
 \end{lproof}
 
@@ -1680,7 +1688,7 @@ Finally, \Cref{prop:consist} is a simple corollary of \Cref{lem:gamma2zero} and 
 By \Cref{prop:limit-uniq}, $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$
 is a singleton. As in the body of the paper, we refer to its unique element by $\bbr{\dg M}^*$
 \Cref{lem:gamma2zero} therefore immediately gives us $\bbr{\dg M}^* \in \bbr{\dg M}_0^*$.  
-
+%
 If $\dg M$ is consistent, then by \Cref{prop:sd-is-zeroset},
 $\Inc({\dg M}) = 0$, so $\bbr{\dg M}_0(\bbr{\dg M}^*) = 0$, and thus
 $\bbr{\dg M}^* 
@@ -1957,8 +1965,8 @@ v_L \log \frac{1}{\phi(x,y)}
 % 	$\Pr_{\Psi}$ is the unique element of
 % 	$\bbr{{\dg M}_{\Psi,\gamma}}_{\gamma}^*$.
 % }
-\recall{theorem:fg-is-pdg}
-\begin{lproof}\label{proof:fg-is-pdg}
+\recall{theorem:wfg-is-pdg}
+\begin{lproof}\label{proof:wfg-is-pdg}
   In $\PDGof{\Psi,\gamma}$,  there is an edge $1 \to X_J$ for every $J
   \in \mathcal J$, and also edges 
   $X_J \tto X_j$ for each $X_j
@@ -1970,11 +1978,13 @@ property of relative entropy: if there exist $j^* \in \V(X_j)$ and
 $\mat z^* \in \V(J)$ such that $\mat z^*_J \ne j^*$ and $\mu$ places positive
 probability on their co-occurance (i.e., $\mu(j^*, \mat z^*) > 0$),
 then we would have
-\[ \Ex_{\mat z \sim \mu_{J}}\kldiv[\Big]{\mu(X_j \mid X_J = \mat z)}
+\begin{align*}
+\Ex_{\mat z \sim \mu_{J}}\kldiv[\Big]{\mu(X_j \mid X_J = \mat z)}
 	{\mathbbm1[X_j = \mat z_{j}]}
- 	= \sum_{\substack{\mat z \in \V(X_J),\\ \iota \in \V(X_j)}} \mu(\mat z, \iota) \log \frac{\mu(\iota \mid \mat z)}{\mathbbm1[\mat z_j = \iota]}
-	\geq \mu(\mat z^*, j^*) \log \frac{\mu(j^* \mid \mat z)}{\mathbbm1[\mat z^*_j = j_*]}
-	= \infty. \]
+ 	&= \sum_{\substack{\mat z \in \V(X_J),\\ \iota \in \V(X_j)}} \mu(\mat z, \iota) \log \frac{\mu(\iota \mid \mat z)}{\mathbbm1[\mat z_j = \iota]}
+	\\&\geq \mu(\mat z^*, j^*) \log \frac{\mu(j^* \mid \mat z)}{\mathbbm1[\mat z^*_j = j_*]}
+	= \infty. 
+\end{align*}
 Consequently, a distribution $\mu$ that does not satisfy the the projections has
 $\bbr{\dg M_{\Psi,\gamma}}_\gamma(\mu) = \infty$ for every $\gamma$.
           Thus, a distribution that 
@@ -2019,7 +2029,6 @@ so by \cref{prop:nice-score},
 	\end{align*}
 which differs from $\GFE_{\Psi}$ by the value $\sum_J \theta_J \log Z_J$, which 
 is constant in $\mu$.
-
 \end{lproof}
 
 \end{subappendices}

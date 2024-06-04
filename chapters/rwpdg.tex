@@ -1,0 +1,430 @@
+
+\section{Quantitative Monotonicity and Equivalence}
+
+
+\section{Qualitative Monotonicity and Equivalence}
+
+%joe7*: You're doing a core dump.  You have made no attempt to connect
+%this material to the rest of the paper.  Either cut this, or 
+%wirte some paragraphs explaining the connection.  
+\subsection{QIM Equivalence}
+% \subsection{SIM-Equivalence}
+    \label{sec:equivalence}
+%oli3: moved this material inside subsection    
+% Another point that's important to keep in mind is the following:
+%joe1: I don't know how you quantify "Often"
+%  Often, two \hgraph s $\Ar$ and $\Ar'$ with intuitively very 
+%  different meanings are \scible\ with the
+%  same set of distributions.
+%joe1*:More importantly, why the rest of this section here?  You've
+%already shown that this semantics lets us capture dependence.  What
+%do I get out of the rest?  I could imagine a story (which is a
+%separate subsection) along the lines "we would expect a good
+%semantics to distinguish PDGs that, intuitively, are different.
+%Structural comptibility does not seem to do that [Give examples.] But
+%it actually can do a better job by taking context into account.  You
+%can then explain "context".  That wouldn't be such a bad story, but
+%then you undercut it "there are still some \hgraph s that the
+%definition of \scibility\ does not distinguish".  So the
+%storty ends in this awkward state, where I have no real sense of the
+%distinctions made by the semantics.  If you could prove a theorem
+%that gave an interesting characterization of equivalence, you would
+%have an intersting story.  But as it is, I believe we should cut it
+%(which is what I've done), although I put in a few further comments
+%below.  You can reinstate it only if you can motivate it and give a
+%good story for it. The goal is not to do a core dump of everything you know.
+%
+%oli1: I see your point. At a high level, this part of the section
+% serves two purposes: to introduce Propostion 3, which is useful
+% because it together with monotonicity forms a useful proof system,
+% and to prime readers for how to think about combining qualitaitve
+% PDGs, and especially what hypergraph union means. 
+%
+%oli1*: The plan for a new story:
+%   >> Highlight how the correspondence of Theorem 2 does not depend on context (i.e., what else is in the PDG).
+%   >> Ask: is this realy necessary? Yes: observe example 3, which behaves the same way, but says more:    
+%
+%oli1*: rewriting lots of the following without careful marking
+%joe5: I don't believe you've defined "context"
+%oli6: good point, and I also just switched the primes. 
+% Applying \cref{theorem:func} with empty context $\Ar = \emptyset$
+{\color{red} [now that we know this version of Theorem 2 is false, much of this discussion doesn't make sense.]
+Applying \cref{theorem:func} with $\Ar' = \emptyset$
+yeilds a quintessential special case: $\mu \models
+\begin{tikzpicture}[center base]
+    \node[dpad0] (X) {$X$};
+    \node[dpad0,right=.5 of X] (Y) {$Y$};
+    \draw[arr1,yshift=2px] (X) to[bend left=16] (Y);
+    \draw[arr1] (X) to[bend right=16] (Y);
+\end{tikzpicture}$ 
+iff $Y$ is a function of $X$ according to $\mu$.
+% At first glance, this does not seem 
+At first glance, this already seems to
+    capture the essence of \cref{theorem:func};
+    is it really meaningfully weaker? 
+%joe2*: in what sense is it rare?
+% In fact it is: the context-independence of 
+%     this two-arc construction with respect to structural
+%     incompatibility is actually rare.
+%oli2: it is rare in the sense that it is very easy to find examples of hypergraphs that are consistent with the same % set of distributions, yet the only cases I've found to be "context independent" are those characterized by Theorem 2 or what is now Proposition 8. 
+% In fact it is. 
+In fact it is; 
+%joe1
+%Our next example is a graph that behaves the same way.
+%oli1:
+% Our next example is another graph that behaves the same way.
+to illustrate, our next example is another graph that behaves the same way---but not in all contexts.
+
+\begin{linked}{example}{det-fn}
+     % Consider $\Ar = \{ \ed 1{}{X},~ \ed2{Y}{X} \}$.
+     % A distribution $\mu$ is s-compatible with $\Ar$ iff
+     % $X$ is a function of $Y$ in $\mu$.
+     % \[
+     %     X \underset\mu\CI X \mid Y \quad\iff\quad \text{$X$ is a function of $Y$}
+     %     \quad\iff\quad \H_\mu(X|Y) = 0
+     %     \qedhere
+     % \]
+     %oli3: adding, because it's not obvious, and we'll prove it in the appendix
+     In the appendix, we prove
+     $\mu \models \begin{tikzpicture}[center base]
+         \node[dpad0] (X) {$X$};
+         \node[dpad0,right of=X] (Y) {$Y$};
+         \draw[arr1] (X) to[] (Y);
+         \draw[arr1,<-] (Y) to[] +(0.7,0);
+    \end{tikzpicture}$
+    iff
+     $Y$ is a function of $X$
+    %  $X \tto Y$
+    %  in $\mu$.
+    (according to $\mu$).
+    But, in general, this graph says something
+        distinct from 
+        % from $X \tto Y$ 
+        (and stronger than, as we will see in \cref{sec:monotone})
+        %oli2
+    %oli3: We're not referring to the one with the previous number, so I prefer:
+    % the previous example. 
+    %joe5: what example are you referring to here?
+    %oli6: the "quintessential special case" PDG containing two arcs X->Y, defined just above this example, but outside of an example environment. 
+    the example above. 
+        % (a stronger statement 
+        % (as we will see in \cref{sec:monotone}) .
+    % In context $\Ar = 
+    % \{\ed {}{}X\}$, for example,
+    After an adding the \arc\ $\ed{}{\emptyset}{\{X\}}$ to both graphs, for example, they behave differently:
+    every distribution $\mu$ satisfying $X \tto Y$
+    also satisfies
+    $\mu \models \begin{tikzpicture}[center base]
+        \node[dpad0] (X) {$X$};
+        \node[dpad0,right of=X] (Y) {$Y$};
+        \draw[arr1] (X) to[bend left=15] (Y);
+        \draw[arr1] (X) to[bend right=15] (Y);
+        \draw[arr1,<-] (X) to[] +(-0.8,0);
+    \end{tikzpicture}$,
+    but only when $Y$ is a constant
+    can it be the case that
+    % but the only $\mu$ for which
+    $\mu \models \begin{tikzpicture}[center base]
+        \node[dpad0] (X) {$X$};
+        \node[dpad0,right of=X] (Y) {$Y$};
+        \draw[arr1] (X) to[] (Y);
+        \draw[arr1,<-] (Y) to[] +(0.7,0);
+        \draw[arr1,<-] (X) to[] +(-0.7,0);
+   \end{tikzpicture}$.
+%    are those in which $Y$ is also deterministic. 
+\end{linked} 
+}
+
+%oli1: excised the following
+\commentout{
+        % The empty hypergraph is consistent with every distribution,
+        % as is every hypergraph containing one arc.
+    For a more general illustration, one can easily show that
+    every \hgraph\ consisting of just one \arc\ is consistent with all probability measures $\mu \in \Delta \V\!\X$,
+        % even though each \arc\ intutively means something different.
+        even though different \arc s intuitively mean different things.
+    %
+    % However, they something different in context. 
+    %oli1: deleting now
+    % This may seem problematic at first, 
+    %     but our definition
+    %     does treat them differently when we add more context. 
+    % Yet they are quite different; 
+        % in particular, every hypergraph
+    Moreover, every \hgraph\ is a union of one-arc \hgraph s,
+        and we have already seen that not all \hgraph s are equivalent.
+    % and it follows that
+    %     the set $\bbra{\Ar} := \{ \mu : \mu \models \Ar\}$
+    %joe1*: this comes out of the blue and is somewhat of a non
+    %sequitur.  If this were to be resintated, you sould need to define a
+    %notion of equivalence that takes context into account, motivate it,
+    %and show that it does good things.
+    % It follows that 
+    %     the set $\bbra{\Ar} := \{ \mu : \mu \models \Ar\}$
+    %     cannot be defined inductively over \hgraph\ union ($+$).
+    %oli1: ok, I'll move this sentence elsewhere.
+    % It follows that notion of \scibility\ cannot be
+    %     defined inductively over unions of independent mechanisms. 
+    We explore role of union as a way of combining   
+        qualitative PDGs further in \cref{sec:union}.
+}
+
+%joe1*: Show how you can account for context! 
+%oli1: replacing with different story.
+%   Once we account for context properly, there are still
+%     some \hgraph s that the definition of \scibility\ 
+%     does not distinguish, but far fewer of them.
+%oli2:
+% In order to capture the meanings of \hgraph s more precisely, it seems
+% we need a stronger notion of equivalence. 
+%joe3: "honor" is the wrong word here
+%To honor the the causal meanings of \hgraph s more precisely,
+%joe3: I also don't know what you mean by the "causal meanings" of
+%hypergraphs.  You've already said that \nu captures the causal
+%meaning in some sense.  How does this relate.
+%oli3: Again it seems to me that your question is confusing the quantitative and qualitative levels.  The witness \nu has causal information, but that information is not present in the hypergraph.  
+% To capture the the causal meanings of \hgraph s more precisely, 
+To distinguish between \hgraph s that are not interchangable,
+    we clearly need a stronger notion of equivalence.
+    
+%joe2*: moved here from above.  However, given that hypergraph union
+%is not terribly interesting in the structural case, I don't find this
+%material particularly interesting or well-motivated.  Why do we care
+%about equivalence?
+Given \hgraph s $\Ar_1$ and $\Ar_2$, 
+we can form the combined \hgraph\ $\Ar_1 + \Ar_2$
+%%joe2
+%%that has disjoint union of the two sets of arcs,
+that consists of the disjoint union of the two sets of \hyperarc s,
+    and the union of their nodes.
+%joe1*: You need to define (and discuss) hyptergraph union, and the
+    %notation.  (What you did above and I commented out was not enough.)
+We say that $\Ar$ and $\Ar'$ are \emph{(structurally) equivalent}
+%joe1:
+%I wouldn't call a hypergraph \Ar'' a context; just call it a hypergraph
+%oli1: I don't understand the objection;
+% what's wrong with "context"? It's clearly a hypergraph by type,
+% but for the present discussion what's more important is that it represents
+% a context of other independent mechanisms. We don't always refer
+% to real numbers as "reals" but also use words like "offset", "position",
+% "confidence", etc., to describe their role. Here, "context" is appropriate.
+($\Ar \cong \Ar'$) if for every context $\Ar''$ and distribution $\mu$,  we have that
+    $\mu \models \Ar + \Ar''$ iff $\mu \models \Ar' + \Ar''$.
+%joe1*: why does "+" mean "disjoint union".  As I said, you need to
+%discuss + much more carefully.
+%oli1:
+% It follows immediately that this definition  is stable under disjoint union ($+$).
+%
+By construction, structural equivalence ($\cong$) is itself
+%joe3: You haven't define "stable", and I wouldn't call the property
+%that you're referring to stability.  (I think there is a standard
+%name for it, although I can't recall it offhand.)
+%oli3: I am looking for an intuitive word, or an appropriate technical one that doesn't need to be defined. Let me know if you think of the standard term! Might it be... invariant? 
+% stable if one adds context:
+invariant to additional context:
+%oli1: now given earlier after definition of the hypergraph. The union is disjoint because combining -> X and -> X this way means two independent mechanisms that determine X, i.e., -> X <-. 
+     if $\Ar \cong \Ar'$ then
+    $\Ar + \Ar'' \cong \Ar' + \Ar''$.
+%oli1:
+Our next result is a simple, intuitive, and particularly useful equivalence.
+%joe2*: why is it useful?  What's it useful for?
+%oli2: having done many such proofs, I can say with some authority that this result is one of the most convenient tools we have for proving that various distributions are or are not \scible\ with various \hgraph s. It works especially well in tandem with monotoncity to prove looser bounds.  With some effort I can give you examples, but those examples are probably not important enough to merrit space in the main body of the paper.  This proposition itself, though, I think is more than worth the space it takes up, and I suspect that by the time the paper is finished, it will be used many times in various proofs and proof sketches. 
+%joe3*: While you may be right, we don't have such proofs in this
+%paper.  To say it's useful, we have to show usefulness, and doing so
+%would take us far beyond what this paper should be about, as far as
+%I'm concerned.  I would still cut it.  It distracts from the story
+%we should be trying to tell.
+%oli3: you may well be right, and it may turn out to be a distraction---but I don't think so. I  think everything will tie together very nicely, if we write it properly.  If it still seems like an unimportant sideshow in a few iterations, we can cut it --- but I have plans that involve this thread. 
+%joe4*: When do you expect to write it up "properly", whatever that
+%means.  As it stands, it is an unimportant sideshow.     
+
+%oli3*: gave a stronger version of the proposition, which is necessary to prove the conjecture.
+\begin{prop}
+        \label{prop:equiv-factorizations-cnd}
+        The following \hgraph s are equivalent:
+    \[
+        % \vspace{-3ex}
+        \begin{tikzpicture}[center base]
+            \node[dpad0] (X) {$X$};
+            \node[dpad0,above right=0.8em and -0.4em of X] (Z) {$Z$};
+            \node[dpad0,right=1.2em of X] (Y) {$Y$};
+            % \cunmergearr[arr1] {Z}{X}{Y}{0.5,.5}
+            % \draw[arr1] (X) to (Y);
+            \mergearr[arr1] {Z}{X}{Y};
+            \draw[arr1] (Z) to (X);
+        \end{tikzpicture}
+        ~~\cong~~
+        \begin{tikzpicture}[center base]
+            \node[dpad0] (X) {$X$};
+            \node[dpad0,right=0.6 of X] (Y) {$Y$};
+            \node[dpad0,anchor=center] (Z) at ($(X.east)!0.5!(Y.west) + (0,0.75)$){$Z$};
+            % \draw[red] (Z.center) circle (0.1);
+            % \draw[blue] ($(X.east)!0.5!(Y.west) + (0,0.75)$) circle (0.12);
+            % \cunmergearr[arr1] {Z}{X}{Y}{0.5,.5}
+            % \draw[arr1] (X) to (Y);
+            \unmergearr[arr1] {Z}{X}{Y};
+        \end{tikzpicture}
+        ~~\cong~~
+        \begin{tikzpicture}[center base]
+            \node[dpad0] (X) {$X$};
+            \node[dpad0,above left=0.8em and -0.4em of Y] (Z) {$Z$};
+            \node[dpad0,right=1.2em of X] (Y) {$Y$};
+            % \cunmergearr[arr1] {Z}{X}{Y}{0.5,.5}
+            % \draw[arr1] (X) to (Y);
+            \mergearr[arr1] {Z}{Y}{X};
+            \draw[arr1] (Z) to (Y);
+        \end{tikzpicture}
+    %    $
+    % \end{enumerate}
+    .
+    \]
+\end{prop}
+These three \hgraph s correspond, respectively, to equivalent factorizations 
+of a conditional probability measure
+\[ 
+    \def\Pr{P}
+    % \def\gr#1{{\color{gray}#1}}
+    % \Pr(X\gr{|Z})\Pr(Y|X\gr{,Z}) 
+    %     = \Pr(X,Y\gr{|Z}) 
+    %     = \Pr(X|Y\gr{,Z})\Pr(Y\gr{|Z}). 
+    \Pr(X|Z)\Pr(Y|X,Z) 
+        = \Pr(X,Y|Z) 
+        = \Pr(X|Y,Z)\Pr(Y|Z).
+\]
+%\oli3: removing old proposition, for now
+\commentout{
+    \begin{prop}
+            \label{prop:equiv-factorizations}
+            The following \hgraph s are equivalent:
+        \[
+            % \vspace{-3ex}
+            \begin{tikzpicture}[center base]
+                \node[dpad0] (X) {$X$};
+                \node[dpad0,right=1.1em of X] (Y) {$Y$};
+                \draw[arr1] (X) to (Y);
+                \draw[arr1,<-] (X) to +(-0.68,0);
+            \end{tikzpicture}
+            ~~\cong~~
+            \begin{tikzpicture}[center base]
+                \node[dpad0] (X) at (0,0) {$X$};
+                \node[dpad0] (Y) at (1,0) {$Y$};
+                \cunmergearr[arr1] {0.5,.8}{X}{Y}{0.5,.5}
+            \end{tikzpicture}
+            ~~\cong~~
+            \begin{tikzpicture}[center base]
+                \node[dpad0] (X) {$X$};
+                \node[dpad0,right=1.1em of X] (Y) {$Y$};
+                \draw[arr1] (Y) to (X);
+                \draw[arr1,<-] (Y) to +(0.68,0);
+            \end{tikzpicture}
+        %    $
+        % \end{enumerate}
+        .
+        \]
+    \end{prop}
+    %joe1: The "These" needs names, and "correspond" needs to be explained.
+    %oli1: Ok. I played with a version that expanded on "correspond",
+    % but I think it made things muddier rather than cleaner. Can you help
+    % me see where the ambiguity is, or why it might be hard to follow?
+    %
+    % These are equivalent BN structures as well, and correspond
+    These three \hgraph s also arise from equivalent BN structures.
+    As such, they correspond, respectively, to equivalent factorizations 
+    %oli1: moved up from above
+    of a probability measure
+    \[ \Pr(X)\Pr(Y|X) ~=~ \Pr(X,Y) ~=~ \Pr(X|Y)\Pr(Y). \]
+}
+%
+%joe2*: downplaying this.  I'm really concerned this material and the
+%section on monotonicity is out of place.  It's preventing us from
+%getting to more interesting material on causal models.
+%oli2: now the causal models are first, so it's no longer standing
+% in the way of that material. It may still need to be downplayed, 
+% but I want to keep it for now.  I've put your replacement text
+% commented out below. 
+%
+\commentout{
+%joe2
+We conjecture that, in a sense, \cref{prop:equiv-factorizations}
+characterizes when two qualitative BNs satisfy the same set of
+independencies.  More specifically, we conjecture that if 
+two qualitative Bayesian Networks describe the same set of
+independencies, then they can 
+be provd equivalent using only instances of \cref{prop:equiv-factorizations}.
+%oli2: I'm happy to use this text if the conjecture remains a conjecture,
+% but I also think it should be provable, independently interesting, and
+% immediately justify the claims above that the Proposition is useful.
+% I don't yet see the proof for the general case, but I'd like to show 
+% you why it's true for some subclasses of BNs, and see if you have any
+% ideas for how to prove the general case!
+}
+%oli2: reinstated old material, for now...
+%joe3*: I continue to stand by what I said above, but I don't know how
+%to convince you that what you wrote makes things worse, not better
+%(unless you can prove the theorem).
+%oli3: I proved the theorem! Or, more accurately, I figured out that somebody else had proved a slight variant of it. 
+%oli3: to make proposition correct...
+% \cref{prop:equiv-factorizations}
+\cref{prop:equiv-factorizations-cnd}
+%oli3: shortening and combining
+% provides a simple yet useful axiom system for for deriving relationships between the structural meanings of different \hgraph s. 
+provides a simple and useful way to relate \scibility\ of different \hgraph s. If we restrict to acyclic structures, for instance, we find: 
+
+%oli3: promoting to theorem, and adding attribution b/c apparently the result is known
+% \begin{conj}[completeness for BN structures]
+%joe5*: If Max's statement is different from this, you have to say
+%something more about the difference, and why our current approach
+%makes things easier to state.  Just saying that it does is not good enough.
+\begin{theorem}[\citealt{chickering-equiv-bns}]
+% \begin{theorem}[alternate statement; proof due to \citealt{chickering-equiv-bns}]
+        \label{theorem:bn-completeness}
+    Any two qualitative Bayesian Networks that 
+    %oli3:
+    % describe the same set of independencies
+    represent the same independencies
+    can be proven equivalent using only instances of \cref{prop:equiv-factorizations-cnd}
+    %oli3: to be precise, adding:
+    (in which $X$, $Y$, $Z$ may be sets of variables).
+% \end{conj}
+\end{theorem}
+
+\Cref{theorem:bn-completeness} 
+is essentially a restatement of
+% the one given by \citet{chickering-equiv-bns}, 
+%joe4: titular?  That seems like the wrong word.
+%oli5: because I'm referring to the result that's referenced in the title of that work. But I can be less precise and just write "main"
+% titular result of \citet{chickering-equiv-bns}, 
+main result of \citet{chickering-equiv-bns}, 
+% but it can be stated more simply in the language of \hgraph s.
+but it is simpler to state in terms of directed hypergraph equivalences.
+%oli9:
+To state the result in its original form, one has to first
+define an edge $X \to Y$ to be \emph{covered} in a graph $G$ iff $\Pa_G(Y) = \Pa_G(X) \cup \{X\}$;
+then, the result states that all equivalent BN structures are related by a chain of reversed covered edges. 
+Observe that this notion of covering is implicit in \cref{theorem:bn-completeness}.
+% \begin{enumerate}
+%     \item 
+%     \item 
+% \end{enumerate}
+% This characterization of BN equivalence, 
+\Cref{theorem:bn-completeness} is one demonstration of the usefulness of 
+\cref{prop:equiv-factorizations-cnd},
+but the latter applies far more broadly, to cyclic structures
+and beyond. 
+It becomes even more useful in tandem
+    %oli6:
+    % an analogue of implication, which we describe next. 
+    with the definition of monotonicity presented in \cref{sec:monotone},
+    which is an analogue of implication. 
+    
+%oli2: note that the material below, which you previously grouped with the material above and commented out, is a segue to the material on monotonicity.  Whether or not we include it is independent of whose approach we take to describing the conjecture above. 
+%oli3: ... and I think it's not all that valuable. I wrote a shorter transition above.
+\commentout{
+    Suppose we want
+        to know that \scibility\ with $\Ar$ suffices to guarantee compatibility with $\Ar'$, but are not interested in the converse.
+    % Is there a one-sided analogue of structural equivalence?
+    As we will see in the next section, there is such a notion, and \cref{prop:equiv-factorizations-cnd} becomes even more useful in tandem with it.
+}
+
+
+% \section{QIM }

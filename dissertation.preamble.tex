@@ -13,6 +13,7 @@
 	 	\rule[0.5ex]{1in}{.15mm}\hfill
 		Chapter \thechapter\ Appendices
 		\hfill \rule[0.5ex]{1in}{.15mm}
+		\hfill
 	}
 	\counterwithin{figure}{section}
 	\counterwithin{table}{section}
@@ -32,6 +33,7 @@
 \newcommand\vjoe[1]{{\color{red!80!black}#1}}
 \newcommand\voli[1]{{\color{orange!80!black}#1}}
 \newcommand\commentout[1]{}
+\newcommand\discard[1]{{\color{orange!80!black}$\blacksquare$}}
 \newcommand{\TODO}[1][INCOMPLETE]{{\centering\Large\color{red}$\langle$~\texttt{#1}~$\rangle$\par}}
 
 
@@ -43,7 +45,9 @@
 \usepackage{cancel}
 	\newcommand{\Cancel}[2][black]{{\color{#1}\cancel{\color{black}#2}}}
 \usepackage{nicefrac}
-\usepackage{algpseudocode}
+\usepackage[noend]{algorithmic}
+\usepackage{algorithm}
+% \usepackage{algpseudocode}
 \usepackage[dvipsnames, cmyk]{xcolor} % must be loaded before tikz
 \usepackage{tikz} % setup comes later
 \usepackage{enumitem}
@@ -121,29 +125,33 @@
 %%% GENERAL SYMBOLS 
 \let\Horig\H
 \let\H\relax
-\def\nf{\nicefrac}
+\let\nf\nicefrac
 \DeclareMathOperator{\H}{\mathrm{H}} % Entropy
 \DeclareMathOperator{\I}{\mathrm{I}} % Information
 \DeclareMathOperator*{\Ex}{\mathbb{E}} % Expectation
-\DeclareMathOperator*{\argmin}{arg\;min}
-\DeclareMathOperator{\Supp}{\mathrm{Supp}}
+\DeclareMathOperator*{\argmin}{arg\;min} % argmin
+\DeclareMathOperator{\Supp}{\mathrm{Supp}} %support
 \DeclareMathOperator{\im}{\mathrm{im}} % image of a map
-\DeclareMathSymbol{\shortminus}{\mathbin}{AMSa}{"39}
+\DeclareMathSymbol{\shortminus}{\mathbin}{AMSa}{"39} %shorter minus
+\DeclarePairedDelimiter{\norm}{\Vert}{\Vert} % paired norm
+\DeclarePairedDelimiter{\pqty}{\lparen}{\rparen} % paired parens
+	
+\newcommand{\Rext}{\mskip1mu\overline{\mskip-1mu\mathbb R\!}\,}
+\newcommand\mat[1]{\mathbf #1}
+\newcommand{\tto}{\rightarrow\mathrel{\mspace{-15mu}}\rightarrow}
 
 \newcommand\At[1]{\mathit{A\mkern-2mu t}(#1)} % boolean algebra atoms
 \newcommand\lang[1]{\mathcal L^{\mathit{#1}}} % languages
 \newcommand\geqc{\succcurlyeq}
 \newcommand\leqc{\preccurlyeq}
-\newcommand\mat[1]{\mathbf #1}
-\newcommand{\tto}{\rightarrow\mathrel{\mspace{-15mu}}\rightarrow}
 
-\newcommand{\indi}[1]{\mathbbm{1}_{\left[\vphantom{\big[}#1 \vphantom{\big]}\right]}}
-\newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}}
+\newcommand{\indi}[1] % indicator function
+	{\mathbbm{1}_{\left[\vphantom{\big[}#1 \vphantom{\big]}\right]}} 
+\newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}} % independence 
 
 \DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{#1\;\delimsize\|\;#2}
 \newcommand{\thickD}{I\mkern-8muD}
 \newcommand{\kldiv}{\thickD\infdivx} % D_\mathrm{KL}
-% \newcommand{\Div}[1][]{\thickD_{#1}\infdivx} % D_\mathrm{KL}
 
 \newcommand{\Pa}{\mathop{\mathbf{Pa}}}
 
@@ -199,6 +207,52 @@
 %%%%%  SPECIAL COMMANDS FOR ONE-TRUE-LOSS %%%%%%%
 \newcommand{\datadist}[1]{\Pr\nolimits_{#1}}
 		% \newcommand{\datadist}[1]{p_\text{data}}
+
+
+%%%%%  SPECIAL COMMANDS FOR INFERENCE  %%%%%%%
+\newcommand\bmu{\boldsymbol\mu}
+\newcommand\C{\mathdcal C}
+\newcommand\minimize{\mathop{\scalebox{0.98}{$\mathsf{minimize}$}}\limits}
+\newcommand\maximize{\mathop{\scalebox{0.98}{$\mathsf{maximize}$}}\limits}
+\newcommand\subjto{{\scalebox{0.98}{$\mathsf{subject~to}$}}}
+
+\newcommand\actree{tree marginal}
+\newcommand\AcTree{Tree Marginal}
+\newcommand\cactree{calibrated \actree}
+
+		
+%%%%%  SPECIAL COMMANDS FOR LIR %%%%%%%%%
+\newcommand\Ctx{\dg{C\mskip-2mut\mskip-2mux}}
+\newcommand\Mm{\dg{M}}
+\newcommand\MThetadense{\dg{M}(\mskip-1mu\Theta\mskip-1mu)}
+\newcommand\Attn{\dg{A\mskip-2.2mut\mskip-2mut\mskip-2mun}}
+\newcommand\Ctrl{\dg{C\mskip-2mut\mskip-2mur\mskip-2mul}}
+
+\newcommand\attn{A}
+\newcommand\ctrl{C}
+
+\relax % Short arrows.
+    \newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
+	    \vcenter{\hbox{\rule[-.5\fontdimen8\textfont3]{#1}{\fontdimen8\textfont3}}}%
+	    \mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+    % \newcommand\sto{{{\scalebox{1}[1]{$\scriptstyle\to$}}}}
+    %
+    \newsavebox{\stosbox}
+    \sbox{\stosbox}{\begin{tikzpicture}\draw[->] (0,0) to (0.15,0);\end{tikzpicture}}
+    \newcommand\sto{\usebox\stosbox}
+    %%%
+    %%% hacky: now I have to do the same thing for green and blue
+    \newsavebox{\stosboxgreen}
+    \sbox{\stosboxgreen}{\begin{tikzpicture}\draw[->,green!70!black] (0,0) to (0.15,0);\end{tikzpicture}}
+    \newcommand\stogreen{\usebox\stosboxgreen}
+    \newsavebox{\stosboxblue}
+    \sbox{\stosboxblue}{\begin{tikzpicture}\draw[->,blue] (0,0) to (0.15,0);\end{tikzpicture}}
+    \newcommand\stoblue{\usebox\stosboxblue}
+
+
+
+
+
 
 %%%%%  DATABASE SYMBOLS  %%%%%
 \newcommand{\D}{\mathbdcal D} % for a database
@@ -287,13 +341,14 @@
 	\newtheorem{fact}[theorem]{Fact}
 	\newtheorem{conj}[theorem]{Conjecture}
     \newtheorem{claim}{Claim}
-
+	\declaretheorem[numberwithin=theorem,name=Claim]{iclaim} % internal claims for lproofs.
+	
 	\theoremstyle{definition}
 	\newtheorem*{defn*}{Definition}
 	\declaretheorem[name=Definition,style=definition,qed=$\square$,within=section, postheadhook={\thmTOCadd}]{defn}
 	\declaretheorem[name=Construction,qed=$\square$,sibling=defn, postheadhook={\thmTOCadd}]{constr}
 	% \declaretheorem[qed=$\square$]{example}
-	\declaretheorem[name=Example,qed=$\square$,postheadhook={\thmTOCadd}]{example}
+	\declaretheorem[name=Example,qed=$\triangle$,postheadhook={\thmTOCadd}]{example}
 
 	\theoremstyle{remark}
 	\newtheorem*{remark}{Remark}

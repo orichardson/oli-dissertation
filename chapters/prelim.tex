@@ -2,9 +2,12 @@
 \subsection{Basic Notation}
 If $A$ is a finite set, we write $\#A$ or $|A|$ for its cardinality.
 We will often be concerned with \emph{variables}, which intuitively correspond to aspects of the world or properties of some object. 
-Mathematically, a variable has two aspects:
-qualitatively, a variable is just some unique identifier (the variable name).
+Mathematically, a variable has two aspects.
+Qualitatively, a variable is just some unique identifier (the variable name),
+    such as ``height''.
 Quantitatively, a variable $X$ is also associated with a set $\V(X)$, or simply $\V\!X$, of possible values. 
+For example, $\V(\text{height})$ might be the set of positive real numbers, 
+    or the set $\{ \texttt{short}, \texttt{tall} \}$. 
 
 \subsection{Algebra}
 \begin{defn}[Monoid]%
@@ -295,7 +298,8 @@ See \cref{fig:dhygraph-duals} for some visual illustrations.
         \node at (0.5,0) {\small $Y$};
         \end{scope}
     \end{tikzpicture}
-    \caption{Examples of directed hypergraphs (first row) and their duals (second row).}
+    \caption[Examples of directed hypergraphs and their duals]
+    {Examples of directed hypergraphs (first row) and their duals (second row).}
         \label{fig:dhygraph-duals}
 \end{figure}%
 We remark that

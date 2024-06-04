@@ -27,7 +27,9 @@
    {\csname end#2\endcsname}
    {\ifthmt@thisistheone\csname end#2\endcsname\else\fi}
    {}{\typeout{FAILED SECOND THMT RESTATE PATCH}}
-
+ 
+ % use this to switch between versions for main text and restatement
+ \newcommand\onlyfirsttime[2][]{\ifthmt@thisistheone#2\else#1\fi}
 
 % \def\onlyaftercolon#1:#2{#2}
 \newcommand{\recall}[1]{\medskip\par\noindent{\bf \Cref{thmt@@#1}.} \begingroup\em \noindent
