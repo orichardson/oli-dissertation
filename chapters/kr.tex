@@ -1,44 +1,243 @@
+% REPRESENTING THINGS WITH PDGs
 
 PDGs are extremely expressive.
 We saw in \cref{sec:bn-convert,sec:factor-graphs,sec:expfam} that PDGs
-can capture graphical models such as Bayesian Networks and Factor graphs. 
-But far more is true. In this 
+can capture graphical models such as Bayesian Networks and Factor graphs---but this is only the beginning. 
+%
+% This chapter, based on a collection of unpublished notes, 
+In this chapter, we will see how a wide variety of other mathematical models and fragments of epsitemic information can be implicitly viewed as PDGs.
 
-\section{Capturing other Representations of Knowledge and Uncertainty, with PDGs}
+
+\section{Probabilities and Random Variables}
 
 Probability is the dominant way that computer computer scientists and
-microeconomists think about an epistemic state.  Standard arguments \cite{morgenstern-von-neuman,savage}, 
+microeconomists think about a epistemic state.
+This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
+must act as if it had probabilistic beliefs \cite{..,savage}.
+% Nevertheless, not everything is probabilistic---at least, not 
+Still, probability has real drawbacks \cite{}, and there have been many other representations of uncertainty \cite{halpern2017reasoning}.
+% Many logics are based on binary truth/falsehood
+Many approach are built on binary truth and falsehood, and epistemic logics dealing with possibility and necessity are built on top of them.
+Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
+Perhaps surprisingly, many of these objects can be represented with PDGs as well.
 
-\subsection{Probabilities}
-
-We start with a rather obvious construction, that is nonetheless important
+We start with an obvious construction, that is nonetheless important
 to keep in mind: a joint distribution can be viewed as a very special case of a PDG. 
-Concretely, let $\X$ be a set of variables, and recall that $\V\!\X$ is the set of all joint settings of the variables $\X$. 
-A joint distribution $\mu \in \Delta \V\!\X$ can be viewed as a PDG
-that has 
+Let $\X$ be a set of variables, and recall that $\V\!\X$ is the set of all joint settings of the variables $\X$. 
+A joint distribution $\mu \in \Delta \V\!\X$ can be implicitly regarded as that has a single hyperarc $\emptyset \to \X$. We attach $\mu$ as the (c)pd, and give it weights $\alpha=0$ (if, as is usual, the distribution represents purely observational and not causal information) and $\beta = 1$ (default confidence). 
+% We will see more about these parameters later on. 
+
+To a probability theorist, these joint distributions $\mu$ may seem to be of a very special form, because they are over product spaces. 
+In probability theory, the setup is typically instead that one has a (measurable) set $\Omega$ of outcomes, and then random variables are in fact \emph{(measurable) functions} $X : \Omega \to \V\!\X$. 
+Observe that this too is an immediate special case of a PDG:
+
+\[
+\]
+
+(In fact, this PDG happens to also be a BN, if one isn't worried about calling $\Omega$, often itself a product of variables, a variable.)
+It is easy to verify that these PDGs have inconsistency zero, and represent precisely the distribution $\mu$. 
+
+The semantics of PDGs 
+    make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and thus would be circular if one were to implicitly convert joint distributions to PDGs before developing the results of the previous chapter. 
+But now that the theory of PDGs is on solid ground, we may freely regard joint distribution as a PDG. 
+This will be useful to keep in mind later, but it is neither surprising, nor is this property unique to PDGs. 
+Indeed, $\mu$ can also be viewed as a factor graph with only one factor. 
+
+\section{Widgets}
+
+PDGs may be expressive, but they are structured objects with clear and specific specific syntax.
+In fact, upon careful examination, one might find the syntax unnecessarily restrictive.  In specifying the data for an arc $X \to Y$, you must specify a probability distribution $p(Y | x)$ over $\V Y$ for \emph{every} value $x \in \V\!X$. 
 
 
-Of course, the development and semantics of PDGs 
-    makes heavy use of the notion of a joint distribution $\mu \in \Delta \V\!\X$ over
-    a set of variables $\X$. 
-    
-\subsection{Pseudomarginals and Clique Trees}
+At least---to a first approximation. 
+It turns out that all of these can be captured by PDGs. 
+% When adding an arc $X \to Y$, we 
+% As expressive as they are, 
+
+% \subsection{Graph-Hypergraph Equivalence}
+\subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
+\subsection{Relations and Constraints}
+\subsection{Couplings}
+Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
+% the set of joint distributions that have respective marginals $p$ and $q$.
+\[
+    \Pi(p(X), q(Y)) := \Big\{ \mu \in \Delta\V(X,Y) :\quad
+        \mu(X) = p, ~\mu(Y) = q \Big\}.
+\]
+Observe that this is exactly the set of distributions
+consistent with a PDG containing $p$ and $q$. 
+\[
+    \Pi(p, q) = 
+    \SD*{\begin{tikzpicture}[center base]
+        \node[dpad0] (X) at (-0,0) {$X$};
+        \node[dpad0] (Y) at (1,0) {$Y$};
+
+        \draw[arr2, <-] (X) to
+            node[left]{$p$}
+            +(0,1);
+        \draw[arr2, <-] (Y) to
+            node[left]{$q$}
+            +(0,1);
+    \end{tikzpicture}~~}.
+\]
+
+Now, supose we have a distance metric $d$ on a spce $X$.
+For $k \in [1,\infty)$, 
+the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
+\[  
+    W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
+\]
+
+\def\Tru{{\tt T}}
+\def\trut{{\tt t}}
+\def\truf{{\tt f}}
+
+This definition effectively takes $p(X)$ and $q(X)$ with
+    high confidence, by constraining to $\mu \in \Pi(p,q)$.
+But, in order to represent this as a PDG, we need to represent 
+the $d$ in probabilistic terms.
+A distance is not a probability. But we can encode the belief
+that the values of $X$ and $Y$ are close, according to $d$.
+
+Let $\Tru$ be a variable that in principle can be
+either $\trut$ or $\truf$, but happens to always be $\trut$.
+% to convert it  to a Gibbs distribution. 
+To place more probability in $\tt f$ as $d(X,Y)$ increases.
+\[
+    \hat d(\Tru=\trut | X,Y) \propto \exp(- d(X,Y)).
+\]
+
+We then have:
+\begin{prop}
+    \[
+        \aar**{\begin{tikzpicture}[center base]
+            \node[dpad0] (X) at (-1,0) {$X$};
+            \node[dpad0] (Y) at (1,0) {$Y$};
+            \node[dpad0] (T) at (0,-1) {$\Tru$};
+            \draw[arr2, <<-] (T) to node[above]{$\trut$} +(-1,0);
+
+            \draw[arr2, <-] (X) to
+                node[left]{$p!$}
+                +(0,1);
+            \draw[arr2, <-] (Y) to
+                node[left]{$q!$}
+                +(0,1);
+
+            \mergearr XYT
+            \node[above=0pt of center-XYT] {$\hat d$};
+
+        \end{tikzpicture}}
+        = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
+    \]
+\end{prop}
 
 
+{\color{gray}
+We also have:
+\begin{prop}
+    \begin{align*}
+        \aar**{\begin{tikzpicture}[center base]
+            \node[dpad0] (X) at (-1,0) {$X$};
+            \node[dpad0] (Y) at (1,0) {$Y$};
+            %
+            \draw[arr2, <-] (X) to
+                node[left]{$p!$}
+                +(0,1);
+            \draw[arr2, <-] (Y) to
+                node[left]{$q!$}
+                +(0,1);
+            %
+            \draw[arr2] (X) to
+                node[above]{$\mathrm G d$}
+                (Y);
+            %
+        \end{tikzpicture}}
+        &=
+        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \log\sum_{y}\exp(-d(X,y)) - \H_\mu(Y|X)\Big] \\
+        % &=
+        % \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \mathrm{softmax}_y \big[ - d(X,y) \big] \Big] - \H(\mu) + \H(p)
+    \end{align*}
+\end{prop}
+
+\begin{prop}
+    \begin{align*}
+        \lim_{t \to \infty} \frac1t \aar**{\begin{tikzpicture}[center base]
+            \node[dpad0] (X) at (-1,0) {$X$};
+            \node[dpad0] (Y) at (1,0) {$Y$};
+            %
+            \draw[arr2, <-] (X) to
+                node[left]{$p!$}
+                +(0,1);
+            \draw[arr2, <-] (Y) to
+                node[left]{$q!$}
+                +(0,1);
+            %
+            \draw[arr2] (X) to
+                node[above]{$\mathrm G d$}
+                node[below]{${\color{gray}\scriptstyle(t)}$}
+                (Y);
+            %
+        \end{tikzpicture}}
+        &=
+        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) \Big]
+    \end{align*}
+\end{prop}
+}
+
+% \subsection{}
+
+
+
+\section{Other Representations of Knowledge and Uncertainty}
 \subsection{Belief and Plausibility Functions}
 
+We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $W$, called a \emph{belief function} \cite{shafer1990probability}. 
+Like a probability measure,
+a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \subseteq W$.  
+Belief functions must satisfy certain axioms ensuring that $\Bel(U) + \Bel(\bar U) \le 1$, and thus $\Plaus(U) := 1 - \Bel(\bar U) \ge \Bel(U)$. 
+It can be shown that a probability distribution is the special case when these two relationships hold with equality, so that $\Bel = \Plaus$.  
+
+Belief functions admit an alternate representation in terms of a \emph{mass function} $m : 2^W \to [0,1]$, which yields a belief function according to $\Bel(U) := \sum_{V \subseteq U} m(V)$. 
+In fact, there is a bijection between belief functions $\Bel$ and mass functions $m$. 
+The only requirement on $m$ is that $\sum_{V \subseteq W} m(V) = 1$.
+So, in other words, $m$ is a probability over subsets $V$ of $W$. 
+There is also a natural relation between values of $V$ (i.e., subsets of $W$) and values of $W$ (i.e., elements of $W$): containment ($\ni$). 
+% As we have seen, both of these 
+Both $m$ and $\ni$ can be modeled with a PDG. What happens if we put them together?
+
 \begin{theorem}
-    
+    \begin{enumerate}[wide,label={(\alph*)}]
+        \item 
+        If $m$ is the mass function corresponding to $\Plaus$, 
+        then for all $U \subseteq W$, 
+        $\displaystyle
+        \aar*{\begin{tikzpicture}[center base]
+            \node[dpad1] (V) at (0,0) {$V$};
+            \node[dpad1] (W) at (2,0) {$W$};
+            \draw[arr2,<-] (V) to node[above]{$m$} +(-1.2,0);
+            \coordinate (crash1) at (1,-0.5);
+            \draw[arr2,->>,shorten >=0pt] (V) to[out=0,in=90] (crash1);
+            \draw[arr2,->>,shorten >=0pt] (W) to[out=180,in=90] (crash1);
+            \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2);
+            \coordinate (crash2) at (3, 0);
+            \draw[arr2,->>,shorten >=0pt] (W) to (crash2);
+            \draw[arr2,<<-,shorten <=0pt] (crash2) to +(0.2,0);
+%
+            \node[above=2ex of crash1] {$\ni$};
+            \node[above=1pt of crash2] {$ {\in} U$};
+        \end{tikzpicture}}
+         = - \log \Plaus ( U ).
+        $
+    \end{enumerate}
 \end{theorem}
 
-\subsection{Implicit Neural Representations}
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
 
 \TODO[TODO: Move Causality Intro Here]
 
-\section{Widgets}
-\subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
-\subsection{Relations and Constraints}
-\subsection{Couplings}
-% \subsection{}
+\subsection{Pseudomarginals and Clique Trees}
+
+\subsection{Implicit Neural Representations}
+
+

@@ -147,13 +147,18 @@
 
 \newcommand{\indi}[1] % indicator function
 	{\mathbbm{1}_{\left[\vphantom{\big[}#1 \vphantom{\big]}\right]}} 
-\newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}} % independence 
-
+	
 \DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{#1\;\delimsize\|\;#2}
 \newcommand{\thickD}{I\mkern-8muD}
 \newcommand{\kldiv}{\thickD\infdivx} % D_\mathrm{KL}
 
+% standard graphical models stuff
+\newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}} % independence 
 \newcommand{\Pa}{\mathop{\mathbf{Pa}}}
+
+% Other notions of uncertainty
+\newcommand\Bel{\mathit{Bel}}
+\newcommand\Plaus{\mathit{Plaus}}
 
 % (these are all defined in pdg-preamble.tex)
 % \DeclarePairedDelimiter{\cbbr}{\lBrace}{\rBrace}

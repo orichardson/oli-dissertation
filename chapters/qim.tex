@@ -36,8 +36,7 @@
 In \cref{sec:set-of-distribution-semantics}, we defined what it meant
 for a joint distribution $\mu$ to be \emph{quantitatively} compatible with the information in a PDG---it must match all of the cpds. 
 But conspiciously absent is a qualitative analogue. 
-What should it mean for a distribution to be compatible with the qualitative data of the hypergraph? 
-
+What should it mean for a distribution to be compatible with the qualitative data of the hypergraph?
 
 
 In this chapter, we define what it means for a joint probability distribution to be 
@@ -2592,7 +2591,7 @@ Although the 2-cycle in \cref{example:xy-cycle} is straightforward, generalizing
      
 \newlength{\cycleboxlen}
 \newsavebox\cyclebox
-\sbox\cyclebox{\begin{tikzpicture}[center base, scale=0.8]
+\sbox\cyclebox{\begin{tikzpicture}[center base, scale=1.0]
         \node[dpad0] (X) at (0:.8) {$X$};
         \node[dpad0] (Y) at (120:.8) {$Y$};
         \node[dpad0] (Z) at (-120:.8) {$Z$};
@@ -2607,15 +2606,17 @@ Although the 2-cycle in \cref{example:xy-cycle} is straightforward, generalizing
             (X);
     \end{tikzpicture}}
 \settowidth{\cycleboxlen}{\usebox{\cyclebox}}
-\begin{wrapfigure}[5]{o}{\cycleboxlen}
+\addtolength{\cycleboxlen}{1em}
+\begin{wrapfigure}[4]{o}{\cycleboxlen}
     \vspace{-0.8em}
+    \hfill
     \usebox\cyclebox
 \end{wrapfigure}
 % \begin{example}
 \refstepcounter{example}
 \label{example:xyz-cycle-1}
 \textbf{Example {\theexample}.~} 
-    What $\mu(X,Y,Z)$ are \cible\ with the 3-cycle shown, on the right?
+    What $\mu(X,Y,Z)$ are \cible\ with the 3-cycle, shown on the right?
     %oli22: change for new context
     % By monotonicity,
     By the reasoning above,
