@@ -1,8 +1,6 @@
-\begin{abstract}
-% This document provides a basic paper template and submission guidelines.
-% Abstracts must be a single paragraph, ideally between 4--6 sentences long.
-% Gross violations will trigger corrections at the camera-ready phase.
-We present a generic algorithm
+% \begin{abstract}
+In this chapter, 
+we present a generic algorithm
     for learning and
     approximate inference
     across a broad class of statistical models,
@@ -17,7 +15,7 @@ It is based on the theory of
         which can capture inconsistent beliefs.
     % can be viewed as a generic recipe for
     % learning and approximate inference.
-\end{abstract}
+% \end{abstract}
 
 \section{Introduction}
 % What causes you to update your beliefs?
@@ -826,7 +824,8 @@ The procedure is fully formalized in \cref{algo:LIR}.
 % $\dg M.\boldsymbol\theta$
 
 \begin{algorithm}
-	\caption{Local Inconsistency Resolution (LIR)}
+    \singlespacingplus
+    \caption{Local Inconsistency Resolution (LIR)}
 	\label{algo:LIR}
 	\begin{algorithmic}
         % \STATE \textbf{Input:}
@@ -1020,7 +1019,7 @@ Each cpd plays major role in this inconsistency.
 What happens when we resolve this inconsistency
 by modifying the parameters associated to different arcs?
 
-\begin{itemize}[nosep,itemsep=3pt, left=3pt]
+\begin{itemize}
     \item Adjusting $\theta$
     % (i.e, $C = \{\theta\}$)
     amounts to training the network in the standard way.
@@ -1071,7 +1070,7 @@ If $\eta := \chi(p) \varphi(p)$ is small, then
     % \tikzset{atkv/.style={red!50!white},defv/.style={green!50!gray}}
     \tikzset{atkv/.style={green!70!black},defv/.style={blue}}
     \phantom{a}\hfill
-    \begin{tikzpicture}[center base]
+    \begin{tikzpicture}[center base,scale=1.2]
         % \node[dpad1] (X) at (0,1) {$X$};
         % \node[dpad1] (X') at (0,0) {$X'$};
         \node[dpad1] (X) at (0,0) {$X$};
@@ -1103,7 +1102,7 @@ If $\eta := \chi(p) \varphi(p)$ is small, then
     \end{tikzpicture}
     % $\cong$
     \hfill
-    \begin{tikzpicture}[center base]
+    \begin{tikzpicture}[center base,scale=1.2]
         \def\outspray{.24}
         \def\inspray{.18}
         \def\yspray{.5}
@@ -1140,6 +1139,7 @@ If $\eta := \chi(p) \varphi(p)$ is small, then
         \draw[arr1, <<-,atkv] (Y.-35) to node[below,pos=0.65]{$y'$} (y'end);
     \end{tikzpicture}
     \hfill
+    \phantom{a}
     %
     \caption[Two Illustrations for adversarial training: with a PPDG and a PDG]
         {Two illustrations of adversarial training.
@@ -1340,7 +1340,7 @@ the missing data is called the EM algorithm. It iteratively computes
 			%\scriptstyle q^{\{\beta =\infty\}}
 			% \ar[r,"p"] \& Z \ar[r,"p", bend left] \& X \ar[l,"q", bend left] \& \ar[l, two heads, "x"']
 		\end{tikzpicture}
-    \!\Bigg)\!\!$
+    \Bigg)$
         % \]
     % in which \textsc{Refocus} fixes $\varphi, \gamma = \mat 1$
     in which \textsc{Refocus} fixes $\varphi = \mat 1$
@@ -1401,7 +1401,7 @@ This state of affairs is summarized below.
 % \vspace{-1ex}
 \[
     % \dg M:=
-    \dg M(\Theta) :=
+    \dg M(\Theta) := \quad
     \begin{tikzpicture}[center base,Dcolor/.style={green!70!black},Gcolor/.style={blue}]
         % \node[dpad1](Z) at (0, 0.6){$Z$};
         \node[dpad1](Xfake) at (0,1) {$X_{\fake}$};
@@ -1417,7 +1417,10 @@ This state of affairs is summarized below.
         \draw[arr1, <-] (Xfake) to node[above,pos=0.6]{$G$}
             % node[below,pos=0.7,inner sep=1.5pt]{\color{gray}\scriptsize$(\beta{=}1)$}
             +(-1.5,0);
-        \draw[arr1, <-] (Xreal) to node[above,pos=0.6]{$\pdata!$} +(-2,0);
+        \draw[arr1, <-] (Xreal) to 
+        node[above,pos=0.6]{$\pdata$}
+        node[below,pos=0.7, inner sep=2pt]{${\color{gray}\scriptscriptstyle(\infty)}$}
+            +(-2,0);
         % \draw[arr] (X.0) to[out=0,in=-80,looseness=1.6] node[right]{$D$} (C.-35);
         % \draw[arr] (X.10) to[out=10,in=-90,looseness=1.4] node[left]{$\frac12$} (C.-45);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%% D %%%%%%%%%%%%%%%%%%

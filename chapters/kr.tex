@@ -1,5 +1,4 @@
 % REPRESENTING THINGS WITH PDGs
-
 PDGs are extremely expressive.
 We saw in \cref{sec:bn-convert,sec:factor-graphs,sec:expfam} that PDGs
 can capture graphical models such as Bayesian Networks and Factor graphs---but this is only the beginning. 
@@ -9,13 +8,14 @@ In this chapter, we will see how a wide variety of other mathematical models and
 
 
 \section{Probabilities and Random Variables}
+    \label{sec:prob-as-pdg}
 
 Probability is the dominant way that computer computer scientists and
-microeconomists think about a epistemic state.
+microeconomists think about epistemic state.
 This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
 must act as if it had probabilistic beliefs \cite{..,savage}.
 % Nevertheless, not everything is probabilistic---at least, not 
-Still, probability has real drawbacks \cite{}, and there have been many other representations of uncertainty \cite{halpern2017reasoning}.
+Still, probability does have shortcomings \cite{}, and there have been many other representations of uncertainty \cite{halpern2017reasoning}.
 % Many logics are based on binary truth/falsehood
 Many approach are built on binary truth and falsehood, and epistemic logics dealing with possibility and necessity are built on top of them.
 Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
@@ -46,8 +46,20 @@ Indeed, $\mu$ can also be viewed as a factor graph with only one factor.
 \section{Widgets}
 
 PDGs may be expressive, but they are structured objects with clear and specific specific syntax.
-In fact, upon careful examination, one might find the syntax unnecessarily restrictive.  In specifying the data for an arc $X \to Y$, you must specify a probability distribution $p(Y | x)$ over $\V Y$ for \emph{every} value $x \in \V\!X$. 
-
+After some brief reflection, one might even find the syntax unnecessarily restrictive. 
+Recall: in specifying the data for an arc $X \to Y$, one must specify a complete probability distribution $p(Y | x)$ over the values of $Y$ for \emph{every} value $x \in \V\!X$. 
+% This has some serious implications---for instance
+% Consequently, 
+This appears to be a serious limitation.
+For instance, if $X$ and $Y$ are binary variables, one might want to 
+annotate an arc $X \to Y$ with data indicating that $X \Rightarrow Y$
+    (i.e., if $X=1$ then $Y=1$).
+% For $X{=}1$, everything works out, 
+There are no problems in supplying a probability over $Y$ when $X{=}1$,
+but unfortunately we also seem to be on the hook to provide
+    a distribution over $Y$ when $X{=}0$. 
+One might also want to indicate not a probabilistic information, but a constraint.
+For instance, one might want to specify that $Z$ must be even when $X{=}0$, 
 
 At least---to a first approximation. 
 It turns out that all of these can be captured by PDGs. 
@@ -56,8 +68,228 @@ It turns out that all of these can be captured by PDGs.
 
 % \subsection{Graph-Hypergraph Equivalence}
 \subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
+    \label{sec:prob-widget}
+    
+A cpd between discrete variables can be represented by
+    a stochastic matrix (i.e., a matirx whose rows sum to one).
+It turns out that it is possible to use the machinery of PDGs
+    to, effectively, give only one value of that matrix.
+That is, for any $p \in [0,1]$, we can construct a PDG
+    that represents the belief that $\Pr(Y{=}y|X={x}) = p$, but say nothing about
+    how the probability splits between other values of $y$, and also says nothing
+    about the probability of $Y$ if $X \ne x$.
+We now describe that construction.
+
+\def\XxYy{{X{=}x\Vert Y{=}y}}
+\def\XxYyshort{{X_x Y_y}}
+\def\Yy{{Y{=}y}}
+\def\Yyshort{{Y_y}}
+
+First, we introduce two new auxiliary variables.
+The first variable, which we might like to call ``$\Yy$'', but
+    mostly refer to as $\Yyshort$ to prevent confusion with the synonomous
+    event, is a binary variable, with $\V(\Yyshort) = \{y, \lnot y\}$,
+    and takes the value $y$ if $Y=y$, and $\lnot y$ if $Y \ne y$.
+The second variable, which we would like to call ``$\XxYy$'',
+    but instead mostly refer to as $\XxYyshort$ to prevent notational confusion,
+    can take three values: $\V(\XxYyshort):= \{ x, y, \lnot y \}$.
+The value $x$ is meant to correspond exactly to the event $X{=}x$,
+    much like before, so that $\XxYyshort = x$ if and only if $X = x$.
+The values $y$ and $\lnot y$ also correspond to their respective
+    events, but more loosely; the variable $\XxYyshort$ only takes one of these
+    values when $X \ne x$.
+Note that both variables can be determined from $X$ and $Y$
+(although we will need to enforce this with additional arcs), and
+therefore there is a unique way to extend a
+distribution over $X$ and $Y$ to also include the variables $\Yyshort$ and $\XxYyshort$.
+
+% Now, supposing that $\XxY$ takes its special value $X{=}x$ if and only if $X=x$, and otherwise takes the value of $Y$, then there's a clear choice of distribution on $B$ given $X$: if $X$ takes its special value, we $\Pr(B) = p$. Otherwise, $\Pr(B)$ is a point mass on the value $b$. And this value of $X$ an be calculated from joint values of $B$ and $A$.
+With these definitions in place, there is
+    now an obvious way to add an arc from the variable $(\XxYyshort)$
+    to the variable $\Yyshort$, together with a cpd asserting that $\Pr(Y{=}y|X{=}x)=p$.
+This cpd is written as a stochastic matrix $\hat p$ on the right of the figure below.
+The PDG we have just constructed is illustrated on the left of the figure below.
+In addition to $\hat p$ and the new variables, this PDG
+    includes the structural constraints $s_1$ and $s_2$ needed to define the variables
+    $\XxYyshort$ and $\Yyshort$ in terms of $X$ and $Y$; they are deterministic functions,
+    drawn in double-headed gray arrows.
+% are illustrated below.
+
+\begin{center}
+% $\dg M^{y|x=p}:=$
+    \colorlet{proofmatt}{white}
+    \begin{tikzpicture}[center base]
+        \node[dpadded] (X) at (0,-0.5){$X$};
+        \node[dpadded, right=1.6 of X](Y){$Y$};
+
+        \node[tpt={astar|$x$}] at (0.0,1.5) {};
+        \node[tpt={b1|$y$},right=0.55 of astar]{};
+        \node[tpt={b2|$\lnot y$},right=0.4 of b1]{};
+        % \node[right=0.2 of b2] (bdots){$\cdots$};
+        % \node[tpt={bn|$y_n$},right=0.2 of bdots]{};
+
+        \node[Dom={$\XxYy$[label distance=-1.5em, xshift=3.2em] (XxYy)
+            around {\lab{astar}\lab{b1}\lab{b2}(1.6,1.85)}} ] {};
+
+
+        \node[tpt={y1|$y$}] at (3.7, 1.5){};
+        \node[tpt={y2|$\lnot y$},right=0.5 of y1]{};
+        \node[Dom={$Y{=}y\,$[label distance=-1.4em, xshift=1.3em] (Yy)
+            around {\lab{y1}\lab{y2}(3.7,1.75)}} ] {};
+
+        %% structural arrows
+        \mergearr[black!35!proofmatt,arr2,->>]{X}{Y}{XxYy}
+        \node[black!35!proofmatt,below=2pt of center-XYXxYy]{$s_1$};
+
+        %%
+        \draw[black!35!proofmatt, arr2, ->>] (Y) to node[below right]{$s_2$} (Yy);
+
+        \draw[arr2] (XxYy) to node[above]{$\hat p$} (Yy);
+    \end{tikzpicture}
+    \hspace{0.9cm}
+    \begin{minipage}{0.3\textwidth}
+        \begin{align*}
+            s_1(\XxYyshort|X,Y) &:= {\singlespacing\begin{cases}
+                x & \text{if $X = x$} \\
+                y & \text{if $X \ne x$ and $Y=y$} \\
+                \lnot y & \text{if $X \ne x$ and $Y\ne y$} \\
+            \end{cases}}\\
+            s_2(\Yyshort|Y) &:= {\singlespacing\begin{cases}
+                y & \text{if $Y=y$} \\
+                \lnot y & \text{if $Y\ne y$} \\
+            \end{cases}}\\[1ex]
+            % p \mathrm{~or~} b~(X) &:= \begin{cases}
+            % 	p(B) & \text{if $X = a^*$} \\
+            % 	\delta_{B=b} & \text{if $X = b$}
+            % \end{cases}
+            \hat p(\Yyshort|\XxYyshort) &= \begin{matrix}
+                &  \begin{matrix} y & \lnot y \end{matrix} \\
+                \begin{matrix} x \!\! \\ y \!\! \\ \lnot y \!\! \end{matrix} &
+                    \begin{bmatrix}
+                        \;p & 1-p \; \\
+                        \;1 & 0  \;\\
+                        \;0 & 1 \;
+                    \end{bmatrix}
+            \end{matrix}
+        \end{align*}
+
+    \end{minipage}
+\end{center}
+    \medskip
+
+So, when we add $\Pr(Y=y|X=x) = p$ to a PDG $\dg M$, what we really mean is:
+first convert construct a widget as above, and add that structure (i.e., the new variables
+$X_xY_y$ and $Y_y$, their definitions $s_1$ and $s_2$, and the cpd $\hat p$) to $\dg M$.
+
+In what sense does this ``work''?
+The first order of business
+is to prove that it behaves as we should expect,
+semantically.
+% , in the case we're interested in.
+
+\begin{prop}
+    If $\dg M$ is a PDG, then 
+    \[
+    % \SD[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}
+         % = \Big\{ \mu \in \SD[\Big]{\dg M}  ~\Big|~
+         %        \mu(y|x) = p
+         %    \Big\}
+         % =  \SD[\Big]{\dg M} \cap  \Big\{ \mu : 
+         %        \mu(y|x) = p
+         %    \Big\}
+    \mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}
+    \quad\iff\quad
+    \mu \in \SD[\big]{\dg M} \text{~~and~~} \mu(Y{=}y|X{=}x) = p.
+    \qedhere
+    \]
+\end{prop}
+
+\begin{prop}%\label{lem:inc-inc-eq}
+    % For all PDGs $\dg M$ with $\bbeta \ge \mat 0$ and all $\gamma > 0$, we have that
+    Suppose $\dg M$ is a PDG with variables $\X$ and $\bbeta \ge \mat 0$.
+    Then, for all $X,Y \subseteq \X$, $x \in \V X$, $y \in \V Y$, $p \in [0,1]$ and $\gamma \ge 0$,
+    we have that:
+    \[
+        \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma \ge \aar{\dg M}_\gamma,
+    \]
+    with equality if and only if there exists $\mu \in \bbr{\dg M}^*_\gamma$
+    such that $\mu(Y{=}y|X{=}x) = p$.
+    (Note that this condition is trivially satisfied when $\mu(X{=}x) =0$.)
+\end{prop}
+\begin{lproof}
+    The inequality is immediate; it is an instance of monotonicity of inconsistency
+    \cite[Lemma 1]{one-true-loss}, which we will discuss in depth in \cref{sec:monotone}. Intuitively: believing more cannot make you any less
+    inconsistent.  We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
+
+    $(\impliedby)$. Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y|X{=}x) = p$.
+    Because $\mu \in \bbr{\dg M}^*_\gamma$, we know that
+    $\bbr{\dg M}_\gamma(\mu) = \aar{\dg M}$.
+    Let $\hat \mu$ be the extension of $\mu$ to the new variables ``$\XxYy$'' and $``\Yy$'',
+        whose values are functions of $X$ and $Y$ according to $s_1$ and $s_2$. Then,
+    {\allowdisplaybreaks
+    \begin{align*}
+        &\aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma}
+            \\&\le \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) 
+            \\&= \bbr{\dg M}_\gamma(\mu) + \Ex_{\mu}\left[
+                \log \frac{\hat\mu(\Yyshort | \XxYyshort)}{ \hat p(\Yyshort | \XxYyshort)} \right]\\
+            \\&= \bbr{\dg M}_\gamma(\mu) +
+                \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} \\
+                &\hphantom{=\bbr{\dg M}_\gamma(\mu)}
+                + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} 
+            \\&= \bbr{\dg M}_\gamma(\mu) +
+                \mu(X{=}x,Y{=}y) \log(1)
+                + \mu(X{=}x,Y{\ne} y) \log(1) 
+            \\&= \bbr{\dg M}_\gamma(\mu)
+            \\&= \aar{\dg M}_\gamma.
+    \end{align*}}
+    The equality between the third and fourth lines
+    is perhaps the trickiest to see, but follows
+    because for joint settings in which $X{\ne}x$,
+    one can easily see that $\hat\mu(\Yyshort|\XxYyshort)$
+    equals 1 with probability 1, as does $\hat p(\Yyshort|\XxYyshort)$.
+    So, after dividing one by the other and taking a logarithm,
+        these cases contribute nothing to the expectation.
+    What remains are the two possibilities where $X{=}x$, which are shown in the second line.
+    %
+    To complete this direction of the proof, it suffices to observe
+    that we already knew the inequality held in the opposite direction
+    (by monotonicity), so the two terms are equal.
+
+    $(\implies)$.  Suppose the two inconsistencies are equal, i.e.,
+    \[
+    \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma = \aar{\dg M}_\gamma.
+    \]
+    This time, choose $\hat\mu \in \bbr{\dg M+ ~\Pr(Y{=}y|X{=}x) = p}^*_\gamma$,
+        and define $\mu$ to be its marginal on the variables of $\dg M$
+        (which contains the same information as $\hat \mu$ itself).
+    %
+    Let $q := \mu(Y{=}y|X{=}x)$. Then,
+
+    \begin{align*}
+        \aar{\dg M}_\gamma &= \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma} \\
+         &= \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) \\
+         &= \bbr{\dg M}_\gamma(\mu) +
+             \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p}
+             + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} \\
+        &= \bbr{\dg M}_\gamma(\mu) +
+            \mu(X {=} x) \left[ q \log \frac qp + (1-q) \log \frac{1-q}{1-p} \right] \\
+        &= \bbr{\dg M}_\gamma(\mu) + \mu(X{=}x) \kldiv qp \\
+        &\ge \aar{\dg M}_\gamma + \mu(X{=}x) \kldiv qp
+    \end{align*}
+    Therefore $0 \ge \mu(X{=}x) \kldiv qp$. But relative entropy is non-negative,
+    by Gibbs inequality. This shows $\mu(X{=}x) \kldiv qp = 0$.
+    So either $\mu(X{=}x)$, or $p = \mu(Y{=}y|X{=}x)$, and the first case is just
+    a special case of the second one.
+    In addition, the algebra above shows that $\mu \in \bbr{\dg M}^*_\gamma$, as its
+        score is $\aar{\dg M}_\gamma$.
+    Thus, we have found $\mu \in \bbr{\dg M}^*_\gamma$ such that $\mu(Y{=}y|X{=}x) = p$, completing the proof.
+\end{lproof}
+    
+    
 \subsection{Relations and Constraints}
+    \label{sec:relation-widget}
 \subsection{Couplings}
+    \label{sec:coupling-widget}
 Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
 % the set of joint distributions that have respective marginals $p$ and $q$.
 \[
@@ -190,26 +422,70 @@ We also have:
 
 \section{Other Representations of Knowledge and Uncertainty}
 \subsection{Belief and Plausibility Functions}
-
-We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $W$, called a \emph{belief function} \cite{shafer1990probability}. 
+    \label{sec:belplaus-as-pdg}
+We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \cite{shafer1990probability}. 
 Like a probability measure,
-a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \subseteq W$.  
+a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \subseteq \Omega$.  
 Belief functions must satisfy certain axioms ensuring that $\Bel(U) + \Bel(\bar U) \le 1$, and thus $\Plaus(U) := 1 - \Bel(\bar U) \ge \Bel(U)$. 
 It can be shown that a probability distribution is the special case when these two relationships hold with equality, so that $\Bel = \Plaus$.  
 
-Belief functions admit an alternate representation in terms of a \emph{mass function} $m : 2^W \to [0,1]$, which yields a belief function according to $\Bel(U) := \sum_{V \subseteq U} m(V)$. 
+Belief functions admit an alternate representation in terms of a \emph{mass function} $m : 2^\Omega \to [0,1]$, which yields a belief function according to $\Bel(U) := \sum_{V \subseteq U} m(V)$. 
 In fact, there is a bijection between belief functions $\Bel$ and mass functions $m$. 
-The only requirement on $m$ is that $\sum_{V \subseteq W} m(V) = 1$.
-So, in other words, $m$ is a probability over subsets $V$ of $W$. 
-There is also a natural relation between values of $V$ (i.e., subsets of $W$) and values of $W$ (i.e., elements of $W$): containment ($\ni$). 
+The only requirements on $m$ are that:
+\[
+m(\emptyset) = 0
+\qquad\text{and}\qquad
+\sum_{A \subseteq \Omega} m(V) = 1.
+\]
+So, in other words, $m$ is a probability over non-empty subsets $V \subseteq \Omega$. 
+There is also a natural relation between values of $V$ (i.e., subsets of $\Omega$) and values of $W$ (i.e., elements of $\Omega$): containment ($\ni$). 
 % As we have seen, both of these 
 Both $m$ and $\ni$ can be modeled with a PDG. What happens if we put them together?
+Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omega$ is drawn according to $m$, and then $\omega \in V$ is picked non-deterministically.
+
+\begin{defn}
+    If $m$ is the mass function representing the belief function $\Bel$ and the plausibility function $\Plaus$, then we associate 
+    all of these objects with the same PDG,
+    \[
+    \dg M_{m}, \dg M_{\Bel}, \dg M_{\Plaus} := \quad
+    \begin{tikzpicture}[center base]
+        \node[dpad1] (V) at (0,0) {$V$};
+        \node[dpad1] (W) at (2,0) {$W$};
+        \draw[arr2,<-] (V) to node[above]{$m$} +(-1.2,0);
+        \coordinate (crash1-pool) at (1,-0.35);
+        \coordinate (crash1) at (1,-0.5);
+        \draw[arr2,shorten >=0pt,-] (V) to[out=0,in=90] (crash1-pool);
+        \draw[arr2,shorten >=0pt,-] (W) to[out=180,in=90] (crash1-pool);
+        \draw[arr2,shorten >=0pt,shorten <=0pt,->>] (crash1-pool) to (crash1);
+        \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2);
+        % \coordinate (crash2) at (3, 0);
+        % \draw[arr2,->>,shorten >=0pt] (W) to (crash2);
+        % \draw[arr2,<<-,shorten <=0pt] (crash2) to +(0.2,0);
+%
+        \node[above=2ex of crash1] {$\ni$};
+        % \node[above=1pt of crash2] {$ {\in} U$};
+    \end{tikzpicture}~,
+    \]
+    where $W$ is a variable taking values in $\V W := \Omega$,
+    and $V$ is a variable whose possible values $\V(V) := 2^\Omega$
+        are subsets of $\Omega$. 
+\end{defn}
+
 
 \begin{theorem}
-    \begin{enumerate}[wide,label={(\alph*)}]
-        \item 
-        If $m$ is the mass function corresponding to $\Plaus$, 
-        then for all $U \subseteq W$, 
+    If $m$ is the mass function the belief function $\Bel$ and the plausibility
+    function $\Plaus$, and $\dg M := \dg M_{\Bel} = \dg M_{\Plaus}$, then:
+    \begin{enumerate}[wide,label={(\alph*)},topsep=0pt]
+    \item 
+        a distribution $\mu \in \Delta \Omega$ is the marginal
+        of an extended distribution
+        $\bar\mu \in \SD[\big]{\dg M} \subseteq \Delta(2^\Omega \times \Omega)$ 
+        if and only if
+        $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all
+        $U \subseteq \Omega$. 
+    
+    \item 
+        For all $U \subseteq \Omega$, 
         $\displaystyle
         \aar*{\begin{tikzpicture}[center base]
             \node[dpad1] (V) at (0,0) {$V$};
@@ -228,8 +504,73 @@ Both $m$ and $\ni$ can be modeled with a PDG. What happens if we put them togeth
         \end{tikzpicture}}
          = - \log \Plaus ( U ).
         $
+    \item 
+    
     \end{enumerate}
 \end{theorem}
+\begin{lproof}
+    \textbf{(a)}~
+    The forwards direction is easy. 
+    Fix some $\bar\mu \in \SD{\dg M}$, let $\mu \in \Delta \Omega$ be its marginal on $W$. 
+    Select an arbitrary $U \subseteq \Omega$. 
+    % In an outcome $()$
+    Keep in mind that $\bar\mu$ is a joint distribution over pairs $(A, \omega)$ that satisfy $\omega \in A \subseteq \Omega$, whose marginal on $A$ is distributed according to $m$. 
+    For every such pair $(A, \omega) \in \Supp \bar\mu$, 
+    if $A \subseteq U$ then clearly $\omega \in U$. 
+    Thus, $\Bel(U) = \sum_{A \subseteq U} m(A) \le \sum_{\omega \in U} \mu(W{=}\omega) = \mu(U)$.
+    Similarly, if $\omega \in U$, then it must be that $A \cap U \ne \emptyset$, 
+    so $\mu(U) \le  \sum_{A : A \cap U \ne \emptyset} m(A) = \Plaus(U)$.
+    
+    Now for the reverse direction. Suppose $\mu \in \Delta \Omega$ satisfies
+    $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$. 
+    
+    
+    \textbf{(b)}~
+    Let $\mathcal P := \{ \bar\mu \in \Delta(2^\Omega \times \Omega) : \bar\mu(W \in U) = \bar\mu(W \in V) = 1\}$ be the set of all distributions satisfying the hard constraints
+    of the PDG in question. 
+    Let $\mathcal A_U := \{ A \subseteq \Omega : A \cap U \ne \emptyset\}$
+    be the collection of subsets of $\Omega$ with non-empty intersection with $\Omega$.
+    It is not not too difficult to see that the marginal projection of $\mathcal P$
+        onto the variable $V$ 
+        is the same as the set
+    $\Delta \mathcal A_U$ of distributions supported on sets with non-empty intersection with $U$. 
+    With these facts in mind, we calculate
+    \begin{align*}
+    \aar*{\begin{tikzpicture}[center base]
+        \node[dpad1] (V) at (0,0) {$V$};
+        \node[dpad1] (W) at (2,0) {$W$};
+        \draw[arr2,<-] (V) to node[above]{$m$} +(-1.2,0);
+        \coordinate (crash1) at (1,-0.5);
+        \draw[arr2,->>,shorten >=0pt] (V) to[out=0,in=90] (crash1);
+        \draw[arr2,->>,shorten >=0pt] (W) to[out=180,in=90] (crash1);
+        \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2);
+        \coordinate (crash2) at (3, 0);
+        \draw[arr2,->>,shorten >=0pt] (W) to (crash2);
+        \draw[arr2,<<-,shorten <=0pt] (crash2) to +(0.2,0);
+%
+        \node[above=2ex of crash1] {$\ni$};
+        \node[above=1pt of crash2] {$ {\in} U$};
+    \end{tikzpicture}}
+    &= \inf_{\bar \mu \in \mathcal P} \kldiv{ \mu(V) }{ m }\\
+    &= \inf_{\nu \in \Delta\{ A \subseteq \Omega : A \cap U \ne \emptyset\}}
+            \Ex_{A \sim \nu} \Big[ \log \frac{\nu(A)}{m(A)} \Big]
+    \intertext{(since the objective on first line does not depend on the marginal on $W$, except through the constraint)}
+    &=  \inf_{\nu \in \Delta \mathcal A_U}
+            \sum_{A \in \mathcal A_U}
+                \nu(A) \log \frac{\nu(A)}{m(A)} \\
+    &\ge \Big({\textstyle\sum_{A \in \mathcal A_U} \nu(A)} \Big)
+        \log \frac{\pqty{\textstyle\sum_{A \in \mathcal A_U} \nu(A)}}{{\textstyle\sum_{A \in \mathcal A_U} m(A)}},
+    \end{align*}
+    by the log-sum inequality \cite{CoverThomas}.
+    Moreover, the log-sum inequality states that this holds 
+    with equality if and only if there is some constant $k$ so that
+        $\nu(A) = k m(A)$ for all $A \in \mathcal A_U$. 
+    By definition, $\Supp \nu \subseteq \mathcal A_U$, and thus
+    $\sum_{A \in \mathcal A_U} \nu(A) = 1$. Therefore, the inconsistency we have been calculating is equal to
+    \[
+        - \log \sum_{A \in \mathcal A_U} m(A) = - \log \Plaus(U).
+    \]
+\end{lproof}
 
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
@@ -239,5 +580,3 @@ Both $m$ and $\ni$ can be modeled with a PDG. What happens if we put them togeth
 \subsection{Pseudomarginals and Clique Trees}
 
 \subsection{Implicit Neural Representations}
-
-

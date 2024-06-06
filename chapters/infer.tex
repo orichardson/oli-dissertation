@@ -1159,22 +1159,19 @@ holds for PDGs as well.
 \begin{linked}[Markov Property for PDGs]{theorem}{markov-property}
   If\, $\dg M_1$ and $\dg M_2$ are PDGs
     over sets $\X_1$ and $\X_2$ of variables, respectively,
-\discard{
-    Then for all $\gamma > 0$, we have that
+    then for all $\gamma > 0$ and $\gamma=0^+$,
+% \discard{
+%     Then for all $\gamma > 0$, we have that
     \[  \bbr{\dg M_1 \bundle \dg M_2}^*_\gamma
 			~\models~
-		\X_1 \mathbin{\bot\!\!\!\bot} \X_2 \mid \X_1 \cap \X_2. \] 
+		\X_1 \CI \X_2 \mid \X_1 \cap \X_2. 
+    \] 
     That is: for every distribution $\mu \in \bbr{\dg M_1 \bundle \dg M_2}^*_\gamma$,
     the variables of $\dg M_1$ and of $\dg M_2$ are conditionally independent given the variables they have in common.
-}
-then
-$\X_1$
-and $\X_2$
-are conditionally independent given $\X_1 \cap \X_2$
-in every
- $\mu \in \bbr{\dg M_1 \bundle \dg M_2}^*_\gamma$\,,
-for all $\gamma > 0$ and
-$\gamma=0^+$.
+% }
+% then $\X_1$ and $\X_2$ are conditionally independent given $\X_1 \cap \X_2$ in every
+%  $\mu \in \bbr{\dg M_1 \bundle \dg M_2}^*_\gamma$\,,
+% for all $\gamma > 0$ and $\gamma=0^+$.
 \end{linked}
 
 For the remainder of this section, fix a PDG $\dg M$ and a tree decomposition $(\C, \mathcal T)$ of $\dg M$'s hypergraph.
@@ -2005,6 +2002,7 @@ Our results fall broadly into three categories:
 
     \begin{iclaim}
         $G$ is chordal.
+            \label{subclaim:chordal}
     \end{iclaim}
     \begin{proof}
         Suppose that $G$ contains a loop $X{-}Y{-}Z{-}W{-}X$.
@@ -2023,10 +2021,13 @@ Our results fall broadly into three categories:
         But now $W \in C_0 \cap D_0$, and by the running intersection property, every node along this unique path must contain $W$ as well.
         But this contradicts our assumption that $W$ is disjoint from $Y$! So $G$ is chordal.
     \end{proof}
+    Having proved the subclaim \cref{subclaim:chordal}, 
+    we have now finished the proof of \cref{coro:can-use-cliquetree}.
 \end{lproof}
 
 
-\subsection{Correctness and Efficiency of Inference via Exponential Conic Programming}
+% \subsection{Correctness and Efficiency of Inference via Exponential Conic Programming}
+\subsection{Correctness and Complexity Analysis for PDG Inference via Exponential Conic Programming}
     \label{proofs:expcone-efficient-correct}
 
 \recall{prop:joint-inc-correct}
@@ -2331,10 +2332,8 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
             \frac{\mathbbm1[X\!v{=}X\!u]}{\mu(X\!u)}\Big( \mathbbm1[Y\!v{=}Y\!u] - \mu(Y\!u|X\!u) \Big)\\
         &= \frac{\mathbbm1[X\!u {=} X\!v \land Y\!u {=} Y\!v]}{\mu(Y\! u, X\! u)}
             - \frac{\mathbbm1[X\!v = X\!u]}{\mu(X\!u)}
-        .
+        . \qedhere
     \end{align*}
-
-
 \end{lproof}
 
 
@@ -2884,8 +2883,14 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
     \end{subequations}
     where
     $W_+$ is defined the same way that $W$ is, except that it uses the components of $z_+$ instead of $z$.
-    After adding the correction step $\Delta z_+^{\text{cor}}$ to $z$, we repeat the entire process. The full algorithm, then, is summarized as follows:
+    After adding the correction step $\Delta z_+^{\text{cor}}$ to $z$, we repeat the entire process. The full algorithm, then, is
+    % summarized as follows:
+    given by \cref{algo:dahl-primal-dual} below. 
 
+    \begin{algorithm}
+        \caption{~[\citeauthor*{badenbroek2021algorithm}]}
+        \label{algo:dahl-primal-dual}
+        \singlespacingplus
     \begin{algorithmic}
         \STATE $z \gets (y_0, x_0, \tau_0, s_0, \kappa_0)$;
         \WHILE{}
@@ -2898,6 +2903,7 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
             \STATE $z \gets z_+ + \Delta z_+^{\text{cor}}$;
         \ENDWHILE
     \end{algorithmic}
+    \end{algorithm}
 
     We have verified that each iteration of this process can be done in $O((n+m)^\omega))$ time.
     Their main result \parencite[Theorem 3]{badenbroek2021algorithm}, states that for every $\epsilon \in (0,1)$,
@@ -2915,10 +2921,10 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
     $O(n (m+n)^{2.332} \log (1/\epsilon) )$ time using the linear solver with best
          known asymptotatic complexity as of 2022 \cite{duan2022faster}.
 
-    \medskip
-    \hrule
+    % \medskip
+    % \hrule
 
-    \textbf{Verifying that the solution is approximately optimal.}
+    \paragraph{Verifying that the solution is approximately optimal.}
     What we have at this point is not quite enough: simply because the residual quantity $G(z)$ is approximately zero (so that we have approximately solved the homogenous model), does not mean that we've approximately solved the original problem.
     Specifically, it's entirely possible a priori that the parameter $\tau$ goes to zero at the same rate as everything else, and the quantity $(x/\tau)$ does not converge to a solution to the primal problem.
     To address this issue, we must also trace the analysis of the seminal work of \textcite{nesterov1996infeasible}, who use slightly different quantities, conflicting with the notation we have been using thus far.
@@ -3039,7 +3045,7 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
     $\frac{1}{\epsilon} \in O(\frac1{\epsilon_0} (n+m)^{\nf32})$,
     leading to $\log \frac{1}{\epsilon} = O( \log \frac{n+m}{\epsilon_0} ) )$
     iterations.
-
+%
     Thus, we arrive at our total advertised asymptotic complexity of time
     \[
         O \Big( n (n+m)^\omega \log \frac{n+m}{\epsilon_0} \Big).
@@ -3050,19 +3056,6 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
     (say with 64-bit floats, leading to $\epsilon_0 = 10^{-78}$ in the worst case), and omit the dependance on $\epsilon_0$ for the price of relatively
     small constant (78, for 64-bit floats).
 \end{lproof}
-
-\discard{
-\begin{prop}
-    It can also be solved with the methods of \textcite{skajaa2015homogeneous} in
-    time
-    \[ O(\sqrt{n} (m+n)^\omega \log n )
-        \quad\subset\quad O( (m+n)^{2.872} \log n )
-        \]
-\end{prop}
-\begin{lproof}
-
-\end{lproof}
-}
 
 Having combed through all of the details of the analysis of  \textcite{badenbroek2021algorithm} and \textcite{nesterov1996infeasible} for exponential
 conic programs as we have defined them, we are ready to show that this algorithm solves the problems presented in \cref{sec:clique-tree-expcone} within polynomial time.
@@ -3112,8 +3105,9 @@ where $\beta^{\max} := \max_{a \in \Ar} \beta_a$ is the largest value of $\beta$
                         \mu_{C_{\!a}}\!(\bar c, s, t) \Big) \\
                 \qquad\text{and}\qquad
                 w_{a,s,t} &= \mu_{C_{\!a}}\!(\Src a{=}s)\, \p_a(\Tgt a{=}t\mid\Src a{=}s)
-                    \qquad\Big(~= \p_a(\Tgt a{=}t\mid\Src a{=}s) \sum_{\bar c \in \V(C_a \setminus\{\Src a\})}
-                        \mu_{C_{\!a}}\!(\bar c, s) \Big);
+                    \\
+                    \Big(\text{or, more precisely,} w_{a,s,t} = \p_a(\Tgt a{=}t\mid\Src a{=}s) ~~\sum_{\mathclap{\bar c \,\in\, \V(C_a \setminus\{\Src a\})}}~~
+                        \mu_{C_{\!a}}\!(\bar c, s) ~~\Big);
             \end{align*}
             \item for every edge $(C\!{-}\!D) \in \cal T$, and every value $\omega \in \V(C \cap D)$ of the variables that clusters $C$ and $D$ have in common, a linear constraint
             \[
@@ -3193,13 +3187,13 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
 
 \begin{lemma}\label{lem:smallgamma-polytime}
     Problem \eqref{prob:cluster-small-gamma} is solved to precision $\epsilon$ in time
-    \[
-        O\bigg( |\V\!\Ar + \V\C|^{1 + \omega} \Big( \log \frac{ |\V\!\Ar| + |\V\C|}{\epsilon} + \log(1+ \Vert\bbeta\Vert_\infty) + \log \log \frac{1}{p^{\min}} \Big) \bigg)
-        \quad
+    \begin{align*}
+        &O\bigg( |\V\!\Ar + \V\C|^{1 + \omega} \Big( \log \frac{ |\V\!\Ar| + |\V\C|}{\epsilon} + \log(1+ \Vert\bbeta\Vert_\infty) + \log \log \frac{1}{p^{\min}} \Big) \bigg)
+        \\&\quad
         \subset
         \quad
         \tilde O_{\text{BP}}\Big( |\V\!\Ar + \V\C|^4 \log\frac1\epsilon \Big)
-    \]
+    \end{align*}
     where $p^{\min}$ is the smallest nonzero probability in the PDG.
 \end{lemma}
 \begin{lproof}
@@ -3245,8 +3239,8 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
             that ensures
             \[
                 0 = \mu_{C_a}\!(\Src a{=}s,\Tgt a{=}t)
-                \qquad\Big(~~
-                   = \sum_{\bar c \in \V(C \setminus \{\Src a, \Tgt a\})} \mu_{C_a}(\bar c, s, t) \Big)
+                \qquad\Big(\quad
+                   = ~~\sum_{\mathclap{\bar c \,\in\, \V(C \setminus \{\Src a, \Tgt a\})}} ~~ \mu_{C_a}(\bar c, s, t) \Big)
             \]
 
             \discard{\TODO[POSSIBLE ISSUE: doesn't this mean the problem isn't strictly feasible?]}
@@ -3255,13 +3249,13 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
             \item a linear constraint for every value $c \in \V(C)$ of every cluster $C \in \C$, to ensure that
             \[
                 z_{C,c} = \mu_C( \Pash_C(c) )
-                    \qquad \Big(~~= \sum_{\bar c \in \V(C \setminus \Pash_C)}
+                    \qquad \Big(\quad=~~ \sum_{\mathclap{\bar c \,\in\, \V(C \setminus \Pash_C)}}~~
                         \mu_{C}(\bar c, \Pash_C(c)) ~~\Big)
             \]
             \item and one constraint for each cluster $C \in \C$ to ensure that $\mu_{C}$ lies on the probability simplex, i.e.,
-            \[
+            $
                 \sum_{c \in \V(C)} \mu_C(c) = 1.
-            \]
+            $
         \end{itemize}
     \end{itemize}
     So in total, there are
@@ -3969,7 +3963,9 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/2}
-    \caption{
+    \caption[
+        Plot of the accuracy gap for inference methods and baselines, for various values of $\gamma$.
+    ]{
         A graph of the gap (the difference between the attained objective value, and the best objective value obtained across all methods for that value of $\gamma$),
         as $\gamma$ varies. The x-axis is $\log_{10} ( \gamma + 10^{-15})$.
         As before, colors indicate the optimization method, and
@@ -3988,7 +3984,8 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
 \begin{figure}
     \centering
     \includegraphics[width=0.67\linewidth]{figs/rand-clus/gap-vs-time}
-    \caption{An analogue of \cref{fig:joint-gap-time}, for the cluster setting.
+    \caption[Objective gap vs time in the cluster setting; shows more separation]
+        {An analogue of \cref{fig:joint-gap-time}, for the cluster setting.
     Note that there is even more separation between the exponential-cone based approaches, and the black-box optimization based ones.
     The new grey points on the bottom correspond to belief propogation, which is both faster and typically the most accurate.}
     \label{fig:clus-gap-vs-time--appendix}
@@ -3996,7 +3993,8 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
 \begin{figure}
     \centering
     \includegraphics[width=0.67\linewidth]{figs/rand-clus/resource-costs}
-    \caption{Resource costs for the cluster setting. Once again, the $\OInc$-optimimzing exponential cone methods are in gold, the small-gamma and CCCP is in violet, and the baselines are in green. The bottom line is belief propogation, which is significantly faster and requires very little memory, but also only gives the correct answer under very specific cirucumstances.}
+    \caption[Resource costs for the cluster setting.]
+        {Resource costs for the cluster setting. Once again, the $\OInc$-optimimzing exponential cone methods are in gold, the small-gamma and CCCP is in violet, and the baselines are in green. The bottom line is belief propogation, which is significantly faster and requires very little memory, but also only gives the correct answer under very specific cirucumstances.}
     \label{fig:clus-resource-costs}
 \end{figure}
 

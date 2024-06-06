@@ -600,8 +600,9 @@ Gaussian predictors, with arbitrary variances and confidences.
 \label{sec:regularizers}
 Regularizers are extra terms added to loss funtions, which provide a source of inductive bias towards simple model parameters.
 There is a well-known correspondence between using a regularizer and
-doing maximum \emph{a posteriori} inference with a prior,%
-\footnote{A full account can be found in the appendix.}
+doing maximum \emph{a posteriori} inference with a prior
+    (see \cref{appendix:MAP-and-priors}),
+% \footnote{A full account can be found in the appendix.}
 in which L2 regularization corresponds to a Gaussian prior
 \parencite{rennie2003l2},
 while L1 regularization corresponds to a Laplacian prior \parencite{williams1995bayesian}.
@@ -661,7 +662,7 @@ any of the objectives we describe can be regularized in this way.
 
 \section{Statistical Distances as Inconsistencies} \label{sec:statdist}
 
-\begin{figure*}
+\begin{figure}
 	\centering
 	\def\ptradius{0.07}
 	\begin{tikzpicture}[xscale=1.8, yscale=1.4]
@@ -724,9 +725,11 @@ any of the objectives we describe can be regularized in this way.
 				label={[yshift=-1ex,xshift=1ex]\footnotesize\color{gray!50} $-$Min Entropy}]
 			{$- \log \sup \frac pq$};
 	\end{tikzpicture}
-	\caption{A map of the inconsistency of the PDG comprising $p(X)$ and $q(X)$, as we vary their respective confidences $\beta_p$ and $\beta_q$. Solid circles indicate well-known named measures, semicircles indicate limiting values, and the heavily dashed lines are well-established classes. }
+	\caption[%
+        Statistical distances as inconsistencies: amap of the inconsistency of $p(X)$ and $q(X)$, as their respective confidences vary.]
+    {A map of the inconsistency of the PDG comprising $p(X)$ and $q(X)$, as we vary their respective confidences $\beta_p$ and $\beta_q$. Solid circles indicate well-known named measures, semicircles indicate limiting values, and the heavily dashed lines are well-established classes. }
 	\label{fig:statdistmap}
-\end{figure*}
+\end{figure}
 
 Suppose you are concerned with a single variable $X$. One friend has told you that it is distributed according to $p(X)$; another has told you that it follows $q(X)$. You adopt both beliefs. Your mental state will be inconsistent if (and only if) $p \ne q$, with more inconsistency the more $p$ and $q$ differ.
 Thus the inconsistency of a PDG comprising $p$ and $q$ is a measure of divergence.
@@ -1641,7 +1644,8 @@ Finally, thanks to my friends, particularly Varsha Kishore and Greg Yauney, for 
 \clearpage
 \begin{subappendices}
 
-\section{The Fine Print for Probability Densities}
+\section{Notes}
+\subsection{The Fine Print for Probability Densities}
 \label{appendix:density}
 \textbf{Densities and Masses.} Many of our results (%
 \Cref{prop:pdg-Ix,%
@@ -1677,6 +1681,39 @@ As a result, using one of these ``unbalanced'' functions involving densities whe
 This imposes an additional constraint: suppose the variable $Y$ takes values in the measurable space $(\V(Y), \mathcal B)$. If $p(Y|X)$ is to be a \emph{Markov Kernel}, then for every fixed measurable subset $B \in \mathcal B$ of the measure space, the we must require that  $x \mapsto \Pr(B|x)$ be a measurable function (with respect to the measure space in which $X$ takes values).
 This too mostly does not bear on the present discussion, because the $\sigma$-algebras for all measure spaces of interest, are fine enough that one can get an arbitrarily close approximation of any cpd with a Markov Kernels.
 This means that the infemum defining the inconsistency of a PDG does not change.
+
+\subsection{Maximum A Posteriori and Priors}
+    \label{appendix:MAP-and-priors}
+
+The usual telling of the correspondence between regularizers and priors is something like the following.
+Suppose you have a parameterized family of distributions
+$\Pr(X|\Theta)$
+and have observed evidence $X$, but do not know the parameter $\Theta$.
+The maximum-likelihood estimate of $\Theta$ is then
+\[
+	\theta^{\mathrm{MLE}}(X) := \arg\max_{\theta\in \Theta}~  \Pr(X \mid \theta)
+		= \arg\max_{\theta\in \Theta} ~ \log \Pr(X \mid \theta).
+\]
+The logarithm is a monotonic transformation, so it does not change the argmax, but it has
+nicer properties, so that function is generally used instead. (Many of the loss functions in main body of the paper are log-likelihoods also.)
+
+In some sense, better than estimating the maximum likelihood, is to perform a Bayesian update with the new information, to get a \emph{distribution} over $\Theta$.
+If that's too expensive, we could simply take the estimate with the highest posterior probability, which is called the Maximum A Posteriori (MAP) estimate.
+For any given $\theta$, the Bayesian reading of Bayes rule states that
+\[
+	\text{posterior $\Pr(\Theta | X)$} = \frac
+		{\text{likelihood $\Pr(X|\Theta)$}\cdot\text{prior $\Pr(\Theta)$}}{\text{evidence $\Pr(X) = \sum_{\theta'} \Pr(X|\theta')\Pr(\theta')$}}.
+\]
+So taking a logarithm,
+\[
+	\text{log-posterior $\log \Pr(\Theta | X)$} = \text{log-likelihood $\log \Pr(X|\Theta)$} ~+~ \text{log-prior $\log \Pr(\Theta)$}
+		- \text{log-evidence $\log \Pr(X)$}.
+\]
+The final term does not depend on $\theta$, so it is not relevant for finding the optimal $\theta$ by this metric. Swapping the signs so that we are taking a minimum rather than a maximum, the MAP estimate is then given by
+\[
+ 	\theta^{\mathrm{MAP}}(X) := \arg\min_{\theta \in \Theta} \left\{ \log \frac{1}{\Pr(X|\theta)} + \log \frac1{\Pr(\theta)} \right\}.
+\]
+Note that if negative log likelihood (or surprisal, $-\log \Pr(X|\theta)$) was our original loss function, we have now added an arbitrary extra term, as a function of $\Theta$, to our loss function. It is in this sense that priors classically correspond to regularizers.
 
 \section{Further Results and Generalizations}
 \subsection{Full Characterization of Gaussian Predictors}
@@ -2995,7 +3032,7 @@ We now provide a rigorous proof of this equality.
 
 To ameliorate subscript pains, we henceforth write $X$ for $X_1$, and $Z$ for $X_2$.
 We now compute:
-
+%
 \begin{align*}
 	\aar{\dg M_4}
 	&= \inf_{\mu(X,Z,Y)}
@@ -3007,8 +3044,9 @@ We now compute:
 		\Ex_\mu \left[
 			\beta \log \frac{\mu(Y)\, \mu(X|Y)}{p(X)\,f(Y|X)}
 			+ \zeta \log \frac{\mu(Y)\, \mu(Z|Y)}{q(Z)\,f(Y|Z)}
-		\right] & \text{[apply Bayes Rule in numerators]}
+		\right] %& \text{[apply Bayes Rule in numerators]}
 \end{align*}
+by applying Bayes Rule in each numerator. 
 By the chain rule, every distribution $\mu(X,Z,Y)$ may be specified as $\mu(Y)\mu(X|Y)\mu(Z|X,Y)$, so we can rewrite the formula above as
 \begin{equation*}
 	\aar{\dg M_4}
@@ -3204,6 +3242,8 @@ where $\mathit{const}$ does not depend on $h$. To see this, let $\dg M_2$ be the
 		\gamma \log \frac{\mu(XY)}{s(XY)}
 		\frac{\mu(XY)}{d(XY)}
 		+ \log \frac{\mu(Y|X)}{h(Y|X)} }^{\Inc(\mu)}
+        \\[-0.5ex]
+        &\hspace{3cm}
 		+
 		\overbracket{
 		\gamma \log \frac{1}{s(XY)}
@@ -3294,11 +3334,12 @@ to be already compatible with this joint distribution, the inconsistency does no
 
 
 \subsubsection{Details for Claims made in \texorpdfstring{\Cref{sec:reverse-engineer}}{Section 9} }
+% \subsection{Details for Claims made in \texorpdfstring{\Cref{sec:reverse-engineer}}{Section 9} }
 \textbf{Distortion Due to Inconsistency.}
 In the footnote on \Cpageref{fn:logEexp}, we claimed that if the model confidence $\beta_p$ were 1 rather than $\infty$, we would have obtained an incconsistency of
 $ - \log \Ex_{x\sim p} \exp(- c(x)) $,
 and that the optimal distribution would not have been $p(X)$.
-
+%
 \begin{align*}
 	\aar*{\!\begin{tikzpicture}[center base]
 		\node[dpad0] (X) at (0,0) {$X$};
@@ -3320,7 +3361,7 @@ and that the optimal distribution would not have been $p(X)$.
 		+ \log \frac{1}{\hat c(\trut\,|\,x)} \right] \\
 	&=  \inf_{\mu(X)} \Ex_{x \sim \mu} \left[ \log \frac{\mu(x)}
 		{p(x) \exp(-c(x))}\cdot\frac{Z}{Z} \right] \\
-\intertext{\raggedleft where $Z = \sum_x p(x) \exp(-c(x)) = \Ex_p \exp(-c(X))$ is the constant required to normalize the distribution
+\intertext{\raggedleft where $Z :   = \sum_x p(x) \exp(-c(x)) = \Ex_p[ \exp(-c(X))]$ is\\ the constant required to normalize the distribution
 }
 	&=  \inf_{\mu(X)} \kldiv*{\mu}{\frac{1}{Z}\,p(X)\exp(-c(X))} - \log Z \\
 	&=  - \log Z \\
@@ -3378,18 +3419,20 @@ Both equalities of the derivation above standard information theoretic identitie
 As a result, as $\gamma\to\infty$ any distribution that for which  $Y'$ and $Y$ are not independent given $X$ will incur infinite cost. Since the confidences in $h$ and $\datadist\xysamp$ are also infinite, so will a violation of either cpd.
 There is only one distribution that has both cpds and also this independence; that distribution is $\mu(X,Y,Y') := \datadist\xysamp(X,Y)h(Y'|X)$.
 Now the argument of \Cref{prop:expected-cost} applies: all other cpds must be matched, and the inconsistency is the expected incompatibility of $\hat l$, which equals
-\[ \quad\;\;\mathop{\scalebox{1.2}{$\Ex$}}\limits_{\substack{%
+\begin{align*}
+ % \quad\;\;
+ \mathop{\scalebox{1.2}{$\Ex$}}\limits_{\substack{%
 	\vphantom{x}\\
 	\mathllap{(x,y)} \sim \mathrlap{\datadist\xysamp} \\
 	\mathllap{y'} \sim \mathrlap{p(Y'|\,x)}} }
  \; \log\frac{1}{\hat\ell(\trut\,|y,y')}
- =
+&=
  \quad\;\;\mathop{\scalebox{1.2}{$\Ex$}}\limits_{\substack{%
  	\vphantom{x}\\
  	\mathllap{(x,y)} \sim \mathrlap{\datadist\xysamp} \\
  	\mathllap{y'} \sim \mathrlap{p(Y'|\,x)}} }
   \;  \log\frac{1}{\exp(-\ell(y,y'))}
- =
+ \\&=
  \quad\;\;\mathop{\scalebox{1.2}{$\Ex$}}\limits_{\substack{%
  	\vphantom{x}\\
  	\mathllap{(x,y)} \sim \mathrlap{\datadist\xysamp} \\
@@ -3403,40 +3446,7 @@ Now the argument of \Cref{prop:expected-cost} applies: all other cpds must be ma
   \;\big[\ell(y,y')\big]
   = \mathcal L
  .
- \]
-
-\section{More Notes}
-\subsection{Maximum A Posteriori and Priors}
-
-The usual telling of the correspondence between regularizers and priors is something like the following.
-Suppose you have a parameterized family of distributions
-$\Pr(X|\Theta)$
-and have observed evidence $X$, but do not know the parameter $\Theta$.
-The maximum-likelihood estimate of $\Theta$ is then
-\[
-	\theta^{\mathrm{MLE}}(X) := \arg\max_{\theta\in \Theta}  \Pr(X|\theta)
-		= \arg\max_{\theta\in \Theta} \log \Pr(X|\theta).
-\]
-The logarithm is a monotonic transformation, so it does not change the argmax, but it has
-nicer properties, so that function is generally used instead. (Many of the loss functions in main body of the paper are log-likelihoods also.)
-
-In some sense, better than estimating the maximum likelihood, is to perform a Bayesian update with the new information, to get a \emph{distribution} over $\Theta$.
-If that's too expensive, we could simply take the estimate with the highest posterior probability, which is called the Maximum A Posteriori (MAP) estimate.
-For any given $\theta$, the Bayesian reading of Bayes rule states that
-\[
-	\text{posterior $\Pr(\Theta | X)$} = \frac
-		{\text{likelihood $\Pr(X|\Theta)$}\cdot\text{prior $\Pr(\Theta)$}}{\text{evidence $\Pr(X) = \sum_{\theta'} \Pr(X|\theta')\Pr(\theta')$}}.
-\]
-So taking a logarithm,
-\[
-	\text{log-posterior $\log \Pr(\Theta | X)$} = \text{log-likelihood $\log \Pr(X|\Theta)$} ~+~ \text{log-prior $\log \Pr(\Theta)$}
-		- \text{log-evidence $\log \Pr(X)$}.
-\]
-The final term does not depend on $\theta$, so it is not relevant for finding the optimal $\theta$ by this metric. Swapping the signs so that we are taking a minimum rather than a maximum, the MAP estimate is then given by
-\[
- 	\theta^{\mathrm{MAP}}(X) := \arg\min_{\theta \in \Theta} \left\{ \log \frac{1}{\Pr(X|\theta)} + \log \frac1{\Pr(\theta)} \right\}.
-\]
-Note that if negative log likelihood (or surprisal, $-\log \Pr(X|\theta)$) was our original loss function, we have now added an arbitrary extra term, as a function of $\Theta$, to our loss function. It is in this sense that priors classically correspond to regularizers.
+\end{align*}
 
 % \end{subappendices}
 \end{subappendices}

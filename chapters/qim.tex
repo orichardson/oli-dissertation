@@ -4664,7 +4664,7 @@ In any randomized PSEM $M$, we can define an event
 %joe16: it wasn't done, but is now
         \bigcap_{X \in \mat X} \bigcap_{\mathrlap{\mat s \in \V(\Pa(X))}~~}~~~f_X(U_{\!{X}}, \mat s) = \mat x[X],
     %oli21: saving a line by moving the below into the equation
-    \qquad\parbox{3cm}{\centering
+    \qquad\parbox{3.5cm}{\centering\singlespacingplus
     %joe16
     %oli21: here, X is a single variable
     % where $\mat x[X]$ is the restrition of $\mat x$ to the variables in $X$.
@@ -5504,15 +5504,17 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
 % But first: why should there be any relationship between entropy and \scibility\ at all? To build intuition, we review a special case: the relationship between entropy and probabilistic (in)dependence.
 % }
 %oli21: inline figure
-\begin{wrapfigure}[10]{o}{3.2cm}
-    \vspace{-4.5ex}
+% \begin{wrapfigure}[10]{o}{3.2cm}
+\begin{figure}
+    % \vspace{-4.5ex}
+    \centering
     \def\circsize{1.6}
     \def\radsize{0.8}
     % \edef\outerrad{{\circsize/2+\radsize}}
     \edef\outerrad{1.6}
     \def\innerrad{1.00}
     % \def\twosize{0.5}
-    \scalebox{0.7}{
+    \scalebox{1.0}{
     \begin{tikzpicture}[center base]
         % \node at ({-\circsize-\radsize+0.1},{\circsize+\radsize-0.2}) {\underline{\textbf{(a)}}};
 
@@ -5596,12 +5598,17 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
         % \draw[purple,ultra thick] (
     \end{tikzpicture}
     }
-    \caption{$\mat I_\mu$.
+    \caption[Illustration of the information profile $\mat I_\mu$]{%
+        The components of the information profile $\mat I_\mu$
+        for three variables $\X = \{X,Y,Z\}$,
+        and a graphical illustration that 
+        $\I(X;Y;Z) = \H(X,Y,Z) -  {\color{purple!60!black}\H(X|Y)} + {\color{violet!65!black}\H(Y|Z)} + {\color{blue!50!black}\H(Z|X)}$.
     % and their relationships.
      % for $\X {=} \{X,Y,Z\}$.
      }
         \label{fig:info-diag-a}
-\end{wrapfigure}
+% \end{wrapfigure}
+\end{figure}
 %oli20: replacement
 We now review the critical information theoretic concepts and their relationships to
     (in)dependence

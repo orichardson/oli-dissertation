@@ -13,14 +13,16 @@
 	 	\rule[0.5ex]{1in}{.15mm}\hfill
 		Chapter \thechapter\ Appendices
 		\hfill \rule[0.5ex]{1in}{.15mm}
-		\hfill
+		\hfill\phantom{-}
 	}
 	\counterwithin{figure}{section}
 	\counterwithin{table}{section}
 	}
 \AtEndEnvironment{subappendices}{%
-	\counterwithout{figure}{section}
-	\counterwithout{table}{section}
+	\counterwithin{figure}{chapter}
+	\counterwithin{table}{chapter}
+	% \counterwithout{figure}{section}
+	% \counterwithout{table}{section}
 	}
 
 
@@ -58,14 +60,6 @@
 \usepackage{environ}% http://ctan.org/pkg/environ;
 	% required for use of label_matrix.tex.
 \usepackage{nameref,hyperref}%\Autoref is defined by thmtools
-
-\usepackage[noabbrev,nameinlink,capitalize]{cleveref}% n.b. cleveref after! hyperref
-\crefname{example}{Example}{Examples}
-\crefname{defn}{Definition}{Definitions}
-\crefname{prop}{Proposition}{Propositions}
-\crefname{constr}{Construction}{Constructions}
-\crefname{conj}{Conjecture}{Conjectures}
-\crefname{fact}{Fact}{Facts}
 
 
 %%%%% visual appearance
@@ -119,7 +113,14 @@
 \makeatother
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \makeatother
-
+%% don't double space matrices please...
+\makeatletter
+\def\env@matrix{\hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \linespread{1}\selectfont
+  \renewcommand{\arraystretch}{1.2}%
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
 
 
 %%% GENERAL SYMBOLS 
@@ -358,6 +359,19 @@
 	\theoremstyle{remark}
 	\newtheorem*{remark}{Remark}
 
+	
+\usepackage[noabbrev,nameinlink,capitalize]{cleveref}% n.b. cleveref after! hyperref
+\crefname{example}{Example}{Examples}
+\crefname{defn}{Definition}{Definitions}
+\crefname{prop}{Proposition}{Propositions}
+\crefname{constr}{Construction}{Constructions}
+\crefname{conj}{Conjecture}{Conjectures}
+\crefname{fact}{Fact}{Facts}
+\crefname{claim}{Claim}{Claims}
+\crefname{iclaim}{Claim}{Claims}
+\crefname{coro}{Corolary}{Corolaries}
+
+
 %% ANNOTATION
 \newcommand{\todo}[1]{{\color{red}\ \!\Large\smash{\textbf{[}}{\normalsize\textsc{todo:} #1}\ \!\smash{\textbf{]}}}}
 \newcommand{\note}[1]{{\color{blue}\ \!\Large\smash{\textbf{[}}{\normalsize\textsc{note:} #1}\ \!\smash{\textbf{]}}}}
@@ -394,7 +408,8 @@ innertopmargin=2pt, frametitlebelowskip=3pt, frametitleaboveskip=2pt, frametitle
 % 	%%%%%%%%%%%%
 % 	\tikzset{AmpRep/.style={ampersand replacement=\&}}
 % 	\tikzset{center base/.style={baseline={([yshift=-.8ex]current bounding box.center)}}}
-% 	\tikzset{paperfig/.style={center base,scale=1.0, every node/.style={transform shape}}}
+	\tikzset{paperfig/.style={center base,scale=1.0, every node/.style={transform shape}}}
+	% \tikzset{paperfig/.style={center base,scale=0.9, every node/.style={transform shape}}}
 % 
 % 	\tikzset{is bn/.style={background rectangle/.style={fill=blue!35,opacity=0.3, rounded corners=5},show background rectangle}}
 % 	% Node Stylings

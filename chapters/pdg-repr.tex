@@ -69,7 +69,7 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 \begin{tikzpicture}[center base, scale=0.7, AmpRep]
         \def\figtabledist{0.2}
         \def\fignodedist{1.4}
-        \def\figtableheight{0.41} 
+        \def\figtableheight{0.45} 
 
         \matrix [table with head, column 1/.style={leftrule}, anchor=south east,
              column 2/.style={rightrule}, row 2/.style={bottomrule}] at (-\figtabledist,\figtableheight) {
@@ -95,7 +95,7 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
         \def\newcptX{-0.2}
         \def\newcptY{-0.5}
                      
-		\node[dpadded, fill=white, draw=gray] (true)  at (0,1.8) {$\pdgunit$};
+		\node[dpadded, fill=white, draw=gray] (true)  at (0,2) {$\pdgunit$};
 		\node[dpadded] (floomp) at (-\fignodedist,\fignodeheight) {$F$};
 		\node[dpadded] (gun) at (\fignodedist,\fignodeheight) {$G$};			
 		
@@ -130,8 +130,8 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 \fi
         \caption[
         A BN without edges, its corresponding PDG, 
-            and an illustration of how the latter can be augmented
-            losslessly with additional cpds.
+            and how the latter can be augmented
+            (losslessly) with additional cpds.
         ]
         {A BN (left) and corresponding PDG (right), which can
         be augmented with additional cpds. The cpds $p$ and/or $p'$
@@ -281,7 +281,9 @@ $\PDGof{{\mathcal B}}$, shown as the solid nodes and edges in
 	\refstepcounter{subfigure}
 	\label{subfig:smoking-pdg}
 \addtocounter{figure}{-1}
-\caption{ (a) The Bayesian Network $\mathcal B$ in \cref{ex:smoking} (left), and
+\caption[The classic ``smoking'' BN, its corresponding PDG, and a restriction of
+    the latter, which can be augmented with other information about cancer.
+]{ (a) The Bayesian Network $\mathcal B$ in \cref{ex:smoking} (left), and
 (b) $\PDGof{\mathcal B}$, its corresponding PDG (right). The shaded box
 indicates a restriction of $\PDGof{\mathcal B}$ to only the nodes and edges it
 contains, and the dashed node $T$ and its arrow to $C$ can be added in the PDG,
@@ -517,17 +519,18 @@ We refer to
 ${\dg N} = (\Gr, \mathbb P)$ as an \emph{unweighted} PDG,
 and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
 $\bf 1$ is the constant function (i.e., so that $\alpha_L = \beta_L = 1$ for all $L$). 
-In this paper, with the exception of \cref{sec:expfam},  we implicitly take $\alpha = {\bf 1}$
+In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\alpha = {\bf 1}$
 and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.%
 \footnote{The appendix gives results for arbitrary $\alpha$.} 
 \end{defn}
 If $\dg M$ is a PDG, we reserve the names 
 $\N^{\dg M}, \Ar^{\dg M}, \ldots$,
 for the components of $\dg M$, so that we may reference one without naming them
-all explicitly. We write $\V(S)$ for the set of possible joint settings of a set
-$S$ of variables, and write
-$\V(\dg M)$ for all settings of the variables in $\N^{\dg M}$; we
-refer  to these settings as ``worlds''.
+all explicitly.
+We write $\V(S)$ for the set of possible joint settings of a set
+$S$ of variables.
+Thus, we write $\V\!\X$ for all settings of the variables in $\N^{\dg M}$; 
+    we refer to these complete joint settings as ``worlds''.
 While the definition above is sufficient to represent the class of all legal
 PDGs, we often use two additional bits of syntax
 to indicate common constraints:  
@@ -821,7 +824,7 @@ a surprisingly flexible tool for specifying distributions.
 The idea is to select the distributions with the best score. 
 We thus define 
 \begin{equation}
-	\bbr{\dg M}_\gamma^* = \argmin_{\mu \in \Delta\V(\dg M)} \bbr{\dg M}_\gamma(\mu).
+	\bbr{\dg M}_\gamma^* = \argmin_{\mu \in \Delta\V\!\X} \bbr{\dg M}_\gamma(\mu).
 \end{equation}   
 
 In general, $\bbr{\dg M}_\gamma^*$ does not give a unique distribution.  But if
@@ -849,7 +852,7 @@ It can be further shown that
 \end{linked}
 Let $\bbr{{\dg M}}^*$ be the unique element of $\smash{\lim\limits_{\gamma
 	\rightarrow 0}} \bbr{{\dg M}}_\gamma^*$. 
-The semantics has an important property: 
+This limiting semantics semantics has an important property: 
 
 \begin{linked}{prop}{consist}
 	$\bbr{\dg M}^* \in \bbr{\dg M}_0^*$, so if $\dg M$ is consistent,
@@ -1013,7 +1016,7 @@ The process is illustrated in \cref{fig:fg2PDG}.
 	\end{tikzpicture}
 	\fi
 	\hfill~
-	\caption{
+	\caption[Illustration of how a factor graph is converted to a PDG]{
 Conversion of the PDG in \cref{ex:smoking} to a factor graph
 according to \cref{def:PDG2fg} (left), and from that factor graph back
 to a PDG by \cref{def:fg2PDG} (right). 
@@ -1174,33 +1177,36 @@ $\bbr{(\dg N,  \mat v,  \gamma\mat v)}_{\gamma}^*
 
 
 
-
-
-
 The key step in proving \Cref{theorem:wfg-is-pdg,theorem:pdg-is-wfg}
 (and in the proofs of a number of other results) involves 
 rewriting  
 $\bbr{\dg M}_\gamma$ as follows: 
 \begin{linked}{prop}{nice-score}%
  Letting $x^{\mat w}$ and $y^{\mat w}$ denote the values of
-  $X$ and $Y$, respectively, in $\mat w \in \V(\dg M)$, 
+  $X$ and $Y$, respectively, in
+  % $\mat w \in \V\!\X$, 
+  the joint setting $\mat w \in \V\!\X$, 
 we have 
 \begin{equation}\label{eq:semantics-breakdown}
 \begin{split}
-\bbr{\dg M}(\mu) =  \Ex_{\mat w \sim \mu}\! \Bigg\{
+\bbr{\dg M}_\gamma(\mu) =  \Ex_{\mat w \sim \mu}\!
+% \Bigg\{
+\Bigg[
  \sum_{ X \xrightarrow{\!\!a} Y  }
 \bigg[\,
-    \color{gray}\overbrace{\color{black}
-      \!\beta_L \log \frac{1}{\p_a(y^{\mat w} |x^{\mat w})}
-	}^{\color{gray}\smash{\mathclap{\text{log likelihood / cross entropy}}}} + \qquad\\[-0.7em]
-    \color{gray}\underbrace{\color{black} 
-({\alpha_L}\gamma - \beta_L ) \log \frac{1}{\mu(y^{\mat w} |x^{\mat w})} 
-	}_{\color{gray}\smash{\mathclap{\text{local regularization (if $\beta_L > 
-	\alpha_L
-	\gamma$)}}}}\bigg] - \underbrace{\color{black}
+    \color{gray}
+    \underbrace{\color{black}
+      \!\beta_a \log \frac{1}{\p_a(y^{\mat w} |x^{\mat w})}
+	}_{\color{gray}\smash{\mathclap{\text{log likelihood / cross entropy}}}} +
+    % \onlyfirsttime{ \qquad\\[-0.7em] }
+    {\color{gray}\underbrace{\color{black} 
+({\alpha_a}\gamma - \beta_a ) \log \frac{1}{\mu(y^{\mat w} |x^{\mat w})} 
+	}_{\color{gray}\smash{\mathclap{\text{local regularization (if $\beta_a > 
+	\alpha_a
+	\gamma$)}}}}}\bigg] - \underbrace{\color{black}
 \gamma \log \frac{1}{\mu(\mat w)}
 	}_{\color{gray}\smash{\mathclap{\text{global
-        regularization}}}}\color{black} \Bigg\} .
+        regularization}}}}\color{black} \Bigg].
 \end{split}
 \end{equation}
 \end{linked}
@@ -1286,8 +1292,8 @@ Two major issues that need to be tackled are inference and dynamics.
 How should we query a PDG for probabilistic information? How should 
 we modify a PDG in light of new information or to make it more consistent?
 These issues turn out to be closely related.
-Due to space limitations, 
-we just briefly give some intuitions and examples here.
+% Due to space limitations, 
+% we just briefly give some intuitions and examples here.
 
 Suppose that we want to compute the probability of $Y$ given $X$ in a PDG $\dg
 M$. For a cpd $p(Y|X)$, let $\dg M^{+p}$ be the PDG obtained by associating $p$
@@ -1295,40 +1301,37 @@ with a new edge in $\dg M$ from $X$ to $Y$, with $\alpha_p \!=\! 0$. We judge
 the quality of a candidate answer $p$ by the best possible score that $\dg
 M^{+p}$ gives to any distribution (which we call the \emph{degree of
 inconsistency} of $\dg M^{+p}$). It can be shown that the deegree of
-inconsistency is minimized by $\bbr{\dg M}^*(Y\!\mid\! X)$. Since the degree of
-inconsistency of $\dg M^{+p}$ is smooth and strongly convex as a function of
-$p$, we can compute its optimum values by standard gradient methods. This
-approach is inefficient as written (since it involves computing the full joint
-distribution $\bbr{{\dg M}^{+p}}^*$), but we believe that standard approximation
-techniques will allow us to draw inferences efficiently.
+inconsistency is minimized by $\bbr{\dg M}^*(Y\!\mid\! X)$. 
 
-	To take another example,
-	conditioning can be understood in terms of resolving inconsistencies
-	in a PDG.  To condition on an observation $Y\!=\!y$, given a situation
-	described by a PDG $\dg M$, we can add an edge 
-	from $\pdgunit$ to $Y$ in $\dg M$, annoted with the cpd that gives
-	probability 1 to $y$, to get the (possibly inconsistent) PDG
-	$\vphantom{\raisebox{0.05em}{$\big|$}}$
-${\dg M}^{+(\!Y\!=y)}$.   The distribution $\bbr{{\dg M}^{+(\!Y\!=y)}}^*$ turns out
-to be the result of conditioning $\bbr{\dg M}^*$ on $Y\!=\!y$.
+To take another example,
+conditioning can be understood in terms of resolving inconsistencies
+in a PDG.  To condition on an observation $Y\!=\!y$, given a situation
+described by a PDG $\dg M$, we can add an edge 
+from $\pdgunit$ to $Y$ in $\dg M$, annoted with the cpd that gives
+probability 1 to $y$, to get the (likely inconsistent) PDG
+% $\vphantom{\raisebox{0.05em}{$\big|$}}$
+${\dg M}^{+(\!Y\!=y)}$.   
+% The distribution $\bbr{{\dg M}^{+(\!Y\!=y)}}^*$ turns out
+% to be the result of conditioning $\bbr{\dg M}^*$ on $Y\!=\!y$.
+In the special case where $\dg M$ represents or is equivalent to a joint distribution
+    (which will be made precise in \cref{sec:prob-as-pdg,sec:equivalence}), 
+    $\bbr{{\dg M}^{+(\!Y\!=y)}}^*$ turns out
+    to be the result of conditioning that distribution on the event $Y{=}y$. 
 This account of conditioning generalizes
 without modification to give Jeffrey's Rule \cite{Jeffrey68}, a more
 general approach to belief updating. 
 
-Issues of updating and inconsistency also arise in
-variational inference. A  
+Issues of updating and inconsistency also arise in variational inference. A  
 variational autoencoder \cite{kingma2013autoencoding}, for instance, 
 is essentially three cpds: a prior $p(Z)$, a decoder $p(X \!\mid\! Z)$, and 
 an encoder $q(Z \!\mid\! X)$. Because two cpds target $Z$ (and the cpds are 
 inconsistent until fully trained), this situation
 can be represented by PDGs but not
 by other graphical models.
-We hope to report further on the deep connection between
-inference, updating, 
-and the resolution of inconsistency in PDGs
-in future work.
 
-
+In the coming chapters, we will explore 
+the deep connection between inference, updating, 
+and the resolution of inconsistency in PDGs.
 	
 \commentout{	
 \section*{Ethics Statement}
@@ -1459,7 +1462,7 @@ setting $q_1 = q_2 = \p_\ell(a)$, we get that
 The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
 % \restate{prop:nice-score}{
 % Letting $x^{\mat w}$ and $y^{\mat w}$ denote the values of
-%  $X$ and $Y$, respectively, in $\mat w \in \V(\dg M)$, 
+%  $X$ and $Y$, respectively, in $\mat w \in \V\!\X$, 
 % we have 
 % \begin{equation*}
 % \begin{split}
@@ -1575,19 +1578,19 @@ finite support%
 Thus, there exist bounds $k$ and $K$ depending only on $\N^{\dg M}$ and
 $\V^{\dg M}$, such that $\lb \leq \IDef_{\dg M}(\mu) \leq \ub$ for all $\mu$.
 Since $\bbr{\dg M}_\gamma = \Inc_{\dg M} + \gamma \IDef_{\dg M}$,
-it follows that, for all $\mu \in \V(\dg M)$, we have
+it follows that, for all $\mu \in \V\!\X$, we have
 \[ \Inc_{\dg M}( \mu) + \gamma\lb \leq~ \bbr{\dg M }_\gamma(\mu) 
 \leq~  \Inc_{\dg M}( \mu) + \gamma\ub. \]
 For a fixed $\gamma$, since this inequality holds for all $\mu$, and
 both $\Inc$ and $\IDef_{}$ are bounded below, it must be the case that  
 \[
-\min_{\mu \in \Delta\V(\dg M)} \Big[ \Inc_{\dg M}( \mu) + \gamma\lb \Big]
-~\leq~ \min_{\mu \in \Delta\V(\dg M)}\bbr{\dg M }_\gamma(\mu) ~\leq~
-\min_{\mu \in \Delta\V(\dg M)} \Big[ \Inc_{\dg M}( \mu) + \gamma\ub
+\min_{\mu \in \Delta\V\!\X} \Big[ \Inc_{\dg M}( \mu) + \gamma\lb \Big]
+~\leq~ \min_{\mu \in \Delta\V\!\X}\bbr{\dg M }_\gamma(\mu) ~\leq~
+\min_{\mu \in \Delta\V\!\X} \Big[ \Inc_{\dg M}( \mu) + \gamma\ub
     \Big], \] 
 even though the distributions that minimize each expression will in general be different.
 Let $\Inc(\dg M) = \min_{\mu} \Inc_{\dg M}(\mu)$.
-Since $\Delta\V(\dg M)$ is compact, the minimum of the middle term is
+Since $\Delta\V\!\X$ is compact, the minimum of the middle term is
 achieved.  
 Therefore, for $\mu_\gamma \in \bbr{\dg M}^*_\gamma(\mu)$ that
 minimizes it, we have 
@@ -1610,7 +1613,7 @@ First we show that $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$ cannot be empty.
 Let $(\gamma_n) = \gamma_1, \gamma_2, \ldots$ be a sequence of
 positive reals 
 converging to zero.  For all $n$, choose some $\mu_n \in \bbr{\dg
-M}_{\gamma_n}^*$. Because $\Delta\V(\dg M)$ is a compact metric
+M}_{\gamma_n}^*$. Because $\Delta\V\!\X$ is a compact metric
 space, it is sequentially compact, and so, by the
 Bolzano–Weierstrass Theorem, the sequence $(\mu_n)$ has at least one
 accumulation point, say $\nu$. By our definition of the limit, $\nu \in
@@ -1627,7 +1630,7 @@ By \Cref{lem:gamma2zero}, $\nu_1, \nu_2 \in \bbr{\dg M}_0^*$, so
 $\Inc_{\dg M}(\nu_1) = \Inc_{\dg M}(\nu_2)$.  
 Because  $(\mu_{j_n}) \to \nu_1$, $(\mu_{k_n}) \to \nu_2$, and
 $\IDef_{\dg M}$ is
-continuous on $\Delta\V(\dg M)$,
+continuous on $\Delta\V\!\X$,
 we conclude that  
 $(\IDef_{\dg M}(\mu_{i}))\to \IDef_{\dg M}(\nu_1)$ and
 $(\IDef_{\dg M}(\mu_{j}))\to \IDef_{\dg M}(\nu_2)$.

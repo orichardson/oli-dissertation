@@ -262,9 +262,9 @@ by reduction to SAT and \#SAT, respectively.
 	an algorithm for determining if a PDG is consistent can also be adapted (in polynomial space and time) for use as a SAT solver, and so the problem of determining if a PDG consistent is NP-hard.
 
 
-    \medskip\hrule\smallskip
+    % \medskip\hrule\smallskip
 
-	\textbf{(b) Hardness of exact computation.}
+	\paragraph{(b) Hardness of exact computation.}
     We prove this by reduction to \#SAT. Again, let $\varphi$ be some CNF formula over $\mat X$, and construct
 	$\dg M_\varphi$ as in \hyperref[proof:consistent-NP-hard]{the proof} of
 	\Cref{theorem:consistent-NP-hard}.
@@ -303,7 +303,10 @@ by reduction to SAT and \#SAT, respectively.
 		appear in clause $j$, and $\delta_{(-)}$ is the probability distribution placing all mass on the point indicated by its subscript.
 		As a reminder, the relative entropy is given by
 		\[ \kldiv[\Big]{\mu(\Omega)}{\nu(\Omega)} := \Ex_{\omega \sim \mu} \log \frac{\mu(\omega)}{\nu(\omega)},
-		\quad\parbox{1.4in}{\centering and in particular, \\ if $\Omega$ is binary,}\quad
+        \]
+		% \quad\parbox{1.4in}{\centering and in particular, \\ if $\Omega$ is binary,}\quad
+        and in particular, if $\Omega$ is binary, 
+        \[
 			\kldiv[\big]{\mu(\Omega)}{\delta_\omega} = \begin{cases}
 				0 &  \text{if}~\mu(\omega) = 1 ; \\
 				\infty & \text{otherwise}.
@@ -1046,7 +1049,7 @@ Let's step back for a momemnt.
 In the equations above, we can see the beginnings of a complementary argument: if $\mu_z^*$ and $\mu_b^*$ are close together, then $m_b \approx m_b$, and so all terms apart from $\blacksquare_0$ (i.e., $\squa1+\squa2+\squa4$) go to zero. And yet, because of $\squa0$, $f(b)$ and $f(z)$ remain far apart.
 To make this argument precise, we now merge $\squa1$, $\squa2$, and $\squa4$ back together, calculating
 \begin{align*}
-    \squa2 + \squa4  + \squa1
+    &\squa2 + \squa4  + \squa1 \\
         &= (m_b - m_z) \log \frac{m_b}{b} \frac{1-b}{1-m_b} \frac{z}{m_z} \frac{1-m_z}{1-z}
             - \kldiv{m_z}{m_b} \\
         &= (m_b - m_z) \log \frac{z}{b} \frac{1-b}{1-z}
@@ -1267,12 +1270,16 @@ PDGs has greater inconsistency.
 In this case, the $\gg$ and $\ll$ in the
 algorithm below should be interpreted simply as $>$ as $<$.
 This will enable us to approximate the minimizer $p^*$ of $f$
-arbitrarily closely, with the following algorithm.
+arbitrarily closely, with the following algorithm (\cref{algo:unimodal-search}).
 
-    \medskip
+    % \medskip
 
+\begin{algorithm}
 \begin{minipage}{0.49\linewidth}
-    \rule{4in}{0.2ex}
+    % \rule{4in}{0.2ex}
+    \singlespacingplus
+    \caption{Unimodal (Trinary) Search}
+	\label{algo:unimodal-search}
     \begin{algorithmic}
         \STATE Initialize $(a,b,c) \gets (0, \frac12, 1)$;
         \WHILE{$|c - a| > \epsilon$}
@@ -1297,7 +1304,7 @@ arbitrarily closely, with the following algorithm.
         \ENDWHILE
         \STATE \textbf{return} $b$;
     \end{algorithmic}
-    \rule{4in}{0.2ex}
+    % \rule{4in}{0.2ex}
 \end{minipage}
 \begin{minipage}{0.49\linewidth}
     \begin{tikzpicture}
@@ -1327,15 +1334,15 @@ arbitrarily closely, with the following algorithm.
     \end{array}\right\}\implies~~p^* > b$};
     \end{tikzpicture}
 \end{minipage}
+\end{algorithm}
 
-    We begin by proving that this algorithm does indeed output
-    a point within $\epsilon$ of
-    $p^*
-    $.
-    Because $f$ is convex,
-    this algorithm satisfies an important invariant: 
+We begin by proving that \cref{algo:unimodal-search} does indeed output
+a point within $\epsilon$ of
+$p^*$.
+Because $f$ is convex,
+this algorithm satisfies an important invariant: 
     
-    \begin{iclaim} \label{claim:reduction-works}
+\begin{iclaim} \label{claim:reduction-works}
     Both $b$ and $p^*$
     always lie in the interval $[a,c]$.
     \end{iclaim}
@@ -1398,7 +1405,7 @@ Next, we analyze the complexity of this algorithm, modulo the
     Apart from the time needed to compare $f(b)$ and $f(z)$,
     it is easy to see that each iteration of the algorithm takes constant time.
     So overall, it requires
-    $\log(\nf1\epsilon)$ (enough to track the numbers $\{a,b,c\}$, plus a reference to the PDG $\dg M$), and time $O(\log \nf1\epsilon)$, which is linear in the number of bits returned.
+    $\log(\nf1\epsilon)$ space(enough to track the numbers $\{a,b,c\}$, plus a reference to the PDG $\dg M$), and time $O(\log \nf1\epsilon)$, (linear in the number of bits returned).
     This completes the proof of \cref{theorem:inf-via-inc-oracle} (a). 
 
     Although it is common to assume that numbers can be compared in $O(1)$ time, and this is an assumption well suited to modern computer architecture, it is arguably not appropriate in this context.
@@ -1442,7 +1449,7 @@ The obvious approach to implementing the inconsistency calculation subroutine
                     \log^2 \Big(
                          1 +  8 \gamma (z-b)^2
                      \Big).
-            \qquad\qquad\text{(This number comes from \cref{lem:togetherbound}.)}
+            \qquad\text{(This number comes from \cref{lem:togetherbound}.)}
             \label{eq:query-precision}
         \end{equation}
         Call these approximations $\tilde f(z)$ and $\tilde f(b)$.
@@ -1462,9 +1469,11 @@ The obvious approach to implementing the inconsistency calculation subroutine
 
     \begin{iclaim} \label{claim:b-z-eps-sep}
         At the beginning of each iteration,
-        $b \in [\frac\epsilon2, 1-\frac\epsilon2]$,
-        $z \in [\frac\epsilon4, 1-\frac\epsilon4]$,
-       and $|b-z| \ge \frac{\epsilon}{4}$.
+        \[
+        b \in [\frac\epsilon2, 1-\frac\epsilon2],\qquad
+        z \in [\frac\epsilon4, 1-\frac\epsilon4],\quad\text{and}\quad
+        |b-z| \ge \frac{\epsilon}{4}.\qedhere
+        \]
     \end{iclaim}
     We prove this by contradiction.
     Initially, $b = \frac12$
@@ -1680,7 +1689,7 @@ Therefore, the algorithmn cannot choose the wrong branch.
     This is because once we see the radix point in one number but not the other, we can immediately conclude the former is smaller.
     In the first iteration, $|A|$ is at most
     \begin{align*}
-        |A| \le \max \left\{ 0,~ \log_2 \aar[\Big]{\dg M ~+~ \Pr(Y{=}y){=}\frac12}_{\!\gamma} \right\}
+        |A| &\le \max \left\{ 0,~ \log_2 \aar[\Big]{\dg M ~+~ \Pr(Y{=}y){=}\frac12}_{\!\gamma} \right\} \\
         &\le
             \max \left\{ 0,~ \log \Big( \aar{\dg M}_\gamma
         +
@@ -1758,9 +1767,9 @@ Therefore, the algorithmn cannot choose the wrong branch.
 
 
 
-    Finally, we remark that, 
-    often we are only interested in doing inference up to the precision that
-    is tracked by a typical computer.
+    Finally, we remark that
+    typically we are interested in doing inference up to floating point 
+    precision.
     In this case, by selecting
 $\epsilon \le 10^{-78}$, the procedure above
 runs in constant time, making at most 1555 
