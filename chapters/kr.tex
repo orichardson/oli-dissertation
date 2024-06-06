@@ -4,14 +4,14 @@ We saw in \cref{sec:bn-convert,sec:factor-graphs,sec:expfam} that PDGs
 can capture graphical models such as Bayesian Networks and Factor graphs---but this is only the beginning. 
 %
 % This chapter, based on a collection of unpublished notes, 
-In this chapter, we will see how a wide variety of other mathematical models and fragments of epsitemic information can be implicitly viewed as PDGs.
+In this chapter, we will see how a wide variety of other mathematical models and fragments of epistemic information can be implicitly viewed as PDGs.
 
 
 \section{Probabilities and Random Variables}
     \label{sec:prob-as-pdg}
 
 Probability is the dominant way that computer computer scientists and
-microeconomists think about epistemic state.
+microeconomics think about epistemic state.
 This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
 must act as if it had probabilistic beliefs \cite{..,savage}.
 % Nevertheless, not everything is probabilistic---at least, not 
@@ -71,7 +71,7 @@ It turns out that all of these can be captured by PDGs.
     \label{sec:prob-widget}
     
 A cpd between discrete variables can be represented by
-    a stochastic matrix (i.e., a matirx whose rows sum to one).
+    a stochastic matrix (i.e., a matrix whose rows sum to one).
 It turns out that it is possible to use the machinery of PDGs
     to, effectively, give only one value of that matrix.
 That is, for any $p \in [0,1]$, we can construct a PDG
@@ -87,7 +87,7 @@ We now describe that construction.
 
 First, we introduce two new auxiliary variables.
 The first variable, which we might like to call ``$\Yy$'', but
-    mostly refer to as $\Yyshort$ to prevent confusion with the synonomous
+    mostly refer to as $\Yyshort$ to prevent confusion with the synonymous
     event, is a binary variable, with $\V(\Yyshort) = \{y, \lnot y\}$,
     and takes the value $y$ if $Y=y$, and $\lnot y$ if $Y \ne y$.
 The second variable, which we would like to call ``$\XxYy$'',
@@ -187,6 +187,8 @@ is to prove that it behaves as we should expect,
 semantically.
 % , in the case we're interested in.
 
+\TODO[ FIX can-arise type problem below]
+
 \begin{prop}
     If $\dg M$ is a PDG, then 
     \[
@@ -203,6 +205,11 @@ semantically.
     \qedhere
     \]
 \end{prop}
+\begin{proof}
+    Suppose $\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}$
+\end{proof}
+
+We have shown that the effect of our widget on a PDG's set-of-distributions semantics is precisely to restrict to distributions $\mu$ in which $\mu(y|x) = p$. 
 
 \begin{prop}%\label{lem:inc-inc-eq}
     % For all PDGs $\dg M$ with $\bbeta \ge \mat 0$ and all $\gamma > 0$, we have that
@@ -313,7 +320,7 @@ consistent with a PDG containing $p$ and $q$.
     \end{tikzpicture}~~}.
 \]
 
-Now, supose we have a distance metric $d$ on a spce $X$.
+Now, suppose we have a distance metric $d$ on a space $X$.
 For $k \in [1,\infty)$, 
 the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
 \[  
@@ -520,10 +527,45 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
     Thus, $\Bel(U) = \sum_{A \subseteq U} m(A) \le \sum_{\omega \in U} \mu(W{=}\omega) = \mu(U)$.
     Similarly, if $\omega \in U$, then it must be that $A \cap U \ne \emptyset$, 
     so $\mu(U) \le  \sum_{A : A \cap U \ne \emptyset} m(A) = \Plaus(U)$.
+
+    % For the reverse direction, suppose that $\mu \in \Delta \Omega$ satisfies
+    % $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$.
+    For the reverse direction, we first need to build up a few concepts first.  
+    Following \citet[Theorem 2.6.1]{halpern-RAU}, let $\mathcal P_\Bel := \{ \mu \in \Delta \Omega : \Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega \}$. 
+    \unskip\footnote{For observant readers who followed the reference: the second condition is redundant, so this really is the same definition as in \cite{halpern-RAU}.}
+    According to that theorem, for every $U \subseteq \Omega$, we know that $\Bel(U) = \inf_{\mu' \in \mathcal P_\Bel} \mu'(U)$, and $\Plaus(U) = \sup_{\mu' \in \mathcal P_\Bel} \mu'(U)$.  Since $\mathcal P_\Bel$ is closed and bounded, the infimum and supremum are achieved. For a given $U$, let $\mu_*^{U}$ and $\mu^*_{U}$ denote the minimizing and maximizing distributions, respectively, so that $\Bel(U) = \mu_*^{U}(U)$ and $\Plaus(U) = \mu^*_{U}(U)$.  
+
+    We can now address the reverse direction directly. Suppose that $\mu$ satisfies
+    $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$---that is, $\mu \in \mathcal P$. We now construct a cpd $q(W \mid V)$ according to 
+    \[
+        q(\omega \mid A) := \mu_*^{A}(\omega) 
+            + \frac{\mu(A) - \Bel(A)}{\Plaus(A) - \Bel(A)} (\mu^*_{A}(\omega) - \mu_*^{A}(\omega) ).
+    \]
+    $q(W|A)$ is a probability distribution for every fixed $A$, since it is a convex combination of two probability measures.
+    % \begin{align*}
+    %     % \Big(\text{ e.g., })
+    %     \sum_{\omega \in \Omega} q(\omega \mid A)
+    %     &= \sum_{\omega \in \Omega} \mu_*^{(A)}(\omega) 
+    %     + \frac{\mu(U) - \Bel(U)}{\Plaus(U) - \Bel(U)} \sum_{\omega \in \Omega} (\mu^*_{(A)}(\omega) - \mu_*^{(A)}(\omega) ) 
+    %     = 1 + 0. 
+    % \end{align*}
+    We claim that the distribution $\bar\mu(V, W) := m(V) q(W | V)$ is an extension of $\mu$ and an element of $\SD{\dg M_{\Bel}}$. 
+    \begin{itemize}
+        \item We start by showing that $\bar\mu(W) = \mu(W)$. 
+        \begin{align*}
+            &\sum_{A \subseteq \Omega} \bar\mu(A, \omega)  \\
+            &= \sum_{A \subseteq \Omega} m(A)  
+            \mu_*^{(A)}(\omega) 
+            + 
+            \sum_{A \subseteq \Omega} m(A) \frac{\mu(A) - \Bel(A)}{\Plaus(A) - \Bel(A)} (\mu^*_{A}(\omega) - \mu_*^{A}(\omega) )\\
+            &=
+        \end{align*}
+        \item 
+    Clearly its marginal on $V$ is $m$, as required. 
+    \end{itemize}
     
-    Now for the reverse direction. Suppose $\mu \in \Delta \Omega$ satisfies
-    $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$. 
-    
+
+
     
     \textbf{(b)}~
     Let $\mathcal P := \{ \bar\mu \in \Delta(2^\Omega \times \Omega) : \bar\mu(W \in U) = \bar\mu(W \in V) = 1\}$ be the set of all distributions satisfying the hard constraints

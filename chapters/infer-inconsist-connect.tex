@@ -3,6 +3,13 @@
 
 \section{A Semantic Connection}
 
+Recall that the inconsistency of a PDG is the score of its best-scoring distribution:
+\[
+    \aar{\dg M} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}(\mu).
+\]
+Clearly, inconsistency $\aar{ \,\cdot\, }$ 
+
+\TODO
 
 % \chapter{The Deep Connection between Inference and Inconsistency}
 \section{Approximation}
@@ -63,7 +70,7 @@ a conditional probability, not a \cactree.
 While a \cactree\ does allow us to compute conditional
 probabilities, 
 an $\epsilon$-close \actree\ does not give us $\epsilon$-close answers
-    to probabilistic queries, especially those conditioned on improbabable events (i.e., finding $\Pr(Y{=}y|X{=}x)$ when $\Pr(X{=}x) \approx 0$).
+    to probabilistic queries, especially those conditioned on improbable events (i.e., finding $\Pr(Y{=}y|X{=}x)$ when $\Pr(X{=}x) \approx 0$).
 Nevertheless, because precision is so cheap,
 the interior point method behind \cref{theorem:main}
 can still be used as a subroutine to solve \ApproxInferUniq. 
@@ -123,12 +130,12 @@ in three key ways.
 \end{enumerate}
 
 See the proof for details. 
-One immediate corrolary of \cref{theorem:approx-infer} is that
+One immediate corollary of \cref{theorem:approx-infer} is that
 \ApproxInferUniq\ $\subseteq \mathsf{EXP}$, without the assumption of bounded treewidth.
 
 
-It may be worth noting that there is at least one instance in the literature where \emph{approximate} Bayesian Network (BN) inference is tractable for a subclass of models other than those of bounded treewidth: \textcite{Dagum-Luby-approximate} give a randomzied algorithm for the special class of Bayesian Networks that do not have extreme conditional probabilities. Specifically they show that, assuming a network with $N$ nodes, the inference problem is in $\mathsf{RP}(N, \nf1\epsilon)$. 
-In addition to restricting to a differet class of models (bounded conditional probabilities, but not bounded treewidth), their approximation 
+It may be worth noting that there is at least one instance in the literature where \emph{approximate} Bayesian Network (BN) inference is tractable for a subclass of models other than those of bounded treewidth: \textcite{Dagum-Luby-approximate} give a randomized algorithm for the special class of Bayesian Networks that do not have extreme conditional probabilities. Specifically they show that, assuming a network with $N$ nodes, the inference problem is in $\mathsf{RP}(N, \nf1\epsilon)$. 
+In addition to restricting to a different class of models (bounded conditional probabilities, but not bounded treewidth), their approximation 
     algorithm in another significant respect: it is polynomial in $\nf1\epsilon$, rather than in $\log(\nf1\epsilon)$. 
 Thus, the time it requires is exponential with respect to the number of requested digits,
     while our algorithm takes linear time.
@@ -217,7 +224,7 @@ While it is a clean result, part (a) is unsatisfying as a complexity result beca
 Part (b) fleshes out the algorithm of part (a) more precisely 
     by reducing to inconsistency approximation (which we now know is computable), 
     and also extends the procedure to handle to conditional probability queries. 
-This leads to a significantly more complex analysis, and a more expensive reuction, although it is possible that much of the difference in the costs is due to loose bounds in our analysis. 
+This leads to a significantly more complex analysis, and a more expensive reduction, although it is possible that much of the difference in the costs is due to loose bounds in our analysis. 
 Part (c) is a straightforward observation in light of 
     the results in \cref{sec:clique-tree-expcone}.
 
@@ -268,7 +275,7 @@ by reduction to SAT and \#SAT, respectively.
     We prove this by reduction to \#SAT. Again, let $\varphi$ be some CNF formula over $\mat X$, and construct
 	$\dg M_\varphi$ as in \hyperref[proof:consistent-NP-hard]{the proof} of
 	\Cref{theorem:consistent-NP-hard}.
-	Furthemore, let $\bbr{\varphi} := \{ \mat x : \mat x \models \varphi \}$ be the set of  assingments to $\mat X$ satisfying $\varphi$, and $\#_\varphi := |\bbr{\varphi}|$ denote the number such assignments. We now claim that
+	Furthermore, let $\bbr{\varphi} := \{ \mat x : \mat x \models \varphi \}$ be the set of  assignments to $\mat X$ satisfying $\varphi$, and $\#_\varphi := |\bbr{\varphi}|$ denote the number such assignments. We now claim that
 	\begin{equation}\label{eqn:number-of-solns}
 		\#_\varphi = \exp \left[- \frac1\gamma \aar{ \dg M_\varphi }_\gamma \right].
 	\end{equation}
@@ -353,7 +360,7 @@ by reduction to SAT and \#SAT, respectively.
 						+ \alpha_{j,0} \H_\mu(C_j) \Big],
 	\]
 	where $\alpha_{j,0}$ and $\alpha_{j,1}$ are values of $\alpha$ for the edges of $\dg M_\varphi$, which we have not specified because they are rendered irrelevant by the fact that their corresponding cpds are deterministic. We now show how this plays out in the present case.
-	Any $\mu \in \Delta\big[\bbr{\varphi} \times \{\mat 1\}\big]$ we consider has a degenerate marginal on $\mat C$. Specifcally, for every $j$, we have $\mu(C_j) = \delta_1$, and since entropy is non-negative and never increased by conditioning,
+	Any $\mu \in \Delta\big[\bbr{\varphi} \times \{\mat 1\}\big]$ we consider has a degenerate marginal on $\mat C$. Specifically, for every $j$, we have $\mu(C_j) = \delta_1$, and since entropy is non-negative and never increased by conditioning,
 	$$
 		0 \le \H_\mu(C_j \mid \mat X_j) \le \H_\mu(C_j) = 0.
 	$$
@@ -603,7 +610,7 @@ It is (notationally) simpler to state (and equally easy to prove) this result in
     and hence there is a unique joint distribution which minimizes it. We now  show that the overall inconsistency is strictly convex in $h$.
 
 	Suppose that $h_1(Y)$ and $h_2(Y)$ are two distributions over $Y$.
-    Let $\mu_1, \mu_2$ and $\mu_\lambda$ be the joint distributions that minimze $\bbr{\dg M + h_1}_\gamma$ and $\bbr{\dg M + h_2}_\gamma$, respectively.
+    Let $\mu_1, \mu_2$ and $\mu_\lambda$ be the joint distributions that minimize $\bbr{\dg M + h_1}_\gamma$ and $\bbr{\dg M + h_2}_\gamma$, respectively.
 	For every $\lambda \in [0,1]$, define $h_\lambda := (1-\lambda) h_1 + \lambda h_2$,
     $\mu_\lambda := (1-\lambda) \mu_1 + \lambda \mu_2$, and
     $\mu_\lambda^*$ to be a minimizer of $\bbr{\dg M + h_\lambda}_\gamma$.
@@ -629,7 +636,7 @@ It is (notationally) simpler to state (and equally easy to prove) this result in
 				\label{eqn:D-cvx}
 	\end{align}
 	If $\mu_1 \ne \mu_2$ then since $\bbr{\dg M}$ is strictly convex, \eqref{eqn:score-cvx} must
-	be a strict inequality. On the other hand, if $\mu_1 = \mu_2$, then since $\mu_\lambda = \mu_1 = \mu_2$ and $\thickD$ is stricly convex in its second argument when its first argument is fixed, \eqref{eqn:D-cvx} must be a strict inequality.
+	be a strict inequality. On the other hand, if $\mu_1 = \mu_2$, then since $\mu_\lambda = \mu_1 = \mu_2$ and $\thickD$ is strictly convex in its second argument when its first argument is fixed, \eqref{eqn:D-cvx} must be a strict inequality.
 	In either case, the sum of the two inequalities must be strict.
     Combining this with the first inequality, we get
 	\begin{align*}
@@ -900,8 +907,8 @@ $}}
 that if the optimal distributions corresponding to adding $p_1$ and $p_2$ to the PDG
 ($\mu_1$ and $\mu_2$, respectively) are far apart, then so are
 $f(p_1)$ and $f(p_2)$.  But what if these optimal distributions are close together?
-It turns out that if $\mu_1 \approx \mu_2$ then it's still the case that $f(p_1)$ and $f(p_2)$ are far apart, provied that $p_1$ and $p_2$ are.
-However, showing this requires an entirely appraoch, which we pursue in \cref{lem:D-lowerbound}.
+It turns out that if $\mu_1 \approx \mu_2$ then it's still the case that $f(p_1)$ and $f(p_2)$ are far apart, provided that $p_1$ and $p_2$ are.
+However, showing this requires an entirely approach, which we pursue in \cref{lem:D-lowerbound}.
 But first, we need two intermediate technical results.
 
 \begin{lemma} \label{lem:score-gradient-bound}
@@ -1044,7 +1051,7 @@ With these definitions, we have $f(b) - f(z) \ge
 Observe that if $m_z$ were equal to $z$, then $\blacksquare_0$ would equal $\kldiv{z}{b}$. But in fact we know that $m_z > z$.
 It is easy to see that that $\blacksquare_0$ is linear in $m_z$ with positive slope, since $z > b$ and $1-b  > 1-z$. It follows that $\blacksquare_0 > \kldiv zb$.
 
-Let's step back for a momemnt.
+Let's step back for a moment.
 \cref{lem:strongly-cvx-ish} shows that $f(b)$ and $f(z)$ cannot be too close, provided that $\mu_z^*$ and $\mu_b^*$ are far apart.
 In the equations above, we can see the beginnings of a complementary argument: if $\mu_z^*$ and $\mu_b^*$ are close together, then $m_b \approx m_b$, and so all terms apart from $\blacksquare_0$ (i.e., $\squa1+\squa2+\squa4$) go to zero. And yet, because of $\squa0$, $f(b)$ and $f(z)$ remain far apart.
 To make this argument precise, we now merge $\squa1$, $\squa2$, and $\squa4$ back together, calculating
@@ -1164,7 +1171,7 @@ Applying these two transformations in our case, we find:
         \log \left( 1 +  \frac{16}{k^2} \gamma (z-b)^2 \right)
     .
 \end{align*}
-Finally, since $f(b) - f(z) \ge \frac\gamma2 \delta_{\text{worst}}^2$, to get lower bound for $f(b) - f(z)$, we simply need to square this lower bound for $\delta_{\text{worst}}$ and mutliply by $\gamma/2$.
+Finally, since $f(b) - f(z) \ge \frac\gamma2 \delta_{\text{worst}}^2$, to get lower bound for $f(b) - f(z)$, we simply need to square this lower bound for $\delta_{\text{worst}}$ and multiply by $\gamma/2$.
 As a result,
 \begin{align*}
     f(b) - f(z) ~&\ge~
@@ -1233,7 +1240,7 @@ We will perform two analyses, the second building on the first.
 \end{enumerate}
 
 We begin by describing our algorithm,
-which uses the first variant of the inconsistency procudure
+which uses the first variant of the inconsistency procedure
     (the one that tells us which of two PDGs is more inconsistent)
 to produce a sequence of approximations
 $(p_1, p_2, \ldots)$
@@ -1245,7 +1252,7 @@ that converges exponentially to
 \]
 through a variant of binary search.
 More precisely, the algorithm we present below is an extremely close relative of 
-    an algorithm known to the competetive programming community 
+    an algorithm known to the competitive programming community 
     as \emph{trinary search} \cite{trinary-search}.
 In some ways it is slightly more efficient,
     but its analysis is more complex. 
@@ -1361,7 +1368,7 @@ this algorithm satisfies an important invariant:
                 Thus, we can rule out all such $y$ as possible minimizers of $f$, so
                 we can restrict our attention to $[a, b]$, which contains $p^*$ (and $x$).
 
-                \item On the other hand, if $f(z) > f(b)$, then it must be the case that no $y < z$ can be a minimizer of $f$ by convexity, with the same reasing as above.
+                \item On the other hand, if $f(z) > f(b)$, then it must be the case that no $y < z$ can be a minimizer of $f$ by convexity, with the same reasoning as above.
                 (Namely, if $f(y) < f(z)$ then the segment between $(y,f(y))$ and $(b,f(b))$ lies below $(z,f(z))$, contradicting convexity).
                 Thus the true minimizer $p^*$ lies in $[z,c]$, an interval which contains $b$.
             \end{itemize}
@@ -1385,7 +1392,7 @@ this algorithm satisfies an important invariant:
 
     We have shown that both $b$ and $p^*$ lie within $[a,c]$,
     and we know that, at termination, $|c-a| < \epsilon$.
-    Therefore, the final value of $b$ (i.e., the ouput of the algorithm)
+    Therefore, the final value of $b$ (i.e., the output of the algorithm)
         must be within $\epsilon$ of $p^*$.
 
 
@@ -1420,7 +1427,7 @@ The obvious approach to implementing the inconsistency calculation subroutine
     it must be the case that $f(b) > f(z)$, $f(z) > f(b)$, or
             $f(b) > f(\frac{b+z}{2})$.  
     In the last case, we can act as if $f(b) > f(z)$, and 
-    the algorithitm will be correct, because
+    the algorithm will be correct, because
     the argument supporting \cref{claim:reduction-works} still applies.
     Thus, by running the subroutine on all three questions until one of them
         returns true, and then aborting the other two calculations, we can see that
@@ -1441,7 +1448,7 @@ The obvious approach to implementing the inconsistency calculation subroutine
     for the following procedure:
     \begin{itemize}
         \item
-        Run the inconsitency calculation procedure to obtain
+        Run the inconsistency calculation procedure to obtain
         approximations to $f(z)$ and $f(b)$ that are correct to within
         \begin{equation}
             \epsilon' :=
@@ -1673,13 +1680,13 @@ The obvious approach to implementing the inconsistency calculation subroutine
     \end{align*}
     The definition of $\epsilon'$ in \eqref{eq:query-precision} is constructed
     precisely to make sure that this is never true.
-Therefore, the algorithmn cannot choose the wrong branch.
+Therefore, the algorithm cannot choose the wrong branch.
 
 
 
 
 
-    \textbf{Complexity Analaysis.}
+    \textbf{Complexity Analysis.}
     We now provide a more careful analysis of the runtime of the algorithm.
     We already have a bound on the number of iterations required;
     what is missing is a bound on how long it takes to compute $\ll$, i.e., to compare the approximations $\tilde f(z)$ and $\tilde f(b)$.
@@ -1727,7 +1734,7 @@ Therefore, the algorithmn cannot choose the wrong branch.
         &\in O \left(\log\frac1\epsilon + |\log {\gamma}\, | + \log\aar{\dg M}_\gamma \right).
     \end{align*}
 
-    Recall that the process takes at most $O(\log \frac1\epsilon)$ iterations---but in the process, produces the same number of bits of ouput, since $\log(\nf1\epsilon)$ is the number of bits need to encode the final approximation to $p^*$.
+    Recall that the process takes at most $O(\log \frac1\epsilon)$ iterations---but in the process, produces the same number of bits of output, since $\log(\nf1\epsilon)$ is the number of bits need to encode the final approximation to $p^*$.
     So, accounting for the time needed to compare $f(z)$ and $f(b)$,
         the algorithm runs in time
     \begin{align*}
