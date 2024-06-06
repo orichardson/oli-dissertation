@@ -108,14 +108,16 @@ With these definitions in place, there is
     now an obvious way to add an arc from the variable $(\XxYyshort)$
     to the variable $\Yyshort$, together with a cpd asserting that $\Pr(Y{=}y|X{=}x)=p$.
 This cpd is written as a stochastic matrix $\hat p$ on the right of the figure below.
-The PDG we have just constructed is illustrated on the left of the figure below.
+The PDG we have just constructed is illustrated on the left of the \cref{fig:pyx-widget}.
 In addition to $\hat p$ and the new variables, this PDG
     includes the structural constraints $s_1$ and $s_2$ needed to define the variables
     $\XxYyshort$ and $\Yyshort$ in terms of $X$ and $Y$; they are deterministic functions,
     drawn in double-headed gray arrows.
 % are illustrated below.
 
-\begin{center}
+% \begin{center}
+\begin{figure}
+    \centering
 % $\dg M^{y|x=p}:=$
     \colorlet{proofmatt}{white}
     \begin{tikzpicture}[center base]
@@ -146,22 +148,10 @@ In addition to $\hat p$ and the new variables, this PDG
 
         \draw[arr2] (XxYy) to node[above]{$\hat p$} (Yy);
     \end{tikzpicture}
-    \hspace{0.9cm}
+    % \hspace{0.6cm}
+    \hfill
     \begin{minipage}{0.3\textwidth}
         \begin{align*}
-            s_1(\XxYyshort|X,Y) &:= {\singlespacing\begin{cases}
-                x & \text{if $X = x$} \\
-                y & \text{if $X \ne x$ and $Y=y$} \\
-                \lnot y & \text{if $X \ne x$ and $Y\ne y$} \\
-            \end{cases}}\\
-            s_2(\Yyshort|Y) &:= {\singlespacing\begin{cases}
-                y & \text{if $Y=y$} \\
-                \lnot y & \text{if $Y\ne y$} \\
-            \end{cases}}\\[1ex]
-            % p \mathrm{~or~} b~(X) &:= \begin{cases}
-            % 	p(B) & \text{if $X = a^*$} \\
-            % 	\delta_{B=b} & \text{if $X = b$}
-            % \end{cases}
             \hat p(\Yyshort|\XxYyshort) &= \begin{matrix}
                 &  \begin{matrix} y & \lnot y \end{matrix} \\
                 \begin{matrix} x \!\! \\ y \!\! \\ \lnot y \!\! \end{matrix} &
@@ -170,12 +160,27 @@ In addition to $\hat p$ and the new variables, this PDG
                         \;1 & 0  \;\\
                         \;0 & 1 \;
                     \end{bmatrix}
-            \end{matrix}
+            \end{matrix}\\[2ex]
+            s_1(\XxYyshort|X,Y) &:= \delta{\singlespacing\begin{cases}
+                x & \text{if $X = x$} \\
+                y & \text{if $X \ne x$ and $Y=y$} \\
+                \lnot y & \text{if $X \ne x$ and $Y\ne y$} \\
+            \end{cases}}\\
+            s_2(\Yyshort|Y) &:= \delta{\singlespacing\begin{cases}
+                y & \text{if $Y=y$} \\
+                \lnot y & \text{if $Y\ne y$} \\
+            \end{cases}}
+            % p \mathrm{~or~} b~(X) &:= \begin{cases}
+            % 	p(B) & \text{if $X = a^*$} \\
+            % 	\delta_{B=b} & \text{if $X = b$}
+            % \end{cases}
         \end{align*}
-
     \end{minipage}
-\end{center}
-    \medskip
+% \end{center}
+    % \medskip
+    \caption{A widget PDG for capturing a single conditional probability, a statement of the form $\Pr(Y{=}y\mid X{=}x) = p$, for $p \in [0,1]$.}
+    \label{fig:pyx-widget}
+\end{figure}
 
 So, when we add $\Pr(Y=y|X=x) = p$ to a PDG $\dg M$, what we really mean is:
 first convert construct a widget as above, and add that structure (i.e., the new variables
@@ -192,6 +197,9 @@ semantically.
 \begin{prop}
     If $\dg M$ is a PDG, then 
     \[
+    \mu \in \SD[\big]{\dg M} \text{~~and~~} \mu(Y{=}y|X{=}x) = p
+    \quad\iff\quad
+    \mu \text { extends to }
     % \SD[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}
          % = \Big\{ \mu \in \SD[\Big]{\dg M}  ~\Big|~
          %        \mu(y|x) = p
@@ -199,10 +207,7 @@ semantically.
          % =  \SD[\Big]{\dg M} \cap  \Big\{ \mu : 
          %        \mu(y|x) = p
          %    \Big\}
-    \mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}
-    \quad\iff\quad
-    \mu \in \SD[\big]{\dg M} \text{~~and~~} \mu(Y{=}y|X{=}x) = p.
-    \qedhere
+    \bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}
     \]
 \end{prop}
 \begin{proof}
@@ -238,7 +243,7 @@ We have shown that the effect of our widget on a PDG's set-of-distributions sema
         &\aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma}
             \\&\le \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) 
             \\&= \bbr{\dg M}_\gamma(\mu) + \Ex_{\mu}\left[
-                \log \frac{\hat\mu(\Yyshort | \XxYyshort)}{ \hat p(\Yyshort | \XxYyshort)} \right]\\
+                \log \frac{\hat\mu(\Yyshort | \XxYyshort)}{ \hat p(\Yyshort | \XxYyshort)} \right]
             \\&= \bbr{\dg M}_\gamma(\mu) +
                 \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} \\
                 &\hphantom{=\bbr{\dg M}_\gamma(\mu)}
@@ -247,7 +252,8 @@ We have shown that the effect of our widget on a PDG's set-of-distributions sema
                 \mu(X{=}x,Y{=}y) \log(1)
                 + \mu(X{=}x,Y{\ne} y) \log(1) 
             \\&= \bbr{\dg M}_\gamma(\mu)
-            \\&= \aar{\dg M}_\gamma.
+            % \\&
+            = \aar{\dg M}_\gamma.
     \end{align*}}
     The equality between the third and fourth lines
     is perhaps the trickiest to see, but follows
@@ -295,6 +301,9 @@ We have shown that the effect of our widget on a PDG's set-of-distributions sema
     
 \subsection{Relations and Constraints}
     \label{sec:relation-widget}
+
+    
+
 \subsection{Couplings}
     \label{sec:coupling-widget}
 Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
@@ -511,10 +520,24 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
         \end{tikzpicture}}
          = - \log \Plaus ( U ).
         $
-    \item 
+    % \item 
     
     \end{enumerate}
 \end{theorem}
+
+% A few remarks before we prove the theorem. 
+This theorem, which we shall prove momentarily, 
+shows that PDGs of this form coincide semantically with Dempster-Shafer belief functions. 
+Part (a) states that the set-of-distribution semantics is precisely the set-of-distribution semantics for $\Bel$.
+Indeed, if we follow the conventions of \citet[Theorem 2.6.1]{halpern-RAU} and define $\mathcal P_\Bel := \{ \mu \in \Delta \Omega : \Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega \}$, 
+\unskip\footnote{For observant readers who followed the reference: it is not hard to see that the upper and lower bounds are equivalent; \citet{halpern-RAU} uses only the lower bound, but we give both for symmetry.}
+then we have shown that $\mu$ is compatible with $\dg M_{\Bel}$ if and only if is an element of $\mathcal P_{\Bel}$. 
+
+Meanwhile, part (b) states that something quite intuitive: after adding a constraint
+that event $U$ occurs, the resulting degree of inconsistency is a direct function of the (im)plausibility of $U$ to begin with---if $U$ was completely plausible, there is no inconsistency in learning $U$. 
+
+Now for the proof of the theorem.
+
 \begin{lproof}
     \textbf{(a)}~
     The forwards direction is easy. 
@@ -528,20 +551,66 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
     Similarly, if $\omega \in U$, then it must be that $A \cap U \ne \emptyset$, 
     so $\mu(U) \le  \sum_{A : A \cap U \ne \emptyset} m(A) = \Plaus(U)$.
 
-    % For the reverse direction, suppose that $\mu \in \Delta \Omega$ satisfies
-    % $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$.
-    For the reverse direction, we first need to build up a few concepts first.  
-    Following \citet[Theorem 2.6.1]{halpern-RAU}, let $\mathcal P_\Bel := \{ \mu \in \Delta \Omega : \Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega \}$. 
-    \unskip\footnote{For observant readers who followed the reference: the second condition is redundant, so this really is the same definition as in \cite{halpern-RAU}.}
-    According to that theorem, for every $U \subseteq \Omega$, we know that $\Bel(U) = \inf_{\mu' \in \mathcal P_\Bel} \mu'(U)$, and $\Plaus(U) = \sup_{\mu' \in \mathcal P_\Bel} \mu'(U)$.  Since $\mathcal P_\Bel$ is closed and bounded, the infimum and supremum are achieved. For a given $U$, let $\mu_*^{U}$ and $\mu^*_{U}$ denote the minimizing and maximizing distributions, respectively, so that $\Bel(U) = \mu_*^{U}(U)$ and $\Plaus(U) = \mu^*_{U}(U)$.  
-
-    We can now address the reverse direction directly. Suppose that $\mu$ satisfies
-    $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$---that is, $\mu \in \mathcal P$. We now construct a cpd $q(W \mid V)$ according to 
-    \[
-        q(\omega \mid A) := \mu_*^{A}(\omega) 
-            + \frac{\mu(A) - \Bel(A)}{\Plaus(A) - \Bel(A)} (\mu^*_{A}(\omega) - \mu_*^{A}(\omega) ).
+    % For the reverse direction, 
+    The reverse direction is far more subtle than it appears;
+        here we present a relatively compact proof of it based on Hall's
+        Mariage Theorem \cite{Hall1935}. 
+    Suppose that $\mu \in \Delta \Omega$ satisfies
+        $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$.
+    Assume for simplicity that the possible outputs of $m$ and $\mu$ are rational numbers, and let $N$ be their common denominator. 
+    We now construct a bipartite graph $G = (L, R, \mathcal E)$ be a bitartite graph with $|L| = |R| = N$ vertices in each part.
+    The left part $L = \sqcup_{\omega \in \Omega} L_\omega$ 
+    is partitioned to be in bijection with the elements of $\Omega$, with
+        $|L_\omega| = \mu(\omega)\cdot N$. 
+    % (This is made possible by our assumption that $\mu$ is )
+    Symmetrically, $R = \sqcup_{A \in \Omega} R_A$, where each $R_A$
+        consists of $|R_A| = m(A) \cdot N$ vertices.
+    For notational convenience, for $u \in L$, let $\omega_u$ be the element of $\Omega$ corresponding to the partition containing $u$; symmetrically,  let $A_v$ be the subset associated with the partition of $v \in R$. 
+    Finally, let $\mathcal E := \{ (u,v) \in L \times R : \omega_u \in A_v\}.$
+    Observe that a perfect matching $E \subseteq \mathcal E$ in the graph $G$ amounts to a coupling between the marginal distributions $\mu \in \Delta\Omega$ and $m \in \Delta(2^\Omega)$, supported only on $(\omega, A)$ such that $\omega \in A$.
+    To be fully precise, that coupling would be a joint distribution $\bar\mu_E(\omega, A) := \frac1N |\{ (u,v) \in E : \omega_u \in A_v \}|$ that is both an element of $\SD{\dg M_\Bel}$ and an extension of $\mu$. 
+    What remains is only to show that there exists such a perfect matching, for which we turn to Hall's Mariage criterion.     
+    
+    Hall's Mariage Theorem states that there exists a perfect matching
+    for $G$ if and only if, $|T| \le  |\partial_G(T)|$ for all $T \subseteq L$,
+    where $\partial_G(T) = \{ v \in R : \exists u \in T.~\omega_u \in A_v\}$ is the set of vertices connected to $T$ by an edge. 
+    We now prove that this is the case.
+    Choose any subset $T \subseteq L$ of vertices, and define $U_T := \{ \omega \in \Omega : T \cap L_\omega \ne \emptyset \}$ to be the elements of $\Omega$ represented by some vertex in $T$. 
+    On one hand,
+    \[ 
+        |T| \le | \bigcup_{u \in T} L_{\omega_u} | 
+            =  \sum_{\substack{\omega \in \Omega \\ L_\omega \cap T \ne\emptyset }}
+            = \mu(U_T).
     \]
-    $q(W|A)$ is a probability distribution for every fixed $A$, since it is a convex combination of two probability measures.
+    On the other hand, 
+    \begin{align*}
+        |\partial_G(T)] &=  |\{ v \in R : \exists u \in T.~\omega_u \in A_v \}| \\
+            &= \sum_{\substack{A \subseteq \Omega \\ \exists u \in T.~ \omega_u \in A}} m(A)
+            = \sum_{\substack{A \subseteq \Omega \\ U_T \cap A = \emptyset}} m(A)
+            = \Plaus(A).  
+    \end{align*}
+    But recall that, by assumption, $\mu(U_T) \le \Plaus(U_T)$! This allows us to 
+    chain together the previous seven (in)equalities, thereby proving that $|T| \le |\partial_G(T)|$ as desired.
+    By Hall's criterion, this means there must exist a perfect matching, and we have already seen this means $\mu$ can be extended to some $\bar\mu \in \SD{\dg M_{\Bel}}$, as desired.
+    % \begin{align*}
+    %     \mu(U_T) &\le \Plaus(U_T)
+    %         &= \sum_{\substack{A \subseteq \Omega \\ A \cap U_T \ne \emptyset}} m(A)
+    %         &= |\{ v \in R : \exists u \in T :  \}
+    % \end{align*}
+    % $\mathcal A_T := \{ A \subseteq \Omega : \exists u \in T : \omega_u \in A\}$.
+    % \begin{align*}
+    %     \sum_{\substack{A \subseteq \Omega \\ A \cap U \ne \emptyset}}
+    % \end{align*}
+    % For the reverse direction, we first need to build up a few concepts first.  
+    % According to that theorem, for every $U \subseteq \Omega$, we know that $\Bel(U) = \inf_{\mu' \in \mathcal P_\Bel} \mu'(U)$, and $\Plaus(U) = \sup_{\mu' \in \mathcal P_\Bel} \mu'(U)$.  Since $\mathcal P_\Bel$ is closed and bounded, the infimum and supremum are achieved. For a given $U$, let $\mu_*^{U}$ and $\mu^*_{U}$ denote the minimizing and maximizing distributions, respectively, so that $\Bel(U) = \mu_*^{U}(U)$ and $\Plaus(U) = \mu^*_{U}(U)$.  
+    %
+    % We can now address the reverse direction directly. Suppose that $\mu$ satisfies
+    % $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$---that is, $\mu \in \mathcal P$. We now construct a cpd $q(W \mid V)$ according to 
+    % \[
+    %     q(\omega \mid A) := \mu_*^{A}(\omega) 
+    %         + \frac{\mu(A) - \Bel(A)}{\Plaus(A) - \Bel(A)} (\mu^*_{A}(\omega) - \mu_*^{A}(\omega) ).
+    % \]
+    % $q(W|A)$ is a probability distribution for every fixed $A$, since it is a convex combination of two probability measures.
     % \begin{align*}
     %     % \Big(\text{ e.g., })
     %     \sum_{\omega \in \Omega} q(\omega \mid A)
@@ -549,20 +618,20 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
     %     + \frac{\mu(U) - \Bel(U)}{\Plaus(U) - \Bel(U)} \sum_{\omega \in \Omega} (\mu^*_{(A)}(\omega) - \mu_*^{(A)}(\omega) ) 
     %     = 1 + 0. 
     % \end{align*}
-    We claim that the distribution $\bar\mu(V, W) := m(V) q(W | V)$ is an extension of $\mu$ and an element of $\SD{\dg M_{\Bel}}$. 
-    \begin{itemize}
-        \item We start by showing that $\bar\mu(W) = \mu(W)$. 
-        \begin{align*}
-            &\sum_{A \subseteq \Omega} \bar\mu(A, \omega)  \\
-            &= \sum_{A \subseteq \Omega} m(A)  
-            \mu_*^{(A)}(\omega) 
-            + 
-            \sum_{A \subseteq \Omega} m(A) \frac{\mu(A) - \Bel(A)}{\Plaus(A) - \Bel(A)} (\mu^*_{A}(\omega) - \mu_*^{A}(\omega) )\\
-            &=
-        \end{align*}
-        \item 
-    Clearly its marginal on $V$ is $m$, as required. 
-    \end{itemize}
+    % We claim that the distribution $\bar\mu(V, W) := m(V) q(W | V)$ is an extension of $\mu$ and an element of $\SD{\dg M_{\Bel}}$. 
+    % \begin{itemize}
+    %     \item We start by showing that $\bar\mu(W) = \mu(W)$. 
+    %     \begin{align*}
+    %         &\sum_{A \subseteq \Omega} \bar\mu(A, \omega)  \\
+    %         &= \sum_{A \subseteq \Omega} m(A)  
+    %         \mu_*^{(A)}(\omega) 
+    %         + 
+    %         \sum_{A \subseteq \Omega} m(A) \frac{\mu(A) - \Bel(A)}{\Plaus(A) - \Bel(A)} (\mu^*_{A}(\omega) - \mu_*^{A}(\omega) )\\
+    %         &=
+    %     \end{align*}
+    %     \item 
+    % Clearly its marginal on $V$ is $m$, as required. 
+    % \end{itemize}
     
 
 
@@ -601,7 +670,7 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
             \sum_{A \in \mathcal A_U}
                 \nu(A) \log \frac{\nu(A)}{m(A)} \\
     &\ge \Big({\textstyle\sum_{A \in \mathcal A_U} \nu(A)} \Big)
-        \log \frac{\pqty{\textstyle\sum_{A \in \mathcal A_U} \nu(A)}}{{\textstyle\sum_{A \in \mathcal A_U} m(A)}},
+        \log \frac{\textstyle\sum_{A \in \mathcal A_U} \nu(A)}{{\textstyle\sum_{A \in \mathcal A_U} m(A)}},
     \end{align*}
     by the log-sum inequality \cite{CoverThomas}.
     Moreover, the log-sum inequality states that this holds 
@@ -611,6 +680,7 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
     $\sum_{A \in \mathcal A_U} \nu(A) = 1$. Therefore, the inconsistency we have been calculating is equal to
     \[
         - \log \sum_{A \in \mathcal A_U} m(A) = - \log \Plaus(U).
+        \qedhere
     \]
 \end{lproof}
 
