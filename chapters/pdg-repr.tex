@@ -1,9 +1,9 @@
-\begin{abstract}
+% In this chapter, based on a 2021
 We introduce Probabilistic Dependency Graphs (PDGs), a new class of
-directed graphical models.   PDGs can capture inconsistent beliefs in a
+directed graphical models. PDGs can capture inconsistent beliefs in a
 natural way and are more modular than Bayesian Networks (BNs), in that
 they make it easier to incorporate new information and restructure the  
-representation.    We show by example how PDGs are an especially natural
+representation. We show by example how PDGs are an especially natural
 modeling tool.
 We provide three semantics for PDGs, each of which can be derived from a
 scoring function (on joint distributions over the
@@ -14,11 +14,11 @@ to a BN, this function is uniquely minimized by the distribution the
 BN represents, showing that PDG semantics extend BN semantics.  
 We show further that factor graphs
 and their exponential families
-can also be faithfully represented as PDGs%
-, while there are significant barriers to modeling a PDG with a factor graph.
-\end{abstract}
+can also be faithfully represented as PDGs,
+while there are significant barriers to modeling a PDG with a factor graph.
+% \end{abstract}
 
-\section{Introduction}
+\section{Introduction and Examples}
 
 In this paper we introduce yet another graphical
 tool
@@ -46,11 +46,11 @@ with locals lead her to believe that, with probility .1, the law
 prohibits floomps.
 
 The obvious way to represent this as a BN is to use two random variables
-$F$ and $G$ (respectively taking values $\{f, \lnot f\}$ and
+$\var F$ and $\var G$ (respectively taking values $\{f, \lnot f\}$ and
 $\{ g, \lnot g\}$),
 indicating whether  floomps and guns are prohibited.
-The semantics of a BN offer her two choices: either assume that $F$ and $G$
-to be independent and give (unconditional) probabilities of $F$ and $G$, or
+The semantics of a BN offer her two choices: either assume that $\var F$ and $\var G$
+to be independent and give (unconditional) probabilities of $\var F$ and $\var G$, or
 choose a direction of dependency, and give one of the two unconditional
 probabilities and a conditional probability distribution. 
 As there is no reason to choose either direction of dependence, the
@@ -84,8 +84,8 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
             $\vphantom{fg}g$ \& $\vphantom{fg}\lnot g$\\
              .05 \& .95\\
         };
-        \node[dpadded, circle, fill=black!08, fill opacity=1] (floomp) at (-\fignodedist,0) {$F$};
-        \node[dpadded, circle, fill=black!08, fill opacity=1] (gun) at (\fignodedist,0) {$G$};
+        \node[dpadded, circle, fill=black!08, fill opacity=1] (floomp) at (-\fignodedist,0) {$\var F$};
+        \node[dpadded, circle, fill=black!08, fill opacity=1] (gun) at (\fignodedist,0) {$\var G$};
     \end{tikzpicture}
     ~~\vrule~~
 	\begin{tikzpicture}[center base]
@@ -95,9 +95,9 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
         \def\newcptX{-0.2}
         \def\newcptY{-0.5}
                      
-		\node[dpadded, fill=white, draw=gray] (true)  at (0,2) {$\pdgunit$};
-		\node[dpadded] (floomp) at (-\fignodedist,\fignodeheight) {$F$};
-		\node[dpadded] (gun) at (\fignodedist,\fignodeheight) {$G$};			
+		\node[dpadded, fill=white, draw=gray] (true)  at (0,2) {$\var\pdgunit$};
+		\node[dpadded] (floomp) at (-\fignodedist,\fignodeheight) {$\var F$};
+		\node[dpadded] (gun) at (\fignodedist,\fignodeheight) {$\var G$};			
 		
 		\draw[arr] (true) to[bend left=0] coordinate(A) (floomp);
 		\draw[arr] (true) to[bend right=0] coordinate(B) (gun);
@@ -474,22 +474,22 @@ Although it is possible to formalize PDGS with hyperedges directly,
 and hyperedges are captured using a simple construction
 that involves adding an extra node.
 %
-\vfull{\unskip\footnote{In the factor graph literature,
-          especially with regard to loopy belief propagation
-          \cite{wainwright2007graphical}, it is common to
-          call a collection of marginals that are not
-          necessarily all compatible with a distribution
-          \emph{pseudomarginals}, making a PDG in some sense a
-          collection of `conditional' pseudomarginals. This
-          gives an alternate expansion of ``PDG'' 
-          as ``Pseudomarginal Dependency Graph'',
-          with nomenclature rooted in the literature.}}
+% \vfull{\unskip\footnote{
+%     In a large part of the graphical models community,
+%     it is common to  call a collection of marginals that are not
+%       necessarily all compatible with a distribution
+%       \emph{pseudomarginals} \cite{wainwright2008graphical}.
+%     Syntactially, a PDG is therefore 
+%     collection of (weighted) \emph{conditional} pseudomarginals. 
+%     This gives an alternate expansion of ``PDG'' 
+%      as ``Pseudomarginal Dependency Graph'',
+%      with nomenclature rooted in the literature.}}
 
 \begin{defn}\label{def:model}
 A \emph{Probabilistic Dependency Graph}
 is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \alpha, \beta)$, where 
-
-\begin{description}%
+%
+\begin{description}[topsep=0pt]%
 	\item[$\N$] \notation{$:\Set$}%
 		is a finite set of nodes, corresponding to variables;
 	\item[$\Ar$] \notation{$\subseteq \N \times \N \times \mathit{Label}$}%
@@ -497,16 +497,19 @@ is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \alpha, \beta)$, where
 		$S$ and target $T$ in $\N$;
 	\item[$\V$] \notation{$\N \to \mathbf{Set}$}%
 		associates each variable $N \in \N$ with a set $\V(N)$ of values that the variable $N$ can take;
-  	\item[$\mathbb P$] \notation{$:\big(\!({A,B,\ell})\colon\!\Ar \big) \to \V(A) \to \Delta\V(B)$}%
+  	\item[$\mathbb P$]
+        % \notation{$:\big(\!({A,B,\ell})\colon\!\Ar \big) \to \V(A) \to \Delta\V(B)$}%
+        \notation{$:\big(\!(\ed aXY \in \Ar \big) \to \V(X) \to \Delta\V(Y)$}%
 	associates to each edge $\ed aXY \in \Ar$
 	a distribution $\p_a(x)$ on $Y$ for each $x \in \V(X)$; 
 
-\item[$\alpha$] \notation{$:\Ar \to [0,1]$}
-associates to each edge $\ed aXY$ a non-negative number $\alpha_L$ which,
+\item[$\alpha$] \notation{$:\Ar \to \mathbb R$}
+associates to each edge $\ed aXY$ a number $\alpha_L$ which,
 roughly speaking, is the modeler's confidence in the functional
 dependence of $Y$ on $X$ implicit in $L$; 
-\item[$\beta$] \notation{$:\Ar \to \mathbb R^+$}
-associates to each edge $L$ a positive real number $\beta_L$,
+\item[$\beta$] 
+    \notation{$:\Ar \to \Rext$}
+associates to each edge $L$ a (possibly infinite) real number $\beta_L$,
 the modeler's 
 subjective confidence in the reliability of
 $\mathbb P$. 
@@ -520,9 +523,10 @@ ${\dg N} = (\Gr, \mathbb P)$ as an \emph{unweighted} PDG,
 and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
 $\bf 1$ is the constant function (i.e., so that $\alpha_L = \beta_L = 1$ for all $L$). 
 In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\alpha = {\bf 1}$
-and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.%
-\footnote{The appendix gives results for arbitrary $\alpha$.} 
+and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.
+% \footnote{The appendix gives results for arbitrary $\alpha$.} 
 \end{defn}
+
 If $\dg M$ is a PDG, we reserve the names 
 $\N^{\dg M}, \Ar^{\dg M}, \ldots$,
 for the components of $\dg M$, so that we may reference one without naming them
@@ -541,7 +545,7 @@ that the corresponding cpd is degenerate, effectively representing a determinist
 function $f : \V(A) \to \V(B)$. 
 
 \begin{constr}\label{constr:hyperedge-reducton}
-We can now explain how we capture   the multi-tailed edges that 
+We can now explain how we capture the multi-tailed edges that 
 were used in 
 \Crefrange{ex:smoking}{ex:grok-union}. 
 That notation can be viewed as shorthand for the graph that results by adding a new node at the junction representing the joint value of the nodes at the tails, with projections going back.  For instance,
@@ -634,24 +638,29 @@ over all the edges $L$ in the PDG, weighted by their reliability.
 
 
 \begin{defn}\label{def:inc}
-    For a PDG $\dg M$, the \emph{incompatibility} of a
+    For a PDG $\dg M$, the (observational) \emph{incompatibility} of a
     a joint distribution $\mu$ over $\V(\dg M)$, is given by
     \[
-	\Inc_{\dg M }( \mu) := 
+	\OInc_{\dg M }( \mu) := 
 		\!\!\!\!\!\!\sum_{\Ar L{X\,}{\,Y} \in \Ar^{\dg M}} \!\!\!\!\!\beta_L^{\dg M} \Ex_{x \sim \mu_{_X}}\!\!
 \left[\kldiv[\Big]{ \mu(Y \mid X {=} x) }{\p_a^{\dg M}(x) } \right] , \]
 	where $\kldiv{\mu}{\nu} = \sum_{w \in \text{Supp($\mu$)}} \mu(w) \log\frac{\mu(w)}{\nu(w)}$ is the 
 	relative entropy from $\nu$ to $\mu$.
 \vfull{
-	The \emph{inconsistency of PDG $\dg M = 
+	The (observational) \emph{inconsistency of PDG $\dg M = 
         (\N, \Ar, \mathbb P, \balpha, \bbeta)
-        $}, denoted $\Inc(\dg M)$, is the minimum possible incompatibility of $\dg M$ with any distribution $\mu$,  
-	\[ \Inc(\dg M) = \inf_{ \mu \in \Delta [W_{\cal V}]} \Inc_{\dg M}(\mu) . \]
+        $}, 
+	\[ 
+        % \OInc(\dg M) 
+        \aar{\dg M}_0
+        = \inf_{ \mu \in \Delta [W_{\cal V}]} \OInc_{\dg M}(\mu) . 
+    \]
+    is the minimum possible incompatibility of $\dg M$ with any distribution $\mu$.
 }
 \end{defn}
 
 \vfull{
-    The idea behind this definition of inconsistency is that we want to choose a
+The idea behind this definition of inconsistency is that we want to choose a
     distribution $\mu$ that minimizes the total number of bits required to
     encode all of the relevant conditional marginals. More precisely, fix a
     distribution $\mu$. For each edge $L = (X, Y, \ell) \in \Ar$ and $x \in
@@ -680,25 +689,29 @@ over all the edges $L$ in the PDG, weighted by their reliability.
     beliefs lined up with the true distribution $\mu$.
 
     Repeating for each edge and summing the expectations of these costs, we can view
-    $\Inc_{\dg M}(\mu)$ as the total number of \emph{additional} expected
+    $\OInc_{\dg M}(\mu)$ as the total number of \emph{additional} expected
     bits required to communicate $y$ with a code optimized for
     $\p_a(x)$ instead of the true conditional distribution   $\mu(Y \mid X=x)$. 
 
     If $\dg M$ is inconsistent, then there will be a cost no matter what
     distribution $\mu$ is the true distribution. Conversely, if $\dg M$ is
-    consistent, then any distribution $\mu \in \SD{\dg M}$ will have $\Inc_{\dg
+    consistent, then any distribution $\mu \in \SD{\dg M}$ will have $\OInc_{\dg
     M}( \mu) = 0$.  
 
-	\begin{example}[continues=ex:worldsonly]
-	    Recall our simplest example, which directly encodes an entire distribution $p$
-	    over the set $W$. In this case, there is only one edge, the expectation is over
-	    a single element, and the marginal on $W$ is the entire distribution. Therefore,
-	    $\Inc(\dg M; \mu) = \kldiv{\mu}{\mu}$, so the inconsistency is just the
-	    information $\mu$ and $p$, so is minimized uniquely when $\mu$ is $p$
-	\end{example}
+	% \begin{example}
+    %     % [continues=ex:worldsonly]
+	%     % Recall our simplest example, which directly encodes an entire distribution $p$
+    %     Consider a simple example in which encodes a distribution $p$ over the set $W$. In this case, there is only one edge, the expectation is over
+	%     a single element, and the marginal on $W$ is the entire distribution. Therefore,
+	%     $\OInc(\dg M; \mu) = \kldiv{\mu}{\mu}$, so the inconsistency is just the
+	%     information $\mu$ and $p$, so is minimized uniquely when $\mu$ is $p$
+	% \end{example}
+    It may be helpful to see what's going on in the simplest case, 
+    in which the PDG $\dg M$ contains just a single unconditional probability $p(W)$.
+    In this case, $\OInc_{\dg M}(\mu)$ is just the relative entropy of $p$ with respect to $\mu$, and is uniquely minimized when $\mu = p$. 
 }
 
-$\SD{\dg M}$ and $\Inc_{\dg M}$ distinguish %
+$\SD{\dg M}$ and $\OInc_{\dg M}$ distinguish %
 between distributions based on their compatibility with
 $\dg M$, but even among distributions that match the
 marginals, some more closely match the qualitative structure
@@ -788,14 +801,14 @@ while maximizing $\H(\mu)$, for example, by taking $\mu(0,0)
 = \mu(1,1) = 1/2$. 
 
 
-$\Inc_{\dg M}(\mu)$ and $\IDef_{\dg M}(\mu)$ give us two measures
+$\OInc_{\dg M}(\mu)$ and $\IDef_{\dg M}(\mu)$ give us two measures
 of compatibility between ${\dg M}$ and a distribution $\mu$.
 We take the score of interest to be their sum, with the tradeoff
 controlled by a parameter $\gamma \ge 0$:
 
 \begin{equation}
   	  \bbr{\dg M}_\gamma(\mu)
-	 := \Inc_{\dg M}(\mu) + \gamma \IDef_{\dg M}(\mu)  \label{eqn:full-score}
+	 := \OInc_{\dg M}(\mu) + \gamma \IDef_{\dg M}(\mu)  \label{eqn:full-score}
 \end{equation}
 
 The following just makes precise that the scoring semantics generalizes the first semantics.
@@ -1049,7 +1062,7 @@ p)$ with the weighted PDG $(\Gr,\mathbb P,  \mat 1, \mat 1)$.}
 $\bbr{\dg N}_{1}^* = \Pr_{\FGof{\dg N}}\;$ for all unweighted
 	PDGs $\dg N$.  
 \end{linked}
-The correspondence hinges on the fact that we take $\gamma=1$, so that $\Inc$ and
+The correspondence hinges on the fact that we take $\gamma=1$, so that $\OInc$ and
 $\IDef_{}$ are weighted equally.
 Because the user of a PDG gets to choose $\gamma$, the fact that the 
 translation from factor graphs to PDGs preserves semantics only for $\gamma=1$
@@ -1074,7 +1087,7 @@ together with a vector of non-negative weights
 $\{ \theta_J \}_{J \in \mathcal J}$.
 $\Psi$ specifies a canonical scoring function 
 \begin{equation}
-\GFE_{\Psi}(\mu)
+\VFE_{\Psi}(\mu)
 	 := \!\Ex_{\vec x\sim\mu}\left[  \sum_{J \in
            \cal J} \theta_J \log\frac1{\phi_J(\vec
                x_J)}\right] - \H(\mu)  , 
@@ -1082,7 +1095,7 @@ $\Psi$ specifies a canonical scoring function
 \end{equation}
 called the \emph{variational
 Gibbs free energy} \cite{mezard2009information}. 
-$\GFE_{\Psi}$ is uniquely minimized by the distribution
+$\VFE_{\Psi}$ is uniquely minimized by the distribution
 ${\Pr}_{\Psi}(\vec x) = \frac{1}{Z_{\Psi}}
  	\prod_{J \in \cal J} \phi_J(\vec x_J)^{\theta_J}$, 
 which matches the unweighted case when every $\theta_J = 1$.
@@ -1143,7 +1156,7 @@ the translation.
 \begin{linked}{theorem}{wfg-is-pdg}
 For all WFGs $\Psi = (\Phi,\theta)$ and all $\gamma > 0$,
 we have that
-$\GFE_\Psi
+$\VFE_\Psi
 = \nicefrac1{\gamma} \bbr{{\dg M}_{\Psi,\gamma}}_{\gamma} 
 + C$   
 for some constant $C$, so
@@ -1166,7 +1179,7 @@ reverse translation also preserves semantics.
 For all unweighted PDGs $\dg{N}$ and non-negative vectors $\mat v$
 over $\Ar^{\dg N}$, and all $\gamma > 0$, we have that 
 $\bbr{(\dg N, \mat v, \gamma \mat v)}_{\gamma}
-= \gamma\,\GFE_{(\Phi_{\dg N}, \mat v)} $; consequently,
+= \gamma\,\VFE_{(\Phi_{\dg N}, \mat v)} $; consequently,
 $\bbr{(\dg N,  \mat v,  \gamma\mat v)}_{\gamma}^*
 		= \{\Pr_{(\Phi_{\dg N}, \mat v)} \}$. 
 \end{linked}
@@ -1212,7 +1225,7 @@ we have
 \end{linked}
 For a fixed $\gamma$, the first and last terms
 of \eqref{eq:semantics-breakdown} are equal to a scaled
-version of the free energy, $\gamma\GFE_\Phi$, 
+version of the free energy, $\gamma\VFE_\Phi$, 
 if we set $\phi_J := \p_a$ and $\theta_J := \nicefrac{\beta_L}{\gamma}$.  
 If, in addition, $\beta_L = {\alpha_L}\gamma$ for all
 edges $L$, then
@@ -1256,7 +1269,7 @@ the way that the Gibbs free energy varies with $\theta$
 is quite different from the way that the score of a PDG
 varies with $\beta$. 
 The scoring function that we use for PDGs can be viewed as
-extending ${\GFE}_{\Phi,\theta}$ by including
+extending ${\VFE}_{\Phi,\theta}$ by including
 the local regularization term.
 As $\gamma$ approaches zero,
 the importance of the global regularization terms decreases relative
@@ -1279,7 +1292,7 @@ from multiple sources with varying degrees of reliability.
 \item They allow for a clean separation between quantitiatve information (the
 	cpds and weights $\beta$) and more qualitative information contained by
 	the graph structure (and the weights $\alpha$); this is captured by the
-	terms $\Inc$ and $\IDef_{}$ in our scoring function.
+	terms $\OInc$ and $\IDef_{}$ in our scoring function.
 \item PDGs have (several) natural semantics; one of them allows us to
 pick out a unique distribution.  Using this distrbution, PDGs
 	can capture BNs and factor graphs.
@@ -1396,7 +1409,7 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 % }
 \recall{prop:sd-is-zeroset}
 \begin{lproof}\label{proof:sd-is-zeroset}
-	 By taking $\gamma = 0$, the score is just $\Inc$. By
+	 By taking $\gamma = 0$, the score is just $\OInc$. By
 			 definition, a distribution $\mu \in \SD{\dg M}$ satisfies
 	  all the
 			 constraints, so $\mu(Y = \cdot \mid X=x) =
@@ -1405,13 +1418,13 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 			 $\mu(X=x)>0$. By Gibbs inequality
 			 \cite{mackay2003information}, 
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} = 0$. Since this is true
-			 for all edges, we must have $\Inc_{\dg M}( \mu) =
+			 for all edges, we must have $\OInc_{\dg M}( \mu) =
 			 0$. Conversely, if $\mu \notin \SD{\dg M}$, then it
 			 fails to marginalize to the cpd $\p_a$ on some edge
 							  $L$, and so again by Gibbs inequality,
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} > 0$. As relative entropy
 			 is non-negative, the sum of these terms over all
-			 edges must be positive as well, and so $\Inc_{\dg M}(
+			 edges must be positive as well, and so $\OInc_{\dg M}(
 			 \mu) \neq 0$. %
 \end{lproof}
 
@@ -1421,7 +1434,7 @@ in other contexts as well.
 
 \begin{lemma}
 	\label{theorem:inc-convex}
-	$\Inc_{\dg M}( \mu)$ is a convex function of $\mu$.
+	$\OInc_{\dg M}( \mu)$ is a convex function of $\mu$.
 \end{lemma}
 \begin{lproof}\label{proof:inc-convex}
     It is well known that $\thickD$ is convex \cite[Theorem
@@ -1452,11 +1465,11 @@ setting $q_1 = q_2 = \p_\ell(a)$, we get that
 							\kldiv{\p_\ell(a)}{p_1} + (1-\lambda)
 							\kldiv{\p_\ell(a)}{p_2}. \\
     \shortintertext{It follows that} 
-		\Inc_{\dg M}( \lambda p_1) + (1-\lambda)p_2)
-					&\leq \lambda \Inc_{\dg M}(p_1) + (1-\lambda)
-					\Inc_{\dg M}(p_2). 
+		\OInc_{\dg M}( \lambda p_1) + (1-\lambda)p_2)
+					&\leq \lambda \OInc_{\dg M}(p_1) + (1-\lambda)
+					\OInc_{\dg M}(p_2). 
 	\end{align*}
-	Therefore, $\Inc_{\dg M}( \mu)$ is a convex function of $\mu$.
+	Therefore, $\OInc_{\dg M}( \mu)$ is a convex function of $\mu$.
 \end{lproof}
 
 The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
@@ -1484,7 +1497,7 @@ We use the more general formulation of $\IDef_{}$ given
 in \Cref{sec:expfam}, in which each arc $a$'s conditional  
 information is weighted by $\alpha_a$.
   \begin{align*}
-	&\bbr{\dg M}_\gamma(\mu) := \Inc_{\dg M}( \mu) + \gamma \IDef_{\dg M}(\mu) \\
+	&\bbr{\dg M}_\gamma(\mu) := \OInc_{\dg M}( \mu) + \gamma \IDef_{\dg M}(\mu) \\
 		&= \left[\sum\alle \beta_a \Ex_{x\sim \mu_X}\kldiv[\Big]{ \mu(Y | X {=} x) }{\p_a(x) } \right]  + \gamma \left[\sum\alle \alpha_a \H_\mu(Y\mid X) ~-\H(\mu)\right]\\
 		&= \sum\alle 
 			\Ex_{x \sim \mu_{\!_X}}  \left[ \beta_a\; \kldiv[\Big]{ \mu(Y \mid x) }{\p_a(Y \mid x) } + \gamma \; \alpha_a \H(Y \mid X{=} x) \right]  - \gamma \H(\mu) \\ 
@@ -1577,27 +1590,27 @@ finite support%
 , it is bounded.
 Thus, there exist bounds $k$ and $K$ depending only on $\N^{\dg M}$ and
 $\V^{\dg M}$, such that $\lb \leq \IDef_{\dg M}(\mu) \leq \ub$ for all $\mu$.
-Since $\bbr{\dg M}_\gamma = \Inc_{\dg M} + \gamma \IDef_{\dg M}$,
+Since $\bbr{\dg M}_\gamma = \OInc_{\dg M} + \gamma \IDef_{\dg M}$,
 it follows that, for all $\mu \in \V\!\X$, we have
-\[ \Inc_{\dg M}( \mu) + \gamma\lb \leq~ \bbr{\dg M }_\gamma(\mu) 
-\leq~  \Inc_{\dg M}( \mu) + \gamma\ub. \]
+\[ \OInc_{\dg M}( \mu) + \gamma\lb \leq~ \bbr{\dg M }_\gamma(\mu) 
+\leq~  \OInc_{\dg M}( \mu) + \gamma\ub. \]
 For a fixed $\gamma$, since this inequality holds for all $\mu$, and
-both $\Inc$ and $\IDef_{}$ are bounded below, it must be the case that  
+both $\OInc$ and $\IDef_{}$ are bounded below, it must be the case that  
 \[
-\min_{\mu \in \Delta\V\!\X} \Big[ \Inc_{\dg M}( \mu) + \gamma\lb \Big]
+\min_{\mu \in \Delta\V\!\X} \Big[ \OInc_{\dg M}( \mu) + \gamma\lb \Big]
 ~\leq~ \min_{\mu \in \Delta\V\!\X}\bbr{\dg M }_\gamma(\mu) ~\leq~
-\min_{\mu \in \Delta\V\!\X} \Big[ \Inc_{\dg M}( \mu) + \gamma\ub
+\min_{\mu \in \Delta\V\!\X} \Big[ \OInc_{\dg M}( \mu) + \gamma\ub
     \Big], \] 
 even though the distributions that minimize each expression will in general be different.
-Let $\Inc(\dg M) = \min_{\mu} \Inc_{\dg M}(\mu)$.
+Let $\OInc(\dg M) = \min_{\mu} \OInc_{\dg M}(\mu)$.
 Since $\Delta\V\!\X$ is compact, the minimum of the middle term is
 achieved.  
 Therefore, for $\mu_\gamma \in \bbr{\dg M}^*_\gamma(\mu)$ that
 minimizes it, we have 
-$$\Inc(\dg M) +\gamma \lb \le \bbr{\dg M }_\gamma(\mu_\gamma) \le
-		 \Inc(\dg M) +\gamma \ub$$ for all $\gamma \ge 0.$
+$$\OInc(\dg M) +\gamma \lb \le \bbr{\dg M }_\gamma(\mu_\gamma) \le
+		 \OInc(\dg M) +\gamma \ub$$ for all $\gamma \ge 0.$
 Now taking the limit as $\gamma\rightarrow 0$ from above, we get that
-$\Inc(\dg M) = \bbr{\dg M }_0(\mu^*)$.
+$\OInc(\dg M) = \bbr{\dg M }_0(\mu^*)$.
 Thus, $\mu^* \in \bbr{\dg M}_0^*$, as desired.
 \end{lproof}
 
@@ -1627,7 +1640,7 @@ Thus, there are subsequences $(\mu_{i})$ and $(\mu_{j})$ of
 $(\mu_n)$ converging
 to $\nu_1$ and $\nu_2$, respectively.
 By \Cref{lem:gamma2zero}, $\nu_1, \nu_2 \in \bbr{\dg M}_0^*$, so
-$\Inc_{\dg M}(\nu_1) = \Inc_{\dg M}(\nu_2)$.  
+$\OInc_{\dg M}(\nu_1) = \OInc_{\dg M}(\nu_2)$.  
 Because  $(\mu_{j_n}) \to \nu_1$, $(\mu_{k_n}) \to \nu_2$, and
 $\IDef_{\dg M}$ is
 continuous on $\Delta\V\!\X$,
@@ -1642,8 +1655,8 @@ Since $(\IDef_{\dg M}(\mu_{i})) \to \IDef_{\dg M}(\nu_1)$, there exists some $i^
 \in \mathbb N$ such that for all $i > i^*$,  
 $ \IDef_{\dg M}(\mu_{i}) >  \IDef_{\dg M}(\nu_2) $.
 But then for all $\gamma$ and $i > i^*$, we have 
-\[ \bbr{\dg M}_\gamma(\mu_i) = \Inc(\mu_i) + \gamma\IDef_{\dg M}(\mu_i)
-> \Inc(\nu_2)  
+\[ \bbr{\dg M}_\gamma(\mu_i) = \OInc(\mu_i) + \gamma\IDef_{\dg M}(\mu_i)
+> \OInc(\nu_2)  
 + \gamma \IDef_{\dg M}(\nu_2) = \bbr{\dg M}_\gamma(\nu_2),\]
 contradicting the assumption that $\mu_{i}$ minimizes
 $\bbr{\dg M}_{\gamma_{i}}$. We thus conclude that we
@@ -1656,12 +1669,12 @@ is strictly convex for $\gamma > 0$, among the possible convex
 combinations of $\nu_1$ and $\nu_2$, the distribution $\nu_3 = \lambda
 \nu_1 + (1-\lambda) \nu_2$ that minimizes $\bbr{\dg M}_\gamma$ must
 lie strictly between $\nu_1$ and $\nu_2$. 
-Because $\Inc$ itself is convex and $\Inc_{\dg M}(\nu_1) = \Inc_{\dg
-  M}(\nu_2) =: v$, we must have $\Inc_{\dg M}(\nu_3) \le v$. 
+Because $\OInc$ itself is convex and $\OInc_{\dg M}(\nu_1) = \OInc_{\dg
+  M}(\nu_2) =: v$, we must have $\OInc_{\dg M}(\nu_3) \le v$. 
 But since
-$\nu_1,\nu_2 \in \bbr{\dg M}_0^*$ minimize $\Inc$,
-we must have $\Inc_{\dg M}(\nu_3) \ge v$.
-Thus, $\Inc_{\dg M}(\nu_3) = v$. 
+$\nu_1,\nu_2 \in \bbr{\dg M}_0^*$ minimize $\OInc$,
+we must have $\OInc_{\dg M}(\nu_3) \ge v$.
+Thus, $\OInc_{\dg M}(\nu_3) = v$. 
 Now, because, for all  $\gamma > 0$,
 \[ \bbr{\dg M}_\gamma(\nu_3) = v + \gamma \IDef_{\dg M}(\nu_3) 
  	< v + \gamma \IDef_{\dg M}(\nu_1) = \bbr{\dg M}_\gamma(\nu_1), \] 
@@ -1673,7 +1686,7 @@ that $\IDef_{\dg M}(\nu_1) =\IDef_{\dg M}(\nu_2)$.
     $i^*$ such that for all $i > i^*$, we have $\IDef_{\dg M}(\mu_{i}) >
     \IDef_{\dg M}(\nu_3)$. Thus, for all $i > i^*$ and all
     $\gamma > 0$, 
-    \[ \bbr{\dg M}_\gamma(\mu_{i}) = \Inc(\mu_{i}) + \gamma\IDef_{\dg M}(\mu_{i}) > \Inc(\nu_3) 
+    \[ \bbr{\dg M}_\gamma(\mu_{i}) = \OInc(\mu_{i}) + \gamma\IDef_{\dg M}(\mu_{i}) > \OInc(\nu_3) 
     + \gamma \IDef_{\dg M}(\nu_3) = \bbr{\dg M}_\gamma(\nu_3),\]
 again contradicting the assumption that $\mu_{i}$ minimizes
 $\bbr{\dg M}_{\gamma_{i}}$.
@@ -1693,7 +1706,7 @@ is a singleton. As in the body of the paper, we refer to its unique element by $
 \Cref{lem:gamma2zero} therefore immediately gives us $\bbr{\dg M}^* \in \bbr{\dg M}_0^*$.  
 %
 If $\dg M$ is consistent, then by \Cref{prop:sd-is-zeroset},
-$\Inc({\dg M}) = 0$, so $\bbr{\dg M}_0(\bbr{\dg M}^*) = 0$, and thus
+$\OInc({\dg M}) = 0$, so $\bbr{\dg M}_0(\bbr{\dg M}^*) = 0$, and thus
 $\bbr{\dg M}^* 
 \in \SD{\dg M}$. 
 \end{lproof}
@@ -1837,7 +1850,7 @@ $\mathcal N$, is also with the cpd on the edge from $\Pa(X_i)$ to
 $X_j$.
 Thus, $\Pr_{\cal B}$ is consistent with all the cpds in
 $\PDGof{\mathcal B, \beta}$;
-so$\Inc_{\PDGof{\mathcal B,\beta}}(\Pr_{\cal B}) = 0$.
+so$\OInc_{\PDGof{\mathcal B,\beta}}(\Pr_{\cal B}) = 0$.
 
 We next want to show  that $\IDef_{\PDGof{\mathcal B,\beta}}(\mu) \ge 0$ for all
 distributions $\mu$.  To do this, we first need some definitions.
@@ -1894,7 +1907,7 @@ ${\bf X}_{\prec_\rho i}$ for some permutation $\rho$ iff $X_i$ is independent of
   ${\bf X}_{\prec_\rho i}$ for every permutation $\rho$.  Since there
 is a permutation compatible with $\mathcal B$, we get that 
 $\IDef_{\PDGof{\mathcal B,\beta}}(\Pr_{\cal B}) = 0$.
-We have now shown that that $\IDef_{\PDGof{\mathcal B, \beta}}$ and $\Inc$ are 
+We have now shown that that $\IDef_{\PDGof{\mathcal B, \beta}}$ and $\OInc$ are 
 non-negative functions of $\mu$, and both are zero at $\Pr_{0\cal B}$. 
 Thus, for all $\gamma \geq 0$ and all vectors $\beta$, we
 have that   $\bbr{\PDGof{\mathcal B, \beta}}_\gamma( \Pr_{\cal
@@ -1906,7 +1919,7 @@ for $\gamma > 0$.
 
 So suppose that $\mu \ne \Pr_{\cal B}$. 
 Then $\mu$ must also match each cpd of $\cal B$,
-for otherwise $\Inc_{\PDGof{\mathcal B,
+for otherwise $\OInc_{\PDGof{\mathcal B,
 \beta}}(\mu) > 0$, and we are done.  
 Because $\Pr_{\cal B}$ is the \emph{unique} distribution that matches the 
 both the cpds and independencies of $\cal B$, $\mu$ must not have all of the 
@@ -1951,7 +1964,7 @@ we now prove.
 		&= \gamma \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
 v_L \log \frac{1}{\phi(x,y)}
 			 \right] -\log \frac{1}{\mu(\mat w)} \Bigg\} \\
-			&= \gamma \GFE_{(\FGof{\dg N}, \mat v)}. 
+			&= \gamma \VFE_{(\FGof{\dg N}, \mat v)}. 
 	\end{align*}
 	It immediately follows that the associated factor graph has 
 	$\bbr{\dg M}^*_\gamma
@@ -1961,7 +1974,7 @@ v_L \log \frac{1}{\phi(x,y)}
 % \restate{theorem:fg-is-pdg}{
 % 	For all WFGs $\Psi = (\Phi,\theta)$ and all $\gamma > 0$,
 % 	we have that
-% 	$\GFE_\Psi
+% 	$\VFE_\Psi
 % 	= \nicefrac1{\gamma} \bbr{{\dg M}_{\Psi,\gamma}}_{\gamma} 
 % 	+ C$   
 % 	for some constant $C$, so
@@ -1975,7 +1988,7 @@ v_L \log \frac{1}{\phi(x,y)}
   $X_J \tto X_j$ for each $X_j
     \in X_J$. Because the latter edges are deterministic, a
 distribution $\mu$ that is not  consistent
-with one of the edges, say $X_J \tto X_j$, has $\Inc_{\dg M}(\mu)
+with one of the edges, say $X_J \tto X_j$, has $\OInc_{\dg M}(\mu)
 = \infty$.  This is a 
 property of relative entropy: if there exist $j^* \in \V(X_j)$ and 
 $\mat z^* \in \V(J)$ such that $\mat z^*_J \ne j^*$ and $\mu$ places positive
@@ -2001,7 +2014,7 @@ X_j$, the conditional entropy
 $\H(X_j \mid X_J) = -\Ex_\mu\log(\mu(x_j \mid x_J))$ and divergence from
 the constraints are both zero. 
 Therefore the per-edge terms for both $\IDef_{\dg M}$
-and $\Inc_{\dg M}$ can be safely ignored for the projections.
+and $\OInc_{\dg M}$ can be safely ignored for the projections.
 Let $\p_J$ be
 the normalized distribution $\frac{1}{Z_J}\phi_J$ over $X_J$,
 where $Z_J = \sum_{x_J} \phi_J(x_J)$ is the appropriate normalization constant.
@@ -2028,9 +2041,9 @@ so by \cref{prop:nice-score},
 		&= \gamma \cdot \Ex_{\mat x \sim \mu} \Bigg\{  \sum_{ J \in \mathcal J } \theta_J 
 			\log \frac{1}{\phi_J(x_J)}  - \log \frac{1}{\mu(\mat x)} \Bigg\}
 			 +  \sum_{J \in \mathcal J} \theta_J \log Z_J  \\
-        	&= \gamma\, \GFE_{\Psi} + k \log \prod_{J} Z_J,
+        	&= \gamma\, \VFE_{\Psi} + k \log \prod_{J} Z_J,
 	\end{align*}
-which differs from $\GFE_{\Psi}$ by the value $\sum_J \theta_J \log Z_J$, which 
+which differs from $\VFE_{\Psi}$ by the value $\sum_J \theta_J \log Z_J$, which 
 is constant in $\mu$.
 \end{lproof}
 

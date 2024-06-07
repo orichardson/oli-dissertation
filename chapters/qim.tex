@@ -6,8 +6,6 @@
 \newcommand\PSEMsA{\mathrm{PSEMs}_{\!\Ar}}
 \newcommand\Wits{\mathrm{Wits}}
 
-\newcommand\U{\mathcal U}
-\newcommand\enV{\mathcal V} % for endogenous variables
 \newcommand\muxor{\mu_{\mathit{xor}}}
 
 \newcommand\hyperarc{hyperarc}
@@ -237,7 +235,7 @@ For instance,
     % note: this is closely related to monotonicity axiom of [Naumov & Nicholls].
 % That fact is a key ingredient in many of our proofs (\cref{lem:indep-fun}). 
 \unskip\footnote{This well-known fact (\cref{lem:indep-fun}) is formalized
-    and proved in \cref{appendix:proofs},
+    and proved in \cref{qim-appendix:proofs},
     where all proofs can be found.}
 %joe4*: Why is this important for our purposes?  We don't do anything
 %with it in the paper!  You can't make a big deal out of something in
@@ -2022,7 +2020,7 @@ Furthermore, the variables in $\U$ may not be independent of one another conditi
     % $X$ and $Y$,  respectively, then $X$ and $Y$ must be independent.%
     For if $U_1$ and $U_2$ are independent and respectively determine
     $X$ and $Y$, then $X$ and $Y$ must also be independent.%
-        % \footnote{see \cref{lem:indep-fun} in \cref{appendix:proofs}, where all proofs can be found.}
+        % \footnote{see \cref{lem:indep-fun} in \cref{qim-appendix:proofs}, where all proofs can be found.}
 \end{example}
 
 This is a simple illustration of a more general
@@ -5515,7 +5513,7 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
     \def\innerrad{1.00}
     % \def\twosize{0.5}
     \scalebox{1.0}{
-    \begin{tikzpicture}[center base]
+    \begin{tikzpicture}[center base,scale=1.2]
         % \node at ({-\circsize-\radsize+0.1},{\circsize+\radsize-0.2}) {\underline{\textbf{(a)}}};
 
         \path[fill=white!90!black] (210:\radsize) circle (\circsize) ++(225:\circsize) node[label={[label distance=2pt,inner sep=0pt]left:\Large $X$}]{};
@@ -7907,7 +7905,7 @@ We hope to explore all these questions in future work.
 
 
 \section{Proofs}
-    \label{appendix:proofs}
+    \label{qim-appendix:proofs}
     
 %oli21: putting this here as a subsection; it's used in the proofs and doesnt' need its own section
 
@@ -8350,8 +8348,7 @@ As mentioned above, we also know that $\mu \models \Ar$,
 and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 \end{lproof}
 
-
-\newpage
+% \newpage
 \subsection{Causality Results of \cref{sec:causal}}
 %oli15*: proof
 \recall{prop:sc-graph-arise}
@@ -8560,17 +8557,21 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
         \item At the same time, the marginal on exogenous variables is
         \begin{align*}
             \nu'(\U) &= \nu'(\U_{\mat X}, \U_{\mat Z})  \\
-            &= \int_{\V(\X)} \nu(\omega, \U_{\mat Z}\mid \doXx) P(\U_{\mat X}) \,\mathrm d\omega\\
+            &= 
+                \mathrlap{
+                \int_{\V(\X)} \nu(\omega, \U_{\mat Z}\mid \doXx) P(\U_{\mat X}) \,\mathrm d\omega
+                }
+                \\
             &= P(\U_{\mat X}) \nu(\U_{\mat Z} \mid \doXx) 
                 &\text{}\\
             &= P(\U_{\mat X}) P(\U_{\mat Z} \mid \doXx) 
                 &\text{[ since $\doXx$ depends only on $\U$ ]}
                 \\
             &= P(\U_{\mat X}) P(\U_{\mat Z}) 
-                &\left[~\parbox{5cm}{ since $\doXx$ depends only on $\U_{\mat X}$, while $\U_{\mat X}$ and $\U_{\mat Z}$ are independent in $\nu$ (by the witness condition).}~\right]
+                &\left[~\parbox{6cm}{\singlespacing since $\doXx$ depends only on $\U_{\mat X}$, while $\U_{\mat X}$ and $\U_{\mat Z}$ are independent in $\nu$ (by the witness condition).}~\right]
                 \\
             &= P(\U_{\mat X}, \U_{\mat Z})
-                & [\text{  same reason as above }]
+                & [\text{ for the same reason as above }].
         \end{align*}
         \item Finally, $\nu'$ satisfies all equations of $\mathcal M_{\mat X{\gets} \mat x}$. It satisfies the equations for the variables $\mat X$ because $\mat X = \mat x$ holds with probability 1. 
         At the same time, the equations in $\mathcal M_{\mat X{\gets} \mat x}$ corresponding to the variables $\mat Z$ hold with probability 1, because the marginal $\nu'(\U_{\mat Z}, \X)$ is shared with the distribution $\nu \mid \doXx$---and that distribution satisfies these equations. (It suffices to show that they share this particular marginal because the equations for $\mat Z$ do not depend on $\U_{\mat X}$.)
@@ -8586,10 +8587,10 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
     \[
         \mathcal F_{\mat X \gets \mat x} (\mat u) 
         := \left\{ \omega \in \V(\X) ~\middle|~
-        \begin{array}{rl}
+        {\singlespacingplus\begin{array}{rl}
             \forall X \in \mat X.~& \omega[X] = \mat x[X]\\
             \forall Y \in \X \setminus \mat X.~&\omega[Y] = f_X(\omega[\X \setminus Y], \mat u) 
-        \end{array}
+        \end{array}}
         % \forall X \in X.~
         % f'_{X}(\omega[\X\setminus X], \mat u)  = \omega[X] 
         \right\} 
@@ -8832,30 +8833,34 @@ To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we wi
     \]
     for some $k < n$, where $\mat Y_{1:k} = (Y_1, \ldots, Y_k)$. 
     We now prove that the analogue for $k+1$ also holds. 
-    Some calculation reveals:
+    Some calculation reveals that
     % We know that 
     \begin{align*}
         % \I(X ; Y_{k+1}) &\le \I(X ; \mat Y_{1:k+1})
             % &\text{since } \I(X ; \mat Y_{1:k+1}) = 
             % &= \I()
-        \I(X ; Y_{k+1}) &= \I(X ; \mat Y_{1:k+1}) - \I(X ; \mat Y_{1:k} \mid Y_{k+1}) 
+        &\I(X ; Y_{k+1}) \\
+        &= \I(X ; \mat Y_{1:k+1}) - \I(X ; \mat Y_{1:k} \mid Y_{k+1}) 
             & \big[\text{ by MI chain rule \eqref{eq:chain-rule-mi} } \big]
         \\
             &\le \I(X ; \mat Y_{1:k+1})
             & \Big[\text{ since } \I(X ; \mat Y_{1:k} \mid Y_{k+1}) \ge 0\, \Big] \\
         &= \I(X;  Y_{k+1} \mid \mat Y_{1:k}) + \I(\mat Y_{1:k} ;  Y_{k+1})
             & \big[\text{ by MI chain rule \eqref{eq:chain-rule-mi} } \big] \\
-        &= \left(
+        &= \left\{
+        {\singlespacingplus\begin{array}{cc}
+        \I(X ; \mat Y_{1:k+1})  & + \H(Y_{k+1}) - \H( \mat Y_{1:k+1}) \\
+         - \I(X ; \mat Y_{1:k})  & + \H( \mat Y_{1:k} )           
+        \end{array}}
+        \right.
+        & \!\bigg[
+        {\singlespacing
         \begin{array}{c}
-        \I(X ; \mat Y_{1:k+1}) + \H(Y_{k+1}) - \H( \mat Y_{1:k+1}) \\
-         - \I(X ; \mat Y_{1:k})  \qquad\quad\qquad + \H( \mat Y_{1:k} )           
-     \end{array}\right)
-        & \Big[
-        \begin{array}{c}
-        \text{ left: one more MI chain rule \eqref{eq:chain-rule-mi}; } \\
-        \text{ right: defn of mutual information  }    
-        \end{array}
-        \Big].
+        \text{left: one more MI chain rule \eqref{eq:chain-rule-mi};} \\
+        \text{right: defn of mutual information}    
+        \end{array}% 
+        }%
+        \bigg].
     \end{align*}
     
     Observe: adding this inequality to our inductive hypothesis (IH$_k$) yields (IH$_{k+1}$)!
@@ -8936,9 +8941,9 @@ To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we wi
     \]
     Thus, we compute    
     \begin{align*}
-        \sum_{a \in \Ar} \H_\mu(\Tgt a \mid \Src a) 
+        &\sum_{a \in \Ar} \H_\mu(\Tgt a \mid \Src a)\\
         &= \sum_{a \in \Ar} \I_\nu(U_a ; \Tgt a \mid \Src a) 
-        \\
+            & \text { by the above } \\
         &= \sum_{a \in \Ar} \I_\nu(U_a ; \Tgt a, \Src a) - \I_\nu(U_a ; \Src a)
             & \text{ by MI chain rule \eqref{eq:chain-rule-mi}} \\
         &\le \sum_{a \in \Ar} \I_\nu(U_a ; \Tgt a, \Src a) 
@@ -8950,9 +8955,17 @@ To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we wi
         &\le \I_\nu(\X ; \U) + \sum_{a \in \Ar} \H_\nu( U_a ) - \H_\nu(\U)
             & \text{ by \cref{lem:Y-filter}}
         \\
-        &= \I_\nu(\X ; \U) & \begin{array}{r}\text{ since $\U$ are independent}\\\text{ (per condition (b) of \cref{defn:scompat})} \end{array} \\
+        &= \I_\nu(\X ; \U) 
+            &
+            {\singlespacing\hspace{-1.5cm}
+            \begin{array}{r}\text{ since $\U$ are independent}\\
+                \text{ (per condition (b) of \cref{defn:scompat})} \end{array}
+            }
+        \\
         &\le \H_\nu(\X) = \H_\mu(\X).
-            &\text{(per condition (a) of \cref{defn:scompat})}
+            &
+            \hspace{-1.5cm}
+            \text{by condition (a) of \cref{defn:scompat}}
     \end{align*}
     Thus, $\IDef_{\!\Ar}(\mu) \le 0$. \qedhere
 \end{lproof}
@@ -10370,7 +10383,7 @@ one might hope this criterion is not just a bound, but
 Unfortunately, it does not, and the converse of \cref{theorem:sdef-le0} is false.
 
 \begin{example}
-    Suppose $\mu(X,Y,Z) = \mathrm{Unif}(X,Z) \delta \mathrm{id} (Y|X)$ and $\Ar = \{\to X, \to Y\}$,
+    Suppose $\mu(X,Y,Z) = \Unif(X,Z) \delta \mathrm{id} (Y|X)$ and $\Ar = \{\to X, \to Y\}$,
     % Consider $\Ar = \{\to X, \to Y\}$, ,
     where all variables are binary.
     Then $\SDef_{\!\Ar}(\mu) \,{=}\, 0$, but $X$ and $Y$ are not independent.
@@ -10887,12 +10900,12 @@ Extend our previous weight vector by one entry, so that $\boldsymbol\lambda = (\
         \\ + \lambda^{\text{(d)}}
         \inf_{\mathcal F}& \Ex_{\mat u \sim \nu(\U)}
             \Big[ 
-            \kldiv[\big]{ \nu(\X \mid \U{=}\mat u) }{ \mathrm{Unif}[{\mathcal F(\mat u)}] }
+            \kldiv[\big]{ \nu(\X \mid \U{=}\mat u) }{ \Unif[{\mathcal F(\mat u)}] }
             \Big],
 \end{align*}
 where $\blacksquare$ consists of everything but the infemum from \cref{eq:siminc},
 %oli11: expanding to fully explain notation 
-$\mathcal F$ ranges over sets of equations along $\Ar$ (as in \cref{defn:SEM,defn:esim-compat}), and $\mathrm{Unif}[{\mathcal F(\mat u)}]$ is the uniform distribution over joint settings of $\X$ that are consistent with the equations after fixing context $\U = \mat u$. 
+$\mathcal F$ ranges over sets of equations along $\Ar$ (as in \cref{defn:SEM,defn:esim-compat}), and $\Unif[{\mathcal F(\mat u)}]$ is the uniform distribution over joint settings of $\X$ that are consistent with the equations after fixing context $\U = \mat u$. 
 Recall that the key step of constructing $\Ar^\dagger$ was to add the hyperarc $\U \to \X$. But for even compatbility, we want to effectively do the opposite---that is, subject to satisfying the other constraints, we want to incentivize, rather than penalize the conditional entropy $\H(\X|\,\U)$. This is made precise by the following proposition.
 
 

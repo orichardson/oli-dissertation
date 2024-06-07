@@ -315,7 +315,7 @@ captures this formally: adding cpds or increasing confidences cannot decrease a 
 	Suppose PDGs $\dg M$ and $\dg M'$ differ only in their edges (resp. $\Ar$ and $\Ar'$) and confidences (resp. $\boldsymbol\beta$ and $\boldsymbol\beta'$).
 	If $\Ar \subseteq \Ar'$ and
 		$\beta_L \le \beta'_L$ for all $L \in \Ar$, then $\aar{\dg M}_{\gamma} \le \aar{\dg M'}_{\gamma}$ for all $\gamma$.%
-	\footnote{All proofs can be found in \cref{appendix:proofs}.}
+	\footnote{All proofs can be found in \cref{loss-appendix:proofs}.}
 \end{linked}
 % \vspace{-1ex}
 
@@ -1500,26 +1500,26 @@ It seems that our approach, in addition to providing a unified view of standard 
 \section{Reverse-Engineering a Loss Function?}
 	\label{sec:reverse-engineer}
 
-\def\Truth{{\tt T}}
-\def\trut{{\tt t}}
-\def\truf{{\tt f}}
+% \def\Tru{{\tt T}}
+% \def\trut{{\tt t}}
+% \def\truf{{\tt f}}
 
 Given an \emph{arbitrary} loss function, can we find a PDG that gives rise to it?
 The answer appears to be yes---although not without making unsavory modeling choices.
-Without affecting its semantics, one may add the variable $\Truth$ that takes values $\{\trut, \truf\}$, and the event $\Truth \!\!=\! \trut$, to any PDG.
+Without affecting its semantics, one may add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the event $\Tru \!\!=\! \trut$, to any PDG.
 Now, given a
 cost function $c: \V(X) \to \mathbb R_{\ge 0}$,
-define the cpd $\hat c(\Truth |X)$ by
+define the cpd $\hat c(\Tru |X)$ by
 $
 	\hat c(\trut | x) := e^{-c(x)}.
 $
-By threatening to generate the falsehood {\tt f} with probability dependent on the cost of $X$, $\hat c$ ties the value of $X$ to inconsistency.
+By threatening to generate the falsehood {\truf} with probability dependent on the cost of $X$, $\hat c$ ties the value of $X$ to inconsistency.
 \begin{linked}{prop}{expected-cost}
 	\!
 	\( \displaystyle
 		\aar*{\!\begin{tikzpicture}[center base]
 			\node[dpad0] (X) at (0,0) {$X$};
-			\node[dpad0] (2) at (1.1,0) {$\Truth$};
+			\node[dpad0] (2) at (1.1,0) {$\Tru$};
 
 			\draw[arr2] (X) to
 				node[above, pos=0.4,inner sep=2pt]{$\hat c$}
@@ -1563,7 +1563,7 @@ Concretely, define:
 			\node[dpad0] (X) at (0.3,0) {$X$};
 			\node[dpad0] (Yt) at (1,1) {$Y$};
 			\node[dpad0,align=center] (Yp) at (1.4,0) {$\vphantom{Y}\smash{Y'}$};
-			\node[dpad0] (2) at (2,1) {$\Truth$};
+			\node[dpad0] (2) at (2,1) {$\Tru$};
 
 			\coordinate (dstart) at (-0.1,0.9);
 		\end{scope}
@@ -2013,7 +2013,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 \clearpage
 %\begin{append}
 
-\section{PROOFS}\label{appendix:proofs}
+\section{Proofs}\label{loss-appendix:proofs}
 \allowdisplaybreaks
 
 {\renewcommand\footnote[1]{}\recall{lemma:!}}
@@ -2824,7 +2824,7 @@ Now, we formally state and prove the more general result for $\beta$-VAEs.
 	\begin{align*}
 		\aar*{\!\begin{tikzpicture}[center base]
 			\node[dpad0] (X) at (0,0) {$X$};
-			\node[dpad0] (2) at (1.1,0) {$\Truth$};
+			\node[dpad0] (2) at (1.1,0) {$\Tru$};
 			\draw[arr2] (X) to
 				node[above, pos=0.4,inner sep=2pt]{$\hat c$}
 				(2);
@@ -3343,7 +3343,7 @@ and that the optimal distribution would not have been $p(X)$.
 \begin{align*}
 	\aar*{\!\begin{tikzpicture}[center base]
 		\node[dpad0] (X) at (0,0) {$X$};
-		\node[dpad0] (2) at (1.1,0) {$\Truth$};
+		\node[dpad0] (2) at (1.1,0) {$\Tru$};
 		\draw[arr2] (X) to
 			node[above, pos=0.4,inner sep=2pt]{$\hat c$}
 			(2);
@@ -3382,7 +3382,7 @@ We also claimed without careful proof in \Cref{sec:reverse-engineer} that, if $\
 			\node[dpad0] (X) at (0.3,0) {$X$};
 			\node[dpad0] (Yt) at (1,1) {$Y$};
 			\node[dpad0,align=center] (Yp) at (1.4,0) {$\vphantom{Y}\smash{Y'}$};
-			\node[dpad0] (2) at (2,1) {$\Truth$};
+			\node[dpad0] (2) at (2,1) {$\Tru$};
 			\coordinate (dstart) at (-0.1,0.9);
 		\end{scope}
 		\unmergearr[arr1]{dstart}{X}{Yt}

@@ -12,7 +12,8 @@ Clearly, inconsistency $\aar{ \,\cdot\, }$
 \TODO
 
 % \chapter{The Deep Connection between Inference and Inconsistency}
-\section{Approximation}
+% \section{Approximation}
+\section{The Computational Complexity of (Approximate) Inference and Inconsistency Calculation}
 
 \def\ApproxPDGInfer{\textsf{APPROX-PDG-INFER}}
 \def\ApproxPDGInc{\textsf{APPROX-CALC-INC}}
@@ -154,7 +155,7 @@ The argument is due to \textcite{roth-hardness-1996},
 although we have altered it somewhat. 
 
 
-\section{An Algorithmic Connection}
+\section{A Deeper, Computational Connection}
 
 Our approach to $\zogamma$-inference computes
 $\aar{\dg M}_\gamma$ as a side effect.
@@ -380,7 +381,7 @@ by reduction to SAT and \#SAT, respectively.
 
     To show the same for $\gamma = 0$, it suffices to add an additional hyperedge pointing to all variables, and associate it with a joint uniform distribution, and confidence 1, resulting in a new PDG $\dg M_\varphi'$.
     Because this new edge's contribution to $\OInc_{\dg M}$
-    equals $\kldiv{\mu}{\mathsf{Unif}(\X)} = \log |\V\!\X| - \H(\mu)$,
+    equals $\kldiv{\mu}{\Unif(\X)} = \log |\V\!\X| - \H(\mu)$,
     we have
     \[
         \bbr{\dg M_\varphi'}_0(\mu)

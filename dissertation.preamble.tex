@@ -37,7 +37,7 @@
 \newcommand\commentout[1]{}
 \newcommand\discard[1]{{\color{orange!80!black}$\blacksquare$}}
 \newcommand{\TODO}[1][INCOMPLETE]{{\centering\Large\color{red}$\langle$~\texttt{#1}~$\rangle$\par}}
-
+\newcommand\hidewithbox[1]{{\color{red}$\blacksquare$}}
 
 %%%%% STANDARD PACKAGES
 \usepackage{mathtools}		%also loads amsmath
@@ -60,7 +60,7 @@
 \usepackage{environ}% http://ctan.org/pkg/environ;
 	% required for use of label_matrix.tex.
 \usepackage{nameref,hyperref}%\Autoref is defined by thmtools
-
+\usepackage[noabbrev,nameinlink,capitalize]{cleveref}% n.b. cleveref after! hyperref
 
 %%%%% visual appearance
 \colorlet{color1}{blue}
@@ -130,36 +130,39 @@
 \DeclareMathOperator{\H}{\mathrm{H}} % Entropy
 \DeclareMathOperator{\I}{\mathrm{I}} % Information
 \DeclareMathOperator*{\Ex}{\mathbb{E}} % Expectation
-\DeclareMathOperator*{\argmin}{arg\;min} % argmin
-\DeclareMathOperator{\Supp}{\mathrm{Supp}} %support
+\DeclareMathOperator*{\argmin}{arg\,min} % argmin
+\DeclareMathOperator*{\argmax}{arg\,max} % argmax
+% \DeclareMathOperator*{\argmin}{\arg\!\min}
+% \DeclareMathOperator*{\argmax}{\arg\!\max}
 \DeclareMathOperator{\im}{\mathrm{im}} % image of a map
 \DeclareMathSymbol{\shortminus}{\mathbin}{AMSa}{"39} %shorter minus
 \DeclarePairedDelimiter{\norm}{\Vert}{\Vert} % paired norm
 \DeclarePairedDelimiter{\pqty}{\lparen}{\rparen} % paired parens
+\newcommand{\ifrac}[2]{{#1}/{#2}} % inline fraction, (I guess?)
+\DeclareMathOperator{\Supp}{\mathrm{Supp}} %support
+\newcommand{\Unif}{\mathrm{Unif}} % uniform distribution
 	
 \newcommand{\Rext}{\mskip1mu\overline{\mskip-1mu\mathbb R\!}\,}
-\newcommand\mat[1]{\mathbf #1}
-\newcommand{\tto}{\rightarrow\mathrel{\mspace{-15mu}}\rightarrow}
-
-\newcommand\At[1]{\mathit{A\mkern-2mu t}(#1)} % boolean algebra atoms
-\newcommand\lang[1]{\mathcal L^{\mathit{#1}}} % languages
-\newcommand\geqc{\succcurlyeq}
-\newcommand\leqc{\preccurlyeq}
-
+\newcommand\mat[1]{\mathbf #1} % short matrix / \mathbf 
 \newcommand{\indi}[1] % indicator function
 	{\mathbbm{1}_{\left[\vphantom{\big[}#1 \vphantom{\big]}\right]}} 
 	
 \DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{#1\;\delimsize\|\;#2}
 \newcommand{\thickD}{I\mkern-8muD}
 \newcommand{\kldiv}{\thickD\infdivx} % D_\mathrm{KL}
-
-% standard graphical models stuff
+% graphical models stuff
 \newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}} % independence 
 \newcommand{\Pa}{\mathop{\mathbf{Pa}}}
-
+\newcommand{\tto}{\rightarrow\mathrel{\mspace{-15mu}}\rightarrow}
 % Other notions of uncertainty
 \newcommand\Bel{\mathit{Bel}}
 \newcommand\Plaus{\mathit{Plaus}}
+
+\newcommand\At[1]{\mathit{A\mkern-2mu t}(#1)} % boolean algebra atoms
+\newcommand\lang[1]{\mathcal L^{\mathit{#1}}} % languages
+\newcommand\geqc{\succcurlyeq}
+\newcommand\leqc{\preccurlyeq}
+
 
 % (these are all defined in pdg-preamble.tex)
 % \DeclarePairedDelimiter{\cbbr}{\lBrace}{\rBrace}
@@ -201,7 +204,8 @@
 %%%%%  SPECIAL COMMANDS FOR PDG-AAAI  %%%%%
 \newcommand{\Gr}{\mathcal G}
 \newcommand{\alle}[1][a]{_{\ed {#1}XY}}
-\newcommand\GFE{\mathit{G\mkern-4mu F\mkern-4.5mu E}}
+% \newcommand\GFE{\mathit{G\mkern-4mu F\mkern-4.5mu E}}
+\newcommand\VFE{\mathit{V\mkern-4mu F\mkern-4.5mu E}}
 % conversions
 \newcommand{\WFGof}[1]{\Psi_{{#1}}}
 \newcommand{\FGof}[1]{\Phi_{{#1}}}
@@ -209,6 +213,8 @@
 
 %%%%%  SPECIAL COMMANDS FOR QIM  %%%%%%%
 \newcommand{\derind}[2]{ {#1}^{+\tilde{#2}(\X^{\U})}}
+\newcommand\U{\mathcal U}
+\newcommand\enV{\mathcal V} % for endogenous variables
 
 %%%%%  SPECIAL COMMANDS FOR ONE-TRUE-LOSS %%%%%%%
 \newcommand{\datadist}[1]{\Pr\nolimits_{#1}}
@@ -257,8 +263,47 @@
 
 
 
-
-
+%%%%%  SPECIAL COMMANDS FOR CONFIDENCE  %%%%%
+\newcommand\confdom{[\bot,\!\top]}
+\newcommand\Lrn{\mathit{Lrn}}
+\newcommand{\ext}[1]{\overline #1} %  extension of \Phi and F to mixture.
+\usepackage{xparse}
+\let\realItem\item % save a copy of the original item; will be temporarily swapped out in envirnoments below.
+\makeatletter
+\NewDocumentCommand\myItemboldperiod{o}{%
+   \IfNoValueTF{#1}%
+      {\realItem}% add an item
+      {\realItem[\conflabel{#1}]%
+        \def\@currentlabel{#1}%
+        \protected@edef\cref@currentlabel{[CFaxiomsi][][]#1}% \label[#1]{#2}
+        }% add an item and update label
+}
+\makeatother
+% \newcommand\conflabel[1]{\textbf{#1.}}
+\newcommand\conflabel[1]{\textbf{[#1]}}
+\newlist{LrnAxioms}{enumerate}{1}
+	\setlist[LrnAxioms]{%
+	    resume,%
+	    label=\conflabel{L\arabic{*}},
+	    ref={L\arabic*},
+	    leftmargin=*,
+	    itemindent=1.5em, labelsep=1em, topsep=1ex,
+	    before=\let\item\myItemboldperiod,
+    }
+	\crefname{LrnAxiomsi}{}{}
+	\crefrangeformat{LrnAxiomsi}{#3#1#4#5--\crefstripprefix{#1}{#2}#6}
+\newlist{LrnBelAxioms}{enumerate}{1}
+	\setlist[LrnBelAxioms]{
+	    resume,%
+	    label=\conflabel{LB\arabic{*}},
+	    ref={LB\arabic*},
+	    leftmargin=*,
+	    itemindent=1.5em, labelsep=1em, topsep=1ex,
+	    before=\let\item\myItemboldperiod,
+    }
+	\crefname{LrnBelAxiomsi}{}{}
+	\crefrangeformat{LrnBelAxiomsi}{#3#1#4#5--\crefstripprefix{#1}{#2}#6}
+ 
 
 %%%%%  DATABASE SYMBOLS  %%%%%
 \newcommand{\D}{\mathbdcal D} % for a database
@@ -277,6 +322,9 @@
 \newcommand\Bmid{\mathrel{\Big|}}%
 \newcommand\vals{\mathbf{vals}}
 \newcommand\nj{\bowtie}
+
+
+
 
 
 
@@ -299,7 +347,7 @@
 % 	}}
 % \newcommand\nextstructurelevel{subsubsection}
 
-%% THEOREMS
+%%%%%%%%%%%%%%%% THEOREMS %%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsthm}
 \usepackage{thmtools} % asmsymb must be loaded also.
 \usepackage[framemethod=TikZ]{mdframed}
@@ -360,7 +408,6 @@
 	\newtheorem*{remark}{Remark}
 
 	
-\usepackage[noabbrev,nameinlink,capitalize]{cleveref}% n.b. cleveref after! hyperref
 \crefname{example}{Example}{Examples}
 \crefname{defn}{Definition}{Definitions}
 \crefname{prop}{Proposition}{Propositions}

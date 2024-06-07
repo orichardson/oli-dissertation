@@ -10,7 +10,7 @@
 	\tikzset{center base/.style={baseline={([yshift=-.8ex]current bounding box.center)}}}
 
 	%%% Node Stylings
-	\tikzset{dpadded/.style={rounded corners=2, inner sep=0.7em, draw, outer sep=0.3em, fill={black!50}, fill opacity=0.08, text opacity=1}}
+	\tikzset{dpadded/.style={rounded corners=5, inner sep=0.7em, draw, outer sep=0.3em, fill={black!50}, fill opacity=0.08, text opacity=1}}
 	\tikzset{dpad1/.style={outer sep=0.1em, inner sep=0.4em, draw=gray!50, rounded corners=2, fill=black!08, fill opacity=1, align=center}}
 	\tikzset{dpad0/.style={outer sep=0.05em, inner sep=0.3em, draw=gray!75, rounded corners=4, fill=black!08, fill opacity=1, align=center}}
 	\tikzset{dpadinline/.style={outer sep=0.05em, inner sep=2.5pt, rounded corners=2.5pt, draw=gray!75, fill=black!08, fill opacity=1, align=center, font=\small}}
@@ -81,9 +81,14 @@
     }
     \makeatother
 
+%ensure we have dutchcal...
+\DeclareMathAlphabet{\mathdcal}{U}{dutchcal}{m}{n}
+\DeclareMathAlphabet{\mathbdcal}{U}{dutchcal}{b}{n}
+
 \relax %%%%%%%%%   PDG  MACROS   %%%%%%%%
 	\newcommand{\X}{\mathcal X}
-	\newcommand{\V}{\mathcal V}
+	% \newcommand{\V}{\mathcal V}
+	\newcommand{\V}{\mathdcal V}
 	\newcommand{\N}{\mathcal N}
 	\newcommand{\Ar}{\mathcal A}
 	\newcommand{\Ed}{\mathcal E}
@@ -92,33 +97,35 @@
     \newcommand{\bbeta}{\boldsymbol\beta}
 
 	\def\p_#1{\mathbb P_{\!#1\mskip-2mu}}
-	\newcommand{\pdgunit}{\mathrlap{\mathit 1} \mspace{2.3mu}\mathit 1}
+	
+	\newcommand{\dg}[1]{\mathbdcal{#1}}
+	\newcommand{\var}[1]{\mathsf{#1}}
 	
 	%%%%% a clever version of \Src,\Tgt, and \p that supresses subscripts
 	\newif\ifsuba \subatrue
 	\let\psimp\p  % \let\simpSrc\Src   \let\simpTgt\Tgt
 	\newcommand\Src[1]{\ifsuba S\mskip-2mu\vphantom{|}_{{#1}} \else S \fi}
 	\newcommand\Tgt[1]{\ifsuba T\mskip-3mu\vphantom{|}_{{#1}} \else T \fi}
-
-	\DeclareMathAlphabet{\mathdcal}{U}{dutchcal}{m}{n}
-	\DeclareMathAlphabet{\mathbdcal}{U}{dutchcal}{b}{n}
-	\newcommand{\dg}[1]{\mathbdcal{#1}}
-	% \newcommand{\PDGof}[1]{{\dg M}_{#1}}
-	% \newcommand{\PDGof}[1]{\mathbb P \mkern-2mu\dg{D\mkern-2muG}({#1})}
-	% \newcommand{\PDGof}[1]{\mathbb P \mkern-2mu\mathit{D\mkern-2muG}({#1})}
-	\newcommand{\PDGof}[1]{{\mathbdcal{p\kern-0.05em d\kern-0.125em g}} (#1)}
-	% \newcommand{\UPDGof}[1]{{\dg N}_{#1}}
-	\newcommand{\UPDGof}[1]{{\mathbdcal{u\kern-0.05em p\kern-0.05em d\kern-0.125em g}} ({#1})}
-	\newcommand\VFE{\mathit{V\mkern-4mu F\mkern-4.5mu E}}
-
+		
+	\newcommand{\PDGof}[1]{{\dg M}_{#1}}
+	\newcommand{\UPDGof}[1]{{\dg N}_{#1}}
+	
+	% Special Variables
+	\newcommand{\pdgunit}{\mathrlap{\mathit 1} \mspace{2.3mu}\mathit 1}
+	\newcommand\Tru{{\tt T}}
+		\newcommand\trut{{\tt t}}
+		\newcommand\truf{{\tt f}}
+	
+	% \newcommand{\PDGof}[1]{{\mathbdcal{p\kern-0.05em d\kern-0.125em g}} (#1)}
+	% \newcommand{\UPDGof}[1]{{\mathbdcal{u\kern-0.05em p\kern-0.05em d\kern-0.125em g}} ({#1})}
 	\newcommand\Inc{\mathit{Inc}}
 	\newcommand\OInc{\mathit{O\mskip-2.5muI\mskip-3.5mun\mskip-1.7muc}} % new version of Inc
 	% Variants of the second term's name....
 	% \newcommand{\IDef}[1]{\mathit{IDef}_{\!#1}}
 	\newcommand{\IDef}{\mathit{I\mskip-3.0muD\mskip-2.5mue\mskip-1.5muf}}
-	\newcommand\SDef{\mathit{S\mskip-3.5muD\mskip-2.5mue\mskip-1.5muf}} %
-	\newcommand\SDiff{\mathit{S\mskip-3.5muD\mskip-2.5mui\mskip-1.5muff}} % the new IDef, v1
-	\newcommand{\SInc}{\mathit{S\mskip-2.5muI\mskip-3.5mun\mskip-1.7muc}} % the new IDef, v2
+	\newcommand\SDef{\mathit{S\mskip-3.5muD\mskip-2.5mue\mskip-1.5muf}} % structural dif?
+	\newcommand\SDiff{\mathit{S\mskip-3.5muD\mskip-2.5mui\mskip-1.5muff}} % the new IDef?
+	\newcommand\SInc{\mathit{S\mskip-2.5muI\mskip-3.5mun\mskip-1.7muc}} % the new IDef? 
 	
 	\newcommand{\SIMInc}{\mathrm{\SQIM}\mathit{\mskip-2.5muI\mskip-3.5mun\mskip-1.7muc}} 
 	% \newcommand{\ed}[3]{%
@@ -132,6 +139,7 @@
 	        #1$}}}{\rightarrow}} #3}
 
 	\newcommand{\bundle}{\mathbin{+}}
+		
 	\DeclareDoubleDelim
 		\SD\{\{\}\}
 	\DeclareDoubleDelim

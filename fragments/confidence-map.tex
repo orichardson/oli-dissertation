@@ -1,0 +1,96 @@
+\begin{figure*}
+% \centering
+\begin{center}
+~\hfill
+\hspace{-3cm}
+\begin{tikzpicture}
+\begin{scope}[every node/.style={align=left,rounded corners=3,draw,thick,inner sep=5pt,anchor=center}]
+	\node at (-5, 0) (fc) {%
+		% Full-Confidence Update\\
+		Full Update Rule \\
+		% Update Rule \\
+		$(\,\cdot\mid \cdot\,) : \Theta \times \Phi \to \Theta$\\
+			\small\hfill\color{gray}(idempotent)\hfill};
+	\node at (0, -1.4)(flow) {%
+		% Complete Positive Flows\\
+		% Commitment Flow\\
+		% Flow Commitment Fn\\
+		Flow Update Fn\\
+		% Update Flow \\
+		$
+		% f
+		\Lrn
+		: [0,\infty] \times \Phi \times \Theta \to \Theta$\\
+			\small\hfill\color{gray}(diffble, additive, limiting)\hfill};
+	\node at (0, 1.4)(path) {
+		% Smoooth Paths\\
+		% Commitment Path\\
+		% Path Commitment Fn\\
+		% Path Update Fn \\
+		Update Path \\
+		$\gamma: [0,1] \times \Phi \times \Theta \to \Theta$\\
+		\small\hfill\color{gray}(diffble, end-halting)\hfill};
+	\node at (4.5, 0)(vfield) {%
+		% Vector Fields \\
+		Update Field \\
+		$F : \Phi \to \mathfrak X(\Theta)$\\
+		\small\hfill\color{gray}(complete, terminating)\hfill};
+	\node at (8.5, 0) (loss) {%
+		% Loss Repr \\
+		% Incompatibility Measure \\
+		% Loss Fn\\
+		Plaus Function\\
+		$\Bel: \Theta \times \Phi \to \mathbb R$};
+	%%
+	% \node at (-5, 3) (truth) {%
+	% 	Truth Relation\\
+	% 	${\models} : \Phi \times \Theta \to 2$
+	% 	};
+\end{scope}
+	%% grad: loss to update fields
+	\draw[arr] (loss) to node[above]{$\hat\nabla$} (vfield);
+
+	%% commitment functions to update fields
+	\draw[arr] (path) to[out=7,in=85]
+		node[right=5pt,pos=0.7]{$\frac{\partial}{\partial s}$} (vfield);
+	\draw[arr] (flow) to[out=-7,in=-85]
+		node[right=3pt,pos=0.7]{$\frac{\partial}{\partial t}$} (vfield);
+
+	%% update fields to commitment functions
+	\draw[arr] (vfield) to[out=-95,in=-2] node[above=0pt,pos=0.70]
+		% {$\int \mathrm dt$}
+		% {$\int dt$}
+		% {$\int$}
+		% {$\int (\,\cdot\,)\mathrm dt$}
+		{$\int \,\cdot\,\mathrm dt$}
+		% {$\int {-}\mathrm dt$}
+		(flow);
+	% \draw[arr1] (vfield) to[out=90,in=0] node[below right]{$\int \mathrm dt$} (path);
+	% \draw (vfield) to[out=90,in=0] node[above]{$\int \mathrm dt$} (flow);
+	
+	%% full-confidence udpate rules from commitment functions
+	\draw[arr] (path) to node[above, sloped]{$\scriptstyle s=1$} (fc);
+	\draw[arr] (flow) to node[below,sloped]{$\scriptstyle t=\infty$}(fc);
+
+	%% extra: dashed correspondence between commitment fns
+	\draw[arr,-left to,dotted,gray] (path) edge[transform canvas={xshift=4pt}]
+		node[right]{$\scriptstyle-\log(1-s)$} (flow);
+	\draw[arr,-left to,dotted,gray] (flow) edge
+	 	node[left]{$\scriptstyle1-e^{-t}$}(path);
+	% \draw[arr,-left to] (path.south)++(0.1,0) to (flow.north)+(0.1,0);
+	% \draw[arr,-left to] (flow.north) to (path.south);
+	
+	%% connections to truth
+	% \draw[arr] (fc) to node[right]
+	% 	% {$\models$}
+	% 	{}
+	% 	(truth);	
+	% \draw[arr] (loss) to[out=130, in=0] 
+	% 	node[above,pos=0.7]{local minima} (truth);
+\end{tikzpicture}
+\hspace{-3cm}\hfill~
+\end{center}
+\caption{Different representations of update functions, and the relationships they have with one another.
+% Sections 3 and
+}\label{fig:map}
+\end{figure*}
