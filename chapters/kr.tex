@@ -118,7 +118,7 @@ We associate $R$  with a PDG
         \node at (0,0) {$\cdots$};
         \node[dpadded] (An) at (1,0) {$\var A_n$};
         \node[dpadded] (T) at (0, -1.4) {$\Tru$};
-        \mergearr[arr1] {A1}{An}{T}
+        \mergearr[arr1,->>] {A1}{An}{T}
         \node [%
             below left=0pt and 3pt 
             % above= 1pt
@@ -169,6 +169,9 @@ that leaves $\Tru$ implicit, so that the binary relation $R(\var X,\var Y)$ and 
     \end{tikzpicture}~,
 \end{center}
 respectively, in PDG notation.
+Correspondingly, we will typically identify a distribution $\mu(\X)$ with 
+the ``extended'' distribution $\mu(\X) \delta(\Tru{=}\trut)$, except
+in the following theorem statement, where we treat it carefully.
 % Observe that, as far as finite PDGs are concerned, 
 % relations, events, and constraints are essentially the same.
 
@@ -177,29 +180,131 @@ While it is not surprising that this construction encodes a relation
     as far as PDG semantics are concerned, it is still worth verifying.
 \begin{prop}
     If $R = R(\var A_1, \ldots, \var A_n) = R(\mat X)$ is a relational constraint
-    on the variables $\mat X = \{\var A_1, \ldots, \var A_n\}$, then:
+    on the variables $\mat X = \{\var A_1, \ldots, \var A_n\}$, then,
+    writing $R$ for both the PDG $\dg M_R$ and the event $R \subseteq \V\mat X$, we have:
     \begin{enumerate}[topsep=0pt]
         \item $\SD{R\,} 
-            = \{ \mu(\mat X)\delta(\Tru{=}\trut) : \Supp \mu \subseteq R \}
-            = \{ \mu(\mat X)\delta(\Tru{=}\trut) : \mu(R) = 1 \}
+        % (= \SD{\dg M_R})
+            = \{ \mu(\mat X, \Tru) : \Supp \mu \subseteq R \times \{\trut\} \}
+            = \{ \mu(\mat X, \Tru) : \mu(R) = \mu(\Tru{=}\trut) = 1 \}
             $.
-        \item For all PDGs $\dg M$
+        \item  
+        Moreover, for all PDGs $\dg M$ 
+            % with variables $\X$,
             % containing the variables $\mat X$:
             with variables $\X \supseteq \mat X$, 
         \begin{enumerate}
-            \item $\SD{\dg M + R} = \SD{\dg M} \cap
-                % \{ \mu(\X) : \Supp \mu \subseteq R\}
-                \{ \mu(\X) : \mu(R) = 1\}.
-                % \SD{R}
-                $
-            \item for all $\gamma \ge 0$, $\aar{\dg M + R}_\gamma \ge \aar{\dg M}_\gamma$ with equality iff $\mu(R) = 1$ for all $\mu \in \bbr{\dg M}_\gamma$. 
+            \item 
+            % $\SD{\dg M + R} 
+            % \cong
+            %     % =
+            %     % \SD{\dg M} \cap \{ \mu(\X) : \Supp \mu \subseteq R\}
+            %     % \SD{\dg M} \cap \{ \mu(\X) : \mu(R) = 1\}
+            %     \big\{ \mu \in \SD{\dg M} ~\big|~ \mu(R) = 1 \big\}
+            %     $
+            $\mu \in \SD{\dg M + R}$ 
+            iff $\mu(\X) \in \SD{\dg M}$ and $\mu(R) = 1$ 
+                ~(and also $\mu(\Tru{=}\trut)=1$).
+            % where $\cong$ identifies 
             
-            \item provided $\aar{\dg M} < \infty$, $\bbr{\dg M + R}^*$ consists entirely of distributions $\mu$ satisfying $\mu(R) = 1$. 
+            
+            \item provided $\aar{\dg M}_\gamma < \infty$, $\bbr{\dg M + R}^*_\gamma$ consists entirely of $\mu$ satisfying $\mu(R) = 1$. 
+            
+            \item for all $\gamma \ge 0$, $\aar{\dg M + R}_\gamma \ge \aar{\dg M}_\gamma$ with equality if and only if
+            there exists some $\mu \in \bbr{\dg M}^*_\gamma$ for which $\mu(R) = 1$. 
+        
         \end{enumerate}
     \end{enumerate}
 \end{prop}
 \begin{proof}
-    If $\dg M$ is a 
+    1.
+    If $\mu \in \SD{R\,}$, then $\mu(\Tru{=}\trut) = 1$, so if $\mu(\mat X{=}\mat x) > 0$, then $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = 1$ for all joint settings $\mat x \in \V(\mat X)$. But $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = R(\mat x)$, and thus $R(\mat x) = 1$.
+    Conversely, if $\mu(\mat X, \Tru) = \mu(\mat X)\delta(\Tru{=}\trut)$ and $\mu(R) = 1$, then 
+    \[
+        \mu(\Tru \mid \mat X)
+        = (\mu(\mat X) \delta(\Tru {=} \trut)) / \mu(\mat X)
+        = \delta R(\Tru \mid \mat X).
+    \]
+    Thus $\mu$ is consistent with all conditional probabilities in the widget $\PDGof R$,
+    and so $\mu \in \SD{\dg M_R} = \SD{R\,}$.
+    
+    2. 
+    (a)
+    If $\mu \in \SD{\dg M + R}$, then by definition $\mu(\Tru{=}\trut) = 1$. By the same reasoning as in part 1, we also find that $\mu(R) = 1$. We also know that $\mu$ satisfies the cpds of $\dg M$, so $\mu(\X) \in \SD{\dg M}$. 
+    Conversely, if $\mu(\X) \in \SD{\dg M}$, and $\mu(\Tru{=}\trut) = \mu(R) = 1$, 
+    then, again by the logic in part 1, $\mu(\Tru \mid \mat X) = \delta R$.
+    Therefore $\mu$ satisfies all cpds of $\dg M$, and all cpds of the widget $\PDGof{R}$, and thus $\mu \in \SD{\dg M + R}$.
+    
+    (b) 
+    % In search of a contradiction, suppose that there is some 
+    For all 
+    $\mu \in \bbr{\dg M}^*_\gamma$, we have
+     % with $\mu(R) < 1$. 
+    % Then there is some setting $\mat x$
+    % If $\mu(\Tru{=}\trut) < 1$, then $$
+    \begin{align*}
+        \aar{\dg M}_\gamma 
+        &= \bbr{\dg M}_\gamma^*(\mu) 
+        \\&\ge \Ex_{\mu} \Big[
+            \log \frac{\mu(\Tru)}{\mathbbm1[\Tru=\trut]}
+            + \log \frac{\mu(\Tru \mid \mat X)}{\delta R(\Tru \mid \mat x)}
+        \Big]
+        \\&= \infty \cdot \mathbbm1[\mu(\Tru{=}\trut)=1] + 
+            \infty \cdot \Ex_{\mat x \sim \mu}\big[ \mat x \notin R \Rightarrow \mu(\Tru{=}\trut\mid\mat x)=0 \big]
+        .
+    \end{align*} 
+    Now, suppose that $\mu(R) < 1$, meaning there is some mass on joint settings $\mat x \notin R$.
+    If $\mu(\Tru{=}\trut \mid \mat x) \ne 0$, then the score is infinite, by the second term. 
+    Yet if $\mu(\Tru{=}\trut \mid \mat x) = 0$ and there is some mass on $\mat x$, then 
+    $\mu(\Tru{=}\trut) < 1$, and so again the score is infinite, by the first term.
+    Thus, if the score is finite, then $\mu(R) = 1$. 
+    
+    (c) The inequality is monotonicity (\cref{lemma!}). 
+    % For the remainder of this proof, identify distrib
+    Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(R) = 1$.
+    % Define 
+    % If $\Tru \notin \X$, then d
+    Define $\bar\mu(\X, \Tru) := \mu(\X)\delta(\Tru{=}\trut)$.
+    By the same logic as in the proof of part 1 of the proposition, 
+    $\mu$ satisfies all of the cpds of the widget $\PDGof R$; and thus 
+    $\bbr{\dg M + R}(\bar\mu) = \bbr{\dg M}_\gamma(\mu)$.
+    We now chain together some inequalities to find that
+    \[
+     \aar{\dg M + R}_\gamma \le 
+     \bbr{\dg M + R}(\bar\mu) 
+     = \bbr{\dg M}_\gamma(\mu)
+     = \aar{\dg M}_\gamma
+     \le \aar{\dg M + R}_\gamma
+     \]
+    and thus all of these quantities are equal.
+    The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
+    % Finally, if $\Tru \in \X$ and $\mu(\Tru{=}\trut) < 1$, then 
+    % \[
+    %     \aar{\dg M}_\gamma^* = \bbr{\dg M}^*_\gamma(\mu)
+    % \]
+    
+    Conversely, suppose
+    that $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$.
+    % \[
+    %     \bbr{\dg M + R}_\gamma \subseteq = \bbr{\dg M}^*_\gamma
+    % \]
+    If $\bbr{\dg M} = \infty$, then $\bbr{\dg M}_\gamma^*$ consists of 
+        all distributions, and so the statement is vacuous. 
+    On the other hand, 
+    select some $\bar\mu \in \bbr{\dg M + R}_\gamma^*$.
+    By applying part (b), we find that $\bar\mu(R) = 1$. 
+    And, because $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$
+    and $\bar\mu$ is an optimal distribution for $\dg M + R$, 
+    we find that its marginal $\mu(\X) := \bar\mu(\X)$
+    is optimal for $\dg M$:
+    \[
+        \bbr{\dg M}_\gamma(\mu(\X))
+        % = \Ex_{\omega \sim \mu}[ \sum_{a \in \Ar} ]
+        = \aar{\dg M + R}_\gamma 
+        = \aar{\dg M}_\gamma
+        \le \bbr{\dg M}_\gamma(\mu(\X))
+    \]
+    Thus, we have constructed $\mu \in \bbr{\dg M}^*_\gamma$ satisfying $\mu(R) =1$. 
 \end{proof}
 
 
@@ -277,19 +382,12 @@ In addition to $\hat p$ and the new variables, this PDG
         % \node[right=0.2 of b2] (bdots){$\cdots$};
         % \node[tpt={bn|$y_n$},right=0.2 of bdots]{};
 
-        \node[Dom={%
-            %$\XxYy$%
-            $\XxYyshort$%
-                [label distance=-1.5em, xshift=3.2em] (XxYy)
+        \node[Dom={$\XxYyshort$[label distance=-1.5em, xshift=1.2em] (XxYy)
             around {\lab{astar}\lab{b1}\lab{b2}(1.6,1.85)}} ] {};
-
 
         \node[tpt={y1|$y$}] at (3.7, 1.5){};
         \node[tpt={y2|$\lnot y$},right=0.5 of y1]{};
-        \node[Dom={%
-            %$Y{=}y\,$%
-            $\Yyshort\$%
-            [label distance=-1.4em, xshift=1.3em] (Yy)
+        \node[Dom={$\Yyshort$[label distance=-1.4em, xshift=1.3em] (Yy)
             around {\lab{y1}\lab{y2}(3.7,1.75)}} ] {};
 
         %% structural arrows
