@@ -261,7 +261,8 @@
     \sbox{\stosboxblue}{\begin{tikzpicture}\draw[->,blue] (0,0) to (0.15,0);\end{tikzpicture}}
     \newcommand\stoblue{\usebox\stosboxblue}
 
-
+%%%%%%% SPECIAL COMMANDS FOR REASONING WITH PDGS %%%%%%
+\newcommand\False{\dg{F\mskip-5mua\!l\mskip-4mus\mskip-1.5mue}}
 
 %%%%%  SPECIAL COMMANDS FOR CONFIDENCE  %%%%%
 \newcommand\confdom{[\bot,\!\top]}
@@ -393,6 +394,7 @@
 	\declaretheorem[sibling=theorem,name=Proposition, postheadhook={\thmTOCadd}]{prop}
 	\newtheorem{lemma}[theorem]{Lemma}
 	\newtheorem{fact}[theorem]{Fact}
+    \newtheorem{falsity}[theorem]{Falsity}
 	\newtheorem{conj}[theorem]{Conjecture}
     \newtheorem{claim}{Claim}
 	\declaretheorem[numberwithin=theorem,name=Claim]{iclaim} % internal claims for lproofs.

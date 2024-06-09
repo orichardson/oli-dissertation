@@ -1631,13 +1631,13 @@ The obvious approach to implementing the inconsistency calculation subroutine
     \begin{minipage}{0.49\linewidth}
         \textbf{Case 1.} $\frac{a+b}2 = z < b$. Thus,
         \begin{align*}
-            \Big| \log \frac zb & \frac{1-b}{1-z} \Big| 
+            \Big| \log & \frac zb  \frac{1-b}{1-z} \Big| 
             = \log \frac bz \frac{1-z}{1-b} \\
             &= \log \frac {2b}{a+b} \frac{1-\frac{a+b}2}{1-b} \\
             &= \log \frac {b}{a+b} \frac{2 - a - b}{1-b} \\
             &= \log \frac {b}{a+b} + \log \frac{\bar a + \bar b}{\bar b} \\
             &\le \log \frac{\bar a + \bar b}{\bar b}
-                \qquad [\text{as first term is negative}] \\
+                \qquad \Big[\parbox{2.6cm}{\centering\singlespacing as first term\\ is negative}\Big] \\
             &= \log\Big(1 + \nicefrac{\bar a}{\bar b}\Big) \\
             &\le \log \Big(1 + \frac{\bar a}{(\bar a / 3)} \Big)
             = \log 4.
@@ -1647,13 +1647,13 @@ The obvious approach to implementing the inconsistency calculation subroutine
         \textbf{Case 2.}
         $\frac{b+c}2 = z > b$. Thus,
         \begin{align*}
-            \Big| \log \frac zb &\frac{1-b}{1-z} \Big| 
+            \Big| \log & \frac zb \frac{1-b}{1-z} \Big| 
             = \log \frac zb \frac{1-b}{1-z} \\
             &= \log \frac {b+c}{2b} \frac{1-b}{1-\frac{b+c}2} \\
             &= \log \frac {b+c}{b} \frac{1-b}{2 - b - c} \\
             &= \log \frac {b+c}{b} + \log \frac{\bar b}{\bar b + \bar c} \\
             &\le \log \frac{b + c}{b}
-                \qquad [\text{as second term is negative}] \\
+                \quad~~ \Big[\parbox{2.85cm}{\centering\singlespacing as second term\\ is negative}\Big] \\
             &= \log\Big(1 + \nicefrac{c}{b}\Big) \\
             &\le \log \Big(1 + \frac{c}{(c / 3)} \Big)
             = \log 4.

@@ -428,3 +428,767 @@ It becomes even more useful in tandem
 
 
 % \section{QIM }
+
+
+\section{A Logic Based on PDGs}
+
+\subsection{PDG Entailment: A Natural Preorder on PDGs}
+
+    We say that $\dg M_1$ \emph{entails} $\dg M_2$
+    and write $\dg M_1 \models \dg M_2$
+    % $\dg M_1$,
+    % to indic
+    % to indicate that a
+    iff
+    \[
+        \forall \gamma \ge 0.~
+        \forall \dg M'.\quad \aar{\dg M_1 + \dg M'}_{\gamma}
+            \ge \aar{\dg M_2 + \dg M'}_{\gamma}.
+    \]
+
+    % Treating both PDGs as black boxes, so that we can add extra stuff to them, but all we can measure is how inconsistent they are, 
+    Let's imagine that we can interact with a PDG only by altering it, and by measuring its degree of inconsistency.
+    % We will later justify this perspective by showing that 
+    $\dg M_1 \models \dg M_2$ means $\dg M_1$ is a ``stronger statement'': in every context (so long as it's the same context added to $\dg M_1$ and $\dg M_2$), $\dg M_1$ has is at least as inconsistent as $\dg M_2$. 
+    It may be helpful to think of the extremes: 
+        % the empty PDG, which we will denote $0$, 
+    an outright contradiction, which has infinite inconsistency no matter the context, entails everything.  Here are a few more examples. 
+    
+    
+    % 
+    % \bigskip
+    % Are these definitions appropriate? Some examples:
+    % 
+    \begin{linked}{prop}{entailment}
+    \begin{enumerate}[parsep=0pt,itemsep=0.2ex]
+        \item Marginals are entailed by joint distributions, e.g., $p(X,Y) \models p(X)$.
+        \item Weaker constraints are entailed by larger ones, e.g., $(XY {=}xy) \models (X{=}x)$. 
+    \end{enumerate}   
+    \end{linked}
+    % I believe the following are true (although I need to come back and verify this):
+    
+    Some more properties of the entailment relation, for general PDGs.
+    
+    \begin{linked}{prop}{entail-properties}
+        \begin{enumerate}[parsep=0pt]
+            \item Reflexivity: $\dg M \models \dg M$.
+            \item Transitivity: $\dg M_1 \models \dg M_2$ and $\dg M_2 \models \dg M_3$ imply that $\dg M_1 \models \dg M_3$. 
+            \item If 
+                % $\dg M_1 \supseteq \dg M_2$
+                $\Ar_1 \supseteq \Ar_2$
+                 or if $\bbeta_1 \ge \bbeta_2$ but otherwise the two are identical, then $\dg M_1 \models \dg M_2$. 
+            \item The same is true if $\dg M_1$ and $\dg M_2$ are identical except for
+            $\balpha_1 \ge \balpha_2$.%
+                \footnote{
+                    % {\color{gray}\small (
+                So far, this result only holds for PDGs with discrete variables;
+                It is not true true for the approach I have been using to
+                formalize $\SDef$ for continuous variables.
+                    % )}
+                }
+                % The way this works with $\balpha$ depends on which
+                % way formalizations go, but using the default one with entropy, $\balpha_1 \ge \balpha_2$ also implies $\dg M_1 \models \dg M_2$. 
+        \end{enumerate}
+    \end{linked}
+    
+    
+    If both $\dg M_1 \models \dg M_2$ and $\dg M_2 \models \dg M_1$, 
+        then we say the two PDGs $\dg M_1$ and $\dg M_2$ are \emph{equivalent}, and write $\dg M_1 \equiv \dg M_2$.
+    Two PDGs are eqivalent if the respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
+    Intuitively, $\dg M_1 \equiv \dg M_2$ iff $\dg M_1$ and $\dg M_2$ are equally (in)consistent no matter how one alters them, so long as both are altered in the same way. 
+    
+    \begin{linked}{prop}{sem-equiv-properties}
+        \begin{enumerate}[parsep=0pt]
+        \item For all distributions $p(X)$, $p(X) + p(Y|X) \equiv p(X,Y)$. 
+        \item If $\dg M_1 \equiv \dg M_2$, then their mixtures are also equivalent:
+            $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$. 
+        \item $\dg M + \dg M \equiv 2 \dg M$. 
+            Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $2 \dg M$ has all confidences doubled. 
+    \end{enumerate}
+    \end{linked}
+
+From its definition, it is clear that $\equiv$ is symmetric.
+Thus transitivity and reflexivity of $\models$ (above), imply that
+$\equiv$ is an equivalence relation. Moreover, it is the same equivalence relation as equality of scoring function semantics!
+
+\begin{linked}{theorem}{sem-equiv}
+    $\dg M_1 \equiv \dg M_2$ iff $\bbr{\dg M_1} = \bbr{\dg M_2}$.
+    % \footnote{More explicitly, these two objects are functions of 
+    %     $\gamma$, and equal iff $\bbr{\dg M_1}_\gamma = \bbr{\dg M_2}_\gamma$
+    %     for all $\gamma \ge 0$.}
+    That is, $\dg M_1 \equiv \dg M_2$ if and only if 
+    $\dg M_1$ and $\dg M_2$ have the same set of variables $\X$, and
+    $\bbr{\dg M_1}_\gamma(\mu) = \bbr{\dg M_2}_\gamma(\mu)$
+    for all $\gamma \ge 0$ and $\mu \in \Delta\V\!\X$.
+\end{linked}    
+
+
+It is worth stressing an implication of this theorem: equivalent PDGs always have the same set of variables.
+In some ways this makes perfect sense: postulating the existence of $X$ (or forgetting about $X$) does in fact distinguish your mental state, even if you know nothing about $X$. 
+However, it may also be too strict a requirement.
+% Here are some reasons why, and some alternative weaker notions of congruence that may address them.
+% \begin{itemize}
+    % \item 
+    When $\dg M_1 + \X_2 \equiv \dg M_2 + \X_1$,
+    we call $\dg M_1$ and $\dg M_2$ \emph{congruent modulo variables}, and write $\dg M_1 \cong_\X \dg M_2$.
+    This definition places the two PDGs on the same set of variables before comparison.  All PDGs with $\balpha = \bbeta = 0$ are congruent to the empty PDG, modulo variables. 
+    % 
+    % \item 
+    % A somewhat orthogonal concern is that variable identities. 
+    % If $\dg M_1$ and $\dg M_2$ are identical except that their variables have different names,
+    % then we don't really want them to be distinct. 
+    % We call $\dg M_1$ and $\dg M_2$ \emph{isomorphic} iff
+    % there exists a bijection $\iota : \X_1 \to \X_2$ and an indexed family of bijections $\{\psi_{X} : \V(X) \to \V(\iota(X)) \}_{X \in \X_1}$ such that 
+    % 
+% \end{itemize}
+
+
+
+We can also add entailments togther.
+
+\begin{linked}{prop}{entail-sum}
+    If $\dg M_1 \models \dg M_3$ and $\dg M_2 \models \dg M_4$, then
+    $\dg M_1 + \dg M_2 \models \dg M_3 + \dg M_4$.
+\end{linked}
+\begin{lproof}\label{proof:entail-sum}
+    % Suppose  $c_1, c_2 > 0$, $\dg M_1 \models 0$, and $\dg M_2 \models 0$.
+    % Then $\forall \dg M''$, we have $\aar{\dg M_1 + \dg M''}_\gamma \ge \aar{\dg M''}$. 
+    % In particular, for any $\dg M'$, we can set $\dg M'' := \dg M' + \dg M_2$, 
+    % and thus
+    % \[
+    % \aar[\big]{\dg M_1 + \dg M_2 + \dg M'}_\gamma ~~\ge~~ \aar[\big]{\dg M_2 + \dg M'}_\gamma
+    %     ~~\ge~~ \aar[\big]{\dg M'}_\gamma
+    % .3
+    % \]
+    Suppose $\dg M_1 \models \dg M_3$, and $\dg M_2 \models \dg M_4$.
+    Then $\forall \dg M''$, we have $\aar{\dg M_1 + \dg M''}_\gamma \ge \aar{\dg M_3 + \dg M''}$. 
+    In particular, for any $\dg M'$, we can set $\dg M'' := \dg M' + \dg M_2$, 
+    and thus
+    \[
+    \aar[\big]{\dg M_1 + \dg M_2 + \dg M'}_\gamma ~~\ge~~ \aar[\big]{\dg M_3 + \dg M_2 + \dg M'}_\gamma
+        ~~\ge~~ \aar[\big]{\dg M_3 + \dg M_4 + \dg M'}_\gamma
+    .
+    \qedhere
+    \]
+\end{lproof}
+
+One way of defining subtraction is to add the negated second argument.
+The biggest unintuitive aspect of this is that $\dg M - \dg M$ is not equivalent to the empty PDG; the variables are still there. 
+(But they are congruent modulo variables.)
+One might also consider a variant that deleted variables, but it seems
+impossible to do this continuously and invertably.
+Do we want $\dg M - \X$ to be the trivial PDG?
+
+\begin{coro}
+    If $\dg M_1 \models \dg M_2$, then $\dg M_1 - \dg M_2 \models \X_2$.
+\end{coro}
+% To further specialize, chosing $\dg M_1 = \dg M_2$, the premise is always true,
+% and so we find that $\X \models 0$. 
+
+\begin{coro}
+    If $\dg M_1 \models 0$ and $\dg M_2 \models 0$, then $\dg M_1 + \dg M_2 \models 0$. 
+    This is because $0$ is an idempotent PDG:  $0 \equiv 0+ 0$. 
+\end{coro}
+
+% 
+% \paragraph{\color{red} Trivial PDG.}
+Thus the PDGs that entail the trivial PDG are closed under addition. 
+Do all PDGs have this property? 
+As a point of comparison, in propositional logic, every proposition entails true. 
+So, in this setting, is it the case that $\dg M \models 0$ for all $\dg M$---that is, do we have
+% \[
+$
+\aar{\dg M + \dg M'}_\gamma \ge \aar{\dg M'}_\gamma
+$
+for all $\dg M$ and $\dg M'$?
+% This is certaintly true if $\dg M$ has $\balpha,\bbeta \ge 0$.  
+This is very close to a special case of the monotonicity property of \cref{one-true-loss}. 
+
+In general, the answer is no.
+Nevertheless, it does hold for PDGs $\dg M$ that have $\bbeta \ge 0$ and are in a sense ``qualitatively complete'' 
+% (definition \cref{defn:qual-complete} below),
+which includes many PDGs of interest. 
+% But it may not be true for PDGs $\dg M$ that have insufficient qualitative edges
+%     (or those that have negative confidences).
+    
+\begin{defn}\label{defn:qual-complete}
+    A weighted hypergraph $(\Ar, \balpha)$ is \emph{qualitatively complete}
+    iff its structural deficiency is non-negative.
+    More precisely: $(\Ar, \balpha)$ is qualitatively complete iff
+    for all interpretations $\X$ of its nodes as variables,
+    all and joint distributions $\mu \in \Delta\V\!\X$, 
+    the structural deficiency $\SDef_{(\Ar, \balpha)}(\mu) \ge 0$
+    of $\mu$ with respect to $(\Ar, \balpha)$ is non-negative. 
+\end{defn}
+
+\begin{linked}{prop}{qual-complete-criterea}
+Let $\dg M$ be a PDG with structure $(\Ar,\balpha)$,
+    and observational confidences $\bbeta \ge \mathbf 0$.
+Then the following are equivalent:
+\begin{enumerate}[parsep=0ex]
+    \item $(\Ar, \balpha)$ is qualitatively complete. 
+    \item $\dg M \models 0$.
+    \item 
+    $\balpha$
+    can be written as a mixture of BNs plus a positive residual.
+    That is, there exist BN structures $B_1, \ldots B_n$ 
+    (which correspond to vectors $\balpha_1, \ldots, \balpha_n$), mixture coefficients
+    $w_1, \ldots w_n \in [0,1]$ with $\sum_{i=1}^n w_i = 1$, and a vector
+    $\balpha' \ge \mathbf 0$ such that $\balpha = \balpha' + \sum_{i=1}^n w_i \,\balpha_i$. 
+\end{enumerate}
+\end{linked}
+
+
+% I suspect that such PDGs form a cone with vertex $0$ somehow.
+% If $c_1, c_2 > 0$, $\dg M_1 \models 0$, and $\dg M_2 \models 0$, then
+% is it true that $c_1 \dg M_1 + c_2 \dg M_2 \models 0$?  To investigate,
+% we must look into scalar multiplication. 
+
+
+We can scale a PDG $\dg M$ by $r \in \mathbb R$, by multiplying
+all of its constituent confidences $\balpha$ and $\bbeta$ by $r$. 
+Concretely, this means $\dg M' = (r) \dg M$
+has confidences $\beta_a' = r \cdot \beta_a$ and $\alpha_a' = r \cdot \alpha_a$,
+where $\beta_a$ and $\alpha_a$ are the confidences of arc $a$ in $\dg M$. 
+Can we get a result similar to \cref{prop:entail-sum}
+    for scalar multiplication? 
+No, we cannot.
+
+\begin{falsity}
+    If $\dg M_1 \models \dg M_2$ then $(r) \dg M_1 \models (r) \dg M_2$, 
+    for all $r \ge 0$. 
+\end{falsity}
+
+For when $r=0$, this means 
+But here are some variants that might be true:
+
+\begin{conj}
+    \begin{enumerate}
+        \item If $\X_1 \subseteq \X_2$ and $\dg M_1 \models \dg M_2$, then
+        $(r) \dg M_1 \models (r) \dg M_2$ for all $r \ge 0$. 
+        \item If $\dg M_1 \models \dg M_2$ then
+        $(r) \dg M_1 \models (r) \dg M_2$ for all $r \ge 1$. 
+    \end{enumerate}
+\end{conj}
+  
+% Why is this? 
+% Adding arcs or confidences 
+% Part of the reason 
+% Introducing variables has the opposite effect.
+While new beliefs cannot make you any less inconsistent, 
+new variables are additional degrees of freedom, and
+cannot make you any more inconsistent. 
+\begin{prop}
+    If $\X_1 \subseteq \X_2$, then $\X_1 \models \X_2$. 
+\end{prop}
+
+It follows, for example, that the empty PDG entails any PDG that only contains variables, 
+    i.e., $0 \models \X$ for any set of variables $\X$. 
+(It might be worth noting that, as PDGs, $\X_1 + \X_2 = \X_1 - \X_2  = \X_1 \cup \X_2$ are all the same.)
+% If $\X_1 \subseteq \X_2$, it is also perhaps interesting that
+% $\X_1 - \X_2$ is 
+
+
+
+The bottom (or initial) element(s) of the entailment order are easily identified;
+like in propositional logic, they are the (most extreme) contradictions contradictions.
+Every such PDG is equivalent to
+$\dg{\False} := \begin{tikzpicture}
+    \node[dpadinline] (X) {$X$};
+    \draw[arr1, <<-] (X) to node[pos=0.7,inner sep=1pt, above]{$\delta_{0}$} + (-1,0);
+    \draw[arr1, <<-] (X) to node[pos=0.7,inner sep=1pt, above]{$\delta_{1}$} +(1,0);
+\end{tikzpicture}$,
+which has $\aar{\dg{\False}}= \infty$, and satisfies $\False \models \dg M$ for all $\dg M$. 
+
+Are there largest PDGs in this order?  What is the analogue of ``true''?--is it the empty PDG? 
+Clearly not, because $\dg M \models 0$ only if $\dg M$ is qualitatively complete. 
+It turns out there is such a ``most annodyne'' PDG if and only if
+the collection of all possible variables is a PDG.
+Concretely, let $\mathcal U$ be a ``universe of all possible variables''.  
+Then every PDG $\dg M$ with variables $\X \subseteq \mathcal U$ satisfies $\dg M \models \mathcal U$. 
+
+
+\section{``Propositional'' PDG Logic}
+Starting with the entailment operation and introducing connectives, we 
+can obtain a propositional logic whose atomic formulas are PDGs. 
+We  adopt the usual convention of writing 
+``$\models \varphi$'' if $\dg M \models \varphi$ for all PDGs $\dg M$. 
+% Observe that something nice happens: 
+% \begin{align*}
+%     0 \models \varphi \iff \models \varphi
+% \end{align*}
+
+\textbf{Exploring the Set-of-Distribution Semantics.}
+In a sense, PDGs themselves already encode a set of probabilistic models: the 
+collection $\SD{\dg M}$ of distributions consistent with them. In many
+ways, this seems like the intension of a formula formula.  
+Because $\SD{-}$ is a feature of just the observational/quantitative
+half of a PDG, let's ignore $\SDef$ for now, and assume $\gamma = 0$. 
+
+Taking only the binary aspect of this logic into account, we might want
+it to be the case that if $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then
+$\dg M_1 \models \dg M_2$. This is not true,%
+    \footnote{For instance, $\SD{\dg M} = \SD{(2) \dg M}$, but $\dg M \not\models (2) \dg M$.}
+% but it is the case that
+but it is true, in this case, that
+$(\infty) \dg M_1 \models (\infty) \dg M_2$. 
+Similarly, if 
+
+
+\subsection{Defining Connectives}
+
+% \textbf{Approach 1.}
+As usual, we can introduce conjunction by
+    defining $\dg M \models \varphi \land \varphi'$ iff
+    $\dg M \models \varphi$ and $\dg M \models \varphi'$.
+So, for example, 
+    $\dg M_1 \models (\dg M_2 \Rightarrow \dg M_3)$
+    states that if $\dg M_1 \models \dg M_2$, then $\dg M_1 \models \dg M_3$. 
+    %
+    % The equivalent of ``no assumptions'' or true, as discussed above,
+    % is the universe $\mathcal U$ of all variables.
+    % These definitions let us 
+    This lets us prove things like
+    \[
+        \models p(X,Y) \Leftrightarrow p(X) + p(Y|X)
+        \qquad
+        \text{and}
+        \qquad
+        \models (p(X) + q(X)) \Rightarrow p(X).
+    \]
+We can also continue with $\lnot$ and then define other connectives
+    ($\lor, \Rightarrow, \Leftrightarrow$) in terms of ($\land, \lnot$).    
+But the usual definition of $\dg M \models \lnot \varphi$ iff 
+    $\dg M \not\models \varphi$,
+    may not be so well-behaved.
+For instance, ...
+
+    
+% \textbf{Approach 2.}
+\def\entimp{\overset{\smash{\!\!\bullet}}\Rightarrow}
+Often outside of classical logic, it is more natural to start with 
+    implication instead of negation.
+Here is an alternate conception of implication that more closely
+    follows the intuition we had for entailment.
+% We might to say something along the lines of
+Define
+\[ \dg M \models \varphi \entimp \varphi' \qquad\text{if and only if}\qquad
+    \dg M + \varphi \models \dg M + \varphi'. \] 
+In words: a formula $\varphi$ implies another formula $\varphi'$ in context $\dg M$ 
+    iff $\varphi$ with context $\dg M$ entails $\varphi'$ with context $\dg M$. 
+One nice proprerty of this definition: $\dg M_1 \models \dg M_2$ becomes
+    equivalent to $\models \dg M_1 \entimp \dg M_2$.
+%
+This definition has a very significant drawback, however:
+it only makes sense if $\varphi$ and $\varphi'$ are themselves PDGs (or at least,
+    can be added to $\dg M$ to form a new PDG). 
+This would rule out
+    ``synthetic'' logical connectives such as $\land$ and $\lnot$
+    inside an implication.
+Thus, the logic inside a connective $\entimp$ collapses to ordinary constructions
+    that can be done with PDGs themselves. 
+        
+
+    
+    PDGs also have their own operations, most notably $+$ and $\sqcup$.
+    One interesting question is how these interact with the logical connectives we have just defined. 
+    Here are some interactions between connectives $\land, \lor, \lnot$, and PDG operations:
+    \begin{linked}{conj}{pdg-connective-interactions}
+    \begin{enumerate}[parsep=0pt]
+        \item If $\dg M \models 0$, and $\dg M \models \dg M_1 + \dg M_2$,
+        then $\dg M \models \dg M_1 \land \dg M_2$. 
+        \item $\dg M_1 + \dg M_2 \models \dg M_1 \sqcup \dg M_2$ 
+        \item   
+        % A consequence of \cref{prop:entail-sum}:
+            For all $\alpha\in [0,1]$, we have:
+            $\models (\dg M_1 \land \dg M_2) \Rightarrow ((1-\alpha)\dg M_1 + (\alpha)\dg M_2)$. 
+    \end{enumerate}
+    \end{linked}
+    \begin{lproof}[Exploration]\label{proof:pdg-connective-interactions}
+    \begin{enumerate}[parsep=0pt]
+        \item 
+        \item 
+        \item Suppose $\dg M \models \dg M_1 \land \dg M_2$. 
+        Then $\dg M \models \dg M_1$ and $\dg M \models \dg M_2$.
+        % So by \cref{prop:entail-sum}, 
+        Thus
+        % \[ \dg M \equiv \dg M + \dg M \models \dg M_1 + \dg M_2 \]
+    \end{enumerate}
+    \end{lproof}
+    
+    
+    
+Some questions.
+\begin{enumerate}
+    \item 
+    Question: which of the following are equivalent?
+    \[
+        \dg M \models \dg M'
+            \quad\qquad 
+        0\models \dg M \Rightarrow \dg M'
+            \quad\qquad
+        0\models \lnot \dg M \lor \dg M'
+            \quad\qquad
+        0\models \dg M' - \dg M
+            \quad\qquad        
+        \dg M - \dg M' \models 0
+    \]
+
+\end{enumerate}
+
+\subsection{}
+\section{PDGs and Epistemic Logic}
+        
+        
+    Given a PPDG $\dg M(\Theta)$, 
+    and a set $I$ of agents, each of which has an attention mask
+        $\mathit{Attn}_i(\theta) : 2\Ar \to \mathbb R$, 
+        we can define the local state of agent $i$ at $\theta$ to be $\dg M_i(\theta) := \mathit{Attn}_i(\theta) \odot \dg M(\theta)$. 
+    If it's always the case that $\dg M_i(\theta) \equiv \dg M(\theta)$ (which happens iff $\mathit{Attn}_i(\theta)(a) = 1$) we say that $i$ has uniform attention over $\dg M$.   
+    We can form a Kripke structure
+    with states $\Theta$, and accessibility relation 
+    % $\mathcal K_i \subseteq \Theta^2$
+    $\theta  \sim_i \theta'$ iff $\dg M_i(\theta) \equiv \dg M_i(\theta')$.
+    Because $\equiv$ is an equivalence relation, the resulting logic satisfies S5. 
+    We can also take primitive propositions $\Phi$ to be the set of PDGs, using the entailment relation.
+
+To be extra clear about the types, we distinguish the PPDG $\dg M(\Theta)$ also written $\dg M$,
+    from $\dg M\& \Theta$, its translation to a PDG by include each $\Theta$ as a variable.
+    
+{\color{gray}Equivalently, rather than thinking in terms of PPDGs, 
+we can think in terms of a set $\mathbf W$ of ``world variables'',
+by converting $\dg M(\Theta)$ to a PDG with the inclusion of variables $\{\Theta_a \}_{a \in \Ar} =: \mathbf W$.
+}
+
+Either way, we can then build an epistemic logic.  If $\dg M(\Theta)$,
+which we sometimes abbreviate
+
+Some basic properties of it:
+\begin{prop}
+    \begin{enumerate}[parsep=0pt]
+    \item $ (\dg M, \theta, I) \models \dg M(\theta)$.
+    \item For all agents $i \in I$, 
+        $(\dg M, I) \models K_i ( \dg M_i(\theta) )$, i.e., each agent
+            knows its local state. 
+    \item In particular, if agent $i$ has uniform global attention over $\dg M$, then 
+        $(\dg M, \theta, I) \models K_i (\dg M(\theta))$.
+    \item Introducing variables,  have $(\dg M, I) \models K_i (\dg M \& \Theta)$.
+    \item Moreover, the PPDG is common knowledge: $(\dg M, I) \models C_{I} (\dg M \& \Theta)$.
+    \end{enumerate}
+\end{prop}
+
+
+Now some other examples. 
+
+\begin{example}
+    There are two agents, $I = \{1,2\}$. Each has its own belief
+    about a variable $X$, and can only see that belief. 
+    We can't say anything interesting here, because the beliefs
+    of the agents don't interact.
+    
+    Now, suppose both agents observe $X=x$. That is, $\dg M_1 = \{p, x\}$
+    and $\dg M_2 = \{q, x\}$. Then  $(\dg M, I) \models C_{\{1,2\}}(X=x)$. 
+    
+    Also, $(\dg M, I) \models C_{\{1,2\}}( (\dg M_1 - \dg M_2) \lor (\dg M_2 -\dg M_1))$.
+    In English: it's common knowledge that one of the two is more inconsistent than the other.
+    % Now, suppose the value of $x$ is parameterized, 
+\end{example}
+
+\begin{subappendices}
+    
+    \section{Proofs}
+
+    \begin{lemma}
+        $\bbr{\dg M_1 + \dg M_2}_\gamma =
+            \bbr{\dg M_1}_\gamma(\X_1) + \bbr{\dg M_2}_\gamma(\X_2) 
+                + \gamma \I_\mu(\X_1; \X_2| \X_1 \cap \X_2).$
+    \end{lemma}
+    \begin{proof}
+        See appendix of inference paper. 
+    \end{proof}
+
+    \begin{defn}
+        If $\dg M_1 + \dg M_2 \equiv \dg M_1 \sqcup \dg M_2$, then 
+        we say $\dg M_1$ and $\dg M_2$ are independent. 
+    \end{defn}
+
+    \begin{lemma}
+        If $\dg M_1$ and $\dg M_2$ have disjoint variables $\X_1 \cap \X_2 = \emptyset$, 
+        then $\aar{\dg M_1 + \dg M_2} = \aar{\dg M_1} + \aar{\dg M_2}$. 
+    \end{lemma}
+
+    \begin{lemma}
+            \label{lem:commonvar-dominance}
+        If $\dg M_1$ and $\dg M_2$ are such that,
+            for all pairs of distributions 
+            $\mu_1 \in \Delta\V\!\X_1$ and $\mu_2 \in \Delta\V\!\X_2$
+            that have the same marginal on their common variables $\X_1 \cap \X_2$, it is the case that
+        \begin{align*}
+            \OInc_{\dg M_1}(\mu_1) \ge \OInc_{\dg M_2}(\mu_2)
+                \qquad\text{and}\qquad
+            \SDef_{\dg M_1}(\mu_1) \ge \SDef_{\dg M_2}(\mu_2),
+        \end{align*}
+        then $\dg M_1 \models \dg M_2$. 
+    \end{lemma}
+    \begin{lproof}
+        Suppose $\dg M_1$ and $\dg M_2$ satisfy this property.
+        Then clearly $\bbr{\dg M_1}_\gamma(\mu_1) \ge \bbr{\dg M_2}_\gamma(\mu_2)$,
+        as
+        \begin{align*}
+            \bbr{\dg M_1}_\gamma(\mu_1)
+                &= \OInc_{\dg M_1}(\mu_1) + \SDef_{\dg M_1}(\mu_1) 
+                \ge \OInc_{\dg M_2}(\mu_2) + \SDef_{\dg M_2}(\mu_2) = \bbr{\dg M_2}_\gamma(\mu_2).
+        \end{align*}
+        % This shows us that
+        Let $\dg M'$ be an arbitrary PDG, with variables $\X'$.
+        With some calculation, we find that 
+        \begin{align*}
+            \aar[\big]{\,\dg M_1 + \dg M'\,}_\gamma
+                &= \inf_{\mu \in \Delta\V(\X_1 \cup\X')}\, \Big( 
+                    \bbr{\dg M}_\gamma(\mu(\X)) + \bbr{\dg M'}_\gamma(\mu(\X'))
+                    + \gamma \I_\mu(\X_1 ; \X' | \X_1 \cap \X')
+                \Big) \\
+                &= \inf_{\mu \in \Delta\V(\X_1 \cup \X' \cup \X_2)}\, \Big( 
+                    \bbr{\dg M_1}_\gamma(\mu(\X_1)) + \bbr{\dg M'}_\gamma(\mu(\X'))
+                \Big) \\
+                &\ge \inf_{\mu \in \Delta\V(\X_1  \cup \X'  \cup \X_2)}\, \Big(
+                    \bbr{\dg M_2}_\gamma(\mu(\X_2)) + 
+                    \bbr{\dg M'}_\gamma(\mu(\X'))
+                \Big) \\
+                &= \inf_{\mu \in \Delta\V(\X'  \cup \X_2)}\, \Big(
+                    \bbr{\dg M_2}_\gamma(\mu(\X_2))  + 
+                    \bbr{\dg M'}_\gamma(\mu(\X'))
+                    + \gamma \I_\mu(\X_2 ; \X' | \X_2 \cap \X')
+                \Big) \\
+                &= \inf_{ \mu \in \Delta\V(\X_2  \cup \X')} \bbr{ \dg M_2 + \dg M' }_\gamma(\mu) \\
+                &= \aar[\big]{\,\dg M_2 + \dg M'\,}_{\gamma}.
+        \end{align*}
+        We can freely remove the term $\I_\mu(\X;\X'|\X\cap \X')$ inside the infemum (line 1), because this quantity
+        is minimized when $\X$ and $\X'$ are conditionally independent given their common variables, and we can always find a distribution with this property that has the same marginals on $\X$ and $\X'$.
+    \end{lproof}
+
+    \recall{prop:entailment}
+    \begin{lproof}\label{proof:entailment}
+    \textbf{Marginals.}
+       Implicitly, we have converted $p(X,Y)$ and $p(X)$ to PDGs 
+        by assigning them a default value of $\alpha=1$. 
+    One can easily calculate:
+    \begin{align*}
+    &\OInc_{p(X,Y)}(\mu(X,Y))
+            &  &\SDef_{\to XY}(\mu(X,Y)) 
+            \\
+    &= \kldiv{\mu(X,Y)}{p(X,Y)} 
+            & &= 0
+            \\
+    &= \kldiv{\mu(X)}{p(X)} + \thickD( \mu(Y|X) \Vert p(Y|X) \mid \mu(X))
+            & &= \SDef_{ \to X }(\mu(X))\\
+    &\ge \kldiv{\mu(X)}{p(X)} = \OInc_{p(X)}(\mu(X))
+    \end{align*} 
+    So, by \cref{lem:commonvar-dominance}, we have $p(X,Y) \models p(X)$.
+
+
+    \paragraph{ Hard Constraints.}
+    First, observe that
+     % If $X=x$ implies $Y=y$, we can 
+     % If $\bbr{\dg M_1}_
+     \[
+        \OInc_{XY{=}xy}(\mu(XY)) = \infty \mathbbm1[\mu(XY{=}xy) < 1]
+        \ge
+        \infty \mathbbm1[\mu(X{=}x) < 1] = \OInc_{X{=}x}(\mu(X))
+    \]
+    % Since $\SDef$ of both PDGs is the negative entropy of the
+    In other words, the only distribution attaining a finite $\OInc$
+    for $XY = xy$ is the point mass $\delta_{xy}$; thus this
+    is the only candidate distribution $\mu$ which 
+    $\bbr{X=x}_\gamma(\mu)$ could be larger. But this distribution
+    has no entropy, thus $\bbr{XY=xy}_\gamma(\delta_{xy}) = 0 
+        = \bbr{XY=xy}_\gamma(\delta_{xy})$. 
+    Thus, 
+        $\bbr{XY=xy}_\gamma(\mu) \ge \bbr{X=x}_\gamma(\mu)$ for \emph{all}
+        distributions $\mu$, showing $XY=xy \models X=x$. 
+    % 
+    % \begin{align*}
+    %     \bbr{XY=xy}_\gamma(\mu) &= -\gamma \log \#\big| w : XY(w) = xy \big|
+    %         \\
+    %         &\le - \gamma \log \# \big| w : X(w) = x \big|
+    %         = \bbr{X=x}_\gamma(\mu),
+    % \end{align*}        
+    % which is backwards. While OInc ensures the set of distributions
+    % is smaller for the joint constraint (and hence a larger score),
+    % the freedom to choose the other variable makes the qualitative part
+
+
+
+    \end{lproof}
+
+
+
+
+    \recall{prop:entail-properties}
+    \begin{lproof}
+            \label{proof:entail-properties}
+        \textbf{Reflexivity and Transitivity.~~}
+        Reflexivity is immediate.
+         % is only slightly less trivial.
+        For transitivity, we have assumed $\dg M_1 \models \dg M_2$ and $\dg M_2 \models \dg M_3$. 
+        By definition, we have that for all $\dg M'$, we have
+        \[
+            \aar{\dg M_1 + \dg M'} \ge \aar{\dg M_2 + \dg M'} \ge \aar{\dg M_3 + \dg M'}. 
+            % \qedhere
+        \]
+        
+        \paragraph{Domination.} If $\dg M_1$ and $\dg M_2$ share
+            variables but $\dg M_1$ has more edges or higher weights, the
+            we immediately satisfy the condition of \cref{lem:commonvar-dominance}, and so $\dg M_1 \models \dg M_2$. 
+    \end{lproof}
+
+    \recall{prop:sem-equiv-properties}
+    \begin{lproof}\label{proof:sem-equiv-properties}
+        \textbf{Equivalence of conditional/marginal and Joint.}
+        Both of the following are well-known:
+
+        \begin{minipage}{0.5\linewidth}
+        \begin{align*}
+            \OInc_{[p(X) + p(Y|X)]}(\mu) 
+            &= \Ex_{\mu} \Big[\log \frac{\mu(X)}{p(X)} + \log \frac{\mu(Y|X)}{p(Y|X)}\Big] 
+                        \\
+             &= \Ex_{\mu} \Big[\log \frac{\mu(X)\mu(Y|X)}{p(X)p(Y|X)}\Big] 
+                        &  \\
+             &= \OInc_{p(X,Y)}(\mu);
+        \end{align*}
+        \end{minipage}
+        \begin{minipage}{0.5\linewidth}
+            \begin{align*}
+                \SDef_{\to X \to Y}(\mu) &= \H_\mu(X) + \H_\mu(Y|X) - \H(\mu)\\
+                &= \H_\mu(X,Y) - \H(\mu) \\
+                &= \SDef_{\to XY}(\mu).
+            \end{align*}
+        \end{minipage}
+        Thus, by applying \cref{lem:commonvar-dominance} once in each direction, or by appeal to \cref{theorem:sem-equiv}, 
+        $p(X) + p(Y|X) \equiv p(X,Y)$. 
+        
+        
+        
+        \paragraph{Mixtures.}
+        Let $\H_\mu(\dg M) := \sum_{a \in \Ar^{\dg M}} \alpha_a^{\dg M} \H_\mu(\Tgt a | \Src a)$,
+        so that $\SDef_{\dg M}(\mu) = \H_\mu(\dg M) - \H_\mu(\X)$. 
+        Suppose $\dg M_1 \equiv \dg M_2$. 
+        Then, the theorem above tells us
+        \begin{align*}
+            \bbr{\dg M_1}_\gamma(\mu) &= \bbr{\dg M_2}_\gamma(\mu)
+            \\\iff\quad%%%
+            \OInc_{\dg M_1}(\mu) + \gamma \SDef_{\dg M_1}(\mu)   
+                &= \OInc_{\dg M_2}(\mu) + \gamma \SDef_{\dg M_2}(\mu)
+            \\\iff\quad%%%
+            \OInc_{\dg M_1}(\mu) + \gamma \H(\dg M_1) - \gamma \H(\mu)
+                &= \OInc_{\dg M_2}(\mu) + \gamma \H(\dg M_2) - \gamma \H(\mu)
+            \\\iff\quad%%%
+            \OInc_{\dg M_1}(\mu) + \gamma \H(\dg M_1)
+                &= \OInc_{\dg M_2}(\mu) + \gamma \H(\dg M_2)
+        \end{align*}
+        But $\dg M \mapsto \OInc_{\dg M}(\mu)$ and $\dg M \mapsto \H_\mu(\dg M)$
+        are both linear in $(\balpha,\bbeta)$. 
+        Thus, for $\alpha \in [0,1]$, letting $\dg M_{\alpha} := (1-\alpha) \dg M_1 + (\alpha) \dg M_2$, we have:
+        \begin{align*}
+            % &\bbr{(1-\alpha) \dg M_1 + (\alpha) \dg M_2}_\gamma(\mu) + \gamma \H(\mu) \\
+            % &\bbr{\dg M_\alpha}_\gamma(\mu) + \gamma \H(\mu) \\
+                % &= 
+            \OInc_{\dg M_\alpha} (\mu)   + \gamma \H_\mu({\dg M_\alpha}) 
+                &= (1-\alpha) \OInc_{\dg M_1} + \alpha \OInc_{\dg M_2} +
+                    \gamma (1-\alpha) \H_\mu({\dg M_1}) + \gamma\alpha \H_\mu({\dg M_2})\\
+                &= (1-\alpha) \Big( \OInc_{\dg M_1} + \gamma \H_\mu({\dg M_1}) \Big)
+                    + \alpha \Big( \OInc_{\dg M_2} + \gamma \H_\mu({\dg M_2}) \Big)\\
+                &= \OInc_{\dg M_1} + \gamma \H_\mu({\dg M_1}).
+        \end{align*}
+        The last line follows from the equality of the two parenthesized expressions
+            (as shown in the previous block of algebra). Thus following the first argument
+            in reverse, we learn that $\bbr{\dg M_\alpha} = \bbr{\dg M_1} = \bbr{\dg M_2}$, 
+            and so by the previous Theorem, $\dg M_\alpha \equiv \dg M_1 \equiv \dg M_2$.
+    \end{lproof}
+
+
+    \recall{theorem:sem-equiv}
+    \begin{lproof}\label{proof:sem-equiv}    
+        ($\implies$). Suppose $\dg M_1 \equiv \dg M_2$. 
+        Let $\X_1$ be the variables of $\dg M_1$, and $\X_2$ be the variables of $\dg M_2$. 
+        % First, we show that $\dg M_1$ and $\dg M_2$ have the same set of variables.
+        We begin by showing that $\X_1 = \X_2$ (up to constant variables, that can take only one value). 
+        In search of a contradiction,
+        suppose there is a variable $X$ be a variable present in one PDG but not the other;
+        without loss of generality, suppose $X \in \X_1 \setminus \X_2$. 
+        Then in particular, we must have $\aar{\dg M_1} = \aar{\dg M_2}$,
+        and also $\aar{\dg M_1 + X} = \aar{\dg M_2 + X}$. But $X \in \X_1$,
+        so $\dg M_1 + X = \dg M_1$. Therefore,
+        \[ \aar{\dg M_2} = \aar{\dg M_1} =   \aar{\dg M_1 + X} = \aar{\dg{M_2}+X}. \]
+        Since $X \notin \X_2$, the minimizer of 
+        $\bbr{\dg M_2 + X}_\gamma(\mu(X,\X_2))$ is realized when $X$ and $\X_2$ are independent \cite[Theorem 5]{pdg-infer}.
+        This means that $\aar{\dg M_2 + X}_\gamma = \aar{\dg M_2}_\gamma - \gamma \H(\mathrm{Unif}(X))$.
+        By selecting $\gamma > 0$, we discover that
+        find a contradiction, unless $X$ can only take one value. 
+            
+        So far we have shown that $\dg M_1$ and $\dg M_2$ have the same set of (nontrivial) variables; we now show that they have the same scoring function. For any $\gamma \ge 0$ and $\mu \in \Delta\V\!\X$,
+            the definition of $\equiv$ with a choice of $\dg M' = \mu!$ gives
+            us the middle equality in the following.
+        \begin{align*}
+            \bbr{\dg M_1}_\gamma(\mu) = 
+            \aar{\dg M_1 + \mu!}_\gamma = \aar{\dg M_2 + \mu!}_\gamma = \bbr{\dg M_2}_{\gamma}(\mu).
+        \end{align*}
+        
+        ($\impliedby$). Suppose $\bbr{\dg M_1} = \bbr{\dg M_2}$.
+        In particular, for the two objects to even have the same type, this means $\dg M_1$ and $\dg M_2$ have the same set $\X$ of variables.  
+        For every $\dg M'$ and $\gamma \ge 0$, we have
+        \begin{align*}
+            \aar{\dg M_1 + \dg M'}_\gamma
+                &= \inf_{\mu \in \Delta \V(\X + \X')} 
+                    \Big( \bbr{\dg M_1}_\gamma(\X)
+                        + \bbr{\dg M'}_\gamma(\X') \Big) \\
+                &= \inf_{\mu \in \Delta \V(\X + \X')} 
+                    \Big( \bbr{\dg M_2}_\gamma(\X)
+                        + \bbr{\dg M'}_\gamma(\X') \Big) 
+                = \aar{\dg M_2 + \dg M'}_\gamma.
+                \qedhere
+        \end{align*}
+    \end{lproof}
+
+
+    \section{Negative Results and Anti-Conjectures}
+    \begin{falsity}\label{more-examples}\begin{enumerate}
+        \item If $\dg B$ is the PDG form of a BN, which determines distribution
+            $\Pr_{\dg B}$, then $\dg B \models \Pr_{\dg B}$. 
+        Moreover, $\Pr_{\dg B} \models \dg B$, and thus $\dg B \equiv \Pr_{\dg B}$. 
+        
+        % \item {\it (conjecture)}
+        % \item 
+    \end{enumerate}   
+    \end{falsity}
+
+    1. cannot be true because by selecting $\Pr_{\dg B}$ we have lost
+    the ability to control the relative weight of independence and cpds;
+    it's all mushed together, and this will only hold at $\gamma = 1$.
+
+    \begin{falsity}
+        If $\dg M \models 0$, then $(\alpha) \dg M \models 0$ for all 
+        $\alpha \ge 0$. 
+    \end{falsity}
+    % I think this might be true, actually.
+    This can't be true; for $\alpha=0$, it reduces to $\X^{\dg M} \models 0$, which is false. 
+    % This is false, because if $\dg M = ( {\to} X)$, then $\bbr{\dg M} = 0$
+
+    Corollary: the following is false. 
+    \begin{falsity}
+        If $\dg M_1 \models \dg M_2$, then $(r) \dg M_1 \models (r) \dg M_2$, 
+        for all $r \ge 0$. 
+    \end{falsity}
+    Chosing $\dg M_2 = 0$ would imply the previous false result.
+
+
+    We can show that ${\to} X \models 0$, but not necessarily the reverse.
+    If $\dg M'$ does not include $X$, then $\aar{\dg M' + {\to} X}_\gamma = \aar{\dg M'}$.
+    But what if $\dg M'$ includes $X$? 
+    Then $\aar{\dg M' + {\to} X} \ge \aar{\dg M'}$ by domination, and the
+    inequality is strict for ``most'' choices of $\dg M'$.
+    So either way $\aar{{\to}X + \dg M'} \ge \aar{0 + \dg M'}$, so ${\to X} \models 0$.
+
+    
+
+\end{subappendices}

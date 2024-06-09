@@ -1534,11 +1534,12 @@ It suffices to show that $\bbr{\dg
 since every strictly convex function has a unique minimum.
 Note that
 \begin{align*}
-\bbr{M}_\gamma(\mu) 
-	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
+&   \bbr{M}_\gamma(\mu) 
+\\	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
 		\beta_L \log \frac{1}{\p_a(y\mid x)} + ({\alpha_L}\gamma - \beta_L ) \log \frac{1}{\mu(y \mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
-	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[ \gamma {\alpha_L} \log \frac{1}{\p_a(y\mid x)} + 
-		(\beta_L - {\alpha_L} \gamma) \log \frac{1}{\p_a(y\mid x)} - (\beta_L - {\alpha_L} \gamma) \log \frac{1}{\mu(y \mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\}  \\
+	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \bigg[ \gamma {\alpha_L} \log \frac{1}{\p_a(y\mid x)} + 
+		(\beta_L - {\alpha_L} \gamma) \log \frac{1}{\p_a(y\mid x)} \\
+        &\hspace{3cm}- (\beta_L - {\alpha_L} \gamma) \log \frac{1}{\mu(y \mid x)} \bigg] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\}  \\
 	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[ \gamma {\alpha_L} \log \frac{1}{\p_a(y\mid x)} + 
 		(\beta_L - {\alpha_L} \gamma) \log \frac{\mu(y\mid x)}{\p_a(y\mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
 	&=  \sum_{ X \xrightarrow{\!\!L} Y  } \left[ \gamma {\alpha_L} \Ex_{x,y \sim \mu_{\!_{XY}}} \left[ \log \frac{1}{\p_a(y\mid x)} \right] + 
@@ -1712,7 +1713,8 @@ $\bbr{\dg M}^*
 \end{lproof}
 
 
-\subsection{PDGs as Bayesian Networks}
+% \subsection{PDGs as Bayesian Networks}
+\subsection{Bayesian Networks as PDGs}
 In this section, we prove Theorem~\ref{theorem:bns-are-pdgs}.  
 We start by recounting some standard results and notation, all of
 which can be found in a standard introduction to information
