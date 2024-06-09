@@ -268,16 +268,16 @@ While it is not surprising that this construction encodes a relation
     By the same logic as in the proof of part 1 of the proposition, 
     $\mu$ satisfies all of the cpds of the widget $\PDGof R$; and thus 
     $\bbr{\dg M + R}(\bar\mu) = \bbr{\dg M}_\gamma(\mu)$.
-    We now chain together some inequalities to find that
+    Chaining together some inequalities, we find:
     \[
      \aar{\dg M + R}_\gamma \le 
      \bbr{\dg M + R}(\bar\mu) 
      = \bbr{\dg M}_\gamma(\mu)
      = \aar{\dg M}_\gamma
-     \le \aar{\dg M + R}_\gamma
+     \le \aar{\dg M + R}_\gamma, 
      \]
     and thus all of these quantities are equal.
-    The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
+    % The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
     % Finally, if $\Tru \in \X$ and $\mu(\Tru{=}\trut) < 1$, then 
     % \[
     %     \aar{\dg M}_\gamma^* = \bbr{\dg M}^*_\gamma(\mu)
@@ -387,7 +387,10 @@ In addition to $\hat p$ and the new variables, this PDG
 
         \node[tpt={y1|$y$}] at (3.7, 1.5){};
         \node[tpt={y2|$\lnot y$},right=0.5 of y1]{};
-        \node[Dom={$\Yyshort$[label distance=-1.4em, xshift=1.3em] (Yy)
+        \node[Dom={%
+            %$Y{=}y\,$%
+            $\Yyshort$%
+            [label distance=-1.4em, xshift=1.3em] (Yy)
             around {\lab{y1}\lab{y2}(3.7,1.75)}} ] {};
 
         %% structural arrows
@@ -585,14 +588,23 @@ which shows our construction behaves appropriately for all PDGs.
 
 \subsection{Couplings}
     \label{sec:coupling-widget}
-Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
+% The set of couplings $\
+Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
+A \emph{coupling} between $p$ and $q$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
+Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \cite{optimal-transport}, 
+a wide range of programming logics \cite{Kaminski_Katoen_Matheja_2020}.
+
+% Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
 % the set of joint distributions that have respective marginals $p$ and $q$.
+Formaly, the set of couplings between $p$ and $q$ is defined as
 \[
     \Pi(p(X), q(Y)) := \Big\{ \mu \in \Delta\V(X,Y) :\quad
-        \mu(X) = p, ~\mu(Y) = q \Big\}.
+        \mu(X) = p, ~\mu(Y) = q \Big\};
 \]
-Observe that this is exactly the set of distributions
-consistent with a PDG containing $p$ and $q$. 
+Observe that this
+% Observe that this 
+is exactly the set of distributions
+consistent with a PDG containing $p$ and $q$, i.e., 
 \[
     \Pi(p, q) = 
     \SD*{\begin{tikzpicture}[center base]
@@ -608,7 +620,8 @@ consistent with a PDG containing $p$ and $q$.
     \end{tikzpicture}~~}.
 \]
 
-Now, suppose we have a distance metric $d$ on a space $X$.
+But the couplings themselves are not all that a PDG can capture. 
+Suppose we have a distance metric $d$ on a space $X$.
 For $k \in [1,\infty)$, 
 the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
 \[  
@@ -865,7 +878,8 @@ Now for the proof of the theorem.
             = \sum_{\substack{A \subseteq \Omega \\ U_T \cap A = \emptyset}} m(A)
             = \Plaus(A).  
     \end{align*}
-    But recall that, by assumption, $\mu(U_T) \le \Plaus(U_T)$! This allows us to 
+    But recall that, by assumption, $\mu(U_T) \le \Plaus(U_T)$. 
+    This allows us to 
     chain together the previous seven (in)equalities, thereby proving that $|T| \le |\partial_G(T)|$ as desired.
     By Hall's criterion, this means there must exist a perfect matching, and we have already seen this means $\mu$ can be extended to some $\bar\mu \in \SD{\dg M_{\Bel}}$, as desired.
     % \begin{align*}
@@ -963,7 +977,8 @@ Now for the proof of the theorem.
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
 
-A causal model 
+
+PDGs can also capture causal models. 
 
 
 %%% MATERIAL LIFTED FROM CAUSAL MODEL PAPER
@@ -1167,9 +1182,9 @@ If $\cal M$ is acyclic, then it
 %what you mean, of course, but a reader can't read your mind.  Rewrote
 %oli5: I don't understand why you're asking such questions. I define it immediately below. Also, there's an easy fix here: replace "correspond" with "extend". Or, as you do, below, with "induce".
 % A cylic PSEM, however, may correspond to more than one such distribution, or none at all.
-A cylic PSEM, however, may induce more than one such distribution, or none at all.
+A cyclic PSEM, however, may induce more than one such distribution, or none at all.
 In general, a PSEM $\cal M$
-induces a (possiby empty) convex set of distributions over $\V(\U \cup \enV)$.
+induces a (possibly empty) convex set of distributions over $\V(\U \cup \enV)$.
 This set is defined by two (linear) constraints:
 the equations $\mathcal F$ must hold with probability 1, and
 \unskip, in the case of a PSEM,

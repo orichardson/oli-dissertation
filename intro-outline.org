@@ -1,0 +1,37 @@
+#+title: Intro Outline
+
+
+
+
+
+Much of computer science is about reducing one problem to another,
+
+ - Computer Science is about communicating with computers.
+ - Part of that communication is in writing down a model.
+ - Probabilities have won. It is worth trying to understand why.
+   - (Hint: it's because they can represent everything)
+
+
+Understanding The Relationships Between Things.
+Understanding relationships between concepts is important. If you are workng on X and your neighbor is working on X from the opposite perspective, it is often useful to share notes. It also guards against the possibility of reinventing the wheel many times under different names, a problem that becomes inceasingly visible as computer science continues to grow. It is already almost impossible to read all of the good papers in a
+    (( but why does this have anything to do with PDGs or my PhD work?  Because it connects things. But it's just another paper.  The reason it's nice to connect things is that this tells us where stuff is coming from.))
+
+
+Declarative Modeling.
+
+
+
+What makes one modeling language better than another?
+
+ - Generality. If everything B can do A can do also, then A is at least as expressive as B.
+   But by this metric alone, there is nothing better than set theory or assembly language.
+
+ - Easy to compute with. There should be a reasonably fast way to use the langauge to "do stuff".
+
+ - Naturality and Simplicity in standard use cases.  If languages A and B are essentially the same, except that it take a lot more time to say everything with language A, then language B is simpler and more efficient
+
+ - A Good Prior.
+
+* INTRO DRAFT
+
+One way
