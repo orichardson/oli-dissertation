@@ -33,13 +33,15 @@ Observe that this too is an immediate special case of a PDG:
 %
 \begin{center}
     \begin{tikzpicture}[xscale=1.6]
-        \coordinate (mergeorigin) at (3,2);
+        % \coordinate (mergeorigin) at (3,2);
+        \node[dpadded] (omega) at (3,2) {$\Omega$};
         \foreach \i in {1,...,5} {
             \node[dpadded] (X\i) at (\i,0) {$X_\i$};
-            \draw[arr2, shorten <=0pt] (mergeorigin) to (X\i);
+            \draw[arr2, shorten <=0pt, ->>] (omega) to (X\i);
         }
-        \draw[arr2,-,shorten >=0pt,shorten <=0pt] (mergeorigin) to +(0,0.5);
-        \node[above left=0pt and 4pt of mergeorigin]{$\mu$};
+        % \draw[arr2,-,shorten >=0pt,shorten <=0pt] (mergeorigin) to +(0,0.5);
+        % \node[above left=0pt and 4pt of mergeorigin]{$\mu$};
+        \draw[arr2,<-] (omega) to node[above]{$\mu$} +(-1.3,0);
     \end{tikzpicture}
 % \]
 \end{center}

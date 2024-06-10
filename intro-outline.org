@@ -1,12 +1,18 @@
 #+title: Intro Outline
 
 
-
+In seeking truth, thefs
 
 
 Much of computer science is about reducing one problem to another,
 
  - Computer Science is about communicating with computers.
+   - Algorithms is the field that studies which useful tasks can (or cannot) be translated into computer code.
+   - (( Complexity theory is about the relationships between computational problems, and how much we can expect from an algorithm ))
+   - Security is about making sure we don't communicate too much to computers.
+   - And machine learning is about communicating to
+
+
  - Part of that communication is in writing down a model.
  - Probabilities have won. It is worth trying to understand why.
    - (Hint: it's because they can represent everything)
