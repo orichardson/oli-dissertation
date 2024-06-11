@@ -1,3 +1,5 @@
+\label{chap:infer}
+
 \newcommand\zogamma{{\mathrlap{\raisebox{-0.1ex}{$\hat{\phantom{x}}$}}\gamma}}
 \newif\ifvfull
     \vfulltrue %
@@ -1726,6 +1728,16 @@ our methods can be augmented with the convex-concave procedure
 We imagine that this extension could also be useful for computing with PDGs 
     beyond the specific inference problem considered in this paper.
 
+% \vfull{
+Our analysis does not resove these problems, but it
+    does shed light on some of them.  
+The $0$-semantics, for instance, is 
+characterized by \cref{prop:marginonly,prop:cluster-inc-correct}, 
+Also, when $\bbr{\dg M}_\gamma$ is not convex, we can still find an optimal distribution with the concave-convex procedure \cite{yuille2003concave}, which we do in \cref{sec:cccp}---but this only suffices for inference if we already know there's a unique optimal distribution.
+In some cases, this might actually allow us to do inference---say, if we happen to know for external reasons that $\bbr{\dg M}^*_\gamma$ is pseudo-convex (although we loose polynomial time guarantees and have no ability to automatically recognize such situations). In any case, we have implemented this, and describe it in \cref{sec:cccp}.
+% }
+
+
 Given the long history of improvements to our
 understanding of inference for 
     Bayesian networks,
@@ -1734,14 +1746,7 @@ we are optimistic that
     inference algorithms
     for PDGs
     are possible.
-\vfull{
-Our analysis does not resove these problems, but it
-    does shed light on some of them.  
-The $0$-semantics, for instance, is 
-characterized by \cref{prop:marginonly,prop:cluster-inc-correct}, 
-Also, when $\bbr{\dg M}_\gamma$ is not convex, we can still find an optimal distribution with the concave-convex procedure \cite{yuille2003concave}, which we do in \cref{sec:cccp}---but this only suffices for inference if we already know there's a unique optimal distribution.}
-\vfull{
-In some cases, this might actually allow us to do inference---say, if we happen to know for external reasons that $\bbr{\dg M}^*_\gamma$ is pseudo-convex (although we loose polynomial time guarantees and have no ability to automatically recognize such situations). In any case, we have implemented this, and describe it in \cref{sec:cccp}.}
+
 
 
 \begin{subappendices}
@@ -3832,11 +3837,12 @@ We now see how this is true even when working with very small PDGs and joint dis
 
 
 \subsection{Synthetic Experiment: Comparison with Black-Box Optimizers, on Joint Distributions.} \label{sec:joint-expt-details}
-\begin{wrapfigure}{R}{4.8cm}
+\begin{wrapfigure}[14]{R}{4.8cm}
     \centering
     \vspace{-3ex}
     \includegraphics[width=4.5cm]{figs/rand-joint/representation}
-    \caption{\small differences in performance between the Gibbs and simplex parameterizations of probabilities.}%
+    \captionsetup{format=plain}
+    \caption{differences in performance between the Gibbs and simplex parameterizations of probabilities.}%
     \label{fig:representation}%
 \end{wrapfigure}
 
@@ -3880,16 +3886,18 @@ on joint distributions, which contrasts the convex optimization approaches of \c
     thus, this refers to using the convex solver to compute minimizers of $\OInc$ with and without considering $\IDef{}$.
 
     \item Run the \texttt{pytorch} baselines.
-    Let $\theta = [\theta_{\mat x}]_{\mat x \in \V\!\X} \in \mathbb R^{\V\X}$ be a vector of optimization variables, and choose a representation of the joint distribution, either by
-    \[
-        \Big(\begin{array}{c}\text{renormalized}\\
-        \text{simplex}\end{array}\Big)\quad
-        \mu_{\theta}(\mat x) = \frac{\max\{\theta_{\mat x}, 0\} }
+    Let $\theta = [\theta_{\mat x}]_{\mat x \in \V\!\X} \in \mathbb R^{\V\X}$ be a vector of optimization variables, and choose a representation of the joint distribution, either:
+    \begin{align*}
+        % \Big(\begin{array}{c}\text{renormalized}\\
+        % \text{simplex}\end{array}\Big)\quad
+        \mu_{\theta}(\mat x) &= \frac{\max\{\theta_{\mat x}, 0\} }
             {\sum_{\mat y \in \V\!\X}\max\{\theta_{\mat y}, 0\} }
-    \qquad\text{or}\qquad
-    \mu_{\theta}(\mat x) = \frac{\exp(\theta_{\mat x})}{\sum_{\mat y \in \V\!\X} \exp(\theta_{\mat y})}\quad(\text{Gibbs})
-    \qquad\quad\text{(see \cref{fig:representation})}
-    \]
+        &(\text{ renormalized simplex }) \\
+    \text{or}\qquad
+    \mu_{\theta}(\mat x) &= \frac{\exp(\theta_{\mat x})}{\sum_{\mat y \in \V\!\X} \exp(\theta_{\mat y})} & (\text{Gibbs})
+    % \qquad\quad\text{(see \cref{fig:representation})}
+    \end{align*}
+    See \cref{fig:representation} for a visual representation of the (relatively minor) effect of this choice. 
     \item
     For each value of the trade-off paramteter 
     $\gamma \in \{0, 10^{-8}, 10^{-4}, 10^{-2}, 1\}$, and each learning rate $\texttt{lr} \in 1E-3, 1E-2, 1E-1, 1E0$, and each optimizer $\mathit{opt} \in \{\texttt{adam}, \texttt{L-BFGS}\}$,
@@ -3903,8 +3911,10 @@ on joint distributions, which contrasts the convex optimization approaches of \c
          \item the objective and its component values:
          \vspace{-1ex}
          \[
-            \texttt{inc} := \SInc_{\dg M}(\mu),
+            \begin{array}{c}
+            \texttt{inc} := \SInc_{\dg M}(\mu), \\
             \qquad \texttt{idef} := \SInc_{\dg M}(\mu),
+            \end{array}
             \qquad \texttt{obj} := \OInc_{\dg M}(\mu) + \gamma \SInc_{\dg M}(\mu) = \bbr{\dg M}_\gamma(\mu)
         \]
      \end{itemize}

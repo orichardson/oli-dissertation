@@ -1,3 +1,4 @@
+    \label{chap:QIM}
 %%%%%%%%%%%% EXTRA COMMANDS %%%%%%%%%%
 \newcommand\dotmodels{\mathbin{{\models}^{\mathllap{\bullet\,}}_{\vphantom{l}}}}
 \newcommand\emodels{\mathbin{{\models}^{\mathllap{e\,}}_{\vphantom{l}}}}
@@ -1849,7 +1850,6 @@ This is made precise by the following definition.
 the variables\, $\U_{\Ar} $ are mutually independent
 %oli15: 
     \hfill (i.e., $\bar\mu(\U_{\Ar} ) = \prod_{a \in \Ar} \bar\mu(U_a)$ ),
-    and
 %joe6*: You said above " I strongly disagree with your approach.
 %The variables are not part of the hypergraph."  If that's the case, 
 %you can't talk about the source variables; that's meaningless.  You
@@ -1861,19 +1861,21 @@ the variables\, $\U_{\Ar} $ are mutually independent
 % Each variable in \X  is a pair (N, VN), where N is a unique "label" or "variable name", and VN is a set of possible values it can take. The nodes of the hypergraph are precisely those same elements N.  So in this context, for example, the "targets" of a hyperarc are subsets of \N, and thus we can look up the corresponding variables in \X.  So it's not that the nodes of the hypergraph are labeled by variables, but rather the reverse: the variables in the distribution have labels, which are the node elements of the hypergraph.
 %
 %oli-17:
-\item the target variable(s) $\Tgt a$ of each \arc\ $a \in \Ar$ are\\ determined
-% \item the target variable(s) $\Tgt a \subseteq \X$ of each \arc\ $a \in \Ar$ are\\ determined
-    %oli7: reordering for flow
-    % by the source variable(s) $\Src a$ and $U_a$
+\item
+% \parbox[t]{0.7\linewidth}{
+and 
+the target variable(s) $\Tgt a$ of each \arc\ $a \in \Ar$ \\ are determined
     by $U_a$ and the source variable(s) $\Src a$
+% }%
     % by $U_a$ and the source variable(s) $\Src a \subseteq \X$
-    %oli15:
-    \hfill (i.e., $\forall a \in \Ar.~ \bar\mu \models (\Src a, U_a) \tto \Tgt a$)
-    % (i.e., $\sum_{a \in \Ar} \H(\Tgt a | \Src a, U_a) = 0$)
-    % (i.e., $\forall {a \in \Ar}.~ \H(\Tgt a | \Src a, U_a) = 0$)
-    \unskip.%
-    % \footnote{More formally still: $\mu \in \Delta \V!\X$ is compatible with }
-    % \qedhere
+    %
+    \hfill%
+    % $\Big($
+    \parbox[t]{0.28\linewidth}{\singlespacing
+        % \phantom{a}\\
+        % \vspace{0.0ex}
+        (i.e., $\forall a \in \Ar.$\\\phantom{(}$\bar\mu \models (\Src a, U_a) \tto \Tgt a$).
+        }
 \end{enumerate}
 
 
@@ -1890,7 +1892,8 @@ $\bar\mu(\X \cup \mathcal Y \cup\, \U_{\!\Ar})$
 %oli4:
     % for its marginal $\mu(\X)$ being \scible\ with
     % independent mechanisms along $\Ar$,
-    that $\mu$ is \scible\ with $\Ar$.
+    % that $\mu$ is \scible\ with $\Ar$.
+    to the fact that $\mu$ is \scible\ with $\Ar$.
 % and write $\mu \models \Ar$.
     % to indicate that there exists such a witness.
 %joe2: Since you allow arbitrary sets \U, this set of witnesses is

@@ -309,6 +309,9 @@ While it is not surprising that this construction encodes a relation
     Thus, we have constructed $\mu \in \bbr{\dg M}^*_\gamma$ satisfying $\mu(R) =1$. 
 \end{proof}
 
+% Now that we can describe relational constraints, one might
+% naturally wonder about databases.
+
 
 \subsection{Costs: ``Soft Relations''}
 
@@ -316,8 +319,141 @@ TODO: Comparisons between factors and costs.
 
 TODO: move in and split material from loss chapter.
 
-% Now that we can describe relational constraints, one might
-% naturally wonder about databases.
+
+\subsection{Couplings}
+    \label{sec:coupling-widget}
+% The set of couplings $\
+Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
+A \emph{coupling} between $p$ and $q$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
+Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \cite{optimal-transport}, 
+a wide range of programming logics \cite{Kaminski_Katoen_Matheja_2020}.
+
+% Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
+% the set of joint distributions that have respective marginals $p$ and $q$.
+Formaly, the set of couplings between $p$ and $q$ is defined as
+\[
+    \Pi(p(X), q(Y)) := \Big\{ \mu \in \Delta\V(X,Y) :\quad
+        \mu(X) = p, ~\mu(Y) = q \Big\};
+\]
+Observe that this
+% Observe that this 
+is exactly the set of distributions
+consistent with a PDG containing $p$ and $q$, i.e., 
+\[
+    \Pi(p, q) = 
+    \SD*{\begin{tikzpicture}[center base]
+        \node[dpad0] (X) at (-0,0) {$X$};
+        \node[dpad0] (Y) at (1,0) {$Y$};
+
+        \draw[arr2, <-] (X) to
+            node[left]{$p$}
+            +(0,1);
+        \draw[arr2, <-] (Y) to
+            node[left]{$q$}
+            +(0,1);
+    \end{tikzpicture}~~}.
+\]
+
+But the couplings themselves are not all that a PDG can capture. 
+Suppose we have a distance metric $d$ on a space $X$.
+For $k \in [1,\infty)$, 
+the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
+\[  
+    W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
+\]
+
+
+This definition effectively takes $p(X)$ and $q(X)$ with
+    high confidence, by constraining to $\mu \in \Pi(p,q)$.
+But, in order to represent this as a PDG, we need to represent 
+the $d$ in probabilistic terms.
+A distance is not a probability. But we can encode the belief
+that the values of $X$ and $Y$ are close, according to $d$.
+
+Let $\Tru$ be a variable that in principle can be
+either $\trut$ or $\truf$, but happens to always be $\trut$.
+% to convert it  to a Gibbs distribution. 
+To place more probability in $\truf$ as $d(X,Y)$ increases.
+\[
+    \hat d(\Tru=\trut | X,Y) \propto \exp(- d(X,Y)).
+\]
+
+We then have:
+\begin{prop}
+    \[
+        \aar**{\begin{tikzpicture}[center base]
+            \node[dpad0] (X) at (-1,0) {$X$};
+            \node[dpad0] (Y) at (1,0) {$Y$};
+            \node[dpad0] (T) at (0,-1) {$\Tru$};
+            \draw[arr2, <<-] (T) to node[above]{$\trut$} +(-1,0);
+
+            \draw[arr2, <-] (X) to
+                node[left]{$p!$}
+                +(0,1);
+            \draw[arr2, <-] (Y) to
+                node[left]{$q!$}
+                +(0,1);
+
+            \mergearr XYT
+            \node[above=0pt of center-XYT] {$\hat d$};
+
+        \end{tikzpicture}}
+        = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
+    \]
+\end{prop}
+
+
+{\color{gray}
+We also have:
+\begin{prop}
+    \begin{align*}
+        \aar**{\begin{tikzpicture}[center base]
+            \node[dpad0] (X) at (-1,0) {$X$};
+            \node[dpad0] (Y) at (1,0) {$Y$};
+            %
+            \draw[arr2, <-] (X) to
+                node[left]{$p!$}
+                +(0,1);
+            \draw[arr2, <-] (Y) to
+                node[left]{$q!$}
+                +(0,1);
+            %
+            \draw[arr2] (X) to
+                node[above]{$\mathrm G d$}
+                (Y);
+            %
+        \end{tikzpicture}}
+        &=
+        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \log\sum_{y}\exp(-d(X,y)) - \H_\mu(Y|X)\Big] \\
+        % &=
+        % \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \mathrm{softmax}_y \big[ - d(X,y) \big] \Big] - \H(\mu) + \H(p)
+    \end{align*}
+\end{prop}
+
+\begin{prop}
+    \begin{align*}
+        \lim_{t \to \infty} \frac1t \aar**{\begin{tikzpicture}[center base]
+            \node[dpad0] (X) at (-1,0) {$X$};
+            \node[dpad0] (Y) at (1,0) {$Y$};
+            %
+            \draw[arr2, <-] (X) to
+                node[left]{$p!$}
+                +(0,1);
+            \draw[arr2, <-] (Y) to
+                node[left]{$q!$}
+                +(0,1);
+            %
+            \draw[arr2] (X) to
+                node[above]{$\mathrm G d$}
+                node[below]{${\color{gray}\scriptstyle(t)}$}
+                (Y);
+            %
+        \end{tikzpicture}}
+        &=
+        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) \Big]
+    \end{align*}
+\end{prop}
+}
 
 % \subsection{Graph-Hypergraph Equivalence}
 \subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
@@ -588,146 +724,21 @@ which shows our construction behaves appropriately for all PDGs.
 \end{lproof}
     
 
-\subsection{Couplings}
-    \label{sec:coupling-widget}
-% The set of couplings $\
-Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
-A \emph{coupling} between $p$ and $q$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
-Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \cite{optimal-transport}, 
-a wide range of programming logics \cite{Kaminski_Katoen_Matheja_2020}.
-
-% Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
-% the set of joint distributions that have respective marginals $p$ and $q$.
-Formaly, the set of couplings between $p$ and $q$ is defined as
-\[
-    \Pi(p(X), q(Y)) := \Big\{ \mu \in \Delta\V(X,Y) :\quad
-        \mu(X) = p, ~\mu(Y) = q \Big\};
-\]
-Observe that this
-% Observe that this 
-is exactly the set of distributions
-consistent with a PDG containing $p$ and $q$, i.e., 
-\[
-    \Pi(p, q) = 
-    \SD*{\begin{tikzpicture}[center base]
-        \node[dpad0] (X) at (-0,0) {$X$};
-        \node[dpad0] (Y) at (1,0) {$Y$};
-
-        \draw[arr2, <-] (X) to
-            node[left]{$p$}
-            +(0,1);
-        \draw[arr2, <-] (Y) to
-            node[left]{$q$}
-            +(0,1);
-    \end{tikzpicture}~~}.
-\]
-
-But the couplings themselves are not all that a PDG can capture. 
-Suppose we have a distance metric $d$ on a space $X$.
-For $k \in [1,\infty)$, 
-the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
-\[  
-    W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
-\]
-
-
-This definition effectively takes $p(X)$ and $q(X)$ with
-    high confidence, by constraining to $\mu \in \Pi(p,q)$.
-But, in order to represent this as a PDG, we need to represent 
-the $d$ in probabilistic terms.
-A distance is not a probability. But we can encode the belief
-that the values of $X$ and $Y$ are close, according to $d$.
-
-Let $\Tru$ be a variable that in principle can be
-either $\trut$ or $\truf$, but happens to always be $\trut$.
-% to convert it  to a Gibbs distribution. 
-To place more probability in $\truf$ as $d(X,Y)$ increases.
-\[
-    \hat d(\Tru=\trut | X,Y) \propto \exp(- d(X,Y)).
-\]
-
-We then have:
-\begin{prop}
-    \[
-        \aar**{\begin{tikzpicture}[center base]
-            \node[dpad0] (X) at (-1,0) {$X$};
-            \node[dpad0] (Y) at (1,0) {$Y$};
-            \node[dpad0] (T) at (0,-1) {$\Tru$};
-            \draw[arr2, <<-] (T) to node[above]{$\trut$} +(-1,0);
-
-            \draw[arr2, <-] (X) to
-                node[left]{$p!$}
-                +(0,1);
-            \draw[arr2, <-] (Y) to
-                node[left]{$q!$}
-                +(0,1);
-
-            \mergearr XYT
-            \node[above=0pt of center-XYT] {$\hat d$};
-
-        \end{tikzpicture}}
-        = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
-    \]
-\end{prop}
-
-
-{\color{gray}
-We also have:
-\begin{prop}
-    \begin{align*}
-        \aar**{\begin{tikzpicture}[center base]
-            \node[dpad0] (X) at (-1,0) {$X$};
-            \node[dpad0] (Y) at (1,0) {$Y$};
-            %
-            \draw[arr2, <-] (X) to
-                node[left]{$p!$}
-                +(0,1);
-            \draw[arr2, <-] (Y) to
-                node[left]{$q!$}
-                +(0,1);
-            %
-            \draw[arr2] (X) to
-                node[above]{$\mathrm G d$}
-                (Y);
-            %
-        \end{tikzpicture}}
-        &=
-        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \log\sum_{y}\exp(-d(X,y)) - \H_\mu(Y|X)\Big] \\
-        % &=
-        % \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \mathrm{softmax}_y \big[ - d(X,y) \big] \Big] - \H(\mu) + \H(p)
-    \end{align*}
-\end{prop}
-
-\begin{prop}
-    \begin{align*}
-        \lim_{t \to \infty} \frac1t \aar**{\begin{tikzpicture}[center base]
-            \node[dpad0] (X) at (-1,0) {$X$};
-            \node[dpad0] (Y) at (1,0) {$Y$};
-            %
-            \draw[arr2, <-] (X) to
-                node[left]{$p!$}
-                +(0,1);
-            \draw[arr2, <-] (Y) to
-                node[left]{$q!$}
-                +(0,1);
-            %
-            \draw[arr2] (X) to
-                node[above]{$\mathrm G d$}
-                node[below]{${\color{gray}\scriptstyle(t)}$}
-                (Y);
-            %
-        \end{tikzpicture}}
-        &=
-        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) \Big]
-    \end{align*}
-\end{prop}
-}
 
 % \subsection{}
 
 
 
 \section{Other Representations of Knowledge and Uncertainty}
+
+Probability is the dominant way of talking about epistemic uncertainty
+in economics and computer science, but it is far from the only one \cite{halpern-RAU}.
+Probability---at least, in the form of a joint distribution $\mu$---has some shortcomings; for instance, they are not able to represent ignorance very well.
+(We will return to this point in \cref{chap:conf}.)
+This has lead many to develop generalizations of probability that are \cite{shafer1990probability,Walley1991-SRIP}.
+It turns out that some of these representations are also special cases of PDGs. 
+
+
 \subsection{Belief and Plausibility Functions}
     \label{sec:belplaus-as-pdg}
 We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \cite{shafer1990probability}. 
@@ -798,15 +809,17 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
             \node[dpad1] (V) at (0,0) {$V$};
             \node[dpad1] (W) at (2,0) {$W$};
             \draw[arr2,<-] (V) to node[above]{$m$} +(-1.2,0);
+            \coordinate (crash1-pool) at (1,-0.35);
             \coordinate (crash1) at (1,-0.5);
-            \draw[arr2,->>,shorten >=0pt] (V) to[out=0,in=90] (crash1);
-            \draw[arr2,->>,shorten >=0pt] (W) to[out=180,in=90] (crash1);
+            \draw[arr2,shorten >=0pt,-] (V) to[out=0,in=90] (crash1-pool);
+            \draw[arr2,shorten >=0pt,-] (W) to[out=180,in=90] (crash1-pool);
+            \draw[arr2,shorten >=0pt,shorten <=0pt,->>] (crash1-pool) to (crash1);
             \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2);
+            \node[above=2ex of crash1] {$\ni$};
+            %
             \coordinate (crash2) at (3, 0);
             \draw[arr2,->>,shorten >=0pt] (W) to (crash2);
             \draw[arr2,<<-,shorten <=0pt] (crash2) to +(0.2,0);
-%
-            \node[above=2ex of crash1] {$\ni$};
             \node[above=1pt of crash2] {$ {\in} U$};
         \end{tikzpicture}}
          = - \log \Plaus ( U ).
@@ -943,25 +956,32 @@ Now for the proof of the theorem.
         \node[dpad1] (V) at (0,0) {$V$};
         \node[dpad1] (W) at (2,0) {$W$};
         \draw[arr2,<-] (V) to node[above]{$m$} +(-1.2,0);
+        \coordinate (crash1-pool) at (1,-0.35);
         \coordinate (crash1) at (1,-0.5);
-        \draw[arr2,->>,shorten >=0pt] (V) to[out=0,in=90] (crash1);
-        \draw[arr2,->>,shorten >=0pt] (W) to[out=180,in=90] (crash1);
+        \draw[arr2,shorten >=0pt,-] (V) to[out=0,in=90] (crash1-pool);
+        \draw[arr2,shorten >=0pt,-] (W) to[out=180,in=90] (crash1-pool);
+        \draw[arr2,shorten >=0pt,shorten <=0pt,->>] (crash1-pool) to (crash1);
         \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2);
+        \node[above=2ex of crash1] {$\ni$};
+        %
         \coordinate (crash2) at (3, 0);
         \draw[arr2,->>,shorten >=0pt] (W) to (crash2);
         \draw[arr2,<<-,shorten <=0pt] (crash2) to +(0.2,0);
-%
-        \node[above=2ex of crash1] {$\ni$};
         \node[above=1pt of crash2] {$ {\in} U$};
     \end{tikzpicture}}
     &= \inf_{\bar \mu \in \mathcal P} \kldiv{ \mu(V) }{ m }\\
     &= \inf_{\nu \in \Delta\{ A \subseteq \Omega : A \cap U \ne \emptyset\}}
             \Ex_{A \sim \nu} \Big[ \log \frac{\nu(A)}{m(A)} \Big]
-    \intertext{(since the objective on first line does not depend on the marginal on $W$, except through the constraint)}
-    &=  \inf_{\nu \in \Delta \mathcal A_U}
+    % \intertext{(since the objective on first line does not depend on the marginal on $W$, except through the constraint)}
+    \end{align*}
+    since the objective on first line does not depend on the marginal on $W$, except through the constraint.
+    In turn, this is equal to
+    \begin{align*}
+    % &=
+     \inf_{\nu \in \Delta \mathcal A_U}
             \sum_{A \in \mathcal A_U}
-                \nu(A) \log \frac{\nu(A)}{m(A)} \\
-    &\ge \Big({\textstyle\sum_{A \in \mathcal A_U} \nu(A)} \Big)
+                \nu(A) \log \frac{\nu(A)}{m(A)} 
+    \ge \Big({\textstyle\sum_{A \in \mathcal A_U} \nu(A)} \Big)
         \log \frac{\textstyle\sum_{A \in \mathcal A_U} \nu(A)}{{\textstyle\sum_{A \in \mathcal A_U} m(A)}},
     \end{align*}
     by the log-sum inequality \cite{CoverThomas}.

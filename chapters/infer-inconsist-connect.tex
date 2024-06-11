@@ -1,29 +1,116 @@
 \colorlet{proofmatt}{white}
 
 
+On one hand, PDGs are powerful modeling tools, and representations of uncertainty.
+On the other, PDGs are universal loss functions. 
+This chapter describes a deep connection between two roles of PDGs. 
+We start with a suggestive observation: that the semantics by which PDGs specify a distribution is equivalent to the semantics that simply evaluates a PDG's degree of inconsistency (\cref{sec:semantic-connection}). 
+We then build on this semantic connection by describing a surprisingly strong algorithmic one: an inconsistency oracle can be used to perform inference (\cref{sec:deeper-connection-overview}) in almost-linear time. 
+% To do this precisely, we must also formally describe the problems of approximate inference and inconsistency (\cref{sec:approximate-inference}).
+% We prove  (rather substantial) proof to \cref{proofs:the-reductions}.
+% In this sense, precisely quantifying one's inconsistencies is no easier than optimally resolving them.  
+Thus, the two views of PDGs are essentially equivalent---not only semantically, but algorithmically as well.
+
+In between, we formally describe the two computational problems of interest in \cref{sec:approximate-inference}, and finish off the upper bounds developped in \cref{chap:infer}.
+
+ 
+% \section{A Semantic Connection}
 \section{A Semantic Connection}
+    \label{sec:semantic-connection}
 
-Recall that the inconsistency of a PDG is the score of its best-scoring distribution:
+% Recall that the inconsistency of a PDG is the score of its best-scoring distribution:
+% \[
+%     \aar{\dg M}_\gamma := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu).
+% \]
+Recall that we defined the inconsistency $\aar{ \,\cdot\, }$ of a PDG is the score of its best-scoring distribution.
+Although we defined
+$\aar{ \,\cdot\, }$
+in terms of the scoring-function semantics (\ref{eq:inc-scoring-semantic-equivalence}, left), it worth noting that the reverse is also possible: the scoring function can be defined in terms of inconsistency (\ref{eq:inc-scoring-semantic-equivalence}, right).
+%
+% \begin{prop}
+    % For all $\gamma$,
+    % $
+    % \[
+\begin{equation}
+    \aar{\dg M}_\gamma = \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu)
+    \qquad
+    \qquad
+    \bbr{\dg M}_\gamma = \aar{\dg M + \mu!}_\gamma
+    ~.
+    \label{eq:inc-scoring-semantic-equivalence} 
+\end{equation}
+    % \]
+    % $
+% \end{prop}
+% As a result
+
+Although the technical details are not surprising, this fact seems quite surprising if we take a few steps back and reflect on its meaning at a higher level.
+In general, a function $f : X \times Y \to \mathbb R$ typically contains strictly more information than its minimizers $(x \mapsto \argmin_y f(x,y) \subseteq Y) : X \to 2^Y$, which in turn one typically thinks of as containing more information than its minimum value 
 \[
-    \aar{\dg M} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}(\mu).
+\min_Y f = (x \mapsto \min_y f(x,y)) : X \to \mathbb R. 
 \]
-Clearly, inconsistency $\aar{ \,\cdot\, }$ 
+In this case, however, when we take $X$ to be the set of PDGs, $Y$ to be the set of joint distributions, and $f$ to be the scoring function, $\min_Y f$ is equivalent to $f$ itself, in the sense that either can be derived from the other. 
 
-\TODO
+So, semantically, the PDG inconsistency measure is equivalent to the full scoring function. 
+Despite returning only a single number, the PDG inconsistency $\aar{\,\cdot\,}_\gamma$
+encodes so much information that the optimal (set of) distribution(s) of a PDG \cref{sec:semantics} can be derived from it. 
+% It can be computationally challenging (if even possible) to calculate $\min_Y f$ from $f$, 
+
+When a single number encodes so much information,
+    it is often because that information has been heavily compressed, 
+    and the drawback is that a lot of calculation is necessary to recover the original information.
+But, perhaps surprisingly, in this case it appears that the compressed form is not only more simpler and more compact, but also easier to use.  
+To calculate $\aar{\,\cdot\,}_\gamma$ from $\bbr{\,\cdot\,}_\gamma$
+requires solving an optimization problem over an enormous space,
+while the calculating $\bbr{\,\cdot\,}_\gamma$ from $\aar{\,\cdot\,}_\gamma$
+requires only passing the function argument to the PDG and a single evaluation \eqref{eq:inc-scoring-semantic-equivalence}. 
+% What's even more interesting is that 
+Yet recovering the scoring function from inconsistency is only the beginning.
+Once we define the computational problems at hand precisely
+    (which we do in \cref{sec:approximate-inference}),
+it will turn out that even PDG inference can be done in linear
+    time with an inconsistency oracle \cref{sec:deeper-connection-overview}.
+All of this suggests at a theoretical level something we
+    illustrated at length in \cref{chap:one-true-loss}:
+    that calculating the degree of inconsistency is a fundemental problem, that can be used to solve other problems. 
+
+    
+% Conceptually, this result is not so different from the relation between a factor graph and its partition function 
+Indeed, as previously mentioned (e.g., in \cref{sec:free-energy-fg-inc}),
+    a factor graph (a special case of a PDG, by \cref{theorem:fg-is-pdg})
+    is associated with a similarly important number, called its \emph{free energy} or \emph{log partition function} (which is the inconsistency of this factor graph when viewed as a PDG, by \cref{proprop:fg-inconsistency-is-partition-function}).
+Calculating this number is computationally difficult, but if it is known, then inference becomes far easier \cite{ma2013estimating,koller2009probabilistic}. 
+% The results of this chapter de-mystify the nature of this relationship
+This chapter will clarify the nature of this relationship, generalize it to a far wider class of probabilistic models, and significantly strengthen the reduction.
+More precisely, we will show that an inconsistency oracle on its own can be used to perform inference in time linear in the length of its required output length.
+
+This will make precise a rather profound fact: not only is it difficult to see one's inconsistencies, but in fact precisely quantifying them is no easier than optimally resolving them.
 
 % \chapter{The Deep Connection between Inference and Inconsistency}
 % \section{Approximation}
 \section{The Computational Complexity of (Approximate) Inference and Inconsistency Calculation}
+    \label{sec:approximate-inference}
 
 \def\ApproxPDGInfer{\textsf{APPROX-PDG-INFER}}
 \def\ApproxPDGInc{\textsf{APPROX-CALC-INC}}
 \def\ApproxInferUniq{\textsf{APPROX-INFER-CVX}}
 
+Most work in graphical models works with abstract representations of real numbers, assuming that arithmetic (e.g., addition and multiplication of numbers) can be done in constant time. 
+This assumption has several enormous advantages. 
+\begin{enumerate}
+\item 
+It simplifies things a great deal, and puts the focus where it should be: on the important aspects of the algorithm, rather than the details of numerical representations.
+\item 
+It is essentially the right model of computational complexity in practice, given the we typically cache out numerical computations with floating point represntations in hardware, which approximately have this complexity.
+\item 
+Finally, the assumption typically does not impact theoretical results, because (with a great deal of difficult and uninteresting work) one can often assume that all parameters are rational numbers, and then show that the the calculations can be done just as before with a small overhead.
+\end{enumerate}
 
+Unfortunately, and for a very superficial reason, the final point does not apply to PDGs.
+% ---and therefore if we are to speak precisely about computational complexity, we must talk about \emph{approximate} inference. 
 While \cref{theorem:main} gives us a way of doing inference to machine precision in polynomial time, which is the typical use case of an exact algorithm, it is not technically an exact inference algorithm.
-Indeed, if we require binary representations of numbers, exact inference for PDGs is technically not possible in finite time: in a PDG, the exact answer to an inference query may be an irrational number (even if all components of $\mathbb P$,$\balpha$, and $\bbeta$ are rational).
-This leads us to formulate approximate inference more precisely.
-
+Indeed, if we use binary representations of numbers, exact inference for PDGs is technically not possible in finite time: in a PDG, the exact answer to an inference query may be an irrational number (even if all components of $\mathbb P$,$\balpha$, and $\bbeta$ are rational).
+Therefore, in order to say something precise about the computational complexity of inference, the problem we formulate precisely must be that of \emph{approximate} inference. 
 
 \begin{defn}[approximate PDG inference]
     An instance of problem \ApproxPDGInfer\ 
@@ -156,6 +243,7 @@ although we have altered it somewhat.
 
 
 \section{A Deeper, Computational Connection}
+    \label{sec:deeper-connection-overview}
 
 Our approach to $\zogamma$-inference computes
 $\aar{\dg M}_\gamma$ as a side effect.
@@ -238,6 +326,9 @@ For PDGs of bounded treewidth, the two problems are equivalent, and can be solve
 % \relax
 % \section{Reductions}
 \section{The Reductions}
+    \label{proofs:the-reductions}
+    
+\subsection{Hardness }
     \label{proofs:hardness-results}
 
 We now turn to \cref{theorem:consistent-NP-hard}. We begin by proving
@@ -402,7 +493,7 @@ by reduction to SAT and \#SAT, respectively.
     via an oracle for $\aar{-}_0$, as well.  This shows that calculating
     this purely observational inconsistency is \#P-hard as well.
 
-    \medskip\hrule\smallskip
+    % \medskip\hrule\smallskip
 
     \textbf{(c) Hardness of approximation.}
     To calculate $\#_\varphi$ exactly, it turns out that 
@@ -445,7 +536,7 @@ by reduction to SAT and \#SAT, respectively.
     Thus, the problem \ApproxPDGInc\ is \#P hard (in the size of its input).
 \end{lproof}
 
-\paragraph{Inference via Inconsistency Minimization.}
+\subsection{Inference via Inconsistency Minimization.}
 We now address
 \cref{theorem:inf-via-inc-oracle},
 which is closely related to \textcite{pdg-aaai}'s original idea for an inference
@@ -459,7 +550,11 @@ It turns out that it is possible to use the machinery of PDGs
 That is, for any $p \in [0,1]$, we can construct a PDG
     that represents the belief that $\Pr(Y{=}y) = p$, but say nothing about
     how the probability splits between other values of $y$.
-We now describe that construction.
+A generalization of this construction
+    was presented in \cref{sec:prob-widget};
+    for the reader's convenience,
+    we now repeat the special case of it that will matter for the reduction. 
+% We now describe that construction.
 
 \def\Yy{Y{=}y}
 \def\Yyshort{{Y_y}}
@@ -817,11 +912,11 @@ $}}
 
     For each $\lambda \in [0,1]$, define
     \begin{align*}
-        p_\lambda := (1-\lambda)p_1  + \lambda p_2,
-        \qquad\quad
-            \dg M_\lambda := \dg M + \Pr(Y{=}y)=p_\lambda,
+        p_\lambda &:= (1-\lambda)p_1  + \lambda p_2,
+        \qquad\quad\\
+            \dg M_\lambda &:= \dg M + \Pr(Y{=}y)=p_\lambda, \\
             \qquad\text{and}\qquad
-        \mu_\lambda := (1-\lambda) \mu_1  + \lambda \mu_2
+        \mu_\lambda &:= (1-\lambda) \mu_1  + \lambda \mu_2
         ~.
     \end{align*}
 
@@ -894,7 +989,7 @@ $}}
         &= \sum_i q_i \log \frac{q_i}{p_i} \\
         &= \kldiv{q}{p} \\
         &\ge 2 \delta(\mat p, \mat q)^2
-            &[\text{by Pinsker's inequality
+            \qquad[\text{by Pinsker's inequality
                 \parencite{pinsker-inequality}
             }] \\
         &= 2 \Big(\frac12 \Vert \mat p - \mat q \Vert_1 \Big)^2 \\

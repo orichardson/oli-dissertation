@@ -1,28 +1,35 @@
+\label{chap:one-true-loss}
+
 \let\parencite\cite
 \let\textcite\citet
 \newcommand{\ssub}[1]{_{\!_{#1}\!}}
 
+\begin{center}
+    \small\singlespacing
+    Adapted and exteded from \textit{Loss as the Inconcsistency of a Probabilistic Dependency Graph: Choose Your Model, not Your Loss Function}, originally 
+    published in AISTATS 2022 \cite{one-true-loss}. 
+\end{center}
 
-\begin{abstract}
-    In a world blessed with a great diversity of loss functions,
-    we argue that that choice between them is not a matter of taste or pragmatics, but of model.
-	Probabilistic depencency graphs (PDGs) are probabilistic models that come equipped with a measure of ``inconsistency''.
-    We prove that many standard loss functions arise as the inconsistency of
-    a natural PDG describing the appropriate scenario%
-	, and use the same approach
-	to justify a well-known
-		connection between regularizers and priors.
-    We also show that the PDG inconsistency captures a
-    large class of statistical divergences, and detail benefits of
-	thinking of them in this way, including an intuitive
-    visual language for deriving inequalities between them.
-	In variational inference, we find
-	that the ELBO, a somewhat opaque objective for latent variable
-    models, and variants of it
-	arise for free out of uncontroversial modeling assumptions%
-	---as do simple graphical proofs of their corresponding bounds.
-	Finally, we observe that inconsistency becomes the log partition function (free energy) in the setting where PDGs are factor graphs.
-\end{abstract}
+% \begin{abstract}
+In a world blessed with a great diversity of loss functions,
+we argue that that choice between them is not a matter of taste or pragmatics, but of model.
+Probabilistic depencency graphs (PDGs) are probabilistic models that come equipped with a measure of ``inconsistency''.
+We prove that many standard loss functions arise as the inconsistency of
+a natural PDG describing the appropriate scenario%
+, and use the same approach
+to justify a well-known
+	connection between regularizers and priors.
+We also show that the PDG inconsistency captures a
+large class of statistical divergences, and detail benefits of
+thinking of them in this way, including an intuitive
+visual language for deriving inequalities between them.
+In variational inference, we find
+that the ELBO, a somewhat opaque objective for latent variable
+models, and variants of it
+arise for free out of uncontroversial modeling assumptions%
+---as do simple graphical proofs of their corresponding bounds.
+Finally, we observe that inconsistency becomes the log partition function (free energy) in the setting where PDGs are factor graphs.
+% \end{abstract}
 
 \section{Introduction}
 Many tasks in artificial intelligence have been fruitfully cast as optimization problems, but often the choice of objective is not unique.
@@ -1301,6 +1308,7 @@ but with confidence $\beta$ in $p(Z)$.%
 
 
 \section{Free Energy as Factor Graph Inconsistency}
+    \label{sec:free-energy-fg-inc}
 A weighted factor graph $\Psi = (\phi_J, \theta_J)_{J \in \cal J}$, where each $\theta_J$ is a real-valued weight, $J$ is associated with a subset of variables $\mathbf X_J$, and  $\phi_J : \V(\mathbf X_J) \to \mathbb R$, determines a distribution by
 \vskip-1.4em
 \[
@@ -1315,6 +1323,7 @@ $ \sum_{\mat x} \prod_{J \in \mathcal J} \phi_J(\mat x_J)^{\theta_J}$
 required to normalize the distribution,
 and is known as the \emph{partition function}. Computing $\log Z_\Psi$
 is intimately related to probabilistic inference in factor graphs \parencite{ma2013estimating}.
+We will revisit this point in \cref{chap:inc-infer-connection}.
 Following \textcite{pdg-aaai},
 let $\PDGof{\Psi}$ be the PDG with edges $\{ \raisebox{-0.3ex}{$\smash{\stackrel{J}{\rightarrow}}$} \mathbf X_J \}_{\mathcal J}$, cpds $p_J(\mathbf X_J) \propto \phi_J(\mathbf X_J)$, and weights
 $\alpha_J, \beta_J := \theta_J$%
@@ -1377,7 +1386,7 @@ such as
 \[
 \mathcal L_1 = \aar**{
 \begin{tikzpicture}[center base]
-	\node[tpt={z0|\simsymb}] at (-0.5,0.1) {};
+	\node[tpt={z0|\simsymb}] at (-1.5,0.1) {};
 	\node[tpt={z1|\datsymb},right=0.35 of z0]{};
 	\node[Dom={$Z$[label distance=-2.5ex, xshift=1.0em] (Z)
 		around {\lab{z0}\lab{z1}}},yshift=0.2em ] {};
@@ -1388,7 +1397,7 @@ such as
 	\draw[arr1, <-] (Z) to
 		node[above, pos=0.6]{$\lambda$}
 		node[below,inner sep=1pt, pos=0.6]{${\color{gray}\scriptstyle( \infty )}$}
-		+(-1.5, 0);
+		+(-1.8, 0);
 	\draw[arr1] (X) to node[right,pos=0.4]{$h$} (Y);
 	\draw[arr,-,shorten >=0pt] (Z) to [bend left=0, shorten >=0pt]
 		node[above, inner sep=1pt, pos=0.55]
@@ -1706,8 +1715,12 @@ For any given $\theta$, the Bayesian reading of Bayes rule states that
 \]
 So taking a logarithm,
 \[
-	\text{log-posterior $\log \Pr(\Theta | X)$} = \text{log-likelihood $\log \Pr(X|\Theta)$} ~+~ \text{log-prior $\log \Pr(\Theta)$}
-		- \text{log-evidence $\log \Pr(X)$}.
+    \def\parcenterss#1{\parbox{3cm}{\centering\singlespacing #1}}
+    %
+	\parcenterss{log-posterior\\ $\log \Pr(\Theta | X)$} 
+    = \parcenterss{log-likelihood \\ $\log \Pr(X|\Theta)$}
+     ~+~ \parcenterss{log-prior\\ $\log \Pr(\Theta)$}
+		- \parcenterss{log-evidence\\ $\log \Pr(X)$}.
 \]
 The final term does not depend on $\theta$, so it is not relevant for finding the optimal $\theta$ by this metric. Swapping the signs so that we are taking a minimum rather than a maximum, the MAP estimate is then given by
 \[
@@ -3159,7 +3172,7 @@ First, the fact that
 \[
 \mathcal L_1 = \lambda_\dsymb\mathcal L_\datsymb + \lambda_\ssymb \mathcal L_\simsymb = \aar**{
 \begin{tikzpicture}[center base]
-	\node[tpt={z0|\simsymb}] at (-0.5,0.1) {};
+	\node[tpt={z0|\simsymb}] at (-1.5,0.1) {};
 	\node[tpt={z1|\datsymb},right=0.35 of z0]{};
 	\node[Dom={$Z$[label distance=-2.5ex, xshift=1.0em] (Z)
 		around {\lab{z0}\lab{z1}}},yshift=0.2em ] {};
@@ -3189,9 +3202,9 @@ is immediate.
 The two cpds with infinite confidence ensure that the only joint distribution with a finite score is $\lambda_\ssymb s + \lambda_\dsymb d$, and the inconsistency with $h$ is its surprisal, so the inconsistency of this PDG is
 \begin{align*}
 	\Ex_{\lambda_\ssymb s + \lambda_\dsymb d} \Big[\log \frac{1}{h(Y|X)}\Big]
-	= - \lambda_\ssymb \Ex_{s} [\log {h(Y|X)}] - \lambda_\dsymb  \Ex{d}[\log h(Y|X)]
-	= \lambda_\dsymb\mathcal L_\datsymb + \lambda_\ssymb \mathcal L_\simsymb
-	= \mathcal L_1,
+	&= - \lambda_\ssymb \Ex_{s} [\log {h(Y|X)}] - \lambda_\dsymb  \Ex{d}[\log h(Y|X)]
+	\\&= \lambda_\dsymb\mathcal L_\datsymb + \lambda_\ssymb \mathcal L_\simsymb
+	\\&= \mathcal L_1,
 	\quad\text{as promised.}
 \end{align*}
 

@@ -127,7 +127,8 @@ which, in our view, also prescribes full-confidence updates.
 The concept we propose here is much closer to 
 % that of \citeauthor{shafer1976mathematical}, one thrust of whose \citeyear{shafer1976mathematical} book is to develop a theory of what we have been calling confidence, tailored to a specific representation of uncertainty \cite{shafer1976mathematical}.
 the focus of Shafer's \emph{Theory of Evidence} \cite{shafer1976mathematical},
-although his account is heavily specialized to a specific representation of uncertainty that has since fallen out of fashion.
+although his account is heavily specialized to a specific representation of uncertainty (Dempster-Shafer belief functions)
+that have largely fallen out of fashion.
 
 \begin{example}
 
@@ -232,7 +233,7 @@ can be represented by a belief function $\Bel_{(\alpha,\phi)}$
 that Shafer calls a \emph{simple support function}, by
 % $\Bel_{(\alpha,\phi)}$
 \[
-    \Bel_{(\alpha,\phi)}(U) = {\realsinglespacing\begin{cases}
+    \Bel_{(\alpha,\phi)}(U) = {\singlespacing\begin{cases}
         0 &\text{ if } U \subseteq \phi \\
         \alpha & \text{ if } \phi \subseteq U \subsetneq W \\
         1 & 
@@ -325,7 +326,7 @@ We will later see that this is one canonical form of confidence.
 % Is there an additive representation of confidence? 
 Is there a way of representing confidence that combines additively?
 % Shafer calls such a quantity \emph{weight of evidence}, and proves it must be of the form $w = - k \log (1-\alpha)$ for some $k > 0$ [\citeauthor[pg 78]{shafer1976mathematical}].
-There is; Shafer calls it \emph{weight of evidence}, and proves it must be of the form $w = - k \log (1-\alpha)$ for some $k > 0$ [\citeauthor[pg 78]{shafer1976mathematical}].
+There is; Shafer calls it \emph{weight of evidence}, and proves it must be of the form $w = - k \log (1-\alpha)$ for some $k > 0$ \cite[p. 78]{shafer1976mathematical}.
 This additive form of confidence plays a fundemental role in Shafer's theory,
 as well as ours.
 \commentout{
@@ -655,7 +656,9 @@ plus Gaussian noise.
 In many engineering disciplines, the
  standard way to track this information is
 % the Kalman filter \parencite{kalman1960new}.
-the \citeauthor{kalman1960new} filter [\citeyear{kalman1960new}].
+the \citeauthor{kalman1960new} filter
+    % [\citeyear{kalman1960new}].
+    \cite{kalman1960new}.
 It prescribes belief state $(\estx, \sigma^2)$,
 where $\estx \in \mathbb R$ is our current estimate of
 $x$, and
@@ -997,6 +1000,8 @@ The final representations we consider (vector fields and loss functions) also en
 
 
 %%%%%%%%%%%%%%%%%%%% UPDATE FORMALISM %%%%%%%%%%%%%%%%%%
+\section{A Formal Model of Confidence, Learning, and Belief}
+
 Our formalism consists of three parts: 
 	a domain $\confdom$ of confidence values,
 	a space $\Theta$ of belief states, and
@@ -1587,7 +1592,8 @@ In \cref{ex:classifier}, if $\phi=(x,y)$, then $\Theta_{\phi}$ is the parameter 
 % {\color{red}
 Historically, most of the literature on belief updates is about 
 	idempotent updates, which in our framework, correspond to full-confidence updates.
-{\color{red}Full updates are quite extreme.
+% {\color{red}
+Full updates are quite extreme.
 An agent that updates by conditioning, for instance,
 % is permanently commited to believing everything it ever learns with perfect certainty,
 permanently commits to believing everything it ever learns,
@@ -1604,9 +1610,9 @@ Similarly, artificial neural networks are trained with
 We would like an account that allows for for less extreme belief alterations,
 in which information is only partially incorporated.
 This is the role of intermediate degrees of confidence.
-}
 
-Finally, we turn the top element of the confidence domain.
+To understand what a full-confidence update means in our framework, we turn the top element of the confidence domain.
+How should updates 
 Our axioms already have some implications for it. 
 % Our axioms so far already tell us 
 % Because $\Lrn$ reflects the order structure of $\confdom$ (\cref{ax:ineq-witness})
@@ -1734,21 +1740,21 @@ To address this, we will need to assume some additional structure.
 	% need to look at confidence from several more angles.
 }%
 
-\commentout{%
-A function $f : \confdom \times \Theta \to \Theta$,
-	which one should think of as $\Lrn_\phi$ for some fixed $\phi$ whose nature is irrelevant, satisfying the axioms of this section 
-	\[
-	\Big(f^\bot = \mathrm{id}_{\Theta}, 
-	\quad
-	f^\chi \circ f^{\chi'} = f^{\chi\oplus\chi'},
-	\quad
-	\forall\theta. \chi\le\chi'\text{ iff }\exists\chi''. f^{\chi\oplus\chi''}(\theta) = f^{\chi'}(\theta),
-	\quad
-	\chi\mapsto f^\chi(\theta) \text{ continuous}
-	\Big)
-	\]
-	is called a \emph{commitment function}. 
-}
+% \commentout{%
+% A function $f : \confdom \times \Theta \to \Theta$,
+% 	which one should think of as $\Lrn_\phi$ for some fixed $\phi$ whose nature is irrelevant, satisfying the axioms of this section 
+% 	\[
+% 	\Big(f^\bot = \mathrm{id}_{\Theta}, 
+% 	\quad
+% 	f^\chi \circ f^{\chi'} = f^{\chi\oplus\chi'},
+% 	\quad
+% 	\forall\theta. \chi\le\chi'\text{ iff }\exists\chi''. f^{\chi\oplus\chi''}(\theta) = f^{\chi'}(\theta),
+% 	\quad
+% 	\chi\mapsto f^\chi(\theta) \text{ continuous}
+% 	\Big)
+% 	\]
+% 	is called a \emph{commitment function}. 
+% }
 
 
 % \paragraph{Belief and Learning.}
@@ -1892,7 +1898,9 @@ Concretely, assume we have some set $\mathrm{Aut}(\Theta, \Phi)$ of
 	that have an action both on belief states ($\sigma(\theta) \in \Theta$) and 
 		on observations ($\sigma(\phi) \in \Phi$).
 	% (say, rotations of the simplex of distributions), that also have an associated action on assertions, so that $\sigma\phi \in \Phi$ is the corresponding relabeling of $\phi$ under $\sigma$.  
-		The symmetry condition can now be captured by:
+For example, in the setting where $\Theta = \Delta \Omega$ is the set of probability distributions over a finite set $\Omega$, and $\Phi = 2^\Omega$ is the set of events, one might take $\mathrm{Aut}(\Theta,\Phi) \cong \mathrm{Aut}(\Omega)$ to be the set of permuations of $\Omega$, with the obvious relabeling action on both distributions $\theta \in \Theta$ and on events $\phi \in \Phi$.
+    
+Once we select a suitable group of automorphisms (which could well just include the identity), the symmetry condition can now be captured by:
 \begin{LrnAxioms}
 	\item
 	% For all 
@@ -2519,6 +2527,9 @@ In many ways, our framework at this point has come to resemble a dynamical syste
 We have a continuous manifold of states $\Theta$, a set of 
 	of inputs (``control signals'') $\Phi$, which cause $\Theta$ 
 	to evolve ``over time''. 
+However, despite the similar mathematical underpinnings, our framework 
+% makes some additional assumptions that make it more suitable for capturing confidence:
+is different in several important ways:
 
 \begin{itemize}
 	\item Control theory does not require the analogue of a ``full-confidence'' update; there may be no limit as $t \to \infty$.
@@ -2650,7 +2661,9 @@ Then we can define an update rule $\GD {\cal L}$ that reduces inconsistency by g
 % \textbf{Natural Gradients for Probability Distributions.}
 \subsection{Optimizing Commitment Functions for Probabilsitic Beliefs}
 When $\Theta$ parameterizes a family of probability distributions, via some function $\Pr : \Theta \to \Delta X$, there is a particularly natural metric on $\Theta$, called the Fisher information metric.
-This metric is the unique one on $\Theta$ that is independent of the representation of $\X$ \parencite{chentsov}, in the following sense.
+% This metric is the unique one on $\Theta$ that is independent of the representation of $\X$ \parencite{chentsov},
+Chentsov's Theorem \cite{chentsov} tells us that this metric is the only one (up to a multiplicative constant) that is invariant under sufficient statistics. 
+ % in the following sense.
 If there are cpds $p(Y|X)$ and $q(X|Y)$ such that, for all $\theta \in \Theta$,
 % $\Pr_\theta = qp\Pr(\theta)$,
 % for all $\theta$, sampling $x\sim \Pr_\theta$

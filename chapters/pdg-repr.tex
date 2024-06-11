@@ -371,9 +371,9 @@ make independence assumptions, the information in this fragment is truly a
 subset of the information in the whole PDG. 	
 \end{example}
 
-Being able to form a well-behaved local picture and restrict knowledge is
-useful, but an even more compelling reason to use PDGs is their ability to
-aggregate information. 
+The ability to form restrict to arbitrary subsets of information is useful,
+and closely related to an even more compelling reason to use PDGs:
+they make it equally easy to aggregate arbitrary probabilistic information. 
 	
 \begin{example}\label{ex:grok-union}
 Grok dreams of becoming Supreme Leader ($\it SL$), and has come up with a plan.
@@ -485,7 +485,9 @@ that involves adding an extra node.
 %      as ``Pseudomarginal Dependency Graph'',
 %      with nomenclature rooted in the literature.}}
 
-\begin{defn}\label{def:model}
+\begin{defn}
+    % \label{\OInc}
+    \label{def:model}
 A \emph{Probabilistic Dependency Graph}
 is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \alpha, \beta)$, where 
 %
@@ -495,34 +497,35 @@ is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \alpha, \beta)$, where
 	\item[$\Ar$] \notation{$\subseteq \N \times \N \times \mathit{Label}$}%
 		is a set of labeled edges $\{ \ed aXY \}$, each with a source 
 		$S$ and target $T$ in $\N$;
-	\item[$\V$] \notation{$\N \to \mathbf{Set}$}%
+	\item[$\V$] \notation{$: \N \to \Set$}%
 		associates each variable $N \in \N$ with a set $\V(N)$ of values that the variable $N$ can take;
   	\item[$\mathbb P$]
         % \notation{$:\big(\!({A,B,\ell})\colon\!\Ar \big) \to \V(A) \to \Delta\V(B)$}%
-        \notation{$:\big(\!(\ed aXY \in \Ar \big) \to \V(X) \to \Delta\V(Y)$}%
+        \notation{$:\big(\!\ed aXY \in \Ar \big) \to \V(X) \to \Delta\V(Y)$}%
 	associates to each edge $\ed aXY \in \Ar$
 	a distribution $\p_a(x)$ on $Y$ for each $x \in \V(X)$; 
 
-\item[$\alpha$] \notation{$:\Ar \to \mathbb R$}
-associates to each edge $\ed aXY$ a number $\alpha_L$ which,
+\item[$\balpha$] \notation{$:\Ar \to \mathbb R$}
+associates to each edge $\ed aXY$ a number $\alpha_a$ which,
 roughly speaking, is the modeler's confidence in the functional
-dependence of $Y$ on $X$ implicit in $L$; 
-\item[$\beta$] 
+dependence of $Y$ on $X$ implicit in $a$; 
+\item[$\bbeta$] 
     \notation{$:\Ar \to \Rext$}
 associates to each edge $L$ a (possibly infinite) real number $\beta_L$,
 the modeler's 
 subjective confidence in the reliability of
 $\mathbb P$. 
 \end{description}
+
 Note that we allow multiple edges in $\Ar$ with the same source and
 target; thus $(\N,\Ar)$ is a multigraph.  We occasionally write a PDG
-as $\dg M = (\Gr,\mathbb P, \alpha,\beta)$, where $\Gr = (\N,\Ar,\V)$, and
-abuse terminology by referring to $\Gr$ as a multigraph.
+as $\dg M = (\Gr,\mathbb P, \alpha,\beta)$, where $\Gr = (\N,\Ar,\V)$, 
+and abuse terminology by referring to $\Gr$ as a multigraph.
 We refer to 
 ${\dg N} = (\Gr, \mathbb P)$ as an \emph{unweighted} PDG,
 and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
 $\bf 1$ is the constant function (i.e., so that $\alpha_L = \beta_L = 1$ for all $L$). 
-In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\alpha = {\bf 1}$
+In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\balpha = {\bf 1}$
 and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.
 % \footnote{The appendix gives results for arbitrary $\alpha$.} 
 \end{defn}
@@ -531,10 +534,21 @@ If $\dg M$ is a PDG, we reserve the names
 $\N^{\dg M}, \Ar^{\dg M}, \ldots$,
 for the components of $\dg M$, so that we may reference one without naming them
 all explicitly.
-We write $\V(S)$ for the set of possible joint settings of a set
-$S$ of variables.
-Thus, we write $\V\!\X$ for all settings of the variables in $\N^{\dg M}$; 
-    we refer to these complete joint settings as ``worlds''.
+% We write $\V(S)$ for the set of possible joint settings of a set $S$ of variables.
+The pair $(\N, \V)$ describes a set of nodes $\N$ and a set of values $\V X$ for each node $X \in \N$;
+    thus $(\N,\V)$ is equivalent to specifying a set $\X$ of variables.
+For this reason, we write 
+% $\V\!\X$
+\[
+    \V\!\X := \prod_{X \in \N} \V(X)
+\]
+for the set of all joint settings of the variables; we refer to $\omega \in \V\!\X$ as ``worlds''.
+Rather than specifying $\N$ and $\V$ separately, it is common practice in the graphical models community to instead specify a set $\X$ of variables directly \cite{koller2009probabilistic}.
+We have kept them them separate in \cref{def:model} to emphasize the separation between the qualitative information $(\N, \Ar, \balpha)$ and the quantitative information $(\V, \mathbb P, \bbeta)$ that annotates it. 
+This separation between qualitative and quantitative information will
+    play a large role in our semantics in the next section, 
+    and later on when we revisit the point in \cref{chap:QIM,chap:PDG-cat}.
+
 While the definition above is sufficient to represent the class of all legal
 PDGs, we often use two additional bits of syntax
 to indicate common constraints:  
@@ -554,6 +568,17 @@ is really shorthand for the following PDG, where
 where we insert a node labeled $C \times T$ at the junction:
 \smallskip
 	\begin{center}
+    \begin{tikzpicture}[paperfig]
+        \node[dpadded] (SL) at (1.0,0) {$\mathit{SL}$};
+        %
+        \node[dpadded] (C) at (-1.0, -0.6) {$C$};
+        \node[dpadded] (T) at (-1.0, 0.6) {$T$};
+        %
+        \cmergearr{C}{T}{SL}{0.2,0}
+        %
+        \draw[arr] (T) to [bend right=90, looseness=2] (C);
+    \end{tikzpicture}
+    $\qquad\rightsquigarrow\qquad$
 	\ifprecompiledfigs
 \raisebox{-0.5\height}{\includegraphics[scale=0.9]{figure-pdfs/widget.pdf}}
 	\else
@@ -563,7 +588,6 @@ where we insert a node labeled $C \times T$ at the junction:
 			\node[dpadded,light pad] (CT) at (-2.9, 0){$\scriptstyle C \times T$};
 			\node[dpadded] (C) at (-4.8, -0.6) {$C$};
 			\node[dpadded] (T) at (-4.8, 0.6) {$T$};
-			
 			
 			\draw[arr, ->>] (CT) -- (C);
 			\draw[arr, ->>] (CT) -- (T);
@@ -581,7 +605,136 @@ similarly, the cpd for the edge from $ C \times T$ to $T$ gives probability 1 to
 \end{constr}
 
 
-\section{Semantics}\label{sec:semantics}
+\subsection{Alternate, Equivalent Definitions of PDGs}
+
+The definition given in \cref{def:model} is not the only way to define a PDG. 
+
+\begin{enumerate}
+    \item The underlying graphical structure $(\N, \Ar)$ of a PDG can be taken to directly be a directed \emph{hypergraph}, rather than an ordinary directed (multi)graph. With this definition, we circumvent the need for \cref{constr:hyperedge-reducton}, and get a 
+    This is the appraoch taken in the rest of the paper. 
+
+    \item In the other direction, we can also define an equivalent variant of a PDG win which $(\N, \Ar)$ is not a multi-graph, but rather an ordinary directed graph. It is not hard to see that a multi-graph could be simulated in that formalism with the following widget:
+    \[
+        \begin{tikzpicture}[center base]
+            \node[dpadded](X) at (0,0) {$X$};
+            \node[dpadded](Y) at (3,0) {$Y$};
+            \draw[arr2] (X) to[bend left] (Y);
+            \draw[arr2] (X) to[bend right] (Y);
+        \end{tikzpicture}
+        \qquad\rightsquigarrow\qquad
+        \begin{tikzpicture}[center base]
+            \node[dpadded](X1) at (0,0) {$X_1$};
+            \node[dpadded](Y1) at (3,0) {$Y_1$};
+            \node[dpadded](X2) at (0,2) {$X_2$};
+            \node[dpadded](Y2) at (3,2) {$Y_2$};
+            \draw[arr2] (X1) to (Y1);
+            \draw[arr2] (X2) to (Y2);
+            \draw[arr2,->>] (X1) to[bend left] (X2);
+            \draw[arr2,->>] (Y1) to[bend left] (Y2);
+            \draw[arr2,->>] (X2) to[bend left] (X1);
+            \draw[arr2,->>] (Y2) to[bend left] (Y1);
+        \end{tikzpicture}
+    \]
+    where the vertical edges enforce equality. 
+
+    \item The confidence $\beta_a$ in the arc $\ed aXY$ may be replaced with a separate confidence $\beta_{a,x}$ for each possible input $x \in \V(X)$. 
+
+    \item More generally, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank.  Relatedly, one could imagine a 
+    We show in \cref{sec:prob-widget} that these seeming generalizations of a PDG, as well as the one described in the previous item, are equivalent to PDGs as we have already defined them. 
+
+    \item 
+    % The conditional probabilities needn't be 
+    One might want to also consider a parametric variant of a PDG, in which each cpd is not fixed, but dependent on some hyperparameters. 
+    This is especially appropriate if the cpds represent parametric models.
+    This is the approach taken in \cref{chap:LIR}.
+    Once again it may seem that this is a more general setting, yet once again it turns out to be equivalent to all of the other variants of PDGs we have considered so far. 
+\end{enumerate}
+
+\subsection{PDG Superposition}
+
+The most important operation we on PDGs is the sum,
+	which combines the information in $\dg M_1$ and $\dg M_1$
+	to form a new PDG $\dg M_1 + \dg M_2$.  
+More precisely, this involves forming  the disjoint union of the (hyper)arcs
+	(because more edges should count double), 
+    but we don't want to duplicate variables.
+
+If we're being extra careful, depending on the variant
+of the definition of a PDG, we might need another definition:	
+\begin{defn}
+    % [$\V$-compatibility]
+        \label{defn:v-compat}
+	Two PDGs $\dg M_1$ and $\dg M_2$ are $\V$-\emph{compatible},
+	if the variables they have in common take the same sets of values%
+    ---that is, if the nodes and values of $\dg M_1$ and $\dg M_2$,
+	are $\N_1, \V_1$ and $\N_2, \V_2$, respectively, then
+    $
+	\forall X \in \N_1 \cap \N_2.~~
+		\V_1( X) = \V_2 (X). \qedhere
+	$
+\end{defn}
+
+This definition is the same as the one given by \citet{halpern-combining-causal-models}, in combining causal models (structural equations models, or SEMs, to be precise).
+It is worth noting that SEMs are another formalism in which the variables and their possible values are given separately. 
+But the definition is unnecessary if we take the traditional approach in graphical models and rely on implicit variable equality.
+Indeed, if in a PDG is specified not as a pair $(\N, \V)$ but rather as a set $\X$ of variables, then \cref{defn:v-compat} is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
+ % $N \in \N$ in $\dg M_1$ and $\dg M_2$ if their interpretations can be identified as one variable. With that, we can make
+%
+In any case, the point is the following formal definition for how to combine independent information in two different PDGs:
+
+\begin{defn}
+	The sum of $\V$-compatible PDGs is given by
+		taking the disjoint union of their arcs and associated data.
+	Explicitly, if
+	$\dg M_1 = (\N_1, \V_1, \Ar_1, \mathbb P_1, \balpha_1,\bbeta_1)$ and
+	$\dg M_2 = (\N_2, \V_2, \Ar_2, \mathbb P_2, \balpha_2,\bbeta_2)$
+	are $\V$-comatible PDGs, then
+	\[
+		\dg M_1 + \dg M_2 :=
+			\Big(
+				\N_1 \cup \N_2,~~
+				\V_1 \cup \V_2,~~
+				\Ar_1 \sqcup \Ar_2,~~
+				\mathbb P_1 \sqcup \mathbb P_2,~~
+				\balpha_1 \sqcup \balpha_1,~~
+				\bbeta_2 \sqcup \bbeta_2,
+			\Big),
+	\]
+	where, for $f,g : X \to Y$, the function $f \sqcup g : X \sqcup X \to Y$
+	is given by
+	\[
+		f \sqcup g := \left\{\singlespacing\begin{array}{c}
+			\mathrm{inl}(x) \mapsto f(x) \\
+			\mathrm{inr}(x) \mapsto g(x)
+		\end{array} \right.
+		.
+		% f \sqcup g ( \mathrm{inr}(x)) := g(x).
+		\qedhere
+	\]
+\end{defn}
+
+As mentioned above, combining PDGs is simpler (and circumvents $\V$-compatibility) if PDGs are defined through a set of variables $\X$. 
+Given
+$\dg M_1 = (\X_1, \Ar_1, \mathbb P_1, \balpha_1,\bbeta_1)$ and
+$\dg M_2 = (\X_2, \Ar_2, \mathbb P_2, \balpha_2,\bbeta_2)$,
+we can form
+\[
+	\dg M_1 + \dg M_2 =
+		\Big(
+			\X_1 \cup \X_2,~~
+			\Ar_1 \sqcup \Ar_2,~~
+			\mathbb P_1 \sqcup \mathbb P_2,~~
+			\balpha \sqcup \balpha,~~
+			\bbeta \sqcup \bbeta,
+		\Big);
+\]
+in this case, $\V$-compatibility is handled automatically by
+the meaning of variable equality. 
+While the formalism is simpler, this appraoch really just sweeps the issue under the rug. 
+For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts. 
+
+
+\section{The Semantics of PDGs}\label{sec:semantics}
 Although the meaning of an individual cpd is clear, we have not yet given 
 PDGs a ``global'' semantics. We discuss three related approaches to doing so.
 The first is the simplest: we associate with a PDG the set of distributions that
@@ -606,20 +759,35 @@ let $\SD{\dg M}$ be the \emph{s}et of
 whose conditional marginals are exactly those given by $\mathbb P$.
 That is, $\mu \in \SD{\dg M}$ iff, for all edges $a \in \Ar$ from $X$
 to $Y$,  $x \in 
-\V(X)$,  and $y \in \V(Y)$, we have that $\mu(Y \!=\! y \mid X{=} x) = \p_a(T|s)$.
-\notation{Formally,		
-    \[ \SD[\Big]{\dg M} = \!\left\{\mu \!\in\! \Delta \V (\dg M) \middle|\!
-        \begin{array}{l}
+\V(X)$,  and $y \in \V(Y)$, we have that $\mu(Y{=}y\mid X{=}x) = \p_a(Y{=}y\mid X{=}x)$.
+% \notation{
+Formally, define
+    \[ \SD[\big]{\dg M} :=
+    \left\{\mu \in \Delta \V\!\X ~\middle|~
+        {\singlespacing\begin{array}{l}
         \mu(B\!\! =\!\! b \mid A\!\!=\!\! a) \geq \p_a(b \mid a) \\[0.1em]
         ~\text{$\forall (A, B,\ell) \!\in\! \Ar$, $a \!\in\!\V(A)$, $b \!\in\! \V(B)$} 
-   		\end{array}\!\!\! \right\}\]
-    }
+        \end{array}} \right\}.
+    \]
+    % }
+We say that
 $\dg M$ is \emph{inconsistent} if $\SD{\dg M} = \emptyset$, and \emph{consistent} otherwise.
 \end{defn}
-Note that $\SD{\dg M}$ is independent of the weights $\alpha$ and $\beta$.
+% We remarks that $\SD{\dg M}$ 
+% is really an observational notion---it takes into account 
+Note that $\SD{\dg M}$
+% is independent of 
+does not depepend on the weights $\balpha$ or $\bbeta$.
+Furthermore, it reflects only the quantiative probabilistic information in the PDG; it does not say anything about independencies, for example.
+Developping an analogous definition for a \emph{qualitative} information in a PDG is far more subtle, and is the subject of \cref{chap:QIM}. 
+
+This semantics is useful, and we will make frequent use of it, 
+but it has one other extremely important shortcoming: viewed through the lens of this semantics, all inconsistent PDGs are equivalent, no matter how small the inconsistency.
+In the next subsection, we develop another semantics, which will ultimately lead to another, closely related, semantics for PDGs as a set of probability distributions.
 
 
-\subsection{PDGs As Distribution Scoring Functions} \label{sec:scoring-semantics}   
+\subsection{PDGs As Scoring Functions over Joint Distributions}
+    \label{sec:scoring-semantics}   
 
 We now generalize the previous semantics by viewing a PDG $\dg M$ as a
 \emph{scoring function} that, given an arbitrary distribution $\mu$ on $\V(\dg
@@ -634,7 +802,7 @@ We measure the magnitude of this perturbation with relative entropy. In
 particular, for an edge $\ed aXY$ and $x \in \V(X)$, we measure
 the relative entropy from $\p_a(x)$ to $\mu(Y \!= \cdot\mid X=x)$, and take the
 expectation over $\mu_X$ (that is, the marginal of $\mu$ on $X$). We then sum
-over all the edges $L$ in the PDG, weighted by their reliability.
+over all the arcs $a$ in the PDG, weighted by their reliability.
 
 
 \begin{defn}\label{def:inc}
@@ -660,9 +828,9 @@ over all the edges $L$ in the PDG, weighted by their reliability.
 \end{defn}
 
 \vfull{
-The idea behind this definition of inconsistency is that we want to choose a
-    distribution $\mu$ that minimizes the total number of bits required to
-    encode all of the relevant conditional marginals. More precisely, fix a
+The idea behind this definition of inconsistency is to choose a
+distribution $\mu$ that minimizes the total number of bits required to
+encode all of the relevant conditional marginals. More precisely, fix a
     distribution $\mu$. For each edge $L = (X, Y, \ell) \in \Ar$ and $x \in
     \V(X)$, we are given a code for $Y$ optimized for the distribution $\p_a(x)$,
     and asked to transmit data from $\mu(Y\mid x)$; we incur a cost for each bit

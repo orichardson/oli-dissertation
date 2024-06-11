@@ -1,3 +1,5 @@
+    \label{chap:LIR}
+
 % \begin{abstract}
 In this chapter, 
 we present a generic algorithm
@@ -905,22 +907,27 @@ The ODE on the last line of \cref{algo:LIR}, which is
 Alternatively, if \textsc{Refocus} produces small $\chi$,
     then it is well-approximated by a single gradient descent step of size $\chi$.
 At the other extreme: if $\chi$ is infinite in every component,
-    then, so long as the parameterizations $\mathbb P$ are log-concave,
-    the final line
+    then,  the final line
 % then $\chi=\infty$ finds
     % a parameter setting that globally minimizes inconsistency
  reduces to
     \[
         \theta^{(t+1)} \gets \arg\min_{\theta}
             \aar[\big]{ \varphi\odot( \Ctx + \dg M(\theta)) }_{\!\gamma}\,,
-            ~~~\text{because of}
+            % ~~~\text{because of}
     \]
+at least in the typical case in which
+the parameterizations $\mathbb P$ unconditioanl and log-concave.
+This is because of the following result.
+
  % so long as the parameterizations $\mathbb P$ are log-concave, because of
 % This is because of
 \begin{theorem} \label{thm:cvx}
-    If $\,\mathbb P$ is log-concave, then
+    % If $\,\mathbb P$ is log-concave, then
+    If $\mathcal M(\Theta)$ is a PPDG whose parameters
+    $\mathbb P$ is log-concave, then
     for small enough $\gamma$, the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is convex.%
-        \footnote{All proofs can be found in the appendix.}
+        % \footnote{All proofs can be found in the appendix.}
     % and strictly so for $\gamma > 0$.
 \end{theorem}
 % \begin{proof}
@@ -2065,9 +2072,9 @@ the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is c
     the sum of the two terms is convex in $\mu$ \cite{pdg-aaai}.
     Then we have
     \begin{align*}
-        \aar[\Big]{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma
-            &= \inf_\mu  \left( F(\mu) + \Ex_\mu \left[ \sum_{\ed a ST}\beta_a \log \frac{\mu(T|S)}{\p_a^\theta(T|S)} \right] \right) \\
-            &= \inf_\mu  \Bigg( F(\mu) + \Ex_\mu \left[ \,\sum_{\ed a ST} \beta_a\log \frac{\mu(T|S)}{\lambda(T|S)} \right] +
+        &\aar[\Big]{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma
+        \\&\quad= \inf_\mu  \left( F(\mu) + \Ex_\mu \left[ \sum_{\ed a ST}\beta_a \log \frac{\mu(T|S)}{\p_a^\theta(T|S)} \right] \right) \\
+            &\quad= \inf_\mu  \Bigg( F(\mu) + \Ex_\mu \left[ \,\sum_{\ed a ST} \beta_a\log \frac{\mu(T|S)}{\lambda(T|S)} \right] +
             \underbrace{
                 \Ex_\mu \left[\,\sum_{\ed a ST} \beta_a \log \frac{\lambda(T|S)}{\p_a^\theta(T|S)} \right]
             }_{\text{third term}}

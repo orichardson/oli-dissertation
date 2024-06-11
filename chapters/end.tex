@@ -1,0 +1,25 @@
+
+\section{Sewing Things Back Together, with Self-Consistency}
+
+So far we have been working with the degree of inconsistency of a PDG, a number typically in $[0,\infty]$. 
+In \cref{chap:conf}, we saw that the confidence domain 
+% $[0,\infty]$ 
+$[-\infty, 0]$ is isomorphic to $[0,1]$. 
+
+Define the self-consistency of a PDG to be
+\[
+    \Xi(\dg M) := \mathfrak\exp( - \aar{\dg M}_\gamma). 
+\]
+Note that $\Xi(\dg M)$
+
+\begin{prop}
+\begin{enumerate}
+    \item If $E$ is an event, then $\Xi(E) = \begin{cases}
+        0 & \text{ if } E = \emptyset \\
+        1 & \text{ if } E \ne \emptyset
+    \end{cases}$
+    \item If $\mu$ is a probability distribution, and $U$ is an event, 
+        then $\Xi(\mu + U) = \mu(U)$.
+    \item If $\Plaus$ is a Dempster-Shafer probability measure, and $U$ is an event, then $\Xi(\Plaus + U) = \Plaus(U)$. 
+\end{enumerate}
+\end{prop}
