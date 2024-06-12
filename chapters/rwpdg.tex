@@ -3,6 +3,933 @@
 
 
 \section{Qualitative Monotonicity and Equivalence}
+%oli22*: moved full section to the appendix
+% \subsection{Monotonicity of Structural Compatibility}
+%oli3: rebranding section
+% \section{Structural Equivalence and Monotonicity}
+%oli6:
+% \section{Reasoning about \SCibility}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%oli22: rebranding, for appendix
+% \section{Monotonic Reasoning about \SCibility}
+\subsection{Qualitative Monotonicity}
+    \label{sec:monotone}
+
+
+%oli4: should I add eeven more motivation? I feel it distracts from the current story, but it still might help to motivate. Maybe the below should go elsewhere...
+%joe5*: You should definitely add motivation.  But motivating this
+%section by an appeal to cyclic models, which you haven't spent any
+%time discussing in this paper, is not good at all.  The fact that
+%they're complicated might say more about our approach than about
+%cyclic models.  In any case, this definitely does not count as good
+%motivation 
+\commentout{
+ The next two sections build up some theory that is necessary to understand the implications of our definition of \scibility\ for cyclic models---which turn out to be rather complicated. 
+ }
+%
+\commentout{
+    There are simple rules for manipulating
+    %oli6: "quantiative" is not what I want to emphasize here
+     % quantiative
+    PDGs,
+    %joe5: What is a proof language?  
+    %oli6: maybe you'd be more comfortable calling it an axiom system? 
+    % that allow them to be used as a proof language. 
+    % that allow them to be used as an axiomatic proof system. 
+    which can be used as an axiomatic proof system. 
+}
+%oli6*: wow, you were right! Now that equivalence material has been cut, the story becomes easier to state and sell. 
+%oli6:* Why do I struggle so much to prune connections? Why is everything so strongly connected in my head? 
+\commentout{
+    %joe5: confidence is coming out of the blue here.
+    %oli6: I was trying to be extra accurate, but I'll just suppress that thought.
+    % Holding beliefs $p(X)$ and $p(Y|X)$ (with the same confidence),
+    Holding beliefs $p(X)$ and $p(Y|X)$, 
+    for example, is observationally equivalent to holding a single belief $p(X,Y)$ or beliefs $p(Y)$ and $p(Y|X)$.
+}
+%joe5: The reader will have no clue of what "nmonotocity of inconsistency" is.
+%oli6: That's why I'm describing what it is.  And then I give a reference. You definitely aren't expected to know what "monotonicity of inconsistency" is here. To clarify, I am moving the reference to the beginning of the sentence, from the end.
+% Monotonicity of inconsistency is a more powerful reasoning principle: many important statistical relationships (e.g., the data processing inequality and the evidence lower bound) can be proved directly, using only the fact that more beliefs cannot decrease inconsistency, and equivalences like the one above \citep{one-true-loss}.
+%
+%oli21*: cutting this down, for neurips submission
+\vfull{%
+Monotonicity of PDG inconsistency \citep{one-true-loss}
+%joe16: all these inequalities need a reference
+is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
+In this section, we develop and apply an anlogous principle for \scibility.
+But first, we start with something simple.
+}
+%oli21: instead:
+%joe17
+%Monotonicity of (quantitative) PDG inconsistency
+The fact that (quantitative) PDG inconsistency  is monotonic
+    % \citep{one-true-loss}
+is a powerful reasoning principle that can be used to prove many important inequalities \citep{one-true-loss}. 
+In this section, we develop a related principle for \scibility.
+%joe4*: I have no idea what's going on in this section.  At one point I
+%sent you an email explaining why I thought nonpartitional models
+%weren't good models of causality.  I'm not convinced by the
+%connection to models with constraints at all.   It might be better to
+%restrict this section to partional models, where causality is well
+%understood, and cut this subsection altogether.
+%oli5: You are right not to be convinced by this subsection, which isn't very precise right now. Your suggestion to remove this section has been noted, and I'm not a priori opposed to it, but after reading your paper on causal models with constraints more carefully last week, I'm even more certain than I was before, that there's a deep connection here. (But I wasn't able to formulate "the one appropriate thing to prove", in part because your paper isn't clear about how the concept interacts with probabilities.) I think it's still worth saying a few words if we have space.
+%
+%oli6*: moved SIM equivalence to appendix for UAI paper
+%
+%
+% Here is an alternate, equivalent characterization of this definition
+% in terms of de-randomization.
+%
+% \begin{theorem}
+%     $\mu(\X)$ is s-compatible with $\Ar$ if an only if
+%     there exists a variable $U$, an indexed set of functions
+%     $\mathcal F = \{ f_a : \V\Src a \times \V U \times \V \Tgt a\}_{a \in \Ar}$,
+%     and an extended distribution $\nu(\X, U)$ such that
+% \begin{enumerate}[label={\rm(\alph*')}]
+%     \item $\mu(\X) = \nu(\X)$;
+%     \item $\nu$ has support only on ``consistent pairs''
+%         $(\omega, u) \in \V(\X \times U)$
+%         such that
+%         $f_a(\Src a (\omega), u) = \Tgt a(\omega)$
+%         for every \arc\ $a \in \Ar$;
+%
+%     \item For every $a \in \Ar$, the pair $(f_a, \nu(U|\Src a))$
+%         is a derandomization of $\mu(\Tgt a | \Src a)$.
+%
+%     \item
+%         for every subset $A \subseteq \Ar$ of \arc s,
+%         and every fixed choice of settings
+%         $\mat{st} = \{ (s_a, t_a) \in \V(\Src a, \Tgt a) \}_{a \in A}$,
+%         the set of events
+%         \[
+%             \Big\{
+%                 \{ u \in \V U : f_a(s_a, u) = t_a \}
+%                 ~\Big|~a \in \Ar \Big\}
+%         \]
+%         are mutually independent according to $\nu(U)$.
+% \end{enumerate}
+% \end{theorem}
+%
+%oli6: no longer need subsection here
+% \subsection{Monotonicity}
+%joe1*: I know that you won't like to hear this, but I found this
+%section extremely weak.  At the end of the day, what have I learned?
+%That \scibility\ is monotonic in one sense (adding
+%certain edges) and anti-monotonic in another )Theorem 4) and that you
+%can't have monotonicity and there's a strange, unmotivated sense in
+%which you can't capture BNs and MRFs with a monotonic definition of
+%|=.  While monotonicity seems like a nice property, it's not that
+%compelling (particularly since you consider in some sense "positive"
+%and "negative" version of it.  I see no reason why I should care
+%about Theorem 5, which seems to be the punchline of this section.
+%Unless you can come up with a much better story and motivation, I
+%think we should cut this too.  To repeat, the paper is not a place to
+%do a core dump of all the things you thought about.  I think this
+%section weakens the paper.  I put in some comments in the rest of the
+%section, but my strong preference would be  to cut it.
+%
+%oli1: After our discussion, we had a plan for how to proceed here.
+% At a high level, though, let me respond to your concerns above
+% in writing.
+%
+%    First, there's only one sense of monotonicity. The fact that it's
+% covariant in outputs and contravariant in inputs is extremely
+% good news given that functions and mappings work.  Inputs and 
+% outputs play opposite roles. 
+%    Second, this will be useful for a running example of a 3-cycle, 
+% which is one of the things we're buliding towards, as described in the
+% introduction. 
+%    Finally, the last theorem (5/6) is more important than it looks
+% at first. The "positive MRF capture" and "negative BN captue" are
+% weaker than "capturing MRFs" and "capturing BNs", so these words
+% actually strengthen the result, not weaken it. 
+% The high-level of the theorem is: there's no "natural" (in particular,
+% monotonic) definition of \scibility\ that captures both
+% BNs and MRFs.
+%
+%
+%oli7: breaks the flow; a good place to cut 
+\vfull{
+One classical representation of knowledge is a list of formulas
+$[ \phi_1, \phi_2, \ldots, \phi_n]$
+that one knows to be true.
+This representation has a nice property:
+learning an additional formula $\phi_{n+1}$
+can only narrow the set of worlds one considers possible.
+    % after including an additional formula $\phi_{n+1}$
+    % % has the effect of strengthening knowledge:
+    % one can still prove anything that one could prove before.  
+    % (as do many standard representations of knowledge \citep{rak}).
+%oli1: although I like this flourish, I believe I agreed
+% to remove it in order to prevent the story from seeming to undercut
+% itself if one doesn't read carefully.
+%
+% Qualitative Bayesian Networks (and MRFs) are monotonic,
+% 	but in the opposite direction.
+% 	One might be tempted to think that an edge $A{\to}B$
+% 	in a BN represents knowledge (that $A$ influences $B$).
+% 	But in fact it is the \emph{lack} of an edge that caries knowledge:
+% 	$A{\not\to}B$ means that $A$ does not influence $B$ directly.
+%joe1: I don't see why this is exactly right, but in any case, it's a
+%distractin.  I cut it.
+% 	Thus, a BN is more like a list of formulas that one considers possible,
+% 	than a list of formulas one knows.
+%oli1: to help you see why the above is true: an edge in a BN indicates the possibility of dependence, not the necessity of dependence; if all variables are independent, it is consistent with every BN structure. 
+%   \Scibility, however, is monotonic in the direction
+%   we expect of a representation of knowledge.
+%
+%oli1: replacing it with the following, condensed version:
+The same is true of \scibility. 
+%joe2*: this does not seem consistent with your English.  It does
+%*not* say that anything you can prove from A' can also be proved from
+%A.  It says that if all the formulas in A are true according a
+%probability distribution \mu, then so are the formulas in a subset.
+%This is quite a different statement.  
+%oli2: Good point. The English I had and the proposition are (classically)
+% equivalent, but not directly so; they're logical duals. I'll rewrite the
+% English to try to make it more direct.  
+% 
+% In this analogy, \Ar' corresponds to [\phi_1, ... \phi_n], not 
+% to the extension to \phi_{n+1}.  Also, one should not think of \Ar
+% as a collection of formulas, because mechanisms interact. Just
+% because \mu \models { a } for all a \in \Ar (which is always true),
+% does not allow us to conclude that  \mu \models \Ar.
+%
+}%
+%oli21: cutting proposition from condensed version
+% \vfull{%
+\begin{prop}
+        % [monotonicity]
+        \label{prop:mono}
+    % If $\Ar' \subseteq \Ar$, then
+    %     $\bbra{\Ar} \subseteq \bbra{\Ar'}$.
+    %oli2: changing the order so that \Ar
+    % If $\Ar' \subseteq \Ar$ and $\mu \models \Ar$, then $\mu \models \Ar'$.
+    % If $\Ar \subseteq \Ar'$ and $\mu \models \Ar'$, then $\mu \models \Ar$.
+    If $\Ar \subseteq \Ar'$ and 
+    %oli20: adding diamonds
+    $\mu \models \Diamond\Ar'$, then $\mu \models \Diamond\Ar$.
+\end{prop}
+% }%
+%oli21: instead, a short inline discussion. 
+Here is a direct but not very useful analague: if $\Ar \subseteq \Ar'$ and $\mu \models \Diamond\Ar'$, conclude $\mu \models \Diamond\Ar$. 
+%
+% This is an important requirement for any definition of mechanism independence.  If
+% $\mu$ is consistent with a causal picture consisting of some set of independent mechanisms, then surely it must be consistent with a picture in which only a subset of those mechanisms are independent.  
+%oli20: many cuts to shave a line
+% This should be intuitive: if
+%oli21: 
+After all, if 
+% This is intuitive: if
+$\mu$ is consistent with a set of independent causal mechanisms, then surely 
+%oli20: 
+% it must be
+it is
+consistent with a causal picture
+%oli20:
+in which
+% where
+only a subset of those mechanisms 
+%oli20:
+% must be
+are
+present and independent.  
+%oli21: bringing up from below. (material in brackets). 
+{%
+There is a sense in which 
+%oli21: compress by using the acronyms
+    % Bayesian Networks and Markov Random Fields are also monotonic,
+    BNs and MRFs are also monotonic,
+%oli21:
+    % but in the direction opposite to \cref{prop:mono}:
+    but in the opposite direction:
+    adding edges to a graph results in a weaker
+    %oli21:
+    % statement about independence.
+    independence statement.
+%oli21: adding
+    We will soon see why.
+}%
+
+% When we translate a DAG to a hypergraph,
+% In compiling a DAG to a \hgraph\ (see \cref{sec:bns}),
+%     adding more edges in the DAG corresponds to adding more tails to an \arc\ in the corresponding hypergraph.
+
+%oli1:
+% For directed edges, there is a finer notion of monotonicity at play.
+%oli2:
+% Since a hypergraph has directed \arc s,
+%oli5: compressing with wrapfigure
+\begin{wrapfigure}[5]{o}{1.6cm}
+    % \fbox{
+    \vspace{-3ex}
+    % \hspace{-1.2em}
+    \begin{tikzcd}[row sep=3ex,column sep=0.2em]
+        A \ar[rr,"f"] &\ar[d,squiggly]& B\ar[d,hook,gray]  \\
+        A'  \ar[u,hook,gray]\ar[rr, dashed]&{\vphantom{a}}& B'
+    \end{tikzcd}
+    % }
+\end{wrapfigure}
+%joe5: this is somewhat circilar
+%oli6: not anymore, since I changed \hgraph back to "hypergraph"---but your version is still better, I think.
+% Since our notion of a \hgraph\ has \emph{directed} \arc s,
+Since we use \emph{directed} hypergraphs,
+     there is actually a finer notion of monotonicity at play. 
+%oli1: added
+Inputs and ouputs play opposite roles, 
+    and they are naturally monotonic in opposite directions. 
+%oli3: out of order; this should come later.
+% Consider a function $f : A \to B$.
+%joe1*: I have no idea what subtype means, and I'm sure that a typical
+%reader won't either.  We can't read your mind!
+%oli1: it means a value of B can be implicitly converted to a value of B'. I'll change the language.
+% If $B$ is a subtype of $B'$ (written $B \sqsubseteq B'$), then $f$ can be used as a function from $A$ to $B'$.
+%oli3: "implicitly convert" -> "regard" for brevity
+% If there is an obvious way to implicitly convert an element $B$ to an element of $B'$ (abbreviated $B \,{\color{gray}\hookrightarrow}\, B'$)
+If there is an obvious way to regard an element of $B$ as an element of $B'$ (abbreviated $B \,{\color{gray}\hookrightarrow}\, B'$),
+and $A' \,{\color{gray}\hookrightarrow}\, A$, 
+then
+%oli3: heres's where it should be
+% $f$ can be used as a function from $A'$ to $B'$.
+a function $f : A \to B$ can be regarded as one of type $A'\to B'$.
+%joe1*: you've totally lost me here.  I think that this hurts far more
+%than it helps.  I just cut it.
+%oli1*: I think the fact that inputs work the opposite ways is actually
+% the punchline. I've shortened it and moved it above.
+% (Anti)symmetrically, if $A' \sqsubseteq A$, then $f$ can be used as a funciton from $A'$ to $B$
+%oli1: shortening
+% (This may be easier to see in the diagrammatic construction below, where ${\color{gray}\hookrightarrow}$ indicates the subtype inclusion.)
+%oli5:
+% This is depicted below.
+%joe5: I don't find the figure particularly helpful.  I would cut it.  
+%oli6: I like figures and commutative diagrams, and I find things like this very helpful. I know for a fact that there are a lot of people like me who pay more attention to diagrams and figures and equations, than they do to the text.   That said, I agree it was using a lot of space, so I found another fix for that. 
+This is depicted to the right.
+%oli5: moved the diagram above
+% \[
+% %oli1: don't need the first part of the equation; the commutative diagram is enough.
+% % \begin{array}{l}
+% %     A' \sqsubseteq A, \quad B \sqsubseteq B' \\
+% %     \Rightarrow \quad (A \to B) \sqsubseteq (A' \to B').
+% % \end{array}
+% % \qquad
+% \begin{tikzcd}[row sep=2ex,column sep=1em]
+%     A \ar[rr,"f"description] &\ar[d,squiggly]& B\ar[d,hook,gray]  \\
+%     A'  \ar[u,hook,gray]\ar[rr, dashed]&{\vphantom{a}}& B'
+% \end{tikzcd}
+% \]
+%oli5: merging paragraphs
+%
+% These principiles of function variance also apply in our setting.
+The same principile applies in our setting.
+%oli1:
+% have a natural analogue  in our setting, which we call structural weakening.
+If $\mat X$ and $\mat Z$ are sets of variables and $\mat X \subseteq \mat Z$, then 
+%oli3:
+% there is an obvious way to implicitly convert a $\mat z \in \V(\mat Z)$ to 
+%oli5:
+% there is an obvious way to implicitly regard $\mat z \in \V(\mat Z)$ to 
+% as an element of $\mat x = \mat z[\mat X] \in \V(\mat X)$: restrict $\mat z$ to the coordinates of $X$.
+$\V(\mat Z) {\color{gray}\hookrightarrow} \V(\mat X)$, by restriction. 
+%oli5: shorter
+% It follows from the reasoning above that 
+It follows, for example, that
+    any mechanism by which $X$ determines $(Y,Y')$ can be viewed
+        as a mechanism by which $(X,X')$ determines $Y$. 
+%oli3: too verbose
+% This allows us to conclude that some sets of
+%    (independent) mechanisms imply the existence of others.
+The general phenomenon is captured by the following
+%oli5: save a line
+    %\unskip definition.
+    \unskip.
+% Here, the relevant notion of subtype is not set inclusion, but
+%     rather variable superset.
+% Thus, the behavior of our definition follows the appropriate variance
+% of function typing: a function $f : A \to B$ can be regarded as a function
+%     from $A'$ to $B'$ if $A' \subseteq A$ and $B' \supseteq B$.
+
+%joe5*: This is a definition of "weakening", not structural
+%weakening.  Why do you keep insisting on adding the word "structural"
+%everywhere.  It's certainly not an improvement
+%oli6: ok, I'm willing to take "structural" out of the name
+% \begin{defn}[structural weakening]
+\begin{defn}
+    % [weakening]
+        \label{defn:weakening}
+    % Consider two sets of \arc s, $\Ar = \{ \Src a \to \Tgt a\}_a$
+    %     and $\Ar' = \{ \Src a{\!}' \to \Tgt a{\!}'\}_a$.
+    % If $\Ar' = \{ \Src a{\!}' \to \Tgt a{\!}' \}_{a \in \Ar}$
+    % Consider a collection of \hyperarc s
+    %oli21: cleaning up this definition + cutting some lines. 
+    \commentout{%
+        Consider a directed hypergraph
+        $\Ar = \{ \Src a \to \Tgt a \}_{a \in \Ar}$.
+        If another graph $\Ar'$ can be obtained by adding sources to and removing targets from the \arc s of $\Ar$---that is, if $\Ar' = \{ \Src a{\!}' \to \Tgt a{\!}' \}_{a \in \Ar}$, with $\Tgt a{\!}' \subseteq \Tgt a$ and
+         $\Src a{\!}' \supseteq \Src a$ for all $a \in \Ar$---then we
+         say $\Ar'$ is a \emph{weakening} of $\Ar$ and
+         write $\Ar \rightsquigarrow \Ar'$.
+     }%
+     % If $\Ar = \{ \Src a \to \Tgt a \}_{a \in \Ar}$,
+     % $\Ar' = \{ \Src a{\!}' \to \Tgt a{\!}' \}_{a \in \Ar'}$,
+     If $\Ar = \{ \ed aST  \}_{a}$, 
+     $\Ar' = \{ \ed{a'}{S'}{T'} \}_{a'}$,
+     % are hypergraphs,
+     and there is an injective map $\iota : \Ar' \!\to\! \Ar$
+     such that
+     $\Tgt {a}{\!}' \subseteq \Tgt {\iota(a)}$ and
+     $\Src {a}{\!}' \supseteq \Src {\iota(a)}$
+     for all $a \in \Ar'$,
+     % (that is, $\Ar$' is adding sources removing targets from the \arc s of $\Ar$), 
+     then $\Ar'$ is a \emph{weakening} of $\Ar$
+     % and we write $\Ar {\rightsquigarrow} \Ar'$.
+     % ?and we write 
+     (written $\Ar {\rightsquigarrow} \Ar'$).
+\end{defn}
+
+%oli21: this whole thing is unnecessary, and too expensive.
+% \vfull{
+% %joe16: no need
+% %Indeed, 
+% \scibility\ is monotonic with respect to weakening  ($\rightsquigarrow$).}
+% 
+\begin{theorem}
+    % [strong monotonicity]
+        \label{theorem:strong-mono}
+    % If $\Ar' = \{ \Src a{\!}' \to \Tgt a{\!}' \}_{a \in \Ar}$
+    % is obtained by adding heads and removing tails
+    % from each \arc\ of $\Ar$ (i.e., $\Tgt a{\!}' \supseteq \Tgt a$ and $\Src a{\!}' \subseteq \Tgt a$ for all $a \in \Ar$),
+    % then
+    % $\bbra{\Ar'} \subseteq \bbra{\Ar} $.
+    If
+    % $\mu$ is \scible\ with $\Ar$
+    % $\mu \models \Ar$ and $\Ar \rightsquigarrow \Ar'$, then
+    $\Ar \rightsquigarrow \Ar'$ 
+    %oli9: strengthening. Not sure if English or notation is better here,
+    % but I chose English because of the parens. If it is unclear to 
+    % present the words in parens like this, then I think we should
+    % go back to the symbolic notation. 
+    and $\mu \models \Diamond \Ar$, then  $\mu \models \Diamond \Ar'$.
+    %oli21: back to notation; adding diamonds. 
+    \commentout{%
+        and $\mu$ is 
+        % (E)
+        \scible\ with $\Ar$,
+        then $\mu$ is also 
+        % (E)
+        \scible\ with $\Ar'$. 
+        % $\mu$ is \scible\ with $\Ar'$
+    }%
+\end{theorem}
+
+%oli21: not critical; streamlining. 
+% \vfull{%
+\Cref{theorem:strong-mono} is strictly stronger than \cref{prop:mono}
+because a \arc\ with no targets is vacuous, so
+removing all targets of a \arc\ is equivalent to deleting it.
+% }%
+
+%oli3: relocating this material here, from above the theorem. 
+%oli21: moving this material above
+% There is a sense in which 
+%     BNs and MRFs are also monotonic,
+%     but in the direction opposite to \cref{prop:mono}:
+%     adding edges to a graph results in a weaker statement about independence.
+% When we view a graph $G$ as specifying a directed hypergraph
+%     $\Ar_G$ (as described in \cref{sec:bns}),
+%     adding an edge to $G$ amounts to adding a tail to
+%     a \hyperarc\ already present in $\Ar_G$.
+% Thus \cref{defn:weakening} corresponds to 
+% As mentioned before, this is structural weakening captures
+% the way in which Bayesian Networks and Markov Networks
+% are (anti)monotonic: if $G = (\X, E)$ and $G' = (\X, E')$
+% are graphs with the same set of vertices and $E \subseteq E'$,
+% then $\mathcal I(G) \supseteq \mathcal I(G')$,
+% and so $\mu \models \mathcal I(G)$ implies $\mu \models \mathcal I(G')$.
+%oli3:
+% \cref{defn:weakening,defn:graph-to-hypergraph}
+% captures the sense in which Bayesian Networks are (anti)monotonic.
+%oli6:
+% \Cref{defn:weakening} provides an explanation: the effect of adding an edge $X \to Y$ to a directed graph $G$ on $\Ar_G$, is to add $X$ to the sources the \arc\ that determines $Y$.
+%oli21:
+% \Cref{theorem:strong-mono} provides an explanation: adding $X \to Y$ to a graph $G$ means adding $X$ to the \emph{sources} the \arc\ whose target is $Y$, in the \hgraph\ $\Ar_G$.
+\Cref{theorem:strong-mono} explains why BNs and MRFs are arguably \emph{anti}-monotonic: adding $X \to Y$ to a graph $G$ means adding $X$ to the \emph{sources} the \arc\ whose target is $Y$, 
+%oli21: line shave
+% in the \hgraph\ $\Ar_G$.
+in $\Ar_G$.
+%oli3: if I did my job before definition 5 properly, I will have already made this point.
+% This can only weaken the corresponding statement of (in)dependence, because one can always throw out this new source information and use the old mechanism.
+%oli6: merging paragraphs, combining subjects
+%
+%oli1: overly verbose.
+%   Now that we know that
+%     \scibility\ 
+%     (\cref{defn:qim})
+%     is structurally monotonic, we have the tools
+%     we need to at least partially understand more examples,
+%     and cyclic graphs in particular.
+% Structural montonicity is a helpful tool for understanding cyclic graphs.
+%oli6:
+% Structural montonicity is a helpful tool for understanding \scibility\ with respect to cyclic graphs.
+%oli6.2: May as well make coreference easier, since it doesn't cost us a line
+% It 
+%oli21: 
+% \Cref{theorem:strong-mono}
+
+%oli22:
+As mentioned in \cref{sec:}, 
+the far more important consequence of this result is that it
+%oli16:
+% is also helpful for understanding \scibility\ with cyclic \hgraph s.
+helps us begin to understand what \scibility\ means for cyclic \hgraph s.
+%oli22:
+For the reader's convenience, we now restate the examples in the main text,
+which are really about monotonicity.
+
+\medskip
+\textbf{\cref{example:xy-cycle}.}
+% \begin{example}
+        % \label{example:xy-cycle}
+    Every $\mu(X,Y)$ is
+    %oli21: removing a QIM
+    % \scible\ with
+    \cible\ with
+    \begin{tikzpicture}[center base]
+        \node[dpadinline] (X) {$X$};
+        \node[dpadinline,right=1.2em of X] (Y) {$Y$};
+        \draw[arr1] (X) to[bend left=13] (Y);
+        \draw[arr1] (Y) to[bend left=13] (X);
+    \end{tikzpicture}.
+    This is because this cycle is weaker than
+    % a set of \arc s
+    a \hgraph\ 
+    that can already represent any distribution, i.e.,
+    %oli4: no more displaymode, to save a line
+    % \[
+    \begin{tikzpicture}[center base]
+        \node[dpadinline] (X) {$X$};
+        \node[dpadinline,right=1.0em of X] (Y) {$Y$};
+        \draw[arr1] (X) to (Y);
+        \draw[arr1,<-] (X) to +(-0.68,0);
+    \end{tikzpicture}
+    % ~~\rightsquigarrow~~
+    $~\rightsquigarrow~$
+    \begin{tikzpicture}[center base]
+        \node[dpadinline] (X) {$X$};
+        \node[dpadinline,right=1.2em of X] (Y) {$Y$};
+        \draw[arr1] (X) to[bend left=13] (Y);
+        \draw[arr1] (Y) to[bend left=13] (X);
+    \end{tikzpicture}~. \qedhere
+    % \]
+    % $\to X \to Y$.
+% \end{example}
+\hfill$\triangle$.
+\medskip
+
+% \newlength{\cycleboxlen}
+\settowidth{\cycleboxlen}{\usebox{\cyclebox}}
+\begin{wrapfigure}[5]{o}{0.8\cycleboxlen}
+    \vspace{-0.8em}
+    % \usebox\cyclebox
+    \begin{tikzpicture}[center base, scale=0.8]
+        \node[dpad0] (X) at (0:.8) {$X$};
+        \node[dpad0] (Y) at (120:.8) {$Y$};
+        \node[dpad0] (Z) at (-120:.8) {$Z$};
+        \draw[arr2] (X) to 
+            % node[above right]{\small 1}
+            (Y);
+        \draw[arr2] (Y) to
+            % node[left]{\small 2}
+            (Z);
+        \draw[arr2] (Z) to 
+            % node[below]{\small 3}
+            (X);
+    \end{tikzpicture}
+\end{wrapfigure}
+% \begin{example}
+% \refstepcounter{example}
+% \label{example:xyz-cycle-1}
+\textbf{\cref{example:xyz-cycle-1}.~} 
+    % \newlength{\cycleboxlen}
+    % \settowidth{\cycleboxlen}{\usebox{\cyclebox}}
+    % \begin{wrapfigure}{o}{\cycleboxlen}
+    %     \usebox\cyclebox
+    % \end{wrapfigure}
+    % Consider the set of \hyperarc s
+    % to the right.
+    What
+    %oli21:
+    %  distributions
+    $\mu(X,Y,Z)$
+    %oli5:
+    % $\mu(A,B,C)$
+    %oli21: removing a QIM 
+    % are \scible\ 
+    are \cible\ 
+    with 
+    %oli5: compressing, by putting to the right
+    % \[
+    % \Ar_{\text{3-cycle}} := 
+    %     % \Ar_{3\bigcirc} :=
+    %     \usebox\cyclebox\qquad ?
+    % \]
+    %oli21: 
+    % the hypergraph $\Ar_{\text{3-cycle}}$, on the right? 
+    % By monotonicity, we know that 
+    the 3-cycle shown, on the right?
+    By monotonicity,
+    % \[
+    %
+    % \]
+    %oli21: fixing several issues, and compressing
+    % the chain $\to X \to Y \to Z$, and all permutations of it,  
+    % are \scible\ with this graph. Thus,
+    among them must be all distributions consistent with a linear chain ${\to}X{\to}Y{\to}Z$. Thus,  
+    %oli21:
+    % any distribution $\mu(X,Y,Z)$
+    %joe17
+        %    any distribution
+        %spencer3: I think ``any distribution'' is what we want to say here. Reverting.
+    % a distribution
+        any distribution
+    in which two variables are conditionally independent given the third
+    is compatible with 
+    the 3-cycle.
+    %oli1: replacing long attempt to finish example at a high level, with
+    % this sentence:
+    Are there any distributions that are \emph{not} compatible with 
+    %oli20:
+    % this graph? It is not obvious.
+    this hypergraph? It is not obvious.
+    We return to this
+   %oli21: line shave
+    %  question
+      in \cref{sec:pdgs}. 
+    %
+    %
+    % By randomly selecting distributions $\Pr(U_1),
+    % \Pr(U_2)$, and $\Pr(U_3)$ (see \cref{sec:null}), one finds that the set of distributions that are consistent with this 3-cycle has larger dimension than the set of distributions that factorize according to $\Pr(X,Y,Z) \propto \phi_1(X,Y) \phi_2(Y,Z) \phi_3(Z,X)$.
+    % Thus, our definition does not coincide with the corresponding factor graph.
+    %
+    %oli1: removing the final paragraph, which is an unnecessarily verbose
+    % forward pointer. 
+    %
+    % But what about negative examples? Are there any distributions that
+    % are \emph{not} compatible with the cycle?
+    % It seems intuitively clear that the XOR distribution $\muxor$ (in which $X,Y$ are independent random coin flips, and $Z = X \oplus Y$) cannot arise from mechanisms of this shape.
+    % But it is not so obvious how to prove this.
+    % We will return to this example once we have a few more tools available.
+% \end{example}
+\hfill$\triangle$
+
+\begin{wrapfigure}[5]{i}
+        % {1.7cm}
+        {1.5cm}
+    \vspace{-1em}
+    \centering
+    \begin{tikzpicture}[center base]
+        \node[dpad0] (A) at (-0.6,0) {$A$};
+        \node[dpad0] (B) at (0,1) {$B$};
+        \node[dpad0] (C) at (0.6,0) {$C$};
+
+        \draw[arr2,<-] (A) -- (B);
+        \draw[arr2,<-] (C) -- (B);
+        \mergearr[arr2] ACB
+    \end{tikzpicture}
+\end{wrapfigure}
+% \section{BNs, MRFs, and Structural Compatibility}
+% Initially, our
+% We were quite surprised to discover that this definition,
+% which is fundamentally a much better match to directed models,
+% goes a long ways for undirected models as well.
+%joe1*: In what sense can we "handle" cycles.
+%oli1: I just mean that our definition applies for cylcic graphs.  I'll try to change the wording to clarify.
+% Now that we can handle cycles, it is natural to wonder whether our definition can capture undirected models.
+% Again by monotonicity, it is easy to see that the complete graph 
+%oli21: compressing
+% Because our definition of \scibility\ applies to cyclic models, it is natural to wonder whether 
+Because \scibility\ applies to cyclic structures,  one might wonder if
+    it also captures the independencies of undirected models 
+    %oli6: not helpful here, and breaks the flow
+    % (i.e., Markov Random Fields).
+    \unskip.
+%joe5: You have to explain what cyclic models have to do with MRFs
+%oli6: one moment...
+%oli1
+% In many contexts, it is standard to regard 
+%oli2:
+% It is common to identify an undirected edge $A {-} B$
+Undirected edges $A {-} B$ are commonly identified
+%oli6: answering your question above:
+% with a pair of directed edges $\{ A{\to}B, B{\to}A\}$,
+with a (cylic) pair of directed edges $\{ A{\to}B, B{\to}A\}$,
+%joe5: ?? Where did you do this in Equation (2):
+%oli6: Equation (2) is the conversion of graphs to directed hypergraphs; looking at it closely should reveal why it's implicitly identifying an unorded edge with a pair of directed edges in each direction.
+as we have implicitly done in
+%oli21: 
+% \cref{defn:graph-to-hypergraph}.
+defining $\Ar_G$. 
+%joe5
+%In this way, undirected graphs, too, naturally generate to directed hypergraph s.
+In this way, undirected graphs, too, naturally correspond to directed hypergraph s.
+For example, 
+%oli21: shortening
+% the undirected graph
+$G = A{-}B{-}C$
+%joe5
+%results in the directed hypergraph\
+%oli21: 
+% corresponds to the directed hypergraph\
+corresponds to the \hgraph\ 
+%oli6: compressing to save space
+\commentout{
+\[
+    \Ar_{G} = \Bigg\{
+            \begin{array}{r@{}l} \{B\}&{\to}\{A\},\\ \{A,C\}&{\to}\{B\},\\ \{B\}&{\to}\{C\}
+            \end{array}\Bigg\}
+    =     \begin{tikzpicture}[center base]
+        \node[dpad1] (A) at (-0.6,0) {$A$};
+        \node[dpad1] (B) at (0,1) {$B$};
+        \node[dpad1] (C) at (0.6,0) {$C$};
+
+        \draw[arr2,<-] (A) -- (B);
+        \draw[arr2,<-] (C) -- (B);
+        \mergearr[arr2] ACB
+    \end{tikzpicture}
+    ~.
+\]
+}
+%oli6:
+$\Ar_G$ shown on the left.
+% 
+%joe5: I don't know what "match" means.  This needs to be explained
+%better.  If you want to say something about the set of distributions
+%compatible with the resulting hypergraph, say that. 
+%oli6: ok
+    % Applying \cref{defn:qim} to the resulting \hgraph\ $\Ar_G$, however,
+    % does not match any of the three standard Markov properties
+    %     which define semantics for MRFS \citep{lauritzen}.
+%oli21: cutting QIM
+% \Scibility\
+Compatibility
+with $\Ar_G$, however, does not coincide with any of the standard Markov properties
+%oli6: can be simplified
+ % for the MRF corresponding to $G$ \citep{lauritzen-mrf-indeps}.
+corresponding to $G$ \citep{koller2009probabilistic}.
+%oli15: adding, for clarity
+%oli21: not helpful; removing. 
+% as we will soon see.
+%
+%oli1:
+% There is a sense in which this is unavoidable.  
+%oli21:
+% This may seem to be a flaw in our particular definition of \scibility\ (\cref{defn:qim}), but it is unavoidable.  
+This may appear to be a flaw in \cref{defn:qim} (\scibility), but it is unavoidable.  
+%oli3:
+% While BNs and MRFs are both monotonic, 
+%     it is impossible to monotonically capture
+%     both Bayesian Networks (directed graphical models) and Markov Random Fields (undirected graphical models) with a single monotonic definition of \scibility.
+%oli21: making use of abbreviations we've had all along to save some space
+% While both Bayesian Networks (directed graphical models)
+%     and Markov Random Fields (undirected graphical models)
+%     are both monotonic on their own,
+%     it is impossible to capure both BNs and MRFs monotoncially together.
+While both BNs and MRFs are monotonic, it is impossible to capture both classes with a monotonic definition.
+% The proof is a straightforward application of monotonicity.
+% and one instance of a graphical proof technique.
+
+% \begin{linked}{theorem}{mrf-bn-monotone-impossible}
+\begin{theorem}\label{theorem:mrf-bn-monotone-impossible}
+    % No monotonic definition $\bbr{-}$ of structural
+    % compatibility that captures BN structures can also capture
+     % with dag $D$ as $\bbr{\Ar_D}$,
+     % also compatibility with an undirected graph $G$ as $\bbr{\Ar_G}$.
+     %oli1: added \prime to \models in this definition throughout
+    % No definition $\models$ of \scibility\ with a set of \hyperarc s can satisfy all three of the following:
+    %oli2:
+    % It is possible to give a definition  $\models'$ of structural compatibility 
+    %oli9:
+    % \def\newmodels{\models^{\mathllap{\cdot~~~}}}
+    % \def\newmodels{\models^{\mathllap{\bullet~}}}
+%joe5*: You need to discuss and motivate what you mean by a
+%"compatibility" relation before you state the theorem.  This is
+%coming out of the blue.
+%oli6: I don't mean anything technical. I will remove the quotes and the word, for the theorem statement.
+    % It is possible to define a ``compatibility'' relation  $\models'$ 
+    It is possible to define a  relation  $\dotmodels$ 
+    %oli5: saving a line, part 1:
+        % between probability distributions $\mu$ and directed hypergraph s $\Ar$
+        between distributions $\mu$ and directed hypergraph s $\Ar$
+        % between a distribution and directed hypergraph
+    satisfying 
+    any two, but not all three, of the
+    %oli5: ... and part 2.
+    % following properties.
+    following.
+    \begin{description}[itemsep=0pt,parsep=0.3ex,topsep=0pt]
+        \item [\rm(monotonicity)]
+            % If $\Ar \Rightarrow \Ar'$ then $\bbr{\Ar} \supseteq \bbr{\Ar'}$.
+            % If $\mu$ is \scible\ with $\Ar$
+            If $\mu \dotmodels \Ar$
+            and $\Ar \rightsquigarrow \Ar'$,
+            then
+             % $\mu$ is \scible\ with $\Ar'$.
+            $\mu \dotmodels \Ar'$.
+        \item [\rm(positive BN capture)]
+            % For directed graphs $G$,
+            % $\mu \in \bbr{\Ar_G}$ if and only if $\mu \models \mathcal I(G)$.
+            %oli1:
+            % If $\mu \models \mathcal I(G)$ for a directed graph $G$, then
+            If $\mu$ satisfies the independencies
+            %oli3:
+            % of a BN $G$,
+            %oli15: saving a line; also I don't like "implied"
+            % implied by a directed acyclic graph $G$,
+            $\mathcal I(G)$ of a dag $G$,
+            then
+                % $\mu$ is \scible\ with $\Ar_G$.
+            $\mu \dotmodels \Ar_G$.
+        \item [\rm(negative MRF capture)]
+            % For undirected graphs $H$,
+            % if $\mu \in \bbr{\Ar_G}$ then $\mu \models \mathcal I(G)$.
+            % If $\mu$ is \scible\ with $\Ar_G$ for an undirected
+            If $\mu \dotmodels \Ar_G$ for an undirected directed graph $G$,
+            %oli2: oops, the undefined notation didn't get fixed
+            % then $\mu \models \mathcal I(G)$.
+            %oli3: missing citation
+            % then $\mu$ has a Markov property with respect to $G$.
+            then $\mu$ has one of the Markov properties 
+                % \citep{lauritzen-mrf-indeps} 
+                with respect to $G$.
+    \end{description}
+\end{theorem}
+
+
+\label{proof:mrf-bn-monotone-impossible}
+    %oli1: added to make it explicit
+%joe5: is this what you meant
+% a notion of
+%oli6: yes, but I now removed it; see below.
+%oli5: removed because I've now said it better above
+% In particular, there's no way to define of \scibility\ 
+%     that fully captures BNs and MRFs in a monotonic way. 
+The proof is
+a direct and easy-to-visualize application
+% an easy-to-visualize application
+of monotonicity (\cref{theorem:strong-mono}).
+% {\renewcommand*{\proofname}{Proof Sketch}
+% \begin{proof}
+%oli21: expanding
+Assume montonicity and positive BN capture. 
+Let $\muxor(A,B,C)$ be the joint distribution in which 
+%oli3: two variables
+$A$ and $C$ are independent fair coins, and
+$B = A \oplus C$ is their parity.
+% Finally, let $G$ be the undirected graph $A{-}B{-}C$. 
+%joe16
+% Then, we have:
+We then have:
+%oli20: saving a line:
+% \[
+\\$
+\muxor
+\models
+\begin{tikzpicture}[center base,scale=1]
+    \node[dpadinline] (A) at (-0.6,0) {$A$};
+    \node[dpadinline] (B) at (0,1) {$B$};
+    \node[dpadinline] (C) at (0.6,0) {$C$};
+
+    \draw[arr2,<-] (A) -- +(0,1);
+    \draw[arr2,<-] (C) -- +(0,1);
+    \mergearr[arr2] ACB
+\end{tikzpicture}
+~~\rightsquigarrow~~
+\begin{tikzpicture}[center base,scale=1]
+    \node[dpadinline] (A) at (-0.6,0) {$A$};
+    \node[dpadinline] (B) at (0,1) {$B$};
+    \node[dpadinline] (C) at (0.6,0) {$C$};
+
+    \draw[arr2,<-] (A) -- (B);
+    \draw[arr2,<-] (C) -- (B);
+    \mergearr[arr2] ACB
+\end{tikzpicture}
+~=~ \Ar_{A{-}B{-}C}.
+%oli20:
+% \]
+$
+~~
+But
+$\muxor \not\models A \CI C \mid B$.
+% \qedhere
+% and so
+% $\muxor$ does not satisfy any of the three
+% markov properties with respect to the graph $A{-}B{-}C$.
+% \end{proof}}
+\hfill\qedsymbol
+% \end{lproof}
+
+
+%oli21*: moved the proof that was previously here, to the appendix. 
+%
+%joe3*: Perhaps you found it surprising, but I suspect that most
+%readers won't appreciate the points you made.  I have no clue what
+%the connection is between the first paragfraph and the result, let
+%alone why it should make me feel the result is surprising.  The same
+%goes for the second paragraph (although at least I understand better
+%what it's saying).  If all readers were clones of you, this might
+%interest them.  I strongly suspect that for most readers, these two
+%paragraphs detract from the paper.
+%oli3: ok, I'll try to distill these paragraphs to something that others can find more useful. 
+% We found this result surprising, for two reasons. First, for an undirected graph, $\Ar_G$ is a consistent dependency network stucture \citep{heckerman2000dependency} that corresponds exactly to that Markov Network (for positive distributions), intuitively by placing independent mechanisms along each \arc. This is because dependency networks with a fixed sampling order only capture those BNs consistent with that order, and if the order changes depending on the graph, then the definition is not monotonic. 
+%joe5
+%We found this result surprising for a few reasons.
+%First, if $G$ is an undirected graph then $\Ar_G$ is the structure of
+%a consistent dependency network \citep{heckerman2000dependency}, and
+%
+%joe5*: this requires more explanation.  The "represents precisely" 
+%presumably means "according to the semantics of DNs".  If that's
+%what it means, you have to say so; if that's not what it means, then
+%I'm confused and yet more explanation is needed.
+%oli6: that's right; I've modified the below as you requested.
+%joe16*: I feel very strongly that this should be cut.  It will
+%confuse lots of readers.  You're basically saying to the (very small)
+%set of readers who may be confused "here's why you shouldn't be
+%confused", at the price of confusing many other readers, who didn't
+%caref about this at all.  But not that, at the end of this section,
+%you basically have one result, that is no where close to the results
+%of other sections in terms of conceptual imporance.   I would cut this
+%section altogether.  It makes the paper worse.
+%oli21*: I see where you're coming from. I agree that this next part is nowhere near valuable enough to keep in the main paper at this point. I still think that the section itself is valuable though. It's not as valuable, but it's also shorter.  It will ultimately take up less than one page. 
+%joe17*: I'm not talking about "valuable".  I'm saying that adding this
+%to the paper makes it seem worse (i.e., less good from the point of
+%view of the reader/reviewer).   We can debate its value (I don't
+%think it's that high), but that's %not what I'm talking about.  I a
+%giving you my judgment on what will make the paper more likely to be
+%accepted at NeurIPS.  As is often the case, you think you know
+%better, and I don't know how to convince you.  Please talk to Spencer.
+%oli21*: adding replacement and link to appendix, where the technical discussion to un-confuse the very small subset of graphical-model  readers, will be at home. 
+%joe17*: I feel strongly that this should be cut.  I don't even know
+%what "qualitative smeantics of any graphical model" even means.  Do
+%all graphical models have qualitative semantics?  On top of that, we
+%should talk about "lesser-known models".  After all the work you've
+%gone through to cut material, this is an easy cut that should
+%definitely be made.  (You should also cut Appendix B.  Less, in this
+%case, is much more.  The appendix is not a dumping ground.) 
+%We emphasize that \cref{theorem:mrf-bn-monotone-impossible} has
+%implications for the qualitative semantics of \emph{any} graphical
+%model (even rejecting \scibility).  
+%It may be especially surprising to experts in lesser-known models
+%such as dependency networks \cite{heckerman2000dependency}. 
+%For a full discussion, see \cref{appendix:undirected PGMs}. 
+% To readers familiar with \emph{dependency networks (DNs)} ... 
+%spencer3: I agree; this at least needs more explanation, and probably
+% should be cut, at least for NeurIPS.
+We emphasize that \cref{theorem:mrf-bn-monotone-impossible} has implications for the qualitative semantics of \emph{any} graphical model (even if one were to reject the definition \scibility). 
+%oli22: bridging; this is now appendix B.
+% It may be especially surprising to experts in lesser-known models.
+% such as dependency networks \cite{heckerman2000dependency}.
+For a full discussion, see \cref{appendix:undirected PGMs}.
+% It may be especially surprising to experts 
+%
 
 %joe7*: You're doing a core dump.  You have made no attempt to connect
 %this material to the rest of the paper.  Either cut this, or 
@@ -1189,6 +2116,30 @@ Now some other examples.
     inequality is strict for ``most'' choices of $\dg M'$.
     So either way $\aar{{\to}X + \dg M'} \ge \aar{0 + \dg M'}$, so ${\to X} \models 0$.
 
+
+\section{Notes}
+\subsection{Reconcilliation of \cref*{theorem:mrf-bn-monotone-impossible} with other Graphical Models}
+\label{appendix:undirected PGMs}
+We now address some conceptual implications of \cref{theorem:mrf-bn-monotone-impossible} for two classes of graphical models: PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
+
+\paragraph{Dependency Networks}
+To readers familiar with \emph{dependency networks (DNs)} \citep{heckerman2000dependency},
+\cref{theorem:mrf-bn-monotone-impossible} may raise some conceptual issues. 
+When $G$ is an undirected graph, $\Ar_G$ is the structure of a consistent DN.
+The semantics of such a DN,
+which intuitively describe an independent mechanism on each \arc,
+coincide with the MRFs for $G$ (at least for positive distributions). 
+In more detail, DN semantics are given by the fixed point of a markov chain that repeatedly generates independent samples along the \arc s of $\Ar_G$ for some (typically cyclic) directed graph $G$. The precise definition requires an order in which to do sampling. Although this choice doesn't matter for the ``consistent DNs'' that represent MRFs, it does in general. With a fixed sampling order, the DN is monotonic and captures MRFs, but can represent only BNs for which that order is a topological sort.
+
+\paragraph{Probabilistic Dependency Graphs}
+PDGs capture BNs and MRFs quantiatively
+\citep[Theorems 4.4 \& 4.5]{pdg-aaai} with a monotonic scoring function,
+and the independence property exploited by the PDG inference procedure \citep[Theorem 6]{pdg-infer} is the same as that of 
+a MRF with the same structure. 
+Yet capturing a MRF quantitatively is not the same as capturing its structure,
+and 
+a PDG's underlying \hgraph\ $\Ar$
+may well imply more independencies than the inference procedure exploits. 
     
 
 \end{subappendices}

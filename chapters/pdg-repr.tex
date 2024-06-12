@@ -236,7 +236,7 @@ $\PDGof{{\mathcal B}}$, shown as the solid nodes and edges in
 \ifprecompiledfigs
 \raisebox{-0.5\height}{\includegraphics{figure-pdfs/smoking-BN.pdf}}
 \else
-\begin{tikzpicture}[paperfig]
+\begin{tikzpicture}[center base, scale=1.2]
 	\begin{scope}[every node/.style={dpadded, fill opacity=1,fill=black!08, circle, inner sep=2pt, minimum size=2em, draw=gray}]
 		\node (PS) at (0,1.1) {$\mathit{PS}$};
 		\node (SH) at (-0.6,0) {$\mathit{SH}$};
@@ -255,7 +255,7 @@ $\PDGof{{\mathcal B}}$, shown as the solid nodes and edges in
 \ifprecompiledfigs
 \raisebox{-0.5\height}{\includegraphics{figure-pdfs/smoking-PDG.pdf}}
 \else
-\begin{tikzpicture}[paperfig]
+\begin{tikzpicture}[center base, scale=1.2]
 	\fill[fill opacity=0.1, blue!80!black, draw, draw opacity=0.5] (2.73,1.35) rectangle (6.7, -1.35);
 	
 	\node[dpadded] (1) at (1.65,1) {$\pdgunit$};
@@ -607,11 +607,15 @@ similarly, the cpd for the edge from $ C \times T$ to $T$ gives probability 1 to
 
 \subsection{Alternate, Equivalent Definitions of PDGs}
 
-The definition given in \cref{def:model} is not the only way to define a PDG. 
+\Cref{def:model} is not the only way to define a PDG. 
+% In fact, there are many 
+Indeed, there are many definitions of PDGs, and seeming generalizations
+or restrictions of them, all of which turn out to be essentially equivalent. 
+We now review a some important alternative ways of defining a PDG.
 
 \begin{enumerate}
     \item The underlying graphical structure $(\N, \Ar)$ of a PDG can be taken to directly be a directed \emph{hypergraph}, rather than an ordinary directed (multi)graph. With this definition, we circumvent the need for \cref{constr:hyperedge-reducton}, and get a 
-    This is the appraoch taken in the rest of the paper. 
+    This is the appraoch taken in later chapters of the thesis. 
 
     \item In the other direction, we can also define an equivalent variant of a PDG win which $(\N, \Ar)$ is not a multi-graph, but rather an ordinary directed graph. It is not hard to see that a multi-graph could be simulated in that formalism with the following widget:
     \[
@@ -921,10 +925,12 @@ $\mu$ requires
 additional information to specify, beyond
 what is necessary to determine outcomes of the marginals selected by $G$.
 
+\TODO[FIXME]
 
 \begin{defn}\label{def:info-deficiency}
-For a multigraph $G = (\N, \Ar, \V)$ over a set $\N$ of variables,
-define the \emph{$G$-information deficiency}
+% For a multigraph $G = (\N, \Ar, \V)$ over a set $\N$ of variables,
+Given a directed (multi)(hyper)graph $\Ar$, 
+the \emph{$G$-information deficiency}
 of distribution $\mu$, denoted $\IDef_{G}(\mu)$,
 by considering the difference between (a) and (b), 
 where we measure the amount of information needed for a description
@@ -934,7 +940,7 @@ using entropy:
 	\label{eqn:alt-extra}
 \end{equation}
 (Recall that $H_\mu(Y\mid X)$, the
-($\mu$-)\emph{conditional entropy of $Y$ given $X$}, is
+\emph{conditional entropy of $Y$ given $X$}, is
 defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
 For a PDG ${\dg M}$, we take $\IDef_{\dg M} = \IDef_{\Gr^{\dg M}}$.   
 \end{defn}
@@ -983,7 +989,8 @@ The following just makes precise that the scoring semantics generalizes the firs
 
 \begin{linked}{prop}{sd-is-zeroset}
 	$\SD{\dg M} \!= \{ \mu : \bbr{\dg M}_0(\mu) \!=\! 0\}$ for 
-	all $\dg M$.
+	all $\dg M$
+    that satisfy $\bbeta^{\dg M} > 0$. 
 \end{linked}
           
 While we focus on this particular scoring function in the paper, 
@@ -1012,16 +1019,20 @@ In general, $\bbr{\dg M}_\gamma^*$ does not give a unique distribution.  But if
 $\gamma$ is sufficiently small, then it does:
 
 \begin{linked}{prop}{sem3}
-	If $\dg M$ is a PDG and $0 < \gamma \leq \min_L \beta_L^{\dg M}$, then
+	If $\dg M$ is a PDG and $0 < \gamma \leq \min_{a \in \Ar} 
+        {\displaystyle\frac {\beta_a^{\dg M}}{\alpha_a^{\dg M}} }$, then
 	$\bbr{\dg M}_\gamma^*$ is a singleton. 
 \end{linked}
 
-In this paper, we are interested in the case where $\gamma$ is small;
-this amounts to emphasizing the accuracy of the probability
-distribution as a description of probabilistic information,
-rather than the graphical structure of the PDG.  
+% We will soon see that the 
+In much of this dissertation, we will be
+    particularly interested in the case where $\gamma$ is small,
+    which means emphasizing the accuracy of the probability
+    distribution as a description of probabilistic information,
+    over the graphical structure of the PDG.  
 This motivates us to consider
-what happens as $\gamma$ goes to 0.  If $S_\gamma$ is a set of
+what happens as $\gamma$ goes to 0.
+If $S_\gamma$ is a set of
 probability distributions for all $\gamma \in [0,1]$, we define $\lim_{\gamma
 \rightarrow 0} S_\gamma$ to consist of all distributions $\mu$ such that there
 is a sequence $(\gamma_i, \mu_i)_{i \in \mathbb N}$ with $\gamma_i \to 0$ and
@@ -1029,16 +1040,30 @@ $\mu_i \to \mu$ such that $\mu_i \in S_{\gamma_i}$ for all $i$.
 It can be further shown that 
 
 \begin{linked}{prop}{limit-uniq}
-    For all $\dg M$, $\lim_{\gamma\to0}\bbr{\dg M}_\gamma^*$ is a singleton.
+    For all $\dg M$, $\lim\limits_{\gamma\to0}\bbr{\dg M}_\gamma^*$ is a singleton.
 \end{linked}
-Let $\bbr{{\dg M}}^*$ be the unique element of $\smash{\lim\limits_{\gamma
+Let $\bbr{{\dg M}}_{0^+}^*$ be the unique element of $\smash{\lim\limits_{\gamma
 	\rightarrow 0}} \bbr{{\dg M}}_\gamma^*$. 
-This limiting semantics semantics has an important property: 
+This limiting semantics intuitively represents the ``quantitative'' or ``observational'' extreme, in which the quantitative probabilities and their confidences $(\mathbb P, \bbeta)$ dominate, and the qualitative information $(\Ar, \balpha)$ is used only to break ties. 
+It has an important property: 
 
 \begin{linked}{prop}{consist}
-	$\bbr{\dg M}^* \in \bbr{\dg M}_0^*$, so if $\dg M$ is consistent,
-	then $\bbr{\dg M}^* \in \SD{\dg  M}$.
+	$\bbr{\dg M}^*_{0^+} \in \bbr{\dg M}_0^*$, so if $\dg M$ is consistent,
+	then $\bbr{\dg M}^*_{0^+} \in \SD{\dg  M}$.
 \end{linked}
+
+\subsection{Further Semantics: PDGs as Degrees of Inconsistency and as Transformations on Distributions}
+
+The three semantics given in the previous section are the ones presented in the original PDG paper \cite{pdg-aaai}, and hence the ones relevant for the present chapter based on it. 
+However, there are two other semantics that will play an important role later on. 
+The first is a PDG's degre of inconsistency: for each $\gamma$, we can define
+\[
+    \aar[\big]{\dg M}_{\gamma} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu) \in \Rext.
+\] 
+Thus, it interprets a PDG as a single number.  This quantity may at first seem less important than the others, but we will see in \cref{chap:one-true-loss} that it is a ``universal loss function'', and then in \cref{chap:inc-infer-connection} that all of the other semantics can be derived from it. 
+
+In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from another perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function 
+$\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$.
 
 \section{Relationships to Other Graphical Models}
 \label{sec:other-graphical-models} 
@@ -1066,49 +1091,54 @@ in this way; we defer the straightforward formal details to the appendix.
 and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.    
 \end{linked}
 \Cref{theorem:bns-are-pdgs} is quite robust to parameter choices: it holds for every
-weight vector $\beta$ and all $\gamma > 0$. However, it does lean heavily on
-our assumption that $\alpha = \mathbf 1$, making it our only result
-that does not 
-have a natural analog for general $\alpha$.
+weight vector $\beta$ and all $\gamma > 0$.
+However, it does lean heavily on our assumption that $\alpha = \mathbf 1$, intuitively because that is what encodes the BN's independencies. 
+% making it our only result that does not have a natural analog for general $\alpha$.
 
 
 
 \subsection{Factor Graphs} 
-\label{sec:factor-graphs}
+    \label{sec:factor-graphs}
 Factor graphs 
 \cite{kschischang2001sumproduct},
-like PDGs, generalize BNs.
-In this section, we consider the relationship between factor graphs (FGs) and PDGs.
+% like PDGs, generalize BNs.
+are another class of graphical model, which are often thought of as generalizing BNs.%
+    \footnote{This claim is true at a quantiative level, but it is worth noting that factor graphs do not capture the same independencies unless augmented with extra infromation \cite{frey2012extending}, and lack some properties that makes BNs useful in causality.}
+In this section, we explore the relationship between PDGs and factor graphs.
+
 \begin{defn}
  A \emph{factor graph} $\Phi$ is a set of random variables
-        $\mathcal X = \{X_i\}$ and \emph{factors}
-       $\{\phi_J\colon \V(X_J) \to \mathbb R_{\geq0}\}_{J \in
+        $\X$ and
+    and indexed collection of \emph{factors}
+       $\{\phi_J : \V(X_J) \to \mathbb R_{\geq0}\}_{J \in
 \mathcal J }$,
-where $X_J \subseteq \mathcal X$.  
-More precisely, each factor $\phi_J$ is associated with a subset
+where $\mathcal J$ is an arbitrary index set, 
+and each $X_J \subseteq \X$.  
+In other words, each factor $\phi_J$ is associated with a subset
 $X_J\subseteq \mathcal{X}$ of variables, and maps
 joint settings of $X_J$ to non-negative real numbers.
 $\Phi$ specifies a distribution
 \[ {\Pr}_{\Phi}(\vec x) = \frac{1}{Z_{\Phi}}
  	\prod_{J \in \cal J} \phi_J(\vec x_J), \]
-where $\vec{x}$ is a joint setting of all of the variables,
+where $\vec{x} \in \V\!\X$ is a joint setting of all of the variables,
  $\vec{x}_J$ is the restriction of $\vec{x}$ to only the
  variables $X_J$, and $Z_{\Phi}$ is the constant required to
  normalize the distribution.  
 \end{defn}
 
+% The cpds of a PDG naturally constitute a collection of factors,
+% so it natural to wonder how the semantics of a PDG compares to 
+% simply treating the cpds as factors in a factor graph. 
+To view a BN as a factor graph, one essentially views each cpd as a factor.
+From this perspective, a PDG also seems to specify a collection of factors. 
+How do PDG semantics as we have already defined them compare to this 
+``multiply-and-renormalize'' semantics of a factor graph?
+To answer this, we start by making the translation precise.
 
-
-
-The cpds of a PDG naturally constitute a collection of factors,
-so it natural to wonder how the semantics of a PDG compares to 
-simply treating the cpds as factors in a factor graph. To answer this,
-we start by making the translation precise.
 \begin{defn}[unweighted PDG to factor graph]\label{def:PDG2fg}
-If $\dg N = (\Gr, \mathbb P)$ is an unweighted PDG, define   
-the associated FG $\FGof{\dg N}$ on the 
-variables $(\N, \V)$ by
-taking $\mathcal J$ to be the set of edges, 
+If $\dg N = (\Gr, \mathbb P)$ is an unweighted PDG with variables $\X$, 
+define the associated FG $\FGof{\dg N}$ as follows. 
+Let $\mathcal J := \Ar$ to be the set of arcs, 
 and for an edge $L$ from $Z$ to $Y$, taking $X_{L} = \{Z,Y\}$, and $\phi_L(z,y)$ to be
 $\p_a^{\dg M}(y \mid z)$ (i.e., $(\p_a^{\dg M}(z))(y)$).
 \end{defn}
@@ -1214,11 +1244,8 @@ distribution given by normalizing $\phi_J$.
 
 PDGs are directed graphs, while factors graphs are undirected. The
 map from PDGs to factor graphs thus loses some important structure.
-As shown in \Cref{fig:fg2PDG},
-this mapping can change the graphical structure significantly.
-Nevertheless,
-
-
+As shown in \Cref{fig:fg2PDG}, this mapping can change the graphical structure significantly.
+Nevertheless, when $\gamma = 1$, so that the quantitative and qualitative terms are weighted equally, the semantics coincide. 
 
 
 \begin{linked}{theorem}{fg-is-pdg}
@@ -1592,7 +1619,7 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 							  $L$, and so again by Gibbs inequality,
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} > 0$. As relative entropy
 			 is non-negative, the sum of these terms over all
-			 edges must be positive as well, and so $\OInc_{\dg M}(
+			 edges must be positive as well, (because we have assumed $\bbeta > 0$) and so $\OInc_{\dg M}(
 			 \mu) \neq 0$. %
 \end{lproof}
 
@@ -1714,14 +1741,16 @@ Note that
 		(\beta_L - {\alpha_L} \gamma) \Ex_{x\sim\mu_X}
           \kldiv[\Big]{\mu(Y\mid x)}{\p_a( x)} \right] - \gamma \H(\mu). 
 \end{align*}
-	The first term, 
-	\( \Ex_{x,y \sim \mu_{\!_{XY}}} \left[-\log {\p_a(y\mid x)}\right] \) 
-	is linear in $\mu$, as $\p_a(y\mid x)$ does not depend on $\mu$. %
+The first term, 
+\( \Ex_{x,y \sim \mu_{\!_{XY}}} \left[-\log {\p_a(y\mid x)}\right] \) 
+is linear in $\mu$, as $\p_a(y\mid x)$ does not depend on $\mu$. %
 As for the second term, it is well-known that KL divergence is convex, in the sense that 
-	\[ \kldiv{\lambda q_1 + (1-\lambda) q_2 }{ \lambda p_1 +
-          (1-\lambda) p_2} \leq \lambda \kldiv {q_1}{ p_1} +
-                (1-\lambda) \kldiv{q_2}{p_2}. \] 
-	Therefore, for a distribution on $Y$, setting $p_1 =
+\begin{align*}
+    &\kldiv{\lambda q_1 + (1-\lambda) q_2 }{ \lambda p_1 + (1-\lambda) p_2}
+    \\&\qquad\qquad \leq \lambda \kldiv {q_1}{ p_1} +
+                (1-\lambda) \kldiv{q_2}{p_2}.
+\end{align*}
+Therefore, for a distribution on $Y$, setting $p_1 =
  p_2 = \p_a(x)$, for all conditional marginals $\mu_1(Y \mid X=x)$ and
 			$\mu_2(Y\mid X=x)$,
 	\[ \kldiv{\lambda \mu_1(Y\mid x) + (1-\lambda)

@@ -9,6 +9,41 @@ Quantitatively, a variable $X$ is also associated with a set $\V(X)$, or simply 
 For example, $\V(\text{height})$ might be the set of positive real numbers, 
     or the set $\{ \texttt{short}, \texttt{tall} \}$. 
 
+
+\subsection{Relations}
+
+Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables, traditionally called atributes. 
+A \emph{relation} $R(\mathcal A) = R(X_1, \ldots, X_n) \subseteq 
+\V(X_1) \times \cdots \times \V(X_n)$, or equivalently, $R : \prod_{i=1}^n \V\!X_i \to \{0,1\}$, is a subset of joint values of attributes. 
+The natural number $n$ is called the \emph{arity} of $R$. 
+
+
+The \emph{natural join} of two relations $R(A,B)$ and $S(B,C)$ combines them in a particularly obvious way: $(a,b,c) \in R \bowtie S$ iff $(a,b) \in R$ and $(b,c) \in S$. 
+More generally, we have
+
+% \begin{defn}[natural join]
+%     \[
+\begin{equation}
+    R(\mathcal X) \bowtie S(\mathcal Y)
+        := 
+        \Big\{
+            \boldsymbol\omega \in  \V(\mathcal X \cup \mathcal Y)
+            ~\Big|~
+            \mathcal X(\boldsymbol\omega) \in R \land
+            \mathcal Y(\boldsymbol\omega) \in S
+        \Big\}
+        % \qedhere
+%     \]
+% \end{defn}
+\end{equation}
+
+At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \mathcal X$ and $S \subseteq \V\mathcal Y$.
+At the opposite extreme, if $\mathcal X = \mathcal Y$ are the same set of variables, then $R(\mathcal X) \bowtie S(\mathcal X)$ coincides with the intersection of the subsets $R$ and $S$. 
+
+Even when $A_1, \ldots, A_n \subseteq \X$ are not disjoint, we give a convenient extended syntax by defining the quantity $R(a_1, \ldots, a_n)$, where $a_i \in \V(A_i)$. 
+Concretely, define $R(a_1,\ldots, a_n) := 0$ if when $\{a_1, \ldots, a_n\}$ do not agree on the value of some shared attribute (i.e., if $\exists X \in \X, \exists i,j \in [n]. ~X \in A_i \cap A_j \land X(a_i) \ne X(a_j)$).
+When $\{a,b,c\}$ do agree on all values of shared attributes, let $\mat x$ denote the joint value of $A \cup B \cup C$ obtained from $(a,b,c)$ by removing redundant copies of variable values.
+In this case, define $R(a,b,c) := R(\mat x)$. 
 \subsection{Algebra}
 \begin{defn}[Monoid]%
     A \emph{monoid} is a tuple $(S, *, e)$, where $S$ is a set, $* : S \times S \to S$ is a binary operation, and $e \in S$ is a distinguished identity element, such that:
@@ -27,48 +62,18 @@ For example, $\V(\text{height})$ might be the set of positive real numbers,
     An idempotent semiring defines partial order by $a \le b \iff a + b = b$. 
 \end{defn}
 
-\subsection{Relations}
-
-Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables, traditionally called atributes. 
-A \emph{relation} $R(\mathcal A) = R(X_1, \ldots, X_n) \subseteq 
-\V(X_1) \times \cdots \times \V(X_n)$, or equivalently, $R : \prod_{i=1}^n \V\!X_i \to \{0,1\}$, is a subset of joint values of attributes. 
-The natural number $n$ is called the \emph{arity} of $R$. 
-
-
-The \emph{natural join} of two relations $R(A,B)$ and $S(B,C)$ combines them in a particularly obvious way: $(a,b,c) \in R \bowtie S$ iff $(a,b) \in R$ and $(b,c) \in S$. 
-More generally, we have
-
-\begin{defn}[natural join]
-    $R(\mathcal X) \bowtie S(\mathcal Y)
-        := 
-        \Big\{
-            \boldsymbol\omega \in  \V(\mathcal X \cup \mathcal Y)
-            ~\Big|~
-            \mathcal X(\boldsymbol\omega) \in R \land
-            \mathcal Y(\boldsymbol\omega) \in S
-        \Big\}.
-    $
-\end{defn}
-
-At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \mathcal X$ and $S \subseteq \V\mathcal Y$.
-At the opposite extreme, if $\mathcal X = \mathcal Y$ are the same set of variables, then $R(\mathcal X) \bowtie S(\mathcal X)$ coincides with the intersection of the subsets $R$ and $S$. 
-
-Even when $A_1, \ldots, A_n \subseteq \X$ are not disjoint, we give a convenient extended syntax by defining the quantity $R(a_1, \ldots, a_n)$, where $a_i \in \V(A_i)$. 
-Concretely, define $R(a_1,\ldots, a_n) := 0$ if when $\{a_1, \ldots, a_n\}$ do not agree on the value of some shared attribute (i.e., if $\exists X \in \X, \exists i,j \in [n]. ~X \in A_i \cap A_j \land X(a_i) \ne X(a_j)$).
-When $\{a,b,c\}$ do agree on all values of shared attributes, let $\mat x$ denote the joint value of $A \cup B \cup C$ obtained from $(a,b,c)$ by removing redundant copies of variable values.
-In this case, define $R(a,b,c) := R(\mat x)$. 
-
 
 \subsection{Graph Theory}
 \begin{defn}
-    A \emph{(directed) (multi) graph} $G = (N, A)$, or simply a \emph{graph}, is a set $N$ of nodes,
+    A \emph{(directed) (multi)graph} $G = (N, A)$, or simply a \emph{graph}, is a set $N$ of nodes,
     and a collection $A$ of arcs, such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
     So, formally, the definition is
     $G = (N, A, \Src{}, \Tgt{})$, with $\Src{},\Tgt{}: A \to N$ often left implicit.
 \end{defn}
 
-\begin{defn}[Undirected (Multi) Graph]
-    An undirected (multi)graph $G = (N,E)$ is a set $N$ of vertices (or nodes)
+\begin{defn}
+    % [Undirected (Multi) Graph]
+    An \emph{undirected} (multi)graph $G = (N,E)$ is a set $N$ of vertices (or nodes)
     and a set $E$ of edges,
     each element $e \in E$ of which
     corresponds to an unordered pair of vertices $\{u,v\}$.
@@ -187,16 +192,17 @@ By transitivity, one might expect bipartite graphs to naturally be an extremely 
 \end{defn}
 
 A directed hypergraph $(N, \mathcal A)$ can be equivalently defined as an (ordinary) directed graph $(2^N, \Ar)$ whose set of nodes is the powerset of some set $N$. 
-
-\medskip
-\hrule
-\medskip
-
+% 
+% \medskip
+% \hrule
+% \medskip
+% 
 \begin{defn}
 The \emph{dual} of the hypergraph $G = (V, \mathcal E)$ is
-\(
+\[
     \check G := (\mathcal E, \{\{e \in \mathcal E : v \in e\} : v \in V\})
-\).
+    .\qedhere
+\]
 \end{defn}
 
 \begin{defn}
@@ -205,11 +211,13 @@ The \emph{dual} of the hypergraph $G = (V, \mathcal E)$ is
         \check{\mathcal H} := (\mathcal A, N)
     \),
     where
-    \[
+    % \[
+    $
     \check{\Src n} = \{ a \in \Ar : n \in \Tgt a\} \quad\text{and}\quad
     \check{\Tgt n} = \{ a \in \Ar : n \in \Src a\}.
-    \qedhere
-    \]
+    % \qedhere
+    % \]
+    $
 \end{defn}
 
 % \begin{prop}
@@ -219,8 +227,8 @@ Observe that
     \check{\check{\Src a}}
     &= \{ n \in N : a \in \check{\Tgt n} \} \\
     &= \{ n \in N : a \in \{ a' \in \Ar :  n \in \Src a' \} \} \\
-    &= \{ n \in N : n \in \Src a\} \\
-    &= \Src a;
+    &= \{ n \in N : n \in \Src a\} 
+    = \Src a;
 \end{align*}
 % \end{prop}
 symetrically, $\Tgt a = \check{\check{\Tgt a}}$. 

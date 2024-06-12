@@ -112,16 +112,16 @@ There is a natural way
     and many standard loss functions
     can be viewed as measuring the inconsistency of a PDG that
     describes the appropriate situation \cite{one-true-loss}.
-\vfull{
-    Recently, techniques have been developed to calculate this inconsistency
-    in polynomial time for bounded tree-width,
-    although it scales exponentially with the tree-width of the graph \cite{pdg-infer}.
-    As we move to variables that are continuous variables of large dimension,
-        it becomes intractable to calculate this global inconsistency
-        even for small graphs---the log evidence
-        of a latent variable model \cite{one-true-loss} can be
-        represented as a PDG inconsistency, for example.
-}
+% \vfull{
+%     Recently, techniques have been developed to calculate this inconsistency
+%     in polynomial time for bounded tree-width,
+%     although it scales exponentially with the tree-width of the graph \cite{pdg-infer}.
+%     As we move to variables that are continuous variables of large dimension,
+%         it becomes intractable to calculate this global inconsistency
+%         even for small graphs---the log evidence
+%         of a latent variable model \cite{one-true-loss} can be
+%         represented as a PDG inconsistency, for example.
+% }
 % Our work
 % We provide an algorithm that
 %
@@ -378,6 +378,7 @@ We now introduce an equally expressive variant,
 
 
 \begin{defn}
+        \label{defn:ppdg}
     % A \emph{parametric PDG family}
     % A \emph{parametric probabilistic dependency graph} (PPDG)
     A \emph{Parametric Probabilistic Dependency Graph} (PPDG)

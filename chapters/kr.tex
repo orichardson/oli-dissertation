@@ -314,6 +314,7 @@ While it is not surprising that this construction encodes a relation
 
 
 \subsection{Costs: ``Soft Relations''}
+    \label{sec:soft-constraint}
 
 TODO: Comparisons between factors and costs. 
 
@@ -354,31 +355,40 @@ consistent with a PDG containing $p$ and $q$, i.e.,
     \end{tikzpicture}~~}.
 \]
 
-But the couplings themselves are not all that a PDG can capture. 
+The couplings themselves are not all that a PDG can capture.
 Suppose we have a distance metric $d$ on a space $X$.
-For $k \in [1,\infty)$, 
-the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
+% For $k \in [1,\infty)$, 
+% the $k$-Wasserstein distance between $p,q \in \Delta X$ is given by
+% \[  
+%     W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
+% \]
+The Wasserstein distance between $p,q \in \Delta X$, given by
 \[  
-    W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
+    W_1(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big],
 \]
-
-
+is a foundational quantity in optimal transport \cite{}.
+%
 This definition effectively takes $p(X)$ and $q(X)$ with
     high confidence, by constraining to $\mu \in \Pi(p,q)$.
 But, in order to represent this as a PDG, we need to represent 
 the $d$ in probabilistic terms.
-A distance is not a probability. But we can encode the belief
-that the values of $X$ and $Y$ are close, according to $d$.
-
-Let $\Tru$ be a variable that in principle can be
-either $\trut$ or $\truf$, but happens to always be $\trut$.
-% to convert it  to a Gibbs distribution. 
-To place more probability in $\truf$ as $d(X,Y)$ increases.
-\[
-    \hat d(\Tru=\trut | X,Y) \propto \exp(- d(X,Y)).
-\]
-
-We then have:
+% A distance is not a probability. 
+% But we can encode the belief that the values of $X$ and $Y$ are close, according to $d$.
+% Let $\Tru$ be a variable that in principle can be
+% either $\trut$ or $\truf$, but happens to always be $\trut$.
+% % to convert it  to a Gibbs distribution. 
+% To place more probability in $\truf$ as $d(X,Y)$ increases.
+%
+A distance is not a probability, but we can convert it to a soft constraint and write it in probabilistic terms, as in \cref{sec:soft-constraint}.
+Accordingly, 
+% Let $\Tru$ be a variable that in principle can be
+% either $\trut$ or $\truf$, but happens to always be $\trut$.
+% % to convert it  to a Gibbs distribution. 
+% To place more probability in $\truf$ as $d(X,Y)$ increases.
+% \[
+%     \hat d(\Tru=\trut | X,Y) \propto \exp(- d(X,Y)).
+% \]
+we have:
 \begin{prop}
     \[
         \aar**{\begin{tikzpicture}[center base]
@@ -401,59 +411,9 @@ We then have:
         = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
     \]
 \end{prop}
-
-
-{\color{gray}
-We also have:
-\begin{prop}
-    \begin{align*}
-        \aar**{\begin{tikzpicture}[center base]
-            \node[dpad0] (X) at (-1,0) {$X$};
-            \node[dpad0] (Y) at (1,0) {$Y$};
-            %
-            \draw[arr2, <-] (X) to
-                node[left]{$p!$}
-                +(0,1);
-            \draw[arr2, <-] (Y) to
-                node[left]{$q!$}
-                +(0,1);
-            %
-            \draw[arr2] (X) to
-                node[above]{$\mathrm G d$}
-                (Y);
-            %
-        \end{tikzpicture}}
-        &=
-        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \log\sum_{y}\exp(-d(X,y)) - \H_\mu(Y|X)\Big] \\
-        % &=
-        % \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) + \mathrm{softmax}_y \big[ - d(X,y) \big] \Big] - \H(\mu) + \H(p)
-    \end{align*}
-\end{prop}
-
-\begin{prop}
-    \begin{align*}
-        \lim_{t \to \infty} \frac1t \aar**{\begin{tikzpicture}[center base]
-            \node[dpad0] (X) at (-1,0) {$X$};
-            \node[dpad0] (Y) at (1,0) {$Y$};
-            %
-            \draw[arr2, <-] (X) to
-                node[left]{$p!$}
-                +(0,1);
-            \draw[arr2, <-] (Y) to
-                node[left]{$q!$}
-                +(0,1);
-            %
-            \draw[arr2] (X) to
-                node[above]{$\mathrm G d$}
-                node[below]{${\color{gray}\scriptstyle(t)}$}
-                (Y);
-            %
-        \end{tikzpicture}}
-        &=
-        \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y) \Big]
-    \end{align*}
-\end{prop}
-}
+\begin{proof}
+    The high confidence specification of $p$ and $q$ constrains the optimal distributions to $\Pi(p,q)$, and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint}. 
+\end{proof}
 
 % \subsection{Graph-Hypergraph Equivalence}
 \subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
@@ -462,18 +422,27 @@ We also have:
 A cpd between discrete variables can be represented by
     a stochastic matrix (i.e., a matrix whose rows sum to one).
 It turns out that it is possible to use the machinery of PDGs
-    to, effectively, give only one value of that matrix.
-That is, for any $p \in [0,1]$, we can construct a PDG
-    that represents the belief that $\Pr(Y{=}y|X={x}) = p$, but say nothing about
-    how the probability splits between other values of $y$, and also says nothing
-    about the probability of $Y$ if $X \ne x$.
-We now describe that construction.
+    to, effectively, give only some of the values in that matrix.
+Using PDG notation, we abbreviate a cpd $p(Y|X)$ with some missing values by adding an empty circle at the tail, i.e., drawing 
+\begin{tikzpicture}[center base]
+    \node[dpad1] (X) at (0,0) {$X$};
+    \node[dpad1] (Y) at (1.5,0) {$Y$};
+    \draw[arr2,o->] (X) to (Y);
+\end{tikzpicture}.    
+
+We now present an important extreme case of that construction:
+how, for any $p \in [0,1]$, we can construct a PDG
+that represents the belief that $\Pr(Y{=}y|X={x}) = p$, but say nothing about
+how the probability splits between other values of $y$, and also says nothing
+about the probability of $Y$ if $X \ne x$.
+
 
 \def\XxYy{{X{=}x\Vert Y{=}y}}
 \def\XxYyshort{{X_x Y_y}}
 \def\Yy{{Y{=}y}}
 \def\Yyshort{{Y_y}}
 
+% We now describe the construction.
 First, we introduce two new auxiliary variables.
 The first variable, which we might like to call ``$\Yy$'', but
     mostly refer to as $\Yyshort$ to prevent confusion with the synonymous
@@ -544,15 +513,22 @@ In addition to $\hat p$ and the new variables, this PDG
     \hfill
     \begin{minipage}{0.3\textwidth}
         \begin{align*}
-            \hat p(\Yyshort|\XxYyshort) &= \begin{matrix}
-                &  \begin{matrix} y & \lnot y \end{matrix} \\
-                \begin{matrix} x \!\! \\ y \!\! \\ \lnot y \!\! \end{matrix} &
-                    \begin{bmatrix}
-                        \;p & 1-p \; \\
-                        \;1 & 0  \;\\
-                        \;0 & 1 \;
-                    \end{bmatrix}
-            \end{matrix}\\[2ex]
+            \hat p(\Yyshort|\XxYyshort) &= 
+            % \begin{matrix}
+            %     &  \begin{matrix} y & \lnot y \end{matrix} \\
+            %     \begin{matrix} x \!\! \\ y \!\! \\ \lnot y \!\! \end{matrix} &
+            %     \begin{bmatrix}
+            %         \;p & 1-p \; \\
+            %         \;1 & 0  \;\\
+            %         \;0 & 1 \;
+            %     \end{bmatrix}
+            % \end{matrix}
+            \begin{idxmat}{$x$,$y$,$\lnot y$}{$y$,$\lnot y$}
+                p & 1-p  \\
+                1 & 0  \\
+                0 & 1 
+            \end{idxmat}
+            \\[2ex]
             s_1(\XxYyshort|X,Y) &:= \delta{\singlespacing\begin{cases}
                 x & \text{if $X = x$} \\
                 y & \text{if $X \ne x$ and $Y=y$} \\
@@ -570,7 +546,7 @@ In addition to $\hat p$ and the new variables, this PDG
     \end{minipage}
 % \end{center}
     % \medskip
-    \caption{A widget PDG for capturing a single conditional probability, a statement of the form $\Pr(Y{=}y\mid X{=}x) = p$, for $p \in [0,1]$.}
+    \caption{A widget PDG for capturing a single conditional probability: a statement of the form $\Pr(Y{=}y\mid X{=}x) = p$, for $p \in [0,1]$.}
     \label{fig:pyx-widget}
 \end{figure}
 
@@ -702,18 +678,19 @@ which shows our construction behaves appropriately for all PDGs.
         (which contains the same information as $\hat \mu$ itself).
     %
     Let $q := \mu(Y{=}y|X{=}x)$. Then,
-
+    {\allowdisplaybreaks
     \begin{align*}
         \aar{\dg M}_\gamma &= \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma} \\
          &= \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) \\
          &= \bbr{\dg M}_\gamma(\mu) +
-             \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p}
+             \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} 
+             \\&\hphantom{\bbr{\dg M}_\gamma(\mu)}
              + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} \\
         &= \bbr{\dg M}_\gamma(\mu) +
             \mu(X {=} x) \left[ q \log \frac qp + (1-q) \log \frac{1-q}{1-p} \right] \\
         &= \bbr{\dg M}_\gamma(\mu) + \mu(X{=}x) \kldiv qp \\
         &\ge \aar{\dg M}_\gamma + \mu(X{=}x) \kldiv qp
-    \end{align*}
+    \end{align*}}
     Therefore $0 \ge \mu(X{=}x) \kldiv qp$. But relative entropy is non-negative,
     by Gibbs inequality. This shows $\mu(X{=}x) \kldiv qp = 0$.
     So either $\mu(X{=}x)$, or $p = \mu(Y{=}y|X{=}x)$, and the first case is just
@@ -722,21 +699,212 @@ which shows our construction behaves appropriately for all PDGs.
         score is $\aar{\dg M}_\gamma$.
     Thus, we have found $\mu \in \bbr{\dg M}^*_\gamma$ such that $\mu(Y{=}y|X{=}x) = p$, completing the proof.
 \end{lproof}
-    
+
+\paragraph{``Conditional Conditional'' Probabilities.}
+We now turn to another, closely related modeling task. 
+What if we wanted to specify a full cpd $p(B|A)$, but with the stipulation that it was only meaningful when a third ``guard variable'' $G$ takes a certain value (say, $G{=}1$)?
+% Having an independent guard variable 
+This can be a useful thing to model. For instance, it exactly describes
+    a common practice for reducing errors in machine learning, by identifying domain shift: train a classifier (whose output is $G$) to detect if the original predictor $p(B|A)$ is relevant to the current context, and only apply $p$ if it is (i.e., $G{=}1$).
+A second, more abstract use for this primitive is to enrich PDGs with another notion of confidence. 
+By adding a guard variable $G_a$ for each $a \in \Ar$, and asserting that each $G_a = 1$ occurs with probability $1 - \epsilon_a$ (for some $\epsilon_a \in [0,1]$), it becomes possible to articulate a different and more standard kind of probability-based confidence in the reliability of each cpd.
+(Observe that the special case in which each $\epsilon_a= 0$ is the definition of a PDG we already have.)
+We discuss the difference between approaches like this and the meaning of our primitive $\beta$ at length in \cref{chap:relent-soup}. 
+
+Technically speaking, the specification of $p(B|A)$ under the condition that $G = 1$ is really no different from a cpd $p(B|A, G{=}1)$.
+Gven that we have already proved that PDGs an represent arbitrary conditional probabilities, it is entirely expected that PDGs can represent this too. 
+A widget for it is illustrated in \cref{fig:guard-variable}.
+% Now that we have verified that it is possible to specify arbitrary conditional probabilities with a PDG, it should come as no surprise that its can specify 
+
+\begin{figure}
+    \centering
+	% \begin{tikzpicture}[center base]
+	% 	\node[dpadded] (A) at (0,-0.5){$A$};
+	% 	\node[dpadded, right=1.5 of A](B){$B$};
+    % 
+	% 	\node[tpt={astar|$a$}] at (0.2,1.5) {};
+	% 	\node[tpt={b1|$b_1$},right=0.35 of astar]{};
+	% 	\node[tpt={b2|$b_2$},right=0.2 of b1]{};
+	% 	\node[right=0.2 of b2] (bdots){$\cdots$};
+	% 	\node[tpt={bn|$b_n$},right=0.2 of bdots]{};
+    % 
+	% 	\node[Dom={$X$[label distance=-2em, xshift=-1.0em] (X)
+	% 		around {\lab{astar}\lab{b1}\lab{bn}(1,1.65)}} ] {};
+    % 
+    % 
+	% 	\mergearr[->>]{A}{B}{X}
+	% 	\node[below=2pt of center-ABX]{$\varphi$};
+    % 
+	% 	\draw[arr2] (X) to node[above right,yshift=-3pt]{$p$ or $b$} (B);
+	% \end{tikzpicture}
+	% % \hspace{1cm}
+    % \hfill
+	% \begin{minipage}{0.3\textwidth}
+	% 	\begin{align*}
+	% 		\varphi(A,B) &:= \begin{cases}
+	% 			\delta_{X=a} & \text{if $A = a$} \\
+	% 			\delta_{X=B} & \text{otherwise}
+	% 		\end{cases}\\[1em]
+	% 		p \mathrm{~or~} b~(X) &:= \begin{cases}
+	% 			p(B) & \text{if $X = a$} \\
+	% 			\delta_{B=b} & \text{if $X = b$}
+	% 		\end{cases}
+	% 	\end{align*}
+	% \end{minipage}
+    \begin{tikzpicture}[center base]
+		\node[dpadded] (A) at (0,-0.5){$A$};
+		\node[dpadded, right=1.5 of A](B){$B$};
+		\node[dpadded, above=1 of A](G){$G$};
+
+%			\node[dpadded, inner sep=0.8em, label={[label distance=-1.5em,shading = axis, top color=white, bottom color=black!04, xshift=2.2em]145:$G\,{?}A\,{:}\,B$}, text=gray] (GAB) at (3,1.5) {$\cong \V(A) \sqcup \V(B)$};
+		\node[dpadded, inner sep=0.8em, label={[label distance=-1.5em,shading = axis, top color=white, bottom color=black!04, xshift=-1.0em]145:$X$}, text=gray] (GAB) at (3.5,1.5) {$\cong \V(A) \sqcup \V(B)$};
+%
+
+%			\mergearr[->>]{A}{B}{GAB}
+		\coordinate (cent) at (1.2, 0.5);
+		\draw[arr,-] (A) -- (cent) to[] (B);
+		\draw[arr,->>] (G) to[bend right] (cent) -- (GAB.south west);
+%			\node[below=2pt of cent]{$G\,{?}A\,{:}\,B$};
+		\node[below=2pt of cent]{$\varphi$};
+
+		\draw[arr2] (GAB) to[bend left] node[below right,yshift=-3pt]{$p$ or $b$} (B);
+	\end{tikzpicture}
+	% \hfill
+    \hspace{1cm}
+	\begin{minipage}{0.3\textwidth}
+		\begin{align*}
+			\varphi(G,A,B) &:= \text{ if } G \text{ then } A \text{ else } B. \\[1em]
+			p \mathrm{~or~} b~(X) &:= \begin{cases}
+				p(B|A\!=\!a) & \text{if } X = a \\
+				\delta_{B=b} & \text{if } X = b 
+			\end{cases}
+		\end{align*}
+	\end{minipage}
+    \caption{A widget implementing a CPD whose presence is conditioned on a guard variable, i.e., $p(B|A,G{=}1)$}
+        \label{fig:guard-variable}
+\end{figure}
+
+\subsection{Probability Ranges}
 
 
-% \subsection{}
+\begin{figure}
+    \centering
+% $\dg M^{y|x=p}:=$
+    \colorlet{proofmatt}{white}
+    \begin{tikzpicture}[center base]
+        \node[dpadded] (X) at (2,5.5){$X$};
+        \node[dpadded] (Y) at (5.6, 4.2){$Y$};
+
+        \node[tpt={uastar|$x$}] at (-1.0,3.5) {};
+        \node[tpt={ub1|$y$},right=0.55 of uastar]{};
+        \node[tpt={ub2|$\lnot y$},right=0.4 of ub1]{};
+        \node[Dom={$X_x\overline Y_y$[label distance=-1.5em, xshift=1.2em] (XxuYy)
+            around {\lab{uastar}\lab{ub1}\lab{ub2}(0.6,3.85)}} ] {};
+
+        \node[tpt={lastar|$x$}] at (-0.5,1.6) {};
+        \node[tpt={lb1|$y$},right=0.55 of lastar]{};
+        \node[tpt={lb2|$\lnot y$},right=0.4 of lb1]{};
+        \node[Dom={$X_x\underline Y_y$[label distance=-1.5em, xshift=1.2em] (XxlYy)
+            around {\lab{lastar}\lab{lb1}\lab{lb2}(1.1,1.95)}} ] {};
+
+        \node[tpt={ly1|$y$}] at (3.9, 1.6){};
+        \node[tpt={ly2|$\lnot y$},right=0.5 of ly1]{};
+        \node[Dom={$\underline Y_y$%
+            [label distance=-1.45em, xshift=1.0em] (lYy)
+            around {\lab{ly1}\lab{ly2}(3.9,1.85)}} ] {};
+
+        \node[tpt={uy1|$y$}] at (2.8, 3.5){};
+        \node[tpt={uy2|$\lnot y$},right=0.5 of uy1]{};
+        \node[Dom={$\overline Y_y$%
+            [label distance=-1.4em, xshift=1.3em] (uYy)
+            around {\lab{uy1}\lab{uy2}(2.8,3.75)}} ] {};
 
 
+        %% structural arrows
+        \mergearr[black!35!proofmatt,arr2,->>]{X}{uYy}{XxuYy} % {0.5,3}
+        % \node[black!35!proofmatt] at (0.2,3) {$s_1$};
+        \node[black!35!proofmatt, above left=2pt of center-XuYyXxuYy] {$s_1$};
+        
+        \cmergearr[black!35!proofmatt,arr2,->>]{X}{lYy}{XxlYy}{1.6,2.5}
+        \node[black!35!proofmatt] at (1.85,2.6){$s_3$};
+
+        %%
+        \draw[black!35!proofmatt, arr2, o->>] (Y) to node[below right]{$s_2$} (lYy);
+        \draw[black!35!proofmatt, arr2, o->>] (Y) to node[above]{$s_4$} (uYy);
+
+        \draw[line width=7pt,white] (XxlYy) to (lYy);
+        \draw[arr2] (XxlYy) to node[above]{$\hat a$} (lYy);
+        \draw[line width=7pt,white] (XxuYy) to (uYy);
+        \draw[arr2] (XxuYy) to node[above]{$\hat b$} (uYy);
+    \end{tikzpicture}
+    % \hspace{0.6cm}
+    % \hfill
+    % \begin{minipage}{0.3\textwidth}
+        \begin{align*}
+            \hat b(\overline Y_y|X_x\overline Y_y)
+            = \hat a(\underline Y_y|X_x\underline Y_y) = 
+                \begin{idxmat}{$x$,$y$,$\lnot y$}{$y$,$\lnot y$}
+                        a & 1-a  \\
+                        1 & 0  \\
+                        0 & 1 
+                \end{idxmat},
+                \\
+            % \hat b &\text { is defined analogously,}
+                % \text{ where $p =$}
+                % \\[2ex]
+            s_2(\underline Y_y | Y) := {\singlespacing\begin{cases}
+                \delta_y & \text{if $Y=y$} \\
+                \texttt{(null)} & \text{if $Y\ne y$} 
+            \end{cases}} \quad \text{ and } \quad
+            s_4(\overline Y_y | Y) := {\singlespacing\begin{cases}
+                \texttt{(null)} & \text{if $Y=y$} \\
+                \delta_{\lnot y} & \text{if $Y\ne y$} 
+            \end{cases}}\\
+            % \parbox{5.5cm}{
+            \intertext{
+            where \texttt{(null)} indicates no information
+                (see \cref{sec:prob-widget}),
+                }
+            \mathllap{\text{and}~~} 
+                s_1(X_x\overline Y_y|X,\overline Y_y) = 
+                s_3(X_x\underline Y_y|X,\underline Y_y) = 
+                \delta{\singlespacing\begin{cases}
+                x & \text{if $X = x$} \\
+                y & \text{if $X \ne x$ and $Y_y=y$} \\
+                \lnot y & \text{if $X \ne x$ and $Y\ne y$} \\
+            \end{cases}}\\
+            \text{as in \cref{fig:pyx-widget}.}
+            % p \mathrm{~or~} b~(X) &:= \begin{cases}
+            % 	p(B) & \text{if $X = a^*$} \\
+            % 	\delta_{B=b} & \text{if $X = b$}
+            % \end{cases}
+        \end{align*}
+    % \end{minipage}
+% \end{center}
+    % \medskip
+    \caption{A widget PDG for capturing a conditional probability range, a statement of the form $\Pr(Y{=}y\mid X{=}x) \in [a,b]$.}
+    \label{fig:pyx-range-widget}
+\end{figure}
+
+Probability requires the modeler to assign a specific number to every event $U \subseteq \Omega$. This can be restrictive; what if you simply don't know, and so are not prepared to assign a probability to $U$? 
+One heavily studied line of work aimed at addressing this issue allows the modeler to instead specify a range of values rather than a single one; thus one can say ``the probability of $U$ lies between $\frac13$ and $\frac12$'', for example.
+It is easy to see that specifying an actual probability distribution is the special case where the upper and lower bounds are equal, but in general, this approach yields a far richer theory \cite{Walley1991-SRIP}.
+
+At first, it appears that allowing a modeler to specify beliefs this way would require us to define an generalized PDG in which the modeler specifies not a cpd $p(Y|X)$, but rather upper and lower bounds on it. But yet again, it turns out to be possible with the definition we already have.
+
+There are multiple ways to do this. One idea to specify $\Pr(Y{=}y\mid X{=}x) \in [a,b]$ with a PDG is to add an ``overapproximation'' variable $\overline Y_y$ that is guaranteed to take on the value $y$ whenever $Y$ does (but may also take on the value $y$ other times), as well as an ``underapproximation'' variable $\underline Y_y$ that can only take on the value $y$ when $Y$ does (but even then, may not). 
+Once these are defined (e.g., with constraints), it is not too difficult to encode the upper and lower probabilities as cpds that target these new variables. 
+A (perhaps clunky) way of fully formalizing this is fleshed out in \cref{fig:pyx-range-widget}.
 
 \section{Other Representations of Knowledge and Uncertainty}
 
 Probability is the dominant way of talking about epistemic uncertainty
 in economics and computer science, but it is far from the only one \cite{halpern-RAU}.
-Probability---at least, in the form of a joint distribution $\mu$---has some shortcomings; for instance, they are not able to represent ignorance very well.
-(We will return to this point in \cref{chap:conf}.)
+Probability---at least, in the form of a joint distribution $\mu$---has some shortcomings. 
+One of the biggest is its inability to represent ignorance well
+    (a point we will return to in \cref{chap:conf}).
 This has lead many to develop generalizations of probability that are \cite{shafer1990probability,Walley1991-SRIP}.
-It turns out that some of these representations are also special cases of PDGs. 
+It turns out that several of the most celebrated generalizations of probabilities can be viewed as special cases of PDGs. 
 
 
 \subsection{Belief and Plausibility Functions}
@@ -747,8 +915,13 @@ a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \su
 Belief functions must satisfy certain axioms ensuring that $\Bel(U) + \Bel(\bar U) \le 1$, and thus $\Plaus(U) := 1 - \Bel(\bar U) \ge \Bel(U)$. 
 It can be shown that a probability distribution is the special case when these two relationships hold with equality, so that $\Bel = \Plaus$.  
 
-Belief functions admit an alternate representation in terms of a \emph{mass function} $m : 2^\Omega \to [0,1]$, which yields a belief function according to $\Bel(U) := \sum_{V \subseteq U} m(V)$. 
-In fact, there is a bijection between belief functions $\Bel$ and mass functions $m$. 
+Belief functions admit an alternate representation in terms of a \emph{mass function} $m : 2^\Omega \to [0,1]$, which yields belief and plausibility functions according to
+\[
+    \Bel_m(U) := \sum_{V \subseteq U} m(V)
+    \qquad\text{and}\qquad
+    \Plaus_m(U) := \sum_{\substack{V \subseteq \Omega \\ V \cap U \ne \emptyset}} m(V).
+\]
+Moreover, the the correspondince is unique.  That is, there are 1-1 correspondence between belief functions $\Bel$, plausibility functions $\Plaus$, and mass functions $m$ \cite[Thm 2.6.3]{halpern-RAU}. 
 The only requirements on $m$ are that:
 \[
 m(\emptyset) = 0
@@ -996,350 +1169,34 @@ Now for the proof of the theorem.
     \]
 \end{lproof}
 
-\subsection{Causal Models}
-    \label{ssec:capture-causal-models}
 
 
-PDGs can also capture causal models. 
-
-
-%%% MATERIAL LIFTED FROM CAUSAL MODEL PAPER
-\begin{defn}[\citet{pearl2009causality}]
-        \label{defn:SEM}
-    A \emph{structural equations model} (SEM) is a tuple
-    %oli15: being more consistent about reserving \cal M for PSEMs
-    % $\mathcal M = (\U, \enV, \mathcal F)$,
-    $M = (\U, \enV, \mathcal F)$,
-    % $\mathcal M = (\U, \X, \mathcal F, \V)$,
-    % $M = (\U, \enV, \mathcal F, \mathcal I)$,
-    where
-    % $\V$ is as before,
-    \begin{itemize}[left=0pt,itemsep=0pt,topsep=0pt,parsep=0.3ex]
-    \item $\U$ is a set of exogenous variables;
-    \item $\enV$ is a set of endogenous variables (disjoint from $\U$);
-    % \item $\mathcal F$ is an indexed set of functions consisting of an equation $f_Y : \V (\U \cup \enV - Y ) \to \V(Y)$ that determines is value as a function of the values of the other variables.
-    \item $\mathcal F = \{ f_Y \}_{Y \in \enV}$ associates to each endogenous variable $Y$ an \emph{equation}
-    $f_Y : \V (\U \cup \enV - Y) \to \V(Y)$
-     that determines its value as a function of the other variables. 
-        \qedhere
-    \end{itemize}
-\end{defn}
-
-% %oli3: the definition in this sentence may not be necessary; graying out for now
-% %joe4: I would prefer to cut the definition.
-% %oli5: as you wish
-% \commentout{
-Given a SEM $M = (\U, \enV, \mathcal F)$, and a joint setting $\mat u \in \V(\U)$ of exogenous variables, let
-\[
-    % M(\mat u) :=
-    \mathcal F(\mat u)
-    := \Big\{
-        \mat x \in \V\! \enV ~\Big|~
-            \forall Y \,{\in}\, \enV.~
-            f_{Y}\big(\mat u,~ \mat x[ \enV {-} Y ]\big) = \mat x[Y]
-    \Big\}
-        % \quad \subseteq \V\! \enV
-\]
-be the set of joint endogenous variable settings that are consistent with $\mat u$, according to the equations $\mathcal F$.
-% }
-%
-% A SEM is called \emph{acyclic}
-% if for every $\mat u \in \V \U$, there is a total order $\prec_{\mat u}$ on $\enV$ such that, $f_{X}(\mat u, \mat z)$ does not depend on $\mat z[Y]$  when $X \prec_{\mat u} Y$,
-% and \emph{structurally acylic}%
-%     %
-%     \footnote{for Joe: this is important because structural acyclicity,
-%         which is standard in some settings, is the qualitative proeprty, and
-%         the one that leads to a correspondence with BNs.}
-%     %
-% if $\prec_{\mat u}$ can be chosen
-% so that it does not depend on $\mat u$.
-%oli6: taking your approach even further:
-In a SEM $M$, a variable $X \in \enV$ \emph{does not depend} on $Y \in \enV\cup\U$ if $f_X(\ldots, y, \ldots) =
-f_X(\ldots, y', \ldots)$ for all $y, y' \in \V(Y)$.
-%oli6: moving up from next section, and significantly compressing; it belongs here.
-Let the parents $\Pa_{M}(X)
- % \subseteq \V(\enV \cup \U - X)
-$
-%joe7
-%of $X$ to be the set of variables on which it depends.
-of $X$ be the set of variables on which $X$ depends.
-%joe4
-%A SEM is called \emph{acyclic}
-% A SEM is \emph{acyclic}
-%oli6:
-$M$ is \emph{acyclic}
-%oli6: 
-% if there is a total order $\prec$ on $\enV$ such that
-%joe4: Why do f_X need arguments?  What is their role in the
-%definition.  What is z[Y]?
-%$f_{X}(\mat u, \mat z)$ does not depend on $\mat z[Y]$  when $X \prec Y$.
-%oli5: z[Y] is the value of Y in joint setting z. We'll need this notation
-% eventually, either way.  I prefer my version, but let's go with yours. 
-%oli5: fixing up your version so it compiles (and removing duplicate parens):
-% $f_{X}$ does not depend on $Y$ (i.e., $f_X(\ldots, y, \ldots) =
-% f_X(\ldots, y', \ldots)$ for all $y, y' \in \V(Y)$) when $X \prec Y$.
-%oli6: a few possibilities:
-% if $X \prec Y$ implies $X$ does not depend on $Y$. 
-% if this is the case whenever $X \prec Y$. 
-% if $X$ does not depend on $Y$ whenever $X \prec Y$. 
-%oli16*: this is an ambiguous definition, and arguably wrong, because of how it treats exogenous variables
-% if $\Pa_M = \Pa_G$ for a directed acyclic graph $G$. 
-% iff there is a total order $\prec$ on $\enV$ such that $X$ does not depend on $Y$ when $X \prec Y$. 
-iff $\Pa_M(X) \cap \enV = \Pa_G(X)$ for some dag $G$ with vertices $\enV$. 
-% iff there is a total order $\prec$ on $\enV$ such that $X$ does not depend on $Y$ when $X \prec Y$. 
-% if the negation of this relation is a directed acyclic graph. 
-%joe4: I on't know what it means to determine the value of each
-%exogenous variable according to this order.  
-%oli5: I thought it was obvious that this means you go one by one through the variables in this order, and determine them by applying their corresponding functions.  If this is not obvious, I don't see how your replacement statement is obvious.
-%joe4: Moving up a level, it
-%seems ot me that you're making things too complicated here.
-%oli5: I disagree that what I wrote is more complicated (I think it
-% gives more intuition, yet is shorter). We also still need to bind
-% f $f_\enV$ for several purposes (e.g., the next sentence). But this is
-% not the hill I want to die on, so I'll start from your version.
-% (I've consolidated my version for reference below.)
-\commentout{
-    It is easy to see that,
-    by determining the value of each exogenous variable according to this order,
-    $\mathcal F(\mat u)$ is a singleton for acyclic models, in which case
-    $\U$ determine $\enV$ via a function $f_{\enV} : \V (\U) \to \V(\enV)$.
-}
-% It is easy to see that,
-% in an acyclic SEM, 
-In an acyclic SEM, it is easy to see that 
-a setting of the exogneous variables determines the
-values of the endogenous variables
-%oli14: reminding of this notation, because it will come in handy to refer to this property more briefly than the English above. 
-(symbolically: $M \models \U \tto \enV$).
-%oli5: adding this, because we use the notation below. (I still like my approch better, but I can live with this once we define $f_{\enV}$.)
-%oli5.2: the extra bit I added was clunky and long. Making it shorter, but like I had before.
-% ; let $f_{\enV} : \V (\U) \to \V(\enV)$ be a function capturing this determination.
-%oli6:
-% by a function $f_{\enV} : \V (\U) \to \V(\enV)$.
-%oli8: no longer used; I know you dislike it; we can now safely delete.
-% let  $f_{\enV} : \V (\U) \to \V(\enV)$ capture this relationship.
-% \begin{remark}
-%     This definition depends heavily on variable identity.
-%         This is an artificial limitation, and due to the fact that there is precisely
-%         one equation per variable.
-%     We illustrate with an example construction.
-%     Given a SEM $(\U, \enV, \mathcal F)$,
-%     let's construct a new SEM $(\U, \enV \sqcup \enV, \mathcal F')$, with two copies of each endogenous variable $X \in X$: one which we call $X.0$, and one which we call $X.1$.
-%     How shall we set the equations?
-%     \[
-%         F'_{X.0}(\mat u, \mat x.0, \mat x.1) = F_X(\mat u, \mat x.0)
-%     \]
-%     Intuitively, all of these should be true.
-%
-%     \TODO
-% \end{remark}
-%oli8: merging paragraphs.
-%
-A \emph{probabilistic SEM} (PSEM)
-%oli2: compressing and changing \nu to P to avoid confusion. (\nu
-% changed to P later on silently without marking.)
-% $\mathcal M = (\U, \enV, \mathcal F, \nu)$ is a SEM in which
-%oli8: shortened
-% $\mathcal M = (\U, \enV, \mathcal F, P)$ 
-$\mathcal M = (M, P)$ 
-is a SEM,
-%joe8: As I've said repeatedly, yoyr quest for precision will (a)
-%confuse the reader and (b) is misguided.  If you can explain to
-%Spencer why you need this and he's convinced, then I'd be willing to
-%diss it further.  If your goal is to snow the reader, you're doing well.
-%oli19: I've convinced Spencer that it creates a big technical problem if we don't assume variables are measurable.  However, I'm willing not to say it out loud here if we leave in the parenthteical early on when we defined a variable as taking on a value from "a (measurable) set of possible values"
-%joe14*: One author convincing a second author of something when the
-%third author is still unconvinced is absolutely, positively not the
-%basis for adding it to a paper.  Do you really not see how absurd
-%your coment below is?  Since it seems you're reoved "measurable", it
-%seems that we've converged.
-%oli20: I've removed "measurable" here, and put "(finite)" earlier in section 2 (because it will make the discussion about entropy a thousand times simpler).  I mentioned Spencer here not as a basis for forcefully changing the paper, but rather because above you say "If you can convince Spencer, I'd be willing to discuss it further". 
-% in which $\V(Z)$ is measurable for all $Z \in \U \cup \enV$,
-% (in which all variables have measurable domains)
-together with a probability 
-%oli21: shaving
-% measure
-$P$ over the exogenous variables.
-%
-% If $M = (\U, \enV, \mathcal F, \nu)$ is an acyclic PSEM,
-\commentout{
-If $\cal M$ is acyclic, then it
-    determines a 
-    distribution over the endogenous variables $\enV$,
-    by the pushforward of $P(\U)$ through
-    the function $f_{\enV}$.
-    % $f_{\enV}$.
-}%
-%joe4*: I don't understand your notation, and find it *far* too complicated.
-%oli5: I fixed a typo that should help you understand the notation. I don't think the notation is at all complicated here, and for people like me, the notation is better than the words.  But I'm trying to cut things, so and what you wrote is shorter, so I'll write something based on your version.
-\commentout{
-    In this case, $P$ extends uniquely to a joint distribution
-    $\nu(\U, \enV) = P(\U) \delta\! f_{\enV}(\enV \mid \U)$, where the notation $\delta g(B|A)$ describes the (deterministic) cpd
-    %oli1:
-    % that corresponds to the function $f : \V \! A \to \V \! B$.
-    %oli5: here's one reason for confusion: a typo in which I replaced f with g.
-    % that corresponds to the function $f : \V (A) \to \V (B)$.
-    that corresponds to the function $g : \V (A) \to \V (B)$.
-}%
-%oli5: your version, which I've improved
-%oli6: and then later merged with the previous setnence
-{%
-    %oli5: What is the point of "easily"?  Also, this distribution over the exogenous variables has a name. 
-    % It easily follows that a distribution on the exogenous variables $\U$ can be
-    %oli14: previously broken sentence. Adding a sensible first part. 
-    When $\mathcal M \models \U \tto \enV$ 
-    %oli21: can't afford the extra reminder; we just defined this
-    \vfull{%
-    (such as when $M$ is acyclic)%
-    },
-    the distribution
-    %oli6:
-    % It follows that $P(\U)$  
-    $P(\U)$
-    %oli5:
-    % extended uniquely to a distribution on $\U \times \enV$.    
-    extends uniquely to a distribution over $\V(\enV \cup \U)$.    
-}%
-%joe4*: what does "correspond" mean?  You haven't defined it.  (I know
-%what you mean, of course, but a reader can't read your mind.  Rewrote
-%oli5: I don't understand why you're asking such questions. I define it immediately below. Also, there's an easy fix here: replace "correspond" with "extend". Or, as you do, below, with "induce".
-% A cylic PSEM, however, may correspond to more than one such distribution, or none at all.
-A cyclic PSEM, however, may induce more than one such distribution, or none at all.
-In general, a PSEM $\cal M$
-induces a (possibly empty) convex set of distributions over $\V(\U \cup \enV)$.
-This set is defined by two (linear) constraints:
-the equations $\mathcal F$ must hold with probability 1, and
-\unskip, in the case of a PSEM,
-the marginal probability over $\U$ must equal $P$. 
-% Formally, for a PSEM $\mathcal M = (\U, \enV, \mathcal F, P)$, define
-%joe4*: this notation will only confuse th rader.  If you're going to
-%keep it (and I see no reason to), you have to explain it better.
-%oli5: I can run with your replacement explanation in English, but I find the symbolic version far more satisfying and precise. There is value to having both.  English is full of ambiguities, and I don't want definitions like this one to rest on interpretation. I've already compiled it to math, for the reader who would rather read math than English.  
-\vfull{
-Formally, for a PSEM $\mathcal M = (M, P)$, define
-%oli2: slight notational change that might better suit our uses
-% $\SD[\big]{\mathcal F, \nu} := $\\[-0.2ex]
-$\SD{\mathcal M} := $
-% \\[-0.2ex]
-% \\
-% \vspace{-1.5ex}
-% $\displaystyle
-\[
-    \bigg\{
-    %joe3
-       \nu {\,\in\,} \Delta\!\V(\enV \cup \, \U)
-    %oli3: I agreed to give you your parens for the arguments of \V,
-    % but I still object to putting parens around the arguments to 
-    % \Delta.  In this particular case, the spacing only barely works as is, and the parens make the left half twice as difficult to parse.  The \Delta also fits very nicely well next to the \V.  I suggest we dont think of \Delta$ as being meaningful on its own; define "\Delta\V" together as meaning distributions over values.
-    %oli3: reverting to above
-        % \nu {\,\in\,} \Delta(\V(\enV \cup \, \U))
-            \,\bigg|\!
-        \begin{array}{l}
-            %oli2: swapped order of two equations to match English
-            \forall Y \!\in\! \enV.~~
-            % \text{ and }
-            % \forall Y \in \enV.
-            % \\
-            \nu\Big( f_Y(\mathcal U,
-                % \enV {\setminus}\{Y\}
-                \enV {-} Y
-            ) \,{=}\, Y\Big) \,{=}\, 1
-            % \\ ~\text{for all $Y \in \enV$}
-            ,
-            \\[0.2ex]
-            % \qquad
-            \nu(\U) = P(\U)
-        \end{array}\!\!
-        \bigg\}
-% $
-% \vspace{-1ex}
-\]
-and define $\SD{M}$ for an ``ordinary'' SEM $M$ in the same way,
-    except without the constraint involving $P$.
-% This definition might be clarified if we unpack it slightly
-% The final line may be difficult to read;
-% To unpack the last line:
-%oli2: expanding
-% To unpack the first constraint:
-%oli3: essentially reverting
-% The other constraint may be harder to parse. Unpacking it, 
-To unpack the other constraint,
-observe that
-% $f_{Y}(\U, \enV \setminus \{Y\})$
-$f_{Y}(\U, \enV - Y)$
-is a random variable
-%oli2: should we hide this, because it's the only sample space in sight?
-%joe3: I don't feel strongly about it
-on the outcome space $\V(\enV,\U)$,
-and that it
-%joe3*: I find this really confusing.  I have never thought of Y as a
-%random variable that takes inputs from \U and X-\{Y\}.  I can't
-%imagine that anyone other than you has either.   If I were to think of it
-%as a function all, it would be a function of the context.  At a bare
-%minimum, this needs much more comment.
-%oli3: What else is there to say?  You're also making it more complicated than it needs to be.  Every function f_Y is a function of \U and \enV, and so all of these functions are variable for the same sample space \V(\U,\enV) which is the same as the sample space of the distribution \nu.  It's not that each function is a special random variable with a restricted sample space. In any case, your way of thinking about it is totally compatible with this one. As a function of the context, f_Y is a function \U -> (\enV -> Y). But we still need to say that, according to the distribution $\nu$, the equation always holds.  But now you need to specify "always" with respect to the marginal on \enV.  I think this approach to thinking of what's going on is not just clunkier, but also less standard. It's far cleaner just to use the sample space \V(\U,\enV) throughout. 
-has the same value as $Y$ is an event
- % of interest that must always occur
-which, according to the equation $f_Y$,
-must always occur.
-}%
-% In a probabilistic context such as this one, a (set of) variable(s) $\mat X \subseteq \U \cup \enV$ is also a \emph{random variable}, i.e., a function from the sample space $\Omega = \V(\enV \cup \U)$ to the range $\V \mat X$, by projection.
-% This makes $F_X(\mathcal U, \enV - \{ X \}) = X$,
-% an event $\{ (\mat u, \mat x) :  \mat u \in \V\U, \mat x \in \mathcal F(\mat u) \} \subseteq \Omega$, and hence we can require that it has probability 1, which is the second condition above.
-%%% END MATERIAL LIFTED FROM CAUSAL MODEL INTRO %%%
-Given a 
-%oli21: we don't use the generality anymore for ordinary SEMs, I think
-% (P)SEM 
-PSEM
- $\mathcal M$, let $\SD{\mathcal M}$ consist of all 
-joint distributions $\nu(\U, \enV)$ that satisfy the two constraints above
-%cutting down
-\vfull{%
-%oli21: this is clearly implied,  not helping the reader, and long (and unused, I think)
-(or just the first of them, in the case of a non-probabilistic SEM).
-%oli21: this is not as useful as the next sentence, which subsumes it; cutting for space. 
-$\SD{\cal M}$ can be thought of as the set of distributions compatible
-wth $\cal M$. It
-}%
-%oli21: merging sentences
-\unskip; this set
-captures the behavior of $\cal M$ in
-the absence of interventions.  
-%oli14: defining what it means to "arise", because it will be easier and shorter this way.
-A joint distribution $\mu(\mat X)$ over $\mat X \subseteq \enV \cup \U$ \emph{can arise from} a (P)SEM $\mathcal M$ iff there 
-is
-% exists
-some $\nu \in \SD{\mathcal M}$ whose marginal on $\mat X$ is $\mu$.
-%oli16: some extra words, for clarity, brought on by Spencer's comment
-%joe8*: This is a distraction.  Readers won't havea clue what youy
-%eabn y "set-of-distribution semantics".  You should have to explain
-%it.  I cut this
-%oli19: OK; I'll leave it cut, but we may want to revisit it depending on how much we talk about PDGs.
-\commentout{
-We remark that a (P)SEMs $\cal M$ is naturally a special case of a PDG, and that $\SD{\mathcal M}$ is the set-of-distributions semantics of that PDG. 
-}
-% Keep in mind that $\SD{\cal M}$ captures the behavior of $\cal M$ in the absence of intervention. 
-% While much of causality is about the effects of intervention, .
-%oli5: this is not an efficient use of space; moved the critical part above.
-\commentout{
-    For a SEM $M$, we take $\SD{M}$ to consist of all 
-    %oli5:
-    % distributions in $\SD(M,P)$ for some distribution $P$ on the exogenous variables of $M$; 
-    distributions $\nu \in \SD{M,P}$ for some distribution $P$ on the exogenous variables of $M$; 
-    equivalently
-    %oli5:
-    % SDM $M$ consists of all
-    $\SD{M}$ consists of all
-    distributions that satisfy
-    the first of the two constraints above.
-}
-% \TODO[TODO: Move Causality Intro Here]
-
-
-\begin{prop}
-    
-\end{prop}
 
 \subsection{Pseudomarginals and Clique Trees}
 
+Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \cite{wainwright2003tree,wainwright2008graphical,koller2009probabilistic},
+sometimes called a \emph{pseudomarginal} or a \emph{cluster graph (with associated data)}. 
+We will also use them when we develop an inference algorithms for PDGs in \cref{chap:infer}. 
+Belief propogation is a way of calibrating these objects, and effectively is a way of reducing inconsistency. We will return to this in \cref{chap:LIR}. 
+
+
+\subsection{Causal Models}
+    \label{ssec:capture-causal-models}
+    
+A \emph{sturctural equations model} \cite{pearl2009causality} is essentially a collection of deterministic functions, that index variables. Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG. 
+The semantics we have given so far capture the semantics of that causal model in the absence of intervention, but we have not given an analogue of intervention for a PDG, so at this point we cannot yet say anything deeper. 
+
+We will make this precise when we return to causal models in 
+\cref{sec:causal}, 
+% \cref{chap:QIM},
+where we also develop a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibiilty} (the subject of \cref{chap:QIM}), a notion which can be represented with PDGs. 
+
 \subsection{Implicit Neural Representations}
+
+A more modern way to represent knowledge is implicitly, within the parameters of a neural network. 
+But neural networks are often viewed as conditional probability distributions, and hence can be directly included as the quantitative data for an arc of a PDG.
+So too can the other components of machine learning systems such as data, priors, and observations. 
+Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism has a great deal to say about modern neural representations as well.
+
+Visually, it is uncommon to use the notation of graphical models to describe the architecture of neural networks; instead, the standard is to represent operations and layers of a neural network as nodes, and their connections as edges---like a circuit diagram.
+In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.

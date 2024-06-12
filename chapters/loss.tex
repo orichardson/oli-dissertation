@@ -1761,7 +1761,7 @@ It is well known that $\mathrm M_p^w(\mathbf r)$ is increasing in $p$, and stric
 \begin{linked}{prop}{inc-two-gaussians}
 	Consider a PDG containing two (distinct) conditional Gaussian distributions on a variable $Y$, whose parameters can both depend on a variable $X$. Its inconsistency takes the form
 	\begin{align*}
-		\aar**{\!\!\!\!\begin{tikzpicture}[center base]
+		&\aar**{\!\!\!\!\begin{tikzpicture}[center base]
 			\node[dpad0] (Y) {$Y$};
 			\node[dpad0,left=2.4 of Y] (X) {$X$};
 			\node[dpad0,above right=0.6 and 0.8 of X] (mf) {$\mu_1$};
@@ -1796,15 +1796,15 @@ It is well known that $\mathrm M_p^w(\mathbf r)$ is increasing in $p$, and stric
 				(Y);
 			\draw[arr2, -,shorten >=0pt] (sf) to[bend left=25] (C1);
 		\end{tikzpicture}\!} %
-		 \! &=
+		 \\&=
 			\Ex_{D}\left[
     			(\beta_1 \!+\! \beta_2) \log \frac
     				{ \mathrm{QM}_{\hat\beta}(\sigma_1,\sigma_2) }
     				{ \mathrm{GM}_{\hat\beta}(\sigma_1,\sigma_2) }
     			+ \frac12 \frac{\beta_1\beta_2}{\beta_1+\beta_2} \left(\frac{\mu_1- \mu_2}{ \mathrm{QM}_{\hat\beta}(\sigma_1,\sigma_2)}\right)^{\!2} \right]
 		 \numberthis\label{eq:2gaussians} \\
-		 &\hspace{-2cm}
-		 = \frac12 \Ex_{x \sim D} \left[
+		 % &\hspace{-2cm}
+		 &= \frac12 \Ex_{x \sim D} \left[
 		 	\frac{\beta_1 \beta_2}2
 		 	\frac{\Big(f(x) - h(x)\Big)^2}
 		 		{\beta_2 s(x)^2 + \beta_1 t(x)^2}
@@ -1879,9 +1879,9 @@ We now present the promised multi-sample analogs from \cref{sec:variational}.
 
 \Cref{prop:expected-surprise,prop:pdg-elbo-vae-whole} then give us an analog of the visual bounds in the body of the main paper (\cref{sec:variational}) for many i.i.d. datapoints at once, with only a single application of the inequality:
 \begin{align*}
-	- \log \Pr(\xsamp) = - \log \prod_{i=1}^m \left(\Pr(x^{(i)})\right) =
-	- \frac1{m}\sum_{i = 1}^m \log \Pr(x^{(i)})   = &\\
-	\H(\datadist\xsamp) + \aar*{\begin{tikzpicture}[center base]
+	- \log \Pr(\xsamp) = - \log \prod_{i=1}^m \left(\Pr(x^{(i)})\right) &=
+	- \frac1{m}\sum_{i = 1}^m \log \Pr(x^{(i)})   = \\
+	= \H(\datadist\xsamp) + \aar*{\begin{tikzpicture}[center base]
 	   \node[dpad0] (Z) {$Z$};
 	   \node[dpad0,right=0.8 of Z] (X) {$X$};
 	   \draw[arr2, ->] (Z) to[bend left=30]
@@ -2022,8 +2022,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 	\]
 \end{linked}
 
-
-\clearpage
+% \clearpage
 %\begin{append}
 
 \section{Proofs}\label{loss-appendix:proofs}
@@ -2326,17 +2325,17 @@ As promised, we now give the simultaneous generalization of the surprisal result
 	which is quite similar, and has an identical dependence on $y$.
 	To facilitate converting one to the other, we explicitly compute the ratio:
 	\begin{align*}
-		\frac
+		&\frac
 			{\psi(x,y)^{\frac1{\beta_1+\beta_2}} }
 			{\mathcal N\left(y\,\middle|\,g(x),\,
 				\tilde\sigma(x)\sqrt{\beta_1+\beta_2}\right)}
-		&= \frac
+		\\&= \frac
 			{\tilde\sigma \sqrt{2\pi(\beta_1+\beta_2)}}
-			{\sqrt{2\pi}\; s(x)^{\hat \beta_1} t(x) ^{\hat \beta_2}}
-		= \frac
+			{\sqrt{2\pi}\; s(x)^{\hat \beta_1} t(x) ^{\hat \beta_2}} 
+		\\&= \frac
 			{\tilde\sigma \sqrt{\beta_1+\beta_2}}
-			{s(x)^{\hat \beta_1} t(x) ^{\hat \beta_2}} \\
-		&=
+			{s(x)^{\hat \beta_1} t(x) ^{\hat \beta_2}} 
+		\\&=
 		\left(\frac{s(x)t(x)}{\sqrt{\beta_1t(x)^2+\beta_2 s(x)^2}}\right)
 		\frac
 			{\sqrt{\beta_1+\beta_2}}
@@ -2432,15 +2431,16 @@ As promised, we now give the simultaneous generalization of the surprisal result
 			\end{array}
 			+ \xi(x)
 		\right] \\
-		&=\! \Ex_{x\sim D}\left[
+		&=\! \Ex_{x\sim D}\Bigg[
 			(\beta_1 \!+\! \beta_2)
 			\log \sqrt{\frac{ \beta_1\,t(x)^2+\beta_2\,s(x)^2 }{\beta_1+\beta_2}}
 			\begin{array}{l}
 				- \beta_2 \log s(x)\\
 				- \beta_1 \log t(x)
 			\end{array}
+            \\&\qquad\qquad
 			+ \frac12\frac{\beta_1\beta_2}{\beta_1 t(x)^2 + \beta_2 s(x)^2}\, \Big(f(x)-h(x)\Big)^{\!2} \numberthis\label{eq:gauss-finalform}
-		\right]
+		\Bigg]
 	\end{align*}
 	Whew! Pulling the square root of the logarithm proves complex
 	second half of the proposition.
