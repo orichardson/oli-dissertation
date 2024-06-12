@@ -1,6 +1,10 @@
 % What is the problem I'm solving?
 
+%%% POINTS TO TOUCH ON %%%
+% - 
+
 \section{}
+
 
 
 
@@ -9,22 +13,59 @@
 \subsection{Equivalent Representations}
 
 % Suppose I learn that 
-When working with abstract tools for modeling and representation, often it is the case that one way of representing things (representation $R_1$) appears to be clearly more general than another (representation $R_2$).
-To prove this, you show that anything with representation $R_2$ can be converted to $R_1$.
+When working with abstract representations, often it is the case that one class of models (representation $R_1$) seems clearly more general than another (representation $R_2$).
+To prove this, you show that anything with representation $R_2$ can be converted to $R_1$; perhaps $R_2$ is even literally a subset of $R_1$. 
 You convince yourself that the relationship is strict, because very little of $R_1$ is in the image of this transformation---and besides, how could you possibly represent a generic element of $R_1$ with $R_2$? 
 But later, you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
+Thus $R_1$ turns out to be equivalent to $R_2$. 
+
+To illustrate, consider an example that will soon appear in the mathematical preliminaries (\cref{chap:prelim}). 
+Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
+Also, hypergraphs clearly are generalization of graphs; only the special case where hyperedges have two vertices correspond meaningfully to graphs. 
+So, chaning these together, one might reasonably assume that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet they are naturally isomorphic. 
+% This pattern will be a recurring theme in this dissertation. 
 
 
+%
+%
 % Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
+Probabililistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are a particularly special representation in this regard. 
+Not only can PDGs capture a great many things (\cref{chap:pdg-repr}), but there is no obvious way to generalize them that is not equivalent. 
+There are numerous ways to define PDGs, an numerous seeming generalizations of them, all of which are equivalent. 
+% This makes the representation 
 
-Probabililistic Dependency Graphs (PDGs), the central mathematical tool used in this dissertation, are 
 
-
-\subsection{Epistemic Humility}
-I distinguish between 
+%oli: don't talk about epistemic humility as a separate section if that's the hook.
+% \subsection{Epistemic Humility}
+% I distinguish between 
 
 \subsection{A Division between Quantitative and Qualitative}
 
+% on two levels: a high-level structure
+There is an important conceptual division between concepts at two levels,
+which goes by different names in different circles. 
+% Here, we will largely call the distinction one between \emph{qualitative } 
+
+\begin{center}
+\begin{tabular}{c|c}
+    Qualitative & Quantitative \\ 
+    Structural & Observational \\
+    Values & Types \\ 
+    Theorems & Proofs \\
+    Definitions & Examples \\
+    Schemas & Instances 
+\end{tabular}
+\end{center}
+
+The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
+
+Practically, one benefit of separating these modeling choices is that it allows us to  [[ divide among experts / reason using structure /  ]]
+
+One of the biggest benefits of this separation is that it 
+
+For expressive enough langauges, the lines become blurred. 
+Dependent types require one to think about values, leading to can get runtime errors at compile time. 
+PDGs, too, blur this line.  We will see that it is possible to define variables that correspond to specific values of a variable (\cref{?})
 
 \commentout{
 \subsection{Not Nouns, but Verbs}
@@ -55,7 +96,7 @@ The whole point of formalism is to support reasoning and thought,
     in a way that aids precision; if it is too cumbersome to use properly,
     perhaps we would be better off with another formalism.
     
-    Either it is too cumbersome to spea
+Either it is too cumbersome to spea
 
 
 \section{Overview of Results}

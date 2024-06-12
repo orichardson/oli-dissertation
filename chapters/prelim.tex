@@ -1,3 +1,4 @@
+    \label{chap:prelim}
 
 \subsection{Basic Notation}
 If $A$ is a finite set, we write $\#A$ or $|A|$ for its cardinality.
@@ -344,3 +345,25 @@ a ``quantitative/observational'' aspect,
 
 A qualitative BN, for example, is a directed graph whose semantics are given in terms of independencies: any variable $X$ is independent of its non-descendents, given the values of its parents, $\mathbf{Pa}\, X$.  
 A quantitative BN, then, includes both that directed graph, and also each variable $X$ to a conditional probability distribution $\Pr_X(X|\mathbf{Pa}\, X)$.
+
+\section{An Ode to Relative Entropy}
+
+In this dissertation, we will derive a 
+
+Relative entropy is extremely special, and arguably exactly the
+appropriate measure of discrepancy between belief and reality.  It has
+a clear information theoretic interpretation as communication overhead
+from an incorrect belief.  There are many nice axiomatizations of it;
+some important ones include Renyi's, Tom Leinster's result showing
+that it is the only function satisfying three trivial regularity
+properties and the chain rule, and this characterization as the unique
+functor from statistical maps to the additive monoid $[0,\infty]$, which
+might be particularly persuasive to a category theorist.  It is the
+only statistical divergence that is both a Bregman divergence and an
+f-divergence.  Its Hessian is the Fisher metric, which is the unique
+metric tensor that is invariant under sufficient statistics. In that
+geometry, I have recently shown that gradient flow of relative entropy
+with respect to its first (``belief'') argument amounts to
+multiplicative interpolation of probability measures, while gradient
+flow of relative entropy with respect to its second (``reality'')
+argument amounts to additive interpolation. 

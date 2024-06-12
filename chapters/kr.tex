@@ -1183,13 +1183,13 @@ Belief propogation is a way of calibrating these objects, and effectively is a w
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
     
-A \emph{sturctural equations model} \cite{pearl2009causality} is essentially a collection of deterministic functions, that index variables. Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG. 
-The semantics we have given so far capture the semantics of that causal model in the absence of intervention, but we have not given an analogue of intervention for a PDG, so at this point we cannot yet say anything deeper. 
+A \emph{sturctural equations model} \cite{pearl2009causality} is essentially a collection of deterministic functions, that index variables.
+Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG. 
+When we do so, the PDG semantics described in \cref{sec:semantics} capture the behavior of causal model in the absence of intervention.
+We have not yet given an analogue of intervention for a general PDG, although it's straightforward to encode interventions by altering the functions in the usual way (i.e., replacing them with constants).
+We will make all of this precise in \cref{sec:causal}.
 
-We will make this precise when we return to causal models in 
-\cref{sec:causal}, 
-% \cref{chap:QIM},
-where we also develop a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibiilty} (the subject of \cref{chap:QIM}), a notion which can be represented with PDGs. 
+More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibiilty} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
 
 \subsection{Implicit Neural Representations}
 
