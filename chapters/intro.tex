@@ -4,53 +4,85 @@
 % - 
 
 \section{In Defense of Inconsistency}
+% \section{In Defense of Our Villain}
 
-If you ever want to be right, it is important to acknowledge that you might now be wrong.  And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could be fundamentally misguided about how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in people and institutions that seek to manipulate you. Worst of all, your own internal calculations may not even be self-consistent.
+\begin{quotation}
+    ``A man with one watch always knows the time;
+    a man with two watches is never sure.''
+    \\
+    \hfill
+\end{quotation}
 
+If you ever want to be right, it is important to acknowledge that you might now be wrong.  And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could have a fundamentally misguided understanding of how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in those that seek to manipulate you. 
+Most terrifying at all, your own internal calculations may not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
-The foundations of microeconomics have taught us that we are entitled to our own tastes (and beliefs, to some extent), but only if they at least adhere to an internal logic.
-Otherwise we can be easily cheated \cite{RAT}, manipulated \cite{explosion}, and humiliated \cite{logicalfalacy, emptysetthesis}.
+The foundational principles of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
+For without one, we risk being swindled \cite{RAT} or manipulated \cite{explosion}, if not humiliated \cite{logicalfalacy,emptysetthesis,politicians}.
 
 That is why theoretical computer scientists are careful to prove things about clearly defined models,
 and it is why applied computer scientists build artificial agents that are are consistent by construction:
   it grants an invulnerability to our one common enemy: inconsistency.
-
+%
 Yet this invulnerability comes with shackles.
 Would \emph{you} trade your freedom to think in weird and backwards ways, to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
 
 In order to always present a consistent front, it is necessary to fully process new information before moving on. Mulling is prohibited, as
 is waiting for clarification.
 Half-baked ideas are a nonstarter.
-This regimented consistency-first lifestyle works very well when your observations only tell you're mistaken in the margins and only need to update a few parameters here and there.
+This regimented consistency-first lifestyle works well if you are only mistaken in the margins, and need only to occasionally update a few parameters.
 But what if you're wrong in a more fundamental way?
-Can you imagine how hard it would be to reconceptualize things without ever venturing into an inconsistent state?
-Imagine having to seriously refactor a large codebase, with an interface that only allows you to see code that compiles.
+Can you imagine how hard it would be to learn to see things completely differently, without ever venturing into an inconsistent state?
+Imagine having to implement a substantial refactor of a large codebase, with an interface that only allows you to see code that compiles.
 So if (by no fault of your own) you do happen to be wrong about how the world works---that is, really, fundamentally wrong---then taking on inconsistency may be worthwhile.
 
-By way analogy, we all agree debt is bad, but would you willingly give up your freedom to take on debt?
-Many of the most powerful people and institutions in this world would not.
-Running a budget surplus works well, until you fall ill or need to buy a house.
+% By way of analogy, we all agree debt is bad, but would you willingly give up your freedom to take on debt?
+% Many of the most powerful people and institutions in this world would not.
+% Running a budget surplus works well, until you fall ill or need to buy a house.
+
+In some sense, the opposite of inconsistency is \emph{redundancy}, which engineers and computer scientists agree is generally positive. 
+% Another problem consistent by construction is that they also have no redundancy, which makes them fragile.
+% Apparently unfazed by the prospect of representing inconsistency, the cryptographers distributed systems people 
+But consistent-by-construction representations are also redundancy-free, by construction. 
+% The only way to make sure your beliefs cannot conflict is to only have one perspective on any 
+For if there is no opportunity for internal conflict, then there is also no opportunity for internal agreement. 
+% The only way to eliminate the possibility  opportunity for internal conflict, then there is also no opportunity for internal agreement. 
 
 For analogous reasons, modern AI systems have been slipping away from the consistency that they aspire to.
 For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
-The priors are typically inconsistent with the data, which is arguably the point.
-The result is a far more robust learning process, both theoretically \cite{ftrl} and practically \cite{regularizers}
+The priors are typically inconsistent with the data (which is arguably the point), although neither is ever modified. 
+Still, the result is a far more robust learning process, both theoretically \cite{ftrl} and practically \cite{regularizers}
 %
 % (maybe more?)
+% Perhaps clearer examples arise when people use multiple networks together, such as  
+Even clearer examples of inconsistency arise in variational inference, 
+    and when combining multiple networks in unusual structures \cite{cyclegan,kingma2013autoencoding}.
+In these cases, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
+    and tolerating inconsistency is critical for the learning process.
 %
-These techniques are billed as more efficient approximations to the consistent thing we really mean.
-But I argue that we should just call them what they are: inconsistent belief states.
+These techniques are billed
+% to our Bayesian overlords 
+as efficient approximations (i.e., cheap knockoffs) to the consistent thing we really mean.
+But why perpetuate these unrealistic rationality standards?
+I argue that we should just call them what they are: (possibly) inconsistent belief states.
 
+Doing so intelligently unlocks a beautiful theory of probabilistic modeling, that unifies a broad range of concepts, representations, and algorithms across artificial intelligence, and the theory of rational mind. 
+Make no mistake: inconsistency is still bad.
+% Indeed, it is the one true villain
+% In fact, it is the only thing we view as bad.
+Indeed, our measure of it is the only conception of ``bad'' needed to do much of machine learning (\cref{chap:one-true-loss,chap:LIR}).
+There is no question that chronically exhibiting a high degree of inconsistency is problematic.
+%
+Yet, as with all internal conflict, it is better to engage with it and recognize it as a catalyst for positive change, 
+than to avoid it entirely. 
 
-It is said that a man with two watches never knows the time.  But a man with only one watch
-
-The  of inconsistency is redundancy.
-
-
+% People, institutions, cultures, institutions of all shapes and sizes, 
+%
+It is said that a man with two watches never knows the time.  
+But is a man with only one watch really better off?
 
 
 \section{Themes and Motifs}
-
+%
 \subsection{Equivalent Representations}
 
 % Suppose I learn that 
@@ -67,25 +99,29 @@ So, chaning these together, one might reasonably assume that bipartite graphs ar
 % This pattern will be a recurring theme in this dissertation. 
 
 
-%
-%
 % Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
-Probabililistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are a particularly special representation in this regard. 
-Not only can PDGs capture a great many things (\cref{chap:pdg-repr}), but there is no obvious way to generalize them that is not equivalent. 
-There are numerous ways to define PDGs, an numerous seeming generalizations of them, all of which are equivalent. 
-% This makes the representation 
+Probabilistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are a particularly special representation in this regard. 
+Not only can PDGs capture a great many things 
+% (\cref{chap:pdg-repr,chap:repr-tools})
+\unskip, but they also capture most of the ``obvious generalizations'' of them that we could have wanted. 
+If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many variants of TMs aimed at extending their expressive power: ``generalized'' TMs that have multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary Turing Machines. 
 
 
 %oli: don't talk about epistemic humility as a separate section if that's the hook.
 % \subsection{Epistemic Humility}
 % I distinguish between 
 
-\subsection{A Division between Quantitative and Qualitative}
+% \subsection{A Division between Quantitative and Qualitative}
+\subsection{Qualitative and Quantitative}
+
+\TODO[ TODO: fix this subsection; it is still very rough ]
 
 % on two levels: a high-level structure
-There is an important conceptual division between concepts at two levels,
-which goes by different names in different circles. 
+There is an important conceptual division,
+which goes by different names in different communities. 
 % Here, we will largely call the distinction one between \emph{qualitative } 
+In computer science, it is most commonly known as the difference between types and values.
+Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information (although both can be numerical), or alternatively as the divide between \emph{structural} and \emph{observational} information. 
 
 \begin{center}
 \begin{tabular}{c|c}
@@ -100,13 +136,19 @@ which goes by different names in different circles.
 
 The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
 
-Practically, one benefit of separating these modeling choices is that it allows us to  [[ divide among experts / reason using structure /  ]]
+Both kinds of information are important, and they are fundamentally very different. The former is about the graph structure, and the latter is about its annotation. Put differently (as we will see in \cref{chap:PDG-cat}), the former is a conceptual shape, and the latter interprets that shape in the language of probabilities and confidences. 
 
-One of the biggest benefits of this separation is that it 
+% One unusual feature of PDGs is that the qualitative information has a numerical weight. 
+Different experts may have different relative strengths.
+For instance, one might want to trust one person to design a study to determine what causes what, and another person to independently design experiments aimed at determining the numerical probabilities. 
 
-For expressive enough langauges, the lines become blurred. 
+% Practically, one benefit of separating these modeling choices is that it allows us to 
+%  [[ divide among experts / reason using structure /  ]]
+% One of the biggest benefits of this separation is that it 
+
+For expressive enough languages, the lines become blurred. 
 Dependent types require one to think about values, leading to can get runtime errors at compile time. 
-PDGs, too, blur this line.  We will see that it is possible to define variables that correspond to specific values of a variable (\cref{?})
+PDGs, too, blur this line.  We will see that it is possible to define variables that correspond to specific values of a variable (\cref{?}).
 
 \commentout{
 \subsection{Not Nouns, but Verbs}
@@ -129,15 +171,22 @@ Then, in 20
 
 
 \subsection{Mathematical Precision for Informal Reasoning}
-People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with deep foundations. 
-
+People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with many layers of definitions. 
+%
+The hallmark of a good formalism combined with good notation is that it supports a user in manipulate the concepts quickly and intuitively, yet precisely.
+% Two particularly successful representations, for which I have only the highest respect, are for are string diagrams for operating with symmetric monoidal categories, and 
+% To my eyes, a primary strength of the formalism we develop in this dissertation 
+% This is a sign that the formalism could be improved.
+% The whole point of formalism is to support reasoning and thought, 
+%     in a way that aids precision; if it is too cumbersome to use properly,
+%     perhaps we would be better off with another formalism.
     
-This is a sign that the formalism could be improved.
-The whole point of formalism is to support reasoning and thought, 
-    in a way that aids precision; if it is too cumbersome to use properly,
-    perhaps we would be better off with another formalism.
-    
-Either it is too cumbersome to spea
+% Either it is too cumbersome to spea
 
+PDGs aim to be such a representation for manipulating probabilities.
+Some of the key reasoning principles have been combined to form \cref{chap:reason}.
+But a keen reader will find examples of how PDGs formalize intuitive probabilistic reasoning throughout. 
 
 \section{Overview of Results}
+
+\TODO

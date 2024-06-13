@@ -10,16 +10,21 @@ Define the self-consistency of a PDG to be
 \[
     \Xi(\dg M) := \mathfrak\exp( - \aar{\dg M}_\gamma). 
 \]
-Note that $\Xi(\dg M)$
 
-\begin{prop}
+Note that $\Xi(\dg M)$
+% \begin{prop}
 \begin{enumerate}
-    \item If $E$ is an event, then $\Xi(E) = \begin{cases}
+    \item If $E$ is an event, then $\Xi(E) = {\singlespacing\begin{cases}
         0 & \text{ if } E = \emptyset \\
         1 & \text{ if } E \ne \emptyset
-    \end{cases}$
+    \end{cases}}$
+
     \item If $\mu$ is a probability distribution, and $U$ is an event, 
         then $\Xi(\mu + U) = \mu(U)$.
+    
     \item If $\Plaus$ is a Dempster-Shafer probability measure, and $U$ is an event, then $\Xi(\Plaus + U) = \Plaus(U)$. 
+
+    \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
+    
 \end{enumerate}
-\end{prop}
+% \end{prop}

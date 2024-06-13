@@ -820,7 +820,7 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
 \left[\kldiv[\Big]{ \mu(Y \mid X {=} x) }{\p_a^{\dg M}(x) } \right] , \]
 	where $\kldiv{\mu}{\nu} = \sum_{w \in \text{Supp($\mu$)}} \mu(w) \log\frac{\mu(w)}{\nu(w)}$ is the 
 	relative entropy from $\nu$ to $\mu$.
-\vfull{
+% \vfull{
 	The (observational) \emph{inconsistency of PDG $\dg M = 
         (\N, \Ar, \mathbb P, \balpha, \bbeta)
         $}, 
@@ -830,10 +830,10 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
         = \inf_{ \mu \in \Delta [W_{\cal V}]} \OInc_{\dg M}(\mu) . 
     \]
     is the minimum possible incompatibility of $\dg M$ with any distribution $\mu$.
-}
+% }
 \end{defn}
 
-\vfull{
+\temphide{
 The idea behind this definition of inconsistency is to choose a
 distribution $\mu$ that minimizes the total number of bits required to
 encode all of the relevant conditional marginals. More precisely, fix a
