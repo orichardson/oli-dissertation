@@ -3,7 +3,48 @@
 %%% POINTS TO TOUCH ON %%%
 % - 
 
-\section{}
+\section{In Defense of Inconsistency}
+
+If you ever want to be right, it is important to acknowledge that you might now be wrong.  And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could be fundamentally misguided about how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in people and institutions that seek to manipulate you. Worst of all, your own internal calculations may not even be self-consistent.
+
+If there is one thing on which we can all agree, it is a contempt for inconsistency.
+The foundations of microeconomics have taught us that we are entitled to our own tastes (and beliefs, to some extent), but only if they at least adhere to an internal logic.
+Otherwise we can be easily cheated \cite{RAT}, manipulated \cite{explosion}, and humiliated \cite{logicalfalacy, emptysetthesis}.
+
+That is why theoretical computer scientists are careful to prove things about clearly defined models,
+and it is why applied computer scientists build artificial agents that are are consistent by construction:
+  it grants an invulnerability to our one common enemy: inconsistency.
+
+Yet this invulnerability comes with shackles.
+Would \emph{you} trade your freedom to think in weird and backwards ways, to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
+
+In order to always present a consistent front, it is necessary to fully process new information before moving on. Mulling is prohibited, as
+is waiting for clarification.
+Half-baked ideas are a nonstarter.
+This regimented consistency-first lifestyle works very well when your observations only tell you're mistaken in the margins and only need to update a few parameters here and there.
+But what if you're wrong in a more fundamental way?
+Can you imagine how hard it would be to reconceptualize things without ever venturing into an inconsistent state?
+Imagine having to seriously refactor a large codebase, with an interface that only allows you to see code that compiles.
+So if (by no fault of your own) you do happen to be wrong about how the world works---that is, really, fundamentally wrong---then taking on inconsistency may be worthwhile.
+
+By way analogy, we all agree debt is bad, but would you willingly give up your freedom to take on debt?
+Many of the most powerful people and institutions in this world would not.
+Running a budget surplus works well, until you fall ill or need to buy a house.
+
+For analogous reasons, modern AI systems have been slipping away from the consistency that they aspire to.
+For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
+The priors are typically inconsistent with the data, which is arguably the point.
+The result is a far more robust learning process, both theoretically \cite{ftrl} and practically \cite{regularizers}
+%
+% (maybe more?)
+%
+These techniques are billed as more efficient approximations to the consistent thing we really mean.
+But I argue that we should just call them what they are: inconsistent belief states.
+
+
+It is said that a man with two watches never knows the time.  But a man with only one watch
+
+The  of inconsistency is redundancy.
 
 
 
