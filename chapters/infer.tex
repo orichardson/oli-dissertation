@@ -340,25 +340,20 @@ a graphical model $\cal M$
 typically
 represents a joint probability distribution $\Pr_{\!\cal M}
  \in \Delta \V\!\X$ over its variables.
-\discard{
-    Although there is often more to the story,
-    it can typically be
-    expressed as a product
-    $\Pr_{\!\cal M}(\X) \propto \prod_{E \in \Ed} \phi_{E}(E)$
-    of factors $\boldsymbol\phi = 
-    \{ \phi_E : \V E \to \mathbb R_{\ge 0} \}_{E \in \Ed}$
-    over a hypergraph $(\X, \Ed)$ closely related to the structure of $\cal M$.
-    For this reason, some authors use the term ``graphical model'' to refer to a tuple $(\X ,\Ed, \boldsymbol\phi)$,
-    i.e., a factor graph.
-    PDGs, however, do not represent probabilities this way.}
-Inference for $\cal M$ is then the ability to calculate cpds $\Pr_{\!\cal M}(Y|X{=}x)$,
+% \discard{
+%     Although there is often more to the story,
+%     it can typically be
+%     expressed as a product
+%     $\Pr_{\!\cal M}(\X) \propto \prod_{E \in \Ed} \phi_{E}(E)$
+%     of factors $\boldsymbol\phi = 
+%     \{ \phi_E : \V E \to \mathbb R_{\ge 0} \}_{E \in \Ed}$
+%     over a hypergraph $(\X, \Ed)$ closely related to the structure of $\cal M$.
+%     For this reason, some authors use the term ``graphical model'' to refer to a tuple $(\X ,\Ed, \boldsymbol\phi)$,
+%     i.e., a factor graph.
+%     PDGs, however, do not represent probabilities this way.}
+Inference for $\cal M$ is then the ability to calculate conditional probabilities
+ $\Pr_{\!\cal M}(Y|X{=}x)$,
 where $X,Y \subset \X$ and $x \in \V\! X$. 
-
-\discard{
-    To do inference in probabilistic model $\cal M$ is to answer probabilistic queries, of the form
-    \textit{``what is the distribution of variables $Y$, given that $X\!=\!x$?''}
-    If $\cal M$ represents the joint distribution $\Pr_{\cal M}$, then the
-    appropriate answer to this question is $\Pr_{\cal M}(Y \mid X\!=\!x)$.}
 
 Many inference algorithms (such as belief propagation),
 when applied to tree-like graphical models,
@@ -409,27 +404,20 @@ $\bmu$ determines a joint distribution by
 which has the property that $\Pr_{\bmu}(C) = \mu_C$ for 
 all
 $C \in \C$.
-\discard{%
-\vfull{A \cactree\ $\bmu$ summarizes the answers to 
-many queries about $\Pr_{\bmu}$ at once. 
-To see why
-in a simple case, note that 
-for an unconditional query about $Y$ contained within a single cluster $C$, we have
-$\Pr_{\bmu}(Y) = \mu_C(Y)$.
-\discard{%
-    Note also that if $\C = \{ \X \}$ just contains one big cluster, 
-    a \actree\ is an explicit joint distribution, reducing queries to summation.}%
-With some care, the general idea can be extended to arbitrary queries 
-    \parencite[see][\S 10.3.3]{koller2009probabilistic};
-    those conditional on evidence $X{=}x$ can be handled
-    by conditioning the clusters that contain $X$,
-    and then recalibrating $\bmu$ with 
-    a standard algorithm like belief propagation.
-    }
-}
 A \cactree\ summarizes the answers to
-queries about $\Pr_{\bmu}$
+many queries about $\Pr_{\bmu}$
 \parencite[see][\S 10.3.3]{koller2009probabilistic}.
+    \unskip\footnote{To see why
+    in a simple case, note that 
+    for an unconditional query about $Y$ contained within a single cluster $C$, we have
+    $\Pr_{\bmu}(Y) = \mu_C(Y)$.
+    With some care, the general idea can be extended to arbitrary queries 
+        \parencite[see][\S 10.3.3]{koller2009probabilistic};
+        those conditional on evidence $X{=}x$ can be handled
+        by conditioning the clusters that contain $X$,
+        and then recalibrating $\bmu$ with 
+        a standard algorithm like belief propagation.
+    }
 Therefore, to answer probabilistic queries with respect to a distribution $\mu$, it suffices to find a \cactree\ $\bmu$ that represents $\mu$, and appeal to standard algorithms.
 
 \textbf{Probabilistic Dependency Graphs.}
@@ -475,7 +463,7 @@ a collection of cpds and causal assertions,
     indicating
     the modeler's confidence in 
     the cpd {\subafalse $\p_a(\Tgt a | \Src a)$},
-    \discard{(as measured by the number of independent observations that support $\p_a$), }
+    % \discard{(as measured by the number of independent observations that support $\p_a$), }
     and
     \item 
     a weight $\smash{\alpha_a \in \mathbb R}$
@@ -484,22 +472,24 @@ a collection of cpds and causal assertions,
     {\subafalse$\Tgt a\mskip-2mu$ on $\Src a\mskip-2mu$}
     expressed by
     $a$.
-    \discard{
-    (as measured by the expected number of independent causal mechanisms corresponding to $a$,
-    that determine $\Tgt a$ given $\Src a$).%
-    }
+    % \discard{
+    % (as measured by the expected number of independent causal mechanisms corresponding to $a$,
+    % that determine $\Tgt a$ given $\Src a$).%
+    % }
     \end{itemize}
-\expandafter\discard\voli{In aggregate, $\balpha = [\alpha_a]_{a \in \Ar} \in \Rext^\Ar$ and $\bbeta = [\beta_a]_{a \in \Ar} \in \Rext^\Ar$ are the vector forms of the weights, and
-    $\mathcal P$ is the set of cpds indexed by $\Ar$.}
+% \expandafter\discard\voli{In aggregate, $\balpha = [\alpha_a]_{a \in \Ar} \in \Rext^\Ar$ and $\bbeta = [\beta_a]_{a \in \Ar} \in \Rext^\Ar$ are the vector forms of the weights, and
+%     $\mathcal P$ is the set of cpds indexed by $\Ar$.}
 If $\bbeta \ge \mat 0$ and $\alpha_a\! > 0$ implies $\beta_a\! > 0$, we
 write $\bbeta \gg \balpha$ and
 call $\dg M$ \emph{proper}.
 Note that  $\bbeta \gg \balpha$ if $\bbeta > \mat 0$.
 \end{defn}
 
+\temphide{%
 One significant advantage of PDGs is their modularity:
 we can combine the information in $\dg M_1$ and $\dg M_2$ 
 by taking the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
+}%
 
 \expandafter\discard\voli{%
     Like other graphical models,
@@ -577,10 +567,10 @@ If the observational and structural information conflict,
 then the distribution(s) that best represent a PDG 
 will depend
 on the importance of structure relative to observation,
-\discard{ This is captured by a trade-off 
-    parameter $\gamma \ge 0$, which 
-    can be used to define the scoring function
-    $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
+% \discard{ This is captured by a trade-off 
+%     parameter $\gamma \ge 0$, which 
+%     can be used to define the scoring function
+%     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
 as captured by a trade-off parameter $\zogamma \in [0,1]$
 that controls the convex combination
 $(1-\zogamma)\OInc + \zogamma \SInc$. 
@@ -614,19 +604,11 @@ in $\dg M$ is to respond to probabilistic queries in a way that is sound with re
 It is not too difficult to see that when $\bbeta \ge \gamma\balpha$, 
  \eqref{eqn:scoring-fn} is strictly convex, which ensures that
  $\bbr{\dg M}^*_\gamma$ is a singleton.
-This paper demonstrates that
+This chapter demonstrates that
 $\zogamma$-inference
-is tractable for such PDGs.
-\discard{%
-    The former is a notational convenience,
-    because for $\gamma \in (0, \infty)$,
-    $\gamma$-inference is just $1$-inference for a
-    slightly different PDG:
-    $\bbr{
-        \balpha, \bbeta}^*_\gamma = \bbr{
-        \gamma \balpha, \bbeta}^*_1$.
-    This paper demonstrates the tractability of
-    1-inference for the specific case of PDGs satisfying $\bbeta \ge \balpha$, which is sufficient to ensure strict convexity of \eqref{eqn:scoring-fn}, and hence a unique optimal distribution.}%
+is tractable 
+% for such PDGs.
+under this condition.
 
 The limiting behavior of the $\zogamma$-semantics as $\zogamma \to 0$,
 which we denote $\bbr{\dg M}^*_{0^+}$ and call the \emph{$0^+$\!-semantics},
@@ -648,11 +630,9 @@ the set of distributions that minimize
 $\OInc_{\dg M}$; the latter  set
 includes
  $\bbr{\dg M}^*_{0^+}$
-\parencite[Prop 3.4]{pdg-aaai},
+% \parencite[Prop 3.4]{pdg-aaai},
+(\cref{prop:consist}; \parencite{pdg-aaai})
 but may also contain other distributions.
-\expandafter\discard\voli{
-One of our main goals is to answer probabilistic queries with respect to $\bbr{\dg M}^*$, which we call \emph{$\epsilon$-inference}, 
-since it coincides with $\gamma$-inference for $\gamma$ equal to an infinitessimal number $\epsilon$.}
 This paper also shows how to efficiently answer queries with respect 
 to the unique distribution in $\bbr{\dg M}^*_{0^+}$, which we call
 \emph{$0^+$\!-inference}.
@@ -692,10 +672,10 @@ The \emph{exponential cone} is the convex set
         \qquad \subset \mathbb \Rext^3.
     \end{aligned}
 \end{align*}
-\discard{\voli{It is also sometimes called the ``relative entropy'' cone, because if $\mat m, \mat p \in \Delta^{n-1} \subset \mathbb R^n$ are points on a probability simplex, then $(-\mat u, \mat m, \mat p) \in K_{\exp}^n$ if and only if $\mat u$ is an upper bound on $\mat m \log (\nicefrac{\mat m}{\mat p})$, the pointwise contribution to relative entropy at each outcome.}}
-Let $K \mskip-2mu := \mskip-2mu K_{\exp}^p \mskip-2mu \times \mskip-1mu
-[0, \infty]^q 
-\subset \smash\Rext^n$ be a product of $p$ exponential cones and $q = n - 3k$ non-negative orthants.
+It is also sometimes called the ``relative entropy cone', for reasons we will see in \cref{sec:minimize-inc}.
+% \discard{\voli{It is also sometimes called the ``relative entropy'' cone, because if $\mat m, \mat p \in \Delta^{n-1} \subset \mathbb R^n$ are points on a probability simplex, then $(-\mat u, \mat m, \mat p) \in K_{\exp}^n$ if and only if $\mat u$ is an upper bound on $\mat m \log (\nicefrac{\mat m}{\mat p})$, the pointwise contribution to relative entropy at each outcome.}}
+Suppose $K  =  K_{\exp}^p  \times [0, \infty]^q 
+\subset \smash\Rext^n$ is a product of $p$ exponential cones and $q = n - 3k$ non-negative orthants.
 An \emph{exponential conic program} is then an optimization problem of the form
 \begin{equation}
     \minimize
@@ -733,24 +713,6 @@ of this form,
 we can easily compile them
 to exponential conic programs even if they do not exactly conform to \eqref{eq:exp-conic-program}.
 
-
-
-
-
-\discard{\color{gray!80!white}
-    \section{AN EXPRESSIVE CLASS OF OPTIMIZATION PROBLMS}
-
-    \begin{itemize}
-        \item
-        Many optimization problems can be effectively solved with
-    \end{itemize}
-
-    \begin{itemize}
-        \item
-        For optimization people: a new class of optimization problems,
-    \end{itemize}
-
-}
 
 \section{Inference as a Convex Program}
     \label{sec:inf-as-cvx-program}
@@ -825,15 +787,6 @@ Consider a PDG with
 only one variable $X$
 with
 $\V\mskip-2mu X = \{1, \ldots, n\}$.
-\discard{\vfull{
-    Suppose further that for every arc $j \in \Ar = \{1, \ldots, k\}$, the cpd $\p_j(X)$ is an unconditional distribution over $X$.
-    That is, $\Tgt j = \{ X \}$, and $\Src j = \emptyset$.
-    Such unconditional probabilities may be identified with vectors $\mat p_j \in [0,1]^n$, and all $k$ of them may conjoined to form a
-    matrix $\mat P = [\,p_{ij}] \in [0,1]^{n \times k}$.
-    A candidate
-    (joint)
-    distribution $\mu(X)$
-    may be represented as a vector $\mat m \in [0,1]^n$.}}
 Suppose further that every arc $j \in \Ar = \{1, \ldots, k\}$
 has $\Tgt j = \{ X \}$ and $\Src j = \emptyset$.
 Then each $\p_j(X)$ can be identified with a vector $\mat p_j \in [0,1]^n$, and all $k$ of them can conjoined to form a matrix $\mat P = [\,p_{ij}] \in [0,1]^{n \times k}$.
@@ -880,9 +833,6 @@ meaning $\mu$ minimizes $\OInc_{\dg M}$.
 We now show how the same construction can be used to find
  a distribution $\mu \in \bbr{\dg M}^*_0$
 for an arbitrary PDG $\dg M = (\X, \Ar, \mathcal P, \balpha, \bbeta)$.
-\discard{\color{gray}Now that we have a taste for how this works in terms of matrices,
-    let's now move up a level,
-    and identify distributions with their simplex representations.}
 To further simplify the presentation,
 for each arc $a \in \Ar$, let
 $\V a := \V(\Src a, \Tgt a)$
@@ -899,25 +849,16 @@ we can regard $\mu(\Tgt a, \Src a)$ and $\mu(\Src a)\p_a(\Tgt a | \Src a)$, both
 as vectors of shape $\V a$.
 As before, we introduce an optimization variable $\mat u$ that packages together
     all of the relevant pointwise upper bounds.
-To that end, consider a 
-vector
+To that end, consider a vector
 $\mat u = [u_{a,s,t}] \in \Rext^{\V\!\Ar}$
 in the optimization problem
-\discard{\begin{align*}
-    \minimize_{\mu, \mat u} \quad
-        \sum_{\mathrlap{(a,s,t) \in \V\!\Ar}} \beta_a \, u_{a,s,t}
-        \quad~~&
-    \numberthis\label{prob:joint-inc}\\[-3ex]
-    &\subjto\quad \mu \in \Delta\V\!\X, \\[-0.3ex]
-    \forall a \in \Ar.~\big({-}{\mat u}_a,\, \mu( \Tgt a,\Src a),&\, \p_a(\Tgt a | \Src a)  \mu(\Src a) \big) \in K_{\exp}^{\V a}
-\end{align*}}%
 {\begin{align*}
     \minimize_{\mu, \mat u} &\quad
         \sum_{\mathrlap{(a,s,t) \in \V\!\Ar}} \beta_a \, u_{a,s,t}
     \numberthis\label{prob:joint-inc}\\
     \subjto&\quad \mu \in \Delta\V\!\X, \\[-0.4ex]
         \forall a \in \Ar.~&\big(-{\mat u}_a,\, \mu( \Tgt a,\Src a),\, \p_a(\Tgt a | \Src a)  \mu(\Src a) \big) \in K_{\exp}^{\V a}
-        .
+        ,
 \end{align*}}%
 where $\mat u_a = [u_{a,s,t}]_{(s,t) \in \V a}$ consists of those
 components of $\mat u$ associated with arc $a$.
@@ -1985,16 +1926,16 @@ Our results fall broadly into three categories:
         \parencite[CIRV1-5 of][Theorem 4.4.4]{halpern2017reasoning} to find that $\mu$ must satisfy:
     \begin{align*}
         \XX  &\CI \XNX \mid \XX \cap \XNX\\
-    \implies\qquad
+    \implies\quad
         (\XX \setminus \mat Z) &\CI (\XNX\setminus \mat Z) \mid (\XX \cap \XNX) \cup \mat Z
             & \big[\,\text{CIRV3}\,\big] \\
-    \implies\qquad
+    \implies\quad
         (\mat X \setminus \mat Z) &\CI (\mat Y \setminus \mat Z) \mid (\XX \cap \XNX) \cup \mat Z
         & \big[\,\text{by CIRV2, as $\mat X \subseteq \XX$ and $\mat Y \subseteq \XNX$}\,\big] \\
-    \implies\qquad
+    \implies\quad
         (\mat X \setminus \mat Z) &\CI (\mat Y \setminus \mat Z) \mid \mat Z
         & \big[\,\text{since $(\XX \cap \XNX) \cup \mat Z = \mat Z$}\,\big] \\
-    \iff\qquad
+    \iff\quad
         \mat X &\CI \mat Y \mid \mat Z
         & \hspace{-4em}\big[\,\text{standard; e.g., Exercise 4.18 of \textcite{halpern2017reasoning}}\,\big] \\
     \end{align*}
@@ -2041,31 +1982,32 @@ Our results fall broadly into three categories:
     \label{proof:joint-inc-correct}
     Suppose that $(\mu, \mat u)$ is a solution to \eqref{prob:joint-inc}.
     The exponential cone constraints ensure that, for every $(a, s,t) \in \V\!\Ar$,
-    $$
-        u_{a,s,t} \ge \mu(s,t) \log \frac{\mu(s,t)}{\p_a(t|s)\mu(s)}
-    $$
+    \[
+        u_{a,s,t} \ge \mu(s,t) \log \frac{\mu(s,t)}{\p_a(t|s)\mu(s)},
+    \]
     where $\mu(s,t)$ and $\mu(s)$, as usual, are shorthand for $\mu(\Src a{=}s, \Tgt a{=}t)$ and $\mu(\Src a {=} s)$, respectively.
-
+    %
     Suppose, for contradiction, that one of these inequalities is strict at some an index $(a',s',t') \in \V\!\Ar$ for which $\beta_{a'} > 0$.
     Explicitly, this means
-    $$
+    \[
         u_{a',s',t'} > \mu(s_0,t_0) \log \frac{\mu(s',t')}{\p_{a'}(t'|s')\mu(s')}.
-    $$
+    \]
     In that case, we can define a vector $\mat u' = [u'_{a,s,t}]_{(a,s,t)\in\V\!\Ar}$ which is identical to $\mat u$, except that at $(a',s',t')$, it is halfway between the two quantities described as different above.  More precisely:
-    $$
+    \[
         u'_{a',s',t'} = \frac12 u_{a',s',t'} + \frac12 \log \mu(s',t') \log \frac{\mu(s',t')}{\p_a(t'|s')\mu(s')}.
-    $$
+    \]
     Note that $u'_{a',s',t'} < u_{a',s',t'}$,
     and also that, by construction, $(\mu, \mat u')$ also satisfies the constraints of \eqref{prob:joint-inc}.
-    In more detail: for $(a', s', t')$ it doesn't violate the associated exponential cone constraint, as
+    In more detail: at the index $(a', s', t')$,
+    $\mat u'$ does not violate the associated exponential cone constraint
     $$
-        \left( \text{formally:} \quad
+        \left( \text{because}~ 
         u'_{a',s',t'} = \frac12 u_{a',s',t'} + \frac12 \log \mu(s',t')\log \frac{\mu(s',t')}{\p_{a'}(t'|s')\mu(s')}
         >
         \mu(s',t') \log \frac{\mu(s',t')}{\p_{a'}(t'|s')\mu(s')}
         \right),
     $$
-    and $\mat u'$ remains unchanged at the other indices, and so satisfies the constraints at those indices, becasuse $\mat u$ does.
+    and $\mat u'$ equals $\mat u$ at other indices, and therefore satisfies the constraint everywhere else as well.
     But now, because $u'_{a', s', t'} < u_{a',s',t'}$, and $\beta_{a'} >0$, we also have
     \[
         \sum_{(a,s,t) \in \V\!\Ar} \beta_a u'_{a,s,t}
@@ -2431,7 +2373,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
     \begin{align*}
         \bdelta^{\sf T} \mat H(\mu) \bdelta = 0
             \quad\iff\quad\forall x \in \V\!X.\quad
-                \text{either}&~~  (\bdelta_x \ge \mat 0 \text{ or } \bdelta_y \le \mat 0) \text{~~and~~ $|\delta|(Y|x) = \mu(Y|x) $}\\
+                \text{either}&~~  (\bdelta_x \ge \mat 0 \text{ or } \bdelta_y \le \mat 0) \text{~~and~~ $|\delta|(Y|x) = \mu(Y|x),$}\\
                 \text{or }&~~ \delta(x) = 0.
     \end{align*}
 
@@ -2449,15 +2391,18 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
     \begin{align*}
         \bdelta^{\sf T} \mat H(\mu) \bdelta = 0
         \quad&\iff\quad
+            \begin{array}{c}
             (\forall x .~  \bdelta_x \ge \mat 0 \text{ or } \bdelta_x \le \mat 0)
-            \qquad\text{and}\qquad
+            % \qquad\text{and}\qquad
+            \\\text{and}\quad
             \forall (x,y) \in \V(X,Y).~~
                 \delta(x,y) \mu(x) = \delta(x) \mu(x,y)
+            \end{array}
         \end{align*}
 
-    \medskip
-    \hrule
-    \medskip
+    % \medskip
+    % \hrule
+    % \medskip
 
     Finally, we are in a position to prove the lemma.
     Suppose that $\mu_0,\mu_1 \in \Delta\V(X,Y)$ and $(x^*,y^*) \in \V(X,Y)$
@@ -2645,7 +2590,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
     $\nu_{C_{a}}(\Tgt a(c) | \Src a(c))$, in cases where $\Src a(c) \ne 0$.
     Therefore, we calculate the objective to be:
     \begin{align*}
-        \mat 1^{\sf T} \mat u &=
+        &\mat 1^{\sf T} \mat u =
         \sum_{C \in \C} \sum_{c \in \V(C)} \left( \mu_{C}(c) \log \frac{\mu_C(c)}{\Pash_C(c)} -
             \mu_{C}(c) \sum_{a \in \Ar_C} \alpha_a \log \nu_C (\Tgt a (c) | \Src a (c))
             \right)\\
@@ -2660,7 +2605,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
                 \mu_{C_{\!a}}\!(c) \log  \nu_{C_{\!a}}\! (\Tgt a (c) | \Src a (c)) \\
         &= -\H(\Pr\nolimits_{\bmu}) - \sum_{a \in \Ar} \alpha_a \sum_{c \in \V(C)_a}
                 \mu_{C_{\!a}}\!(c) \log { \mu_{C_{\!a}}\! (\Tgt a (c) | \Src a (c))}
-            \qquad\Big[~\text{since $\mu_{C_{\!a}}\!(\Src a(c)) > 0$ whenever
+            ~~\quad\Big[~\parbox{2.5cm}{since $\mu_{C_{\!a}}\!(\Src a(c)) > 0$ whenever
                 $\mu_{C_{\!a}}\!(c) > 0$}~\Big]\\
         &= -\H(\Pr\nolimits_{\bmu}) + \sum_{a \in \Ar} \alpha_a \H_{\Pr_{\bmu}}(\Tgt a | \Src a ) \\
         &= \SInc_{\dg M}(\Pr\nolimits_{\bmu}).
@@ -2805,7 +2750,7 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
         for this particular cone $K$,
     the algorithm begins at the initial point
     \begin{align*}
-        z_0 := (y_0, x_0, \tau_0, s_0, \kappa_0)
+        z_0 &:= (y_0, x_0, \tau_0, s_0, \kappa_0) \\
         \qquad
                     \text{where}\quad
                 x_0 &= s_0 = (\overbrace{\vphantom| 1, \ldots, 1}^{n_{\sf o} \text{ copies}},~
@@ -3111,7 +3056,7 @@ where $\beta^{\max} := \max_{a \in \Ar} \beta_a$ is the largest value of $\beta$
                 \qquad\text{and}\qquad
                 w_{a,s,t} &= \mu_{C_{\!a}}\!(\Src a{=}s)\, \p_a(\Tgt a{=}t\mid\Src a{=}s)
                     \\
-                    \Big(\text{or, more precisely,} w_{a,s,t} = \p_a(\Tgt a{=}t\mid\Src a{=}s) ~~\sum_{\mathclap{\bar c \,\in\, \V(C_a \setminus\{\Src a\})}}~~
+                    \Big(\text{or, more precisely, }& w_{a,s,t} = \p_a(\Tgt a{=}t\mid\Src a{=}s) ~~\sum_{\mathclap{\bar c \,\in\, \V(C_a \setminus\{\Src a\})}}~~
                         \mu_{C_{\!a}}\!(\bar c, s) ~~\Big);
             \end{align*}
             \item for every edge $(C\!{-}\!D) \in \cal T$, and every value $\omega \in \V(C \cap D)$ of the variables that clusters $C$ and $D$ have in common, a linear constraint
@@ -3247,9 +3192,6 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
                 \qquad\Big(\quad
                    = ~~\sum_{\mathclap{\bar c \,\in\, \V(C \setminus \{\Src a, \Tgt a\})}} ~~ \mu_{C_a}(\bar c, s, t) \Big)
             \]
-
-            \discard{\TODO[POSSIBLE ISSUE: doesn't this mean the problem isn't strictly feasible?]}
-
 
             \item a linear constraint for every value $c \in \V(C)$ of every cluster $C \in \C$, to ensure that
             \[
@@ -3486,30 +3428,32 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     We now extend the bounds on $q/(p+\delta^*)$ in both directions, 
     starting with the upper bound. 
     Because $a - \delta \le \Pr(A)$, the RHS of \eqref{eq:bound1} is at most
-    \[
+    \begin{align*}
         \frac{\Pr(A \cap B) + \delta^*}{\Pr(A)}
-        ~=~ \Pr(B|A) + \frac{\delta^*}{\Pr(A)}
+        ~&=~ \Pr(B|A) + \frac{\delta^*}{\Pr(A)}
         ~=~ \Pr(B|A) + \frac{\epsilon}{3}\frac{(a-\delta)}{\Pr(A)}
-        ~\le~ \Pr(B|A) + \frac{\epsilon}{3} \frac{\Pr(A)}{\Pr(A)}
+        ~\\&\le~ \Pr(B|A) + \frac{\epsilon}{3} \frac{\Pr(A)}{\Pr(A)}
         ~<~ \Pr(B|A) + \epsilon.
-    \]
+    \end{align*}
     The analysis of the lower bound (the LHS of \eqref{eq:bound1}) is slightly more complicated, but we still find that
     {\allowdisplaybreaks
     \begin{align*}
-        \frac{\Pr(A \cap B) - \delta^*}{\Pr(A) + 2 \delta^*}
-        &= \Pr(B|A) - \frac{\mu^*(x,y)}{\Pr(A)} + \frac{\Pr(A \cap B) - \delta^*}{\Pr(A) + 2 \delta^*}
+        &\frac{\Pr(A \cap B) - \delta^*}{\Pr(A) + 2 \delta^*}
+        = \Pr(B|A) - \frac{\mu^*(x,y)}{\Pr(A)} + \frac{\Pr(A \cap B) - \delta^*}{\Pr(A) + 2 \delta^*}
         \\
         &= \Pr(B|A) + \frac{\Cancel{-\Pr(A)\, \Pr(A \cap B)} - 2 \delta^* \Pr(A \cap B) + \Cancel{\Pr(A) \Pr(A \cap B)} - \delta^* \Pr(A)}{\Pr(A) (\Pr(A) + 2 \delta^*)} \\
         &= \Pr(B|A) + \frac{ - 2 \delta^* \Pr(B|A) - \delta^* }{\Pr(A) + 2 \delta^*} \\
         &= \Pr(B|A) - \delta^* \Big( \frac{2 \Pr(B|A) + 1}{ \Pr(A) + 2 \delta^*} \Big) \\
         &\ge \Pr(B|A) - \delta^* \frac{3}{\Pr(A)+ \delta^*}
-            \qquad  \Big[\text{ since $\Pr(B|A) \le 1$, and thus $- 2\Pr(B|A) \ge -2$ }\Big]\\
+            \qquad &\mathllap{
+            \Big[\text{ since $\Pr(B|A) \le 1$, and thus $- 2\Pr(B|A) \ge -2$ }\Big]}\\
         & \ge \Pr(B|A) - \delta^* \frac{3}{\Pr(A)}
-            \qquad \Big[ \text{ as eliminating $\delta^*$ makes this more negative }\Big] \\
+            \qquad &\mathllap{
+            \Big[ \text{ as eliminating $\delta^*$ makes this more negative }\Big]} \\
         &= \Pr(B|A) - \frac{\epsilon(a-\delta)}{3} \frac{3}{\Pr(A)}
-            \qquad\Big[ \text{ by definition of $\delta^*$ }\Big]\\
+            \qquad &\mathllap{ \Big[ \text{ by definition of $\delta^*$ }\Big]}\\
         &\ge \Pr(B|A) - \frac{\epsilon \Pr(A)}{\Pr(A)}
-            \qquad\Big[ \text{ since $-(a-\delta) \ge - \Pr(A)$ }\Big]\\
+            \qquad &\mathllap{ \Big[ \text{ since $-(a-\delta) \ge - \Pr(A)$ }\Big]}\\
         &= \Pr(B|A) - \epsilon.
     \end{align*}}
     These two arguments extend the bounds of \eqref{eq:bound1} in both directions.  Chaining all of these inequalities together, we have shown that our procedure returns a number $\mathtt{output}$ satisfying
@@ -3527,15 +3471,16 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     If $m = 1$, then already in the first iteration
     $a > 2 \delta = 2 \epsilon$, so by definition $\delta^* > \frac13 \epsilon^3$.
     Line 6 is just two calls to the procedure, and takes
-    \begin{equation}
+    \begin{align*}
     O\left( \Phi \Big(K_0 + \sum_{i=1}^k K_i \log^i \frac{1}{\delta^*}  \Big) \! \right)
-    =
+    &=
     O\left( \Phi \Big(K_0 +  \sum_{i=1}^k K_i \log^i \frac{3}{\epsilon^3} \Big) \!\right)
-    \subseteq
+    \\&\subseteq
     O\left( \Phi \Big(K_0 + \sum_{i=1}^k K_i \log^i \frac{1}{\epsilon} \Big) \!\right)
     ~\text{time}.
+        \numberthis
         \label{eq:cost-case1}
-    \end{equation}
+    \end{align*}
 
     Now consider the case where $m > 1$.
     Observe that, in the final iteration, $\delta = \epsilon^{2^{m-1}}$.
@@ -3544,11 +3489,11 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     where $\delta' := \epsilon^{2^{m-2}}$ is the value of $\delta$ in the penultimate iteration.
     Together, these two facts give us a relationship between $m$ and $\Pr(A)$:
     \begin{align*}
-        &&3 \epsilon^{2^{m-2}} ~&\ge&~ & \Pr(A) ~&&>~ 3 \epsilon^{2^{m-1}} \\
-        &\iff\qquad&
-        - \log_2 3 - 2^{m-2} \log_2 \epsilon ~&\le&~ - \log_2 & \Pr(A) ~&&<~ - \log_2 3 - 2^{m-1} \log_2 \epsilon \\
-        &\iff\qquad&
-        2^{m-2} ~&\le&~ \Big(\log_2 \frac3{\Pr(A)} \Big) & / \log_2(\nf1\epsilon) ~&&<~ 2^{m-1}
+        &&3 \epsilon^{2^{m-2}} ~&\ge& & \Pr(A) &&>~ 3 \epsilon^{2^{m-1}} \\
+        &\iff~~&
+        - \log_2 3 - 2^{m-2} \log_2 \epsilon ~&\le& - \log_2 & \Pr(A) &&<~ - \log_2 3 - 2^{m-1} \log_2 \epsilon \\
+        &\iff~~&
+        2^{m-2} ~&\le& \Big(\log_2 \frac3{\Pr(A)} \Big) & / \log_2(\nf1\epsilon) &&<~ 2^{m-1}
         .
             \numberthis\label{eq:bound2}
     \end{align*}

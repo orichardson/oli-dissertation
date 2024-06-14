@@ -658,14 +658,19 @@ We now review a some important alternative ways of defining a PDG.
 
 \subsection{PDG Superposition}
 
-The most important operation we on PDGs is the sum,
-	which combines the information in $\dg M_1$ and $\dg M_1$
-	to form a new PDG $\dg M_1 + \dg M_2$.  
-More precisely, this involves forming  the disjoint union of the (hyper)arcs
-	(because more edges should count double), 
-    but we don't want to duplicate variables.
+As illustrated \cref{ex:grok-union}, a significant advantage of PDGs is their modularity:
+we can combine the information in $\dg M_1$ and $\dg M_2$ 
+by taking the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
 
-If we're being extra careful, depending on the variant
+% The most important operation we on PDGs is the sum,
+% 	which combines the information in $\dg M_1$ and $\dg M_1$
+% 	to form a new PDG $\dg M_1 + \dg M_2$.  
+% More precisely, this involves forming  the disjoint union of the (hyper)arcs
+% 	(because more edges should count double), 
+%     but we don't want to duplicate variables.
+
+% If we're being extra careful,
+To be more precise, depending on the variant
 of the definition of a PDG, we might need another definition:	
 \begin{defn}
     % [$\V$-compatibility]
