@@ -192,7 +192,7 @@ $\dg M$'s cpds, and is given by
     \Inc_{\dg M}(\mu)\! := \!\!\!\sum_{\ed aXY}\!\! \beta\ssub L  \Ex_{{x \sim \mu(\mskip-2.6muX\mskip-2mu)}} \kldiv[\Big]{\mu(Y|\, x)}{p_a(Y |\, x)}.
     \label{eq:inc}
 \end{equation}
-\vskip-2ex
+% \vskip-2ex
 Relative entropy $\thickD(\mu\Vert p)$ measures divergence
 between $\mu$ and $p$,
 and can be viewed as the overhead (in extra bits per sample)
@@ -212,11 +212,11 @@ $\aar{\dg M} := \inf_\mu \Inc_{\dg M}(\mu)$.
 This quantity, which does not depend on $\balpha$, is the primary focus of this paper.
 
 The second scoring function defined by a PDG $\dg M$, called the \emph{I}nformation \emph{Def}iciency, measures the {qualitative} discrepency between $\dg M$ and $\mu$, and is given by
-\vskip-3ex
+% \vskip-3ex
 \[
 	\IDef_{\dg M}(\mu) := -\H(\mu) + \sum_{\ed aXY} \alpha\ssub L \H_\mu(Y\mid X).
 \]
-\vskip-2ex
+% \vskip-2ex
 $\IDef_{\dg M}(\mu)$ %
 can be thought of as the
 information
@@ -395,7 +395,7 @@ What if we replace $x$ with an empirical distribution over many samples?
 	and $\xsamp = \{ x_i \}_{i=1}^m$ is a dataset
     with empirical distribution $\datadist\xsamp$, then
 	~~~$\mathrm{CrossEntropy}(\datadist\xsamp, p) = $
-	\vskip-4ex
+	% \vskip-4ex
 	\[
         \frac{1}{m} \sum_{i=1}^m \I_p[X\!\!=\!x_i]
 		=
@@ -436,11 +436,11 @@ Now consider an orthogonal generalization of \cref{prop:pdg-Ix}, in which the sa
 \begin{linked}{prop}{marginal-ll}
 	If $p(X,Z)$ is a joint distribution, then the information content of the partial observation $X=x$
 	is given by
-	\vskip-4ex
+	% \vskip-4ex
 	\begin{equation}
 	 	\I_p[X\!\!=\!x] =
 		 \aar[\Bigg]{
-			\begin{tikzpicture}[center base]
+			\begin{tikzpicture}[center base, scale=1.2]
 				\node[dpad0] (Z) {$Z$};
 				\node[dpad0,right=.5 of Z] (X) {$X$};
 				\coordinate (A) at ($ (X)!.5!(Z) + (0,0.7)$);
@@ -484,10 +484,8 @@ There, cross entropy loss is perhaps even more dominant---and it is essentially 
 			\draw[arr1] (A) -- ++(0,-0.35) -- (Y);
 			\draw[arr2, ->] (X) --  node[below,pos=0.5]{$h$} (Y);
 		\end{tikzpicture}}
-        \begin{aligned}
-            = \frac1{m}\sum_{i=1}^m \log \frac1{h(y_i\,|\, x_i)}&\\
-             - \H_{\datadist\xysamp}(Y | X)&.
-        \end{aligned}
+            = \frac1{m}\sum_{i=1}^m \log \frac1{h(y_i\,|\, x_i)}
+             ~~- \H_{\datadist\xysamp}(Y | X).
 	\]
 \end{linked}
 }
@@ -503,7 +501,7 @@ Simple evaluation metrics, such as the accuracy of a classifier, and the mean sq
     The inconsistency of believing $f$ and $h$ (with any confidences), and a distribution $D(X)$ with confidence $\beta$, is
 	$\beta$ times
 	the log accuracy of $h$. That is,
-	\vskip-4ex
+	% \vskip-4ex
 	\begin{equation}\label{eq:accuracy-pdg}
 		\aar*{\!\!\!\begin{tikzpicture}[center base]
 				\node[dpad0] (Y) {$Y$};
@@ -529,7 +527,7 @@ Simple evaluation metrics, such as the accuracy of a classifier, and the mean sq
         \end{aligned}
 	\end{equation}
 \end{linked}
-\vskip-1.5ex
+% \vskip-1.5ex
 One often speaks of the accuracy of a hypothesis $h$, leaving the true labels $f$ and empirical distribution $D$ implicit.
 Yet \Cref{prop:accuracy} suggests that there is a sense in which
 $D(X)$ plays the primary role: the inconsistency in \eqref{eq:accuracy-pdg} is scaled by the confidence in $D$, and does not depend on the confidences in $h$ or $f$.
@@ -767,7 +765,7 @@ We start with a familiar one.
 	= \beta\, \kldiv pq .
 \]
 \end{prop}
-\vskip-1.3ex
+% \vskip-1.3ex
 This result gives us an intuitive interpretation of the asymmetry of relative entropy / KL divergence, and a prescription about when it makes sense to use it.
 $\kldiv p q$ is the inconsistency of a mental state containing both $p$ and $q$, when absolutely certain of $p$ (and not willing to budge on it).
 This concords with the standard intuition that $\kldiv pq$ reflects the amount of information required to change $q$ into $p$, which is why
@@ -798,7 +796,7 @@ We now consider the general case of a PDG comprising $p(X)$ and $q(X)$ with arbi
         = - (r+s) \log  \sum_x \left(p(x)^{r}\vphantom{\Big|} q(x)^{s}\right)^{\frac{1}{r+s}}.
     \]
 \end{linked}
-\vskip-1ex
+% \vskip-1ex
 
 
 
@@ -856,7 +854,7 @@ every (non-limiting) PDG divergence is a (scaled) R\'enyi divergence.
         \end{tikzpicture}\!}
     \end{align*}
 \end{coro}
-\vskip-1.4ex
+% \vskip-1.4ex
 
 However, the two classes are not identical, because the PDG divergences have extra limit points.
 One big difference is that the reverse KL divergence $\kldiv q p$ is not a R\'enyi divergence $\thickD_\alpha\infdivx p q$ for any value (or limit) of $\alpha$.
@@ -911,9 +909,9 @@ For a start, conditional divergences
  \ns\ns\Big(\ns
  p(\ns Y \ns|x) \ns\ns\,\Big\Vert\,\ns\ns q(\ns Y \ns|x)\!\Big)
 \]
-\vskip-2ex
+% \vskip-2ex
 can be represented straightforwardly as
-\vskip-3ex
+% \vskip-3ex
 \[
 \thickD^{\mathrm{P\mskip-2muD\mskip-1.5muG}}_{(r,s)}\ns(p \,\Vert\, q \,|\, r\ns)
  = \aar*{
@@ -939,7 +937,7 @@ can be represented straightforwardly as
 }
 \,.
 \]
-\vskip-1ex
+% \vskip-1ex
 
 Other structures are useful intermediates.
 \Cref{lemma!}, plus some structural manipulation, gives visual proofs of many divergence properties; \Cref{fig:dpi-vis-proof} features such a proof of the data-processing inequality.
@@ -1081,6 +1079,8 @@ a graphical proof language for it.
 
 \subsection{PDGs and Variational Approximations}
 \label{sec:variational}
+% \def\ELBO{\mathop{\mathrm{E\mskip-0.5muL\mskip-0.5muB\mskip-0.5muO}}}
+\def\ELBO{\mathop{\mathrm{ELBO}}}
 
 We begin by recounting the standard development of the `Evidence Lower BOund' (ELBO), a standard objective for training latent variable models \parencite[\S2.2]{blei2017variational}.
 Suppose we have a model $p(X,Z)$, but only have access to observations of $x$.
@@ -1090,14 +1090,14 @@ The variational approach is as follows: fix a family of distributions $\mathcal 
 $\mathrm{ELBO}_{p,q}(x) := \Ex_{z \sim q} \log \frac{p(x,z)}{q(z)}$.
 This is something we can estimate, since we can sample from $q$. By Jensen's inequality,
 \[
-    \mathop{\mathrm{ELBO}}\limits_{p,q}(x)
+    \ELBO\limits_{p,q}(x)
     =\! \Ex_{q} \log \frac{p(x,Z)}{q(Z)}
     \le  \log \Big[\! \Ex_{q}\! \frac{p(x,Z)}{q(Z)} \Big]\!
     = \log p(x),
 \]
 with equality if $q(Z) = p(Z)$.
-So to find $p$ maximizing $p(x)$, it suffices to adjust $p$ and $q$ to maximize $\mathrm{ELBO}_{p,q}(x)$,%
-    \footnote{or for many iid samples: $\max_{p,q}\sum_{x \in \xsamp}\mathrm{ELBO}_{p,q}(x)$.}
+So to find $p$ maximizing $p(x)$, it suffices to adjust $p$ and $q$ to maximize $\ELBO_{p,q}(x)$,%
+    \footnote{or for many iid samples: $\max_{p,q}\sum_{x \in \xsamp}\ELBO_{p,q}(x)$.}
  provided $\mathcal Q$ is expressive enough.
 
 
@@ -1111,7 +1111,7 @@ appropriate PDG.
 	That is,
     % \vspace{-0.8em}
 	\[
-	-\mathrm{ELBO}_{p,q}(x) =
+	-\ELBO_{p,q}(x) =
 	 \aar[\Bigg]{
 		\begin{tikzpicture}[center base]
 			\node[dpad0] (Z) {$Z$};
@@ -1129,10 +1129,7 @@ appropriate PDG.
 		.
 	\]
 \end{linked}
-\vskip-1ex
-
-
-
+% \vskip-1ex
 
 
 
@@ -1140,9 +1137,9 @@ Owing to its structure, a PDG is often more intuitive and easier to work with th
 To illustrate,
 we now give a simple and visually intuitive proof of the bound traditionally used to motivate the ELBO, via \cref{lemma!}:
 \[
-\log \! \frac{1}{p(\mskip-1.5mux\mskip-1.5mu)} \!=\!\!
+\log  \frac{1}{p(x)} =
 	 \aar*{
-		\begin{tikzpicture}[center base]
+		\begin{tikzpicture}[center base,scale=1.2]
 			\node[dpad0] (Z) {$Z$};
 			\node[dpad0,right=.5 of Z] (X) {$X$};
 			\coordinate (A) at ($ (X)!.5!(Z) + (0,0.7)$);
@@ -1151,9 +1148,9 @@ we now give a simple and visually intuitive proof of the bound traditionally use
 			\draw[arr2, <<-] (X) --  node[left,pos=0.8]{$x$} ++(0.2, 0.8);
 		\end{tikzpicture}
 		}%
-	\!\le\!
-	 \aar*{\!\!
-		\begin{tikzpicture}[center base]
+	\le
+	 \aar*{
+		\begin{tikzpicture}[center base,scale=1.2]
 			\node[dpad0] (Z) {$Z$};
 			\node[dpad0,right=.5 of Z] (X) {$X$};
 			\coordinate (A) at ($ (X)!.5!(Z) + (0,0.7)$);
@@ -1165,7 +1162,7 @@ we now give a simple and visually intuitive proof of the bound traditionally use
                 ++(110:0.9);
 		\end{tikzpicture}
 		}%
-    \!=\! -\!\mathop{\mathrm{E\mskip-0.5muL\mskip-0.5muB\mskip-0.5muO}}\limits_{p,q}(\mskip-1.5mux\mskip-1.5mu).
+    = - \ELBO_{p,q}(x).
 \]
 
 The first and last equalities are \Cref{prop:marginal-ll,prop:pdg-elbo-x} respectively.
@@ -1187,8 +1184,8 @@ One important consideration is the
 \emph{reconstruction error} \eqref{eq:rec}: when we decode an encoded image, we would like it to resemble the original.
 % \vspace{-0.5em}
 \begin{equation}
-	\mathrm{Rec}(x) := \!\!\!\!\! \Ex_{z \sim e(Z|x)} \smash{\underbrace{\mathrm I_{d(\!X\!|z)}(x)\vphantom{\Big|}}_{\mathclap{\left(\;\substack{\text{additional bits required to}\\\text{decode $x$ from its encoding  $z$}}\;\right)}}}
-	\!= \sum_z e(z \,|\, x) \log \frac1{d(x \,|\, z)}\label{eq:rec}
+	\mathrm{Rec}(x) := \!\!\!\!\! \Ex_{z \sim e(Z|x)} \smash{\underbrace{\mathrm I_{d(X |z)}(x)\vphantom{\Big|}}_{\mathclap{\left(\;\substack{\text{additional bits required to}\\\text{decode $x$ from its encoding  $z$}}\;\right)}}}
+	= \sum_z e(z \,|\, x) \log \frac1{d(x \,|\, z)}\label{eq:rec}
 \end{equation}
 % \vspace{0.0ex}
 
@@ -1247,10 +1244,10 @@ We now give a visual proof of the analogous variational bound.
 Let $\Pr_{p,d}(X,Z) := p(Z)d(X|Z)$ be
 the distribution that arises from decoding the prior. Then:
 \begin{align*}
-	\log \frac{1}{\displaystyle\!\mathop{\mathrm{P\mkern-1.5mur}}_{\mathclap{p\mkern-1mu,d}}(\mskip-1.5mux\mskip-1.5mu)\!} \!=\!
+	\log \frac{1}{\displaystyle\mathop{\mathrm{P\mkern-1.5mur}}_{p\mkern-1mu,d}(\mskip-1.5mux\mskip-1.5mu)} =
 	\aar**
-	{$\mkern-1mu$\begin{tikzpicture}
-			[baseline=1.9ex]
+	{\begin{tikzpicture}
+			[baseline=1.9ex,scale=1.2]
 		\node[dpad0] (Z) {$Z$};
 		\node[dpad0,right=.4 of Z] (X) {$X$};
 		\draw[arr2, ->] (Z) to[bend left=50,looseness=1.5]
@@ -1259,11 +1256,11 @@ the distribution that arises from decoding the prior. Then:
 			node[left,pos=0.8,inner sep=2pt]{$x$} ++(0.2, 0.8);
 		\draw[arr2, <-] (Z) --
 			node[right,pos=0.7,inner sep=2pt]{$p$} ++(-0.2, 0.8);%
-	\end{tikzpicture}$\mkern-1mu$}
-	&\!\le\!
+	\end{tikzpicture}}
+	&\le
 	\aar**
-	{$\mkern-1mu$\begin{tikzpicture}
-		[baseline=1.5ex]
+	{\begin{tikzpicture}
+		[baseline=1.5ex,scale=1.2]
 		\node[dpad0] (Z) {$Z$};
 		\node[dpad0,right=.7 of Z] (X) {$X$};
 		\draw[arr2, ->] (X) to[bend left=0]
@@ -1277,8 +1274,8 @@ the distribution that arises from decoding the prior. Then:
 			node[left,pos=0.8,inner sep=2pt]{$x$} ++(0.2, 0.8);
 		\draw[arr2, <-] (Z) --
 			node[right,pos=0.7,inner sep=2pt]{$p$} ++(-0.2, 0.8);%
-   \end{tikzpicture}$\mkern-1mu$}
-   \!=\! \shortminus\!\mathop{\mathrm{E\mskip-0.5muL\mskip-0.6muB\mskip-0.7muO}}\limits_{p,e,d}\mskip-0.2mu(\mskip-1.5mux\mskip-1.5mu).
+   \end{tikzpicture}}
+   = \shortminus\ELBO\limits_{p,e,d}(x).
 \end{align*}
 
 The first and last equalities are \Cref{prop:marginal-ll,prop:pdg-elbo-vae}, and the inequality is \cref{lemma!}.
@@ -1295,7 +1292,7 @@ the `KL term' differently, resulting in a loss function of the form
 \[
 	\beta\text{-}\mathrm{ELBO}_{p,e,d}(x) := - \mathrm{Rec}(x) - \beta \kldiv{e(Z|x)}{p},
 \]
-\vskip-1.5ex
+% \vskip-1.5ex
 which, when $\beta \!=\! 1$, is the ELBO as before. The authors view $\beta$ as a regularization strength, and argue that
 it sometimes helps to have a stronger prior.
 Sure enough:
@@ -1310,11 +1307,12 @@ but with confidence $\beta$ in $p(Z)$.%
 \section{Free Energy as Factor Graph Inconsistency}
     \label{sec:free-energy-fg-inc}
 A weighted factor graph $\Psi = (\phi_J, \theta_J)_{J \in \cal J}$, where each $\theta_J$ is a real-valued weight, $J$ is associated with a subset of variables $\mathbf X_J$, and  $\phi_J : \V(\mathbf X_J) \to \mathbb R$, determines a distribution by
-\vskip-1.4em
+% \vskip-1.4em
+\vspace{-2ex}
 \[
 	\Pr\nolimits_\Psi(\mat x) = \frac{1}{Z_\Psi} \prod_{J \in \cal J} \phi_J(\mat x_J)^{\theta_J}.
 \]
-\vskip-0.7em
+% \vskip-0.7em
 \(
 	Z_{\Psi} %
 \)
@@ -1616,7 +1614,7 @@ If, in addition, we set $\alpha_p, \alpha_{\datadist\xysamp} := 1$ and
 strictly enforce the qualitative picture,
 finally no more squirming is possible, as we arrive at
 $\displaystyle\lim_{\gamma\to\infty}\aar{\mypdg}_\gamma = \mathcal L$.
-\vskip-0.5ex
+% \vskip-0.5ex
 
 In the process, we have given up our ability to tolerate inconsistency by setting all probabilistic modeling choices in stone.
 What's more, we've dragged in the global parameter $\gamma$,

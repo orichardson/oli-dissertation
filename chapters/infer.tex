@@ -1,5 +1,13 @@
 \label{chap:infer}
 
+So far, we have seen that PDGs are a flexible modeling tool that
+    plays two seemingly very different roles.
+On one hand, PDGs specify a joint distribution; in this capacity, they are an especially modular and interpretable generalization of standard probabilistic graphical models.
+On the other hand, PDGs have a natural inconsistency measure; in this capacity, they are a principled model-based way to specify a loss function.
+Yet, even several years after their introduction, there had been no practical way to compute with PDGs in either role: no inference algorithm, and no (provably correct) way to calculate the degree of inconsistency.
+% In this chapter, we address both issues.
+This chapter, based on a paper of the same name \cite{pdg-infer}, resolves both issues.
+
 \newcommand\zogamma{{\mathrlap{\raisebox{-0.1ex}{$\hat{\phantom{x}}$}}\gamma}}
 \newif\ifvfull
     \vfulltrue %
@@ -207,18 +215,19 @@ Finally, we evaluate our implementation. The
 
 \section{Preliminaries \& Related Work}
 
+\commentout{%
 \textbf{Vector Notation.}
 For us, a vector is a map from a finite set $S$, called its 
 \emph{shape},
 to the extended reals $\Rext := \mathbb R \cup \{\infty\}$.
 We write $\mat u := [u_i]_{i \in S}$ to define a vector $\mat u$ by its components.
-\discard{\color{gray!30!white}
-    We will sometimes use superscripts as well, especially when indices depend on one another. For example, if $\dg S$ is a finite set of finite sets, then
-    $[u^S_s]^{S \in \dg S}_{s \in S}$ denotes a vector which has an element
-    for each pair $(S,s)$, satisfying $s \in S \in \dg S$.
-    By supplying just the upper index of such a vector, as in $\mat u^{S_0}$,
-    we mean $[u^{S_0}_s]_{s \in {S_0}}$, the projection of $\mat u$ onto the subspace whose upper index is $S_0$.
-}
+% \discard{\color{gray!30!white}
+%     We will sometimes use superscripts as well, especially when indices depend on one another. For example, if $\dg S$ is a finite set of finite sets, then
+%     $[u^S_s]^{S \in \dg S}_{s \in S}$ denotes a vector which has an element
+%     for each pair $(S,s)$, satisfying $s \in S \in \dg S$.
+%     By supplying just the upper index of such a vector, as in $\mat u^{S_0}$,
+%     we mean $[u^{S_0}_s]_{s \in {S_0}}$, the projection of $\mat u$ onto the subspace whose upper index is $S_0$.
+% }
 Vectors of the same shape
 can be added (+), partially ordered ($\le$), or multiplied ($\odot$) pointwise as usual.
 $\mat 1$ denotes an all-ones vector, of a shape implied by context.
@@ -230,7 +239,7 @@ $\mat v$ of the same shape.}}
 \discard{
     \color{gray!30!white} If $\mat u = [u_a]_{a \in A}$ is a vector over $A$ and $\mat v = [v_b]_{b \in B}$ is a vector over $B$, then $\mat u \mathbin{\otimes} \mat v := [ u_a \cdot v_b ]_{a \in A, b \in B}$ is a vector over $A \times B$. }
 
-    \textbf{Probabilities.}
+\textbf{Probabilities.}
 We write $\Delta S$ to denote the set of probability distributions over a finite set $S$.
 Every variable $X$ can take on values from a finite set
 $\V\mskip-1.5mu X$
@@ -264,12 +273,16 @@ We also refer to $\mu$'s entropy
 conditioning on $X$ and marginalizing to $Y$.
 We also refer to $\mu$'s entropy $\H(\mu) := \Ex_{\mu} [\log \frac1\mu]$ and conditional entropy $\H_\mu(Y|X) := \Ex_\mu[\log\nicefrac1{\mu(Y|X)}]$.
 \fi
+}% endcommentout
 
 
 
-
-\textbf{Hypergraphs and Treewidth.} \label{sec:tw}
-A hypergraph 
+\textbf{Treewidth.}
+    \label{sec:tw}
+% New material
+Recall that 
+%
+a hypergraph 
 $
 (V, \Ed)$ is a set $V$ of vertices and a
 set

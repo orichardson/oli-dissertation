@@ -14,7 +14,7 @@
 \end{quotation}
 
 If you ever want to be right, it is important to acknowledge that you might now be wrong.  And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could have a fundamentally misguided understanding of how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in those that seek to manipulate you. 
-Most terrifying at all, your own internal calculations may not even be self-consistent.
+Most terrifying at all (at least for Descartes \cite{descartes}), your own internal calculations may not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
 The foundational principles of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
 For without one, we risk being swindled \cite{RAT} or manipulated \cite{explosion}, if not humiliated \cite{logicalfalacy,emptysetthesis,politicians}.
@@ -24,14 +24,15 @@ and it is why applied computer scientists build artificial agents that are are c
   it grants an invulnerability to our one common enemy: inconsistency.
 %
 Yet this invulnerability comes with shackles.
-Would \emph{you} trade your freedom to think in weird and backwards ways, to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
+Would \emph{you} trade \emph{your} freedom to see things from two angles at once---to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
 
 In order to always present a consistent front, it is necessary to fully process new information before moving on. Mulling is prohibited, as
 is waiting for clarification.
 Half-baked ideas are a nonstarter.
 This regimented consistency-first lifestyle works well if you are only mistaken in the margins, and need only to occasionally update a few parameters.
 But what if you're wrong in a more fundamental way?
-Can you imagine how hard it would be to learn to see things completely differently, without ever venturing into an inconsistent state?
+Can you imagine how hard it would be to learn to see things completely differently, without ever venturing into a confused state?
+% being even a little bit inconsiste
 Imagine having to implement a substantial refactor of a large codebase, with an interface that only allows you to see code that compiles.
 So if (by no fault of your own) you do happen to be wrong about how the world works---that is, really, fundamentally wrong---then taking on inconsistency may be worthwhile.
 
@@ -54,10 +55,13 @@ Still, the result is a far more robust learning process, both theoretically \cit
 %
 % (maybe more?)
 % Perhaps clearer examples arise when people use multiple networks together, such as  
-Even clearer examples of inconsistency arise in variational inference, 
-    and when combining multiple networks in unusual structures \cite{cyclegan,kingma2013autoencoding}.
-In these cases, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
-    and tolerating inconsistency is critical for the learning process.
+Even clearer examples of inconsistency arise in variational inference,
+    (e.g., mean field approximation methods, variational autoencoders \cite{kingma2013autoencoding})
+    and when combining multiple networks 
+        in more complicated ways \cite{}.
+    In some cases, there is even a term reprsenting ``consistency'' in the learning objecctive \cite{cycle-gan}. 
+In all of these, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
+and tolerating inconsistency is critical for the learning process.
 %
 These techniques are billed
 % to our Bayesian overlords 
@@ -66,6 +70,16 @@ But why perpetuate these unrealistic rationality standards?
 I argue that we should just call them what they are: (possibly) inconsistent belief states.
 
 Doing so intelligently unlocks a beautiful theory of probabilistic modeling, that unifies a broad range of concepts, representations, and algorithms across artificial intelligence, and the theory of rational mind. 
+The framework developped in this dissertation
+gives us
+% The 
+ability to model, measure, and mitigate inconsistency 
+    % comes with an enormous amount of 
+This affords an agent an enormous amount of epistemic flexibility,
+    making it far easier to make deep structural changes to its epistemic
+    representations.
+So, in a sense, the possibility of internal inconsistency may be precisely what saves you from being deeply wrong. 
+%
 Make no mistake: inconsistency is still bad.
 % Indeed, it is the one true villain
 % In fact, it is the only thing we view as bad.
@@ -79,6 +93,9 @@ than to avoid it entirely.
 %
 It is said that a man with two watches never knows the time.  
 But is a man with only one watch really better off?
+And how are you supposed to use multiple watches, anyway?
+% In the coming chapters, we will see. 
+We will soon see. 
 
 
 \section{Themes and Motifs}
@@ -89,8 +106,9 @@ But is a man with only one watch really better off?
 When working with abstract representations, often it is the case that one class of models (representation $R_1$) seems clearly more general than another (representation $R_2$).
 To prove this, you show that anything with representation $R_2$ can be converted to $R_1$; perhaps $R_2$ is even literally a subset of $R_1$. 
 You convince yourself that the relationship is strict, because very little of $R_1$ is in the image of this transformation---and besides, how could you possibly represent a generic element of $R_1$ with $R_2$? 
-But later, you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
-Thus $R_1$ turns out to be equivalent to $R_2$. 
+Suppose that, sometimes later,
+ you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
+So, despite appearances, $R_1$ turns out to be equivalent to $R_2$. 
 
 To illustrate, consider an example that will soon appear in the mathematical preliminaries (\cref{chap:prelim}). 
 Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
@@ -114,14 +132,20 @@ If this abstract statement seems puzzling, recall that Turing machines (TMs) not
 % \subsection{A Division between Quantitative and Qualitative}
 \subsection{Qualitative and Quantitative}
 
-\TODO[ TODO: fix this subsection; it is still very rough ]
-
+% \TODO[ TODO: fix this subsection; it is still very rough ]
 % on two levels: a high-level structure
-There is an important conceptual division,
-which goes by different names in different communities. 
+% There is an important conceptual division,
+Broadly speaking, most modeling happens at two different levels: 
+    at an abstract conceptual level, and a concrete 
+The division between the two levels goes by different names in different communities. 
 % Here, we will largely call the distinction one between \emph{qualitative } 
-In computer science, it is most commonly known as the difference between types and values.
-Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information (although both can be numerical), or alternatively as the divide between \emph{structural} and \emph{observational} information. 
+In computer science, pehraps the most common
+    widely appreciated version of this phenomenon is 
+    the difference between types and values.
+    
+Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
+% (although both can be numerical)
+\unskip, or alternatively as the divide between \emph{structural} and \emph{observational} information. 
 
 \begin{center}
 \begin{tabular}{c|c}

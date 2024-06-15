@@ -1,70 +1,112 @@
     \label{chap:prelim}
 
-\subsection{Basic Notation}
-If $A$ is a finite set, we write $\#A$ or $|A|$ for its cardinality.
-We will often be concerned with \emph{variables}, which intuitively correspond to aspects of the world or properties of some object. 
-Mathematically, a variable has two aspects.
-Qualitatively, a variable is just some unique identifier (the variable name),
-    such as ``height''.
-Quantitatively, a variable $X$ is also associated with a set $\V(X)$, or simply $\V\!X$, of possible values. 
-For example, $\V(\text{height})$ might be the set of positive real numbers, 
+Although the high-level ideas in this thesis are often intuitive and philosophical, 
+% our primary vehicle for results is the 
+% we make those ideas precise using some  
+but in their most precise forms, they are often quite mathematical.
+In this chapter, we build up a library of standard mathematical concepts needed to understand them. 
+
+\section{Background, Notation, and Critical Preliminaries}
+
+% Only \cref{sec:}
+Let's start with the basics.
+he notation ``$A := B$'' is an assignment; it (re)defines the symbol $A$ so stand for $B$.  The notation ``$A = 3$'' indicates 1
+
+% \subsection
+% \paragraph
+% {Sets, Variables, and Vectors}
+    \label{ref:prelim-basic}
+
+\paragraph{Basic Concepts}
+A \emph{set} is a collection of unique elements, 
+    such as 
+    $\{1, \texttt{hello}, 7\}$,
+    the natural numbers $\mathbb N = \{0, 1, 2, \ldots \}$,
+    or the set $\mathbb R$ of real numbers. 
+We write $a \in A$, or equivalently $a : A$, 
+    to indicate that $a$ is an element of the set $A$.
+We write $|A|$ or $\# A$ for the \emph{cardinality} of a set $A$;
+    typically when we write this,  $A$ will be \emph{finite}, 
+    meaning it contains $|A| \in \mathbb N$ distinct elements. 
+$A$ is a \emph{subset} of $B$ (written $A \subseteq B$) means that every element of $A$ is also an element of $B$, and $2^A$ is the set of all subsets of $A$.
+
+A \emph{map}, or \emph{function} $f : A \to B$ is an object that, 
+    given $a \in \Ar$, produces a value $f(a) \in B$. 
+So, $A \to B$ (also written $B^A$), 
+    is the set of functions from $A$ to $B$.
+Observe: if $2 = \{ 0, 1\}$ represents a set with 2 elements, then 
+    the elements of $2^A$ are functions assigning either $0$ (absence) or $1$ (presence) to each element of $A$---that is, they are subsets of $A$. 
+
+We write $\forall x \in X.~\varphi(x)$ to indicate that a condition $\varphi$ is true \emph{for all} $x \in X$, and $\exists x \in X.~ \varphi(x)$ to indicate that there \emph{exists some} $x \in X$ such that $\varphi(x)$ is true.
+We use standard ``set-builder'' notation $\{ x \in X ~|~ \varphi(x) \}$ to construct the subset of $X$ that satisfies the property $\varphi$. 
+
+% - products
+% - sums
+% - tuples
+% - "space" = set + topology or geoemtry
+% - unit interval
+
+
+\paragraph{Vectors}
+For us, a \emph{vector} is a map from a finite set $S$, called its 
+\emph{shape}, to the extended reals $\Rext := \mathbb R \cup \{\infty\}$.
+We write $\mat u := [u_i]_{i \in S}$ to define a vector $\mat u$ by its components.
+Vectors of the same shape
+% Suppose that $\mat u, \mat v \in \Rext^S$ are two vectors of 
+can be added (+), partially ordered ($\le$), or multiplied ($\odot$) pointwise as usual.
+$\mat 1$ denotes an all-ones vector, of a shape implied by context.
+If $\mat u$ and $\mat v$ are both of shape $S$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
+    is the real number $\sum_{i \in S} u_i v_i$. 
+
+\paragraph{Variables}
+A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
+Intuitively, a variable represents some feature of the world or some property of some object. 
+Mathematically, a variable exists on two levels.
+\emph{Qualitatively}, a variable is just some unique identifier (the variable name), such as ``Height'', or $X$. 
+We typically use capital roman letters for variables.
+\emph{Quantitatively}, a variable $X$ is also associated with a set $\V(X)$, or simply $\V\!X$, of possible values. 
+For example, $\V(\text{Height})$ might be the set of positive real numbers, 
     or the set $\{ \texttt{short}, \texttt{tall} \}$. 
 
-
-\subsection{Relations}
-
-Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables, traditionally called atributes. 
-A \emph{relation} $R(\mathcal A) = R(X_1, \ldots, X_n) \subseteq 
-\V(X_1) \times \cdots \times \V(X_n)$, or equivalently, $R : \prod_{i=1}^n \V\!X_i \to \{0,1\}$, is a subset of joint values of attributes. 
-The natural number $n$ is called the \emph{arity} of $R$. 
+We can regard sets of variables $\mat X$ as variables themselves, with
+$\V \mat X = \Pi_{X \in \mat X} \V X$.
 
 
-The \emph{natural join} of two relations $R(A,B)$ and $S(B,C)$ combines them in a particularly obvious way: $(a,b,c) \in R \bowtie S$ iff $(a,b) \in R$ and $(b,c) \in S$. 
-More generally, we have
+\section{Probability, and Other Representations of Uncertainty}
 
-% \begin{defn}[natural join]
-%     \[
-\begin{equation}
-    R(\mathcal X) \bowtie S(\mathcal Y)
-        := 
-        \Big\{
-            \boldsymbol\omega \in  \V(\mathcal X \cup \mathcal Y)
-            ~\Big|~
-            \mathcal X(\boldsymbol\omega) \in R \land
-            \mathcal Y(\boldsymbol\omega) \in S
-        \Big\}
-        % \qedhere
-%     \]
-% \end{defn}
-\end{equation}
+A \emph{measurable space} $(\Omega, \mathcal F_\Omega)$ is a set $\Omega$,
+called the \emph{outcome space}, together with a set of subsets of $\Omega$ which are considered ``measurable''. 
+The elements of $\Omega$, should be thought of \emph{possible outcomes} or \emph{possible worlds} for some model. 
+% One should think of $\mathcal A = 2^\Omega$ as consisting of every 
+For all but a few select places, one can ignore $\mathcal F_\Omega$ in this dissertation.
+When $\Omega$ is finite, we allow all subsets to be measured by defining $\mathcal F_\Omega := 2^\Omega$,
+    and there are also standard choices when $\Omega = \mathbb R$, or when it is constructed o. 
+Either way, we will mostly leave $\mathcal F_\Omega$ implicit, and referring to a measurable space simply as $\Omega$. 
 
-At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \mathcal X$ and $S \subseteq \V\mathcal Y$.
-At the opposite extreme, if $\mathcal X = \mathcal Y$ are the same set of variables, then $R(\mathcal X) \bowtie S(\mathcal X)$ coincides with the intersection of the subsets $R$ and $S$. 
+A \emph{probability distribution} over a (measurable) space $(\Omega, \mathcal F)$ is a function $\Pr : \Omega \to [0,1]$
 
-Even when $A_1, \ldots, A_n \subseteq \X$ are not disjoint, we give a convenient extended syntax by defining the quantity $R(a_1, \ldots, a_n)$, where $a_i \in \V(A_i)$. 
-Concretely, define $R(a_1,\ldots, a_n) := 0$ if when $\{a_1, \ldots, a_n\}$ do not agree on the value of some shared attribute (i.e., if $\exists X \in \X, \exists i,j \in [n]. ~X \in A_i \cap A_j \land X(a_i) \ne X(a_j)$).
-When $\{a,b,c\}$ do agree on all values of shared attributes, let $\mat x$ denote the joint value of $A \cup B \cup C$ obtained from $(a,b,c)$ by removing redundant copies of variable values.
-In this case, define $R(a,b,c) := R(\mat x)$. 
-\subsection{Algebra}
-\begin{defn}[Monoid]%
-    A \emph{monoid} is a tuple $(S, *, e)$, where $S$ is a set, $* : S \times S \to S$ is a binary operation, and $e \in S$ is a distinguished identity element, such that:
-    \begin{itemize}[itemsep=0pt,parsep=0pt,topsep=0pt,]
-        \item (associativity) $\forall a, b,c \in S.~~(a*b)*c = a*(b*c)$;
-        \item (identity) $\forall a \in S.~~a * e = a = e * a$.
-    \end{itemize}
-    A monoid is called \emph{commutative} if it also satisfies
-    \begin{itemize}[nosep]
-        \item (commutativity): $\forall a, b \in S.~~ a * b = b * a$,
-    \end{itemize}
-    and \emph{idempotent} if it satisfies
-    \begin{itemize}[nosep]
-        \item (idempotence): $\forall a \in S.~~ a + a = a$. 
-    \end{itemize}
-    An idempotent semiring defines partial order by $a \le b \iff a + b = b$. 
-\end{defn}
+See \cref{sec:meas-prob} for the more formal definition in terms of measure theory. 
+
+We write $\Delta S$ to denote the set of probability distributions over a finite set $S$.
+A conditional probability distribution (cpd) $p(Y|X)$ is a map
+$p : \V\mskip-1.5mu  X \to \Delta \V Y$ assigning to each $x \in \V\mskip-1.5mu X$ a
+probability distribution 
+% $p(Y|X{=}x) \in \Delta \V$.
+$p(Y|x) \in \Delta \V Y$, which is shorthand for $p(Y|X{=}x)$.
+% $p$ that assigns each $x \in \V\mskip-1.5mu X$ a probability distribution
+% $p(Y|X{=}x) \in \Delta \V Y$.
+Given a distribution $\mu$ over (the values of) a set of variables including $X$ and $Y$,
+we write $\mu(X)$ for its marginal on $X$,
+and $\mu(Y|X)$ for the cpd obtained by 
+conditioning on $X$ and marginalizing to $Y$.
+% We also refer to $\mu$'s entropy
+    % $\H(\mu) := \Ex_{\mu} [\log \frac1\mu]$ and 
+    % conditional entropy $\H_\mu(Y|X) := \Ex_\mu[\log\nicefrac1{\mu(Y|X)}]$
+    % of $Y$ given $X$.
 
 
-\subsection{Graph Theory}
+
+\section{Graph Theory}
 \begin{defn}
     A \emph{(directed) (multi)graph} $G = (N, A)$, or simply a \emph{graph}, is a set $N$ of nodes,
     and a collection $A$ of arcs, such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
@@ -141,7 +183,8 @@ There are natural ways to convert between the two: one forgets the direction of 
 in which
 $\mathit{forget} \circ \mathit{annotate} = \id_{\text{Undirected Graphs}}$
 but
-$\mathit{anotate} \circ \mathit{forget}$ is not the identity on (directed) graphs. Technically, this makes $\mathit{forget}$ a \emph{retraction}, and $\mathit{annotate}$ a \emph{section}.
+$\mathit{anotate} \circ \mathit{forget}$ is not the identity on (directed) graphs.
+% Technically, this makes $\mathit{forget}$ a \emph{retraction}, and $\mathit{annotate}$ a \emph{section}.
 
 \begin{defn}
     A bipartite graph $G = (L, R, E)$ is a graph $(L \sqcup R, E)$ whose
@@ -150,19 +193,18 @@ $\mathit{anotate} \circ \mathit{forget}$ is not the identity on (directed) graph
 \end{defn}
 
 
-\fadeout{ \begin{defn}
-    A directed bipartite graph $G = (L, R, E)$ is a bipartite graph $(L, R, E)$ whose edges $E \subset (L \times R) \cup (R \times L)$ are directed. 
-    \end{defn} }
+% \fadeout{ \begin{defn}
+%     A directed bipartite graph $G = (L, R, E)$ is a bipartite graph $(L, R, E)$ whose edges $E \subset (L \times R) \cup (R \times L)$ are directed. 
+%     \end{defn} }
 
 
 \begin{defn}
     A \emph{hypergraph} $G = (V, \mathcal E)$ is a set $V$ of vertices,
-    and a collection $\cal E$ of edges, which correspond to finite
-    subsets of vertices. 
+    and a collection $\Ed$ of \emph{hyperedges}, which correspond to finite
+    subsets of $V$. 
 \end{defn}
 
-Thus, a hypergraph is the generalization of an undirected graph in which the codomain of $\iota : \mathcal E \to 2^V$ is arbitrary subsets of $V$, not just those of cardinality 2. 
-
+An ordinary undirected graph may be viewed as the special case in which every hyperedge contains  two vertices.
 
 \begin{prop} 
 There is a natural bijection between hypergraphs and bipartite graphs:
@@ -332,11 +374,11 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 %     All morphisms 
 % \end{fact}
 
-\subsection{Independencies}
+% \subsection{Independencies}
 
-\subsection{Information Theory}
 
-\subsection{Graphical Models}
+% \subsection{Graphical Models}
+\section{A Review of Graphical Models}
 
 There are two aspects any graphical model: 
 a ``qualitative/structural'' aspect, which describes influences between variables, and
@@ -346,7 +388,65 @@ a ``quantitative/observational'' aspect,
 A qualitative BN, for example, is a directed graph whose semantics are given in terms of independencies: any variable $X$ is independent of its non-descendents, given the values of its parents, $\mathbf{Pa}\, X$.  
 A quantitative BN, then, includes both that directed graph, and also each variable $X$ to a conditional probability distribution $\Pr_X(X|\mathbf{Pa}\, X)$.
 
-\section{An Ode to Relative Entropy}
+
+\section{Information Theory}
+
+Let $\mu$ be a probability distribution, and be $X,Y,Z$
+%oli6:
+% (sets of) random variables (taking on finitely many values).
+    be (sets of) discrete random variables.
+%oli16:
+The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed according to $\mu$, as measured by the number of bits of information needed (in expectation) needed to determine it, if the distribution $\mu$ is known.  It is given by 
+\[
+    \H_\mu(X) := \sum_{x \in \V(X)} \mu(X{=}x) \log \frac{1}{\mu(X{=}x)} \qquad= -\Ex_{\mu}[\log \mu(X)],
+\]
+and a few very important properties; chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ is a constant according to $\mu$. 
+The ``joint entropy'' $\H(X,Y)$ is just the entropy of the combined variable $(X,Y)$ whose values are pairs $(x,y)$ for $x \in \V(X),y \in \V(Y)$; this is the same as the entropy of the variable $X \cup Y$ when $X$ and $Y$ are themselves sets of variables. 
+
+The \emph{conditional entropy} of $Y$ given $X$
+measures the uncertainty present in $Y$ if one knows the value of $X$
+(think: the information in $Y$ but not $X$),
+and is equivalently defined as any of the following three quantities:
+\[
+\H_\mu( Y | X) :=
+        \quad
+    \Ex_{\mu} [~\log \nicefrac1{\mu(Y | X)}~]
+        \quad
+    =\H_\mu(X,Y) - \H_\mu(X)
+        \quad
+    =\Ex_{x \sim \mu(X)} [~\H_{\mu \mid X{=}x}(Y)~]    
+.
+\]
+The \emph{mutual information} $\I(X;Y)$,
+and its conditional variant $\I(X;Y|Z)$, 
+are given, respectively, by
+\[
+    \I_\mu(X;Y) :=
+        \Ex_{\mu} \Big[ \log \frac{\mu(X,Y)}{\mu(X) \mu(Y)}\Big],
+    \quad\text{and}\quad
+    \I(X;Y|Z):= 
+        \Ex_{\mu} \Big[ \log \frac{\mu(X,Y,Z)\mu(Z)}{\mu(X,Z) \mu(Y,Z)}\Big].
+\]
+The former is non-negative and equal to zero iff $\mu \models X \CI Y$, and the latter is non-negative and equal to zero iff $\mu \models X \CI Y \mid Z$. 
+All of these quantities are purely ``structural'' or ``qualitative'' in the sense that they are invariant to relabelings of values, and 
+
+Just as conditional entropy can be written as a linear combination of unconditional entropies, so too can conditional mutual information be written as a linear combination of unconditional mutual informations: $\I(X;Y|Z) = \I(X;(Y,Z)) - \I(X;Z)$.  
+Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \emptyset$). 
+Furthermore, entropy and mutual information are also interdefinable and generated by linear combinations of one another. 
+It is easy to verify that 
+$\I_\mu(X;Y) 
+    % = \H_\mu(X,Y) - \H(Y|X) - \H(X|Y)
+    = \H_\mu(X) + \H_\mu(Y) - \H(X,Y)
+$
+and 
+$\I_\mu(X;Y|Z)
+    = \H_\mu(X|Z) + \H_\mu(Y|Z) - \H(X,Y|Z)
+$,
+and thus mutual information is derived from entropy. 
+Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is a special case of mutual information. 
+
+
+\subsection{An Ode to Relative Entropy}
 
 In this dissertation, we will derive a 
 
@@ -367,3 +467,81 @@ with respect to its first (``belief'') argument amounts to
 multiplicative interpolation of probability measures, while gradient
 flow of relative entropy with respect to its second (``reality'')
 argument amounts to additive interpolation. 
+
+
+
+\begin{subappendices}    
+\section{Primer on Advanded and Auxiliary Concepts}
+The main body of this chapter has focused on material that is directly in the critical path to understanding every important result in this dissertation. 
+ % 
+ % the state of the field and building up a formal mathematical foundation on which the rest of the dissertation s.
+%
+At the other extreme, there is also some mathematical background needed only to understand a single chapter; that material is presented before it is needed. 
+%
+Here, we review some standard mathematical concepts that lie somewhere in between: these concepts play more minor roles than the ones already covered, and are common to a handful of chapters. 
+%
+%
+We encourage a reader to quickly skim this section,
+    and return to it if necessary. 
+
+
+\subsection{Algebra}
+\cref{chap:conf,chap:PDG-cat}
+
+\begin{defn}[Monoid]%
+    A \emph{monoid} is a tuple $(S, *, e)$, where $S$ is a set, $* : S \times S \to S$ is a binary operation, and $e \in S$ is a distinguished identity element, such that:
+    \begin{itemize}[itemsep=0pt,parsep=0pt,topsep=0pt,]
+        \item (associativity) $\forall a, b,c \in S.~~(a*b)*c = a*(b*c)$;
+        \item (identity) $\forall a \in S.~~a * e = a = e * a$.
+    \end{itemize}
+    A monoid is called \emph{commutative} if it also satisfies
+    \begin{itemize}[nosep]
+        \item (commutativity): $\forall a, b \in S.~~ a * b = b * a$,
+    \end{itemize}
+    and \emph{idempotent} if it satisfies
+    \begin{itemize}[nosep]
+        \item (idempotence): $\forall a \in S.~~ a + a = a$. 
+    \end{itemize}
+    An idempotent semiring defines partial order by $a \le b \iff a + b = b$. 
+\end{defn}
+
+\subsection{Relations}
+
+Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables, traditionally called atributes. 
+A \emph{relation} $R(\mathcal A) = R(X_1, \ldots, X_n) \subseteq 
+\V(X_1) \times \cdots \times \V(X_n)$, or equivalently, $R : \prod_{i=1}^n \V\!X_i \to \{0,1\}$, is a subset of joint values of attributes. 
+The natural number $n$ is called the \emph{arity} of $R$. 
+
+
+The \emph{natural join} of two relations $R(A,B)$ and $S(B,C)$ combines them in a particularly obvious way: $(a,b,c) \in R \bowtie S$ iff $(a,b) \in R$ and $(b,c) \in S$. 
+More generally, we have: 
+
+% \begin{defn}[natural join]
+%     \[
+\begin{equation}
+    R(\mathcal X) \bowtie S(\mathcal Y)
+        := 
+        \Big\{
+            \boldsymbol\omega \in  \V(\mathcal X \cup \mathcal Y)
+            ~\Big|~
+            \mathcal X(\boldsymbol\omega) \in R \land
+            \mathcal Y(\boldsymbol\omega) \in S
+        \Big\}
+        % \qedhere
+%     \]
+% \end{defn}
+\end{equation}
+
+At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \mathcal X$ and $S \subseteq \V\mathcal Y$.
+At the opposite extreme, if $\mathcal X = \mathcal Y$ are the same set of variables, then $R(\mathcal X) \bowtie S(\mathcal X)$ coincides with the intersection of the subsets $R$ and $S$. 
+
+Even when $A_1, \ldots, A_n \subseteq \X$ are not disjoint, we give a convenient extended syntax by defining the quantity $R(a_1, \ldots, a_n)$, where $a_i \in \V(A_i)$. 
+Concretely, define $R(a_1,\ldots, a_n) := 0$ if when $\{a_1, \ldots, a_n\}$ do not agree on the value of some shared attribute (i.e., if $\exists X \in \X, \exists i,j \in [n]. ~X \in A_i \cap A_j \land X(a_i) \ne X(a_j)$).
+When $\{a,b,c\}$ do agree on all values of shared attributes, let $\mat x$ denote the joint value of $A \cup B \cup C$ obtained from $(a,b,c)$ by removing redundant copies of variable values.
+In this case, define $R(a,b,c) := R(\mat x)$. 
+
+
+\subsection{Geometry}
+
+    
+\end{subappendices}
