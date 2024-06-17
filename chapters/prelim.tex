@@ -37,13 +37,25 @@ When $n \in \mathbb N$ is a natural number, let
     $[n] := \{ 0, 1, \ldots, n-1 \}$ denote the set of the first $n$ natural numbers.
 $A$ is a \emph{subset} of $B$ (written $A \subseteq B$) means that every element of $A$ is also an element of $B$, and $2^A$ is the set of all subsets of $A$.
 
+There are a number of important ways to combine two sets $A$ and $B$ to produce a third set.  
+% \begin{enumerate}
+%     \item 
+% \end{enumerate}
+Their \emph{union}, denoted $A \cup B$, is the set of all elements contained in either $A$ or $B$ (or both),
+while their \emph{intersection} $A \cap B := \{x \in A : x \in B\}$ is the set of elements they have in common.
+The \emph{product} of $A$ and $B$ is the set $A \times B := \{ (a,b) : a \in A \land b \in B\}$. 
+The \emph{disjoint union} of $A$ and $B$ is the set 
+
+
 We write $\forall x \in X.~\varphi(x)$ to indicate that a condition $\varphi$ is true \emph{for all} $x \in X$, and $\exists x \in X.~ \varphi(x)$ to indicate that there \emph{exists some} $x \in X$ such that $\varphi(x)$ is true.
 We use standard ``set-builder'' notation $\{ x \in X ~|~ \varphi(x) \}$ to construct the subset of $X$ that satisfies the property $\varphi$. 
-If $\varphi$ and $\psi$ are 
-
+We write $\lnot\varphi$ for the negation of an expression $\varphi$. 
+If $\varphi$ and $\psi$ are both logical expressions, we write $\varphi \land \psi$ for their conjunction (which is true only if $\varphi$ and $\psi$ are both true), and $\varphi \lor \psi$ for their disjunction (which is true if and only if either $\varphi$ or $\psi$ are true).
+$\varphi \implies \psi$ means that $\psi$ holds whenever $\phi$ does, and can be viewed as an abbreviation for $\lnot \varphi \lor \psi$, 
+and $\varphi \iff \psi$ to indicate that the two are logically equivalent (which can be viewed as an abbreviation for $(\varphi \implies \psi) \land (\psi \implies \varphi)$)
+Speaking of logical equivalence, we often abbreviate ``if and only if'' by writing just ``iff''. 
 
 % Given two sets $A$ and $B$, there are a number of ways t 
-There are a number of important ways to combine two sets $A$ and $B$ to produce a third set. 
 % The \emph{product }
 % The \emph{union} $A \cup B := \{ x : x \in B \}$  
 
@@ -63,13 +75,11 @@ If $\forall i.~a_i \in A$, then $\mat a$ is just a function $\mat a : I \to A$.
 A \emph{tuple} is the special case of a set indexed by $[n]$ for some natural number $n \in \mathbb N$. 
 
 
-% - intersections, unions, minus
 % - products
 % - sums
-% - tuples
 % - coproduct / disjoint union
-% - "space" = set + topology or geoemtry
 % - unit interval
+% - "space" = set + topology or geoemtry
 
 
 \paragraph{Vectors.}
@@ -105,13 +115,15 @@ To see this another way, observe that if $\mat X = \{ X_1, \ldots, X_n \}$ is a 
 then $|\V\mat X| = 2^n$, so in the special case of $n=0$, we have $|\V \emptyset| = 2^0 = 1$. 
 
 Similarly, tuples $(X_1, \ldots, X_n)$ of variables and indexed sets $\{X_i\}_{i \in I}$ of variables, are also themselves variables,
-with 
+with
 \begin{align*}
-    \V(X_1, \ldots, X_n) &= \{ (x_1, \ldots, x_n) \mid \forall i \in [n]. x_i \in \V(X_i) \}
+    \V(X_1, \ldots, X_n) &= \{ (x_1, \ldots, x_n) \mid \forall i \in [n]. x_i \in \V(X_i) \},
 \end{align*}
  % \text{and}\quad
-More generally, $
-    \V\{ X_i \}_{i \in I} = \prod_{i \in I} \V(X_i).  
+% More generally, 
+and, more generally,
+$
+    \V\{ X_i \}_{i \in I} = \prod_{i \in I} \V(X_i).
 $
 % \end{align*}
 If $f : \V\!X \to S$ is a function, then $f(X)$ is a variable, with $\V(f(X)) = S$. 
@@ -131,27 +143,35 @@ We first give the simpler picture of probability in the finite case, which is la
 Suppose that $\Omega$ is a finite set. 
 % A \emph{probability distriu} 
 % Suppose $X$ and $Y$ are (finite) variables. 
-A \emh{probability distribution} $\mu$ over $\Omega$ is essentially a function 
+A \emph{probability distribution} $\mu$ over $\Omega$ is essentially a function 
 % $\mu : \V\!\X \to [0,1]$ such that $\sum_{x \in \V X} \mu(x) = 1$.
 $\mu : \Omega \to [0,1]$ such that $\sum_{\omega \in \Omega} \mu(\omega) = 1$.
-In this finite case, this means $\mu$ is a vector of shape 
+This means $\mu$ is a vector of shape 
 % $\V\! X$,
 $\Omega$ 
 satisfying $\mu \ge 0$ and $\mu \cdot \mat 1 = 1$. 
 % We write $\Delta \V\!X$ for the set of all distributions over (the values of) $X$,
 % which is also known as the \emph{probability simplex}.
 The \emph{probability simplex} $\Delta \Omega$ is defined as the set of all probability distributions over $\Omega$. 
-For $U \subseteq \V\!X$, $\mu(U) = \sum_{x \in U} \mu(x)$. 
-While we have just defined $\mu(U)$ for subsets $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in the general case, it is the other way around: a distribution $\mu$ is defined as an object that assigns probability to subsets of $\Omega$ in a way that is compatible with intuitions from the finite case we have just described.
+For $U \subseteq \V\!X$, called an \emph{event},
+    define $\mu(U) := \sum_{x \in U} \mu(x)$. 
+While we just defined $\mu$ on events $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in general (i.e., beyond the finite case), it has to be the other way around: a probability distribution is defined as an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
+
+The standard way of updating a probability distribution based on new evidence is conditioning. Given a subset $A \subseteq \Omega$, the conditional measure
+$\mu \mid A$ according to 
+$(\mu \mid A)(x) := \frac{1}{\mu(A)} \mathbbm 1[x \in A] \mu(x)$.
+
 
 %% adding variables.
-In this dissertation, the way we represent and manipulate probability distributions will make heavy use of the notion of a variable, which we have started to develop in the previous section.
-Specifically, we will essentially always work with probability distributions over the values of a variable. This just a notational convenience, since we can always define a variable $W$ with possible values $\V W := \Omega$.  
-
-This allows us to 
-use notation standard notation and
-write $\mu(X)$ in place of $\mu$ to emphasize that $\mu \in \Delta \V \! X$ in a compact way. 
-%
+Our notation for representing and manipulate probability distributions will make heavy use of the notion of a variable, as developped in \cref{ssec:basic-vars}. 
+Namely, we almost always work with probability distributions over the values of a variable. This just a notational convenience, since we can always define a variable $W$ with possible values $\V W := \Omega$.  
+This confers us a number of benefits,
+the first of which is 
+% For now, we mention only that it allows us to 
+to enable standard notation in the AI community:
+given a distribution $\mu \in \Delta \V\!X$ over the values of $X$,
+we also write $\mu(X)$ to specify $\mu$ and its type in a compact way.
+% we write $\mu(X)$ in place of $\mu$ to emphasize that $\mu \in \Delta \V \! X$ in a compact way. 
 
 
 %  $\mu(\mat X) = \mu(X_1, \ldots, X_n)$
@@ -159,32 +179,35 @@ A \emph{joint distribution} over a finite set of variables $\mat X = \{X_1, \ldo
 %TODO: the above is awkward.
 If $\mu(\mat X)$ is a joint distribution and $X \in \mat X$, then we write $\mu(X)$ for its \emph{marginal} on $X$, which is given by
 \[
-    \mu(X{=}x) = \mu(X)(x) := \sum_{\substack{\mat x \in \V \mat X \\ \mat x[X] = x}} \mu(\mat x) 
+    \mu(X{=}x) = \mu(X)(x) := \sum_{\substack{\mat x \in \V \mat X \\ \mat x[X] = x}} \mu(\mat x) .
 \]
-
-A \emph{conditional probability distribution (cpd)} on $Y$ given $X$ is a function $p : \V X \to \Delta \V Y$ that, for each $x \in \V\!X$, yields a probability distribution
-% \[ 
-$p(Y | X{=}x) = p(Y | x)  \in \Delta \V Y$.
-% \]
-
-Cpds have special notation; we refer to $p$ also as $p(Y|X)$. 
-
-%marginals 
-
-We write $\Delta S$ to denote the set of probability distributions over a finite set $S$.
-A conditional probability distribution (cpd) $p(Y|X)$ is a map
-$p : \V\mskip-1.5mu  X \to \Delta \V Y$ assigning to each $x \in \V\mskip-1.5mu X$ a
-probability distribution 
-% $p(Y|X{=}x) \in \Delta \V$.
-$p(Y|x) \in \Delta \V Y$, which is shorthand for $p(Y|X{=}x)$.
-% $p$ that assigns each $x \in \V\mskip-1.5mu X$ a probability distribution
-% $p(Y|X{=}x) \in \Delta \V Y$.
-Given a distribution $\mu$ over (the values of) a set of variables including $X$ and $Y$,
-we write $\mu(X)$ for its marginal on $X$,
-and $\mu(Y|X)$ for the cpd obtained by 
-conditioning on $X$ and marginalizing to $Y$.
+It is called a marginal because of the special case of two variables: a joint distribution $\mu(X,Y)$ may be viewed as a grid of numbers summing to 1, whose rows correspond to values of $X$, and whose columns correspond to values of $Y$. 
+If we were to write the sum $\sum_{y \in \V Y} \mu(x,y)$ of each row $x$ in the margin, this would give the marginal distribution on $X$. 
+%
+To \emph{condition} a joint distribution $\mu(\mat X)$ on a variable $X \in \mat X$ is to form an indexed set of conditioned distributions $\mu(\mat X \mid X) = \{ \mu \mid X{=}x \}_{x \in \V\!X}$, one for each possible value of $X$. 
+% The cpd $\mu(Y|X)$
+We can also refer to such objects without reference to a joint distribution.
 
 
+A \emph{conditional probability distribution (cpd)} on $Y$ given $X$ is a function $p : \V X \to \Delta \V Y$ that, for each $x \in \V\!X$, yields a probability distribution over $Y$,
+which is written in any of the following equivalent notations:
+\[ 
+% $
+p(x) = p|x = p(Y | X{=}x) = p(Y | x) \quad \in \Delta \V Y.
+% $
+\]
+Just like we write $\mu(X)$ for a distribution over the values of $X$, we
+write $p(Y|X)$ for a cpd on $Y$ given $X$. In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
+
+% Observe $p(Y|X)$ is the result of conditiong a joint distribution $\mu(X,Y) = p(Y|X)$
+
+
+The key feature 
+
+%%%% TODO
+% \mu(X,Y) =  \mu(X)\mu(Y|X)
+% undefinedness of probability zero
+%expectation
 
 \subsection{The General Case}
 
