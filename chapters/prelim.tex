@@ -4,7 +4,8 @@ Although the high-level ideas in this thesis are often intuitive and philosophic
 % our primary vehicle for results is the 
 % we make those ideas precise using some  
 but in their most precise forms, they are often quite mathematical.
-In this chapter, we build up a library of standard mathematical concepts needed to understand them. 
+In this chapter, we build up a library of standard mathematical concepts and notation needed to fully understand them. 
+
 
 \section{Background, Notation, and Critical Preliminaries}
 
@@ -20,13 +21,15 @@ but write ``$A = B$'' to assert that the (already defined) expressions $A$ and $
 % {Sets, Variables, and Vectors}
     \label{ref:prelim-basic}
 
-\paragraph{Basic Concepts and Notation.}
+% \paragraph{Basic Concepts and Notation.}
+\paragraph{Sets and Maps.}
 A \emph{set} is a collection of unique elements, 
     such as 
     $\{1, \texttt{hello}, 7\}$,
     the empty set $\emptyset$, 
     the natural numbers $\mathbb N = \{0, 1, 2, \ldots \}$,
     or the set $\mathbb R$ of real numbers. 
+A \emph{singleton} is a set with precisely one element. 
 We write $a \in A$, or equivalently $a : A$, 
     to indicate that $a$ is an element of the set $A$.
 For brevity, we write $a,b \in A$ to indicate that both $a \in A$ and $b \in A$. 
@@ -36,6 +39,7 @@ We write $|A|$ or $\# A$ for the \emph{cardinality} of a set $A$;
 When $n \in \mathbb N$ is a natural number, let
     $[n] := \{ 0, 1, \ldots, n-1 \}$ denote the set of the first $n$ natural numbers.
 $A$ is a \emph{subset} of $B$ (written $A \subseteq B$) means that every element of $A$ is also an element of $B$, and $2^A$ is the set of all subsets of $A$.
+% We write $\Set$ for the collection of all sets (which is not itself a set). 
 
 There are a number of important ways to combine two sets $A$ and $B$ to produce a third set.  
 % \begin{enumerate}
@@ -44,15 +48,23 @@ There are a number of important ways to combine two sets $A$ and $B$ to produce 
 Their \emph{union}, denoted $A \cup B$, is the set of all elements contained in either $A$ or $B$ (or both),
 while their \emph{intersection} $A \cap B := \{x \in A : x \in B\}$ is the set of elements they have in common.
 The \emph{product} of $A$ and $B$ is the set $A \times B := \{ (a,b) : a \in A \land b \in B\}$. 
-The \emph{disjoint union} of $A$ and $B$ is the set 
+The \emph{disjoint union} of $A$ and $B$ is a variant of a union in which all elements are forced to be distinct, by ``tagging'' them with the set they come from, i.e., 
+\[
+    A \sqcup B := \{ (A, a) : a \in A \} \cup \{ (B, b) : b \in B \}. 
+\]
 
 
-We write $\forall x \in X.~\varphi(x)$ to indicate that a condition $\varphi$ is true \emph{for all} $x \in X$, and $\exists x \in X.~ \varphi(x)$ to indicate that there \emph{exists some} $x \in X$ such that $\varphi(x)$ is true.
-We use standard ``set-builder'' notation $\{ x \in X ~|~ \varphi(x) \}$ to construct the subset of $X$ that satisfies the property $\varphi$. 
+We write $\forall x \in X.~\varphi(x)$ to indicate that a logical expression $\varphi(x)$ is true \emph{for all} $x \in X$, and $\exists x \in X.~ \varphi(x)$ to indicate that there \emph{exists some} $x \in X$ such that $\varphi(x)$ is true.
+We use both of the two standard ``set-builder'' notations 
+$\{ x \in X ~|~ \varphi(x) \}$ 
+    and
+    $\{ x \in X : \varphi(x) \}$ 
+    to construct the subset of $X$ that satisfies the property $\varphi$;
+    the choice between the colon and the bar is made to enhance readability in context.
 We write $\lnot\varphi$ for the negation of an expression $\varphi$. 
 If $\varphi$ and $\psi$ are both logical expressions, we write $\varphi \land \psi$ for their conjunction (which is true only if $\varphi$ and $\psi$ are both true), and $\varphi \lor \psi$ for their disjunction (which is true if and only if either $\varphi$ or $\psi$ are true).
-$\varphi \implies \psi$ means that $\psi$ holds whenever $\phi$ does, and can be viewed as an abbreviation for $\lnot \varphi \lor \psi$, 
-and $\varphi \iff \psi$ to indicate that the two are logically equivalent (which can be viewed as an abbreviation for $(\varphi \implies \psi) \land (\psi \implies \varphi)$)
+The notation $\varphi \implies \psi$ means that $\psi$ holds whenever $\phi$ does, and can be viewed as an abbreviation for $\lnot \varphi \lor \psi$, 
+and $\varphi \iff \psi$ to indicate that the two are logically equivalent (which can be viewed as an abbreviation for $(\varphi \implies \psi) \land (\psi \implies \varphi)$).
 Speaking of logical equivalence, we often abbreviate ``if and only if'' by writing just ``iff''. 
 
 % Given two sets $A$ and $B$, there are a number of ways t 
@@ -62,8 +74,9 @@ Speaking of logical equivalence, we often abbreviate ``if and only if'' by writi
 
 A \emph{map}, or \emph{function} $f : A \to B$ is an object that, 
     given $a \in \Ar$, produces a value $f(a) \in B$. 
-So, $A \to B$ (also written $B^A$), 
-    is the set of functions from $A$ to $B$.
+The \emph{preimage} of a set $U \subseteq B$ is the set $\{a \in A \mid f(a) \in B \}$.
+As one might hope from the notation, $A \to B$ 
+    is the set of functions from $A$ to $B$; it is also written $B^A$. 
 Observe: if $2 = \{ 0, 1\}$ represents a set with 2 elements, then 
     the elements of $2^A$ are functions assigning either $0$ (absence) or $1$ (presence) to each element of $A$---that is, they are subsets of $A$. 
 
@@ -74,10 +87,10 @@ If $\forall i.~a_i \in A$, then $\mat a$ is just a function $\mat a : I \to A$.
 % Therefore, if each $a_i \in A_i$, then  $\mat a : \sqcup_{i \in I} A_i  
 A \emph{tuple} is the special case of a set indexed by $[n]$ for some natural number $n \in \mathbb N$. 
 
-
+%%%% TODO %%%%
 % - products
 % - sums
-% - coproduct / disjoint union
+% - converging sequence
 % - unit interval
 % - "space" = set + topology or geoemtry
 
@@ -94,6 +107,10 @@ $\mat 1$ denotes an all-ones vector, of a shape implied by context.
 If $\mat u$ and $\mat v$ are both of shape $S$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
     is the real number $\sum_{i \in S} u_i v_i$. 
 
+
+%%%%% TODO %%%%%
+% - matrices, matrix multiplication
+
 \paragraph{Variables.}
     \label{ssec:basic-vars}
 A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
@@ -106,13 +123,17 @@ For example, $\V(\text{Height})$ might be the set of positive real numbers,
     or the set $\{ \texttt{short}, \texttt{tall} \}$. 
 A \emph{binary variable} is one whose possible values are $\{0, 1\}$, and a 
     \emph{real variable} is one whose possible values are $\mathbb R$. 
+A \emph{constant} is a variable $X$ that can only take on one possible value (i.e., $|\V X| = 1$).
 
 We can regard sets of variables $\mat X$ as variables themselves, with
 $\V \mat X = \Pi_{X \in \mat X} \V X$.
+However, when we do so, we must also be careful to remember $\mat X$ the variable has a special relationship with $\mat X$, the set of variables, a point we will soon return to. 
 Note that, by this definition, the empty set is a variable, and it takes on a single value (i.e., the unique setting of no variables).  
-This might seem strange, but there is precisely one way of selecting a value for each variable in $\emptyset$: simply do nothing. 
+This might seem strange, but there is precisely one way of selecting a value for each variable in $\varnothing$: simply do nothing. 
 To see this another way, observe that if $\mat X = \{ X_1, \ldots, X_n \}$ is a set of binary variables,
-then $|\V\mat X| = 2^n$, so in the special case of $n=0$, we have $|\V \emptyset| = 2^0 = 1$. 
+then $|\V\mat X| = 2^n$, so in the special case of $n=0$, we have $|\V \varnothing | = 2^0 = 1$. 
+Those with keen attention to typography may have noticed we have used a different symbol ($\varnothing$) for the empty set of variables, than we have for other empty sets $(\emptyset)$. 
+This will be necessary to avoid ambiguity, because the (standard) notation for probability that we adopt has a different meaning applied to a set of variables than it does applied to a set of possible outcomes. 
 
 Similarly, tuples $(X_1, \ldots, X_n)$ of variables and indexed sets $\{X_i\}_{i \in I}$ of variables, are also themselves variables,
 with
@@ -126,23 +147,79 @@ $
     \V\{ X_i \}_{i \in I} = \prod_{i \in I} \V(X_i).
 $
 % \end{align*}
-If $f : \V\!X \to S$ is a function, then $f(X)$ is a variable, with $\V(f(X)) = S$. 
+The distinction between sets and indexed sets (such as tuples) of variables is only relevant when variables are not unique---a caveat that is far more relevant for the python implementation of this framework than it is for the mathematical development.
+% Consequently, we convert between the two 
+In the text here, we convert between the two equivalent representations as is convenient, often implicitly converting a set of variables to a tuple of variables with a specific ordering for the purposes of presentation.
+% Later on, we will blur the line between sets and indexed sets,
 
 Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $X(\mat x)$ for the value of the variable $X$ in the joint setting $\mat x$. The former is familiar lookup notation from many programming languages, and the latter is random variable notation, which we will get to in the next section.
 
+% Equality of variables 
+Variables notation is designed to look intuitive. Yet, just beneath the surface, it can also be very confusing, because it is quite unlike the standard mathematical notation for every other mathematical object.
+This is especially true of the way variables interact with equality, and the symbol ``$=$''.
+For instance, if $X$ is a variable and $x \in \V(X)$, then the notation $X{=}x$ does not necessarily stand for a false statement (even though $X$ and $x$ refer to different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
+% In particular, it is neither true nor false, but rather a different mathematical object. 
+% Worse, even if $X$ and $Y$ are both variables, then $X{=}Y$ intuitively represents the possibility that $X$ happens to equal $Y$, 
+Even if $X$ and $Y$ are both variables, one might expect $X{=}Y$ to be true if and only if $X$ and $Y$ stand for the same variable, but here again it instead typically represents the possibility that $X$ and $Y$ happen to equal the same thing. 
+
+By taking context into account, there is a nice way to rigorously remove this ambiguity, and also have all of our notation work out as we would hope. 
+% If $f(\X)$
+But before we resolve the issue, we must first explain a more general version of it. 
+Whenever $X$ is a variable, and $f : \V\!X \to S$ is a function of the value of $X$, then we can regard $f(X)$ itself as a variable, with $\V(f(X)) = S$. 
+The issue with equality we encountered in the previous paragraph is just the special case when we view ${=} : \V(X,Y) \to \{0,1\}$ as such a function. 
+% However, when we do so, we must keep in mind that $f(X)$ and $X$ are related.
+%
+% The key is to keep in mind
+However, when we do so we must also keep in mind that the variable $f(X)$ and the variable $X$ cannot simply take any values; they are related by the constraint $f$. 
+An analogous constraint appears when we regard an (indexed) set of variables as a variable.
+The solution, requires us to keep track constraints involved in the construction of the relevant variables; 
+% for a (set of) variables $\X$, call this set of constraints $\Gamma(\X)$. 
+if $X$ is a variable, let $\Gamma(X)$ denote this set of constraints. 
+% if $X$ is a variable for a (set of) variables $\X$, call this set of constraints $\Gamma(\X)$. 
+%
+Now, when we write $X = Y$ we primarily mean the possibility that $X$ and $Y$ take the same value, which is a rich mathematical object (e.g., an event, or itself a variable). 
+But at the same time, we can also implicitly convert that object to a truth value, in contexts where a truth value is appropriate.
+Specifically, 
+if the construction of $X$ involves constraints on the set of variables $\mat X$, and the construction of $Y$ involves constraints on the variables $\mat Y$, 
+then we say $X{=}Y$ is \emph{true} iff $w[X] = w[Y]$ for all $w \in \V(\mat X \cup \mat Y)$ that satisfy the constraints of $\Gamma(X)$ and $\Gamma(Y)$.
+A variable $X$ \emph{primitive} if $\Gamma(X)$ is empty, and we typically use the symbol $\X$ to denote the set of all primitive variables relevant to the current context.
+
+The approach described above gives us what we want in essentially every context. 
+It is always true that $X = X$, but not in general true that $X = X'$ unless $X$ and $X'$ must be equal by construction, or if $X$ and $X'$ are constants representing the same value. 
+It is true that $f(X) = g(X)$ if and only if $f = g$.
+If $X$ and $Y$ are real variables, then (it is true that) $X + Y = Y + X$.
+At the same time, these expressions remain unambiguously meaningful for describing events (as we will soon see). And when the expressions are \emph{true}, they are events that must occur.
+
+
+% Clearly the full implications of this setup of variables can get rather tangled up
+Most formalisms avoid these issues by adopting only fragments of this picture, or sweeping ambiguities under the rug.
+But it isn't necessary to do so; all of these standard concepts can coexist in one perfectly formal context.
+The constraint-tracking resolution resolution to these issues gives just a taste of a broader approach to modeling, which lies at the heart of the theory of probabilistic dependency graphs. 
+% gives a taste of the approach at the heart of the PDG formalism,   
+% and how we can have our cake and eat it too. 
+% Yet it turns out that all of this can be made precise with probabilistic dependency graphs, the mathematical representation of uncertainty that lies at the heart of this dissertation.  
+The missing part, of course, is the probability. 
 
 \section{Probability, and Other Representations of Uncertainty}
 
-We first give the simpler picture of probability in the finite case, which is largely representative of one should think of probability in general (\cref{ssec:fin-prob}). 
+% The material and notation in this chapter is all standard, but 
+% The one we have chosen 
+There are many different notations for probability in different community.
+% In this section, we present a carefully 
+Our approach simultaneously enables some of the most common notations
+    and the most recognizable foundations. 
+Thus, although all of the pieces are likely to be familiar, the precise formal way it fits together may not be. 
 
-\subsection{The Finite Case}
+We first give the simpler picture of probability in the finite case (\cref{ssec:fin-prob}), which, for our purposes, is largely representative of how one should think of probability in the general case (\cref{ssec:gen-prob}).
+
+\subsection{Probability, in the Finite Case}
     \label{ssec:fin-prob}
-% We first give the simpler picture of probability in the finite case; for now, assume the variables $X$ and $Y$ can take on only finitely many possible values (i.e., $|\V\!X|, |\V Y| \in \mathbb N$).
+% We first give the simple picture of probability in which representations are finite. 
+% in the finite case; for now, assume the variables $X$ and $Y$ can take on only finitely many possible
+% Thus, we assume  values (i.e., $|\V\!X|, |\V Y| \in \mathbb N$).
 % In this section, let's assume that all variables can take on only finitely many possible values
 %     (i.e., $|\V\!X|, |\V Y| \in \mathbb N$).
 Suppose that $\Omega$ is a finite set. 
-% A \emph{probability distriu} 
-% Suppose $X$ and $Y$ are (finite) variables. 
 A \emph{probability distribution} $\mu$ over $\Omega$ is essentially a function 
 % $\mu : \V\!\X \to [0,1]$ such that $\sum_{x \in \V X} \mu(x) = 1$.
 $\mu : \Omega \to [0,1]$ such that $\sum_{\omega \in \Omega} \mu(\omega) = 1$.
@@ -155,17 +232,24 @@ satisfying $\mu \ge 0$ and $\mu \cdot \mat 1 = 1$.
 The \emph{probability simplex} $\Delta \Omega$ is defined as the set of all probability distributions over $\Omega$. 
 For $U \subseteq \V\!X$, called an \emph{event},
     define $\mu(U) := \sum_{x \in U} \mu(x)$. 
+% Specifically, the event $X{=}x$ 
+% The prototypical event is of the form $X{=}x$. 
 While we just defined $\mu$ on events $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in general (i.e., beyond the finite case), it has to be the other way around: a probability distribution is defined as an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
+
 
 The standard way of updating a probability distribution based on new evidence is conditioning. Given a subset $A \subseteq \Omega$, the conditional measure
 $\mu \mid A$ according to 
 $(\mu \mid A)(x) := \frac{1}{\mu(A)} \mathbbm 1[x \in A] \mu(x)$.
-
+% In other words, 
+That quantity is also given a shorter and more common name: $\mu(x \mid A)$. 
+From this definition, it is easy to recover the usual definition of conditional probability:
+$\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
+There is just one caveat: this formula is not meaningful when $\mu(A) = 0$, and in this case, we leave the conditional probability undefined. Indeed, if $\mu(A) = 0$, then every answer for $\mu(U \mid A)$ is appropriate, in the sense that, for for every $p \in [0,1]$ there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu(U \mid A) = p$ for all $k$. 
 
 %% adding variables.
-Our notation for representing and manipulate probability distributions will make heavy use of the notion of a variable, as developped in \cref{ssec:basic-vars}. 
+Our notation for representing and manipulate probability distributions will make heavy use of the notion of a variable, as developed in \cref{ssec:basic-vars}. 
 Namely, we almost always work with probability distributions over the values of a variable. This just a notational convenience, since we can always define a variable $W$ with possible values $\V W := \Omega$.  
-This confers us a number of benefits,
+Working with variables confers us a number of benefits,
 the first of which is 
 % For now, we mention only that it allows us to 
 to enable standard notation in the AI community:
@@ -175,7 +259,7 @@ we also write $\mu(X)$ to specify $\mu$ and its type in a compact way.
 
 
 %  $\mu(\mat X) = \mu(X_1, \ldots, X_n)$
-A \emph{joint distribution} over a finite set of variables $\mat X = \{X_1, \ldots, X_n\}$ is just a distribution over joint settings of all variables---i.e, a distribution over $\V \mat X$. 
+A \emph{joint distribution} $\mu(\mat X) = \mu(X_1, \ldots, X_n)$ over a finite (indexed) set of variables $\mat X = \{X_1, \ldots, X_n\}$ is just a distribution over joint settings of all variables---i.e, a distribution over $\V \mat X$. 
 %TODO: the above is awkward.
 If $\mu(\mat X)$ is a joint distribution and $X \in \mat X$, then we write $\mu(X)$ for its \emph{marginal} on $X$, which is given by
 \[
@@ -183,57 +267,161 @@ If $\mu(\mat X)$ is a joint distribution and $X \in \mat X$, then we write $\mu(
 \]
 It is called a marginal because of the special case of two variables: a joint distribution $\mu(X,Y)$ may be viewed as a grid of numbers summing to 1, whose rows correspond to values of $X$, and whose columns correspond to values of $Y$. 
 If we were to write the sum $\sum_{y \in \V Y} \mu(x,y)$ of each row $x$ in the margin, this would give the marginal distribution on $X$. 
-%
-To \emph{condition} a joint distribution $\mu(\mat X)$ on a variable $X \in \mat X$ is to form an indexed set of conditioned distributions $\mu(\mat X \mid X) = \{ \mu \mid X{=}x \}_{x \in \V\!X}$, one for each possible value of $X$. 
+
+
+To \emph{condition} a joint distribution $\mu(\mat X)$ on a variable $X \in \mat X$ is to form an indexed set of conditioned distributions $\mu(\mat X \mid X) = \{ ~(\mu|X{=}x) ~\}_{x \in \V\!X}$, one for each possible value of $X$. 
 % The cpd $\mu(Y|X)$
 We can also refer to such objects without reference to a joint distribution.
-
-
+%
+%
 A \emph{conditional probability distribution (cpd)} on $Y$ given $X$ is a function $p : \V X \to \Delta \V Y$ that, for each $x \in \V\!X$, yields a probability distribution over $Y$,
 which is written in any of the following equivalent notations:
 \[ 
 % $
-p(x) = p|x = p(Y | X{=}x) = p(Y | x) \quad \in \Delta \V Y.
+p(x) ~=~ p|x ~=~ p(Y | X{=}x) ~=~ p(Y | x) \quad \in \Delta \V Y.
 % $
 \]
+Cpds are also called \emph{channels} in information theory. 
 Just like we write $\mu(X)$ for a distribution over the values of $X$, we
-write $p(Y|X)$ for a cpd on $Y$ given $X$. In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
+write $p(Y|X)$ for a cpd on $Y$ given $X$. 
+In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
+
+We typically write $\X$ for the set of all variables relevant to a given context. If $X,Y \in \X$, then we write $\mu(Y|X)$ for the cpd given by first conditioning $\mu(\X)$ on $X$, and then marginalizing each conditional distribution to $Y$. 
+% This now explains 
+% Observe that $\mu(\X \mid X)$ 
+
+With this definitions, 
 
 % Observe $p(Y|X)$ is the result of conditiong a joint distribution $\mu(X,Y) = p(Y|X)$
-
-
-The key feature 
+% The key feature 
 
 %%%% TODO
+% \mu is a random variable. 
 % \mu(X,Y) =  \mu(X)\mu(Y|X)
 % undefinedness of probability zero
-%expectation
+% expectation
 
-\subsection{The General Case}
 
-A \emph{measurable space} $(\Omega, \mathcal F_\Omega)$ is a set $\Omega$,
-called the \emph{outcome space}, together with a collection $\mathcal F_\Omega \subseteq 2^\Omega$ of subsets of $\Omega$, which considered \emph{measurable}, and called \emph{events}. 
+\subsection{Beyond Probability}
+    \label{ssec:beyond-prob}
+
+%%% TODO %%%
+% sets of probability measures
+% dempster-shafer belief functions
+
+% \subsection{Probability, More Generally}
+\subsection{Probability, In General}
+    \label{ssec:gen-prob}
+
+The time has come for us to bite the bullet and describe how probability actually works, when a finite representation is insufficient. 
+The material here can be interesting and instructive,
+    and it is certainly a necessary foundation for our results that talk about distributions over real numbers.
+Still, we reiterate that the full account of measure theory needed to define probability in general is more than is necessary to get a deep conceptual understanding of the present work. 
+
+\paragraph{Measures.}
+A \emph{measurable space} $(\Omega, \mathcal F)$ is a set $\Omega$,
+called the \emph{outcome space}, together with a collection $\mathcal F \subseteq 2^\Omega$ of subsets of $\Omega$, which considered \emph{measurable}, and called \emph{events}. 
 The elements of $\Omega$, should be thought of \emph{possible outcomes} or \emph{possible worlds} for in the model.
-The set $\mathcal F_\Omega$ of events must also be an algebra, be closed under intersection, union, and complement---%
-that is, $U, V \in \mathcal F_\Omega$, then $U \cup V, U \cap V, \Omega - U \in \mathcal F_\Omega$.  
+The set $\mathcal F$ of events must also be an algebra, meaning that it contains $\Omega$, and is closed under complement and countable union---%
+that is, $\Omega \in \mathcal F$, if $U \in mathcal F$ then $\Omega \setminus U \in \mathcal F$, and if $U_1, U_2, \ldots \in \mathcal F$, then $U_1 \cup U_2 \cup \cdots \in \mathcal F$.  
 % One should think of $\mathcal A = 2^\Omega$ as consisting of every 
 % For all but a few select places, one can ignore $\mathcal F_\Omega$ in this dissertation.
-Often in probabilistic modeling, and in this dissertation in particular, the $\mathcal F_\Omega$.
-When $\Omega$ is finite, we allow all subsets to be measured by defining $\mathcal F_\Omega := 2^\Omega$,
-    and there are also standard choices when $\Omega = \mathbb R$, or when it is constructed o. 
-Either way, we will mostly leave $\mathcal F_\Omega$ implicit, and referring to a measurable space simply as $\Omega$. 
+% Often in probabilistic modeling, and in this dissertation in particular, the $\mathcal F_\Omega$.
+When $\Omega$ is finite, we allow all subsets to be measured by defining $\mathcal F := 2^\Omega$,
+    and there is also a standard choice for most other spaces of interest, such as when $\Omega$ is a convex subset of real numbers, called its \emph{Standard Borel Space}. 
+Either way, we will typically leave $\mathcal F$ implicit, after this chapter, and refer to a measurable space simply as its sample space $\Omega$. 
 
-A \emph{probability distribution} over a (measurable) space $(\Omega, \mathcal F)$ is a function $\Pr : \Omega \to [0,1]$
-satisfying the three Kolmogorov axioms:
-% \begin{enumerate}
-%     \item 
-    $\Pr(\emptyset) = 0$, 
-    $\Pr(\Omega) = 1$, 
-    and 
+A \emph{measure} $\mu$ over a measurable space $(\Omega, \mathcal F)$ is a function $\mu : \mathcal F \to [0,\infty]$ with two additional properties: $\mu(\emptyset) = 0$, and,
+for every countable collection $\{ U_i \}_{i \in \mathbb N}$
+of pairwise disjoint measurable sets (i.e., where each $U_i \in \mathcal F$ and $U_i \cap U_j = \emptyset$),  we have that
+$\sum_{i \in \mathbb N} \mu(U_i) = \lambda( \cup_{i \in \mathbb N} U_i)$. 
+A \emph{probability distribution} (or probability measure) is a measure $\mu$ with the additional property that $\mu(\Omega) = 1$. 
+% satisfying the three Kolmogorov axioms:
+% % \begin{enumerate}
+% %     \item 
+% \begin{align*}
+%     &\Pr(\emptyset) = 0, \qquad
+%     \Pr(\Omega) = 1, \\
+%     \quad\text{and}\qquad&
+%     \forall U, V \in \mathcal F.\quad 
+%         U \cap V = \emptyset \implies \Pr(U \cup V) = \Pr(U) + \Pr(V).
+% \end{align*}
+%
+Intuitively, these three properties are quite intuitive: $\emptyset$ is an event that cannot occur and hence has probability zero,
+$\Omega$ is an event that always occurs and hence has probability 1, 
+and if events cannot co-occur, then the probability that one of them occurs is the sum of their probabilities. 
 % \end{enumerate}
+% We need a few more definitions about measures. 
 
-% See \cref{sec:meas-prob} for the more formal definition in terms of measure theory. 
+We will need two additional concepts about measures.
+First, if $\mu$ and $\nu$ are measures over a space $(X, \mathcal F)$, 
+and, $\nu(U) = 0 \implies \mu(U) = 0$ for all $U \in \mathcal F$, then
+$\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\nu \ll \mu$.
+Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is said to be \emph{strictly positive} (with respect to $\cal T$).
 
+\paragraph{Statistics and (Random) Variables.} 
+If $(\Omega, \mathcal F)$ and $(Y, \mathcal G)$ are two measurable spaces, then
+a function $f : \Omega \to Y$ is said to be \emph{measurable} if $f(U) \in \mathcal F$ for all $U \in \mathcal G$. 
+In a context where one is interested in probabilities over $\Omega$, 
+a measurable function $X : \Omega \to Y$ is also called a \emph{random variable} or a \emph{statistic}.
+Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore in the next two paragraphs.
+
+In this more general setting, we no longer require $\V(X)$ to be a finite set, but it still cannot be arbitrary---it has to be a measurable space. At a technical level, this is compatible with our previous discussion about variables, because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces. 
+\begin{enumerate}
+    \item Recall that we regard a tuple $\mat X = (X_1, \ldots, X_n)$ of variables as itself a variable, with $\V(X_1, \ldots, X_n) = \prod_{i=1}^n \V(X_i)$.
+        But if each $\mathcal V(X_i)$ comes with an algebra $\mathcal F_i$ of events, then there is a natural product algebra $\mathcal F_{1:n}$ generated by complements and countable unions of events of the form $U = U_1 \times \cdots \times U_n$ with each $U_i \in \mathcal F_i$. 
+
+    \item Similarly, recall that when $X$ is a variable and $f : \V X \to S$ is a function, we regard $f(X)$ as a variable. In this setting, we add only the minimal requirement that $S$ be a measurable space and that $f$ be a measurable function.  
+\end{enumerate}
+
+Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
+With that definition, a variable $X$ can be viewed as a random variable $X : \V\!\X \to \V\!X$ that selects the value of $X$ from the joint setting.  
+Conversely, an arbitrary random variable $Z : \V\!\X \to \V Z$ can be included in the set of all variables; there is a natural 1-1 correspondence between distributions $\mu \in \Delta \V\!\X$ over the original variables, and ``extended'' distributions $\bar\mu \in \Delta \V(\X \cup Z)$ with the property that variable $Z$ and the function $Z$ applied to the other variables coincide (i.e., $\bar\mu(Z(\X) = Z)=1$).
+%
+%
+Although the two perspectives seem to be equally expressive, we opt for the variable-based one. 
+After all, we are interested in modeling epistemic states that undergo structural changes, and it is conceptually simpler to add and remove variables of interest, than it is to change sample spaces and figure out how to properly translate the random variables on them.  
+
+
+\paragraph{The Radon-Nikodym Derivative.}
+Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
+The Radon-Nikodym theorem states that there is then a unique $\mathcal F$-measurable function $f$
+such that for all $A \in \mathcal F$,
+\[
+    \mu(A) = \int_{A} f \,\mathrm d \nu.
+\]
+The function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
+
+
+\paragraph{Markov Kernels.}
+Finally, we get to the precise notion of a conditional probability distribution (cpd) 
+in this more careful framework regarding measurability.
+If $(X, \mathcal F)$, and $\mathcal Y = (Y, \mathcal G)$ are two measurable spaces, a \emph{Markov Kernel} $\kappa : \mathcal X \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
+\begin{enumerate}
+    \item For every $x \in X$, the map $\kappa(x, -) : \mathcal U \to [0,1]$ is a probability measure. (So $\kappa$ is also a cpd.)
+    \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borell space $[0,1]$.
+    Or more explicitly: for every open set $S \subseteq [0,1]$, and $U \in \mathcal G$, we have that
+    $\{x : \kappa(x,U) \in S\} \in \mathcal F$. 
+\end{enumerate}
+
+
+%%% TODO %%%%
+% - densities
+% - base measures
+%
+%
+% It is easy to verify that identity maps are measurable, and that, when $f$ and $g$ are measurable, so is $f \circ g$. 
+% It follows that there is a category $\Meas$ whose objects are measurable spaces, and whose maps are measurable functions. 
+%
+% \begin{defn}[Markov Kernels]
+%     If $\mathcal X  = (X, \mathcal F)$, and $\mathcal Y = (Y, \mathcal G)$ are two measurable spaces, a Markov Kernel $\kappa : \mathcal X \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
+%     \begin{enumerate}
+%         \item For every $x \in X$, the map $\kappa(x, -) : \mathcal U \to [0,1]$ is a probability measure. (So $\kappa$ is also a cpd.)
+%         \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borell space $[0,1]$.
+%         Or more explicitly: for every open set $S \subseteq [0,1]$, and $U \in \mathcal G$, we have that
+%         $\{x : \kappa(x,U) \in S\} \in \mathcal F$. 
+% \end{enumerate}
+% \end{defn}
 
 
 \section{Graph Theory}
