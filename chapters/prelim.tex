@@ -79,6 +79,8 @@ As one might hope from the notation, $A \to B$
     is the set of functions from $A$ to $B$; it is also written $B^A$. 
 Observe: if $2 = \{ 0, 1\}$ represents a set with 2 elements, then 
     the elements of $2^A$ are functions assigning either $0$ (absence) or $1$ (presence) to each element of $A$---that is, they are subsets of $A$. 
+We can \emph{compose} the functions $f : A \to B$ and $g : B \to C$
+to form a new function $g \circ f : A \to C$, defined by $(g \circ f) := a \mapsto g(f(a))$. 
 
 If $I$ is a set, then an \emph{indexed set}
     $\mat a = \{ a_i \}_{i \in I}$ consists of a collection of objects, one for each $a_i$. 
@@ -87,12 +89,6 @@ If $\forall i.~a_i \in A$, then $\mat a$ is just a function $\mat a : I \to A$.
 % Therefore, if each $a_i \in A_i$, then  $\mat a : \sqcup_{i \in I} A_i  
 A \emph{tuple} is the special case of a set indexed by $[n]$ for some natural number $n \in \mathbb N$. 
 
-%%%% TODO %%%%
-% - products
-% - sums
-% - converging sequence
-% - unit interval
-% - "space" = set + topology or geoemtry
 
 
 \paragraph{Vectors.}
@@ -107,15 +103,33 @@ $\mat 1$ denotes an all-ones vector, of a shape implied by context.
 If $\mat u$ and $\mat v$ are both of shape $S$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
     is the real number $\sum_{i \in S} u_i v_i$. 
 
-
 %%%%% TODO %%%%%
 % - matrices, matrix multiplication
 
-\paragraph{Variables.}
+
+\paragraph{}
+
+%%%% TODO %%%%
+% - products
+% - sums
+% - converging sequence
+% - unit interval
+% - "space" = set + topology or geoemtry
+
+
+
+\subsection{Variables}
     \label{ssec:basic-vars}
-A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
+% A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
+% A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
+% Another standard concept, but one 
+We now turn to the concept of a \emph{variable}.
 Intuitively, a variable represents some feature of the world or some property of some object. 
-Mathematically, a variable exists on two levels.
+Although variables are widely used across computer science---in programming languages, graphical models, causality, and probability theory, to name a few---there are actually several different closely related formalisms. 
+We give a (perhaps somewhat opinionated) account here that simultaneously explicates many of approaches in the literature. 
+
+% Our presentation of it is not standard, but largely because it incorprorates standard 
+Mathematically, our notion of a variable exists on two levels.
 \emph{Qualitatively}, a variable is just some unique identifier (the variable name), such as ``Height'', or $X$. 
 We typically use capital roman letters for variables.
 \emph{Quantitatively}, a variable $X$ is also associated with a set $\V(X)$, or simply $\V\!X$, of possible values. 
@@ -123,17 +137,17 @@ For example, $\V(\text{Height})$ might be the set of positive real numbers,
     or the set $\{ \texttt{short}, \texttt{tall} \}$. 
 A \emph{binary variable} is one whose possible values are $\{0, 1\}$, and a 
     \emph{real variable} is one whose possible values are $\mathbb R$. 
-A \emph{constant} is a variable $X$ that can only take on one possible value (i.e., $|\V X| = 1$).
+A \emph{constant} is a variable $X$ that can only take on one possible value (i.e., $|\V\! X| = 1$).
 
 We can regard sets of variables $\mat X$ as variables themselves, with
-$\V \mat X = \Pi_{X \in \mat X} \V X$.
+$\V \mat X = \Pi_{X \in \mat X} \V\! X$.
 However, when we do so, we must also be careful to remember $\mat X$ the variable has a special relationship with $\mat X$, the set of variables, a point we will soon return to. 
 Note that, by this definition, the empty set is a variable, and it takes on a single value (i.e., the unique setting of no variables).  
 This might seem strange, but there is precisely one way of selecting a value for each variable in $\varnothing$: simply do nothing. 
 To see this another way, observe that if $\mat X = \{ X_1, \ldots, X_n \}$ is a set of binary variables,
 then $|\V\mat X| = 2^n$, so in the special case of $n=0$, we have $|\V \varnothing | = 2^0 = 1$. 
 Those with keen attention to typography may have noticed we have used a different symbol ($\varnothing$) for the empty set of variables, than we have for other empty sets $(\emptyset)$. 
-This will be necessary to avoid ambiguity, because the (standard) notation for probability that we adopt has a different meaning applied to a set of variables than it does applied to a set of possible outcomes. 
+This will be necessary to avoid a minor ambiguity, because the (standard) notation for probability that we adopt has a different meaning applied to a set of variables than it does applied to a set of possible outcomes. 
 
 Similarly, tuples $(X_1, \ldots, X_n)$ of variables and indexed sets $\{X_i\}_{i \in I}$ of variables, are also themselves variables,
 with
@@ -155,7 +169,7 @@ In the text here, we convert between the two equivalent representations as is co
 Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $X(\mat x)$ for the value of the variable $X$ in the joint setting $\mat x$. The former is familiar lookup notation from many programming languages, and the latter is random variable notation, which we will get to in the next section.
 
 % Equality of variables 
-Variables notation is designed to look intuitive. Yet, just beneath the surface, it can also be very confusing, because it is quite unlike the standard mathematical notation for every other mathematical object.
+Variable notation is designed to look intuitive. Yet beneath the surface, it can be very confusing, as it is quite unlike the standard mathematical notation for every other mathematical object.
 This is especially true of the way variables interact with equality, and the symbol ``$=$''.
 For instance, if $X$ is a variable and $x \in \V(X)$, then the notation $X{=}x$ does not necessarily stand for a false statement (even though $X$ and $x$ refer to different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
 % In particular, it is neither true nor false, but rather a different mathematical object. 
@@ -188,17 +202,17 @@ The approach described above gives us what we want in essentially every context.
 It is always true that $X = X$, but not in general true that $X = X'$ unless $X$ and $X'$ must be equal by construction, or if $X$ and $X'$ are constants representing the same value. 
 It is true that $f(X) = g(X)$ if and only if $f = g$.
 If $X$ and $Y$ are real variables, then (it is true that) $X + Y = Y + X$.
-At the same time, these expressions remain unambiguously meaningful for describing events (as we will soon see). And when the expressions are \emph{true}, they are events that must occur.
+At the same time, these expressions remain unambiguously meaningful for describing events (as we will soon see). And when expressions are \emph{true}, they are events that must necessarily occur.
 
 
 % Clearly the full implications of this setup of variables can get rather tangled up
-Most formalisms avoid these issues by adopting only fragments of this picture, or sweeping ambiguities under the rug.
+Most formalisms that involve variables avoid these issues by adopting only fragments of this picture, or sweeping ambiguities under the rug.
 But it isn't necessary to do so; all of these standard concepts can coexist in one perfectly formal context.
 The constraint-tracking resolution resolution to these issues gives just a taste of a broader approach to modeling, which lies at the heart of the theory of probabilistic dependency graphs. 
 % gives a taste of the approach at the heart of the PDG formalism,   
 % and how we can have our cake and eat it too. 
 % Yet it turns out that all of this can be made precise with probabilistic dependency graphs, the mathematical representation of uncertainty that lies at the heart of this dissertation.  
-The missing part, of course, is the probability. 
+The missing part, as one might expect, is the probability. 
 
 \section{Probability, and Other Representations of Uncertainty}
 
@@ -209,8 +223,8 @@ There are many different notations for probability in different community.
 Our approach simultaneously enables some of the most common notations
     and the most recognizable foundations. 
 Thus, although all of the pieces are likely to be familiar, the precise formal way it fits together may not be. 
-
-We first give the simpler picture of probability in the finite case (\cref{ssec:fin-prob}), which, for our purposes, is largely representative of how one should think of probability in the general case (\cref{ssec:gen-prob}).
+%
+We start by giving the simpler picture of probability in the finite case (\cref{ssec:fin-prob}), which, for our purposes, is largely representative of how one should think of probability in the general case (which we return to \cref{ssec:gen-prob}).
 
 \subsection{Probability, in the Finite Case}
     \label{ssec:fin-prob}
@@ -256,6 +270,8 @@ to enable standard notation in the AI community:
 given a distribution $\mu \in \Delta \V\!X$ over the values of $X$,
 we also write $\mu(X)$ to specify $\mu$ and its type in a compact way.
 % we write $\mu(X)$ in place of $\mu$ to emphasize that $\mu \in \Delta \V \! X$ in a compact way. 
+% To a reader paying close attention, this definition might seem dangerous.
+Since $\mu : \V W \to [0,1]$ is a function, we have already defined $\mu(W)$ to be a variable, but fortunately that variable encodes exactly the same information as $\mu$ itself.
 
 
 %  $\mu(\mat X) = \mu(X_1, \ldots, X_n)$
@@ -269,6 +285,7 @@ It is called a marginal because of the special case of two variables: a joint di
 If we were to write the sum $\sum_{y \in \V Y} \mu(x,y)$ of each row $x$ in the margin, this would give the marginal distribution on $X$. 
 
 
+% The conditioned distribution $\mu|X{=}x$ is also written $\mu(\mat X \mid X{=}x)$, or, in abbreviated form as $\mu(Y|x)$ in contexts where the conditioning variable $X$ is unambiguous. 
 To \emph{condition} a joint distribution $\mu(\mat X)$ on a variable $X \in \mat X$ is to form an indexed set of conditioned distributions $\mu(\mat X \mid X) = \{ ~(\mu|X{=}x) ~\}_{x \in \V\!X}$, one for each possible value of $X$. 
 % The cpd $\mu(Y|X)$
 We can also refer to such objects without reference to a joint distribution.
@@ -287,18 +304,25 @@ write $p(Y|X)$ for a cpd on $Y$ given $X$.
 In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
 
 We typically write $\X$ for the set of all variables relevant to a given context. If $X,Y \in \X$, then we write $\mu(Y|X)$ for the cpd given by first conditioning $\mu(\X)$ on $X$, and then marginalizing each conditional distribution to $Y$. 
+% Now, $\mu(Y|X)$ too is a variable 
+By regarding $\mu(Y|X)$ as a function of $Y$ and $X$, it too can be viewed a real-valued variable (just like $\mu(X)$). 
+Moreover, the fact that $\mu(Y|X{=}x)$ is undefined can now be captured simply by not adding a constraint in $\Gamma(\mu(Y|X))$ connecting the value of $\mu(Y|X)$ to the value of $\mu(X,Y)$ in such cases. 
 % This now explains 
 % Observe that $\mu(\X \mid X)$ 
+% We can deal with the 
+% In this context, the un-definedness of $\mu(Y|X)$ 
+% Recall that the components of $\mu(Y|X)$
+We can now state \emph{chain rule} for probability, a simple but incredibly important fact:
+\begin{equation}
+    \mu(X,Y) = \mu(X) \mu(Y|X).
+\end{equation}
+% Unpacking our definition of what it means for it to be true that two variables are equal, 
+This is a direct analogue the definition of a conditional probability when $X$ and $Y$ are events. 
+% Yet this equation, unlike the definition of a conditional probability for events, holds 
+Yet here, we no longer need to carve out a special caveat for conditioning on probability zero events; that case is handled automatically by implicit underlying constraints. 
 
-With this definitions, 
-
-% Observe $p(Y|X)$ is the result of conditiong a joint distribution $\mu(X,Y) = p(Y|X)$
-% The key feature 
 
 %%%% TODO
-% \mu is a random variable. 
-% \mu(X,Y) =  \mu(X)\mu(Y|X)
-% undefinedness of probability zero
 % expectation
 
 
@@ -329,12 +353,12 @@ that is, $\Omega \in \mathcal F$, if $U \in mathcal F$ then $\Omega \setminus U 
 % Often in probabilistic modeling, and in this dissertation in particular, the $\mathcal F_\Omega$.
 When $\Omega$ is finite, we allow all subsets to be measured by defining $\mathcal F := 2^\Omega$,
     and there is also a standard choice for most other spaces of interest, such as when $\Omega$ is a convex subset of real numbers, called its \emph{Standard Borel Space}. 
-Either way, we will typically leave $\mathcal F$ implicit, after this chapter, and refer to a measurable space simply as its sample space $\Omega$. 
+Either way, we will typically leave $\mathcal F$ implicit after this chapter, referring to a measurable space with the same symbol as its sample space $\Omega$. 
 
 A \emph{measure} $\mu$ over a measurable space $(\Omega, \mathcal F)$ is a function $\mu : \mathcal F \to [0,\infty]$ with two additional properties: $\mu(\emptyset) = 0$, and,
 for every countable collection $\{ U_i \}_{i \in \mathbb N}$
 of pairwise disjoint measurable sets (i.e., where each $U_i \in \mathcal F$ and $U_i \cap U_j = \emptyset$),  we have that
-$\sum_{i \in \mathbb N} \mu(U_i) = \lambda( \cup_{i \in \mathbb N} U_i)$. 
+$\sum_{i \in \mathbb N} \mu(U_i) = \lambda( \cup_{i \in \mathbb N}~U_i)$. 
 A \emph{probability distribution} (or probability measure) is a measure $\mu$ with the additional property that $\mu(\Omega) = 1$. 
 % satisfying the three Kolmogorov axioms:
 % % \begin{enumerate}
@@ -355,7 +379,7 @@ and if events cannot co-occur, then the probability that one of them occurs is t
 
 We will need two additional concepts about measures.
 First, if $\mu$ and $\nu$ are measures over a space $(X, \mathcal F)$, 
-and, $\nu(U) = 0 \implies \mu(U) = 0$ for all $U \in \mathcal F$, then
+and $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
 $\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\nu \ll \mu$.
 Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is said to be \emph{strictly positive} (with respect to $\cal T$).
 
@@ -396,7 +420,7 @@ The function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with res
 \paragraph{Markov Kernels.}
 Finally, we get to the precise notion of a conditional probability distribution (cpd) 
 in this more careful framework regarding measurability.
-If $(X, \mathcal F)$, and $\mathcal Y = (Y, \mathcal G)$ are two measurable spaces, a \emph{Markov Kernel} $\kappa : \mathcal X \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
+If $(\Omega, \mathcal F)$, and $(\Omega', \mathcal G)$ are two measurable spaces, a \emph{Markov Kernel} $\kappa : \Omega \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
 \begin{enumerate}
     \item For every $x \in X$, the map $\kappa(x, -) : \mathcal U \to [0,1]$ is a probability measure. (So $\kappa$ is also a cpd.)
     \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borell space $[0,1]$.
@@ -408,21 +432,9 @@ If $(X, \mathcal F)$, and $\mathcal Y = (Y, \mathcal G)$ are two measurable spac
 %%% TODO %%%%
 % - densities
 % - base measures
+% - move discussion on random variables up to finite case
+%  - integration
 %
-%
-% It is easy to verify that identity maps are measurable, and that, when $f$ and $g$ are measurable, so is $f \circ g$. 
-% It follows that there is a category $\Meas$ whose objects are measurable spaces, and whose maps are measurable functions. 
-%
-% \begin{defn}[Markov Kernels]
-%     If $\mathcal X  = (X, \mathcal F)$, and $\mathcal Y = (Y, \mathcal G)$ are two measurable spaces, a Markov Kernel $\kappa : \mathcal X \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
-%     \begin{enumerate}
-%         \item For every $x \in X$, the map $\kappa(x, -) : \mathcal U \to [0,1]$ is a probability measure. (So $\kappa$ is also a cpd.)
-%         \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borell space $[0,1]$.
-%         Or more explicitly: for every open set $S \subseteq [0,1]$, and $U \in \mathcal G$, we have that
-%         $\{x : \kappa(x,U) \in S\} \in \mathcal F$. 
-% \end{enumerate}
-% \end{defn}
-
 
 \section{Graph Theory}
 \begin{defn}
@@ -451,7 +463,7 @@ If $(X, \mathcal F)$, and $\mathcal Y = (Y, \mathcal G)$ are two measurable spac
 
 It is common to identify a graph $H = (N,A)$ (or an undirected graph $G = (N,E)$) with its (symmetric) adjacency matrix
 \[
-    \mathbb A_H = \Big[ \#\Big\{ a \in A : \begin{array}{c}\Src a = u,\\ \Tgt a = v \end{array} \Big\} \Big]_{(u,v) \in N \times N}
+    \mathbb A_H = \Big[ \#\Big\{ a \in A : {\singlespacing \begin{array}{c}\Src a = u,\\ \Tgt a = v \end{array}} \Big\} \Big]_{(u,v) \in N \times N}
     \qquad
     \mathbb A_G = \Big[
     \#\{ e \in E : \iota(e) = \{u,v\}         \Big]_{(u,v) \in N\times N}~~,
@@ -499,8 +511,8 @@ There are natural ways to convert between the two: one forgets the direction of 
 \end{tikzcd}
 \]
 in which
-$\mathit{forget} \circ \mathit{annotate} = \id_{\text{Undirected Graphs}}$
-but
+$\mathit{forget} \circ \mathit{annotate}$
+is the identity on undirected graphs, but
 $\mathit{anotate} \circ \mathit{forget}$ is not the identity on (directed) graphs.
 % Technically, this makes $\mathit{forget}$ a \emph{retraction}, and $\mathit{annotate}$ a \emph{section}.
 
@@ -680,10 +692,7 @@ In the duals of hypergraphs corresponding to causal models, there are no two-tai
 Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
 
 
-\TODO[((What can be done with these objects? \\TODO: tie into the thesis elswehere or remove.))]
-
-
-
+% \TODO[((What can be done with these objects? \\TODO: tie into the thesis elswehere or remove.))]
 % \TODO[
 %     Possible to have other identity morphisms? Require that, for each $X \in \N$, the identity morphism $\dg M(\ed {\mathrm{id}}XX)$ preserves the base measure $\lambda_X$, in addition to pre/post committing 
 % ]
@@ -709,16 +718,34 @@ A quantitative BN, then, includes both that directed graph, and also each variab
 
 \section{Information Theory}
 
+% Perhaps surprisingly
+Information theory is the study of when computational tasks
+    (such as communicating in a noisy environment, 
+        or )
+    are possible, and when they are not. 
+%
+The field is vast and heterogenous, 
+    yet much of it is built using a small set of 
+    particularly nice ways of quantifying (un)certainty in a probabilistic
+    context, which we will refer to throughout as \emph{information-theoretic primatives}.
+
+Although not typically thought of in this way, 
+    the basic information-theoretic quantities come in two flavors, mirroring the divide between qualitative and quantitative information that we saw in the presentation of graphical models. 
+
+
+\subsection{Shannon Entropy and the Information Profile}
+
 Let $\mu$ be a probability distribution, and be $X,Y,Z$
-%oli6:
-% (sets of) random variables (taking on finitely many values).
     be (sets of) discrete random variables.
-%oli16:
+The \emph{information content} $\I_{\mu}[ X{=}x ] := \log \frac1{\mu(X{=}x)}$ of an event $X{=}x$ quantifies one's surprisal at learning that $X{=}x$.
+    
 The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed according to $\mu$, as measured by the number of bits of information needed (in expectation) needed to determine it, if the distribution $\mu$ is known.  It is given by 
 \[
     \H_\mu(X) := \sum_{x \in \V(X)} \mu(X{=}x) \log \frac{1}{\mu(X{=}x)} \qquad= -\Ex_{\mu}[\log \mu(X)],
 \]
-and a few very important properties; chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ is a constant according to $\mu$. 
+and has several very important properties. 
+Chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ 
+    is a constant according to $\mu$. 
 The ``joint entropy'' $\H(X,Y)$ is just the entropy of the combined variable $(X,Y)$ whose values are pairs $(x,y)$ for $x \in \V(X),y \in \V(Y)$; this is the same as the entropy of the variable $X \cup Y$ when $X$ and $Y$ are themselves sets of variables. 
 
 The \emph{conditional entropy} of $Y$ given $X$
@@ -727,12 +754,13 @@ measures the uncertainty present in $Y$ if one knows the value of $X$
 and is equivalently defined as any of the following three quantities:
 \[
 \H_\mu( Y | X) :=
-        \quad
+        % \quad
+    ~~
     \Ex_{\mu} [~\log \nicefrac1{\mu(Y | X)}~]
-        \quad
-    =\H_\mu(X,Y) - \H_\mu(X)
-        \quad
-    =\Ex_{x \sim \mu(X)} [~\H_{\mu \mid X{=}x}(Y)~]    
+        % \quad
+    ~~=~~\H_\mu(X,Y) - \H_\mu(X)
+        % \quad
+    ~~=\Ex_{x \sim \mu(X)} [~\H_{\mu \mid X{=}x}(Y)~]    
 .
 \]
 The \emph{mutual information} $\I(X;Y)$,
@@ -763,9 +791,14 @@ $,
 and thus mutual information is derived from entropy. 
 Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is a special case of mutual information. 
 
+\TODO[ TODO: move information profile material here ]
 
-\subsection{An Ode to Relative Entropy}
+\subsection{Relative Entropy}
 
+The
+
+
+\paragraph{An Ode to Relative Entropy}
 In this dissertation, we will derive a 
 
 Relative entropy is extremely special, and arguably exactly the

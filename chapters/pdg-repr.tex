@@ -464,9 +464,8 @@ Making this precise
 is
 the focus of \Cref{sec:scoring-semantics}.
 
-
-        
-These examples give a taste of the power of PDGs.  In the coming sections, we formalize PDGs and relate them to other approaches.		
+These examples give a taste of the power of PDGs.  
+In the coming sections, we formalize PDGs and relate them to other approaches.
 	
 	
 \section{Syntax}\label{sec:formal+syntax}
@@ -832,7 +831,10 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
 	\[ 
         % \OInc(\dg M) 
         \aar{\dg M}_0
-        = \inf_{ \mu \in \Delta [W_{\cal V}]} \OInc_{\dg M}(\mu) . 
+        := 
+        % \inf_{ \mu \in \Delta [W_{\cal V}]} 
+        \inf_{ \mu \in \Delta \V\!\X} 
+        \OInc_{\dg M}(\mu) . 
     \]
     is the minimum possible incompatibility of $\dg M$ with any distribution $\mu$.
 % }
@@ -908,13 +910,18 @@ Given a multigraph $G$ and distribution $\mu$ on its variables,
 contrast the amount of
 information required to 
 \begin{enumerate}[label=(\alph*)]
-\item directly describe a joint outcome  \label{item:globalinfo}
-$\mat w$ drawn from $\mu$, and 
-\item separately specify, for each edge $\ed aXY$, the value
-    $\mat w_Y$ (of $Y$ in world $\mat w$) 
-	given the value $\mat w_X$, in expectation.
+\item directly describe a joint outcome 
+% $\mat w$ drawn from $\mu$, and 
+$\omega \sim \mu$, and 
+ \label{item:globalinfo}
+\item 
+% separately specify, for each edge $\ed aXY$, the value $\mat w_Y$ (of $Y$ in world $\mat w$) given the value $\mat w_X$, in expectation.
+separately specify, for each edge $\ed aXY$, the value $\omega[Y]$ (of $Y$ in world $\omega$) given the value $\omega[X]$, in expectation.
 	\label{item:localinfo}
 \end{enumerate}
+In a sense, (a) is the information needed to determine $\mu$ along its own structure,
+while (b) is the information needed to determine $\mu$ along the structure of the hypergraph $\Ar$. 
+
 If \ref{item:globalinfo} $=$ \ref{item:localinfo},
 a specification of (b) has
  exactly the same length as a full desciption of the world. 
