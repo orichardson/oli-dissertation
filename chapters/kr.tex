@@ -933,11 +933,58 @@ $
 $
 % \end{align*}
 which typechecks because a vertex $v$ is a distribution over $\Omega$. 
-
-\begin{tikzpicture}
+\[
+\dg M_{\cal P} :=~
+\begin{tikzpicture}[center base]
+    \node[dpadded] (V) at (-2,0) {$V$};
+    \node[dpadded] (W) at (0,0) {$V$};
     
+    \draw[arr2] (V) to node[above]{$p$} (W);
 \end{tikzpicture}
+\]
 
+\begin{prop}
+    $\mu \in \mathcal P$ iff it can be extended to some $\bar\mu \in \SD{\dg M_{\cal P}}$
+    That is, 
+    $\mathcal P = \{ \mu(W) : \mu \in \SD{\dg M_{\cal P}} \}$. 
+\end{prop}
+
+Interestingly, this approach also resolves some confusion about maximum entropy. 
+Let's look at an example.
+
+\begin{example}
+Suppose we are about to flip a coin; but we know that it is either fair or double-headed, but do not know which.
+One way of modling this is might be to take $\Omega = \{ H, T\}$ to be the possible outcomes of the coin flip, and represent our belief with the set of distributions
+$\mathcal P = \{ \mu_{.5}, \delta_H \}$, where $\mu_{.5}$ assigns probability 1/2 to both $H$ and $T$, and $\delta_H$ assigns probability 1 to $H$. 
+% According to the principle of maximum entropy, we should 
+% The principle of maximum entropy tells us to select as a representative distribution 
+From a set of distributions consistent with observations, the principle of maximum entropy tells us to select the one with the highest entropy---which is a fair coin. 
+
+Part of the problem, however, is that we haven't actually modeled the whole situation---we've left out an important part of the picture: our knowledge about the bias of the coin, and how that affects the outcome.  This information is extremely easy to add to a PDG: 
+
+\begin{center}
+\begin{tikzpicture}[center base]
+    \node[bpt={h | $H$}] at (-0.3,0) {};
+    \node[bpt={t | $T$}] at (0.3,0) {};
+    %			\draw[arr,->, thin, red, dashed] (x1) to[bend right=40](x2);
+    \node[bDom={Coin (C) around \lab{h}\lab{t}}] {};
+    
+    \node[dpadded, left=1 of C] (B) {Bias};
+    
+    \draw[arr] (B) -- (C);
+\end{tikzpicture}
+$\quad\displaystyle
+p = 
+\begin{idxmat}{$F$,$H^2$}{$H$,$T$}
+    .5 & .5 \\ 1& 0
+\end{idxmat}
+$
+\end{center}
+
+Now, in the maximum entropy distribution, the coin is twice as likely to be fair as it is to be one-sided, and overall it has a 2/3 chance of landing heads. 
+This is a more reasonable summary of our belief state---we do not truly believe that the coin is fair.
+Furthermore, if we select $\alpha = 1$ for this edge, 
+\end{example}
 
 \subsection{Belief and Plausibility Functions}
     \label{sec:belplaus-as-pdg}
