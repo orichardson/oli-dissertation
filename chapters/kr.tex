@@ -971,9 +971,9 @@ Part of the problem, however, is that we haven't actually modeled the whole situ
     
     \node[dpadded, left=1 of C] (B) {Bias};
     
-    \draw[arr] (B) -- (C);
+    \draw[arr] (B) to node[above]{$p$} (C);
 \end{tikzpicture}
-$\quad\displaystyle
+$\qquad\qquad\displaystyle
 p = 
 \begin{idxmat}{$F$,$H^2$}{$H$,$T$}
     .5 & .5 \\ 1& 0
