@@ -181,7 +181,8 @@ The result is another
 % A \emph{matrix} is a function $A \in \mathbb R^{S \times T}$
 
 \textbf{Convexity.}
-A subset $A \subseteq \Rext^I$ of real space is a \emph{convex set} iff
+A subset $A \subseteq \Rext^I$ of extended real space is a \emph{convex set} iff
+it contains all of the line segments between pairs of its elements---that is, if
 it has the property that
 $
 (1-\lambda) \mat u + \lambda \mat v \in A
@@ -189,8 +190,26 @@ $
 % it is close
 for all $\mat u, \mat v \in A$ and $\lambda \in [0,1]$,
 $(1-\lambda)$.
+% Convex sets have some important relationships with probability distributions.
+The probability simplex $\Delta \Omega$ is the prototypical convex set. 
+The \emph{convex hull} of a 
+The \emph{extreme points} or \emph{vertices} of a convex set $A$ is the smallest subset 
+% $\matrm{Ext}(A) 
+of $A$ whose convex hull is $A$. 
+If $A$ is a convex set with $|\mathrm{Ext}(A)| \in \mathbb N$,
+then $A$ is the image of a linear map ....
+
 %
-A funtion $f : \Rext^I \to \Rext$ is \emph{convex} if 
+A funtion $f : \Rext^I \to \Rext$ is \emph{convex} iff
+\[
+    \forall \mat u, \mat v \in \Rext^I,~\forall \lambda \in (0,1).\quad
+    f( (1-lambda) \mat u + \lambda \mat v ) \le (1-\lambda) f(\mat u) + \lambda f(\mat v).
+\]
+Recall that a linear map is one whre this relationship always holds with equality for all $\mat u$ and $\mat v$. 
+A \emph{strictly convex} function, on the other hand, is one where it never does, except when $\mat u = \mat v$. 
+
+% The two notions are closely related: a c 
+Convex functions and convex sets are closely related. The set of points that lie above a function (its \emph{epigraph}) is a convex set if and only if $f$ is convex. The level sets of a function $f$ (i.e., $\{ \mat u \in \Rext^I : f(\mat u) \le k \}$ for some $k \in \Rext$) are convex if $f$ is convex. And $\mat u \mapsto \infty \mathbbm 1[\mat u \in A]$ is a convex function iff $A$ is a convex set. 
 
 
 
