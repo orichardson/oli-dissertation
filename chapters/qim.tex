@@ -1359,6 +1359,9 @@ So, the qualitative aspect of a mechanism is best represented as a directed \emp
 %\unskip, and can have multiple sources.
 \unskip, that can have multiple sources.
 %oli16: second part comes here. 
+
+Recall 
+
 \begin{defn}
     A \emph{directed hypergraph}
     %oli16:
@@ -1385,80 +1388,6 @@ be recovered from the \hyperarc s (by selecting $\N := \bigcup_{a \in
   %  \Ar} \Src a \cup \Tgt a$); thus we often leave $\N$ implicit,
     \Ar} \Src a \cup \Tgt a$). Thus, we often leave $\N$ implicit,
 referring to the \hgraph\ simply as $\Ar$.
-%oli7*: I was verifying things closely, and this clause interacts annoyingly with partitionality. Partitionality is the more important notion, so I'll drop this to make that definition clearer. 
-\commentout{
-    We can assume without loss of generality that $\Ar$ contains an identity \arc\ 
-    % $N{\xrightarrow{\mathrm{id}_N}}N$ 
-    $\ed {\mathrm{id}}NN$
-    for each $N \in \N$, 
-    %joe3: it should e "all the information"
-    in which case $\Ar$ alone contains all the information in the hypergraph.
-    For this reason, 
-    %oli7:
-    
-    we refer to the directed hypergraph simply as $\Ar$.
-}%
-%joe4: my version
-%oli5: There's a perfectly good explanation for why we can do this.  (The one I had above.) This sells it short.  I don't see why it muddies the water at all.  
-\commentout{
-    We sometimes abuse notation and ignore the set of variables and their
-    values, referrting to the the directed hypergraph simply as $\Ar$.
-}%
-    %joe7*: what is it mean for a node to be "relevant"?  What does
-    %"almost always" mean?  This is unacceptable in a formal definition!
-    %oli8: I mean, if you define the nodes this way, the resulting mathematical object and its smenatics will naturally embed inside the behavior if you included extra nodes, which interact with nothing and are irrelevant. But I just want a throwaway word to communicate this, so I'll move it outside of the formal definition. 
-    % Becaue all relevant nodes can almost always be recovered from the \hyperarc s (by setting $\N := \bigcup_{a \in \Ar} \Src a \cup \Tgt a$), we often surpress $\N$, referring to the directed hypergraph simply as $\Ar$.
-    %oli16: hiding this, so I can send out a draft. Trying to integrate some pieces of it. 
-    \expandafter\commentout\vjoe{
-    A \emph{directed hypergraph}
-    consists of a set $\N$ of nodes
-    and a set $\Ar$ of \emph{directed hyperedges}.
-    %joe7*: added.  I will insist on this
-    %oli8*: YUCK! I really hate the next line. This is a directed hypergraph, which has a standard definition!  It's a mathematical construction; nodes are an abstract set. The nodes are not not "associated with" anything in the definition of a hypergraph.  Also, hypergraphs are not graphical models, just as graphs are not graphical models. 
-    Each node in $\N$ is associated with a variable, just as in other graphical models. 
-    A directed hyperedge is a generalization of a directed edge in a
-    directed graph; each directed hyperedge  $a \in \Ar$ is associated with
-    a set $\Src a \subseteq \N$ of
-    source nodes and a set $\Tgt a \subseteq \N$ of target
-    nodes.
-    %joe7: added
-    %oli8: this is a distraction
-    (A directed edge in a directed graph can be thought of
-    as having a source and targe that are singletons.)
-    %joe7*: Why do you need the superscript a?  I would get rid of it.
-    %You typically do not write it.
-    %oli8: We need it to distinguish between distinct arcs with the
-    % same source and target. We always use the superscript when we're
-    % carefully using the notation we define here---but when we draw
-    % the PDG out completely, we just write two arrows. This notation
-    % becomes far less useful if we can't use it to bind a hyperarc a \in \Ar. 
-                We write $\ed {\scriptstyle a}{S}{T} \in \Ar$ to specify
-    %joe7
-    %                an \arc\
-    a directed hyperedge
-                $a \in \Ar$ together with its sources $S = \Src a$ and targets $T = \Tgt a$.
-    %oli7*: I was verifying things closely, and this clause interacts annoyingly with partitionality. Partitionality is the more important notion, so I'll drop this to make that definition clearer. 
-    %
-    %If we assume that an isolated node corresponds 
-    %  Becaue all relevant nodes can almost always be recovered  from the 
-    % \hyperarc s (by setting $\N := \bigcup_{a \in \Ar} \Src a \cup  \Tgt a$),
-    We assume that every node in $\N$ is in the source or target of some
-    directed hyperedge.  
-    %oli8: I did say this myself in an earlier version, but this doesn't work
-    % because of the definition of partitionality. Has to be cut.
-    % (This is without loss of generality, since for a
-    % node $X$ not part of any hyperedge, we can always add a hyperedge
-    % whose source and target are $\{X\}$.)
-    This means that we can recover $\N$ from $\Ar$, so
-    we often surpress $\N$, referring to the
-    directed hypergraph simply as $\Ar$.
-    %joe7: added
-    From here on, for ease of exposition, we refer to  a directed
-    hypergraph as just a 
-    hypergraph, and a directed hyperedge as a \emph{\hyperarc}.  We
-    also identify a node $X \in \N$ with the variable associated with
-    it, so talk about a variable $X \in \N$.
-    }
 \end{defn}
 
 %oli16: rewrote both of our paragraphs
@@ -5620,7 +5549,7 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
 %oli20: replacement
 We now review the critical information theoretic concepts and their relationships to
     (in)dependence
-    (see \cref{appendix:info-theory-primer} for a full primer).
+    (see \cref{sec:qual-info-theory-primer} for a full primer).
 % oli13: shortening:
 % The entropy $\H_\mu(Y)$ of a (set of) variable(s) $Y$ measures how far $\mu$ is from making $Y$ a constant, and its interdefinable conditional variant $\H_\mu(Y|X) = \H_\mu(X,Y) - \H_\mu(X)$ measures how far $\mu$ is from satisfying the functional dependency $X \tto Y$. 
 % The mutual information $\I_\mu(Y;Z) = \H_\mu(Y) + \H_\mu(Z) - \H_\mu(Y,Z)$ measures how far $\mu$ is from modeling the independence $Y \CI Z$, and the conditional mutual information $\I_\mu(Y;Z| X)= \H_\mu(Y| X) + \H_\mu(Z| X) - \H_\mu(Y,Z|X)$ measures how far $\mu$ is from satisfying the conditional independence $Y \CI Z \mid X$. 
@@ -6071,11 +6000,11 @@ and entropy $\H_\mu(Y|X)$%
 Either quantity can be derived from the other. 
 In particular, $\H_\mu(Y|X) = \I_{\mu}(Y;Y|X)$, deepening 
 the observation made in \cref{eq:conditional-self-independence-det}.
-See \cref{appendix:info-theory-primer} for definitions and a short review.}---the most important quantities in the field---measure
+See \cref{sec:qual-info-theory-primer} for definitions and a short review.}---the most important quantities in the field---measure
 %oli11: silently rearranged the letters so we're always conditioning on X below. 
 %oli11: worked this material into the above.
 %of its two most basic quantities%
-%---conditional entropy $\H_\mu(Y|X)$ and conditional mutual information $\I_\mu(Y;Z|X)$\footnote{See \cref{appendix:info-theory-primer} for definitions and a short review.}---are 
+%---conditional entropy $\H_\mu(Y|X)$ and conditional mutual information $\I_\mu(Y;Z|X)$\footnote{See \cref{sec:qual-info-theory-primer} for definitions and a short review.}---are 
 % natural ways of quantifying 
 % ways to quantify 
 how far a distribution $\mu$ is from satisfying
@@ -6777,14 +6706,14 @@ let's return to the 3-cycle in \cref{example:xyz-cycle-1}.
 
 %oli8: wrapping in example environment
 %oli21: moving figure here
-\begin{wrapfigure}[5]{o}{1.5cm}
+\begin{wrapfigure}[4]{o}{2.5cm}
     \vspace{-2ex}
     \def\circsize{0.7}
     \def\radsize{0.42}
     \def\twosize{0.5}
     
-    \scalebox{0.85}{
-    \begin{tikzpicture}[center base,scale=0.9]
+    \scalebox{1.0}{
+    \begin{tikzpicture}[center base,scale=1.2]
         %oli21: removing label (b)
         % \node at ({-\circsize-\radsize+0.1},{\circsize+\radsize-0.2}) {\textbf{\underline{(b)}}};
         \begin{scope}
@@ -7069,13 +6998,13 @@ suddenly
 supports the very notion it was meant to challenge, suggesting in an unexpected way that the information profile may yet capture the essence of probabilistic structure.
 % but also suggests the opposite of its intended purpose. 
 
-\begin{wrapfigure}[5]{o}{1.8cm}
+\begin{wrapfigure}[4]{o}{2.5cm}
     \vspace{-2ex}
     \def\circsize{0.7}
     \def\radsize{0.42}
     \def\twosize{0.5}
-    \scalebox{0.85}{%
-    \begin{tikzpicture}[center base,scale=0.9]
+    \scalebox{1.0}{%
+    \begin{tikzpicture}[center base,scale=1.2]
         % \node at ({-\circsize-\radsize+0.1},{\circsize+\radsize-0.2}) {\underline{\textbf{(c)}}};
         \begin{scope}
             \path[fill=green!60!black,fill opacity=0.25]
@@ -8066,6 +7995,7 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
 \begin{enumerate}
     \item Let $f : \V(A) \to \V(B)$ and $g : \V(A) \to \V(C)$ be such that $\nu(f(A) = B) = 1 = \nu(g(A) = C)$. Since both events happen with probability 1, so must the event $f(A) = B \cap g(A) = C$. Thus the event $(f(A), g(A)) = (B,C)$ occurs with probability 1.  Therefore, $\nu \models A \tto (B,C)$. 
     \item The same ideas, but faster: we have $f : \V(A) \to \V(B)$ as before, and $g : \V(B) \to \V(C)$, such that the events $f(A) = B$ and $g(B) = C$ occur with proability 1. By the same logic, it follows that their conjunction holds with probability 1, and hence $C = f(g(A))$ occurs with probability 1. So $\nu \models A \tto C$. 
+    \qedhere
 \end{enumerate}
 \end{lproof}
 
@@ -8796,11 +8726,11 @@ To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we wi
     \]
 \end{lemma}
 \begin{lproof}
-    Since there is only one joint distribution in scope, we omit the subscript $\mu$, writing $\I(-)$ instead of $\I_\mu(-)$ and $\H(-)$ instead of $\H_\mu(-)$, in the body of this proof.
-    The following fact will also be very useful:
+Since there is only one joint distribution in scope, we omit the subscript $\mu$, writing $\I(-)$ instead of $\I_\mu(-)$ and $\H(-)$ instead of $\H_\mu(-)$, in the body of this proof.
+The following fact, known as the \emph{chain rule for mutual information} will also be critical for our calculations:
     \begin{align}
         \I(A; B, C) &= \I(A; C) + \I(A; B \mid C)
-            &\text{(the chain rule for mutual information).}
+            &\text{(the MI chain rule).}
             \label{eq:chain-rule-mi}
     \end{align}
     
@@ -9214,73 +9144,72 @@ To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we wi
 % }
 
 
+\commentout{ Unless 
 \section{Information Theory, PDGs, and \SCibility}
-\subsection{More Detailed Primer on Information Theory}
-    \label{appendix:info-theory-primer}
-%oli16: expanded this primer a bit
-%oli22: adding a link back
-We now expand on the fundemental information quantities introduced at the beginning of \cref{sec:info}.
-Let $\mu$ be a probability distribution, and be $X,Y,Z$
-%oli6:
-% (sets of) random variables (taking on finitely many values).
-    be (sets of) discrete random variables.
-%oli16:
-The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed according to $\mu$, as measured by the number of bits of information needed (in expectation) needed to determine it, if the distribution $\mu$ is known.  It is given by 
-\[
-    \H_\mu(X) := \sum_{x \in \V(X)} \mu(X{=}x) \log \frac{1}{\mu(X{=}x)} \qquad= -\Ex_{\mu}[\log \mu(X)],
-\]
-and a few very important properties; chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ is a constant according to $\mu$. 
-The ``joint entropy'' $\H(X,Y)$ is just the entropy of the combined variable $(X,Y)$ whose values are pairs $(x,y)$ for $x \in \V(X),y \in \V(Y)$; this is the same as the entropy of the variable $X \cup Y$ when $X$ and $Y$ are themselves sets of variables. 
-
-The \emph{conditional entropy} of $Y$ given $X$
-measures the uncertainty present in $Y$ if one knows the value of $X$
-(think: the information in $Y$ but not $X$),
-and is equivalently defined as any of the following three quantities:
-\[
-\H_\mu( Y | X) :=
-        \quad
-    \Ex_{\mu} [~\log \nicefrac1{\mu(Y | X)}~]
-        \quad
-    =\H_\mu(X,Y) - \H_\mu(X)
-        \quad
-    =\Ex_{x \sim \mu(X)} [~\H_{\mu \mid X{=}x}(Y)~]    
-.
-\]
-The \emph{mutual information} $\I(X;Y)$,
-and its conditional variant $\I(X;Y|Z)$, 
-are given, respectively, by
-\[
-    \I_\mu(X;Y) :=
-        \Ex_{\mu} \Big[ \log \frac{\mu(X,Y)}{\mu(X) \mu(Y)}\Big],
-    \quad\text{and}\quad
-    \I(X;Y|Z):= 
-        \Ex_{\mu} \Big[ \log \frac{\mu(X,Y,Z)\mu(Z)}{\mu(X,Z) \mu(Y,Z)}\Big].
-\]
-The former is non-negative and equal to zero iff $\mu \models X \CI Y$, and the latter is non-negative and equal to zero iff $\mu \models X \CI Y \mid Z$. 
-All of these quantities are purely ``structural'' or ``qualitative'' in the sense that they are invariant to relabelings of values, and 
-
-Just as conditional entropy can be written as a linear combination of unconditional entropies, so too can conditional mutual information be written as a linear combination of unconditional mutual informations: $\I(X;Y|Z) = \I(X;(Y,Z)) - \I(X;Z)$.  
-Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \emptyset$). 
-Furthermore, entropy and mutual information are also interdefinable and generated by linear combinations of one another. 
-It is easy to verify that 
-$\I_\mu(X;Y) 
-    % = \H_\mu(X,Y) - \H(Y|X) - \H(X|Y)
-    = \H_\mu(X) + \H_\mu(Y) - \H(X,Y)
-$
-and 
-$\I_\mu(X;Y|Z)
-    = \H_\mu(X|Z) + \H_\mu(Y|Z) - \H(X,Y|Z)
-$,
-and thus mutual information is derived from entropy. 
-Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is a special case of mutual information. 
-    
+}
+% \subsection{More Detailed Primer on Information Theory}
+%     \label{sec:qual-info-theory-primer}
+% %oli16: expanded this primer a bit
+% %oli22: adding a link back
+% We now expand on the fundemental information quantities introduced at the beginning of \cref{sec:info}.
+% Let $\mu$ be a probability distribution, and be $X,Y,Z$
+% %oli6:
+% % (sets of) random variables (taking on finitely many values).
+%     be (sets of) discrete random variables.
+% %oli16:
+% The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed according to $\mu$, as measured by the number of bits of information needed (in expectation) needed to determine it, if the distribution $\mu$ is known.  It is given by 
+% \[
+%     \H_\mu(X) := \sum_{x \in \V(X)} \mu(X{=}x) \log \frac{1}{\mu(X{=}x)} \qquad= -\Ex_{\mu}[\log \mu(X)],
+% \]
+% and a few very important properties; chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ is a constant according to $\mu$. 
+% The ``joint entropy'' $\H(X,Y)$ is just the entropy of the combined variable $(X,Y)$ whose values are pairs $(x,y)$ for $x \in \V(X),y \in \V(Y)$; this is the same as the entropy of the variable $X \cup Y$ when $X$ and $Y$ are themselves sets of variables. 
+% 
+% The \emph{conditional entropy} of $Y$ given $X$
+% measures the uncertainty present in $Y$ if one knows the value of $X$
+% (think: the information in $Y$ but not $X$),
+% and is equivalently defined as any of the following three quantities:
+% \[
+% \H_\mu( Y | X) :=
+%         \quad
+%     \Ex_{\mu} [~\log \nicefrac1{\mu(Y | X)}~]
+%         \quad
+%     =\H_\mu(X,Y) - \H_\mu(X)
+%         \quad
+%     =\Ex_{x \sim \mu(X)} [~\H_{\mu \mid X{=}x}(Y)~]    
+% .
+% \]
+% The \emph{mutual information} $\I(X;Y)$,
+% and its conditional variant $\I(X;Y|Z)$, 
+% are given, respectively, by
+% \[
+%     \I_\mu(X;Y) :=
+%         \Ex_{\mu} \Big[ \log \frac{\mu(X,Y)}{\mu(X) \mu(Y)}\Big],
+%     \quad\text{and}\quad
+%     \I(X;Y|Z):= 
+%         \Ex_{\mu} \Big[ \log \frac{\mu(X,Y,Z)\mu(Z)}{\mu(X,Z) \mu(Y,Z)}\Big].
+% \]
+% The former is non-negative and equal to zero iff $\mu \models X \CI Y$, and the latter is non-negative and equal to zero iff $\mu \models X \CI Y \mid Z$. 
+% All of these quantities are purely ``structural'' or ``qualitative'' in the sense that they are invariant to relabelings of values, and 
+% 
+% Just as conditional entropy can be written as a linear combination of unconditional entropies, so too can conditional mutual information be written as a linear combination of unconditional mutual informations: $\I(X;Y|Z) = \I(X;(Y,Z)) - \I(X;Z)$.  
+% Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \emptyset$). 
+% Furthermore, entropy and mutual information are also interdefinable and generated by linear combinations of one another. 
+% It is easy to verify that 
+% $\I_\mu(X;Y) 
+%     % = \H_\mu(X,Y) - \H(Y|X) - \H(X|Y)
+%     = \H_\mu(X) + \H_\mu(Y) - \H(X,Y)
+% $
+% and 
+% $\I_\mu(X;Y|Z)
+%     = \H_\mu(X|Z) + \H_\mu(Y|Z) - \H(X,Y|Z)
+% $,
+% and thus mutual information is derived from entropy. 
+% Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is a special case of mutual information. 
+% 
 %joe17*: cut this subsection!  It feels like you've just dumped a lot
 %of restuls.  The appendix is not a dumping ground!  This is not how
 %to write a paper!
 %oli22*: I see why you say this; rewriting this subsetion to clarify its current role.  (It's in another document, so I'm working on this concurrently.)
-\subsection{Structural Deficiency: More Motivation, and Examples}
-% \input{original-scoring-function-intuition.tex}
-\input{fragments/idef-intuition}
 
 %oli22: cutting for NeurIPS
 \commentout{%
@@ -9363,54 +9292,15 @@ $(\Ar, \balpha)^\dagger$ by replacing each weighted hyperarc
 \TODO
 }%
 
-\subsection{Counter-Examples to the Converse of Theorem \ref{theorem:sdef-le0}}
-    \label{appendix:converse-sdef-le0}
-
-In light of 
-%oli3
-% its usefulness
-\cref{example:ditrichotomy}
-and its connections to 
-%oli3:
-% the original PDG definition,
-$\SDef$
-through \cref{theorem:sdef-le0},
-one might hope this criterion is not just a bound, but
-    a precise characterization of the distributions that are \scible\ 
-    with the 3-cycle. 
-Unfortunately, it does not, and the converse of \cref{theorem:sdef-le0} is false.
-
-\begin{example}
-    Suppose $\mu(X,Y,Z) = \Unif(X,Z) \delta \mathrm{id} (Y|X)$ and $\Ar = \{\to X, \to Y\}$,
-    % Consider $\Ar = \{\to X, \to Y\}$, ,
-    where all variables are binary.
-    Then $\SDef_{\!\Ar}(\mu) \,{=}\, 0$, but $X$ and $Y$ are not independent.
-    \qedhere
-\end{example}
-%oli3: shortening; previous "story" is not so interesting
-% This problem is easily dealt with by requiring that $\SDef_{\!\Ar}(\mu) \le 0$
-% not just for $\Ar$ and $\mu$, but also for all restrictions of them.
-% Yet here is another kind of example that is not so easily dealt with
-Here is another counter-example, of a very different kind.
-\begin{example}
-    Suppose  $A, B, C$ are binary variables.
-    It can be shown by enumeration (see appendix) that
-    no distribution supported on seven of the eight
-    possible joint settings of of $\V(A,B,C)$ can be
-    %oli5: here and below: \Ar_\circ  -->  \Ar_{3\circ}
-    \scible\ with the 3-cycle $\Ar_{3\circ}$. Yet it is easy
-    to find examples of such distributions $\mu$ that have positive
-    interaction information $\I(A;B;C)$,
-    and thus $\SDef_{\mu}(\Ar_{3\circ}) \le 0$ for such distributions.
-\end{example}
 
 
 %joe17*: Cut this section.  (See my previous coment on the appendix
 %not being a dumping ground.)  
 %oli22: This material directly supports claims made in the main paper.  When I've described Theorem 2 to people, I've essentially always recieved questions about this. 
-\section{\SCibility\ Constructions and Counterexamples}
-    \label{sec:func-counterexamples}
+\section{Constructions and Counterexamples}
 
+\subsection{Parallel Arcs without Functional Dependency}
+    \label{sec:func-counterexamples}
 We now give a counterexample to a 
 % earlier version
 simpler previously conjectured strengthening of \cref{theorem:func},
@@ -9517,6 +9407,47 @@ That is, there are \partl\ graphs $\Ar$ such that $\mu \emodels \Ar$ but $\mu \n
     Intuitively, this one missing bit corresponds to the value of $A$ that is not determined by the structure of $\Ar$.
 \end{example}
 
+
+\subsection{Counter-Examples to the Converse of Theorem \ref{theorem:sdef-le0}}
+    \label{appendix:converse-sdef-le0}
+
+In light of 
+%oli3
+% its usefulness
+\cref{example:ditrichotomy}
+and its connections to 
+%oli3:
+% the original PDG definition,
+$\SDef$
+through \cref{theorem:sdef-le0},
+one might hope this criterion is not just a bound, but
+    a precise characterization of the distributions that are \scible\ 
+    with the 3-cycle. 
+Unfortunately, it does not, and the converse of \cref{theorem:sdef-le0} is false.
+
+\begin{example}
+    Suppose $\mu(X,Y,Z) = \Unif(X,Z) \delta \mathrm{id} (Y|X)$ and $\Ar = \{\to X, \to Y\}$,
+    % Consider $\Ar = \{\to X, \to Y\}$, ,
+    where all variables are binary.
+    Then $\SDef_{\!\Ar}(\mu) \,{=}\, 0$, but $X$ and $Y$ are not independent.
+    \qedhere
+\end{example}
+%oli3: shortening; previous "story" is not so interesting
+% This problem is easily dealt with by requiring that $\SDef_{\!\Ar}(\mu) \le 0$
+% not just for $\Ar$ and $\mu$, but also for all restrictions of them.
+% Yet here is another kind of example that is not so easily dealt with
+Here is another counter-example, of a very different kind.
+\begin{example}
+    Suppose  $A, B, C$ are binary variables.
+    It can be shown by enumeration (see appendix) that
+    no distribution supported on seven of the eight
+    possible joint settings of of $\V(A,B,C)$ can be
+    %oli5: here and below: \Ar_\circ  -->  \Ar_{3\circ}
+    \scible\ with the 3-cycle $\Ar_{3\circ}$. Yet it is easy
+    to find examples of such distributions $\mu$ that have positive
+    interaction information $\I(A;B;C)$,
+    and thus $\SDef_{\mu}(\Ar_{3\circ}) \le 0$ for such distributions.
+\end{example}
 
 %oli16: moved this section here. SHould eventually be a subsection of something. 
 % \subsection{PSEMs as \Scibility\ Witnesses}

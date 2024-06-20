@@ -5,9 +5,21 @@ Although the high-level ideas in this thesis are often intuitive and philosophic
 % we make those ideas precise using some  
 but in their most precise forms, they are often quite mathematical.
 In this chapter, we build up a library of standard mathematical concepts and notation needed to fully understand them. 
+% While 
+Although one effect of this chapter is to develop standard notation for standard concepts, 
+    the way we get there is 
 
+    % the way it fits together is 
+% but it also 
 
-\section{Background, Notation, and Critical Preliminaries}
+The chapter also serves a second purpose: to motivate
+    prime the reader 
+    to see the most important themes and design choices 
+    that go into 
+    
+
+% \section{Background, Notation, and Critical Preliminaries}
+\section{Basic Concepts and Foundational Notation}
 
 % Only \cref{sec:}
 Let's start with the basics.
@@ -22,7 +34,7 @@ but write ``$A = B$'' to assert that the (already defined) expressions $A$ and $
     \label{ref:prelim-basic}
 
 % \paragraph{Basic Concepts and Notation.}
-\paragraph{Sets and Maps.}
+\paragraph{Sets, Maps, Numbers, and Logic.}
 A \emph{set} is a collection of unique elements, 
     such as 
     $\{1, \texttt{hello}, 7\}$,
@@ -33,11 +45,6 @@ A \emph{singleton} is a set with precisely one element.
 We write $a \in A$, or equivalently $a : A$, 
     to indicate that $a$ is an element of the set $A$.
 For brevity, we write $a,b \in A$ to indicate that both $a \in A$ and $b \in A$. 
-We write $|A|$ or $\# A$ for the \emph{cardinality} of a set $A$;
-    typically when we write this,  $A$ will be \emph{finite}, 
-    meaning it contains $|A| \in \mathbb N$ distinct elements. 
-When $n \in \mathbb N$ is a natural number, let
-    $[n] := \{ 0, 1, \ldots, n-1 \}$ denote the set of the first $n$ natural numbers.
 $A$ is a \emph{subset} of $B$ (written $A \subseteq B$) means that every element of $A$ is also an element of $B$, and $2^A$ is the set of all subsets of $A$.
 % We write $\Set$ for the collection of all sets (which is not itself a set). 
 
@@ -49,9 +56,29 @@ Their \emph{union}, denoted $A \cup B$, is the set of all elements contained in 
 while their \emph{intersection} $A \cap B := \{x \in A : x \in B\}$ is the set of elements they have in common.
 The \emph{product} of $A$ and $B$ is the set $A \times B := \{ (a,b) : a \in A \land b \in B\}$. 
 The \emph{disjoint union} of $A$ and $B$ is a variant of a union in which all elements are forced to be distinct, by ``tagging'' them with the set they come from, i.e., 
-\[
+% \[
+$
     A \sqcup B := \{ (A, a) : a \in A \} \cup \{ (B, b) : b \in B \}. 
+$
+% \]
+
+We write $|A|$ or $\# A$ for the \emph{cardinality} of a set $A$;
+    typically when we write this,  $A$ will be \emph{finite}, 
+    meaning it contains $|A| \in \mathbb N$ distinct elements. 
+When $n \in \mathbb N$ is a natural number, let
+    $[n] := \{ 0, 1, \ldots, n-1 \}$ denote the set of the first $n$ natural numbers.
+When $a$ and $b$ are numbers (e.g., elements of $\mathbb N$ or $\mathbb R$), we denote their product by $a \cdot b$, or, more commonly, simply $a b$.
+We will also often consider extended numbers that include positive infinity ($\infty$), and perform arithmetic with it by defining, for $r \in \mathbb R$,
+\[
+    \infty + r := \infty,
+    \qquad 
+    \infty \cdot r := \infty \text{ for }r > 0,
+    \qquad
+    \infty \cdot 0 := 0,
+    % \quad \text{and } \infty + $
 \]
+and leaving $\infty \cdot r$ undefined when $r < 0$. 
+We write $\Rext := \mathbb R \cup \{\infty\}$ for the set of extended real numbers, and $[0, \infty]$ for just the non-negative ones. 
 
 
 We write $\forall x \in X.~\varphi(x)$ to indicate that a logical expression $\varphi(x)$ is true \emph{for all} $x \in X$, and $\exists x \in X.~ \varphi(x)$ to indicate that there \emph{exists some} $x \in X$ such that $\varphi(x)$ is true.
@@ -63,6 +90,7 @@ $\{ x \in X ~|~ \varphi(x) \}$
     the choice between the colon and the bar is made to enhance readability in context.
 We write $\lnot\varphi$ for the negation of an expression $\varphi$. 
 If $\varphi$ and $\psi$ are both logical expressions, we write $\varphi \land \psi$ for their conjunction (which is true only if $\varphi$ and $\psi$ are both true), and $\varphi \lor \psi$ for their disjunction (which is true if and only if either $\varphi$ or $\psi$ are true).
+In some contexts, it is standard (and may feel more natural) to use a comma instead of ``$\land$'' to conjoin logical expressions. 
 The notation $\varphi \implies \psi$ means that $\psi$ holds whenever $\phi$ does, and can be viewed as an abbreviation for $\lnot \varphi \lor \psi$, 
 and $\varphi \iff \psi$ to indicate that the two are logically equivalent (which can be viewed as an abbreviation for $(\varphi \implies \psi) \land (\psi \implies \varphi)$).
 Speaking of logical equivalence, we often abbreviate ``if and only if'' by writing just ``iff''. 
@@ -74,37 +102,101 @@ Speaking of logical equivalence, we often abbreviate ``if and only if'' by writi
 
 A \emph{map}, or \emph{function} $f : A \to B$ is an object that, 
     given $a \in \Ar$, produces a value $f(a) \in B$. 
-The \emph{preimage} of a set $U \subseteq B$ is the set $\{a \in A \mid f(a) \in B \}$.
+If $f, g : A \to B$ have the same behavior (i.e., $\forall a\in A.~f(a) = f(a)$),
+    then they are considered equal, and we write $f = g$. 
+Thus, a function can be specified with the notation $f = a \mapsto f(a)$,
+    which allows us to talk about functions without naming them.
+The \emph{preimage} of a set $U \subseteq B$ is the set $\{a \in A : f(a) \in B \}$.
 As one might hope from the notation, $A \to B$ 
     is the set of functions from $A$ to $B$; it is also written $B^A$. 
-Observe: if $2 = \{ 0, 1\}$ represents a set with 2 elements, then 
+It is worth pausing here to reflect on some implications of this notation.
+First, if $1 = \{ \star \}$ is a singleton set, then an element $a \in A$ is really no different from a map $a \in A^1 = 1 \to A$. 
+Second, if $2 = \{ 0, 1\}$ represents a set with 2 elements, then 
     the elements of $2^A$ are functions assigning either $0$ (absence) or $1$ (presence) to each element of $A$---that is, they are subsets of $A$. 
+Finally, $|A^B| = |A|^{|B|}$. 
 We can \emph{compose} the functions $f : A \to B$ and $g : B \to C$
 to form a new function $g \circ f : A \to C$, defined by $(g \circ f) := a \mapsto g(f(a))$. 
 
+% \paragraph{Indexed sets, Tuples, and Sequeces.}
 If $I$ is a set, then an \emph{indexed set}
     $\mat a = \{ a_i \}_{i \in I}$ consists of a collection of objects, one for each $a_i$. 
 If $\forall i.~a_i \in A$, then $\mat a$ is just a function $\mat a : I \to A$. 
 % The set of indexed 
 % Therefore, if each $a_i \in A_i$, then  $\mat a : \sqcup_{i \in I} A_i  
-A \emph{tuple} is the special case of a set indexed by $[n]$ for some natural number $n \in \mathbb N$. 
+A \emph{tuple} is the special case of a set indexed by $[n]$ for some natural number $n \in \mathbb N$, and typically written with parentheses in order, as in $(a_1, \ldots, a_n)$.
+A \emph{sequence} is the special case of a set indexed by $\mathbb N$, and is typically also written with parentheses, as in $(a_1, a_2, \ldots)$. 
+
+%%%%%% TODO %%%%
+% - convergence of sequences.
 
 
-
-\paragraph{Vectors.}
-For us, a \emph{vector} is a map from a finite set $S$, called its 
-\emph{shape}, to the extended reals $\Rext := \mathbb R \cup \{\infty\}$.
-We write $\mat u := [u_i]_{i \in S}$ to define a vector $\mat u$ by its components.
+\paragraph{Linear Algebra, Cones, and Convexity.}
+For us, a \emph{vector} is a map from a finite set $I$, called its 
+\emph{shape}, to the (possibly extended) reals.
+To simplify and match standard notation, we write $\mathbb R^n$ instead of $\mathbb R^{[n]}$, and often write $\mat u = [u_i]_{i \in I}$ to specify a vector $\mat u$ by its components.
 % Note that $
+Given a number $\alpha \in \mathbb R$ and a vector $\mat u \in \Rext^I$,
+    we can form the scaled vector 
+    $\alpha \mat u := [ \alpha  u_i ]_{i \in I} = i \mapsto \mat \alpha \cdot \mat u(i)$
+    % (unless some $u_i$ is infinite and $\alpha < 0$)
+    \unskip;
+    for this reason, $\alpha$ is called a \emph{scalar} in this context. 
 Vectors of the same shape
 % Suppose that $\mat u, \mat v \in \Rext^S$ are two vectors of 
-can be added (+), partially ordered ($\le$), or multiplied ($\odot$) pointwise as usual.
+can be added ($+$) or multiplied ($\odot$) pointwise as usual,
+    and we say that $\mat u \le \mat v$ iff $\mat u(i) \le \mat v(i)$ for all $i \in I$.
 $\mat 1$ denotes an all-ones vector, of a shape implied by context.
-If $\mat u$ and $\mat v$ are both of shape $S$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
-    is the real number $\sum_{i \in S} u_i v_i$. 
+If $\mat u$ and $\mat v$ are both of shape $I$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
+    is the real number $\sum_{i \in I} \mat u(i) \mat v(i)$. 
+The latter notation will become clear once we introduce the notion of a \emph{matrix}. 
+
+A map $f : \mathbb R^I \to \mathbb R^J$ is \emph{linear} iff
+$f( \alpha \mat u + \beta \mat v) = \alpha f(\mat u) + \beta f(\mat v)$ for all $\mat u, \mat v \in \mathbb R^I$. 
+There is a natural
+1-1 correspondence between linear maps $f : \mathbb R^I \to \mathbb R^J$ and
+special vectors $A \in \mathbb R^{J \times I}$ called \emph{matrices}---%
+    a fact that is arguably the foundation of linear algebra.
+% Specifically, the matrix $A = [a_{i,j}]_{(i,j) \in I\times J} \in \mathbb R^{I \times J}$ represents the function $[u_j]_{j \in J} \mapsto [ \sum_{j \in J} u_j a_{j,i} ]_{i \in I}$.
+Specifically, the matrix $A \in \mathbb R^{J\times I}$ represents the function $\mat u \mapsto [ \sum_{j \in J} \mat u(j) A({j,i}) ]_{i \in I}$.
+%
+Two matrices $A \in \mathbb R^{I \times J}$ and $B \in \mathbb R^{J \times K}$
+can be multiplied to form a matrix
+% \[
+$\displaystyle
+    A B = \Big[ \sum_{j \in J} a_{i,j} \cdot b_{j,k} \Big]_{(i,k) \in I \times K}~;
+$
+% \]
+remarkably, if $f_A : \mathbb R^{J} \to \mathbb R^{I}$ and $f_B : \mathbb R^{K} \to \mathbb R^J$ are the linear maps corresponding to $A$ and $B$, respectively, then
+$A B$ is the matrix corresponding to $f_A \circ f_B$. 
+Observe that a vector $\mu \in \mathbb R^I$ can be seamlessly viewed as
+    a matrix $\mat u \in \mathbb R^{I \times 1}$ for the purposes of composition; in this form, they it is called a \emph{column vector}.
+This establishes that linear maps can be viewed as vectors, 
+    and vectors can be viewed as linear maps.
+% This is yet another instance
+The result is another 
+% This illustrates a general guiding principle in this thesis: 
+%     the nouns (here, the vectors), but rather the maps between sets. 
+
+% For this reason, 
+% A \emph{matrix} is a function $A \in \mathbb R^{S \times T}$
+
+\textbf{Convexity.}
+A subset $A \subseteq \Rext^I$ of real space is a \emph{convex set} iff
+it has the property that
+$
+(1-\lambda) \mat u + \lambda \mat v \in A
+$
+% it is close
+for all $\mat u, \mat v \in A$ and $\lambda \in [0,1]$,
+$(1-\lambda)$.
+%
+A funtion $f : \Rext^I \to \Rext$ is \emph{convex} if 
+
+
 
 %%%%% TODO %%%%%
 % - matrices, matrix multiplication
+% - convex set, function
 
 
 \paragraph{}
@@ -139,6 +231,7 @@ A \emph{binary variable} is one whose possible values are $\{0, 1\}$, and a
     \emph{real variable} is one whose possible values are $\mathbb R$. 
 A \emph{constant} is a variable $X$ that can only take on one possible value (i.e., $|\V\! X| = 1$).
 
+\paragraph{Joint Variables.}
 We can regard sets of variables $\mat X$ as variables themselves, with
 $\V \mat X = \Pi_{X \in \mat X} \V\! X$.
 However, when we do so, we must also be careful to remember $\mat X$ the variable has a special relationship with $\mat X$, the set of variables, a point we will soon return to. 
@@ -152,13 +245,13 @@ This will be necessary to avoid a minor ambiguity, because the (standard) notati
 Similarly, tuples $(X_1, \ldots, X_n)$ of variables and indexed sets $\{X_i\}_{i \in I}$ of variables, are also themselves variables,
 with
 \begin{align*}
-    \V(X_1, \ldots, X_n) &= \{ (x_1, \ldots, x_n) \mid \forall i \in [n]. x_i \in \V(X_i) \},
+    \V(X_1, \ldots, X_n) &= \{ (x_1, \ldots, x_n) : \forall i \in [n].~~ x_i \in \V(X_i) \},
 \end{align*}
  % \text{and}\quad
 % More generally, 
 and, more generally,
 $
-    \V\{ X_i \}_{i \in I} = \prod_{i \in I} \V(X_i).
+    \V\{ X_i \}_{i \in I} := \prod_{i \in I} \V(X_i).
 $
 % \end{align*}
 The distinction between sets and indexed sets (such as tuples) of variables is only relevant when variables are not unique---a caveat that is far more relevant for the python implementation of this framework than it is for the mathematical development.
@@ -169,6 +262,7 @@ In the text here, we convert between the two equivalent representations as is co
 Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $X(\mat x)$ for the value of the variable $X$ in the joint setting $\mat x$. The former is familiar lookup notation from many programming languages, and the latter is random variable notation, which we will get to in the next section.
 
 % Equality of variables 
+\paragraph{Variable Equality, Truth, and Functions of Variables.}
 Variable notation is designed to look intuitive. Yet beneath the surface, it can be very confusing, as it is quite unlike the standard mathematical notation for every other mathematical object.
 This is especially true of the way variables interact with equality, and the symbol ``$=$''.
 For instance, if $X$ is a variable and $x \in \V(X)$, then the notation $X{=}x$ does not necessarily stand for a false statement (even though $X$ and $x$ refer to different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
@@ -233,6 +327,7 @@ We start by giving the simpler picture of probability in the finite case (\cref{
 % Thus, we assume  values (i.e., $|\V\!X|, |\V Y| \in \mathbb N$).
 % In this section, let's assume that all variables can take on only finitely many possible values
 %     (i.e., $|\V\!X|, |\V Y| \in \mathbb N$).
+\paragraph{Measures and Conditioning.}
 Suppose that $\Omega$ is a finite set. 
 A \emph{probability distribution} $\mu$ over $\Omega$ is essentially a function 
 % $\mu : \V\!\X \to [0,1]$ such that $\sum_{x \in \V X} \mu(x) = 1$.
@@ -244,7 +339,10 @@ satisfying $\mu \ge 0$ and $\mu \cdot \mat 1 = 1$.
 % We write $\Delta \V\!X$ for the set of all distributions over (the values of) $X$,
 % which is also known as the \emph{probability simplex}.
 The \emph{probability simplex} $\Delta \Omega$ is defined as the set of all probability distributions over $\Omega$. 
-For $U \subseteq \V\!X$, called an \emph{event},
+The \emph{support} of a distribution $\mu$
+    is the set $\Supp \mu := \{ \omega \in \Omega : \mu(\omega) > 0 \}$
+    of outcomes that have positive probability.
+For $U \subseteq \V\!X$, called \emph{events},
     define $\mu(U) := \sum_{x \in U} \mu(x)$. 
 % Specifically, the event $X{=}x$ 
 % The prototypical event is of the form $X{=}x$. 
@@ -258,9 +356,11 @@ $(\mu \mid A)(x) := \frac{1}{\mu(A)} \mathbbm 1[x \in A] \mu(x)$.
 That quantity is also given a shorter and more common name: $\mu(x \mid A)$. 
 From this definition, it is easy to recover the usual definition of conditional probability:
 $\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
-There is just one caveat: this formula is not meaningful when $\mu(A) = 0$, and in this case, we leave the conditional probability undefined. Indeed, if $\mu(A) = 0$, then every answer for $\mu(U \mid A)$ is appropriate, in the sense that, for for every $p \in [0,1]$ there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu(U \mid A) = p$ for all $k$. 
+There is just one caveat: this formula is not meaningful when $\mu(A) = 0$, and in this case, we leave the conditional probability undefined.
+Indeed, if $\mu(A) = 0$, it is arguably appropriate to say $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
 
 %% adding variables.
+\paragraph{Probability via Variables.}
 Our notation for representing and manipulate probability distributions will make heavy use of the notion of a variable, as developed in \cref{ssec:basic-vars}. 
 Namely, we almost always work with probability distributions over the values of a variable. This just a notational convenience, since we can always define a variable $W$ with possible values $\V W := \Omega$.  
 Working with variables confers us a number of benefits,
@@ -302,29 +402,106 @@ Cpds are also called \emph{channels} in information theory.
 Just like we write $\mu(X)$ for a distribution over the values of $X$, we
 write $p(Y|X)$ for a cpd on $Y$ given $X$. 
 In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
+We will use alternate notation (such as $\mat P_{Y|X}$) when we want to view $p(Y|X)$ as a matrix.
 
 We typically write $\X$ for the set of all variables relevant to a given context. If $X,Y \in \X$, then we write $\mu(Y|X)$ for the cpd given by first conditioning $\mu(\X)$ on $X$, and then marginalizing each conditional distribution to $Y$. 
 % Now, $\mu(Y|X)$ too is a variable 
 By regarding $\mu(Y|X)$ as a function of $Y$ and $X$, it too can be viewed a real-valued variable (just like $\mu(X)$). 
-Moreover, the fact that $\mu(Y|X{=}x)$ is undefined can now be captured simply by not adding a constraint in $\Gamma(\mu(Y|X))$ connecting the value of $\mu(Y|X)$ to the value of $\mu(X,Y)$ in such cases. 
 % This now explains 
 % Observe that $\mu(\X \mid X)$ 
 % We can deal with the 
 % In this context, the un-definedness of $\mu(Y|X)$ 
 % Recall that the components of $\mu(Y|X)$
-We can now state \emph{chain rule} for probability, a simple but incredibly important fact:
-\begin{equation}
-    \mu(X,Y) = \mu(X) \mu(Y|X).
-\end{equation}
+We can now state \emph{chain rule for probability}, a simple but incredibly important fact:
+% \begin{equation}
+    $\mu(X,Y) = \mu(X) \mu(Y|X)$.
+% \end{equation}
 % Unpacking our definition of what it means for it to be true that two variables are equal, 
-This is a direct analogue the definition of a conditional probability when $X$ and $Y$ are events. 
+This standard formula is typically viewed as shorthand for 
+\[
+    \forall (x,y) \in \V(X,Y).\quad \mu(X{=}x,Y{=}y) = \mu(X{=}x) \mu(Y{=}y|X{=}x),
+\]
+a view that also demands a caveat: ``whenever $\mu(X{=}x) > 0$, so that $\mu(Y{=}y|X{=}x)$ is defined''. 
+% and is essentially just many closely related instances of the definition of the conditional probability of one event given another. 
+% But the shorter version also has another benefit: 
+However, since $\mu(X,Y)$, $\mu(X)$, and $\mu(Y|X)$ are all variables,
+    the equality $\mu(X,Y) = \mu(X)\mu(Y|X)$ is simply true without caveats.
+Why?  When $\mu(X{=}x) = 0$, then $\mu(Y{=}y|X{=}x)$ is undefined, meaning 
+    it has no definitional constraint (i.e., $\Gamma(\mu(Y{=}y|X{=}x))$)---but no matter what value we select for $\mu(Y{=}y|X{=}x)$, the result still holds, because 
+    % that value is later multiplied by zero.
+    the question is whether or not that value times zero equals zero. 
+% (Which it does.)
+%    
+% Moreover, the fact that $\mu(Y|X{=}x)$ is undefined can now be captured simply by not adding a constraint in $\Gamma(\mu(Y|X))$ connecting the value of $\mu(Y|X)$ to the value of $\mu(X,Y)$ in such cases. 
+%
 % Yet this equation, unlike the definition of a conditional probability for events, holds 
-Yet here, we no longer need to carve out a special caveat for conditioning on probability zero events; that case is handled automatically by implicit underlying constraints. 
+% Yet here, we no longer need to carve out a special caveat for conditioning on probability zero events; that case is handled automatically by implicit underlying constraints.
+
+\paragraph{Variables and Random Variables.}
+    \label{sec:var-randomvar}
+In the context of a probability distribution $\mu \in \Delta \Omega$,
+% a \emph{random variable} is a function $X : \Omega \to S$, where $S$ is a set called the domain of $X$. In serivce of unified notation, let $\V\!X := S$ denote the domain of the random variable $X$. 
+a \emph{random variable} is a function $X : \Omega \to \V X$, where $\V\! X$ is some set called the \emph{domain} of $X$.
+% Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore.
+Despite the superficial simiarity induced by our choice of notation, random variables and variables are different formal objects;
+    hence the mantra, 
+    ``a random variable is neither random nor a variable''. 
+Yet at an even deeper level, variables and random variables are interchangable, and fundementally represent the same concept, as we now explore. 
+
+Whereas the traditional foundations of probability start with a sample space $\Omega$ and defines random variables $X : \Omega \to \V\!X$ in terms of it, 
+probabilistic modeling is often done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
+Under that definition of $\Omega$ a variable $X \in \X$ can be viewed as a random variable $\hat X : \V\!\X \to \V\!X$ that selects the value of $X$ from a joint setting of all variables.  
+% Conversely, 
+The converse not well appreciated, 
+    perhaps because it requires one to think about
+    the constraints involved in defining a variable.
+% Still, given 
+% Given an arbitrary random variable $Z : $
+If $\Omega = \Delta \V\!X$, we can include an arbitrary random variable 
+    $Z : \V\!\X \to \V Z$ in the set $\X' := \X \cup \{Z \}$ of all variables.
+When we do so,  
+there is a natural 1-1 correspondence between distributions $\mu \in \Delta \V\!\X$ over the original variables, and ``extended'' distributions 
+$\bar\mu \in \Delta \V\!\X'$ in which variable $Z$ and the function $Z$ applied to the other variables coincide (i.e., $\bar\mu(Z(\X) = Z)=1$).
+
+%
+Although the two perspectives seem to be equally expressive, we opt for the one in which the variables $\X$ are primitive, rather than the one in which the sample space $\Omega$ is primitive. 
+After all, we are interested in modeling epistemic states that undergo structural changes, and it is more natural to add and remove variables of interest, than it is to change sample spaces and figure out how to properly translate the relevant random variables on them.  
+% We have already seen one benefit of this, in our compact discussion of 
+We will see an even deeper connection between the two ways of thinking about (random) variables in \cref{chap:PDG-cat}.
+
+\paragraph{Dependence and Independence.} 
+Suppose that $X$, $Y$, and $Z$ are (random) variables and $\mu(X,Y,Z)$ is a distribution over them.
+We say that $X$ and $Y$ are \emph{independent} if $\mu(X,Y) = \mu(X)\mu(Y)$.
+Precisely the same is true if $X$ and $Y$ are not variables, but rather events.
+
+We say that ${X}$ is \emph{conditionally independent of ${Y}$ given ${Z}$} 
+(according to $\mu$),  denoted 
+ % ${X} \CI_\mu {Z} \mid {Y}$, 
+$\mu \models {X} \CI {Y} \mid {Z}$, 
+only if $\mu(X | Z) \mu(Y | Z) = \mu(X,Y \mid Z)$,
+or equivalently, if
+$\mu(X,Z) \mu(Y,Z) = \mu(X,Y,Z) \mu(Z)$. 
+% By multiplying both sides by $\mu(Z)^2$,
+
+%%% perhaps this can wait for QIM section...
+% We say that $X$ \emph{determines} $Y$, and write $\mu \models X \tto Y$ only if
+% for all $x \in \V\!X$, there is at most one value of $Y$ that has positive probability, i.e.,  $\#\{ y \in \V Y : \mu(X{=}x,Y{=}y) > 0 \} \le 1$.
+% It is not hard to see that $X \tto Y$ if and only if there exists a function $f : \V\!X \to \V Y$ such that $\mu(f(X) = Y) = 1$. 
 
 
-%%%% TODO
-% expectation
+\paragraph{Expectation and Utility.} 
+If $\mu$ is a probability over $\Omega$, and $X$ is random variable 
+    taking values in a convex set (i.e., $\V \! X \subseteq \Rext^I$ cvx), then the \emph{expectation} of $X$ with respect to $\mu$ is its average value, written
+\[
+    \Ex_{\omega \sim \mu} \Big[ X(\omega) \Big]
+        = \Ex_{\mu}[ X ]  
+        := \sum_{\omega \in \Omega} \mu(\omega) X(\omega).
+\]
+In some cases, we omit the braces to reduce clutter and improve readability.
 
+The gold standard for decision making is expected utility maximization: an agent that has an internal probability $\mu$ and a utility function $U: $
+
+\TODO
 
 \subsection{Beyond Probability}
     \label{ssec:beyond-prob}
@@ -347,7 +524,7 @@ A \emph{measurable space} $(\Omega, \mathcal F)$ is a set $\Omega$,
 called the \emph{outcome space}, together with a collection $\mathcal F \subseteq 2^\Omega$ of subsets of $\Omega$, which considered \emph{measurable}, and called \emph{events}. 
 The elements of $\Omega$, should be thought of \emph{possible outcomes} or \emph{possible worlds} for in the model.
 The set $\mathcal F$ of events must also be an algebra, meaning that it contains $\Omega$, and is closed under complement and countable union---%
-that is, $\Omega \in \mathcal F$, if $U \in mathcal F$ then $\Omega \setminus U \in \mathcal F$, and if $U_1, U_2, \ldots \in \mathcal F$, then $U_1 \cup U_2 \cup \cdots \in \mathcal F$.  
+that is, $\Omega \in \mathcal F$, if $U \in \mathcal F$ then $\Omega \setminus U \in \mathcal F$, and if $U_1, U_2, \ldots \in \mathcal F$, then $U_1 \cup U_2 \cup \cdots \in \mathcal F$.  
 % One should think of $\mathcal A = 2^\Omega$ as consisting of every 
 % For all but a few select places, one can ignore $\mathcal F_\Omega$ in this dissertation.
 % Often in probabilistic modeling, and in this dissertation in particular, the $\mathcal F_\Omega$.
@@ -387,24 +564,24 @@ Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} f
 If $(\Omega, \mathcal F)$ and $(Y, \mathcal G)$ are two measurable spaces, then
 a function $f : \Omega \to Y$ is said to be \emph{measurable} if $f(U) \in \mathcal F$ for all $U \in \mathcal G$. 
 In a context where one is interested in probabilities over $\Omega$, 
-a measurable function $X : \Omega \to Y$ is also called a \emph{random variable} or a \emph{statistic}.
-Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore in the next two paragraphs.
+a measurable function $X : \Omega \to \V X$ is also called a \emph{random variable} or a \emph{statistic}.
+% Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore in the next two paragraphs.
 
-In this more general setting, we no longer require $\V(X)$ to be a finite set, but it still cannot be arbitrary---it has to be a measurable space. At a technical level, this is compatible with our previous discussion about variables, because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces. 
+In this more general setting, we no longer require $\V(X)$ to be a finite set, but in exchange, we still require some structure---$\V(X)$ has to be a measurable space. At a technical level, this is compatible with our previous discussion about variables, because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces. 
 \begin{enumerate}
     \item Recall that we regard a tuple $\mat X = (X_1, \ldots, X_n)$ of variables as itself a variable, with $\V(X_1, \ldots, X_n) = \prod_{i=1}^n \V(X_i)$.
         But if each $\mathcal V(X_i)$ comes with an algebra $\mathcal F_i$ of events, then there is a natural product algebra $\mathcal F_{1:n}$ generated by complements and countable unions of events of the form $U = U_1 \times \cdots \times U_n$ with each $U_i \in \mathcal F_i$. 
 
     \item Similarly, recall that when $X$ is a variable and $f : \V X \to S$ is a function, we regard $f(X)$ as a variable. In this setting, we add only the minimal requirement that $S$ be a measurable space and that $f$ be a measurable function.  
 \end{enumerate}
-
-Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
-With that definition, a variable $X$ can be viewed as a random variable $X : \V\!\X \to \V\!X$ that selects the value of $X$ from the joint setting.  
-Conversely, an arbitrary random variable $Z : \V\!\X \to \V Z$ can be included in the set of all variables; there is a natural 1-1 correspondence between distributions $\mu \in \Delta \V\!\X$ over the original variables, and ``extended'' distributions $\bar\mu \in \Delta \V(\X \cup Z)$ with the property that variable $Z$ and the function $Z$ applied to the other variables coincide (i.e., $\bar\mu(Z(\X) = Z)=1$).
-%
-%
-Although the two perspectives seem to be equally expressive, we opt for the variable-based one. 
-After all, we are interested in modeling epistemic states that undergo structural changes, and it is conceptually simpler to add and remove variables of interest, than it is to change sample spaces and figure out how to properly translate the random variables on them.  
+% 
+% Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
+% With that definition, a variable $X$ can be viewed as a random variable $X : \V\!\X \to \V\!X$ that selects the value of $X$ from the joint setting.  
+% Conversely, an arbitrary random variable $Z : \V\!\X \to \V Z$ can be included in the set of all variables; there is a natural 1-1 correspondence between distributions $\mu \in \Delta \V\!\X$ over the original variables, and ``extended'' distributions $\bar\mu \in \Delta \V(\X \cup Z)$ with the property that variable $Z$ and the function $Z$ applied to the other variables coincide (i.e., $\bar\mu(Z(\X) = Z)=1$).
+% %
+% %
+% Although the two perspectives seem to be equally expressive, we opt for the variable-based one. 
+% After all, we are interested in modeling epistemic states that undergo structural changes, and it is conceptually simpler to add and remove variables of interest, than it is to change sample spaces and figure out how to properly translate the random variables on them.  
 
 
 \paragraph{The Radon-Nikodym Derivative.}
@@ -558,13 +735,37 @@ The consequences of this can be unintuitive.
 It is common to think of bipartite graphs as a strict (particularly nice) special case of ordinary undirected graphs, which themselves are a strict (particularly easy to draw) strict special case of hypergraphs.  
 By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet in fact they are naturally isomorphic. 
 
+% \begin{defn}
+%     A \emph{directed} hypergraph $(N, \mathcal A)$ is a set $N$ of nodes,
+%     and a collection $\Ar$ of hyperarcs, each of which has a set $S_a \subset N$ of
+%     source variables and a set $T_a \subset N$ of target variables.        
+% \end{defn}
+
 \begin{defn}
-    A \emph{directed} hypergraph $(N, \mathcal A)$ is a set $N$ of nodes,
-    and a collection $\Ar$ of hyperarcs, each of which has a set $S_a \subset N$ of
-    source variables and a set $T_a \subset N$ of target variables.        
+    A \emph{directed hypergraph}
+    consists of a set $\N$ of nodes
+    and a set $\Ar$ of 
+    directed hyperedges, or \emph{hyperarcs};
+    each hyperarc  $a \in \Ar$ is associated with
+        a set $\Src a \subseteq \N$ of
+    source nodes and a set $\Tgt a \subseteq \N$ of target nodes.    %
+    We write $\ed {\scriptstyle a}{S}{T} \in \Ar$ to specify a
+    hyperarc $a \in \Ar$ together with its sources $S = \Src a$ and targets $T = \Tgt a$.
 \end{defn}
 
-A directed hypergraph $(N, \mathcal A)$ can be equivalently defined as an (ordinary) directed graph $(2^N, \Ar)$ whose set of nodes is the powerset of some set $N$. 
+Nodes that are neither a source nor a target of any hyperarc will
+seldom have any effect on our constructions; the other nodes can
+be recovered from the hyperarcs 
+by selecting $\N_{\Ar} := \bigcup_{a \in \Ar} \Src a \cup \Tgt a$. 
+If necessary, we can often add an ``identity'' arc 
+    $N \to N$ for any node $N \in \N \setminus \N_{\Ar}$. 
+% Thus, we often leave $\N$ implicit,
+For these reasons, we often leave $\N$ implicit,
+referring to the directed hypergraph simply as $\Ar$.
+
+
+A directed hypergraph $(N, \mathcal A)$ can be (equivalently) defined
+as an (ordinary) directed graph $(2^N, \Ar)$ whose set of nodes is the powerset of some set $N$. 
 % 
 % \medskip
 % \hrule
@@ -732,8 +933,13 @@ The field is vast and heterogenous,
 Although not typically thought of in this way, 
     the basic information-theoretic quantities come in two flavors, mirroring the divide between qualitative and quantitative information that we saw in the presentation of graphical models. 
 
+% We start by recounting some standard results and notation,
+With the exception of these editorial comments,
+all of this material can be found in any introduction to information
+theory (e.g., \cite[Chapter 1]{mackay2003information}).  
 
 \subsection{Shannon Entropy and the Information Profile}
+    \label{sec:qual-info-theory-primer}
 
 Let $\mu$ be a probability distribution, and be $X,Y,Z$
     be (sets of) discrete random variables.
@@ -747,6 +953,7 @@ and has several very important properties.
 Chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ 
     is a constant according to $\mu$. 
 The ``joint entropy'' $\H(X,Y)$ is just the entropy of the combined variable $(X,Y)$ whose values are pairs $(x,y)$ for $x \in \V(X),y \in \V(Y)$; this is the same as the entropy of the variable $X \cup Y$ when $X$ and $Y$ are themselves sets of variables. 
+    % takes as input not the value of a variable
 
 The \emph{conditional entropy} of $Y$ given $X$
 measures the uncertainty present in $Y$ if one knows the value of $X$
@@ -763,6 +970,24 @@ and is equivalently defined as any of the following three quantities:
     ~~=\Ex_{x \sim \mu(X)} [~\H_{\mu \mid X{=}x}(Y)~]    
 .
 \]
+The fact that these three quantities coincide is a remarkable fact,
+and one that makes entropy particularly special. 
+
+\begin{fact}[Entropy Chain Rule]\label{fact:entropy-chain-rule}
+    If $X$ and $Y$ are random variables, then the entropy of the joint
+   variable $(X,Y)$ can be written as $\H_\mu(X,Y) = 
+\H_\mu( Y \mid X) + \H_\mu(X)$.
+It follows that if $\mu$ is a
+       distribution over the $n$ variables $X_1, \ldots, X_n$,  then
+	\[ \H(\mu) = \sum_{i = 1}^n \H_\mu(X_i \mid X_1, \ldots X_{i-1}). \]
+\end{fact}
+% \begin{defn}[Conditional Mutual Information]\label{defn:cmi}
+%    The \emph{conditional mutual information} between two (sets of) random
+%     variables is defined as  
+%     \[ \I_\mu(X ; Y \mid Z) := \sum_{x,y,z \in \V(X,Y,Z)} \mu(x,y,z)
+%         \log\frac{\mu(z) \mu(x,y,z)}{\mu(x,z)\mu(y,z)}. \] 
+% \end{defn}
+
 The \emph{mutual information} $\I(X;Y)$,
 and its conditional variant $\I(X;Y|Z)$, 
 are given, respectively, by
@@ -773,8 +998,10 @@ are given, respectively, by
     \I(X;Y|Z):= 
         \Ex_{\mu} \Big[ \log \frac{\mu(X,Y,Z)\mu(Z)}{\mu(X,Z) \mu(Y,Z)}\Big].
 \]
-The former is non-negative and equal to zero iff $\mu \models X \CI Y$, and the latter is non-negative and equal to zero iff $\mu \models X \CI Y \mid Z$. 
-All of these quantities are purely ``structural'' or ``qualitative'' in the sense that they are invariant to relabelings of values, and 
+Both quantities are non-negative.
+The former is equal to zero iff $\mu \models X \CI Y$, and the latter is equal to zero iff $\mu \models X \CI Y \mid Z$;
+thus, they measure distance to independence. 
+
 
 Just as conditional entropy can be written as a linear combination of unconditional entropies, so too can conditional mutual information be written as a linear combination of unconditional mutual informations: $\I(X;Y|Z) = \I(X;(Y,Z)) - \I(X;Z)$.  
 Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \emptyset$). 
@@ -791,11 +1018,38 @@ $,
 and thus mutual information is derived from entropy. 
 Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is a special case of mutual information. 
 
+
 \TODO[ TODO: move information profile material here ]
+
+difference identity
+$\I_\mu(X ; Y \mid Z) =
+      \H_\mu(X \mid Y) - \H_\mu(X \mid Y, Z)$
+
+
+
+We claim that all of these (entropy-based) quantities are purely ``qualitative'' notions---although, because represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
+One way to see this is the way these concepts interact with variables. 
+Recall that $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as (random) variables, that take as input values of $X$ and $Y$. 
+% Unlike their counterparts, 
+$\H_\mu(X)$, $\H_\mu(X,Y)$, and $\H_\mu(Y|X)$, however, 
+    are not functions of the values of $X$ and $Y$, but rather functions 
+    of the variables themselves. 
+% Its argument is the identity of the variable $X$, 
+Indeed, it makes no sense to feed $(x,y)$ as an argument to any of these concepts. 
+Another sign that entropy and its cousins are structural notions is that they are invariant to relabelings of the values.
+
+% This is because $\H_\mu(X)$ is fundementally a
+% ``qualitative'' notion,
+%     that operates on the identities of variables, and not their values.
 
 \subsection{Relative Entropy}
 
-The
+% We now move on to the quantiative 
+The \emph{quantiative} version of information 
+\[
+    \kldiv {\mu} {\nu} 
+    := 
+\]
 
 
 \paragraph{An Ode to Relative Entropy}

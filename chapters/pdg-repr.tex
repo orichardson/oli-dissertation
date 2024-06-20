@@ -1,4 +1,4 @@
-    \label{chap:pdg-repr}
+\label{chap:pdg-repr}
 
 % In this chapter, based on a 2021
 We introduce Probabilistic Dependency Graphs (PDGs), a new class of
@@ -131,7 +131,7 @@ BN on the left of \Cref{fig:gun-floomp-diagram}.
 	}
 \fi
         \caption[
-        A BN without edges, its corresponding PDG, 
+        A BN without arcs, its corresponding PDG, 
             and how the latter can be augmented
             (losslessly) with additional cpds.
         ]
@@ -177,22 +177,22 @@ better use of computation may be to notice the inconsistency and look
 up the actual law. 
 
 By way of contrast, consider the corresponding PDG. In a PDG, the cpds are
-attached to edges, rather than nodes of the graph.
+attached to arcs, rather than nodes of the graph.
 In order to represent unconditional probabilities, we introduce
 a \emph{unit variable} $\pdgunit$ which 
 takes only one value, denoted
 $\star$. 
 This leads Grok to 
 the PDG depicted in \Cref{fig:gun-floomp-diagram},
-where the edges from $\pdgunit$ to $F$ and $G$ are associated with the
+where the arcs from $\pdgunit$ to $F$ and $G$ are associated with the
 unconditional probabilities of $F$ and $G$, and the 
-edges between $F$ and $G$ are associated with $p$ and $p'$.
+arcs between $F$ and $G$ are associated with $p$ and $p'$.
 
 
 
 The original state of knowledge consists of all three nodes and the two
 solid
-edges from $\pdgunit$. This is like Bayes Net that we considered above,
+arcs from $\pdgunit$. This is like Bayes Net that we considered above,
 except that we 
 no longer
 explicitly
@@ -200,12 +200,12 @@ take  $F$ and $G$ to be independent; we merely record the constraints
 imposed by the given probabilities.  
 	
 The key point is that we can incorporate the new information into our original
-representation (the graph in \Cref{fig:gun-floomp-diagram} without the edge from
-$F$ to $G$) simply  by adding the edge from $F$ to $G$ and the associated cpd
+representation (the graph in \Cref{fig:gun-floomp-diagram} without the arc from
+$F$ to $G$) simply  by adding the arc from $F$ to $G$ and the associated cpd
 $p$ (the new infromation is shown in blue).
-Doing so does not change the meaning of the original edges.   
+Doing so does not change the meaning of the original arcs.   
 Unlike a Bayesian update, the operation is even reversible: all we need
-to do recover our original belief state is delete the new edge, 
+to do recover our original belief state is delete the new arc, 
 making it possible to mull over and then reject an observation.
 \end{example}
 
@@ -227,7 +227,7 @@ four binary variables indicating whether a person ($C$) develops cancer, ($S$)
 smokes, ($\mathit{SH}$) is exposed to second-hand smoke, and ($\mathit{PS}$) has
 parents who smoke, presented graphically in \Cref{subfig:smoking-bn}. We now
 walk through what is required to represent $\cal B$ as a PDG, which we call
-$\PDGof{{\mathcal B}}$, shown as the solid nodes and edges in
+$\PDGof{{\mathcal B}}$, shown as the solid nodes and arcs in
 \Cref{subfig:smoking-pdg}. 
 
 
@@ -287,17 +287,17 @@ $\PDGof{{\mathcal B}}$, shown as the solid nodes and edges in
     the latter, which can be augmented with other information about cancer.
 ]{ (a) The Bayesian Network $\mathcal B$ in \cref{ex:smoking} (left), and
 (b) $\PDGof{\mathcal B}$, its corresponding PDG (right). The shaded box
-indicates a restriction of $\PDGof{\mathcal B}$ to only the nodes and edges it
+indicates a restriction of $\PDGof{\mathcal B}$ to only the nodes and arcs it
 contains, and the dashed node $T$ and its arrow to $C$ can be added in the PDG,
 without taking into account $S$ and $SH$.}
 \label{fig:smoking-bn+pdg}
 \end{figure}
 
 We start with the nodes corresponding to the variables in $\cal B$, together
-with the special node $\pdgunit$ from \Cref{ex:guns-and-floomps}; we add an edge
+with the special node $\pdgunit$ from \Cref{ex:guns-and-floomps}; we add an arc
 from ${\pdgunit}$ to $\mathit{PS}$, to which we associate the unconditional
 probability given by the cpd for $\mathit{PS}$ in $\cal B$. We can also re-use
-the cpds for $S$ and $\mathit{SH}$, assigning them, respectively, to the edges
+the cpds for $S$ and $\mathit{SH}$, assigning them, respectively, to the arcs
 $PS \to S$ and $PS \to SH$ in $\PDGof{{\mathcal B}}$.
 There are two remaining problems: (1) modeling the remaining table in $\cal B$,
 which corresponds to the conditional probability of $C$ given $S$ and $SH$; and
@@ -305,16 +305,16 @@ which corresponds to the conditional probability of $C$ given $S$ and $SH$; and
 conditional
 independence assumptions in the BN. 
 
-For (1), we cannot just add the edges $S \to C$ and $SH \to C$ that are present
+For (1), we cannot just add the arcs $S \to C$ and $SH \to C$ that are present
 in $\cal B$. As we saw in \Cref{ex:guns-and-floomps}, this would mean
 supplying two \emph{separate} tables, one indicating the probability of $C$
 given $S$, and the other indicating the probability of $C$ given
 $\mathit{SH}$.  We would lose significant information that is
 present in $\cal B$  about 
 how $C$ depends jointly on $S$ and $SH$. To distinguish the joint dependence on
-$S$ and $\mathit{SH}$, for now, we draw an edge with two tails---a
+$S$ and $\mathit{SH}$, for now, we draw an arc with two tails---a
 (directed)
-\emph{hyperedge}---that completes the diagram in \Cref{subfig:smoking-pdg}. 
+\emph{hyperarc}---that completes the diagram in \Cref{subfig:smoking-pdg}. 
 With regard to (2), there are many distributions consistent with the conditional
 marginal probabilities in the cpds, and the independences presumed by $\cal B$
 need not hold for them. 
@@ -336,7 +336,7 @@ given that the incidence of cancer depends on tanning bed use) requires a
 substantial expansion of the cpd; in particular, it requires us to make
 assumptions about the interactions between tanning beds and smoking.  
 The corresponding PDG, $\PDGof{{\mathcal B}}$, on the other hand, has no
-trouble: We can simply add the node $T$ with an edge to $C$ that is associated
+trouble: We can simply add the node $T$ with an arc to $C$ that is associated
 with $\mathbb P$.  But note that doing this makes it possible for our knowledge to
 be inconsistent. To take a simple example, if the distribution on $C$ given $S$
 and $H$ encoded in the original cpd was always deterministically ``has cancer''
@@ -366,7 +366,7 @@ containing all three nodes.
 PDGs do not suffer from either problem.  We can easily delete the
 nodes labeled 1 and $PS$ in \Cref{subfig:smoking-pdg} to get the
 restricted PDG shown in the figure, which captures Grok's updated information.
-The resulting PDG has no edges leading to $S$ or $\mathit{SH}$, and hence no
+The resulting PDG has no arcs leading to $S$ or $\mathit{SH}$, and hence no
 distributions specified on them; no special modeling distinction between
 observation nodes and other nodes are required. Because PDGs do not directly
 make independence assumptions, the information in this fragment is truly a
@@ -450,8 +450,8 @@ for BNs.
 Note that the PDG that Grok used to
 represent her two different sources of information (the mother's wisdom and the
 study) regarding the distribution of $C$ is a \emph{multigraph}: there are two
-edges from $T$ to $C$, with inconsistent information.
-Had we not allowed multigraphs, we would have needed to choose between the two edges, or represent the
+arcs from $T$ to $C$, with inconsistent information.
+Had we not allowed multigraphs, we would have needed to choose between the two arcs, or represent the
 information some other (arguably less natural) way. As we are already allowing
 inconsistency, merely recording both is much more in keeping with the way we
 have handled other types of uncertainty. 
@@ -469,10 +469,11 @@ In the coming sections, we formalize PDGs and relate them to other approaches.
 	
 	
 \section{Syntax}\label{sec:formal+syntax}
-We now provide formal definitions for PDGs.        
-Although it is possible to formalize PDGS with hyperedges directly,
-    we opt for a different approach here, in which PDGs have only regular edges,
-and hyperedges are captured using a simple construction
+% We now provide formal definitions for PDGs.        
+We now provide our first formal definition of a PDG.        
+Although it is possible to formalize PDGS with hyperarcs directly,
+    we opt for a different approach here, in which PDGs have only regular arcs,
+and hyperarcs are captured using a simple construction
 that involves adding an extra node.
 %
 % \vfull{\unskip\footnote{
@@ -496,36 +497,36 @@ is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \alpha, \beta)$, where
 	\item[$\N$] \notation{$:\Set$}%
 		is a finite set of nodes, corresponding to variables;
 	\item[$\Ar$] \notation{$\subseteq \N \times \N \times \mathit{Label}$}%
-		is a set of labeled edges $\{ \ed aXY \}$, each with a source 
+		is a set of labeled arcs $\{ \ed aXY \}$, each with a source 
 		$S$ and target $T$ in $\N$;
 	\item[$\V$] \notation{$: \N \to \Set$}%
 		associates each variable $N \in \N$ with a set $\V(N)$ of values that the variable $N$ can take;
   	\item[$\mathbb P$]
         % \notation{$:\big(\!({A,B,\ell})\colon\!\Ar \big) \to \V(A) \to \Delta\V(B)$}%
         \notation{$:\big(\!\ed aXY \in \Ar \big) \to \V(X) \to \Delta\V(Y)$}%
-	associates to each edge $\ed aXY \in \Ar$
+	associates to each arc $\ed aXY \in \Ar$
 	a distribution $\p_a(x)$ on $Y$ for each $x \in \V(X)$; 
 
 \item[$\balpha$] \notation{$:\Ar \to \mathbb R$}
-associates to each edge $\ed aXY$ a number $\alpha_a$ which,
+associates to each arc $\ed aXY$ a number $\alpha_a$ which,
 roughly speaking, is the modeler's confidence in the functional
 dependence of $Y$ on $X$ implicit in $a$; 
 \item[$\bbeta$] 
     \notation{$:\Ar \to \Rext$}
-associates to each edge $L$ a (possibly infinite) real number $\beta_L$,
+associates to each arc $a$ a (possibly infinite) real number $\beta_a$,
 the modeler's 
 subjective confidence in the reliability of
 $\mathbb P$. 
 \end{description}
 
-Note that we allow multiple edges in $\Ar$ with the same source and
+Note that we allow multiple arcs in $\Ar$ with the same source and
 target; thus $(\N,\Ar)$ is a multigraph.  We occasionally write a PDG
 as $\dg M = (\Gr,\mathbb P, \alpha,\beta)$, where $\Gr = (\N,\Ar,\V)$, 
 and abuse terminology by referring to $\Gr$ as a multigraph.
 We refer to 
 ${\dg N} = (\Gr, \mathbb P)$ as an \emph{unweighted} PDG,
 and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
-$\bf 1$ is the constant function (i.e., so that $\alpha_L = \beta_L = 1$ for all $L$). 
+$\bf 1$ is the constant function (i.e., so that $\alpha_a = \beta_a = 1$ for all $L$). 
 In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\balpha = {\bf 1}$
 and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.
 % \footnote{The appendix gives results for arbitrary $\alpha$.} 
@@ -560,7 +561,7 @@ that the corresponding cpd is degenerate, effectively representing a determinist
 function $f : \V(A) \to \V(B)$. 
 
 \begin{constr}\label{constr:hyperedge-reducton}
-We can now explain how we capture the multi-tailed edges that 
+We can now explain how we capture the multi-tailed arcs that 
 were used in 
 \Crefrange{ex:smoking}{ex:grok-union}. 
 That notation can be viewed as shorthand for the graph that results by adding a new node at the junction representing the joint value of the nodes at the tails, with projections going back.  For instance,
@@ -601,8 +602,8 @@ where we insert a node labeled $C \times T$ at the junction:
 
 As the notation suggests, $\V( C \times T) = \V(C) \times \V(T)$.
 For any joint setting $(c,t) \in \V(C \times T)$ of both variables, the cpd for
-the edge from $C \times T$ to $C$ gives probability 1 to $c$;
-similarly, the cpd for the edge from $ C \times T$ to $T$ gives probability 1 to $t$.
+the arc from $C \times T$ to $C$ gives probability 1 to $c$;
+similarly, the cpd for the arc from $ C \times T$ to $T$ gives probability 1 to $t$.
 \end{constr}
 
 
@@ -640,7 +641,7 @@ We now review a some important alternative ways of defining a PDG.
             \draw[arr2,->>] (Y2) to[bend left] (Y1);
         \end{tikzpicture}
     \]
-    where the vertical edges enforce equality. 
+    where the vertical arcs enforce equality. 
 
     \item The confidence $\beta_a$ in the arc $\ed aXY$ may be replaced with a separate confidence $\beta_{a,x}$ for each possible input $x \in \V(X)$. 
 
@@ -665,7 +666,7 @@ by taking the union of their variables and the disjoint union of their arcs (and
 % 	which combines the information in $\dg M_1$ and $\dg M_1$
 % 	to form a new PDG $\dg M_1 + \dg M_2$.  
 % More precisely, this involves forming  the disjoint union of the (hyper)arcs
-% 	(because more edges should count double), 
+% 	(because more arcs should count double), 
 %     but we don't want to duplicate variables.
 
 % If we're being extra careful,
@@ -762,12 +763,12 @@ specified by matching cpds. From this perspective, it is natural to consider the
 set of all distributions that are consistent with the constraints.
 
 \begin{defn} \label{def:set-semantics} 
-If $\dg M$ is a PDG (weighted or unweighted) with edges $\Ar$ and
+If $\dg M$ is a PDG (weighted or unweighted) with arcs $\Ar$ and
 cpds $\mathbb P$, 
 let $\SD{\dg M}$ be the \emph{s}et of
 \emph{d}istributions over the variables in $\dg M$ 
 whose conditional marginals are exactly those given by $\mathbb P$.
-That is, $\mu \in \SD{\dg M}$ iff, for all edges $a \in \Ar$ from $X$
+That is, $\mu \in \SD{\dg M}$ iff, for all arcs $a \in \Ar$ from $X$
 to $Y$,  $x \in 
 \V(X)$,  and $y \in \V(Y)$, we have that $\mu(Y{=}y\mid X{=}x) = \p_a(Y{=}y\mid X{=}x)$.
 % \notation{
@@ -809,7 +810,7 @@ We start with the first component of the score, which assigns higher scores to
 distributions that require a larger perturbation in order to be consistent with
 $\dg M$.  
 We measure the magnitude of this perturbation with relative entropy. In
-particular, for an edge $\ed aXY$ and $x \in \V(X)$, we measure
+particular, for an arc $\ed aXY$ and $x \in \V(X)$, we measure
 the relative entropy from $\p_a(x)$ to $\mu(Y \!= \cdot\mid X=x)$, and take the
 expectation over $\mu_X$ (that is, the marginal of $\mu$ on $X$). We then sum
 over all the arcs $a$ in the PDG, weighted by their reliability.
@@ -820,7 +821,7 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
     a joint distribution $\mu$ over $\V(\dg M)$, is given by
     \[
 	\OInc_{\dg M }( \mu) := 
-		\!\!\!\!\!\!\sum_{\Ar L{X\,}{\,Y} \in \Ar^{\dg M}} \!\!\!\!\!\beta_L^{\dg M} \Ex_{x \sim \mu_{_X}}\!\!
+		\!\!\!\!\!\!\sum_{\Ar L{X\,}{\,Y} \in \Ar^{\dg M}} \!\!\!\!\!\beta_a^{\dg M} \Ex_{x \sim \mu_{_X}}\!\!
 \left[\kldiv[\Big]{ \mu(Y \mid X {=} x) }{\p_a^{\dg M}(x) } \right] , \]
 	where $\kldiv{\mu}{\nu} = \sum_{w \in \text{Supp($\mu$)}} \mu(w) \log\frac{\mu(w)}{\nu(w)}$ is the 
 	relative entropy from $\nu$ to $\mu$.
@@ -844,19 +845,19 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
 The idea behind this definition of inconsistency is to choose a
 distribution $\mu$ that minimizes the total number of bits required to
 encode all of the relevant conditional marginals. More precisely, fix a
-    distribution $\mu$. For each edge $L = (X, Y, \ell) \in \Ar$ and $x \in
-    \V(X)$, we are given a code for $Y$ optimized for the distribution $\p_a(x)$,
+    distribution $\mu$. For each arc $\ed aXY \in \Ar$ and $x \in
+    \V X$, we are given a code for $Y$ optimized for the distribution $\p_a(x)$,
     and asked to transmit data from $\mu(Y\mid x)$; we incur a cost for each bit
     required beyond what we would have used had we used a code optimized for the
     actual distribution $\mu(Y\mid X=x)$. To obtain the cost for $L$, we take a
     weighted average of these costs, where the weight for the value $x$ is the
-    probability $\mu_X(x)$. We do this for every edge $L \in \Ar$, summing the
+    probability $\mu_X(x)$. We do this for every arc $a \in \Ar$, summing the
     cost.
 
     For even more intuition, imagine two agents ($A$ and $B$) with identical
     beliefs described by a PDG $\dg M$ about a set of variables that are in fact
-    distributed according to $\mu$. For each edge $L = (X,Y, \ell) \in \Ar^\dg
-    M$, values $x,y \in \V(X)$ are chosen according to $\mu_{_{XY}}$ and $x$ is
+    distributed according to $\mu$. For each arc $\ed aXY \in \Ar^\dg
+    M$, values $x,y \in \V(X,Y)$ are chosen according to $\mu(X,Y)$ and $x$ is
     given to both agents. 
 
     At this point, the agents, having the same conditional beliefs, and the same
@@ -869,7 +870,7 @@ encode all of the relevant conditional marginals. More precisely, fix a
     reimbursed the (smaller) cost that would have been paid, had the agents
     beliefs lined up with the true distribution $\mu$.
 
-    Repeating for each edge and summing the expectations of these costs, we can view
+    Repeating for each arc and summing the expectations of these costs, we can view
     $\OInc_{\dg M}(\mu)$ as the total number of \emph{additional} expected
     bits required to communicate $y$ with a code optimized for
     $\p_a(x)$ instead of the true conditional distribution   $\mu(Y \mid X=x)$. 
@@ -882,7 +883,7 @@ encode all of the relevant conditional marginals. More precisely, fix a
 	% \begin{example}
     %     % [continues=ex:worldsonly]
 	%     % Recall our simplest example, which directly encodes an entire distribution $p$
-    %     Consider a simple example in which encodes a distribution $p$ over the set $W$. In this case, there is only one edge, the expectation is over
+    %     Consider a simple example in which encodes a distribution $p$ over the set $W$. In this case, there is only one arc, the expectation is over
 	%     a single element, and the marginal on $W$ is the entire distribution. Therefore,
 	%     $\OInc(\dg M; \mu) = \kldiv{\mu}{\mu}$, so the inconsistency is just the
 	%     information $\mu$ and $p$, so is minimized uniquely when $\mu$ is $p$
@@ -897,9 +898,9 @@ between distributions based on their compatibility with
 $\dg M$, but even among distributions that match the
 marginals, some more closely match the qualitative structure
 of the graph than others.  
-We think of each edge $\ed aXY$ as representing a
+We think of each arc $\ed aXY$ as representing a
 qualitative claim
-(with confidence $\alpha_L$)
+(with confidence $\alpha_a$)
 that the value of $Y$ can be computed from
 $X$ alone.  
 To formalize this, we require only the 
@@ -915,8 +916,8 @@ information required to
 $\omega \sim \mu$, and 
  \label{item:globalinfo}
 \item 
-% separately specify, for each edge $\ed aXY$, the value $\mat w_Y$ (of $Y$ in world $\mat w$) given the value $\mat w_X$, in expectation.
-separately specify, for each edge $\ed aXY$, the value $\omega[Y]$ (of $Y$ in world $\omega$) given the value $\omega[X]$, in expectation.
+% separately specify, for each arc $\ed aXY$, the value $\mat w_Y$ (of $Y$ in world $\mat w$) given the value $\mat w_X$, in expectation.
+separately specify, for each arc $\ed aXY$, the value $\omega[Y]$ (of $Y$ in world $\omega$) given the value $\omega[X]$, in expectation.
 	\label{item:localinfo}
 \end{enumerate}
 In a sense, (a) is the information needed to determine $\mu$ along its own structure,
@@ -930,7 +931,7 @@ correlations in $\mu$ that allow for a more compact representation
 than $G$ provides. 
 The larger the difference,  the more information is needed to determine
 targets $Y$ beyond the conditional probabilities associated with the
-edges $X \rightarrow Y$ leading to $Y$
+arcs $X \rightarrow Y$ leading to $Y$
 (which according to $G$ should be sufficient to compute them), 
 and the poorer the qualitative fit of $\mu$ to $G$.
 Finally,
@@ -944,28 +945,26 @@ what is necessary to determine outcomes of the marginals selected by $G$.
 \begin{defn}\label{def:info-deficiency}
 % For a multigraph $G = (\N, \Ar, \V)$ over a set $\N$ of variables,
 Given a directed (multi)(hyper)graph $\Ar$, 
-the \emph{$G$-information deficiency}
-of distribution $\mu$, denoted $\IDef_{G}(\mu)$,
-by considering the difference between (a) and (b), 
+the \emph{information deficiency}
+of distribution $\mu$, denoted $\IDef_{\!\Ar}(\mu)$,
+is the difference between (a) and (b), 
 where we measure the amount of information needed for a description
 using entropy: 
 \begin{equation}
 	\IDef_{G}(\mu) := \sum_{(X,Y) \in \Ar} \H_\mu(Y\mid X) - \H(\mu). 
 	\label{eqn:alt-extra}
 \end{equation}
-(Recall that $H_\mu(Y\mid X)$, the
-\emph{conditional entropy of $Y$ given $X$}, is
-defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
-For a PDG ${\dg M}$, we take $\IDef_{\dg M} = \IDef_{\Gr^{\dg M}}$.   
+% (Recall that $H_\mu(Y\mid X)$, the \emph{conditional entropy of $Y$ given $X$}, is defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
+For a PDG ${\dg M}$, we take $\IDef_{\dg M} = \IDef_{\Ar^{\dg M}}$.   
 \end{defn}
 
 We illustrate $\IDef_{\dg M}$ with some simple examples.  
-Suppose that $\dg M$ has two nodes, $X$ and $Y$.  If $\dg M$ has no edges, the
+Suppose that $\dg M$ has two nodes, $X$ and $Y$.  If $\dg M$ has no arcs, the
 $\IDef_{\dg M}(\mu) = - \H(\mu)$. There is no information required to specify, for
-each edge in ${\dg M}$ from $X$ to $Y$, the value ${\mat w}_Y$ given ${\mat
-w}_X$, since there are no edges. Since we view smaller numbers as representing a
+each arc in ${\dg M}$ from $X$ to $Y$, the value ${\mat w}_Y$ given ${\mat
+w}_X$, since there are no arcs. Since we view smaller numbers as representing a
 better fit, $\IDef_{\dg M}$ in this case will prefer the distribution that
-maximizes entropy. If $\dg M$ has one edge from $X$ to $Y$, then since $\H(\mu) =
+maximizes entropy. If $\dg M$ has one arc from $X$ to $Y$, then since $\H(\mu) =
 \H_{\mu}(Y \mid X) + \H_\mu(X)$
 by the well known \emph{entropy chain rule} \cite{mackay2003information},
 $\IDef_{\dg   M}(\mu) = -\H_{\mu}(X)$. Intuitively,
@@ -973,20 +972,22 @@ while knowing the conditional probability $\mu(Y \mid X)$ is helpful, to
 completely specify $\mu$ we also need $\mu(X)$. Thus, in this case, $\IDef_{\dg
 M}$ prefers distributions that maximize the entropy of the marginal
 on $X$. 
-If $\dg M$ has sufficiently many parallel edges
+If $\dg M$ has sufficiently many parallel arcs
  from $X$ to $Y$
  and $\H_{\mu}(Y \mid X) > 0$ 
 (so that $Y$ is not totally determined by $X$)
-then we have $\IDef_{\dg M}(\mu) > 0$, because the redundant edges add no
+then we have $\IDef_{\dg M}(\mu) > 0$, because the redundant arcs add no
 information, but there is still a cost to specifying them.
 In this case, $\IDef_{\dg M}$ prefers distributions that make $Y$ a
 deterministic function of $X$ will maximizing the entropy of the
 marginal on $X$.
-Finally, if ${\dg M}$ has an edge from $X$ to $Y$ and another from $Y$
+Finally, if ${\dg M}$ has an arc from $X$ to $Y$ and another from $Y$
 to $X$, then a distribution $\mu$ minimizes $\IDef_{\dg M}$ when 
 $X$ and $Y$  vary together (so that $\H_\mu(Y \mid X) = \H_\mu(X \mid Y) = 0$)
 while maximizing $\H(\mu)$, for example, by taking $\mu(0,0)
 = \mu(1,1) = 1/2$. 
+
+\input{fragments/idef-intuition}
 
 
 $\OInc_{\dg M}(\mu)$ and $\IDef_{\dg M}(\mu)$ give us two measures
@@ -1033,10 +1034,14 @@ In general, $\bbr{\dg M}_\gamma^*$ does not give a unique distribution.  But if
 $\gamma$ is sufficiently small, then it does:
 
 \begin{linked}{prop}{sem3}
-	If $\dg M$ is a PDG and $0 < \gamma \leq \min_{a \in \Ar} 
-        {\displaystyle\frac {\beta_a^{\dg M}}{\alpha_a^{\dg M}} }$, then
-	$\bbr{\dg M}_\gamma^*$ is a singleton. 
+	% If $\dg M$ is a PDG and $0 < \gamma \leq \min_{a \in \Ar} 
+	If $0 < \gamma \leq 
+        {\displaystyle \min_{a \in \Ar} \frac {\beta_a^{\dg M}}{\alpha_a^{\dg M}} }$
+    \unskip, then$\bbr{\dg M}_\gamma^*$ is a singleton. 
 \end{linked}
+
+This is because the scoring function $\bbr{\dg M}_\gamma$ is 
+strictly convex for these (small) values of $\gamma$. 
 
 % We will soon see that the 
 In much of this dissertation, we will be
@@ -1053,7 +1058,7 @@ is a sequence $(\gamma_i, \mu_i)_{i \in \mathbb N}$ with $\gamma_i \to 0$ and
 $\mu_i \to \mu$ such that $\mu_i \in S_{\gamma_i}$ for all $i$. 
 It can be further shown that 
 
-\begin{linked}{prop}{limit-uniq}
+\begin{linked}{theorem}{limit-uniq}
     For all $\dg M$, $\lim\limits_{\gamma\to0}\bbr{\dg M}_\gamma^*$ is a singleton.
 \end{linked}
 Let $\bbr{{\dg M}}_{0^+}^*$ be the unique element of $\smash{\lim\limits_{\gamma
@@ -1072,7 +1077,8 @@ The three semantics given in the previous section are the ones presented in the 
 However, there are two other semantics that will play an important role later on. 
 The first is a PDG's degre of inconsistency: for each $\gamma$, we can define
 \[
-    \aar[\big]{\dg M}_{\gamma} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu) \in \Rext.
+    \aar[\big]{\dg M}_{\gamma} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu) 
+    \quad \in \Rext.
 \] 
 Thus, it interprets a PDG as a single number.  This quantity may at first seem less important than the others, but we will see in \cref{chap:one-true-loss} that it is a ``universal loss function'', and then in \cref{chap:inc-infer-connection} that all of the other semantics can be derived from it. 
 
@@ -1100,7 +1106,7 @@ in this way; we defer the straightforward formal details to the appendix.
  	  If $\cal B$ is a Bayesian network
           and $\Pr_{\cal B}$ is the distribution it specifies, then
         for all $\gamma > 0$ and all vectors $\beta$ such
-        that $\beta_L > 0$ for all edges $L$,
+        that $\beta_a > 0$ for all arcs $a$,
         $\bbr{\PDGof{\mathcal B, \beta}}_\gamma^* = \{ \Pr_{\cal B}\}$, 
 and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.    
 \end{linked}
@@ -1153,8 +1159,9 @@ To answer this, we start by making the translation precise.
 If $\dg N = (\Gr, \mathbb P)$ is an unweighted PDG with variables $\X$, 
 define the associated FG $\FGof{\dg N}$ as follows. 
 Let $\mathcal J := \Ar$ to be the set of arcs, 
-and for an edge $L$ from $Z$ to $Y$, taking $X_{L} = \{Z,Y\}$, and $\phi_L(z,y)$ to be
-$\p_a^{\dg M}(y \mid z)$ (i.e., $(\p_a^{\dg M}(z))(y)$).
+and for an arc $\ed aZY$, take $X_{a} := \{Z,Y\}$, and $\phi_a(z,y) := \p_a^{\dg M}(y \mid z)$ 
+% (i.e., $(\p_a^{\dg M}(z))(y)$)
+\unskip.
 \end{defn}
 
 
@@ -1171,9 +1178,9 @@ the unweighted PDG consisting of
 	\item the variables in $\Phi$ together
    with $\pdgunit$ and a variable $X_{\!J} := \prod_{j \in J} X_j$ for every factor $J \in \mathcal J$%
    , and
-   \item edges ${\pdgunit} \!\!\to\! X_{\!J}$ for each $J$ and $X_{\!J} \!\!\tto\! X_j$ for each $X_j \in \mat X_J$,
+   \item arcs ${\pdgunit} \!\!\to\! X_{\!J}$ for each $J$ and $X_{\!J} \!\!\tto\! X_j$ for each $X_j \in \mat X_J$,
 \end{itemize}
-where the edges $ X_{\!J} \!\tto\! X_j$ are associated with the appropriate projections, and each ${\pdgunit} \!\to\! X_{\!J}$ is associated with the unconditional joint distribution on $X_J$ obtained by normalizing $\phi_J$. 
+where the arcs $ X_{\!J} \!\tto\! X_j$ are associated with the appropriate projections, and each ${\pdgunit} \!\to\! X_{\!J}$ is associated with the unconditional joint distribution on $X_J$ obtained by normalizing $\phi_J$. 
 The process is illustrated in \cref{fig:fg2PDG}.
 \end{defn}
 
@@ -1247,7 +1254,7 @@ according to \cref{def:PDG2fg} (left), and from that factor graph back
 to a PDG by \cref{def:fg2PDG} (right). 
 In the latter, for each $J$ we introduce a new variable $X_J$ (displayed as a
 smaller darker rectangle), whose values are joint settings of the
-variables connected it, and also an edge $1 \to X_J$ 
+variables connected it, and also an arc $1 \to X_J$ 
 (shown in blue),
 to which we associate the unconditional 
 distribution given by normalizing $\phi_J$.
@@ -1263,19 +1270,29 @@ Nevertheless, when $\gamma = 1$, so that the quantitative and qualitative terms 
 
 
 \begin{linked}{theorem}{fg-is-pdg}
+    \label{theorem:pdg-is-fg}
+\begin{enumerate}[label={(\alph*)}]
+    \item
 $\Pr_{\Phi} = \bbr{\UPDGof{\Phi}}_{1}^*\;$ for all factor graphs
-$\Phi$.\footnote{Recall that we identify the unweighted PDG $(\Gr,\mat
-p)$ with the weighted PDG $(\Gr,\mathbb P,  \mat 1, \mat 1)$.}  
-\end{linked}
-\begin{linked}{theorem}{pdg-is-fg}
+$\Phi$.%
+\onlyfirsttime{\footnote{Recall that we identify the unweighted PDG $(\Gr,\mat
+p)$ with the weighted PDG $(\Gr,\mathbb P,  \mat 1, \mat 1)$.}}
+% \end{linked}
+% \begin{linked}{theorem}{pdg-is-fg}
+\item
 $\bbr{\dg N}_{1}^* = \Pr_{\FGof{\dg N}}\;$ for all unweighted
 	PDGs $\dg N$.  
+\end{enumerate}
 \end{linked}
+
 The correspondence hinges on the fact that we take $\gamma=1$, so that $\OInc$ and
-$\IDef_{}$ are weighted equally.
-Because the user of a PDG gets to choose $\gamma$, the fact that the 
-translation from factor graphs to PDGs preserves semantics only for $\gamma=1$
-poses no problem.
+$\IDef$ are weighted equally.
+Because $\gamma$ is not part of the data of a PDG but rather chosen
+    by the end user, 
+% Because the user of a PDG gets to choose $\gamma$, 
+the fact that the translation from factor graphs to PDGs preserves 
+    semantics only for $\gamma=1$ poses no problem:
+
 Conversely, the fact that the reverse correspondence requires
 $\gamma=1$ suggests 
 that factor graphs are less flexible than PDGs.
@@ -1309,37 +1326,45 @@ ${\Pr}_{\Psi}(\vec x) = \frac{1}{Z_{\Psi}}
  	\prod_{J \in \cal J} \phi_J(\vec x_J)^{\theta_J}$, 
 which matches the unweighted case when every $\theta_J = 1$.
 The mapping $\theta \mapsto \Pr_{(\Phi,\theta)}$ is known as 
-$\Phi$'s \emph{exponential family} and is a central tool in the analysis  
-and development of many algorithms for graphical models \cite{wainwright2008graphical}.
+$\Phi$'s \emph{exponential family}, and is central to the analysis
+and development of many algorithms for undirected 
+graphical models \cite{wainwright2008graphical}.
+% new
+Indeed, this is an alternate and in principle equally expressive 
+appraoch to modeling with factor graphs: instead of choosing the factors $\Phi$
+based on data and assuming weight $\mat 1$ on all factors,
+it is possible to instead choose $\Phi$ beforehand to be a suitibly expressive basis, 
+and then use data to inform the choice of \emph{weights} $\boldsymbol\theta$. 
 
 PDGs can in fact capture the full exponential family of a factor graph, but only
 by allowing values of $\alpha$ other than ${\bf 1}$. In this case, the
 only definition  
-that requires alteration is $\IDef_{}$, which now depends on the \emph{weighted multigraph}
+that requires alteration is $\IDef$, which now depends on the \emph{weighted multigraph}
 $(\Gr^{\dg M}, \alpha^{\dg M})$, and is given by
 \begin{equation}
-	\IDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_L \H_\mu(Y\mid X) - \H(\mu). 
+	\IDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_a \H_\mu(Y\mid X) - \H(\mu). 
 	\label{eqn:alt-extra2}
 \end{equation}
 Thus, the conditional entropy $\H_\mu(Y\mid X)$ associated with the
-edge $\ed aXY$ is multiplied by the weight $\alpha_L$ of that edge.
+arc $\ed aXY$ is multiplied by the weight $\alpha_a$ of that arc.
 
-One key benefit of using $\alpha$ is that we can
-capture arbitrary WFGs, not just ones with a constant weight
-vector.    All we have to do is to ensure that in our translation from
-factor graphs to PDGs, the ratio $\alpha_L/\beta_L$ is a
+One important use case for $\alpha$ is 
+    it enables us to capture arbitrary weighted factor graphs
+% not just ones with a constant weight vector.
+All we have to do is to ensure that in our translation from
+factor graphs to PDGs, the ratio $\alpha_a/\beta_a$ is a
 constant.  (Of course, if we allow arbitrary weights, we cannot hope
-to do this if $\alpha_L = 1$ for all edges $L$.)  
+to do this if $\balpha = \mat 1$.)  
 We therefore define a family of translations, parameterized by the
-ratio of $\alpha_L$ to $\beta_L$.
+ratio of $\alpha_a$ to $\beta_a$.
 \begin{defn}[WFG to PDG]\label{def:wfg2pdg}
 Given a WFG
 $\Psi=(\Phi, \theta)$,
 and postive number $k$, 
 we define the corresponding PDG $\PDGof{\Psi,k} = (\UPDGof{\Phi},\alpha_{\theta}, \beta_{\theta})$ 
-by taking $\beta_J = k \theta_J$ and $\alpha_J = \theta_J$ for the edge
+by taking $\beta_J = k \theta_J$ and $\alpha_J = \theta_J$ for the arc
  $\pdgunit  \rightarrow X_J$, and
-taking $\beta_L = k$ and $\alpha_L = 1$ for the projections $X_J \!\tto\! X_j$.
+taking $\beta_a = k$ and $\alpha_a = 1$ for the projections $X_J \!\tto\! X_j$.
 \end{defn}
 
 We now extend Definitions~\ref{def:PDG2fg} and \ref{def:fg2PDG} to
@@ -1354,7 +1379,7 @@ either choice would suffice.
 \begin{defn}[PDG to WFG]
 Given a (weighted) PDG $\dg M =
 (\dg N, \beta)$, we take its corresponding WFG to be $\WFGof{\dg M} :=
-(\FGof{\dg N}, \beta)$; that is, $\theta_L := \beta_L$ for all edges $L$.
+(\FGof{\dg N}, \beta)$; that is, $\theta_a := \beta_a$ for all arcs $a$.
 \end{defn}
 We now show that we can capture the entire exponential family of a factor graph,
 and even its associated free energy, 
@@ -1382,7 +1407,7 @@ $\alpha$ and $\beta$ of the resulting PDG,
 	$\Pr_{(\Phi,\theta)} = \bbr{(\UPDGof{\Phi}, \theta,\theta)}_1^*$
 \end{coro}
 
-Conversely, as long as the ratio of $\alpha_L$ to $\beta_L$ is constant, the
+Conversely, as long as the ratio of $\alpha_a$ to $\beta_a$ is constant, the
 reverse translation also preserves semantics.
 \begin{linked}{theorem}{pdg-is-wfg}
 For all unweighted PDGs $\dg{N}$ and non-negative vectors $\mat v$
@@ -1435,15 +1460,15 @@ we have
 For a fixed $\gamma$, the first and last terms
 of \eqref{eq:semantics-breakdown} are equal to a scaled
 version of the free energy, $\gamma\VFE_\Phi$, 
-if we set $\phi_J := \p_a$ and $\theta_J := \nicefrac{\beta_L}{\gamma}$.  
-If, in addition, $\beta_L = {\alpha_L}\gamma$ for all
-edges $L$, then
+if we set $\phi_J := \p_a$ and $\theta_J := \nicefrac{\beta_a}{\gamma}$.  
+If, in addition, $\beta_a = {\alpha_a}\gamma$ for all
+arcs $L$, then
 the local regularization term disappears, giving us
 the desired correspondence. 
 
 
 \Cref{eq:semantics-breakdown} also makes it clear that 
-taking $\beta_L = {\alpha_L} \gamma$ for all edges $L$ is
+taking $\beta_a = {\alpha_a} \gamma$ for all arcs $a$ is
 essentially necessary to get \Cref{theorem:pdg-is-fg,theorem:fg-is-pdg}.
 Of course, fixed $\gamma$ precludes taking the limit as $\gamma$ goes
 to 0, so 
@@ -1453,7 +1478,7 @@ behavior in factor graphs trying to capture the same phenomena as
 PDGs, as the following example shows.
 
 \begin{example}\label{ex:overdet}
-Consider the PDG $\dg M$ containing just $X$ and $1$, and two edges
+Consider the PDG $\dg M$ containing just $X$ and $1$, and two arcs
 $p, q: 1 \to X$.
 (Recall that such a PDG can arise if we get different information about the
 probability of $X$ from two different 
@@ -1465,7 +1490,7 @@ with the same distribution on $X$%
 $\beta_p = \beta_q = 1$.
 For definiteness, suppose that
 $\V(X) = \{x_1,x_2\}$, and
-that the distribution associated with both edges is $\mu_{.7}$, which ascribes
+that the distribution associated with both arcs is $\mu_{.7}$, which ascribes
 probability $.7$ to $x_1$. Then, as we would hope  $\bbr{\dg M}^* =
 \{\mu_{.7}\}$; after all, both sources agree on the information.
 However, it can be shown that 
@@ -1487,73 +1512,86 @@ becomes quite different from Gibbs free energy.
 
 \section{Discussion}
 We have introduced PDGs, a powerful tool for representing
-probabilistic information. 
-They have a number of advantages over other
-probablisitic graphical models. 
+% probabilistic information. 
+beliefs in the language of probabilities and confidences.
+They have a of advantages over other
+    probablisitic graphical models. 
+Most notably:
 \begin{itemize}
-\item They allow us to capture inconsistency, including conflicting information
-from multiple sources with varying degrees of reliability.
+\item PDGs allow us to capture inconsistent beliefs, including conflicting information from multiple sources with varying degrees of reliability.
+% (and measure its magnitude as a matter of degree
+    Moreover, they provide a natural way of measuring the degree of this inconsistency. 
 \item 
-	They are much more modular 
+	PDGs are much more modular 
 	than other representations; for example, we can combine information from two sources by simply taking the union of two
-	PDGs, and it is easy to add new information (edges)
-	and features (nodes) without affecting previously-received information.
+	PDGs, and it is easy to add new information (arcs)
+	and features (nodes) without affecting 
+    (the meaning of)
+    previously-received information.
 \item They allow for a clean separation between quantitiatve information (the
 	cpds and weights $\beta$) and more qualitative information contained by
 	the graph structure (and the weights $\alpha$); this is captured by the
-	terms $\OInc$ and $\IDef_{}$ in our scoring function.
+	terms $\OInc$ and $\IDef$ in our scoring function.
 \item PDGs have (several) natural semantics; one of them allows us to
 pick out a unique distribution.  Using this distrbution, PDGs
 	can capture BNs and factor graphs.
-In the latter case, a simple parameter shift in the corresponding PDG eliminates
-arguably problematic behavior of a factor graph.
+    In the latter case, a simple parameter shift in the corresponding PDG eliminates arguably problematic behavior of a factor graph.
 \end{itemize}
 
-We have only scratched the surface of what can be done with PDGs here.
+So far, we have only scratched the surface of what can be done with PDGs.
 Two major issues that need to be tackled are inference and dynamics.
-How should we query a PDG for probabilistic information? How should 
-we modify a PDG in light of new information or to make it more consistent?
-These issues turn out to be closely related.
+How should we query a PDG for probabilistic information? 
+How should we modify a PDG in light of new information or to make it more consistent?
+These issues turn out to be closely related, as we will see in 
+    \cref{chap:inc-infer-connection}.
 % Due to space limitations, 
 % we just briefly give some intuitions and examples here.
 
-Suppose that we want to compute the probability of $Y$ given $X$ in a PDG $\dg
-M$. For a cpd $p(Y|X)$, let $\dg M^{+p}$ be the PDG obtained by associating $p$
-with a new edge in $\dg M$ from $X$ to $Y$, with $\alpha_p \!=\! 0$. We judge
-the quality of a candidate answer $p$ by the best possible score that $\dg
-M^{+p}$ gives to any distribution (which we call the \emph{degree of
-inconsistency} of $\dg M^{+p}$). It can be shown that the deegree of
-inconsistency is minimized by $\bbr{\dg M}^*(Y\!\mid\! X)$. 
+% Suppose that we want to compute the probability of $Y$ given $X$ in a PDG $\dg
+% M$. For a cpd $p(Y|X)$, let $\dg M^{+p}$ be the PDG obtained by associating $p$
+% with a new arc in $\dg M$ from $X$ to $Y$, with $\alpha_p \!=\! 0$. We judge
+% the quality of a candidate answer $p$ by the best possible score that $\dg
+% M^{+p}$ gives to any distribution (which we call the \emph{degree of
+% inconsistency} of $\dg M^{+p}$). It can be shown that the deegree of
+% inconsistency is minimized by $\bbr{\dg M}^*(Y\!\mid\! X)$. 
 
-To take another example,
+% To take another example,
+For now, we content ourselves with a simple example:
 conditioning can be understood in terms of resolving inconsistencies
 in a PDG.  To condition on an observation $Y\!=\!y$, given a situation
-described by a PDG $\dg M$, we can add an edge 
+described by a PDG $\dg M$, we can add an arc 
 from $\pdgunit$ to $Y$ in $\dg M$, annoted with the cpd that gives
 probability 1 to $y$, to get the (likely inconsistent) PDG
 % $\vphantom{\raisebox{0.05em}{$\big|$}}$
 ${\dg M}^{+(\!Y\!=y)}$.   
 % The distribution $\bbr{{\dg M}^{+(\!Y\!=y)}}^*$ turns out
 % to be the result of conditioning $\bbr{\dg M}^*$ on $Y\!=\!y$.
-In the special case where $\dg M$ represents or is equivalent to a joint distribution
-    (which will be made precise in \cref{sec:prob-as-pdg,sec:equivalence}), 
+In the special case where $\dg M$ represents or is equivalent to a joint distribution,
+    % (which will be made precise in \cref{sec:prob-as-pdg,sec:equivalence}), 
     $\bbr{{\dg M}^{+(\!Y\!=y)}}^*$ turns out
     to be the result of conditioning that distribution on the event $Y{=}y$. 
 This account of conditioning generalizes
 without modification to give Jeffrey's Rule \cite{Jeffrey68}, a more
 general approach to belief updating. 
 
-Issues of updating and inconsistency also arise in variational inference. A  
-variational autoencoder \cite{kingma2013autoencoding}, for instance, 
+% Issues of updating and inconsistency also arise in variational inference. A  
+% variational autoencoder \cite{kingma2013autoencoding}, for instance, 
+% is essentially three cpds: a prior $p(Z)$, a decoder $p(X \!\mid\! Z)$, and 
+% an encoder $q(Z \!\mid\! X)$. Because two cpds target $Z$ (and the cpds are 
+% inconsistent until fully trained), this situation
+% can be represented by PDGs but not
+% by other graphical models.
+Properly modeling inconsistency also turns out to be a recurrent theme in machine learning, as we will see in \cref{chap:one-true-loss}. 
+A variational autoencoder \cite{kingma2013autoencoding}, for instance, 
 is essentially three cpds: a prior $p(Z)$, a decoder $p(X \!\mid\! Z)$, and 
 an encoder $q(Z \!\mid\! X)$. Because two cpds target $Z$ (and the cpds are 
 inconsistent until fully trained), this situation
-can be represented by PDGs but not
-by other graphical models.
+can be represented by PDGs but not by other graphical models.
 
-In the coming chapters, we will explore 
-the deep connection between inference, updating, 
-and the resolution of inconsistency in PDGs.
+% In the coming chapters, we will explore 
+% the deep connection between inference, updating, 
+% and the resolution of inconsistency in PDGs.
+In the coming chapters, we will explore these connections, and the broader theory of probabilistic modeling that is enabled by the PDG representation.
 	
 \commentout{	
 \section*{Ethics Statement}
@@ -1622,18 +1660,18 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 			 definition, a distribution $\mu \in \SD{\dg M}$ satisfies
 	  all the
 			 constraints, so $\mu(Y = \cdot \mid X=x) =
-			 \p_a(x)$ for all edges $X \rightarrow Y \in \Ar^{\dg
+			 \p_a(x)$ for all arcs $X \rightarrow Y \in \Ar^{\dg
 			   M}$ and $x$ with 
 			 $\mu(X=x)>0$. By Gibbs inequality
 			 \cite{mackay2003information}, 
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} = 0$. Since this is true
-			 for all edges, we must have $\OInc_{\dg M}( \mu) =
+			 for all arcs, we must have $\OInc_{\dg M}( \mu) =
 			 0$. Conversely, if $\mu \notin \SD{\dg M}$, then it
-			 fails to marginalize to the cpd $\p_a$ on some edge
+			 fails to marginalize to the cpd $\p_a$ on some arc
 							  $L$, and so again by Gibbs inequality,
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} > 0$. As relative entropy
 			 is non-negative, the sum of these terms over all
-			 edges must be positive as well, (because we have assumed $\bbeta > 0$) and so $\OInc_{\dg M}(
+			 arcs must be positive as well, (because we have assumed $\bbeta > 0$) and so $\OInc_{\dg M}(
 			 \mu) \neq 0$. %
 \end{lproof}
 
@@ -1641,47 +1679,79 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 Before proving the remaining results, we prove a lemma that will be useful
 in other contexts as well. 
 
+%%%%%%%%%%% BAD PROOF; EASIER TO APPEAL TO LATER RESULTS %%%%%%%%%%%%
+\commentout{%
 \begin{lemma}
 	\label{theorem:inc-convex}
-	$\OInc_{\dg M}( \mu)$ is a convex function of $\mu$.
+	$\OInc_{\dg M}( \mu)$ is a convex function of $\mu$, provided $\bbeta^{\dg M} \ge 0$.
 \end{lemma}
 \begin{lproof}\label{proof:inc-convex}
-    It is well known that $\thickD$ is convex \cite[Theorem
-            2.7.2]{CoverThomas}, in the sense that  
-	\[ \kldiv{\lambda q_1 + (1-\lambda) q_2 }{ \lambda p_1
-			  + (1-\lambda) p_2} \leq \lambda \kldiv {q_1}{ p_1} +
-							(1-\lambda) \kldiv{q_2}{p_2}. \] 
-Given an edge $\ell \in \Ar$ from $A$ to $B$ and $a \in \mathcal V(A)$,
-and   
-setting $q_1 = q_2 = \p_\ell(a)$, we get that
-	\[ \thickD(\p_\ell(a) \ ||\ \lambda p_1 + (1-\lambda) p_2)
-			\leq \lambda \thickD (\p_\ell(a) \ ||\ p_1) + (1-\lambda)
-							\thickD(\p_\ell(a)\ ||\ p_2). \] 
-	Since this is true for every $a$ and edge, we can take
-		   a weighted sum of these inequalities for each $a$
-		   weighted by $p(A=a)$; thus, 
-	\begin{align*}
-		\Ex_{a\sim p_A} \kldiv{\p_\ell(a)}{\lambda p_1 +
-			(1-\lambda) p_2} &\leq 
-			 \Ex_{a\sim p_A}\lambda \kldiv {\p_\ell(a)}{p_1} +
-											(1-\lambda)
-                         			 \kldiv{\p_\ell(a)}{p_2}. \\
-                        \intertext{Taking a sum over all edges, we get
-                        that}
-					\sum_{(A, B) \in \Ar}\mskip-10mu\Ex_{a\sim p_A} \kldiv{\p_\ell(a) }{\lambda p_1 + (1-\lambda) p_2} 
-			&\leq \sum_{(A, B) \in
-							  \Ar}\mskip-10mu\Ex_{a\sim p_A}\lambda
-							\kldiv{\p_\ell(a)}{p_1} + (1-\lambda)
-							\kldiv{\p_\ell(a)}{p_2}. \\
-    \shortintertext{It follows that} 
-		\OInc_{\dg M}( \lambda p_1) + (1-\lambda)p_2)
-					&\leq \lambda \OInc_{\dg M}(p_1) + (1-\lambda)
-					\OInc_{\dg M}(p_2). 
-	\end{align*}
-	Therefore, $\OInc_{\dg M}( \mu)$ is a convex function of $\mu$.
-\end{lproof}
+It is well known that $\thickD$ is convex \cite[Theorem
+        2.7.2]{CoverThomas}, in the sense that  
+\[
+    \kldiv{\lambda p_1 + (1-\lambda) p_2 }
+          { \lambda q_1  + (1-\lambda) q_2}
+    \leq \lambda     \kldiv{p_1}{q_1} 
+       + (1-\lambda) \kldiv{p_2}{q_2} 
+\] 
+for all tuples $(p_1, p_2, q_1,q_2)$ of distributions over the same space.
+% Given an arc $\ell \in \Ar$ from $A$ to $B$ and $a \in \mathcal V(A)$,
 
-The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
+Fix two joint distributions $\mu_1, \mu_2 \in \Delta \V\!\X$;
+our goal is to show that $\OInc_{\dg M}$ is convex, i.e.,
+$\OInc_{\dg M}( (1-\lambda) \mu_1 + \lambda \mu_2) \le (1-\lambda) \OInc_{\dg M}(\mu_1) + \lambda \OInc_{\dg M}(\mu_2)$ for $\lambda \in [0,1]$.
+
+Given an arc $\ed aXY \in \Ar$ and a value $x \in \V X$,
+apply the convexity of relative entropy  with $q_1 = q_2 := \p_a(Y|x)$, 
+and $p_1 := \mu(Y|x)$, and $p_2 := \mu_2(Y|x)$, to find:
+% for all $p_1, p_2$
+\[ 
+    % \thickD(\p_a(x) \ ||\ \lambda p_1 + (1-\lambda) p_2)
+	% 		\leq \lambda \thickD (\p_\ell(a) \ ||\ p_1) + (1-\lambda)
+	% 						\thickD(\p_\ell(a)\ ||\ p_2). 
+    \kldiv[\big]{  \lambda p_1 + (1-\lambda) p_2 }{ \p_a(x) }
+        \leq
+     \lambda \kldiv{ p_1 }{ \p_a(x) } + (1-\lambda) \kldiv { p_2 }{ \p_a(x) }
+\] 
+Since this is true for all $x \in \V\!X$, we can take a sum of 
+these inequalities weighted by $\lambda \mu_1(X{=}x) + (1-\lambda)\mu_2(X{=}x)$, 
+giving us
+\begin{align*}
+	&\Ex_{x \sim \lambda \mu_1 + (1-\lambda)\mu_2}
+        \kldiv[\Big]{\lambda \mu_1(Y|x) +
+		(1-\lambda) \mu_2(Y|x)}{\p_a(x)} 
+    \\&\qquad\leq 
+		 \Ex_{x \sim \lambda \mu_1 + (1-\lambda)\mu_2}
+               \lambda  \kldiv {\mu_1(Y|x)}{\p_a(x)} +
+			(1-\lambda) \kldiv {\mu_2(Y|x)}{\p_a(x)}
+    \\&\qquad=
+        \Ex_{x \sim \lambda \mu_1 + (1-\lambda)\mu_2}
+              \lambda  \kldiv {\mu_1(Y|x)}{\p_a(x)} +
+           (1-\lambda) \kldiv {\mu_2(Y|x)}{\p_a(x)}
+\end{align*}
+Taking a sum over all arcs $a \in \ed XY$, weighted by the non-negative
+number $\beta_a$, we find that
+\begin{align*}
+	&\sum_{\ed aXY \in \Ar} \Ex_{x\sim \mu(X)} 
+        \kldiv[\Big]{\lambda \mu_1(Y|x) + (1-\lambda) \mu_2(Y|x) } { \p_a(Y|x) }
+	\\&\qquad
+        \leq \sum_{\ed aXY \in \Ar}
+            \Ex_{a\sim \mu(A)}
+                     \lambda  \kldiv[\big]{\p_a(Y|x)}{ \mu_1(Y|x) } 
+                + (1-\lambda) \kldiv[\big]{\p_a(Y|x)}{ \mu_2(Y|x) },
+\end{align*}
+which means by definition that
+\[
+	\OInc_{\dg M}( \lambda \mu_1 + (1-\lambda) \mu_2)
+		\leq \lambda \OInc_{\dg M}(\mu_1) + (1-\lambda)
+				\OInc_{\dg M}(\mu_2). 
+\]
+and so $\OInc_{\dg M}( \mu )$ is a convex function of $\mu$.
+\end{lproof}
+}%%%%
+
+The next proposition gives us a useful representation of $\bbr{\dg M}_\gamma$,
+and letting us decompose into three more interpretable pieces.
 % \restate{prop:nice-score}{
 % Letting $x^{\mat w}$ and $y^{\mat w}$ denote the values of
 %  $X$ and $Y$, respectively, in $\mat w \in \V\!\X$, 
@@ -1691,7 +1761,7 @@ The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
 % \bbr{\dg M}(\mu) =  \Ex_{\mat w \sim \mu}\! \Bigg\{
 % \sum_{ X \xrightarrow{\!\!a} Y  }
 % \bigg[\,
-% 	 \!\beta_L \log \frac{1}{\p_a(y^{\mat w} |x^{\mat w})}
+% 	 \!\beta_a \log \frac{1}{\p_a(y^{\mat w} |x^{\mat w})}
 %    +
 % ({\alpha_a}\gamma - \beta_a ) \log \frac{1}{\mu(y^{\mat w} |x^{\mat w})} 
 %  \bigg] - 
@@ -1702,7 +1772,8 @@ The next proposition gives us a useful representation of $\bbr{M}_\gamma$.
 % }
 \recall{prop:nice-score}
 \begin{lproof}\label{proof:nice-score}
-We use the more general formulation of $\IDef_{}$ given
+\allowdisplaybreaks
+We use the more general formulation of $\IDef$ given
 in \Cref{sec:expfam}, in which each arc $a$'s conditional  
 information is weighted by $\alpha_a$.
   \begin{align*}
@@ -1721,7 +1792,10 @@ information is weighted by $\alpha_a$.
 		&= \sum\alle 
 			\Ex_{x,y \sim \mu_{\!_{XY}}}  \left[ \beta_a\; \log\frac{\mu(y\mid x)}{\p_a(y\mid x)} + \alpha_a\gamma \; \log \frac{1}{\mu(y\mid x)}  \right]  - \gamma  \Ex_{\mat w \sim \mu} \left[ \log \frac{1}{\mu(\mat w)}\right] \\
 		&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
-			\beta_a \log \frac{1}{\p_a(y\mid x)}   - \beta_a  \log \frac{1}{\mu(y \mid x)}+ \alpha_a\gamma \log \frac{1}{\mu(y \mid x)} \right]\Bigg\}  -  \gamma  \Ex_{\mat w \sim \mu} \left[\log \frac{1}{\mu(\mat w)}\right] \\
+			\beta_a \log \frac{1}{\p_a(y | x)}   - \beta_a  \log \frac{1}{\mu(y | x)}+ \alpha_a\gamma \log \frac{1}{\mu(y | x)} \right]
+            % \Bigg\}  -  \gamma  \Ex_{\mat w \sim \mu} \left[\log \frac{1}{\mu(\mat w)}\right] 
+              -  \gamma  \log \frac{1}{\mu(\mat w)}\Bigg\}
+            \\
 		&=  \Ex_{\mat w \sim \mu} \Bigg\{ \sum_{ X \xrightarrow{\!\!a} Y  } \left[
 			\beta_a \log \frac{1}{\p_a(y\mid x)} +
 	                        (\alpha_a\gamma - \beta_a ) \log
@@ -1733,7 +1807,7 @@ information is weighted by $\alpha_a$.
 
 We can now prove         Proposition~\ref{prop:sem3}.
 % \restate{prop:sem3}{
-% If $\dg M$ is a PDG and $0 < \gamma \leq \min_L \nicefrac{\beta_L^{\dg M}}{\alpha_L^{\dg M}}$, then
+% If $\dg M$ is a PDG and $0 < \gamma \leq \min_a \nicefrac{\beta_a^{\dg M}}{\alpha_a^{\dg M}}$, then
 % $\bbr{\dg M}_\gamma^*$ is a singleton. 
 % }
 \recall{prop:sem3}
@@ -1743,52 +1817,61 @@ It suffices to show that $\bbr{\dg
 since every strictly convex function has a unique minimum.
 Note that
 \begin{align*}
-&   \bbr{M}_\gamma(\mu) 
-\\	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-		\beta_L \log \frac{1}{\p_a(y\mid x)} + ({\alpha_L}\gamma - \beta_L ) \log \frac{1}{\mu(y \mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
-	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \bigg[ \gamma {\alpha_L} \log \frac{1}{\p_a(y\mid x)} + 
-		(\beta_L - {\alpha_L} \gamma) \log \frac{1}{\p_a(y\mid x)} \\
-        &\hspace{3cm}- (\beta_L - {\alpha_L} \gamma) \log \frac{1}{\mu(y \mid x)} \bigg] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\}  \\
-	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[ \gamma {\alpha_L} \log \frac{1}{\p_a(y\mid x)} + 
-		(\beta_L - {\alpha_L} \gamma) \log \frac{\mu(y\mid x)}{\p_a(y\mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
-	&=  \sum_{ X \xrightarrow{\!\!L} Y  } \left[ \gamma {\alpha_L} \Ex_{x,y \sim \mu_{\!_{XY}}} \left[ \log \frac{1}{\p_a(y\mid x)} \right] + 
-		(\beta_L - {\alpha_L} \gamma) \Ex_{x\sim\mu_X}
-          \kldiv[\Big]{\mu(Y\mid x)}{\p_a( x)} \right] - \gamma \H(\mu). 
+&   \bbr{\dg M}_\gamma(\mu) 
+\\	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+		\beta_a \log \frac{1}{\p_a(y\mid x)} + ({\alpha_a}\gamma - \beta_a ) \log \frac{1}{\mu(y \mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
+	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \bigg[ \gamma {\alpha_a} \log \frac{1}{\p_a(y\mid x)} + 
+		(\beta_a - {\alpha_a} \gamma) \log \frac{1}{\p_a(y\mid x)} \\[-2ex]
+        &\hspace{6.5cm}- (\beta_a - {\alpha_a} \gamma) \log \frac{1}{\mu(y \mid x)} \bigg] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\}  \\
+	&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[ \gamma {\alpha_a} \log \frac{1}{\p_a(y\mid x)} + 
+		(\beta_a - {\alpha_a} \gamma) \log \frac{\mu(y\mid x)}{\p_a(y\mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
+	&=  \sum_{ X \xrightarrow{\!\!a} Y  } \left[ \gamma {\alpha_a} 
+        % \Ex_{\vphantom{|}(x,y) \sim \mathrlap{\mu(X,Y)}}
+        \Ex_{\vphantom{|}(x,y) \sim \mu_{XY}}
+        % \Ex_{\substack{\phantom{aaaaaa}\\\mathclap{(x,y) \sim \mu(X,Y)}}}
+            \log \frac{1}{\p_a(y| x)} + 
+		(\beta_a - {\alpha_a} \gamma) \Ex_{x\sim\mu_X}
+          \kldiv[\big]{\mu(Y | x)}{\p_a(x)} \right] - \gamma \H(\mu). 
 \end{align*}
+The remainder of the argument analyzes the convexity of
+    the three terms of this final formula. 
 The first term, 
 \( \Ex_{x,y \sim \mu_{\!_{XY}}} \left[-\log {\p_a(y\mid x)}\right] \) 
-is linear in $\mu$, as $\p_a(y\mid x)$ does not depend on $\mu$. %
+is linear in $\mu$ (since $\p_a(y\mid x)$ does not depend on $\mu$), and hence convex. %
 As for the second term, it is well-known that KL divergence is convex, in the sense that 
 \begin{align*}
     &\kldiv{\lambda q_1 + (1-\lambda) q_2 }{ \lambda p_1 + (1-\lambda) p_2}
     \\&\qquad\qquad \leq \lambda \kldiv {q_1}{ p_1} +
                 (1-\lambda) \kldiv{q_2}{p_2}.
 \end{align*}
-Therefore, for a distribution on $Y$, setting $p_1 =
- p_2 = \p_a(x)$, for all conditional marginals $\mu_1(Y \mid X=x)$ and
-			$\mu_2(Y\mid X=x)$,
-	\[ \kldiv{\lambda \mu_1(Y\mid x) + (1-\lambda)
-			  \mu_2(Y\mid x) }{ \p_a(x) } \leq \lambda \kldiv
-			   {\mu_1(Y\mid x)}{\p_a(x)} + (1-\lambda)
-								  \kldiv{\mu_2(Y\mid x)}{\p_a(x)}. \] 
-	So $\kldiv*{\mu(Y\mid x)}{\p_a(Y|x)}$ is convex. As
-			convex combinations of convex functions are convex,
-			the second term, $\Ex_{x\sim\mu_X}\kldiv*{\mu(Y\mid
-			  x)}{\p_a( x)}$, is convex.
-Finally, negative entropy is well known to be strictly convex.                
+Instantiate this for distributions over values of $Y$, setting $p_1 =
+ p_2 := \p_a(x)$, 
+    and  $q_1 := \mu_1(Y \mid X=x)$ and
+			$q_2 := \mu_2(Y\mid X=x)$, to get:
+\begin{align*}
+    &\kldiv{\lambda \mu_1(Y\mid x) + (1-\lambda)
+		  \mu_2(Y\mid x) }{ \p_a(x) } 
+    \\&\qquad\qquad \leq \lambda \kldiv
+		   {\mu_1(Y\mid x)}{\p_a(x)} + (1-\lambda) \kldiv{\mu_2(Y\mid x)}{\p_a(x)}. 
+\end{align*}
+So $\kldiv*{\mu(Y\mid x)}{\p_a(Y|x)}$ is convex as a function of $\mu$. 
+As convex combinations of convex functions are convex,
+the second term, $\Ex_{x\sim\mu(X)} \kldiv*{\mu(Y\mid x)}{\p_a(x)}$, is convex.
+Finally, negative entropy (the third term) is well known to be strictly convex.                
 
-			Any non-negative linear combinations of the three
-			terms is convex, and if this combination applies a
-			positive coefficient to the (strictly convex) negative entropy,
-			it must be strictly convex. Therefore, as
-			long as $\beta_L \geq \gamma$ for all edges $L \in
-			\Ar^{\dg M}$, $\bbr{\dg M}_\gamma$ is
+Any non-negative linear combinations of the three
+terms is convex, and if this combination applies a
+positive coefficient to the (strictly convex) negative entropy,
+it must be strictly convex. Therefore, as
+long as $\beta_a \geq \gamma$ for all arcs $a \in
+\Ar^{\dg M}$, $\bbr{\dg M}_\gamma$ is
 strictly convex.  The result follows.
 \end{lproof}
 
 
-We next prove \Cref{prop:limit-uniq}.  The first step is provided by the
-following lemma.
+We next prove \Cref{theorem:limit-uniq}.  The first step is provided by the
+following lemma, which shows that any limiting optimal dsitributions as $\gamma \to 0$ must also be optimal distributions for $\gamma = 0$.  
+
 \begin{lemma}\label{lem:gamma2zero}
  $\lim\limits_{\gamma\to0}\bbr{\dg M}_\gamma^* \subseteq \bbr{\dg M}_0^*$. 
 \end{lemma}
@@ -1807,7 +1890,7 @@ it follows that, for all $\mu \in \V\!\X$, we have
 \[ \OInc_{\dg M}( \mu) + \gamma\lb \leq~ \bbr{\dg M }_\gamma(\mu) 
 \leq~  \OInc_{\dg M}( \mu) + \gamma\ub. \]
 For a fixed $\gamma$, since this inequality holds for all $\mu$, and
-both $\OInc$ and $\IDef_{}$ are bounded below, it must be the case that  
+both $\OInc$ and $\IDef$ are bounded below, it must be the case that  
 \[
 \min_{\mu \in \Delta\V\!\X} \Big[ \OInc_{\dg M}( \mu) + \gamma\lb \Big]
 ~\leq~ \min_{\mu \in \Delta\V\!\X}\bbr{\dg M }_\gamma(\mu) ~\leq~
@@ -1828,11 +1911,11 @@ Thus, $\mu^* \in \bbr{\dg M}_0^*$, as desired.
 
 We now apply Lemma~\ref{lem:gamma2zero} to show that the limit as
 $\gamma \to 
-0$ is unique, as stated in \Cref{prop:limit-uniq}. 
-% \restate{prop:limit-uniq}{
+0$ is unique, as stated in \Cref{theorem:limit-uniq}. 
+% \restate{theorem:limit-uniq}{
 % 	For all $\dg M$, $\lim_{\gamma\to0}\bbr{\dg M}_\gamma^*$ is a singleton.
 % }
-\recall{prop:limit-uniq}
+\recall{theorem:limit-uniq}
 \begin{lproof}\label{proof:limit-uniq}
 First we show that $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$ cannot be empty.
 Let $(\gamma_n) = \gamma_1, \gamma_2, \ldots$ be a sequence of
@@ -1906,85 +1989,44 @@ Thus, our supposition that $\nu_1$ was distinct from $\nu_2$ cannot hold, and so
 $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$ must be a singleton, as desired.
 \end{lproof}
 
-Finally, \Cref{prop:consist} is a simple corollary of \Cref{lem:gamma2zero} and \Cref{prop:limit-uniq}, as we now show. 
+Finally, \Cref{prop:consist} is a simple corollary of \Cref{lem:gamma2zero} and \Cref{theorem:limit-uniq}, as we now show. 
 % \restate{prop:consist}{
 % $\bbr{\dg M}^* \in \bbr{\dg M}_0^*$, so if $\dg M$ is consistent,
 % then $\bbr{\dg M}^* \in \SD{\dg  M}$.
 % }
 \recall{prop:consist}
 \begin{lproof}\label{proof:consist}
-By \Cref{prop:limit-uniq}, $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$
-is a singleton. As in the body of the paper, we refer to its unique element by $\bbr{\dg M}^*$
-\Cref{lem:gamma2zero} therefore immediately gives us $\bbr{\dg M}^* \in \bbr{\dg M}_0^*$.  
+By \Cref{theorem:limit-uniq}, $\lim_{\gamma \to 0}\bbr{\dg M}_\gamma^*$
+is a singleton. As in the body of the paper, we refer to its unique element by $\bbr{\dg M}^*_{0^{\!+}}$.
+\Cref{lem:gamma2zero} therefore immediately gives us $\bbr{\dg M}^*_{0^{\!+}} \in \bbr{\dg M}_0^*$.  
 %
 If $\dg M$ is consistent, then by \Cref{prop:sd-is-zeroset},
-$\OInc({\dg M}) = 0$, so $\bbr{\dg M}_0(\bbr{\dg M}^*) = 0$, and thus
-$\bbr{\dg M}^* 
+$\OInc({\dg M}) = 0$, so $\bbr{\dg M}_0(\bbr{\dg M}^*_{0^{\!+}}) = 0$, and thus
+$\bbr{\dg M}^*_{0^{\!+}} 
 \in \SD{\dg M}$. 
 \end{lproof}
 
 
 % \subsection{PDGs as Bayesian Networks}
 \subsection{Bayesian Networks as PDGs}
-In this section, we prove Theorem~\ref{theorem:bns-are-pdgs}.  
-We start by recounting some standard results and notation, all of
-which can be found in a standard introduction to information
-theory (e.g., \cite[Chapter 1]{mackay2003information}).  
+In this section, we prove Theorem~\ref{theorem:bns-are-pdgs},
+%
+% We start by recounting some standard results and notation, all of
+% which can be found in a standard introduction to information
+% theory (e.g., \cite[Chapter 1]{mackay2003information}).  
+% 
+% First, note that just as we introduced new variables to model joint dependence
+% in PDGs, we can view a finite collection $\mathcal X=X_1, \ldots, X_n$ of random
+% variables, where each $X_i$ has the same sample space, as itself a random
+% variable%
+% , taking the value $(x_1, \ldots, x_n)$ iff each $X_i$ takes the value $x_i$.
+% Doing so allows us to avoid cumbersome and ultimately irrelevant notation which treats sets of raomd variables differently, and requires lots of unnecessary braces, bold face, and uniqueness issues. 
+% Note the notational convention that the joint variable $X,Y$ may be indicated by a comma.
+%
+starting with the formal details of
+the transformation of a BN into a PDG.
 
-First, note that just as we introduced new variables to model joint dependence
-in PDGs, we can view a finite collection $\mathcal X=X_1, \ldots, X_n$ of random
-variables, where each $X_i$ has the same sample space, as itself a random
-variable%
-, taking the value $(x_1, \ldots, x_n)$ iff each $X_i$ takes the value $x_i$.
-Doing so allows us to avoid cumbersome and ultimately irrelevant notation which treats sets of raomd variables differently, and requires lots of unnecessary braces, bold face, and uniqueness issues. 
-Note the notational convention that the joint variable $X,Y$ may be indicated by a comma.
-
-\begin{defn}[Conditional Independence]\label{defn:cond-indep}
-    If $X$, $Y$, and $Z$ are random variables,
-    and $\mu$ is a distribution over them, 
-    then ${X}$ is \emph{conditionally independent of ${Z}$ given ${Y}$}, 
-       (according to $\mu$),  denoted `${ X} \CI_\mu { Z}
-        \mid { Y}$, iff for all ${ x}, { y}, { z} \in
-        \V({X}, { Y},{ Z})$, we
-        have $\mu({ x} \mid { y}) \mu({ z} \mid { y}) =
-        \mu({ x,z} \mid { y})$.
-\end{defn}
-
-\begin{fact}[Entropy Chain Rule]\label{fact:entropy-chain-rule}
-    If $X$ and $Y$ are random variables, then the entropy of the joint
-   variable $(X,Y)$ can be written as $\H_\mu(X,Y) = 
-\H_\mu( Y \mid X) + \H_\mu(X)$.
-It follows that if $\mu$ is a
-       distribution over the $n$ variables $X_1, \ldots, X_n$,  then
-	\[ \H(\mu) = \sum_{i = 1}^n \H_\mu(X_i \mid X_1, \ldots X_{i-1}). \]
-\end{fact}
-\begin{defn}[Conditional Mutual Information]\label{defn:cmi}
-   The \emph{conditional mutual information} between two (sets of) random
-    variables is defined as  
-    \[ \I_\mu(X ; Y \mid Z) := \sum_{x,y,z \in \V(X,Y,Z)} \mu(x,y,z)
-        \log\frac{\mu(z) \mu(x,y,z)}{\mu(x,z)\mu(y,z)}. \] 
-\end{defn}
-
-
-\begin{fact}[Properties of Conditional Mutual Information]\label{fact:cmi}
-For random variables $X,Y$, and $Z$ over a common set of outcomes,
-distributed according to a distribution $\mu$,
-the following properties hold:
-\begin{enumerate}
-    \item \textbf{(difference identity)} $\I_\mu(X ; Y \mid Z) =
-                  \H_\mu(X \mid Y) - \H_\mu(X \mid Y, Z)$; 
-   \item \textbf{(non-negativity)} $\I_\mu({ X }; { Y} \mid {Z}) \ge 0$;
-    \item \textbf{(relation to independence)} $\I_\mu({ X }; { Y}
-         \mid { Z}) = 0$ iff $X \CI_\mu Z \mid Y$.
-\end{enumerate}
-\end{fact}
-
-We now provide the formal details of
-the transformation of a BN 
-into
-a PDG.
-
-	\begin{defn}[Transformation of a BN to a PDG]\label{def:bn2PDG}
+\begin{defn}[BN to PDG]\label{def:bn2PDG}
 Recall that a (quantitative) Bayesian Network $(G, f)$ consists of two
 parts: its qualitative graphical structure $G$, 
 described by a dag,
@@ -2000,7 +2042,7 @@ That is, the variables of
 consist of all the variables in
 ${\cal B}$ together with a variable corresponding to the parents
 of $X_i$%
-.  (This will be used to deal with the hyperedges.) 
+.  (This will be used to deal with the hyperarcs.) 
 			The values $\V(X_i)$ for a random variable
 			$X_i$ are unchanged, 
 (i.e., $\V^{\PDGof{{\mathcal B}}}(\{X_i\}) := \V(X_i)$)
@@ -2008,10 +2050,10 @@ and $\V^{\PDGof{{\mathcal B}}}(\Pa(X_i)) := \prod_{Y \in \Pa(X_i)} \V(Y)$
 (if $\Pa(X_i) = \emptyset$, so that $X_i$ has no parents, then we 
 then we identify $\Pa(X_i)$ with $\pdgunit$ and
 take $\V(\Pa(X_i)) = \{\star\}$). 
-We take the set of edges $\Ar^{\PDGof{{\mathcal B}}} := \{ (\Pa(X_i), X_i) : 
+We take the set of arcs $\Ar^{\PDGof{{\mathcal B}}} := \{ (\Pa(X_i), X_i) : 
 i = 1, \ldots, n \} \cup \{ (\Pa_i, Y) : Y \in
-			\Pa(X_i)\}$ to be the set of edges to a variable $X_i$
-	  from its parents, together with an edge from
+			\Pa(X_i)\}$ to be the set of arcs to a variable $X_i$
+	  from its parents, together with an arc from
 	  from $\Pa(X_i)$ to each of the elements of $\Pa(X_i)$, for
 	  $i = 1, \ldots, n$.  
 	Finally, we set $\mathbb P^{\PDGof{{\mathcal
@@ -2048,7 +2090,7 @@ distribution $\mu$.
 % If $\cal B$ is a Bayesian network
 % and $\Pr_{\cal B}$ is the distribution it specifies, then
 %   for all $\gamma > 0$ and all vectors $\beta$ such
-%   that $\beta_L > 0$ for all edges $L$,
+%   that $\beta_a > 0$ for all arcs $L$,
 %   $\bbr{\PDGof{\mathcal B, \beta}}_\gamma^* = \{ \Pr_{\cal B}\}$, 
 % and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.    
 % }
@@ -2059,7 +2101,7 @@ $\cal B$, we have that $\Pr_{\cal B}(X_i
 \mid \Pa(X_i)) = p(X_i \mid \Pa(X_i))$.  
 For all nodes $X_i$ in $\mathcal B$ and $X_j \in \Pa(X_i)$, 
 by construcction, $\Pr_{\cal B}$, when viewed as a distribution on
-$\mathcal N$, is also with the cpd on the edge from $\Pa(X_i)$ to
+$\mathcal N$, is also with the cpd on the arc from $\Pa(X_i)$ to
 $X_j$.
 Thus, $\Pr_{\cal B}$ is consistent with all the cpds in
 $\PDGof{\mathcal B, \beta}$;
@@ -2079,9 +2121,9 @@ Consider an arbitrary distribution $\mu$ over the variables in
 $\mathcal X$ (which we also view as a distribution over the variables
 in $\mathcal N$, as discussed above).
 Recall from \Cref{def:bn2PDG}
-that the cpd on the edge in $\PDGof{{\cal B},\beta}$ from $\Pa(X_i)$ to $X_i$
+that the cpd on the arc in $\PDGof{{\cal B},\beta}$ from $\Pa(X_i)$ to $X_i$
 is just the cpd associated with $X_i$ in ${\cal B}$, while the cpd on
-the edge in $\PDGof{{\cal B},\beta}$ from $\Pa(X_i)$ to $X_j \in \Pa(X_i)$
+the arc in $\PDGof{{\cal B},\beta}$ from $\Pa(X_i)$ to $X_j \in \Pa(X_i)$
 consists only of deterministic distributions (i.e., ones that put
 probability 1 on one element), which all have entropy 0.  
 Thus,
@@ -2149,7 +2191,8 @@ This completes the proof.
 \end{lproof}
 
 \subsection{Factor Graph Proofs}
-\cref{theorem:fg-is-pdg,theorem:pdg-is-fg} are immediate corolaries of their
+    \label{proof:pdg-is-fg}\label{proof:fg-is-pdg}% target for proof link
+Theorems \ref{theorem:fg-is-pdg}(a) and (b) are immediate corolaries of their
 more general counterparts, \cref{theorem:pdg-is-wfg,theorem:wfg-is-pdg}, which
 we now prove. 
 
@@ -2157,25 +2200,25 @@ we now prove.
 \recall{theorem:pdg-is-wfg}
 \begin{lproof}\label{proof:pdg-is-wfg}
 	Let $\dg M := (\dg N, \mat v, \gamma \mat v)$ be the PDG in question.
-	Explicitly, $\alpha^{\dg M}_L = v_L$ and $\beta_L^{\dg M} =  \gamma v_L$.
+	Explicitly, $\alpha^{\dg M}_a = v_a$ and $\beta_a^{\dg M} =  \gamma v_a$ for all $a \in \Ar$.
 	By \Cref{prop:nice-score},
-	\[ \bbr{\dg M}_\gamma(\mu)= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-		\beta_L \log \frac{1}{\p_a(y\mid x)} + (
-			\alpha_L
-		\gamma - \beta_L ) \log \frac{1}{\mu(y \mid x)}
+	\[ \bbr{\dg M}_\gamma(\mu)= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+		\beta_a \log \frac{1}{\p_a(y\mid x)} + (
+			\alpha_a
+		\gamma - \beta_a ) \log \frac{1}{\mu(y \mid x)}
 					\right] - \gamma \log \frac{1}{\mu(\mat w)}
 			\Bigg\}.  \]
-	Let $\{\phi_L\}_{L \in \Ar} := \Phi_{\dg N}$ denote the
+	Let $\{\phi_a\}_{L \in \Ar} := \Phi_{\dg N}$ denote the
 			factors of the factor graph associated with $\dg M$. 
-	Because we have $\alpha_L\gamma  = \beta_L$, the middle term cancels, leaving us with
+	Because we have $\alpha_a\gamma  = \beta_a$, the middle term cancels, leaving us with
 	\begin{align*}
-	\bbr{\dg M}_\gamma(\mu) &= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-		\beta_L \log \frac{1}{\p_a(y\mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
-		&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-	\gamma v_L \log \frac{1}{\phi(x,y)}  \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} 
-					&\text{[as $\beta_L = v_L \gamma$]}\\
-		&= \gamma \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!L} Y  } \left[
-v_L \log \frac{1}{\phi(x,y)}
+	\bbr{\dg M}_\gamma(\mu) &= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+		\beta_a \log \frac{1}{\p_a(y\mid x)} \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} \\
+		&= \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+	\gamma v_a \log \frac{1}{\phi(x,y)}  \right] - \gamma \log \frac{1}{\mu(\mat w)} \Bigg\} 
+					&\text{[as $\beta_a = v_a \gamma$]}\\
+		&= \gamma \Ex_{\mat w \sim \mu} \Bigg\{   \sum_{ X \xrightarrow{\!\!a} Y  } \left[
+v_a \log \frac{1}{\phi(x,y)}
 			 \right] -\log \frac{1}{\mu(\mat w)} \Bigg\} \\
 			&= \gamma \VFE_{(\FGof{\dg N}, \mat v)}. 
 	\end{align*}
@@ -2196,12 +2239,13 @@ v_L \log \frac{1}{\phi(x,y)}
 % }
 \recall{theorem:wfg-is-pdg}
 \begin{lproof}\label{proof:wfg-is-pdg}
-  In $\PDGof{\Psi,\gamma}$,  there is an edge $1 \to X_J$ for every $J
-  \in \mathcal J$, and also edges 
+  In $\PDGof{\Psi,\gamma}$,  there is an arc $1 \to X_J$ for every $J
+  \in \mathcal J$, and also arcs 
   $X_J \tto X_j$ for each $X_j
-    \in X_J$. Because the latter edges are deterministic, a
+    \in X_J$. 
+Because the cpds attached to the latter arcs are deterministic, a
 distribution $\mu$ that is not  consistent
-with one of the edges, say $X_J \tto X_j$, has $\OInc_{\dg M}(\mu)
+with one of the arcs, say $X_J \tto X_j$, has $\OInc_{\dg M}(\mu)
 = \infty$.  This is a 
 property of relative entropy: if there exist $j^* \in \V(X_j)$ and 
 $\mat z^* \in \V(J)$ such that $\mat z^*_J \ne j^*$ and $\mu$ places positive
@@ -2226,7 +2270,7 @@ projections $X_J \tto
 X_j$, the conditional entropy 
 $\H(X_j \mid X_J) = -\Ex_\mu\log(\mu(x_j \mid x_J))$ and divergence from
 the constraints are both zero. 
-Therefore the per-edge terms for both $\IDef_{\dg M}$
+Therefore the per-arc terms for both $\IDef_{\dg M}$
 and $\OInc_{\dg M}$ can be safely ignored for the projections.
 Let $\p_J$ be
 the normalized distribution $\frac{1}{Z_J}\phi_J$ over $X_J$,

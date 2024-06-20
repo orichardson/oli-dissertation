@@ -29,14 +29,18 @@ Let $\X$ be a set of variables, and recall that $\V\!\X$ is the set of all joint
 A joint distribution $\mu \in \Delta \V\!\X$ can be implicitly regarded as that has a single hyperarc $\emptyset \to \X$. We attach $\mu$ as the (c)pd, and give it weights $\alpha=0$ (if, as is usual, the distribution represents purely observational and not causal information) and $\beta = 1$ (default confidence). 
 % We will see more about these parameters later on. 
 
+
+We start by recounting an observation we already made in \cref{sec:var-randomvar},
+    but in a new light now that we can talk about PDGs. 
 To a probability theorist, these joint distributions $\mu$ may seem to be of a very special form, because they are over product spaces. 
 In probability theory, the setup is typically instead that one has a (measurable) set $\Omega$ of outcomes, and then random variables are in fact \emph{(measurable) functions} $X : \Omega \to \V\!\X$. 
-Observe that this too is an immediate special case of a PDG:
+Observe that this too is an immediate special case of a PDG
+in which $W$ is a variable with possible values $\V W := \Omega$:
 %
 \begin{center}
     \begin{tikzpicture}[xscale=1.6]
         % \coordinate (mergeorigin) at (3,2);
-        \node[dpadded] (omega) at (3,2) {$\Omega$};
+        \node[dpadded] (omega) at (3,2) {$W$};
         \foreach \i in {1,...,5} {
             \node[dpadded] (X\i) at (\i,0) {$X_\i$};
             \draw[arr2, shorten <=0pt, ->>] (omega) to (X\i);
@@ -48,14 +52,19 @@ Observe that this too is an immediate special case of a PDG:
 % \]
 \end{center}
 %
-(In fact, this PDG happens to also be a BN, if one isn't worried about calling $\Omega$, often itself a product of variables, a variable.)
-It is easy to verify that these PDGs have inconsistency zero, and represent precisely the distribution $\mu$. 
+(In fact, this PDG happens to also be a BN, if one isn't worried about calling $W$, itself typically a product of variables, a variable.)
+% No matter what confidence paramteters we use, so long as $\beta_\mu > 0$, 
+It is easy to verify that these PDGs have inconsistency zero, and represent precisely the distribution $\mu$, no matter what confidence parameteters we select (so long as the confidence is positive). 
 
-The semantics of PDGs 
-    make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and thus would be circular if one were to implicitly convert joint distributions to PDGs before developing the results of the previous chapter. 
+Of course, the semantics of PDGs developed in \cref{sec:semantics}
+make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and thus it would be circular to were to implicitly convert joint distributions to PDGs before developing the results of the previous chapter. 
 But now that the theory of PDGs is on solid ground, we may freely regard joint distribution as a PDG. 
-This will be useful to keep in mind later, but it is neither surprising, nor is this property unique to PDGs. 
-Indeed, $\mu$ can also be viewed as a factor graph with only one factor. 
+This will be useful to keep in mind later, 
+    but it is neither surprising,
+    nor is this property unique to PDGs. 
+% Indeed, $\mu$ can also be viewed as a factor graph with only one factor. 
+What makes PDGs special is their ability to do other things at the same time,
+    simultaneously keeping many balls in the air, so to speak. 
 
 \section{Widgets}
 
@@ -66,17 +75,19 @@ Recall: in specifying the data for an arc $X \to Y$, one must specify a complete
 % Consequently, 
 This appears to be a serious limitation.
 For instance, if $X$ and $Y$ are binary variables, one might want to 
-annotate an arc $X \to Y$ with data indicating that $X \Rightarrow Y$
+annotate an arc $X \to Y$ with data indicating that $X \implies Y$
     (i.e., if $X=1$ then $Y=1$).
 % For $X{=}1$, everything works out, 
 There are no problems in supplying a probability over $Y$ when $X{=}1$,
 but unfortunately we also seem to be on the hook to provide
     a distribution over $Y$ when $X{=}0$. 
-One might also want to indicate not a probabilistic information, but a constraint.
-For instance, one might want to specify that $Z$ must be even when $X{=}0$, 
+To take another example, what if we do not want to supply the full probabilistic information, but only whether or not it is possible that $Y{=}y$ given $X{=}x$? 
+Or perhaps we 
+% For instance, one might want to specify that $Z$ must be even when $X{=}0$, 
 
-At least---to a first approximation. 
-It turns out that all of these can be captured by PDGs. 
+% None of this information fits the syntax of a PDG---at least, so not at in any obvious way. 
+It appears that modeling any of these concepts should require a different generalization of a PDG. 
+Yet it turns out that each of these concepts can be concepts can be compiled to a small PDG that exactly captures it, which we call a \emph{widget}. 
 % When adding an arc $X \to Y$, we 
 % As expressive as they are, 
 
@@ -330,7 +341,7 @@ Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
 A \emph{coupling} between $p$ and $q$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
 Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \cite{optimal-transport}, 
 a wide range of programming logics \cite{Kaminski_Katoen_Matheja_2020}.
-
+%
 % Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
 % the set of joint distributions that have respective marginals $p$ and $q$.
 Formaly, the set of couplings between $p$ and $q$ is defined as
@@ -909,6 +920,25 @@ This has lead many to develop generalizations of probability that are \cite{shaf
 It turns out that several of the most celebrated generalizations of probabilities can be viewed as special cases of PDGs. 
 
 
+\subsection{Convex Sets of Probabilities}
+
+We have seen that $\SD{\dg M}$ represents a convex set of probabilities. 
+But does this work the other way around? What if we already have a convex set $\mathcal P$ of distributions over $\Omega$ that we would like to model with a PDG? 
+There is actually a very straightforward way of doing this.
+To simplify matters, suppose that $\mathcal P$ is a \emph{polytope}, meaning that it has finitely many extreme points, which we call vertices. 
+Let $V$ be a random variable whose possible values $\V V$ are vertices of $\mathcal P$, and define a conditional probability distribution 
+% \begin{align*}
+$
+    p(\Omega \mid V{=}v) := v,
+$
+% \end{align*}
+which typechecks because a vertex $v$ is a distribution over $\Omega$. 
+
+\begin{tikzpicture}
+    
+\end{tikzpicture}
+
+
 \subsection{Belief and Plausibility Functions}
     \label{sec:belplaus-as-pdg}
 We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \cite{shafer1990probability}. 
@@ -1174,23 +1204,44 @@ Now for the proof of the theorem.
 
 
 
-\subsection{Pseudomarginals and Clique Trees}
+\subsection{Pseudomarginals on Cluster Graphs}
 
 Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \cite{wainwright2003tree,wainwright2008graphical,koller2009probabilistic},
-sometimes called a \emph{pseudomarginal} or a \emph{cluster graph (with associated data)}. 
-We will also use them when we develop an inference algorithms for PDGs in \cref{chap:infer}. 
-Belief propogation is a way of calibrating these objects, and effectively is a way of reducing inconsistency. We will return to this in \cref{chap:LIR}. 
+sometimes called a \emph{pseudomarginal} \cite{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \cite{koller2009probabilistic}; we will call them \emph{cluster marginals}.
 
+Concretely, given a set of variables $\X$, a cluster graph is 
+graph, whose node set is a collection $\C$ of clusters, each $C \in \C$ of which is a subset of $\X$. 
+% When adjacent clusters agree on the marginal distr
+A cluster marginal $\bmu = \{ \mu_C(C) \}_{C \in \C}$ consists of a distribution $\mu_C \in \Delta \V C$ over the variables in each cluster $C \in \C$.
+Because $\bmu$ is just a collection of joint distributions, it exactly
+    is exactly the shape of the observational data for a hypergraph
+$
+    \Ar = \{ \varnothing \to C \}_{C \in \C}.
+$
+Let $\dg M_{\bmu}$ denote this PDG.
+ 
+A cluster marginal is said to be \emph{calibrated} if, for every edge $C{-}D$ in the cluster graph, the distributions $\mu_C$ and $\mu_D$ agree the marginals of their common variables, which is a necessary condition for $\dg M_{\bmu}$ to be consistent.
+Belief propogation is a way of calibrating these objects, and effectively is a way of reducing local inconsistencies between pairs of clusters. We will return to this in \cref{chap:LIR}. 
+
+When the cluster graph has a special property that makes it a \emph{tree decomposition} 
+    (see \cref{sec:tw} or ```clique tree'' in \cite{koller2009probabilistic}),
+then local consistency is equivalent to global consistency \cite{wainwright2008graphical},
+and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
+We will cover these concepts in detail when we
+    use them when we develop an inference algorithm for PDGs in \cref{chap:infer};
+Here, we aim only to make an orthogonal point: that these structures themselves are PDGs. 
 
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
     
-A \emph{sturctural equations model} \cite{pearl2009causality} is essentially a collection of deterministic functions, that index variables.
-Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG. 
-When we do so, the PDG semantics described in \cref{sec:semantics} capture the behavior of causal model in the absence of intervention.
-We have not yet given an analogue of intervention for a general PDG, although it's straightforward to encode interventions by altering the functions in the usual way (i.e., replacing them with constants).
-We will make all of this precise in \cref{sec:causal}.
+A \emph{sturctural equations model} \cite{pearl2009causality} is a collection of equations that explain how each ``endogenous variable'' gets its value, using a mechanism that can depend on other variables in the model.
+In other words, a SEM is a collection of (deterministic) functions, each taking as input joint settings of variables, and outputting a single value.
+Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG, and moreover, the confidence weights do not impact the semantics when the cpd is deterministic.  
+Furthermore, the usual way of adding probability to a causal model is no different from adding a probability distribution to the corresponding PDG. 
+The semantics of the resulting PDG exactly capture the behavior of causal model in the absence of intervention.
 
+We have not yet given an analogue of intervention for a general PDG, although it's straightforward to encode interventions by altering the functions in the usual way (i.e., replacing the causal equations with constants).
+We will make all of this precise in \cref{sec:causal}.
 More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibiilty} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
 
 \subsection{Implicit Neural Representations}
@@ -1202,3 +1253,5 @@ Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism 
 
 Visually, it is uncommon to use the notation of graphical models to describe the architecture of neural networks; instead, the standard is to represent operations and layers of a neural network as nodes, and their connections as edges---like a circuit diagram.
 In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.
+
+\TODO[TODO: diagram?]
