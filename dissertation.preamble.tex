@@ -229,6 +229,7 @@
 \newcommand\minimize{\mathop{\scalebox{0.98}{$\mathsf{minimize}$}}\limits}
 \newcommand\maximize{\mathop{\scalebox{0.98}{$\mathsf{maximize}$}}\limits}
 \newcommand\subjto{{\scalebox{0.98}{$\mathsf{subject~to}$}}}
+\newcommand\zogamma{{\mathrlap{\raisebox{-0.1ex}{$\hat{\phantom{x}}$}}\gamma}}
 
 \newcommand\actree{tree marginal}
 \newcommand\AcTree{Tree Marginal}
@@ -391,7 +392,7 @@
 	\makeatother
 
 	\theoremstyle{plain}
-	\declaretheorem[numberwithin=section,name=Theorem,postheadhook={\thmTOCadd}]{theorem}
+	\declaretheorem[numberwithin=chapter,name=Theorem,postheadhook={\thmTOCadd}]{theorem}
 	\newtheorem{coro}{Corollary}[theorem]
 	\declaretheorem[sibling=theorem,name=Proposition, postheadhook={\thmTOCadd}]{prop}
 	\newtheorem{lemma}[theorem]{Lemma}
@@ -403,10 +404,10 @@
 	
 	\theoremstyle{definition}
 	\newtheorem*{defn*}{Definition}
-	\declaretheorem[name=Definition,style=definition,qed=$\square$,within=section, postheadhook={\thmTOCadd}]{defn}
+	\declaretheorem[name=Definition,style=definition,qed=$\square$,within=chapter, postheadhook={\thmTOCadd}]{defn}
 	\declaretheorem[name=Construction,qed=$\square$,sibling=defn, postheadhook={\thmTOCadd}]{constr}
 	% \declaretheorem[qed=$\square$]{example}
-	\declaretheorem[name=Example,qed=$\triangle$,postheadhook={\thmTOCadd}]{example}
+	\declaretheorem[name=Example,qed=$\triangle$,postheadhook={\thmTOCadd},numberwithin=chapter]{example}
 
 	\theoremstyle{remark}
 	\newtheorem*{remark}{Remark}

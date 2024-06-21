@@ -526,7 +526,7 @@ and abuse terminology by referring to $\Gr$ as a multigraph.
 We refer to 
 ${\dg N} = (\Gr, \mathbb P)$ as an \emph{unweighted} PDG,
 and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
-$\bf 1$ is the constant function (i.e., so that $\alpha_a = \beta_a = 1$ for all $L$). 
+$\bf 1$ is the constant function (i.e., so that $\alpha_a = \beta_a = 1$ for all $a$). 
 In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\balpha = {\bf 1}$
 and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.
 % \footnote{The appendix gives results for arbitrary $\alpha$.} 
@@ -550,6 +550,69 @@ We have kept them them separate in \cref{def:model} to emphasize the separation 
 This separation between qualitative and quantitative information will
     play a large role in our semantics in the next section, 
     and later on when we revisit the point in \cref{chap:QIM,chap:PDG-cat}.
+
+We now present some shorthand to clarify the presentation.
+We typically conflate a cpd's symbol with its edge label,
+thus drawing
+the PDG with a single edge attached to $f(Y|X)$ as
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (X) at (0,0) {$X$};
+	\node[dpadinline] (Y) at (1.2,0){\small$Y$};
+ 	\draw[arr1,->] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
+\end{tikzpicture}\,.
+\Cref{defn:pdg} is equivalent to one in which edge sources and targets are both \emph{sets} of variables.
+This allows us to indicate joint dependence with multi-tailed arrows, joint distributions with multi-headed arrows,
+and unconditional distributions with nothing at the tail.
+For instance, we draw
+\\[-0.5ex]
+\phantom{aa}
+	$p(Y|X,Z)$ as
+	\begin{tikzpicture}[center base]
+		\node[dpadinline] (Y) at (0.9,0) {$Y$};
+		\node[dpadinline] (X) at (0,-0.4) {$X$};
+		\node[dpadinline] (Z) at (0, 0.4) {$Z$};
+		\mergearr[arr2] XZY
+		\node[above right=-1pt and -3pt of center-XZY] {$p$};
+	\end{tikzpicture}\,,
+    and $q(A,B)$ as
+	\begin{tikzpicture}[center base]
+		\node[dpadinline] (A) at (0,0) {$A$};
+        \node[dpadinline] (B) at (1,0) {$B$};
+        \coordinate (above) at (0.5,0.8);
+        \coordinate (center) at (0.5,0.4);
+        \cunmergearr[arr1] {above}{A}{B}{center}
+        \node[above left=0pt and 0pt of center,inner sep=2pt]{$q$};
+	\end{tikzpicture}\,.
+\\
+To emphasize that a cpd $f(Y|X)$ is degenerate
+(a function $f:X\to Y$),
+we will draw it with two heads, as in:
+\begin{tikzpicture}[center base]
+	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (X) at (0,0) {\small$X$};
+	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (Y) at (1.2,0){\small$Y$};
+ 	\draw[arr1,->>] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
+\end{tikzpicture}\,.
+We identify an event $X\!\!=\!x$ with
+the degenerate unconditional distribution $\delta_x(X)$ that places all mass on $x$;
+hence it may be associated to an edge and drawn simply as
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (Y) {\small$X$};
+ 	\draw[arr1,<<-] (X) --
+		node[above, pos=0.60, inner sep=1pt]{$x$} +(-1,0);
+\end{tikzpicture}\,.
+To specify a confidence $\beta \ne 1$,
+we place the value near the edge, lightly colored and parenthesized, as in:
+\!\!\!\!
+\begin{tikzpicture}[center base]
+	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt](X){\small $X$};
+    \draw[arr, <-]  (X) --
+        node[above,pos=0.62, inner sep=1pt, outer sep=-2pt, fill=white]{$p\!$}
+        node[below,pos=0.55, inner sep=0, outer sep=1.5pt]{${\scriptscriptstyle\color{gray}(\beta)}$}
+         ++(-1,0);
+\end{tikzpicture}\,,
+and we write ${\scriptstyle\color{gray}(\infty)}$ for the limit of high confidence ($\beta\!\to\! \infty$). %
+
+
 
 While the definition above is sufficient to represent the class of all legal
 PDGs, we often use two additional bits of syntax
@@ -776,8 +839,8 @@ Formally, define
     \[ \SD[\big]{\dg M} :=
     \left\{\mu \in \Delta \V\!\X ~\middle|~
         {\singlespacing\begin{array}{l}
-        \mu(B\!\! =\!\! b \mid A\!\!=\!\! a) \geq \p_a(b \mid a) \\[0.1em]
-        ~\text{$\forall (A, B,\ell) \!\in\! \Ar$, $a \!\in\!\V(A)$, $b \!\in\! \V(B)$} 
+        \forall \ed aXY \in \Ar, x \!\in\!\V\!X, y \!\in\! \V Y.\\[0.1ex] 
+        ~~\mu(Y{=}y \mid X{=}x) \geq \p_a(y \mid x) 
         \end{array}} \right\}.
     \]
     % }
@@ -794,18 +857,112 @@ Developping an analogous definition for a \emph{qualitative} information in a PD
 
 This semantics is useful, and we will make frequent use of it, 
 but it has one other extremely important shortcoming: viewed through the lens of this semantics, all inconsistent PDGs are equivalent, no matter how small the inconsistency.
-In the next subsection, we develop another semantics, which will ultimately lead to another, closely related, semantics for PDGs as a set of probability distributions.
+In the next subsection, we develop another semantics, which, among other things, gives us a modification of this semantics that does not have this problem.
 
 
 \subsection{PDGs As Scoring Functions over Joint Distributions}
     \label{sec:scoring-semantics}   
 
-We now generalize the previous semantics by viewing a PDG $\dg M$ as a
-\emph{scoring function} that, given an arbitrary distribution $\mu$ on $\V(\dg
-M)$, returns a real-valued score indicating how well $\mu$ fits $\dg M$.
-Distributions with the lowest (best) scores are those that most closely match
-the cpds in $\dg M$, and contain the fewest unspecified correlations.
+% We now explain the primary way that PDGs 
+We now develop the full PDG semantics. 
+% We now give the full semantics . 
+Specifically, we will interpret a PDG $\dg M$ 
+not as a (convex) set of distributions, but rather as a
+(convex) \emph{scoring function} on distributions. 
+% given an arbitrary distribution 
+Given $\mu \in \Delta \V\!\X$,
 
+returns a real-valued score,
+% indicating the degree of \emph{incompatibility} between $\mu$ and $\dg M$.
+indiating how well (or, rather, how poorly) $\mu$ matches the information in $\dg M$. 
+ % returns a real-valued score indicating how well $\mu$ fits $\dg M$.
+Distributions with the lowest (best) scores are those that most closely match the cpds in $\dg M$, and contain the fewest unspecified correlations.
+
+These two aspects of the scoring function corresond 
+to the two kinds of information present in a PDG:
+``structural'' information, in the (hyper)graph $\Ar$ and
+weights $\balpha$, and ``observational'' data,
+in the cpds  $\mathbb P$ and weights $\bbeta$.
+PDG semantics are based on two scoring functions
+that quantify discrepancy between 
+each type of information and a distribution
+$\mu \in \Delta \V \!\X$ over its variables.
+
+The \emph{observational incompatibility} of $\mu$ with $\dg M$, which
+can be thought of as a ``distance''  between $\mu$ and the cpds of $\dg M$,
+is given by the weighted sum of relative entropies:
+\begin{align*}
+    \OInc_{\dg M}(\mu) :=
+        \sum_{\ed aST \mathrlap{\,\in \Ar}} \subafalse
+        \beta_a\, \kldiv[\Big]{\mu(\Tgt a,\Src a)}{\p_a(\Tgt a | \Src a) \mu(\Src a)}.
+\end{align*}
+Under a standard interpretation of the relative entropy $\kldiv{\mu}{p} \mskip-1.5mu=\mskip-1.5mu \Ex_{\mu}[\log \frac\mu p]$,
+$\OInc_{\dg M}$ measures the excess cost of using codes optimized for the cpds of $\dg M$ 
+(weighted by their confidences),
+when reality is
+distributed according to $\mu$.
+
+The second scoring function measures
+the extent to which
+$\mu$ 
+is incompatible with 
+a causal picture consisting of independent mechanisms 
+along each hyperarc. 
+This is captured by the
+\emph{structural deficiency}
+(of $\mu$ with $\dg M$), 
+and given by
+\begin{equation*}
+    \SDef_{\dg M}(\mu) := \,
+        \pqty[\Big]{\; \sum_{\ed aST \mathrlap{\,\in \Ar}}\subafalse \alpha_a\, \H_\mu(\Tgt a | \Src a) } - \H(\mu).
+\end{equation*}
+Note that
+$\SDef_{\dg M}$
+does not depend on the cpds
+of $\dg M$, nor the possible values of the 
+variables; it
+is defined purely in terms of
+the weighted hypergraph structure $(\Ar,\balpha)$.
+
+
+If the observational and structural information conflict, 
+then the distribution(s) that best represent a PDG 
+will depend
+on the importance of structure relative to observation,
+% \discard{ This is captured by a trade-off 
+%     parameter $\gamma \ge 0$, which 
+%     can be used to define the scoring function
+%     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
+as captured by a trade-off parameter $\zogamma \in [0,1]$
+that controls the convex combination
+$(1-\zogamma)\OInc + \zogamma \SDef$. 
+So as to simplify the math
+and match the notation in
+previous work (\citeyear{pdg-aaai,one-true-loss}),
+we mostly use a rescaled variant with a different parameterization.
+Using
+$\gamma := \nicefrac{\zogamma}{(1-\zogamma)} \in [0,\infty]$,
+define the overall scoring function:
+\begin{align*}
+    \bbr{\dg M}_\gamma&(\mu) 
+        := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
+            \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
+        &= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\dg M}(\mu)\, \Big) \\[-0.1ex]
+        &= \Ex\nolimits_{\mu}\bigg[
+            \,
+            \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
+            \log \frac
+            {\mu(\Tgt a| \Src a)^{\beta_a - \gamma \alpha_a}}
+            {\p_a(\Tgt a | \Src a)^{\beta_a}}
+        \bigg] - \gamma \H(\mu)
+        .
+\end{align*}
+
+
+
+This scoring function has two components: 
+    one for the qualitative (observational) information in the PDG, 
+    and one for the qualitative (structural information). 
 We start with the first component of the score, which assigns higher scores to
 distributions that require a larger perturbation in order to be consistent with
 $\dg M$.  
@@ -821,7 +978,7 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
     a joint distribution $\mu$ over $\V(\dg M)$, is given by
     \[
 	\OInc_{\dg M }( \mu) := 
-		\!\!\!\!\!\!\sum_{\Ar L{X\,}{\,Y} \in \Ar^{\dg M}} \!\!\!\!\!\beta_a^{\dg M} \Ex_{x \sim \mu_{_X}}\!\!
+		\!\!\!\!\!\!\sum_{\ed L{X\,}{\,Y} \in \Ar^{\dg M}} \!\!\!\!\!\beta_a^{\dg M} \Ex_{x \sim \mu_{_X}}\!\!
 \left[\kldiv[\Big]{ \mu(Y \mid X {=} x) }{\p_a^{\dg M}(x) } \right] , \]
 	where $\kldiv{\mu}{\nu} = \sum_{w \in \text{Supp($\mu$)}} \mu(w) \log\frac{\mu(w)}{\nu(w)}$ is the 
 	relative entropy from $\nu$ to $\mu$.
@@ -844,41 +1001,43 @@ over all the arcs $a$ in the PDG, weighted by their reliability.
 \temphide{
 The idea behind this definition of inconsistency is to choose a
 distribution $\mu$ that minimizes the total number of bits required to
-encode all of the relevant conditional marginals. More precisely, fix a
-    distribution $\mu$. For each arc $\ed aXY \in \Ar$ and $x \in
-    \V X$, we are given a code for $Y$ optimized for the distribution $\p_a(x)$,
-    and asked to transmit data from $\mu(Y\mid x)$; we incur a cost for each bit
-    required beyond what we would have used had we used a code optimized for the
-    actual distribution $\mu(Y\mid X=x)$. To obtain the cost for $L$, we take a
-    weighted average of these costs, where the weight for the value $x$ is the
-    probability $\mu_X(x)$. We do this for every arc $a \in \Ar$, summing the
-    cost.
+encode all of the relevant conditional marginals. More precisely, fix
+a distribution $\mu$. For each arc $\ed aXY \in \Ar$ and $x \in \V X$,
+we are given a code for $Y$ optimized for the distribution $\p_a(x)$,
+and asked to transmit data from $\mu(Y\mid x)$; we incur a cost for
+each bit required beyond what we would have used had we used a code
+optimized for the actual distribution $\mu(Y\mid X=x)$. To obtain the
+cost for $a$, we take a weighted average of these costs, where the
+weight for the value $x$ is the probability $\mu_X(x)$. We do this for
+every arc $a \in \Ar$, summing the cost.
 
-    For even more intuition, imagine two agents ($A$ and $B$) with identical
-    beliefs described by a PDG $\dg M$ about a set of variables that are in fact
-    distributed according to $\mu$. For each arc $\ed aXY \in \Ar^\dg
-    M$, values $x,y \in \V(X,Y)$ are chosen according to $\mu(X,Y)$ and $x$ is
-    given to both agents. 
+For even more intuition, imagine two agents ($A$ and $B$) with
+identical beliefs described by a PDG $\dg M$ about a set of variables
+that are in fact distributed according to $\mu$. For each arc $\ed aXY
+\in \Ar^\dg M$, values $x,y \in \V(X,Y)$ are chosen according to
+$\mu(X,Y)$ and $x$ is given to both agents. 
 
-    At this point, the agents, having the same conditional beliefs, and the same
-    information about $Y$, agree on the optimal encoding of the possible values
-    of $Y$ as sequences of bits, so that if $y$ were drawn from $\p_a(x)$, the
-    fewest number of bits would be needed to communicate it in expectation. The
-    value of $y$---which is distributed not according to $\p_a(x)$, but $\mu(Y
-    \mid X=x)$---is now given to agent A. The agents pay a cost equal the number
-    of bits needed to encode $y$ according to the agreed-upon optimal code, but
-    reimbursed the (smaller) cost that would have been paid, had the agents
-    beliefs lined up with the true distribution $\mu$.
+At this point, the agents, having the same conditional beliefs, and
+the same information about $Y$, agree on the optimal encoding of the
+possible values of $Y$ as sequences of bits, so that if $y$ were drawn
+from $\p_a(x)$, the fewest number of bits would be needed to
+communicate it in expectation. The value of $y$---which is distributed
+not according to $\p_a(x)$, but $\mu(Y \mid X=x)$---is now given to
+agent A. The agents pay a cost equal the number of bits needed to
+encode $y$ according to the agreed-upon optimal code, but reimbursed
+the (smaller) cost that would have been paid, had the agents beliefs
+lined up with the true distribution $\mu$.
 
-    Repeating for each arc and summing the expectations of these costs, we can view
-    $\OInc_{\dg M}(\mu)$ as the total number of \emph{additional} expected
-    bits required to communicate $y$ with a code optimized for
-    $\p_a(x)$ instead of the true conditional distribution   $\mu(Y \mid X=x)$. 
+Repeating for each arc and summing the expectations of these costs, we
+can view $\OInc_{\dg M}(\mu)$ as the total number of \emph{additional}
+expected bits required to communicate $y$ with a code optimized for
+$\p_a(x)$ instead of the true conditional distribution   $\mu(Y \mid
+X=x)$. 
 
-    If $\dg M$ is inconsistent, then there will be a cost no matter what
-    distribution $\mu$ is the true distribution. Conversely, if $\dg M$ is
-    consistent, then any distribution $\mu \in \SD{\dg M}$ will have $\OInc_{\dg
-    M}( \mu) = 0$.  
+If $\dg M$ is inconsistent, then there will be a cost no matter what
+distribution $\mu$ is the true distribution. Conversely, if $\dg M$ is
+consistent, then any distribution $\mu \in \SD{\dg M}$ will have
+$\OInc_{\dg M}( \mu) = 0$.  
 
 	% \begin{example}
     %     % [continues=ex:worldsonly]
@@ -910,14 +1069,18 @@ $\Gr^{\dg M}$.
 Given a multigraph $G$ and distribution $\mu$ on its variables,
 contrast the amount of
 information required to 
-\begin{enumerate}[label=(\alph*)]
-\item directly describe a joint outcome 
+\begin{enumerate}[label=(\alph*),nosep]
+\item 
+% directly describe a joint outcome 
 % $\mat w$ drawn from $\mu$, and 
-$\omega \sim \mu$, and 
+% $\omega \sim \mu$, and 
+directly specify the values of all variables $\X$, and
  \label{item:globalinfo}
 \item 
 % separately specify, for each arc $\ed aXY$, the value $\mat w_Y$ (of $Y$ in world $\mat w$) given the value $\mat w_X$, in expectation.
-separately specify, for each arc $\ed aXY$, the value $\omega[Y]$ (of $Y$ in world $\omega$) given the value $\omega[X]$, in expectation.
+separately specify, for each arc $\ed aXY$, the value
+% $\omega[Y]$ (of $Y$ in world $\omega$) given the value $\omega[X]$, in expectation.
+of $Y$ given the value of $X$ in expectation.
 	\label{item:localinfo}
 \end{enumerate}
 In a sense, (a) is the information needed to determine $\mu$ along its own structure,
@@ -946,43 +1109,43 @@ what is necessary to determine outcomes of the marginals selected by $G$.
 % For a multigraph $G = (\N, \Ar, \V)$ over a set $\N$ of variables,
 Given a directed (multi)(hyper)graph $\Ar$, 
 the \emph{information deficiency}
-of distribution $\mu$, denoted $\IDef_{\!\Ar}(\mu)$,
+of distribution $\mu$, denoted $\SDef_{\!\Ar}(\mu)$,
 is the difference between (a) and (b), 
 where we measure the amount of information needed for a description
 using entropy: 
 \begin{equation}
-	\IDef_{G}(\mu) := \sum_{(X,Y) \in \Ar} \H_\mu(Y\mid X) - \H(\mu). 
+	\SDef_{G}(\mu) := \sum_{(X,Y) \in \Ar} \H_\mu(Y\mid X) - \H(\mu). 
 	\label{eqn:alt-extra}
 \end{equation}
 % (Recall that $H_\mu(Y\mid X)$, the \emph{conditional entropy of $Y$ given $X$}, is defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
-For a PDG ${\dg M}$, we take $\IDef_{\dg M} = \IDef_{\Ar^{\dg M}}$.   
+For a PDG ${\dg M}$, we take $\SDef_{\dg M} = \SDef_{\Ar^{\dg M}}$.   
 \end{defn}
 
-We illustrate $\IDef_{\dg M}$ with some simple examples.  
+We illustrate $\SDef_{\dg M}$ with some simple examples.  
 Suppose that $\dg M$ has two nodes, $X$ and $Y$.  If $\dg M$ has no arcs, the
-$\IDef_{\dg M}(\mu) = - \H(\mu)$. There is no information required to specify, for
+$\SDef_{\dg M}(\mu) = - \H(\mu)$. There is no information required to specify, for
 each arc in ${\dg M}$ from $X$ to $Y$, the value ${\mat w}_Y$ given ${\mat
 w}_X$, since there are no arcs. Since we view smaller numbers as representing a
-better fit, $\IDef_{\dg M}$ in this case will prefer the distribution that
+better fit, $\SDef_{\dg M}$ in this case will prefer the distribution that
 maximizes entropy. If $\dg M$ has one arc from $X$ to $Y$, then since $\H(\mu) =
 \H_{\mu}(Y \mid X) + \H_\mu(X)$
 by the well known \emph{entropy chain rule} \cite{mackay2003information},
-$\IDef_{\dg   M}(\mu) = -\H_{\mu}(X)$. Intuitively,
+$\SDef_{\dg   M}(\mu) = -\H_{\mu}(X)$. Intuitively,
 while knowing the conditional probability $\mu(Y \mid X)$ is helpful, to
-completely specify $\mu$ we also need $\mu(X)$. Thus, in this case, $\IDef_{\dg
+completely specify $\mu$ we also need $\mu(X)$. Thus, in this case, $\SDef_{\dg
 M}$ prefers distributions that maximize the entropy of the marginal
 on $X$. 
 If $\dg M$ has sufficiently many parallel arcs
  from $X$ to $Y$
  and $\H_{\mu}(Y \mid X) > 0$ 
 (so that $Y$ is not totally determined by $X$)
-then we have $\IDef_{\dg M}(\mu) > 0$, because the redundant arcs add no
+then we have $\SDef_{\dg M}(\mu) > 0$, because the redundant arcs add no
 information, but there is still a cost to specifying them.
-In this case, $\IDef_{\dg M}$ prefers distributions that make $Y$ a
+In this case, $\SDef_{\dg M}$ prefers distributions that make $Y$ a
 deterministic function of $X$ will maximizing the entropy of the
 marginal on $X$.
 Finally, if ${\dg M}$ has an arc from $X$ to $Y$ and another from $Y$
-to $X$, then a distribution $\mu$ minimizes $\IDef_{\dg M}$ when 
+to $X$, then a distribution $\mu$ minimizes $\SDef_{\dg M}$ when 
 $X$ and $Y$  vary together (so that $\H_\mu(Y \mid X) = \H_\mu(X \mid Y) = 0$)
 while maximizing $\H(\mu)$, for example, by taking $\mu(0,0)
 = \mu(1,1) = 1/2$. 
@@ -990,14 +1153,14 @@ while maximizing $\H(\mu)$, for example, by taking $\mu(0,0)
 \input{fragments/idef-intuition}
 
 
-$\OInc_{\dg M}(\mu)$ and $\IDef_{\dg M}(\mu)$ give us two measures
+$\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
 of compatibility between ${\dg M}$ and a distribution $\mu$.
 We take the score of interest to be their sum, with the tradeoff
 controlled by a parameter $\gamma \ge 0$:
 
 \begin{equation}
   	  \bbr{\dg M}_\gamma(\mu)
-	 := \OInc_{\dg M}(\mu) + \gamma \IDef_{\dg M}(\mu)  \label{eqn:full-score}
+	 := \OInc_{\dg M}(\mu) + \gamma \SDef_{\dg M}(\mu)  \label{eqn:full-score}
 \end{equation}
 
 The following just makes precise that the scoring semantics generalizes the first semantics.
@@ -1071,7 +1234,8 @@ It has an important property:
 	then $\bbr{\dg M}^*_{0^+} \in \SD{\dg  M}$.
 \end{linked}
 
-\subsection{Further Semantics: PDGs as Degrees of Inconsistency and as Transformations on Distributions}
+\subsection{Further Semantics: PDGs as Degrees of Inconsistency 
+    \texorpdfstring{\\}{}and as Transformations on Distributions}
 
 The three semantics given in the previous section are the ones presented in the original PDG paper \cite{pdg-aaai}, and hence the ones relevant for the present chapter based on it. 
 However, there are two other semantics that will play an important role later on. 
@@ -1286,7 +1450,7 @@ $\bbr{\dg N}_{1}^* = \Pr_{\FGof{\dg N}}\;$ for all unweighted
 \end{linked}
 
 The correspondence hinges on the fact that we take $\gamma=1$, so that $\OInc$ and
-$\IDef$ are weighted equally.
+$\SDef$ are weighted equally.
 Because $\gamma$ is not part of the data of a PDG but rather chosen
     by the end user, 
 % Because the user of a PDG gets to choose $\gamma$, 
@@ -1339,10 +1503,10 @@ and then use data to inform the choice of \emph{weights} $\boldsymbol\theta$.
 PDGs can in fact capture the full exponential family of a factor graph, but only
 by allowing values of $\alpha$ other than ${\bf 1}$. In this case, the
 only definition  
-that requires alteration is $\IDef$, which now depends on the \emph{weighted multigraph}
+that requires alteration is $\SDef$, which now depends on the \emph{weighted multigraph}
 $(\Gr^{\dg M}, \alpha^{\dg M})$, and is given by
 \begin{equation}
-	\IDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_a \H_\mu(Y\mid X) - \H(\mu). 
+	\SDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_a \H_\mu(Y\mid X) - \H(\mu). 
 	\label{eqn:alt-extra2}
 \end{equation}
 Thus, the conditional entropy $\H_\mu(Y\mid X)$ associated with the
@@ -1462,7 +1626,7 @@ of \eqref{eq:semantics-breakdown} are equal to a scaled
 version of the free energy, $\gamma\VFE_\Phi$, 
 if we set $\phi_J := \p_a$ and $\theta_J := \nicefrac{\beta_a}{\gamma}$.  
 If, in addition, $\beta_a = {\alpha_a}\gamma$ for all
-arcs $L$, then
+arcs $a$, then
 the local regularization term disappears, giving us
 the desired correspondence. 
 
@@ -1531,7 +1695,7 @@ Most notably:
 \item They allow for a clean separation between quantitiatve information (the
 	cpds and weights $\beta$) and more qualitative information contained by
 	the graph structure (and the weights $\alpha$); this is captured by the
-	terms $\OInc$ and $\IDef$ in our scoring function.
+	terms $\OInc$ and $\SDef$ in our scoring function.
 \item PDGs have (several) natural semantics; one of them allows us to
 pick out a unique distribution.  Using this distrbution, PDGs
 	can capture BNs and factor graphs.
@@ -1639,8 +1803,9 @@ backgrounds.
 \begin{subappendices}
 
 \section{Proofs} \label{sec:proofs}
-For brevity, we use the standard notation and write $\mu(x, y)$
-instead of $\mu(X \!=\! x, Y \!=\! y)$, $\mu(x \mid y)$ instead of
+For brevity, when the appropriate variables are clear from context,
+we write $\mu(x, y)$
+in place of $\mu(X \!=\! x, Y \!=\! y)$, $\mu(x \mid y)$ in place of
 $\mu(X \!=\! x\mid Y \!=\! y)$, and so forth.
 
 	
@@ -1668,7 +1833,7 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 			 for all arcs, we must have $\OInc_{\dg M}( \mu) =
 			 0$. Conversely, if $\mu \notin \SD{\dg M}$, then it
 			 fails to marginalize to the cpd $\p_a$ on some arc
-							  $L$, and so again by Gibbs inequality,
+							  $a$, and so again by Gibbs inequality,
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} > 0$. As relative entropy
 			 is non-negative, the sum of these terms over all
 			 arcs must be positive as well, (because we have assumed $\bbeta > 0$) and so $\OInc_{\dg M}(
@@ -1773,11 +1938,11 @@ and letting us decompose into three more interpretable pieces.
 \recall{prop:nice-score}
 \begin{lproof}\label{proof:nice-score}
 \allowdisplaybreaks
-We use the more general formulation of $\IDef$ given
+We use the more general formulation of $\SDef$ given
 in \Cref{sec:expfam}, in which each arc $a$'s conditional  
 information is weighted by $\alpha_a$.
   \begin{align*}
-	&\bbr{\dg M}_\gamma(\mu) := \OInc_{\dg M}( \mu) + \gamma \IDef_{\dg M}(\mu) \\
+	&\bbr{\dg M}_\gamma(\mu) := \OInc_{\dg M}( \mu) + \gamma \SDef_{\dg M}(\mu) \\
 		&= \left[\sum\alle \beta_a \Ex_{x\sim \mu_X}\kldiv[\Big]{ \mu(Y | X {=} x) }{\p_a(x) } \right]  + \gamma \left[\sum\alle \alpha_a \H_\mu(Y\mid X) ~-\H(\mu)\right]\\
 		&= \sum\alle 
 			\Ex_{x \sim \mu_{\!_X}}  \left[ \beta_a\; \kldiv[\Big]{ \mu(Y \mid x) }{\p_a(Y \mid x) } + \gamma \; \alpha_a \H(Y \mid X{=} x) \right]  - \gamma \H(\mu) \\ 
@@ -1879,18 +2044,18 @@ following lemma, which shows that any limiting optimal dsitributions as $\gamma 
 \def\lb{k}
 \def\ub{K}  
 
-Since $\IDef_{\dg M}$ is a finite weighted sum of entropies
+Since $\SDef_{\dg M}$ is a finite weighted sum of entropies
 and conditional entropies over the variables $\N^{\dg M}$, which have
 finite support%
 , it is bounded.
 Thus, there exist bounds $k$ and $K$ depending only on $\N^{\dg M}$ and
-$\V^{\dg M}$, such that $\lb \leq \IDef_{\dg M}(\mu) \leq \ub$ for all $\mu$.
-Since $\bbr{\dg M}_\gamma = \OInc_{\dg M} + \gamma \IDef_{\dg M}$,
+$\V^{\dg M}$, such that $\lb \leq \SDef_{\dg M}(\mu) \leq \ub$ for all $\mu$.
+Since $\bbr{\dg M}_\gamma = \OInc_{\dg M} + \gamma \SDef_{\dg M}$,
 it follows that, for all $\mu \in \V\!\X$, we have
 \[ \OInc_{\dg M}( \mu) + \gamma\lb \leq~ \bbr{\dg M }_\gamma(\mu) 
 \leq~  \OInc_{\dg M}( \mu) + \gamma\ub. \]
 For a fixed $\gamma$, since this inequality holds for all $\mu$, and
-both $\OInc$ and $\IDef$ are bounded below, it must be the case that  
+both $\OInc$ and $\SDef$ are bounded below, it must be the case that  
 \[
 \min_{\mu \in \Delta\V\!\X} \Big[ \OInc_{\dg M}( \mu) + \gamma\lb \Big]
 ~\leq~ \min_{\mu \in \Delta\V\!\X}\bbr{\dg M }_\gamma(\mu) ~\leq~
@@ -1937,27 +2102,27 @@ to $\nu_1$ and $\nu_2$, respectively.
 By \Cref{lem:gamma2zero}, $\nu_1, \nu_2 \in \bbr{\dg M}_0^*$, so
 $\OInc_{\dg M}(\nu_1) = \OInc_{\dg M}(\nu_2)$.  
 Because  $(\mu_{j_n}) \to \nu_1$, $(\mu_{k_n}) \to \nu_2$, and
-$\IDef_{\dg M}$ is
+$\SDef_{\dg M}$ is
 continuous on $\Delta\V\!\X$,
 we conclude that  
-$(\IDef_{\dg M}(\mu_{i}))\to \IDef_{\dg M}(\nu_1)$ and
-$(\IDef_{\dg M}(\mu_{j}))\to \IDef_{\dg M}(\nu_2)$.
+$(\SDef_{\dg M}(\mu_{i}))\to \SDef_{\dg M}(\nu_1)$ and
+$(\SDef_{\dg M}(\mu_{j}))\to \SDef_{\dg M}(\nu_2)$.
 
-Suppose that $\IDef_{\dg
-M}(\nu_1) \neq \IDef_{\dg M}(\nu_2)$. Without loss of generality,
-suppose that $\IDef_{\dg M}(\nu_1) > \IDef_{\dg M}(\nu_2)$. 
-Since $(\IDef_{\dg M}(\mu_{i})) \to \IDef_{\dg M}(\nu_1)$, there exists some $i^*
+Suppose that $\SDef_{\dg
+M}(\nu_1) \neq \SDef_{\dg M}(\nu_2)$. Without loss of generality,
+suppose that $\SDef_{\dg M}(\nu_1) > \SDef_{\dg M}(\nu_2)$. 
+Since $(\SDef_{\dg M}(\mu_{i})) \to \SDef_{\dg M}(\nu_1)$, there exists some $i^*
 \in \mathbb N$ such that for all $i > i^*$,  
-$ \IDef_{\dg M}(\mu_{i}) >  \IDef_{\dg M}(\nu_2) $.
+$ \SDef_{\dg M}(\mu_{i}) >  \SDef_{\dg M}(\nu_2) $.
 But then for all $\gamma$ and $i > i^*$, we have 
-\[ \bbr{\dg M}_\gamma(\mu_i) = \OInc(\mu_i) + \gamma\IDef_{\dg M}(\mu_i)
+\[ \bbr{\dg M}_\gamma(\mu_i) = \OInc(\mu_i) + \gamma\SDef_{\dg M}(\mu_i)
 > \OInc(\nu_2)  
-+ \gamma \IDef_{\dg M}(\nu_2) = \bbr{\dg M}_\gamma(\nu_2),\]
++ \gamma \SDef_{\dg M}(\nu_2) = \bbr{\dg M}_\gamma(\nu_2),\]
 contradicting the assumption that $\mu_{i}$ minimizes
 $\bbr{\dg M}_{\gamma_{i}}$. We thus conclude that we
-cannot have $\IDef_{\dg M}(\nu_1) > \IDef_{\dg M}(\nu_2)$.  By the same
-argument, we also cannot have $\IDef_{\dg M}(\nu_1) < \IDef_{\dg
-  M}(\nu_2)$, so $\IDef_{\dg M}(\nu_1) =\IDef_{\dg M}(\nu_2)$.  
+cannot have $\SDef_{\dg M}(\nu_1) > \SDef_{\dg M}(\nu_2)$.  By the same
+argument, we also cannot have $\SDef_{\dg M}(\nu_1) < \SDef_{\dg
+  M}(\nu_2)$, so $\SDef_{\dg M}(\nu_1) =\SDef_{\dg M}(\nu_2)$.  
   
 Now, suppose that $\nu_1$ and $\nu_2$ distinct. Since $\bbr{\dg M}_\gamma$
 is strictly convex for $\gamma > 0$, among the possible convex
@@ -1971,18 +2136,18 @@ $\nu_1,\nu_2 \in \bbr{\dg M}_0^*$ minimize $\OInc$,
 we must have $\OInc_{\dg M}(\nu_3) \ge v$.
 Thus, $\OInc_{\dg M}(\nu_3) = v$. 
 Now, because, for all  $\gamma > 0$,
-\[ \bbr{\dg M}_\gamma(\nu_3) = v + \gamma \IDef_{\dg M}(\nu_3) 
- 	< v + \gamma \IDef_{\dg M}(\nu_1) = \bbr{\dg M}_\gamma(\nu_1), \] 
-it must be the case that $\IDef_{\dg M}(\nu_3) < \IDef_{\dg M}(\nu_1)$. 
+\[ \bbr{\dg M}_\gamma(\nu_3) = v + \gamma \SDef_{\dg M}(\nu_3) 
+ 	< v + \gamma \SDef_{\dg M}(\nu_1) = \bbr{\dg M}_\gamma(\nu_1), \] 
+it must be the case that $\SDef_{\dg M}(\nu_3) < \SDef_{\dg M}(\nu_1)$. 
         
 We can now get a contradiction by applying the same argument as that used to show
-that $\IDef_{\dg M}(\nu_1) =\IDef_{\dg M}(\nu_2)$.  
+that $\SDef_{\dg M}(\nu_1) =\SDef_{\dg M}(\nu_2)$.  
     Because $(\mu_{i}) \to \nu_1$, there exists some
-    $i^*$ such that for all $i > i^*$, we have $\IDef_{\dg M}(\mu_{i}) >
-    \IDef_{\dg M}(\nu_3)$. Thus, for all $i > i^*$ and all
+    $i^*$ such that for all $i > i^*$, we have $\SDef_{\dg M}(\mu_{i}) >
+    \SDef_{\dg M}(\nu_3)$. Thus, for all $i > i^*$ and all
     $\gamma > 0$, 
-    \[ \bbr{\dg M}_\gamma(\mu_{i}) = \OInc(\mu_{i}) + \gamma\IDef_{\dg M}(\mu_{i}) > \OInc(\nu_3) 
-    + \gamma \IDef_{\dg M}(\nu_3) = \bbr{\dg M}_\gamma(\nu_3),\]
+    \[ \bbr{\dg M}_\gamma(\mu_{i}) = \OInc(\mu_{i}) + \gamma\SDef_{\dg M}(\mu_{i}) > \OInc(\nu_3) 
+    + \gamma \SDef_{\dg M}(\nu_3) = \bbr{\dg M}_\gamma(\nu_3),\]
 again contradicting the assumption that $\mu_{i}$ minimizes
 $\bbr{\dg M}_{\gamma_{i}}$.
 Thus, our supposition that $\nu_1$ was distinct from $\nu_2$ cannot hold, and so
@@ -2090,7 +2255,7 @@ distribution $\mu$.
 % If $\cal B$ is a Bayesian network
 % and $\Pr_{\cal B}$ is the distribution it specifies, then
 %   for all $\gamma > 0$ and all vectors $\beta$ such
-%   that $\beta_a > 0$ for all arcs $L$,
+%   that $\beta_a > 0$ for all arcs $a$,
 %   $\bbr{\PDGof{\mathcal B, \beta}}_\gamma^* = \{ \Pr_{\cal B}\}$, 
 % and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.    
 % }
@@ -2107,7 +2272,7 @@ Thus, $\Pr_{\cal B}$ is consistent with all the cpds in
 $\PDGof{\mathcal B, \beta}$;
 so$\OInc_{\PDGof{\mathcal B,\beta}}(\Pr_{\cal B}) = 0$.
 
-We next want to show  that $\IDef_{\PDGof{\mathcal B,\beta}}(\mu) \ge 0$ for all
+We next want to show  that $\SDef_{\PDGof{\mathcal B,\beta}}(\mu) \ge 0$ for all
 distributions $\mu$.  To do this, we first need some definitions.
 Let $\rho$ be a permutation of $1, \ldots,  n$.  Define an order
 $\prec_{\rho}$ by taking $j \prec_{\rho} i$ if $j$ precedes $i$ in the
@@ -2135,7 +2300,7 @@ X)=\sum_{i=1}^n \H_\mu(X_i \mid \Pa(X_i)).
 Given a permutation $\rho$, let ${\bf X}_{\prec_\rho i} = \{X_j: j
 \prec_\rho i\}$.  Observe that 
 \begin{align*}
-    \IDef_{\PDGof{\mathcal B,\beta}}(\mu)
+    \SDef_{\PDGof{\mathcal B,\beta}}(\mu)
  	&= \left[\sum_{\ed aXY \in \Ar^{\PDGof{\mathcal B}}} \H_\mu(Y\mid X) \right] - \H(\mu) \\
 	&= \sum_{i=1}^n \H_\mu(X_i \mid \Pa(X_i)) - \sum_{i = 1}^n
 \H_\mu(X_i \mid {\bf X}_{\prec_\rho i}) & \text{[by
@@ -2149,10 +2314,10 @@ Given a permutation $\rho$, let ${\bf X}_{\prec_\rho i} = \{X_j: j
 
 Using \Cref{fact:cmi}, it now follows that,
 for all distributions $\mu$,
-$\IDef_{\PDGof{\mathcal B}}(\mu) \ge 0$.
+$\SDef_{\PDGof{\mathcal B}}(\mu) \ge 0$.
 Furthermore, for all $\mu$ and permutations $\rho$,
 \begin{equation}\label{eq:key}
-  \IDef_{\PDGof{\mathcal B}}(\mu) = 0 \quad\mbox{ iff }\quad 
+  \SDef_{\PDGof{\mathcal B}}(\mu) = 0 \quad\mbox{ iff }\quad 
     \forall i.~X_i \CI_\mu {\bf X}_{\prec_\rho i}.
 \end{equation}
 
@@ -2161,8 +2326,8 @@ it follows that $X_i$ is independent of
 ${\bf X}_{\prec_\rho i}$ for some permutation $\rho$ iff $X_i$ is independent of
   ${\bf X}_{\prec_\rho i}$ for every permutation $\rho$.  Since there
 is a permutation compatible with $\mathcal B$, we get that 
-$\IDef_{\PDGof{\mathcal B,\beta}}(\Pr_{\cal B}) = 0$.
-We have now shown that that $\IDef_{\PDGof{\mathcal B, \beta}}$ and $\OInc$ are 
+$\SDef_{\PDGof{\mathcal B,\beta}}(\Pr_{\cal B}) = 0$.
+We have now shown that that $\SDef_{\PDGof{\mathcal B, \beta}}$ and $\OInc$ are 
 non-negative functions of $\mu$, and both are zero at $\Pr_{0\cal B}$. 
 Thus, for all $\gamma \geq 0$ and all vectors $\beta$, we
 have that   $\bbr{\PDGof{\mathcal B, \beta}}_\gamma( \Pr_{\cal
@@ -2186,7 +2351,7 @@ $\rho$ of the variables in $\mathcal X$ compatible with ${\mathcal B}$
 such that $X_j \prec_{\rho} X_i$ (e.g., we can start with $X_j$ and
 its ancestors, and then add the remaining variables appropriately).
 Thus, it is not the case that $X_i$ is independent of $X_{\prec \rho,
-  i}$, so by (\ref{eq:key}), $\IDef_{\PDGof{\mathcal B}}(\mu) > 0$.
+  i}$, so by (\ref{eq:key}), $\SDef_{\PDGof{\mathcal B}}(\mu) > 0$.
 This completes the proof.
 \end{lproof}
 
@@ -2270,7 +2435,7 @@ projections $X_J \tto
 X_j$, the conditional entropy 
 $\H(X_j \mid X_J) = -\Ex_\mu\log(\mu(x_j \mid x_J))$ and divergence from
 the constraints are both zero. 
-Therefore the per-arc terms for both $\IDef_{\dg M}$
+Therefore the per-arc terms for both $\SDef_{\dg M}$
 and $\OInc_{\dg M}$ can be safely ignored for the projections.
 Let $\p_J$ be
 the normalized distribution $\frac{1}{Z_J}\phi_J$ over $X_J$,

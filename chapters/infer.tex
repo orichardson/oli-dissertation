@@ -1,5 +1,9 @@
 \label{chap:infer}
 
+\newif\ifvfull
+    \vfulltrue %
+
+
 So far, we have seen that PDGs are a flexible modeling tool that
     plays two seemingly very different roles.
 On one hand, PDGs specify a joint distribution; in this capacity, they are an especially modular and interpretable generalization of standard probabilistic graphical models.
@@ -7,10 +11,6 @@ On the other hand, PDGs have a natural inconsistency measure; in this capacity, 
 Yet, even several years after their introduction, there had been no practical way to compute with PDGs in either role: no inference algorithm, and no (provably correct) way to calculate the degree of inconsistency.
 % In this chapter, we address both issues.
 This chapter, based on a paper of the same name \cite{pdg-infer}, resolves both issues.
-
-\newcommand\zogamma{{\mathrlap{\raisebox{-0.1ex}{$\hat{\phantom{x}}$}}\gamma}}
-\newif\ifvfull
-    \vfulltrue %
 
 \section{Introduction}
 
@@ -21,22 +21,22 @@ Bayesian Networks (BNs) and
 Factor Graphs (FGs),
 but also more recent statistical models built out of neural networks,
 such as Variational Autoencoders (VAEs) \parencite{kingma2013autoencoding}.
-\expandafter\discard\vjoe{
- They can also capture inconsistent beliefs; moreover, we can measure how
- inconsistent a probability distribution is with a PDG.  This allows us
- to define the dgree of inconsistent of a PDG to essentially be that of the
- probability measure that is least inconsistent with it.}%
-\expandafter\discard\voli{They can also capture inconsistent beliefs, and moreover provide a natural measurement of the degree of this inconsistency. }%
-\expandafter\discard\vjoe{They can also capture inconsistent beliefs; moreover, we can measure how inconsistent a probability distribution is with a PDG. This allows us to define the degree of inconsistenty of a PDG to essentially be that of the probability measure that is least inconsistent with it.}%
-\expandafter\discard\voli{%
-    They can also contain inconsistent beliefs, such as two different probabilities over the same variable. Moreover, there is a natural way to measure the degree of this inconsistency: starting with a measure of how incompatible a joint distribution is with a PDG, the inconsistency of the PDG is the smallest incompatibility with any joint distribution.  }%
-\discard{%
-    They can also capture inconsistent beliefs,
-    Moreover, there is a useful way to quantify the degree of this inconsistency:
-    the discrepancy between the PDG, and the 
-        probability measure that 
-        best represents it.
-     }%
+% \expandafter\discard\vjoe{
+%  They can also capture inconsistent beliefs; moreover, we can measure how
+%  inconsistent a probability distribution is with a PDG.  This allows us
+%  to define the dgree of inconsistent of a PDG to essentially be that of the
+%  probability measure that is least inconsistent with it.}%
+% \expandafter\discard\voli{They can also capture inconsistent beliefs, and moreover provide a natural measurement of the degree of this inconsistency. }%
+% \expandafter\discard\vjoe{They can also capture inconsistent beliefs; moreover, we can measure how inconsistent a probability distribution is with a PDG. This allows us to define the degree of inconsistenty of a PDG to essentially be that of the probability measure that is least inconsistent with it.}%
+% \expandafter\discard\voli{%
+%     They can also contain inconsistent beliefs, such as two different probabilities over the same variable. Moreover, there is a natural way to measure the degree of this inconsistency: starting with a measure of how incompatible a joint distribution is with a PDG, the inconsistency of the PDG is the smallest incompatibility with any joint distribution.  }%
+% \discard{%
+%     They can also capture inconsistent beliefs,
+%     Moreover, there is a useful way to quantify the degree of this inconsistency:
+%     the discrepancy between the PDG, and the 
+%         probability measure that 
+%         best represents it.
+%      }%
 PDGs can also capture inconsistent 
 beliefs, and provide a useful way to measure the degree of this inconsistency;
 for a VAE, this is the loss function used in training
@@ -110,15 +110,6 @@ in a PDG $\dg M$,
 then for $\zogamma \in (0,1) \cup \{0^+\}$, all
 notions of $\zogamma$-inference 
 coincide.
-\discard{
-    For PDGs satisfying a mild condition 
-    (required by definition in \citeauthor{pdg-aaai})
-    which for now we call \emph{proper},
-    selecting a small enough positive value of $\zogamma$
-    suffices to ensure that
-    the $\zogamma$-semantics consists of only a single distribution.
-    The $0^+$ semantics of a proper PDG is also a unique distribution,
-    and one that does not depend on the choice of a small positive number. }%
 \def\PrM{\mu_{\dg M}}%
 If $\dg M$ is also proper,
     this means there is
@@ -164,37 +155,41 @@ Thus, our result is not only a theoretical one, but practical as well.
 Beyond its role as a probabilistic model,
 a PDG is also of interest for its degree of inconsistency---%
 that is, the minimum value of its loss function. 
-As shown by 
-\textcite{one-true-loss},
+As shown 
+% by 
+% \textcite{one-true-loss},
+in \cref{chap:one-true-loss}
 many loss functions and statistical divergences
 can be viewed as measuring 
 the inconsistency
 of a PDG that models the context appropriately.
 This makes calculating this minimum value of interest%
----but up to now, there has been no way to do so.
-There is a deep connection between this problem and PDG inference;
+---but up to now, 
+there has been no way to do so.
+%
+There is a deep connection between this problem and PDG inference
+    (which we develop in \cref{chap:inc-infer-connection});
 for now, we remark that this number is a byproduct of our techniques.
     
+ 
+% \expandafter\discard\voli{
+% Beyond its role as a probabilsitic model,
+% a PDG is also of interest for its \emph{degree of inconsistency};
+% As shown by \textcite{one-true-loss},
+%     many loss functions and statistical divergences
+%     can be viewed as measuring the inconsistency
+%     of a PDG that models the appropriate context.
+% It follows that the training process in machine learning can
+%     be conceptualized as
+%     adjusting parameters of cpds so as to minimize the inconsistency of a PDG.
+%         But how {does} one \emph{calculate} this degree of inconsistency?
+% This problem turns out to be closely related to that of
+%     inference in PDGs, and our approach addresses both.
+% }
 
 
-\expandafter\discard\voli{
-Beyond its role as a probabilsitic model,
-a PDG is also of interest for its \emph{degree of inconsistency};
-As shown by \textcite{one-true-loss},
-    many loss functions and statistical divergences
-    can be viewed as measuring the inconsistency
-    of a PDG that models the appropriate context.
-It follows that the training process in machine learning can
-    be conceptualized as
-    adjusting parameters of cpds so as to minimize the inconsistency of a PDG.
-        But how {does} one \emph{calculate} this degree of inconsistency?
-This problem turns out to be closely related to that of
-    inference in PDGs, and our approach addresses both.
-}
 
-
-
-\textbf{Contributions.}
+\textbf{Chapter Contributions.}
 We provide the first algorithm for inference in a PDG;
 in addition, it calculates a PDG's degree of inconsistency. 
 We prove that 
@@ -279,50 +274,50 @@ We also refer to $\mu$'s entropy $\H(\mu) := \Ex_{\mu} [\log \frac1\mu]$ and con
 
 \textbf{Treewidth.}
     \label{sec:tw}
+
 % New material
 Recall that 
 %
-a hypergraph 
+an undirected hypergraph 
 $
 (V, \Ed)$ is a set $V$ of vertices and a
 set
- $\Ed$ of \emph{hyperedges}, which correspond to subsets of $V$.
-An ordinary graph may be viewed as the special case in which every hyperedge contains  two vertices.
-
-\begin{defn}
-    A \emph{directed hypergraph}
-    $(N, \mathcal A)$ is a set of nodes $N$, and
-    a set
-    of \emph{(hyper)arcs} $\mathcal A$,
-    each $a \in \mathcal A$ of which
-    is associated with 
-    a set of source nodes $\Src a \subseteq N$,
-    and target nodes $\Tgt a \subseteq N$.
-    We also write $\ed {a}{S}{T} \in \Ar$ to specify an
-    arc $a$ together with its sources $S = \Src a$ and targets $T = \Tgt a$.
-\end{defn}
-
-A directed hypergraph 
-can be viewed as
-    a hypergraph
-by joining
-each source and target set,
+ $\Ed$ of subsets of $V$.
+%
+% 
+% 
+% 
+% \begin{defn}
+%     A \emph{directed hypergraph}
+%     $(N, \mathcal A)$ is a set of nodes $N$, and
+%     a set
+%     of \emph{(hyper)arcs} $\mathcal A$,
+%     each $a \in \mathcal A$ of which
+%     is associated with 
+%     a set of source nodes $\Src a \subseteq N$,
+%     and target nodes $\Tgt a \subseteq N$.
+%     We also write $\ed {a}{S}{T} \in \Ar$ to specify an
+%     arc $a$ together with its sources $S = \Src a$ and targets $T = \Tgt a$.
+% \end{defn}
+Thus, a directed hypergraph 
+$(N, \{ \ed a{\Src a}{\Tgt a} \}_{a \in \Ar})$
+can be viewed as  a hypergraph
+by joining the source and target set of each hyperarc
+(i.e., taking $\Ed = \{ \Src a \cup \Tgt a : a \in \Ar \}$),
 thereby ``forgetting'' the direction of the arrow.
-\ifvfull
 Thus, notions defined for undirected hypergraphs (like that of
 treewidth, which we now review), can be 
     applied to directed hypergraphs as well.
-\fi
 
 Many problems that are intractable for general graphs
 are tractable for trees, and
 some graphs are closer to being trees than others.
 A tree decomposition of a (hyper)graph $G = (V, \Ed)$ is a tree $(\C, \mathcal T)$ whose vertices $C \in \C$, called
 \emph{clusters}, are subsets of $V$ such that:
-
+%
 \begin{enumerate}[nosep]
     \item every vertex $v \in V$ and every hyperedge $E \in \Ed$ is contained in at least one cluster, and
-        \item every cluster $D$ along the unique path from $C_1$ to $C_2$ in $\cal T$,
+    \item every cluster $D$ along the unique path from $C_1$ to $C_2$ in $\cal T$,
          contains $C_1 \cap C_2$.
 \end{enumerate}
 
@@ -338,20 +333,8 @@ This is also true of inference in
 standard graphical models.
 
 
-\textbf{Graphical Models and Inference.}
-A \emph{graphical model structure}
-is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges 
-somehow
-indicate local influences between variables.
-A \emph{probabilistic graphical model},
-or simply  ``graphical model'',
-is a
-graphical model structure
-together with quantitative information about these local influences.
-Semantically,
-a graphical model $\cal M$
-typically
-represents a joint probability distribution $\Pr_{\!\cal M}
+\textbf{Inference for Traditional Graphical Models.}
+Semantically, a traditional graphical model $\cal M$ (such as a Bayesian Network or a factor graph) typically represents a joint probability distribution $\Pr_{\!\cal M}
  \in \Delta \V\!\X$ over its variables.
 % \discard{
 %     Although there is often more to the story,
@@ -368,14 +351,17 @@ Inference for $\cal M$ is then the ability to calculate conditional probabilitie
  $\Pr_{\!\cal M}(Y|X{=}x)$,
 where $X,Y \subset \X$ and $x \in \V\! X$. 
 
-Many inference algorithms (such as belief propagation),
+There are several different approaches to inference in graphical models.
+% and factor graphs (henceforth, \emph{standard graphical models}).  
+%
+Many of them (such as belief propagation; see \cref{chap:LIR}),
 when applied to tree-like graphical models,
 run in linear time and are provably correct.
 If the same algorithms are na{\"i}vely applied to graphs with cycles (as in loopy belief propagation),
 then they may not converge, and even if they do,
 may give incorrect (or even inconsistent) answers
 \parencite{wainwright2008graphical}.
-Nearly all exact inference algorithms
+Nearly all \emph{exact} inference algorithms
 (including variable elimination  \parencite{bertele1972nonserial},
  message-passing with \parencite{lauritzen1988local}
     and without division \parencite{shafer1990probability},
@@ -405,7 +391,7 @@ $\bmu$
 is said to be \emph{calibrated} if neighboring clusters' distributions agree on the variables 
 they share.
 In this case, 
-$\bmu$ determines a joint distribution by
+$\bmu$ determines a joint distribution 
 \begin{equation}
     \Pr\nolimits_{\bmu}
     (\X)
@@ -498,37 +484,37 @@ call $\dg M$ \emph{proper}.
 Note that  $\bbeta \gg \balpha$ if $\bbeta > \mat 0$.
 \end{defn}
 
-\temphide{%
-One significant advantage of PDGs is their modularity:
-we can combine the information in $\dg M_1$ and $\dg M_2$ 
-by taking the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
-}%
-
-\expandafter\discard\voli{%
-    Like other graphical models,
-    PDGs encode two types of information: ``structural'' information 
-    through the graphical structure $\Ar$ and weights $\balpha$,
-    as well as ``observational'' information, 
-    through the conditional probability distributions
-    $\mathcal P$ and weights $\bbeta$. 
-    Corresponding to these two types of information, 
-    PDG semantics are based on two scoring functions 
-    which quantify the discrepancy between 
-    a joint distribution $\mu(\X)$ over all variables,
-    and each of the two types of information.
-}%
-\expandafter\discard\vjoe{%
-    As we mentioned in the introduction,
-    PDGs encode two types of information: ``structural'' information 
-    through the graphical structure $\Ar$, and
-    ``observational'' information, 
-    through the conditional probability distributions.
-    The weight vectors $\alpha$ and $\beta$ encode our confidence in these
-    two types of information.
-    The semantics of PDGs are based on two scoring functions
-    that quantify the discrepancy between 
-    a joint distribution $\mu$ over (the possible values of) the variables
-    in $\X$, and each of the two types of information. }%
+% \temphide{%
+% One significant advantage of PDGs is their modularity:
+% we can combine the information in $\dg M_1$ and $\dg M_2$ 
+% by taking the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
+% }%
+% \expandafter\discard\voli{%
+%     Like other graphical models,
+%     PDGs encode two types of information: ``structural'' information 
+%     through the graphical structure $\Ar$ and weights $\balpha$,
+%     as well as ``observational'' information, 
+%     through the conditional probability distributions
+%     $\mathcal P$ and weights $\bbeta$. 
+%     Corresponding to these two types of information, 
+%     PDG semantics are based on two scoring functions 
+%     which quantify the discrepancy between 
+%     a joint distribution $\mu(\X)$ over all variables,
+%     and each of the two types of information.
+% }%
+% \expandafter\discard\vjoe{%
+%     As we mentioned in the introduction,
+%     PDGs encode two types of information: ``structural'' information 
+%     through the graphical structure $\Ar$, and
+%     ``observational'' information, 
+%     through the conditional probability distributions.
+%     The weight vectors $\alpha$ and $\beta$ encode our confidence in these
+%     two types of information.
+%     The semantics of PDGs are based on two scoring functions
+%     that quantify the discrepancy between 
+%     a joint distribution $\mu$ over (the possible values of) the variables
+%     in $\X$, and each of the two types of information. }%
+% %
 As mentioned in the introduction,
 a PDG contains two types of information:
 ``structural'' information, in the hypergraph $\Ar$ and
@@ -564,11 +550,11 @@ This is captured by the
 (of $\mu$ with $\dg M$), 
 and given by
 \begin{equation*}
-    \SInc_{\dg M}(\mu) := \,
+    \SDef_{\dg M}(\mu) := \,
         \pqty[\Big]{\; \sum_{\ed aST \mathrlap{\,\in \Ar}}\subafalse \alpha_a\, \H_\mu(\Tgt a | \Src a) } - \H(\mu).
 \end{equation*}
 Note that
-$\SInc_{\dg M}$
+$\SDef_{\dg M}$
 does not depend on the cpds
 of $\dg M$, nor the possible values of the 
 variables; it
@@ -586,7 +572,7 @@ on the importance of structure relative to observation,
 %     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
 as captured by a trade-off parameter $\zogamma \in [0,1]$
 that controls the convex combination
-$(1-\zogamma)\OInc + \zogamma \SInc$. 
+$(1-\zogamma)\OInc + \zogamma \SDef$. 
 So as to simplify the math
 and match the notation in
 previous work (\citeyear{pdg-aaai,one-true-loss}),
@@ -596,9 +582,9 @@ $\gamma := \nicefrac{\zogamma}{(1-\zogamma)} \in [0,\infty]$,
 define the overall scoring function:
 \begin{align*}
     \bbr{\dg M}_\gamma&(\mu) 
-        := \OInc_{\dg M}(\mu) + \gamma \, \SInc_{\dg M}(\mu)
+        := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
             \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
-        &\!\!\!= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SInc_{\dg M}(\mu)\, \Big) \\[-0.1ex]
+        &\!\!\!= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\dg M}(\mu)\, \Big) \\[-0.1ex]
         &= \Ex\nolimits_{\mu}\bigg[
             \,
             \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
@@ -650,22 +636,15 @@ This paper also shows how to efficiently answer queries with respect
 to the unique distribution in $\bbr{\dg M}^*_{0^+}$, which we call
 \emph{$0^+$\!-inference}.
 
-Given a PDG $\dg M$, the smallest possible value of its scoring function,
-$
-    \aar{\dg M}_\gamma := \inf_{\mu}\, \bbr{\dg M}_\gamma(\mu),
-$
-is known as its $\gamma$-inconsistency
-and is interesting in its own right:
-$\aar{\,\cdot\,}_\gamma$ 
-is arguably a ``universal'' loss
-function \parencite{one-true-loss}.
-
-
-
-
-
-
-
+% Given a PDG $\dg M$, the smallest possible value of its scoring function,
+% $
+%     \aar{\dg M}_\gamma := \inf_{\mu}\, \bbr{\dg M}_\gamma(\mu),
+% $
+% is known as its $\gamma$-inconsistency
+% and is interesting in its own right:
+% $\aar{\,\cdot\,}_\gamma$ 
+% is arguably a ``universal'' loss
+% function \parencite{one-true-loss}.
 
 
 
@@ -900,7 +879,7 @@ we must find the unique distribution in $\bbr{\dg M}^*_{0^+}$,
 while for $\zogamma$-inference ($\zogamma > 0$), we need to find the optimizers of
 $\bbr{\dg M}^*_\gamma$.
 Either way, we must consider 
-$\SInc$
+$\SDef$
 in addition to $\OInc$. 
 
 \subsection{%
@@ -999,7 +978,7 @@ $\OInc$%
 $0^+$\!-inference,
 we need to find the minimizer
 that, uniquely among them, best minimizes
-$\SInc$.
+$\SDef$.
 It turns out this can be done by
     using $\nu$ to construct a second optimization problem.
 The justification requires two more results;
@@ -1026,9 +1005,9 @@ equals zero.}
 
 As a result, once we find one minimizer $\nu$ of $\OInc_{\dg M}$
 (e.g., via \eqref{prob:joint-inc}),
-it suffices to optimize $\SInc$ among distributions that have the same
+it suffices to optimize $\SDef$ among distributions that have the same
 conditional marginals along $\Ar$ that $\nu$ does.
-This presents another problem: $\SInc$
+This presents another problem: $\SDef$
 is typically not convex.
 Fortunately, if we constrain to distributions that minimize $\OInc$, then it is.
 Moreover, on this restricted domain, it can be represented 
@@ -1038,33 +1017,30 @@ with dcp exponential cone constraints.
 If $\mu \in \bbr{\dg M}_0^*$\,,
 then
 \begin{equation}
-    \underset{{\dg M}}{\SInc_{}}(\mskip-0.5mu\mu\mskip-1mu) \!=\!
-        \sum_{\mathclap{ w \in \V\!\X } }
-            \mskip-1mu
-            \mu(\mskip-1.5mu w \mskip-1.5mu)
-            \log \!  \bigg(\!
-                \faktor{\mu(\mskip-1.5mu w\mskip-1.5mu )}{\,\prod_{\mathclap{a \in \Ar}} 
-                \mskip-1mu
-                \nu\big(\mskip-1mu\Tgt a \mskip-2.2mu(\mskip-2mu w \mskip-2mu) 
-                    \mskip-0.5mu \big|  \Src a \mskip-2mu(\mskip-2mu w \mskip-2mu)\mskip-2mu\big)^
+    \SDef_{\dg M}(\mu) =
+        \sum_{\mathclap{ \omega \in \V\!\X } }
+            \mu(\omega )
+            \log \bigg(
+                \faktor{\mu(\omega)\,}{\,\prod_{\mathclap{a \in \Ar}} 
+                \nu\big(\Tgt a ( \omega ) \big|  \Src a (\omega)\big)^
                 {\!\alpha\ssub a}
-                }\!\mskip-2mu
+                }
             \bigg)\mskip-2mu
         ,\!
         \label{eq:idef-alt-constr}
 \end{equation}
 where $\{ \nu(\Tgt a | \Src a ) \}_{a \in \Ar}$ are the
-marginals along the arcs $\Ar$
+cpds along the arcs $\Ar$
 shared by all distributions in $\bbr{\dg M}^*_0$\
 (per \cref{prop:marginonly}),
-and $\Src a \mskip-1mu(\mskip-1mu w \mskip-1mu), \Tgt a \mskip-1mu(\mskip-1mu w \mskip-1mu)$ are the values of variables $\Src a$ and $\Tgt a$ in $w$.
+and $\Src a ( \omega ), \Tgt a ( \omega )$ are the respective values of variables $\Src a$ and $\Tgt a$ in the joint setting $\omega \in \V\!\X$.
 \end{linked}
 
 If we already know a distribution $\nu \in \bbr{\dg M}_0^*$,
 perhaps by solving \eqref{prob:joint-inc}, then
 the denominator of \eqref{eq:idef-alt-constr} does not depend on $\mu$ 
 and so is constant in our search for minimizers of
-$\SInc_{}$.
+$\SDef_{}$.
 For ease of exposition, aggregate these values into a vector
 \begin{equation}
     \mat k :=
@@ -1089,7 +1065,7 @@ solves the problem
             \forall& \ed aST \subafalse \in \Ar.~~\mu(\Src a, \Tgt a)\, \nu(\Src a) = \mu(\Src a)\, \nu(\Src a, \Tgt a),
 \end{align*}
 then $\bbr{\dg M}^*_{0^+} = \{ \mu \}$
-and $\mat 1^{\sf T} \mat u = \SInc_{\dg M}(\mu)$.
+and $\mat 1^{\sf T} \mat u = \SDef_{\dg M}(\mu)$.
 \end{linked}
 Running \eqref{prob:joint+idef} through a convex solver gives rise to the 
 first algorithm
@@ -1189,10 +1165,6 @@ of \textcite[pg. 384]{koller2009probabilistic}.
 \end{linked}
 We can now find a minimizer of $\OInc$ and
 compute $\aar{\dg M}_0$ without storing a joint distribution.
-\discard{
-Note that
-\eqref{prob:cluster-inc} is the result of modifying \eqref{prob:joint-inc} in the obvious way to deal with \actree s.
-}
 But to do anything else, we must deviate from the template laid out in \cref{sec:inf-as-cvx-program}.
 
 \textbf{Dealing with Joint Entropy.}
@@ -1200,7 +1172,7 @@ In the construction of \eqref{prob:cluster-inc},
 we rely heavily on the fact that each term of $\OInc_{\dg M}$
 depends only on local marginal distributions $\mu_{C_{\mskip-2mu a}}\!(\Tgt a,  \Src a)$
 and $\mu_{C_{\mskip-2mu a}}\!(\Src a)$.
-The same is not true of $\SInc_{}$, which depends on the joint entropy $\H(\Pr_{\bmu})$ of the entire distribution.
+The same is not true of $\SDef_{}$, which depends on the joint entropy $\H(\Pr_{\bmu})$ of the entire distribution.
 At this point we should point out an important 
 reason to restrict our focus to trees:
 it allows the joint entropy to be expressed
@@ -1326,10 +1298,7 @@ them to \cref{appendix:prob-details} for brevity.
     $\Pr_{\bmu}$ is the unique element of $\bbr{\dg M}^*_\gamma$,
     and the objective of \eqref{prob:cluster-small-gamma} at $(\bmu, \mat u, \mat v)$ equals $\aar{\dg M}_\gamma$.
 \end{linked}%
-\discard{%
-\textbf{A \actree\ for
-    $\mat 0^{\boldsymbol+}$\!-inference.%
-}}%
+
 A related use of \eqref{eq:cluster-ent-decomp} is
 to enable an analogue of
 \ifvfull%
@@ -1384,7 +1353,7 @@ whose details we defer to \cref{appendix:prob-details} as well.
 
 At this point, standard algorithms can use $\bmu$
 to answer probabilistic queries about $\Pr_{\!\bmu}$ in polynomial time \parencite[\S 10.3.3]{koller2009probabilistic}.
-\discard{
+\unskip\footnote{%
     Concretely: marginal probabilities can essentially be read off of a cailbrated a \actree,
     and evidence $X{=}x$ may be incorporated by
     setting $\mu_C(c) := 0$ for every $C{=}c$ that conflicts with $X{=}x$
@@ -1407,43 +1376,6 @@ the analyses of \textcite{dahl2022primal}
 and \textcite{nesterov1996infeasible}
 results in
 our main theorem.
-
-
-
-
-
-\discard{
-\begin{linked}{theorem}{main}
-We can do PDG inference to precision $\epsilon$ in 
-    \[ 
-    O\pqty[\Big]{  (N\!+\!A)^4 V^{4T}
-        \pqty[\Big]{ T \log V + \log \frac{N\!+\! A}{\epsilon} 
-    + \log
-    \frac{\beta^{\max}}{\beta^{\min}}
-        } }%
-    \]
-    time,
-    \unskip\daggerfootnote{At the cost of substantial overhead and engineering effort, the exponent $4$ can be reduced to 2.872, by appeal to \textcite{skajaa2015homogeneous} and the 
-    current best matrix multiplication algorithm \parencite[$O(n^{2.372})$]{duan2022faster}
-    to invert 
-    $n{\times} n$
-    linear systems. }
-    where:
-    \begin{itemize}[nosep,%
-            ]
-        \item $N$ is the total number of variables,
-        \item $V$ is the number of values per variable,
-        \item $T$ is the tree-width of the PDG's structure, 
-        \item $A$ is the number of hyperarcs,
-        \item $\beta^{\max}$ is the maximum observational confidence,
-        and
-        \item $\beta^{\min}$ is either $\gamma$ (for $\zogamma$-inference)
-         or the minimimum non-zero observational confidence (for $0^+$\!-inference).
-        \item $\gamma^{\max} = \max_{a \in \Ar} \beta_a/\alpha_a$
-    \end{itemize}
-\end{linked}
-}
-
 
 
 \begin{linked}{theorem}{main}
@@ -1767,7 +1699,7 @@ Our results fall broadly into three categories:
 \begin{lproof}\label{proof:idef-frozen}
     This is mostly a simple algebraic manipulation. By definition:
     \begin{align*}
-        \SInc_{\dg M}(\mu) &= - \H(\mu) + \sum_{a \in \Ar} \alpha_a \H_\mu(\Tgt a | \Src a) \\
+        \SDef_{\dg M}(\mu) &= - \H(\mu) + \sum_{a \in \Ar} \alpha_a \H_\mu(\Tgt a | \Src a) \\
         &= \Ex_\mu \left[ - \log \frac{1}{\mu} + \sum_{a \in \Ar} \alpha_a \log \frac{1}{\mu(\Tgt a|\Src a)} \right] \\
         &= \sum_{w \in \V\!\X} \mu(w) \left[ \log \mu(w) + \sum_{a \in \Ar} \log \frac{1}{\mu(\Tgt a(w)|\Src a(w))^{\alpha_a}} \right] \\
         &= \sum_{w \in \V\!\X} \mu(w) \log \pqty[\bigg]{ \faktor{\mu(w)~}{~\prod_{a \in \Ar}\mu(\Tgt a(w)|\Src a(w))^{\alpha_a}}}
@@ -2057,8 +1989,10 @@ Our results fall broadly into three categories:
 \recall{prop:joint-small-gamma-correct}
 For convenience, we repeat problem \eqref{prob:joint-small-gamma}
 (left) and an equivalent variant of it that we implement (right) below.
-
-\begin{minipage}{0.49\linewidth}
+\begin{center}
+\footnotesize	
+\makebox[0pt]{%
+\begin{minipage}{0.52\linewidth}
 \begin{align*}
 \minimize_{\mu, \mat u, \mat v} & ~~
     \sum_{\mathrlap{\!\!\!(a,s,t) \in \V\!\Ar}}
@@ -2068,7 +2002,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         \sum_{\mathclap{w \in \V\!\X}} v_w
     \tag{\ref{prob:joint-small-gamma}}
 \\[-0.2ex]
-    &\qquad
+    &
     - \sum_{\mathrlap{\!\!\!(a,s,t) \in \smash{\V\!\Ar^+}}}
         \alpha_a \gamma \,
         \mu(\Src a{=}s,\Tgt a {=} t) \log \p_a (t|s)
@@ -2077,7 +2011,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         \quad ( -\mat v,  \mu,  \mat 1) \in K_{\exp}^{\V\!\X},
 \\[-0.4ex]
     \forall a \in \Ar.~
-        &\big(-\mat u_a, \mu( \Tgt a,\Src a),\p_a(\Tgt a | \Src a)  \mu(\Src a) \big)
+        &\big(\shortminus\mat u_a, \mu( \Tgt a,\Src a),\p_a(\Tgt a | \Src a)  \mu(\Src a) \big)
             \in K_{\exp}^{\V a},
 \\[-0.2ex]
     \forall (a,s,t) &\in \V\!\Ar^0\!.~
@@ -2085,7 +2019,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
 \end{align*}
 \end{minipage}
 ~~\vrule~~
-\begin{minipage}{0.49\linewidth}
+\begin{minipage}{0.52\linewidth}
 \begin{align*}
 \minimize_{\mu, \mat u, \mat v} & ~~
     \sum_{\mathrlap{\!\!\!(a,s,t) \in \V\!\Ar}}
@@ -2095,7 +2029,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         \sum_{\mathclap{w \in \V\!\X}} v_w
         \tag{\ref*{prob:joint-small-gamma}b}\label{prob:joint-small-gamma-b}
 \\[-0.2ex]
-    &\qquad
+    &
     - \sum_{\mathrlap{\!\!\!(a,s,t) \in \smash{\V\!\Ar^+}}}
         \beta_a \,
         \mu(\Src a{=}s,\Tgt a {=} t) \log \p_a (t|s)
@@ -2104,14 +2038,16 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         \quad ( -\mat v,  \mu,  \mat 1) \in K_{\exp}^{\V\!\X},
 \\[-0.4ex]
     \forall a \in \Ar.~
-    &\big(-\mat u_a, \mu( \Tgt a,\Src a),
-        \big[\,\mu(\Src a=s) \big]_{(s,t) \in \V a} \big)
+    &\big(\shortminus\mat u_a, \mu( \Tgt a,\Src a),
+        \big[\,\mu(\Src a{=}s) \big]_{(s,t) \in \V a} \big)
         \in K_{\exp}^{\V a},
 \\[-0.2ex]
     \forall (a,s,t) &\in \V\!\Ar^0\!.~
     \mu(\Src a{=}\mskip2mus, \Tgt a{=}\mskip2mut) = 0.
 \end{align*}
 \end{minipage}
+}
+\end{center}
 \medskip
 
 \begin{lproof}\label{proof:joint-small-gamma-correct}
@@ -2122,7 +2058,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         \forall (a,s,t) \in \V\!\Ar.~
         u_{a,s,t} \ge \mu(s,t) \log \frac{\mu(t|s)}{\p_a(t|s)}
     \qquad\text{and}\qquad
-        \forall w \in \V \X.~
+        \forall w \in \V\!\X.~
         v_{w} \ge \mu(w) \log \mu(w).
     \]
     As in the previous proof, we claim that these must hold with equality (except possibly for $u_{a,s,t}$ at indices satisfying $\beta_a = \gamma \alpha_a$, when it doesn't matter).
@@ -2136,28 +2072,31 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         ~- \sum_{\mathrlap{\!\!\!(a,s,t) \in \smash{\V\!\Ar^+}}}
             \alpha_a\gamma \, \mu(s,t) \log \p_a (t|s) \\
     &=
-        \sum_{\mathrlap{\!\!\!(a,s,t) \in \V\!\Ar}}
-            (\beta_a \!- \alpha_a \gamma) \pqty*{\mu(s,t) \log \frac{\mu(t|s)}{\p_a(t|s)}}
-        ~+~ \gamma \sum_{\mathclap{w \in \V\!\X}} \mu(w) \log \mu(w)
-        ~-~ \sum_{\mathrlap{\!\!\!(a,s,t) \in \smash{\V\!\Ar^+}}}
+        \!\sum_{\mathrlap{\!\!\!(a,s,t) \in \V\!\Ar}}
+            (\beta_a \!- \alpha_a \gamma) \Big[ \mu(s,t) \log \frac{\mu(t|s)}{\p_a(t|s)}\Big] \!
+        + \gamma \sum_{\mathclap{w \in \V\!\X}} \mu(w) \log \mu(w)
+        - \sum_{\mathrlap{\!\!\!(a,s,t) \in \smash{\V\!\Ar^+}}}
             \alpha_a\gamma \, \mu(s,t) \log \p_a (t|s) \\
     &=
-        \sum_{a \in \Ar} (\beta_a \!- \alpha_a \gamma) \sum_{(s,t) \in \V a}
-             \pqty*{\mu(s,t) \log \frac{\mu(t|s)}{\p_a(t|s)}}
+        \sum_{a \in \Ar} (\beta_a \!- \alpha_a \gamma) \sum_{\mathclap{(s,t) \in \V a}}
+             \mu(s,t) \log \frac{\mu(t|s)}{\p_a(t|s)}
         - \gamma \H(\mu)
-        - \sum_{a \in \Ar} \alpha_a\gamma \, \sum_{(s,t) \in \V\!\Ar}
+        - \sum_{a \in \Ar} \alpha_a\gamma \, \sum_{\mathclap{(s,t) \in \V\!\Ar}}
              \mu(s,t) \log \p_a (t|s) \\
      &=
-         \sum_{a \in \Ar} (\beta_a \!- \alpha_a \gamma)
-          \sum_{(s,t) \in \V a}
-             \mu(s,t) \pqty*{\log \frac{1}{\p_a(t|s)} - \log \frac{1}{\mu(t|s)}}
-         - \gamma \H(\mu)
-         - \sum_{a \in \Ar} \alpha_a\gamma \, \Ex_{\mu} [ \log \p_a (\Tgt a|\Src a) ] \\
+         \!\sum_{a \in \Ar} (\beta_a \!- \alpha_a \gamma)
+          \sum_{\mathclap{(s,t) \in \V a}}
+             \mu(s,t) \Big[ \!\log \frac{1}{\!\p_a(t|s)\mskip-2mu} - \log \frac{1}{\!\mu(t|s)\!}\Big]
+         -\! \gamma \H(\mu)
+         -\! 
+         % \sum_{a \in \Ar} \alpha_a\gamma \Ex_\mu [\log \p_a (\Tgt a|\Src a)]\\
+         \sum_{\mathclap{~~~\ed aST \in \Ar}} \alpha_a\gamma \Ex_\mu \log \p_a (T|S) \\
     &=
         \sum_{a \in \Ar} (\beta_a \!-\! \alpha_a \gamma)
            \Ex_{\mu}[ - \log \p_a(\Tgt a | \Src a)]
         - \sum_{a \in \Ar} (\beta_a \!-\! \alpha_a \gamma)
            \H_{\mu}(\Tgt a | \Src a)
+           \\&\hspace{5cm}
         - \gamma \H(\mu)
         - \sum_{a \in \Ar} \alpha_a\gamma \, \Ex_{\mu} [ \log \p_a (\Tgt a|\Src a) ] \\
     &=
@@ -2173,9 +2112,9 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
            \H_{\mu}(\Tgt a | \Src a)
         - \gamma \H(\mu).
     \end{align*}
-    ( In the third step, we were able to convert $\V\!\Ar^+$ to $\V\!\Ar$ because, as usual in when dealing with information-therotic quantities, we interpret $0 \log \frac{1}0$ as equal to zero, which is its limit. )
+    ( In the third step, we were able to convert $\V\!\Ar^+$ to $\V\!\Ar$ because, as usual in when dealing with information-therotic quantities, we take $0 \log \frac{1}0$ to equal zero, which is its limit. )
 
-    The algebra, for the right side variant
+    The algebra for the right side variant
     \eqref{prob:joint-small-gamma-b}
     is slightly simpler. In this case the middle conic constraint is almost the same, except for that $\p_a(t|s)$ has been replaced with $1$, and so it ensures that $u_{a,s,t} = \mu(s,t) \log \mu(t\mid s)$ (i.e., the same as before, but without the probability in the denomiator). So,
     \begin{align*}
@@ -2212,7 +2151,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
 
 
 \begin{lemma}\label{lem:hess-relent}
-    The gradient and Hessian of the conditional relative entropy
+    The gradient and Hessian of conditional relative entropy
     are given by
     \begin{align*}
         \Big[ \nabla_{\mu} \kldiv{\mu(X,Y)}{\mu(X) p(Y|X) } &\Big]_u
@@ -2427,20 +2366,20 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
     \]
     Then for all $t \in (0,1)$ the intermediate point $\mu_t = (1-t)\, \mu_0 + t\, \mu_1$ must have different conditional marginals from both $\mu_0$ and $\mu_1$, as
     \begin{align*}
-        &\mu_t(x^*\!,y^*)\mu_0(x^*) - \mu_0(x^*\!,y^*) \mu_t(x^*) \\
-            &= \Cancel{(1-t)\mu_0(x^*\!,y^*)\mu_0(x^*)} + t \mu_1(x^*\!,y^*)\mu_0(x^*)
-                -  \Cancel{(1-t)\mu_0(x^*\!,y^*) \mu_0(x^*)} - t\mu_0(x^*\!,y^*) \mu_1(x^*) \\
-            &= t \pqty[\big] { \mu_1(x^*\!,y^*)\mu_0(x^*) -\mu_0(x^*\!,y^*) \mu_1(x^*)}
+        &\mu_t(x^*\!,y^*)\mu_0(x^*) - \mu_0(x^*\!\!,y^*) \mu_t(x^*) \\
+            &= \Cancel[red]{(1{-}t)\mu_0(x^*\!,y^*\!)\mu_0(x^*)} + t \mu_1(x^*\!\!,y^*)\mu_0(x^*)
+                - \!\Cancel[red]{(1{-}t)\mu_0(x^*\!\!,y^*\!) \mu_0(x^*)} - t\mu_0(x^*\!\!,y^*\!) \mu_1(x^*) \\
+            &= t \pqty[\big] { \mu_1(x^*\!\!,y^*)\mu_0(x^*) -\mu_0(x^*\!\!,y^*) \mu_1(x^*)}
             \\
             &=~ t \cdot \mathit{gap}
             ~\ne~ 0,
     \end{align*}
     and analogously for $\mu_1$,
     \begin{align*}
-        &\mu_t(x^*\!,y^*)\mu_1(x^*) - \mu_1(x^*\!,y^*) \mu_t(x^*) \\
-            &= (1-t)\mu_0(x^*\!,y^*)\mu_1(x^*) + \Cancel{ t \mu_1(x^*\!,y^*)\mu_1(x^*) }
-                -  (1-t)\mu_1(x^*\!,y^*) \mu_0(x^*) - \Cancel{ t\mu_1(x^*\!,y^*) \mu_1(x^*) } \\
-            &= (1-t) (\mu_0(x^*,y^*)\mu_1(x^*) -\mu_1(x^*\!,y^*) \mu_0(x^*))
+        &\mu_t(x^*\!\!,y^*)\mu_1(x^*) - \mu_1(x^*\!\!,y^*) \mu_t(x^*) \\
+            &= (1-t)\mu_0(x^*\!\!,y^*)\mu_1(x^*) + \!\Cancel[red]{t \mu_1(x^*\!\!,y^*\!)\mu_1(x^*\!) }
+                -  (1-t)\mu_1(x^*\!\!,y^*) \mu_0(x^*) - \!\Cancel[red]{t\mu_1(x^*\!\!,y^*\!) \mu_1(x^*\!) } \\
+            &= (1-t) (\mu_0(x^*,\!\!y^*)\mu_1(x^*) -\mu_1(x^*\!\!,y^*) \mu_0(x^*))
             \\
             &=~ -(1-t) \cdot \mathit{gap}
             ~\ne~ 0.
@@ -2484,11 +2423,11 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
     $(-\mat u, \mu, \mat k)$ would not be optimal for \eqref{prob:joint+idef}.
     So, $\mat u$ is a function of $\mu$.  Also, by \cref{prop:idef-frozen}, the problem objective satisfies
     \[
-        \mat 1^{\sf T}\mat u = \sum_{w \in \V\!X} u_w = \SInc_{\dg M}(\mu).
+        \mat 1^{\sf T}\mat u = \sum_{w \in \V\!X} u_w = \SDef_{\dg M}(\mu).
     \]
 
     Finally, because $\mu$ is optimal, it must be the unique distribution
-    $\bbr{\dg M}^*$, which among those distributions that minimize $\OInc_{\dg M}$, also minimizes $\SInc_{\dg M}$, meaning $\mu = \bbr{\dg M}^*$.
+    $\bbr{\dg M}^*$, which among those distributions that minimize $\OInc_{\dg M}$, also minimizes $\SDef_{\dg M}$, meaning $\mu = \bbr{\dg M}^*$.
 \end{lproof}
 
 
@@ -2613,19 +2552,19 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
             \mu_{C}(c) \sum_{a \in \Ar} \mathbbm1[C = C_a] \alpha_a \log \nu_C (\Tgt a (c) | \Src a (c)) \\
         &= -\H(\Pr\nolimits_{\bmu}) - \sum_{a \in \Ar} \alpha_a \sum_{C \in \C} \mathbbm1[C = C_a] \sum_{c \in \V(C)}
             \mu_{C}(c)\log \nu_C (\Tgt a (c) | \Src a (c))
-            \qquad\qquad\big[\,\text{by \eqref{eq:cluster-ent-decomp}}\,\big]\\
+            \qquad\big[\,\text{by \eqref{eq:cluster-ent-decomp}}\,\big]\\
         &= -\H(\Pr\nolimits_{\bmu}) - \sum_{a \in \Ar} \alpha_a \sum_{c \in \V(C)_a}
                 \mu_{C_{\!a}}\!(c) \log  \nu_{C_{\!a}}\! (\Tgt a (c) | \Src a (c)) \\
         &= -\H(\Pr\nolimits_{\bmu}) - \sum_{a \in \Ar} \alpha_a \sum_{c \in \V(C)_a}
                 \mu_{C_{\!a}}\!(c) \log { \mu_{C_{\!a}}\! (\Tgt a (c) | \Src a (c))}
-            ~~\quad\Big[~\parbox{2.5cm}{since $\mu_{C_{\!a}}\!(\Src a(c)) > 0$ whenever
-                $\mu_{C_{\!a}}\!(c) > 0$}~\Big]\\
+            ~~\quad\bigg[~\parbox{3.8cm}{\singlespacing since $\mu_{C_{\!a}}\!(\Src a(c)) > 0$ whenever
+                $\mu_{C_{\!a}}\!(c) > 0$}~\bigg]\\
         &= -\H(\Pr\nolimits_{\bmu}) + \sum_{a \in \Ar} \alpha_a \H_{\Pr_{\bmu}}(\Tgt a | \Src a ) \\
-        &= \SInc_{\dg M}(\Pr\nolimits_{\bmu}).
+        &= \SDef_{\dg M}(\Pr\nolimits_{\bmu}).
     \end{align*}
 
-    To summarize: $\Pr_{\bmu}$ minimizes $\SInc_{\dg M}(\Pr\nolimits_{\bmu})$ among \cactree s with condtional marginals matching those of $\boldsymbol\nu$.
-    Since we know that there is a unique distribution that minimizes $\SInc_{\dg M}$ among the elements $\bbr{\dg M}_0^*$, and also that this distribution can be represented by a \actree\ (by \cref{coro:can-use-cliquetree}), we conclude that $\bmu$ must represent this distribution. Thus, $\Pr_{\bmu} = \bbr{\dg M}^*$ as desired.
+    To summarize: $\Pr_{\bmu}$ minimizes $\SDef_{\dg M}(\Pr\nolimits_{\bmu})$ among \cactree s with condtional marginals matching those of $\boldsymbol\nu$.
+    Since we know that there is a unique distribution that minimizes $\SDef_{\dg M}$ among the elements $\bbr{\dg M}_0^*$, and also that this distribution can be represented by a \actree\ (by \cref{coro:can-use-cliquetree}), we conclude that $\bmu$ must represent this distribution. Thus, $\Pr_{\bmu} = \bbr{\dg M}^*$ as desired.
 \end{lproof}
 
 The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infeasible} in a precise form that we will be able to make use of.
@@ -3402,6 +3341,7 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     $\Pr(B|A)$.
     To do so, we can run the following algorithm.     
     
+    {\singlespacingplus
     \rule{4in}{0.2ex}
     \begin{algorithmic}[1]
         \STATE $\delta \gets \epsilon$;
@@ -3418,7 +3358,8 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
         \ENDLOOP
 
     \end{algorithmic}
-    \rule{4in}{0.2ex}
+    \rule{4in}{0.2ex}%
+    }
     
     \textbf{Proof of correctness.}
     We claim that the final output of the algorithm is within $\epsilon$ of the true conditional probability $\Pr(B|A)$.
@@ -3840,7 +3781,7 @@ on joint distributions, which contrasts the convex optimization approaches of \c
 
 \begin{itemize}
     \item Run MOSEK on \eqref{prob:joint-inc} to find a distribution that minimizes $\OInc$; we refer to this method as \texttt{cvx-idef}
-    \item Use the result to run MOSEK on \eqref{prob:joint+idef} to find the special distribution $\bbr{\dg M}^*_{0^+}$; we refer to this method as \texttt{cvx+idef}. These names are due to the fact that $\SInc$ is called $\IDef{}$ in previous work \parencite{pdg-aaai,one-true-loss};
+    \item Use the result to run MOSEK on \eqref{prob:joint+idef} to find the special distribution $\bbr{\dg M}^*_{0^+}$; we refer to this method as \texttt{cvx+idef}. These names are due to the fact that $\SDef$ is called $\IDef{}$ in previous work \parencite{pdg-aaai,one-true-loss};
     thus, this refers to using the convex solver to compute minimizers of $\OInc$ with and without considering $\IDef{}$.
 
     \item Run the \texttt{pytorch} baselines.
@@ -3870,10 +3811,10 @@ on joint distributions, which contrasts the convex optimization approaches of \c
          \vspace{-1ex}
          \[
             \begin{array}{c}
-            \texttt{inc} := \SInc_{\dg M}(\mu), \\
-            \qquad \texttt{idef} := \SInc_{\dg M}(\mu),
+            \texttt{inc} := \SDef_{\dg M}(\mu), \\
+            \qquad \texttt{idef} := \SDef_{\dg M}(\mu),
             \end{array}
-            \qquad \texttt{obj} := \OInc_{\dg M}(\mu) + \gamma \SInc_{\dg M}(\mu) = \bbr{\dg M}_\gamma(\mu)
+            \qquad \texttt{obj} := \OInc_{\dg M}(\mu) + \gamma \SDef_{\dg M}(\mu) = \bbr{\dg M}_\gamma(\mu)
         \]
      \end{itemize}
 \end{itemize}
@@ -3917,16 +3858,16 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
 
 
 
-\discard{\begin{figure}
-    \includegraphics[height=0.45\textheight]{figs/gamma-vs-gap-bettergap}
-    \caption{
-        A graph of the gap (the difference between the attained objective value, and the best objective value obtained across all methods for that value of $\gamma$),
-        as $\gamma$ varies. The x-axis is $\log_{10} ( \gamma + 10^{-15})$.
-        As before, colors indicate the optimization method; here blue corresponds to \eqref{prob:joint+idef}, while orange corresonds to \eqref{prob:joint-small-gamma}, and green, as before, correponds to all optimization baselines.
-        The size of the circle illustrates the relative number of worlds.
-        See \cref{fig:gamma-v-gap-fine} for a more detailed breakdown.
-    }\label{fig:gamma-v-gap}
-\end{figure}}
+% \discard{\begin{figure}
+%     \includegraphics[height=0.45\textheight]{figs/gamma-vs-gap-bettergap}
+%     \caption{
+%         A graph of the gap (the difference between the attained objective value, and the best objective value obtained across all methods for that value of $\gamma$),
+%         as $\gamma$ varies. The x-axis is $\log_{10} ( \gamma + 10^{-15})$.
+%         As before, colors indicate the optimization method; here blue corresponds to \eqref{prob:joint+idef}, while orange corresonds to \eqref{prob:joint-small-gamma}, and green, as before, correponds to all optimization baselines.
+%         The size of the circle illustrates the relative number of worlds.
+%         See \cref{fig:gamma-v-gap-fine} for a more detailed breakdown.
+%     }\label{fig:gamma-v-gap}
+% \end{figure}}
 
 
 \begin{figure}

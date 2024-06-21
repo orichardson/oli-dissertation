@@ -11,6 +11,8 @@
 \input{pdg-preamble-v4}
 \input{labelmatrix}
 
+\setlength{\skip\footins}{4ex}
+
 %%%%%%%%%%%%%%%% FLAGS %%%%%%%%%%%%%%%%%
 \newif\ifprecompiledfigs
 	\precompiledfigsfalse
@@ -59,8 +61,8 @@
     % Relative Entropy Soup
     % A Unified Theory of Probabilistic Modeling 
     % Learning, Inference, and the Pursuit of Consistency: A Unified Theory of Probabilistic Modeling
-    A Unified Theory of Probabilistic Modeling
-        and Self-Consistency
+    A Unified Theory of Probabilistic Modeling and Self-Consistency
+    % A Unified Theory of (Possibly Inconsistent) Probabilistic Modeling
 }
 \author {Oliver E. Richardson}
 \conferraldate {August}{2024}
@@ -91,10 +93,20 @@ TODO
 \begin{acknowledgements}
 % Your acknowledgements go here. Make sure it sits inside the brackets.
 TODO
+
+% Work supported in part by MURI grant W911NF-19-1-0217.
+% Many thanks to my advisor, Joe Halpern, for his generous support, and for valuable critiques of many drafts. Thanks as well to my reviewers, who pushed me to better explain the confidence parameters, and to include a practical example (\Cref{sec:datsim}).
+% Finally, thanks to my friends, particularly Varsha Kishore and Greg Yauney, for helping me to refine the presentation of these ideas.
+
 \end{acknowledgements}
 
 % \dominitoc% do I want mini toc?
+% {%
+% \renewcommand{\thepart}{\Roman{part} :}
+\renewcommand{\thepart}{Part~\Roman{part} :}
+% \renewcommand\cftpartpresnum{Part~}
 \contentspage
+% }%
 % \tablelistpage
 \figurelistpage
 
@@ -137,7 +149,9 @@ TODO
 
 \chapter{Inference for PDGs, via Exponential Conic Programming}
     \input{chapters/infer}
-\chapter{Lower Bounds, and The Deep Connection between Inconsistency and Inference}
+
+\chapter[Lower Bounds, and the Deep Connection\texorpdfstring{\\}{}between Inconsistency and Inference]%
+    {Lower Bounds, and The Deep Connection between Inconsistency and Inference}
     \input{chapters/infer-inconsist-connect}
 
 \chapter{Reasoning with PDGs}

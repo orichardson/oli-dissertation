@@ -162,8 +162,8 @@ and a collection of equations (i.e., functional dependencies) \citep{pearl:2k}.
 %joe17
 %In deep learning, a popular class of models called
 %oli22: fix typo
-And in deep learning, a popular class of models called 
-    \emph{normalizing flows}
+% And in deep learning, a popular class of models called 
+Deep learning is all about learning functional dependencies between variables; to take just one example \emph{normalizing flows}
     %oli5: just taking first citation, to save room; the second citation isn't critical to our story, just a more modern summary.
     \citep{tabak2010density,Kobyzev_2021}
     %oli15: in neurips format, citations are cheaper, and more is better; reinstated both citations 
@@ -173,8 +173,8 @@ And in deep learning, a popular class of models called
     %spencer2.1
     % probability 
     distribution
-    over some latent space,
-    say a standard normal distribution,
+    over some latent space
+    % say a standard normal distribution,
     with a function (i.e., a functional dependence) fit to observational data.
 % In much the same way, complexity theorists often regard
 % Complexity theorists often regard
@@ -427,8 +427,8 @@ Indeed, our approach brings causal reasoning to the forefront.
 %oli22: Ok, but I don't get it; this is what we had before, except for the first two words.
 %joe18: right; see below (that's the "bear with me" part)
 % This paper
-So the paper
-describes a simple yet expressive graphical
+% So the paper
+This chapter describes a simple yet expressive graphical
     language for describing qualitative
     structure such as dependence and independence
     in probability distributions.
@@ -605,15 +605,10 @@ dependency graph (PDG)} \citep{pdg-infer}.
 %oli20: in NeurIPS format, citations are cheap, so we don't have to 
 % do the "by some accounts" thing. 
 % a \emph{directed hypergraph}---which by some accounts \citep{pdg-infer} is the qualitative structure of a newer kind of probabilistic graphical model, called a \emph{probabilistic dependency graph (PDG)} \citep{pdg-aaai}.
-a \emph{directed hypergraph}---which is the structure of
-%joe16: no reason to "date" it 
-% more recent
-another type of probabilistic graphical model:
-%joe17
-%called 
-%oli23: "a" was out of place; moving from above and putting here
-a
-\emph{probabilistic dependency graph (PDG)} \citep{pdg-aaai,pdg-infer,one-true-loss}.
+a \emph{directed hypergraph}---which, as we have already seen,
+is the structure of
+a PDG.
+% \citep{pdg-aaai,pdg-infer,one-true-loss}.
 
 % Compared to modeling with BNs, the key conceptual shift is to
 %     use a directed hypergraph instead of a directed graph. 
@@ -676,14 +671,15 @@ a
   %expressive?  It's a bad idea to say it's not well understood (as
   %opposed to pointing out cases where it gives problematic answers)
 %oli21*: Your replacement is very good, and in particular far better than what I wrote. Thank you! 
+
 %  PDGs have a qualitative semantics (in terms of a   function on
 %distributions) that is seemingly very expressive, but not
   %well-understood beyond the BN case.
 %Part of the problem is that it is not even clear what the analogue of
 %a BN's independencies should be for a cyclic graph, let alone for an
 %arbitrary directed hypergraph.
-%spencer2.1
-% Although the qualitative aspects of PDG were charactrerized
+% We develop precisely such a notion. 
+% In this work, we develop such a notion from first principles.
 Although the qualitative aspects of PDGs were characterized  
 by
 %oli21: expanding your citation
@@ -691,8 +687,6 @@ by
 \citeauthor{pdg-aaai} \cite{pdg-aaai}
 % \citet{pdg-aaai}
 using a scoring function, that scoring function does not seem to get at the qualitative aspects that we are most interested in here.
-% We develop precisely such a notion. 
-% In this work, we develop such a notion from first principles.
 %oli21: removing implication that this neatly plugs the hole in the PDG framework. 
 % In this work, we develop a semantics that does so from first principles.
 In this work, we develop from first principles an alternate qualtiative semantics for directed hypergraphs.
@@ -1037,9 +1031,9 @@ Applied to cyclic models, it yields a causally inspired notion of pairwise inter
 %wasting space in the intro to say it.  It adds nothing to the intro,
 %and detracts by puzzling the reader.  I've said this before, and I
 %believe I know better than you when it comes to these isses.
-\vfull{%
-    It also gracefully handles incomplete fragments of a causal picture, as well as ``over-determined'' ones.
-}%
+% \vfull{%
+% It also gracefully handles incomplete fragments of a causal picture, as well as ``over-determined'' ones.
+% }%
 % It is also \emph{monotonic}, in the sense that adding more 
 %     mechanisms 
 %oli1: rewriting
@@ -1360,102 +1354,16 @@ So, the qualitative aspect of a mechanism is best represented as a directed \emp
 \unskip, that can have multiple sources.
 %oli16: second part comes here. 
 
-Recall 
+Recall that a directed hypergraph (\cref{defn:hypergraph}) consists consists of a set $\N$ of nodes
+and a set $\Ar$ of hyperarcs, each $a \in \Ar$ of which is associated with
+a set  $\Src a \subseteq \N$ of source nodes and a set $\Tgt a \subseteq \N$ of target nodes.  
+For the rest of \cref{chap:QIM}, we will $(\N, \Ar) = \Ar$
+simply a \emph{hypergraph}, since all our hypergraphs will be directed.
 
-\begin{defn}
-    A \emph{directed hypergraph}
-    %oli16:
-    (or simply a {\hgraph}, since all our \hgraph s will be directed)
-    % \unskip---or simply a {\hgraph}, since
-    %     all our \hgraph s will be directed---%
-    consists of a set $\N$ of nodes
-    and a set $\Ar$ of 
-    %oli8: trying to implement the spirit of your change without breaking everything
-    % directed hyperedges, called \emph{\hyperarc s};
-    directed hyperedges, or \emph{\hyperarc s};
-    each \hyperarc\  $a \in \Ar$ is associated with
-        a set $\Src a \subseteq \N$ of
-    source nodes and a set $\Tgt a \subseteq \N$ of target nodes.    %
-    We write $\ed {\scriptstyle a}{S}{T} \in \Ar$ to specify a
-    \arc\ $a \in \Ar$ together with its sources $S = \Src a$ and targets $T = \Tgt a$.
-%
-Nodes that are neither a source nor a target of any \hyperarc\ will
-%joe16
-%seldom have any effect on our constructions, and the other nodes can
-seldom have any effect on our constructions; the other nodes can
-be recovered from the \hyperarc s (by selecting $\N := \bigcup_{a \in
-%joe16
-  %  \Ar} \Src a \cup \Tgt a$); thus we often leave $\N$ implicit,
-    \Ar} \Src a \cup \Tgt a$). Thus, we often leave $\N$ implicit,
-referring to the \hgraph\ simply as $\Ar$.
-\end{defn}
 
-%oli16: rewrote both of our paragraphs
 \commentout{
-%oli9: Although I see that this paragraph is an attempt to communicate the
-% spirit of what I wrote before but more clearly, I don't really like 
-% the result (particularly, the first half of it).  Comments  within:
-\vjoe{
-%oli9: as I see it, there's no mathematical distinction between a node
-% and a variable, apart from the set of values.  
-%joe9: But you are not typical.  A graph theorist would clearly
-% distinguish a node from the label of a node.
-%oli10: A graph theorist wouldn't bother to make a distinction at all---they would  just fix a set of nodes, and not bother with two different types of things. I've done the same in my definition of a hypergraph, but yours makes a hypergaph somehow about variables, which I think is a mistake. That's now how anyone else defines a hypergraph. In any case, I think this is a place where we're talking past each other somewhat, and should probably address synchronously.
-In  typical graphical models, a node is associated not just with a
-variable $X$, but a set $V(X)$ of possible values of X.  We
-deliberately do not do that here.  It makes perfect sense to talk
-about a variable $X$ being independent of a variable $Y$ without
-specifying the set of possible values of $X$ and $Y$.  However, when we talk
-about a distribution $\mu$ on a set of variables, we assume that the
-the variables are associated with values.  For example, we talk about
-a distribution $\mu$ on $\X = (\N,V)$ for some choice of $V$ mapping each
-variable $X \in \N$ to a set $V(X)$ of values.
-%oli9: I don't get the point of the last sentence. 
-%joe9: In retrospect, neither do I.
-% For ease of exposition (and since a variable is typically associated with a set of values), we talk about ``the set $\X$ of variables''. 
-}
-%joe7*: I don't know what it means to "identify" a node with a
-%variable name.  Nor do I know what it means to "fully" interpret a
-%node.  I rewrote the rest of the paragraph.  I found it far too
-%complicated and confusing (which you should interpret as "I believe
-%that the typical reader will find this complicated and confusing.")
-\voli{
-%oli8: moved here instead, with modifications to make you happier
-% Becaue all relevant nodes can almost always
-%oli9: I still think relevant is the better word; putting it in quotes to try to assuage your concerns above.
-%joe9: You can't use the word, either in quotes or not, without
-%explaining what "relevant" means.  The reader can't read your mind!
-%oli10: I was intending to be vague, not to be precise in a way that requires mind reading.  Vague is not the same as meaningless. 
-% Because the intended nodes $\N$ can typically
-%oli10:
-% the rest of the nodes are actually not relevant for SIM-compatibility, so perhaps we can hint at that instead. 
-Because the
-% relevant nodes can typically 
-nodes that are relevant for our purposes  
-be recovered from the \hyperarc s (by selecting $\N := \bigcup_{a \in \Ar} \Src a \cup \Tgt a$), we often surpress $\N$, referring to the directed hypergraph simply as $\Ar$.
-%
-%joe1
-%The graphical structure of a PDG is a directed hypergraph
-%    whose nodes correspond to variables.
-%oli1: I prefer the original, becasue I think the identificaiton
-% goes more smoothly one way than the other: the qualitative
-% data of a PDG becomes a directed hypergraph when you forget
-% the weights, and the fact that the nodes are variables.
-%oli1: that said, I see why starting with "a directed hypergraph"
-% makes the flow better after the definition. A rewrite attempt:
-% A directed hypergraph can be viewed as an \emph{unweighted
-%     qualitative} PDG \citep{pdg-aaai}.
-%oli7: implementing a change you asked for before, but I hadn't gotten around to
-% A directed hypergraph can be viewed as an
 A directed hypergraph---henceforth, simply a \hgraph, since it's the only kind we discuss---can be viewed as 
-    %oli7: this is the wrong citation here, because that paper defines a PDG structure to be an ordinary graph, not a directed hyeprgraph. We need to cite one of the other two papers.  Also, as you have been saying, we don't want to focus on the weights; adding parens.  
-    % an \emph{unweighted qualitative PDG} \citep{pdg-aaai}
     an \emph{(unweighted) qualitative PDG} \citep{pdg-infer}
-    %joe4*: this is now uncessary
-    %oli5: yet I strongly disagree with your approach.  The variables are not part of the hypergraph. Reinstating what I had. 
-    %joe6*: See my comment below.
-    %oli7: removing parens, and being more explicit below.
-    % by interpreting its nodes as (names of) variables.
     by identifying its nodes with variable names.
 %oli1: moving what was previously the next
 % paragraph here, before continuing with the nod to qualitative
@@ -1581,16 +1489,14 @@ For example,
         % until a distribution is specified.
 % Keeping that in mind, we conflate variable names and nodes in the \hgraph, as is standard.
 }
-}%oli16: end commentout \voli and \vjoe.
 %oli16: compromise version:
 %oli19*: a peace offering, so that we can confuse variables and nodes
 \commentout{Following the graphical models literature, we are interested in \hgraph s whose nodes correspond to variables \unskip---or, more precisely, where $\N$ is a set of variable \emph{names}. It is standard to take $\N$ to be a set $\X$ of variables, each of which implicitly comes with a  (measurable) set $\V(X)$ of possible values; we deliberately do not do that here. 
 It makes perfect sense to say that $X$ is independent of $Y$ without specifying possible values of $X$ and $Y$. Of course, when we talk concretely about a distribution $\mu$ on a set of variables $\X \cong (\N, \V)$, those variables must have possible values. The key point is that \emph{qualitative} properties of $\mu$, such as (in)dependence are expressible purely in terms of $\N$, not $\V$. }
-%oli19*: replacement
+%
+%
 Following the graphical models literature, we are interested in \hgraph s whose nodes represent variables,
 so that each $X \in \N$ will ultimately be associated with a
-%oli19: because we're talking about entropy later on and don't want to get into the subtleties of differential entrpy, I think it's easier and safer to just say finite here
-% (measurable)
 (for simplicity, finite)
 set $\V(X)$ of possible values.
 However, one should not think of $\V$ as part of the information carried by the hypergraph. 
@@ -1908,13 +1814,13 @@ Furthermore, the variables in $\U$ may not be independent of one another conditi
     %it.  (What you wrote earlier is definitely insufficient.)
     %oli21: cut
     % the directed hypergraph\
-    $\Ar = \{ \ed 1\emptyset{  \{X\}}, \ed2{\emptyset} {\{Y\}} \}$     
+    $\Ar = \{ \ed 1\varnothing{  \{X\}}, \ed2{\varnothing} {\{Y\}} \}$     
     %oli21
     % \unskip, depicted graphically in PDG notation as
     (depicted in PDG notation as
     %joe2*: what are the superscripts 1 and 2 on the edges?  
     %oli2: those are the labels of the ars.  Formally, we have \Ar = \{1, 2\},
-    % with S_1 = S_2 = \emptyset, T_1 = { X }, and T_2 = { Y }. 
+    % with S_1 = S_2 = \varnothing, T_1 = { X }, and T_2 = { Y }. 
     %joe3: This is horrible notation.  Why can't the labels just e the
     %cpts?  We've never used integers as the labels.  This confused
     %me, and I'm a coauthor.  It's bound to confuse others. 
@@ -1932,8 +1838,9 @@ Furthermore, the variables in $\U$ may not be independent of one another conditi
 %should be mentioned in Definition 1.  If we're not going to make it,
 %you should remove the labels.)
 %oli5:  Actually we *already* introduced this notation in Definition 1, when we say: "we write X --a--> Y to specify a hyperarc a \in |Ar together with its sources and targets". So, the label is the element of \Ar. \Ar is an index set; that's how it's already set up mathematically.
-    $\smash{
-    \begin{tikzpicture}[center base]
+    $
+    {
+    \begin{tikzpicture}[center base,scale=1.2]
         \node[dpadinline] (X) {$X$};
         \node[dpadinline,right=0.5em of X] (Y) {$Y$};
         %oli21: removing \tiny 1 and \tiny 2 in PDG notation.
@@ -2065,7 +1972,7 @@ The \hgraph s generated by \eqref{defn:graph-to-hypergraph}
     (i.e., $\cup_{a \in \Ar}\Tgt a \subsetneq \N$),
     \emph{\suppartl} if it contains 
         one   that is a target of multiple \arc s
-    (i.e., $\Tgt{a} \cap \Tgt{a'} \ne \emptyset$ for $a \ne a' \in \Ar$),
+    (i.e., $\Tgt{a} \cap \Tgt{a'} \ne \varnothing$ for $a \ne a' \in \Ar$),
     %oli14: moved this up from above, because it'll be useful to refer to it more than once. 
     and \emph{\unipartl} if its \hyperarc\ targets form a singleton partition 
     (i.e., $\cup_{a \in \Ar}\Tgt a \subsetneq \N$).
@@ -2420,8 +2327,8 @@ $X, Y \subseteq\N$,  and a natural number $n \ge 0$,
 %oli19*: new material; this is a bit weaker but much simpler and more pallatable. 
 \item 
 % if $\Ar$ contains a \hyperarc\ without sources targeting $X$, 
-% if there is some $a \in \Ar$ with $\Src a = \emptyset$ and $X \in \Tgt a$, 
-if $\exists a \in \Ar$ such that $\Src a = \emptyset$ and $X \in \Tgt a$, 
+% if there is some $a \in \Ar$ with $\Src a = \varnothing$ and $X \in \Tgt a$, 
+if $\exists a \in \Ar$ such that $\Src a = \varnothing$ and $X \in \Tgt a$, 
 % or a sequence of arcs that can be composed to produce such a \hyperarc, 
 then $\mu \models X {\tto} Y \land \Diamond \Ar$
 % if and only if
@@ -2458,7 +2365,7 @@ Indeed the right hand side of (a) cannot be replaced by any fixed finite number 
 %oli20: for people who want to understand the theorem more deeply, or people who might be convinced to work with QIM-compatibility as a notion of structure.  This is a critical aspect of the intuition that, from personal experience, is easy to get very wrong. 
 %oli19*: replacement. 
 Based on the intuition given after \cref{example:two-edge-det}, it may seem unnecessary to ever add more than two parallel \hyperarc s to ensure functional dependence in part (a). 
-% Indeed, that is true if $X = \emptyset$ (part (c)).
+% Indeed, that is true if $X = \varnothing$ (part (c)).
 However, this intuition implicitly assumes that the randomness $U_1$ and $U_2$ of the two mechanisms is independent conditional on $X$,
 %joe14
 %which we have warned may not be the case.
@@ -2481,22 +2388,22 @@ We start with some simple examples.
 \begin{example}
         \label{example:xy-cycle}
     Every $\mu(X,Y)$ is \cible\ with
-    \begin{tikzpicture}[center base]
+    \begin{tikzpicture}[center base,scale=1.2]
         \node[dpadinline] (X) {$X$};
-        \node[dpadinline,right=1.2em of X] (Y) {$Y$};
-        \draw[arr1] (X) to[bend left=13] (Y);
-        \draw[arr1] (Y) to[bend left=13] (X);
+        \node[dpadinline,right=1.3em of X] (Y) {$Y$};
+        \draw[arr1] (X) to[bend left=16] (Y);
+        \draw[arr1] (Y) to[bend left=16] (X);
     \end{tikzpicture},
     %oli22:
     % This is because this cycle is weaker than a \hgraph\ 
     % that can already represent any distribution, i.e.,
     because every distribution is \cible\ with
-    \begin{tikzpicture}[center base]
+    \begin{tikzpicture}[center base,scale=1.2]
         \node[dpadinline] (X) {$X$};
         \node[dpadinline,right=1.0em of X] (Y) {$Y$};
         \draw[arr1] (X) to (Y);
         \draw[arr1,<-] (X) to +(-0.68,0);
-    \end{tikzpicture},
+    \end{tikzpicture}\,,
     %oli22: before monotonicity
     % $~\rightsquigarrow~$
     % \begin{tikzpicture}[center base]
@@ -2817,9 +2724,8 @@ iff $\Pa_M(X) \cap \enV = \Pa_G(X)$ for some dag $G$ with vertices $\enV$.
 }
 % It is easy to see that,
 % in an acyclic SEM, 
-In an acyclic SEM, it is easy to see that 
-a setting of the exogneous variables determines the
-values of the endogenous variables
+% In an acyclic SEM, it is easy to see that a setting of the exogneous variables determines the values of the endogenous variables
+In an acyclic SEM, it is easy to see that a setting of the exogneous variables uniquely determines the values of the endogenous variables
 %oli14: reminding of this notation, because it will come in handy to refer to this property more briefly than the English above. 
 (symbolically: $M \models \U \tto \enV$).
 %oli5: adding this, because we use the notation below. (I still like my approch better, but I can live with this once we define $f_{\enV}$.)
@@ -2921,7 +2827,7 @@ If $\cal M$ is acyclic, then it
 %oli5: I don't understand why you're asking such questions. I define it immediately below. Also, there's an easy fix here: replace "correspond" with "extend". Or, as you do, below, with "induce".
 % A cylic PSEM, however, may correspond to more than one such distribution, or none at all.
 A cylic PSEM, however, may induce more than one such distribution, or none at all.
-% (for example, if $\U = \emptyset$, $\enV = \{X, Y\}$,  $F_X(x) = x$, and $F_Y(x) = x$), or none at all (when $\mathcal F(\mat u) = \emptyset$, but $\mu(\mat u) > 0$).
+% (for example, if $\U = \varnothing$, $\enV = \{X, Y\}$,  $F_X(x) = x$, and $F_Y(x) = x$), or none at all (when $\mathcal F(\mat u) = \varnothing$, but $\mu(\mat u) > 0$).
 %oli5: Again, your version is the 
 %joe4: 
 % This is not, in general, the case in a cyclic PSEM.  
@@ -2955,7 +2861,9 @@ This set is defined by two (linear) constraints:
     the equations $\mathcal F$ must hold with probability 1, 
     and
     %oli21:
-    \vfull{, in the case of a PSEM,}
+    % \vfull{
+    \unskip, in the case of a PSEM,
+    % }
     the marginal probability over $\U$ must
     %oli7:
     % be the specified one.    
@@ -2965,7 +2873,7 @@ This set is defined by two (linear) constraints:
 %keep it (and I see no reason to), you have to explain it better.
 %oli5: I can run with your replacement explanation in English, but I find the symbolic version far more satisfying and precise. There is value to having both.  English is full of ambiguities, and I don't want definitions like this one to rest on interpretation. I've already compiled it to math, for the reader who would rather read math than English.  
 \vfull{
-Formally, for a PSEM $\mathcal M = (M, P)$, define
+Formally, for a PSEM $\mathcal M = (M, P)$, this means defining
 %oli2: slight notational change that might better suit our uses
 % $\SD[\big]{\mathcal F, \nu} := $\\[-0.2ex]
 $\SD{\mathcal M} := $
@@ -2982,23 +2890,26 @@ $\SD{\mathcal M} := $
     % \Delta.  In this particular case, the spacing only barely works as is, and the parens make the left half twice as difficult to parse.  The \Delta also fits very nicely well next to the \V.  I suggest we dont think of \Delta$ as being meaningful on its own; define "\Delta\V" together as meaning distributions over values.
     %oli3: reverting to above
         % \nu {\,\in\,} \Delta(\V(\enV \cup \, \U))
-            \,\bigg|\!
+            ~\bigg|~
+        {\singlespacing
         \begin{array}{l}
             %oli2: swapped order of two equations to match English
             \forall Y \!\in\! \enV.~~
             % \text{ and }
             % \forall Y \in \enV.
             % \\
-            \nu\Big( f_Y(\mathcal U,
+            \nu\big( f_Y(\mathcal U,
                 % \enV {\setminus}\{Y\}
                 \enV {-} Y
-            ) \,{=}\, Y\Big) \,{=}\, 1
+            ) \,{=}\, Y
+            \big) \,{=}\, 1
             % \\ ~\text{for all $Y \in \enV$}
             ,
-            \\[0.2ex]
+            % \\[0.2ex]
+            ~
             % \qquad
             \nu(\U) = P(\U)
-        \end{array}\!\!
+        \end{array}}
         \bigg\}
 % $
 % \vspace{-1ex}
@@ -3047,13 +2958,14 @@ joint distributions $\nu(\U, \enV)$ that satisfy the two constraints above
 (or just the first of them, in the case of a non-probabilistic SEM).
 %oli21: this is not as useful as the next sentence, which subsumes it; cutting for space. 
 $\SD{\cal M}$ can be thought of as the set of distributions compatible
-wth $\cal M$, and is precisely the set-of-distribution semantics of $\cal M$, when regarded as a PDG. 
+wth $\cal M$, and captures the behavior of the causal model $\cal M$ in
+the absence of intervention.  
 % }%
 %oli21: merging sentences
 % \unskip; this set
-Furthermore, it
-captures the behavior of $\cal M$ in
-the absence of interventions.  
+It is worth noting that $\SD{\dg M}$ is also
+precisely the set-of-distribution semantics of $\cal M$, when regarded as a PDG;
+    hence the notation.
 %oli14: defining what it means to "arise", because it will be easier and shorter this way.
 A joint distribution $\mu(\mat X)$ over $\mat X \subseteq \enV \cup \U$ \emph{can arise from} a (P)SEM $\mathcal M$ iff there 
 is
@@ -3064,9 +2976,9 @@ some $\nu \in \SD{\mathcal M}$ whose marginal on $\mat X$ is $\mu$.
 %eabn y "set-of-distribution semantics".  You should have to explain
 %it.  I cut this
 %oli19: OK; I'll leave it cut, but we may want to revisit it depending on how much we talk about PDGs.
-\commentout{
-We remark that a (P)SEMs $\cal M$ is naturally a special case of a PDG, and that $\SD{\mathcal M}$ is the set-of-distributions semantics of that PDG. 
-}
+% \commentout{
+% We remark that a (P)SEMs $\cal M$ is naturally a special case of a PDG, and that $\SD{\mathcal M}$ is the set-of-distributions semantics of that PDG. 
+% }
 % Keep in mind that $\SD{\cal M}$ captures the behavior of $\cal M$ in the absence of intervention. 
 % While much of causality is about the effects of intervention, .
 %oli5: this is not an efficient use of space; moved the critical part above.
@@ -3367,7 +3279,7 @@ which can be viewed as a randomized mechanism
     % by which the variables $\U$ arise;
     % that describes how $\U$ arise;
     explaining where the variables $\U$ come from;
-    thus $\Ar_{\cal M} := \Ar_M \cup \{ \emptyset \to \U \}$
+    thus $\Ar_{\cal M} := \Ar_M \cup \{ \varnothing \to \U \}$
     is \partl.
 %joe3: nor the next line.  
 %oli3: It seems well-formed to me.  Let me try saying it another way.
@@ -4053,7 +3965,8 @@ They can be viewed as GSEMs \citep{peters-halpern-GSEMs} by selecting the defini
 % \subsection{From Witnesses to Causal Models}
 %oli18: (Spencer's Idea) changing name to emphasize interventions. 
 % \subsection{The Correspondence Between \SCibility\ Witnesses and Causal Models}
-\subsection{Interventions and the Correspondence Between Witnesses and Causal Models}
+\subsection{Interventions, and the Correspondence \texorpdfstring{\\}{} Between Witnesses and Causal 
+Models}
     \label{sec:witness-to-causal-model}
 
 %oli18: rewrote; cutting old material here.
@@ -5196,11 +5109,11 @@ capable of capturing conditional independence, functional dependence, and more,
 % on the distributions that can arise from an arbitrary dependency structure $\Ar$
 on the distributions that can arise from an \emph{arbitrary} 
 %spencer3:
-% dependency structure $\Ar$, in terms of $\IDef$, 
+% dependency structure $\Ar$, in terms of $\SDef$, 
 % the scoring function used for the qualitative structure of PDGs \cite{pdg-aaai}.
 dependency structure.
 %spencer3: moving below
-% in terms of $\IDef$, the scoring function used for the qualitative structure of PDGs \cite{pdg-aaai}. 
+% in terms of $\SDef$, the scoring function used for the qualitative structure of PDGs \cite{pdg-aaai}. 
 This connection between causality and information theory has implications for both fields. It grounds the cyclic dependency structures found in causality in concrete constraints on the distributions they represent. 
 %joe17*: You had promised references here.  We cannot include this in
 %the paper without such references.
@@ -5214,10 +5127,10 @@ In \cref{sec:scoring-funs}, we strengthen this connection. Using entropy to meas
 %oli20: connect new scoring function in terms of idef, as agreed:
 % structure, and
 structure.  
-This function turns out to have an intimate relationship with the qualitative PDG scoring fucntion $\IDef$, which we use to 
+This function turns out to have an intimate relationship with the qualitative PDG scoring fucntion $\SDef$, which we use to 
 %spencer3
 %oli22: I think the flow got worse in some ways; reverting, but will come back to this.
-% Interestingly, both our constraint and our scoring function have a close relationship with the qualitative PDG scoring function $\IDef$. We use this to show that our constraint not only applies to compatible distributions, it also applies (with some loss) to distributions that are only ``near-compatible''.
+% Interestingly, both our constraint and our scoring function have a close relationship with the qualitative PDG scoring function $\SDef$. We use this to show that our constraint not only applies to compatible distributions, it also applies (with some loss) to distributions that are only ``near-compatible''.
 show that our information-theoretic constraints degrade gracefully on ``near-compatible'' distributions.
 
 
@@ -5625,13 +5538,13 @@ some appropriate vector $\mat v$
 % The origin of this bound is actually the scoring function defined by \citet{pdg-aaai} to give qualitative semantics to PDGs.
 %spencer1
 % There is already a way to convert a \hgraph\ $\Ar$ to a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$, originally introduced for the purposes of giving qualitative semantics to PDG \cite{pdg-aaai}. 
-We now formally introduce the qualitative PDG scoring function $\IDef$, which interprets a hypergraph structure $\Ar$ as a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$.
+We now formally introduce the qualitative PDG scoring function $\SDef$, which interprets a hypergraph structure $\Ar$ as a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$.
 This \emph{information deficiency}, given by
 \begin{equation}
 %joe13: There's somethng wrong with the layout here when I latex it.
 %I think the problem is with the definition of \Idef
 %oli14: I suspect your pdg-preamble-v3.tex is out of date. I'll make sure to send you an updated version of that file
-    \IDef_{\!\Ar}(\mu) 
+    \SDef_{\!\Ar}(\mu) 
     %oli20: adding extra context
     = \mat I_\mu \cdot \mat v_{\!\Ar} 
     := - \H_\mu(\X)  + \sum_{a \in \Ar} \H_\mu(\Tgt a \mid \Src a)
@@ -5649,17 +5562,17 @@ the number of bits needed to specify a sample of $\mu$ according to its own stru
 % (i.e., the hyperarc $\to \X$, corresponding to a random mechanism that determines all variables with no input)
 %oli20: answering your prevoius %joe13 in depth lead this to be out of proportion. Shortening to something that still hopefully makes sense.
 % (i.e., the hyperarc $\to \X$, a mechanism that jointly determines $\X$ without input).
-($\emptyset \to \X$).
-% ($S {=} \emptyset \to \X {=} T$).
-% ($S = \emptyset \to \X = T$).
+($\varnothing \to \X$).
+% ($S {=} \varnothing \to \X {=} T$).
+% ($S = \varnothing \to \X = T$).
 %joe13*: Why is it important that it's a linar combination?  Why are
 %you making a fuss about this.  I would cut all this and the long
 %discussion in the previous paragraph on the information profile. 
 %It's not appropriate introductory material.  
 %oli14*: This is an important concept. The fact that it is a linear function of the information profile is important because all standard information theoretic quantities (entropy, conditional entropy, mutual information, etc), as well as all independences, dependencies, and sets thereof, can all be written as linear combinations of the information profile.  This is a natural generalization. 
 %oli20: we now lead with this, so we can cut this whole thing
-% Because it is a linear combination of (conditional) entropies of $\mu$,  $\IDef_{\!\Ar}(\mu) = - \mat v_{\!\Ar} \cdot \mat I_{\mu}$, for some vector $\mat v_{\!\Ar}$ determined by the \hgraph\ $\Ar$. 
-While $\IDef$ has some nice properties\footnote{%
+% Because it is a linear combination of (conditional) entropies of $\mu$,  $\SDef_{\!\Ar}(\mu) = - \mat v_{\!\Ar} \cdot \mat I_{\mu}$, for some vector $\mat v_{\!\Ar}$ determined by the \hgraph\ $\Ar$. 
+While $\SDef$ has some nice properties\footnote{%
 %joe13*: this is *way* too much for an introductory few paragraphs.
 %This should ge shrunk to at most two examples.  Bringing in vector
 %fields here is a sure-fire way to confuse the reader.
@@ -5680,7 +5593,7 @@ These properties include:
 %oli14: a much shorter replacement
 %oli20: improved writing in footnote and rebalanced it to fit on two lines. Changes not carefully marked. 
 For instance, it
-% For instance, $\IDef$
+% For instance, $\SDef$
 %spencer1: for readability
 % captures BN independencies, the dependencies of \cref{theorem:func}, 
 captures BN independencies and the dependencies of \cref{theorem:func}, 
@@ -5696,26 +5609,26 @@ it can also behave unintuitively in some cases; for instance, it can be negative
 Clearly, it does not measure how close $\mu$ is to being structurally compatible with $\Ar$, in general. 
 %oli20: now that we've done a better job at the beginning, we can talk about this in the next section when we get there. 
 \commentout{%
-Nevertheless, if $\mu\models \Ar$, we prove that $- \IDef_{\Ar}(\mu) = \mat v_{\!\Ar} \cdot \mat I_\mu \ge 0$. 
+Nevertheless, if $\mu\models \Ar$, we prove that $- \SDef_{\Ar}(\mu) = \mat v_{\!\Ar} \cdot \mat I_\mu \ge 0$. 
 This is quite useful; by inspecting $\mat v_{\!\Ar}$, one can often directly interpret the constraints imposed by \scibility\  in terms of well-studied information-theoretic primitives. The same connection also allows \scibility\ to elucidate some of the less inuitive information-theoretic quantities. 
 }%
 Nevertheless, there is still a fundamental relationship 
-between $\IDef$ and \scibility, as we now show.
+between $\SDef$ and \scibility, as we now show.
 %oli15*: removing the paragraph beginning " there is a school of thought" from here; moving it below. 
 %
 %oli15: this material breaks the flow; cutting it from here, and putting some of it in section 5.2 and as a transition at the end of section 5.1
 \commentout{
 %oli13: compresssing
-% While the connection made by \cref{theorem:sdef-le0} is the most important, $\IDef$ still does not capture \scibility\ exactly out of the box, as mentioned above.
+% While the connection made by \cref{theorem:sdef-le0} is the most important, $\SDef$ still does not capture \scibility\ exactly out of the box, as mentioned above.
 %oli14: this isn't quite true
-% Still, $\IDef$ does not exactly capture \scibility.
-Still, the quantity $\IDef_{\!\Ar}(\mu)$ does not determine whether or not $\mu \models \Ar$. 
+% Still, $\SDef$ does not exactly capture \scibility.
+Still, the quantity $\SDef_{\!\Ar}(\mu)$ does not determine whether or not $\mu \models \Ar$. 
 %oli14: minor tweaks to this to make it read better, that I forgot to mark precisely. 
 In \cref{sec:scoring-funs}, we derive an entropy-based scoring function that does, by directly translating conditions (a-c) to  scoring functions on witnesses, and then adding an infemum to take care of the existential quantifier (i.e. the choice of witness) implicit in \cref{defn:qim}.
 %oli13: shortening:
 % Perhaps surprisingly, it turns out that the inner part of this formula (i.e., without the existential quantifier) is in fact
 Perhaps surprisingly, without the infemum, this function is
-an instance of $\IDef$---yet not for the original \hgraph, but a transformed one.
+an instance of $\SDef$---yet not for the original \hgraph, but a transformed one.
 Thus the new scoring function is essentially an instance of the old one, tailored for \scibility.  When combined with a modest extension of \cref{theorem:sdef-le0}, this observation also gives us natural easy-to-compute bounds 
 %oli13: adding
 (\cref{theorem:siminc-idef-bounds})
@@ -5726,7 +5639,7 @@ this new \scibility-based
 scoring function.
 }
 
-% Finally, we show that \emph{even} \scibility\ has an even closer relationship to  $\IDef$. 
+% Finally, we show that \emph{even} \scibility\ has an even closer relationship to  $\SDef$. 
 
 
 %oli14*: cutting old S5 intro
@@ -6299,7 +6212,7 @@ a
 scoring function 
 % they call \emph{information deficiency}
 %oli7: 
-% which is $\IDef_{\!\Ar}(\mu)$ is a linear function of $\mu$'s information profile.
+% which is $\SDef_{\!\Ar}(\mu)$ is a linear function of $\mu$'s information profile.
 %oli9:
 % that is a linear function of $\mu$'s information profile. It was intended to quantify discrepancy between a distribution $\mu$ and a PDG's \hgraph\ structure $\Ar$;
 that converts a \hgraph\ to 
@@ -6326,7 +6239,7 @@ a linear function of $\mu$'s information profile, which was intended to quantify
 % this so-called \emph{information deficiency}, given by
 This \emph{information deficiency}, given by
 \begin{equation}
-    \IDef_{\!\Ar}(\mu) := - \H_\mu(\X)  + \sum_{a \in \Ar} \H_\mu(\Tgt a \mid \Src a),
+    \SDef_{\!\Ar}(\mu) := - \H_\mu(\X)  + \sum_{a \in \Ar} \H_\mu(\Tgt a \mid \Src a),
 \end{equation}
 %oli6.2: replacing these two sentences with one
 \commentout{
@@ -6343,7 +6256,7 @@ This \emph{information deficiency}, given by
     %oli6
     % is the number of bits need to specify randomness in a structured way, following the \arc s of $\Ar$.
     is the number of bits needed to (independently) specify randomness along the \arc s of $\Ar$.
-    The structural deficiency $\IDef_{\!\Ar}(\mu)$ is
+    The structural deficiency $\SDef_{\!\Ar}(\mu)$ is
     therefore the difference between the cost of a sample of
         $\mu$ along the structure $\Ar$, and describing it directly.
 }
@@ -6353,12 +6266,12 @@ is the difference between the number of bits needed to (independently) specify t
 % Observe that 
 %oli5: adding some important links to section 4. 
 %oli9: making this less of a nonsequitur, and introducing another important property.
-$\IDef$ has many nice properties.%
+$\SDef$ has many nice properties.%
 %oli10: these properties can go in a footnote. 
 \footnote{
 %oli10:
 % When $\Ar = \Ar_G$ for a dag $G$, then it
-When $G$ is a dag, then $\IDef_{\!\Ar_G}(\mu)$
+When $G$ is a dag, then $\SDef_{\!\Ar_G}(\mu)$
 is non-negative, and
 %oli10
 %joe10
@@ -6368,10 +6281,10 @@ is zero iff $\mu$ has the independencies of the corresponding BN,
 % an
 which is a direct
 analogue of our \cref{theorem:bns}.
-% It is easy to verify that $\IDef_{\!\Ar}$
+% It is easy to verify that $\SDef_{\!\Ar}$
 %oli10:
-% it is also easy to see that $\IDef_{\!\Ar}$
-$\IDef$ also
+% it is also easy to see that $\SDef_{\!\Ar}$
+$\SDef$ also
 % equivalence and monotonicity (\cref{sec:equivalence,sec:monotone})
 %oli6: because I cut the equivalence material from the main body, this can be compressed and done inline
 \ifvfull\vfull{
@@ -6379,14 +6292,14 @@ also satisfies analogues of
 \cref{prop:equiv-factorizations-cnd,theorem:strong-mono}.%
     \footnote{
     % By inspecting \cref{fig:info-diag}, $\H(X,Y \mid Z) = \H(X \mid Z) + \H()$. 
-    Specifically, if $\Ar_1, \Ar_2, \Ar_3$ are the three \hgraph s in \cref{prop:equiv-factorizations-cnd}, then it is easy to prove that $\IDef_{\!\Ar_1} = \IDef_{\!\Ar_2} = \IDef_{\!\Ar_3}$.
+    Specifically, if $\Ar_1, \Ar_2, \Ar_3$ are the three \hgraph s in \cref{prop:equiv-factorizations-cnd}, then it is easy to prove that $\SDef_{\!\Ar_1} = \SDef_{\!\Ar_2} = \SDef_{\!\Ar_3}$.
     In addition,
-    If $\Ar \rightsquigarrow \Ar'$, then it is easy to show that $\IDef_{\!\Ar} \ge  \IDef_{\!\Ar'}$.
+    If $\Ar \rightsquigarrow \Ar'$, then it is easy to show that $\SDef_{\!\Ar} \ge  \SDef_{\!\Ar'}$.
     See appendix for details.}
 }
 \else
 %oli6: for the conference version:
-satisfies an analogue of \cref{theorem:strong-mono}: if $\Ar \rightsquigarrow \Ar'$, then $\IDef_{\!\Ar}(\mu) \ge \IDef_{\!\Ar'}(\mu)$.
+satisfies an analogue of \cref{theorem:strong-mono}: if $\Ar \rightsquigarrow \Ar'$, then $\SDef_{\!\Ar}(\mu) \ge \SDef_{\!\Ar'}(\mu)$.
 %oli10: save a line in the footnote
  % for all $\mu$. 
 \fi
@@ -6397,8 +6310,8 @@ satisfies an analogue of \cref{theorem:strong-mono}: if $\Ar \rightsquigarrow \A
 %oli5: reintroducing subject because it is now further away, and fixing double "note".
 % Note, however, note that it can be 
 %oli11:
-% Note, however, that $\IDef_{\!\Ar}(\mu)$ can be
-However $\IDef_{\!\Ar}(\mu)$ can be
+% Note, however, that $\SDef_{\!\Ar}(\mu)$ can be
+However $\SDef_{\!\Ar}(\mu)$ can be
 %oli11:
 % negative---for instance, if $\Ar$ is empty.
 negative in some cases (e.g., when $\Ar = \emptyset$)),
@@ -6422,7 +6335,7 @@ Nevertheless,
 %That intuition belongs in the (jhournal version of) the first paper.
 %oli6*: As you correctly point out, explaining why this is a reasonable scoring function is not the point of this section. The point is not to *defend* the scoring function, but to lay out what it is as clearly and concisely as we can.  
 % the two constructions are
-\scibility\ and $\IDef$ are
+\scibility\ and $\SDef$ are
 %oli11:
 % closely related.
 deeply connected.
@@ -6438,8 +6351,8 @@ We will demonstrate a different aspect of that connection in each of the coming 
 In \cref{sec:sc-infobound}, we describe a deep and nontrivial connection between \scibility\ and
 %oli8:
 % $\SDef$, 
-% the information profile (via $\IDef$)
-information deficiency ($\IDef$),
+% the information profile (via $\SDef$)
+information deficiency ($\SDef$),
 which works in two directions.  In one direction, it gives us an entropy-based criterion to conclude that a distribution cannot be \scible\ with a \hgraph; in the other, 
 %oli8:
 %this connection allows
@@ -6457,7 +6370,7 @@ We then (\cref{sec:scoring-funs}) derive a new entropy-based scoring function to
 % which, perhaps surprisnigly, turns out to be an instance of the original scoring function, applied to a transformed directed hypergraph.
 But, perhaps surpringly, the new function turns out to be an instance of 
 % the original scoring function, 
-$\IDef$ applied to a transformed \hgraph.
+$\SDef$ applied to a transformed \hgraph.
 % a (seeming) counterexample
 % the more opaque aspects of 
 % in the information theory literature.
@@ -6631,7 +6544,7 @@ The result is a connection between information theory and causality; it yields a
 \begin{linked}{theorem}{sdef-le0}
     %oli20: adding \Diamond
     If $\mu \models \Diamond\Ar$, then
-    $\IDef_{\!\Ar}(\mu) \le 0$.
+    $\SDef_{\!\Ar}(\mu) \le 0$.
 \end{linked}
 
 %joe5:  this is avery weak argument for usefulness.  There could well
@@ -6767,8 +6680,8 @@ It is easy to see
 (e.g., by inspecting \cref{fig:info-diag-a}) 
 that
 %oli8: expanding, so reader can follow
-% $\IDef_{\text{3-cycle}}(\mu) = -\I_\mu(X;Y;Z)$
-$\IDef_{\text{3-cycle}}(\mu) = 
+% $\SDef_{\text{3-cycle}}(\mu) = -\I_\mu(X;Y;Z)$
+$\SDef_{\text{3-cycle}}(\mu) = 
     \H_\mu(Y|X) + \H_\mu(Z|Y) + \H_\mu(X|Z) - \H_\mu(XYZ)
     =
     -\I_\mu(X;Y;Z)$.
@@ -7281,9 +7194,9 @@ In light of \cref{example:ditrichotomy}, one might reasonably conjecture that th
 % It does not (see \cref{appendix:converse-sdef-le0}).
 %joe16
 %Unfortunately, it does not (see \cref{appendix:converse-sdef-le0}),
-%and so, the quantity $\IDef_{\!\Ar}(\mu)$ does not 
+%and so, the quantity $\SDef_{\!\Ar}(\mu)$ does not 
 Unfortunately, it does not (see \cref{appendix:converse-sdef-le0});
-the quantity $\IDef_{\!\Ar}(\mu)$ does not 
+the quantity $\SDef_{\!\Ar}(\mu)$ does not 
 completely determine whether or not 
 $\mu \models \Diamond \Ar$. We now pursue a new (entropy-based) scoring function that does.
 %oli20: adding
@@ -7408,7 +7321,7 @@ Although it is built from a sum of entropies, $\SIMInc_{\Ar}$ is not a linear fu
 This makes it difficult to compute, and obfuscates the connection to information theoretic primitives. 
 }%
 %oli20: replacement
-Although they seem to be very different, $\SIMInc$ and $\IDef$ turn out to be closely related.  
+Although they seem to be very different, $\SIMInc$ and $\SDef$ turn out to be closely related.  
 %
 %joe2: now sort of going back to your story, but the focus is not
 %PDGs, but the scoring function, since that we want to focus on the
@@ -7444,7 +7357,7 @@ Although they seem to be very different, $\SIMInc$ and $\IDef$ turn out to be cl
 In fact, modulo the infimum, $\SIMInc_{\Ar}$ is a special case of
 %oli14: cutting
 % the original scoring function
-$\IDef$---not for the \hgraph\ $\Ar$, but rather for a transformed one $\Ar^\dagger$ that models the noise variables explcitly. 
+$\SDef$---not for the \hgraph\ $\Ar$, but rather for a transformed one $\Ar^\dagger$ that models the noise variables explcitly. 
 % Moreover, this augmentation makes a lot of intuitive sense.
 % Starting with a PDG $\dg M$ with \arc s $\Ar$,
 %     replace each structural \arc 
@@ -7562,20 +7475,20 @@ In total, it has \arc s
 %oli14: toning down rhetoric
 % With these definitions in place, we can state a powerful theorem that allows us to write this new scoring function $\SIMInc$ in terms of he original PDG scoring function $\SDef$.
 %oli20: 
-% With these definitions in place, we can write $\SIMInc$ in terms of $\IDef$.
+% With these definitions in place, we can write $\SIMInc$ in terms of $\SDef$.
 With these definitions in place,
 we can state a theorem that bounds $\SIMInc$ above and below with information deficiencies. 
 %spencer1*: this theorem deserves more fanfare
-% The lower bound generalizes \cref{theorem:sdef-le0} to cases where $\mu \not\models \Ar$,  while the tight upper bound shows that $\SIMInc_{\!\Ar}$ can be defined in terms of $\IDef_{\!\Ar^\dagger}$.
+% The lower bound generalizes \cref{theorem:sdef-le0} to cases where $\mu \not\models \Ar$,  while the tight upper bound shows that $\SIMInc_{\!\Ar}$ can be defined in terms of $\SDef_{\!\Ar^\dagger}$.
 %oli20.1: "Its lower/upper bound" -> "The lower/upper bound"
-The lower bound generalizes \cref{theorem:sdef-le0} by giving an upper limit on $\IDef_{\!\Ar}(\mu)$ even for distributions $\mu$ that are 
+The lower bound generalizes \cref{theorem:sdef-le0} by giving an upper limit on $\SDef_{\!\Ar}(\mu)$ even for distributions $\mu$ that are 
 %oli20.1: stronger still: we give the bound for all distributions.
 % only \emph{nearly} \scible\ with $\Ar$.
 not \scible\ with $\Ar$.
 The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equivalently defined as a minimization over 
 %oli20.1: \nu is unbound. 
-    % $\IDef_{\!\Ar^\dagger}(\nu)$.
-    $\IDef_{\!\Ar^\dagger}$.
+    % $\SDef_{\!\Ar^\dagger}(\nu)$.
+    $\SDef_{\!\Ar^\dagger}$.
 
 \begin{linked}{theorem}{siminc-idef-bounds}
     %oli7: implementing your desire for parts (a) and (b)
@@ -7604,17 +7517,17 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
     If $(\X,\Ar)$ is a hypergraph,
      $\mu(\X)$ is a distribution, and $\nu(\X,\U)$ is an extension of $\nu$ to additional variables $\U = \{U_a \}_{a \in \Ar}$ indexed by $\Ar$, then:
     \[
-        \IDef_{\!\Ar}(\mu) \le
+        \SDef_{\!\Ar}(\mu) \le
         \SIMInc_{\Ar}(\mu)
-        \le \IDef_{\!\Ar^\dagger}(\nu).
+        \le \SDef_{\!\Ar^\dagger}(\nu).
     \]
     % \[
-    %     \IDef_{\!\Ar}(\mu) \le
+    %     \SDef_{\!\Ar}(\mu) \le
     %     \SIMInc_{\Ar}(\mu)
     %     =     \min_{\nu(\X\!,\,\U): 
     %                 {\nu(\X) = \mu(\X)}}
     %                 \;
-    %     \IDef_{\!\Ar^\dagger}(\nu)
+    %     \SDef_{\!\Ar^\dagger}(\nu)
     % \]
     %oli7:
     \item 
@@ -7641,7 +7554,7 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
     \[% ... and layout option 2
         % \SIMInc_{\Ar,\boldsymbol\lambda_0}(\mu)
         \SIMInc_{\Ar}(\mu)
-        = \min \Big\{\ \IDef_{\!\Ar^\dagger}(\nu) : 
+        = \min \Big\{\ \SDef_{\!\Ar^\dagger}(\nu) : 
             \begin{array}{c}
             \nu \in  \Delta\V(\X,
             %oli10:
@@ -7714,7 +7627,7 @@ minimum is achieved when $|\V(U_a)| \le |\V(\Tgt a)|^{|\V(\Src a)|}$.
 %oli14: expanding on the rest of the inequalities.
 %oli20: cutting the rest, as I've now said the important stuff above
 \commentout{
-The first result gives us bounds on $\SIMInc$ in terms of $\IDef$, making it easier to compute, and the second shows that, in the context of a minimization where it usually is \citep{pdg-aaai}, $\SIMInc$ is a special case of $\IDef$, for a graph that models the noise variables explicitly. 
+The first result gives us bounds on $\SIMInc$ in terms of $\SDef$, making it easier to compute, and the second shows that, in the context of a minimization where it usually is \citep{pdg-aaai}, $\SIMInc$ is a special case of $\SDef$, for a graph that models the noise variables explicitly. 
 
 The first inequality of \cref{theorem:siminc-idef-bounds}(a) is a slight strengthening of \cref{theorem:sdef-le0} that applies even when $\mu \not\models \Ar$. 
 But \cref{theorem:sdef-le0} is not based on some choice of scoring function---it describes a direct relationship between the information profile and \scibility.
@@ -7778,8 +7691,8 @@ has deep connections to causality and information theory.
 Many open questions remain.
 \commentout{
     A simple sounding one is the following: are there any distributions that are compatible with the 3-cycle in one direction, but not in the opposite direction? 
-    % We suspect of the symmetry, and because $\IDef$ is the same for both cycles%
-    We suspect of the symmetry, and because $\IDef$ is the same for both cycles%
+    % We suspect of the symmetry, and because $\SDef$ is the same for both cycles%
+    We suspect of the symmetry, and because $\SDef$ is the same for both cycles%
         ---but we have not been able to resolve the question one way or another (see \cref{sec:equivalence} for a partial answer).
     Another obvious question is the decision procedure for deciding whether or not $\mu \models \Ar$.
 }%
@@ -8031,7 +7944,7 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
     $\bar\mu \models (U_1, \ldots, U_k) \tto (X_1, \ldots, X_k)$
     for all $k \in [n]$, and so in particular, $\bar\mu \models \U \tto \X$. 
     This follows from \scibility's condition (c) and the fact that $G$ is acyclic, by induction.
-    % Starting with $X_1$, which has no parents (so $S_1=\emptyset$),
+    % Starting with $X_1$, which has no parents (so $S_1=\varnothing$),
     % (b) states that $\nu$ only has support on $(u, \omega)$ such that in particular,
     % $f_1(u) = X_1(\omega)$.
     In more detail:
@@ -8203,7 +8116,7 @@ Before we move on to proving the other results in the paper, we first illustrate
     \textbf{($\implies$).}
     Let $G$ be a dag.     
     If $\mu \models \Ar_{G}$, then by \cref{theorem:sdef-le0}, 
-    $\IDef_{\Ar_{G}}(\mu) \le 0$. In the appendix of \cite{pdg-aaai}, it is shown that $\IDef_{\Ar_G}(\mu) \ge 0$ with equality iff $\mu$ satisfies the BN's independencies. 
+    $\SDef_{\Ar_{G}}(\mu) \le 0$. In the appendix of \cite{pdg-aaai}, it is shown that $\SDef_{\Ar_G}(\mu) \ge 0$ with equality iff $\mu$ satisfies the BN's independencies. 
     Thus $\mu$ must satisfy the appropriate independencies.
     % 
     % \textbf{($\impliedby$).}
@@ -8903,7 +8816,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
             \hspace{-1.5cm}
             \text{by condition (a) of \cref{defn:qim}}
     \end{align*}
-    Thus, $\IDef_{\!\Ar}(\mu) \le 0$. \qedhere
+    Thus, $\SDef_{\!\Ar}(\mu) \le 0$. \qedhere
 \end{lproof}
 
 
@@ -8960,7 +8873,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
         \label{proof:siminc-idef-bounds}
     %oli14*: complete overhaul of proof, since statement has changed since the proof sketch was added
     Part (a).  The left hand side of the theorem 
-    ($\IDef_{\Ar}(\nu)\le\SIMInc_{\Ar}(\mu)$)
+    ($\SDef_{\Ar}(\nu)\le\SIMInc_{\Ar}(\mu)$)
     is a strengthening of the argument used to prove \cref{theorem:sdef-le0}. 
     Specifically,
     let $\nu^*$ be a minimizer of 
@@ -8970,7 +8883,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     % , subject to the constraint $\nu^*(\)$
     \allowdisplaybreaks
     \begin{align*}
-        &\SIMInc_{\Ar}(\mu) - \IDef_{\!\Ar}(\mu) 
+        &\SIMInc_{\Ar}(\mu) - \SDef_{\!\Ar}(\mu) 
         \\
         &= \left( \,
         \sum_{a \in \Ar} \H_{\nu^*}(\Tgt a \mid \Src a, U_a) - \H_{\nu^*}(\mathcal U) + \sum_{a \in \Ar} \H_{\nu^*}(U_a)
@@ -8993,7 +8906,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     \]
     Substituting this into our previous expression, we have:
     \begin{align*}
-        &\SIMInc_{\Ar}(\mu) - \IDef_{\Ar}(\mu) 
+        &\SIMInc_{\Ar}(\mu) - \SDef_{\Ar}(\mu) 
         \\
         &\ge - \Big(\I_{\nu^*}(\X; \U) + \sum_{a \in \Ar} \H_{\nu^*}(U_a) - \H_{\nu^*}(\U) \Big)
             + \H_\mu(\X) - \H_{\nu^*}(\U) + \sum_{a \in \Ar} \H_{\nu^*}(U_a)
@@ -9006,13 +8919,13 @@ The following fact, known as the \emph{chain rule for mutual information} will a
         %\qedhere
     \end{align*}
     The final inequality holds because of our assumption that the marginal $\nu^*(\X)$ equals $\mu(\X)$. 
-    Thus, $\SIMInc_{\Ar}(\mu) \ge \IDef_{\Ar}(\mu)$, as proimised.
+    Thus, $\SIMInc_{\Ar}(\mu) \ge \SDef_{\Ar}(\mu)$, as proimised.
 
     We now turn to the right hand inequality, and part (b) of the theorem. 
     Recall that $\nu^*$ is defined to be a minimizer of the optimization problem defining $\SIMInc$. 
-    For the right inequality $(\SIMInc_{\Ar}(\mu) \le \IDef_{\!\Ar^\dagger}(\nu))$ of part (a), observe that
+    For the right inequality $(\SIMInc_{\Ar}(\mu) \le \SDef_{\!\Ar^\dagger}(\nu))$ of part (a), observe that
     \begin{align*}
-        \IDef_{\!\Ar^\dagger}(\nu)
+        \SDef_{\!\Ar^\dagger}(\nu)
             &=
                 - \H_\nu(\X, \mathcal U)
                 + \sum_{a \in \Ar} \H_{\nu}(U_a)
@@ -9033,7 +8946,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     % Let $Q(\nu,  \Ar)$ denote the final quantity on the right. 
     % Since $\SIMInc_{\Ar}(\mu)$ is defined to be $\inf_{\nu'} Q(\nu', \Ar)$, it must be at most $Q(\nu, \Ar)$ for this particular choice of $\nu$.  
     % Therefore
-    % $ \IDef_{\!\Ar^\dagger}(\nu)  = Q(\nu,\mu,\Ar) \le \SIMInc_{\Ar}(\mu)$, 
+    % $ \SDef_{\!\Ar^\dagger}(\nu)  = Q(\nu,\mu,\Ar) \le \SIMInc_{\Ar}(\mu)$, 
     This proves the right hand side of the inequality of part (a). 
     Moreover, because the one inequality holds with equality when $\nu = \nu^*$ is a minimizer of this quantity (subject to having marginal $\mu(\X)$) we have shown part (b) as well.
 
@@ -9192,7 +9105,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 % All of these quantities are purely ``structural'' or ``qualitative'' in the sense that they are invariant to relabelings of values, and 
 % 
 % Just as conditional entropy can be written as a linear combination of unconditional entropies, so too can conditional mutual information be written as a linear combination of unconditional mutual informations: $\I(X;Y|Z) = \I(X;(Y,Z)) - \I(X;Z)$.  
-% Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \emptyset$). 
+% Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \varnothing$). 
 % Furthermore, entropy and mutual information are also interdefinable and generated by linear combinations of one another. 
 % It is easy to verify that 
 % $\I_\mu(X;Y) 
@@ -9313,7 +9226,7 @@ The following, slightly more general result,
 \begin{prop}
     $\mu \models \Ar \sqcup \{ \ed1{}X, \ed2{}X \}$ if and only if $\mu \models \Ar$ and
     %  $\H_\mu(X) = 0$.
-    $\mu \models \emptyset \tto X$. 
+    $\mu \models \varnothing \tto X$. 
 \end{prop}
 
 One can be forgiven for imagining that the conditional case would be analogous---that \scibility\ with a \hgraph\ that has two parallel arcs from $X$ to $Y$ would imply that $Y$ is a function of $X$. But this is not the case.
@@ -9392,7 +9305,7 @@ That is, there are \partl\ graphs $\Ar$ such that $\mu \emodels \Ar$ but $\mu \n
     we must satisfy 
     \begin{align*}
     0 \ge
-        \IDef_{\!\Ar}(\mu)
+        \SDef_{\!\Ar}(\mu)
         &= - \H_\mu(X,Y) + n \H_\mu(Y \mid  X) + \H_\mu(X \mid Y) \\
         &= - \I_\mu(X;Y) + (n-1) \H_\mu(Y \mid X)  
     \end{align*}
@@ -9403,7 +9316,7 @@ That is, there are \partl\ graphs $\Ar$ such that $\mu \emodels \Ar$ but $\mu \n
         \H(Y \mid X) = 1\,\text{bit},
         % \qedhere
     \]
-    and so $\IDef_{\!\Ar}(\mu) = -1\,\text{bit}$. 
+    and so $\SDef_{\!\Ar}(\mu) = -1\,\text{bit}$. 
     Intuitively, this one missing bit corresponds to the value of $A$ that is not determined by the structure of $\Ar$.
 \end{example}
 
@@ -9672,7 +9585,7 @@ $\mat x \in \mathcal F(\mat u)$ of the equations $\mathcal F$ symmetrically.
 \]
 % }
 For example, if $\mathcal M$ has 
-no exogenous variables ($\U = \emptyset$),
+no exogenous variables ($\U = \varnothing$),
 endogenous variables $\X = [X_1, \ldots, X_n]$ that are all binary, 
 and equations 
 % $f_{X_i}(\X\setminus X_i) = X_{(i+1)\pmod n}$,
@@ -9788,13 +9701,13 @@ We now verify that various results from the main text extend to E\Scibility.
 \end{itemize}
 
 
-The original scoring function $\IDef$ is related to even \scibility. 
+The original scoring function $\SDef$ is related to even \scibility. 
 
 \begin{conj}
     There is a constant $\kappa = \kappa(\Ar, \V)$ depending on the \hgraph\ $\Ar$ and the possible values $\V$ that the variables can take, such that
     %
     \[
-        \IDef_{\Ar}(\mu) \le \kappa
+        \SDef_{\Ar}(\mu) \le \kappa
         \quad\iff\quad
         \mu \emodels \Ar  
     \] 
@@ -9804,16 +9717,16 @@ The original scoring function $\IDef$ is related to even \scibility.
     Suppose $\mu \emodels \Ar$. Then there is some witness $\bar\mu$ extending $\mu$ to independent variables $\U_\Ar = \{ U_a \}_{a \in \Ar}$. 
 
     \textbf{($\implies$).}
-    Suppose that $\IDef_{\Ar}(\mu) \le \kappa$. 
+    Suppose that $\SDef_{\Ar}(\mu) \le \kappa$. 
 \end{proof}
 
 % Finally, it is worth noting that E\scibility\ coincides exactly with \scibility\ when $\Ar = \Ar_G$ for a directed acyclic graph $G$, and so \cref{theorem:bns} also applies when $\models$ is replaced with $\emodels$. 
 
 \subsection{ESIM Compatibility Scoring Rules}
 %oli11: added, but this is no longer the biggest problem with this section
-We have now seen that, $\IDef_{\Ar^\dagger}$ measures distance from 
+We have now seen that, $\SDef_{\Ar^\dagger}$ measures distance from 
     being a witness to \scibility\ (\cref{theorem:siminc-idef-bounds}(b)).
-Modulo a constant offset or limit, $\IDef_{\Ar}$, i.e., the original scoring function applied to the original \hgraph\ 
+Modulo a constant offset or limit, $\SDef_{\Ar}$, i.e., the original scoring function applied to the original \hgraph\ 
 
 Let's now repeat the same approach as the previous section, by explicitly constructing a scoring function for E\scibility.
 Extend our previous weight vector by one entry, so that $\boldsymbol\lambda = (\lambda^{\text{(a)}},\lambda^{\text{(b)}},\{\lambda^{\text{(c)}}_a\}_{a \in \Ar}, \lambda^{\text{(d)}})$
@@ -9847,7 +9760,7 @@ Recall that the key step of constructing $\Ar^\dagger$ was to add the hyperarc $
     \commentout{
     \item 
     % $\lim_{k \to \infty} \mathrm{E}\mskip-1mu\SIMInc_{\Ar, (\boldsymbol\lambda,k)}(\mu) \ge 0$
-    $\mathrm{E}\mskip-1mu\SIMInc_{\Ar}(\mu) = \IDef_{\!\Ar}(\mu) + \kappa_{\Ar}(\mu)$,
+    $\mathrm{E}\mskip-1mu\SIMInc_{\Ar}(\mu) = \SDef_{\!\Ar}(\mu) + \kappa_{\Ar}(\mu)$,
     where $\kappa_{\Ar}(\mu)$ 
     %oli11: moving this below
     % is a (possibly infinite) piecewise constant function of $\mu$ with finitely many pieces.
@@ -9855,15 +9768,15 @@ Recall that the key step of constructing $\Ar^\dagger$ was to add the hyperarc $
     \end{enumerate}
 \end{prop}
 
-In other words, $\IDef$ itself already measures distance from \emph{even \scibility}, once we find the appropriate constant to make it non-negative. 
+In other words, $\SDef$ itself already measures distance from \emph{even \scibility}, once we find the appropriate constant to make it non-negative. 
 Although has an enormous benefit of not requiring an infemum. 
 
 \TODO[ TODO:  There's an issue here I still need to finish working out. ]
 \[
-    \IDef_{\!\Ar}(\mu)
+    \SDef_{\!\Ar}(\mu)
     \le \SIMInc_{\Ar}(\mu)
-    \le \IDef_{\!\Ar^\dagger}(\nu^*)
-    \le \IDef_{\Ar}(\mu) + \kappa()
+    \le \SDef_{\!\Ar^\dagger}(\nu^*)
+    \le \SDef_{\Ar}(\mu) + \kappa()
     .
 \]
 

@@ -7,15 +7,13 @@ but in their most precise forms, they are often quite mathematical.
 In this chapter, we build up a library of standard mathematical concepts and notation needed to fully understand them. 
 % While 
 Although one effect of this chapter is to develop standard notation for standard concepts, 
-    the way we get there is 
+    the way we get there is perhaps unusual. 
 
-    % the way it fits together is 
-% but it also 
-
-The chapter also serves a second purpose: to motivate
-    prime the reader 
-    to see the most important themes and design choices 
-    that go into 
+ 
+% to motivate
+% to prime the reader 
+% to see the most important themes and design choices that go into 
+The chapter also serves a second purpose: 
     
 
 % \section{Background, Notation, and Critical Preliminaries}
@@ -42,8 +40,9 @@ A \emph{set} is a collection of unique elements,
     the natural numbers $\mathbb N = \{0, 1, 2, \ldots \}$,
     or the set $\mathbb R$ of real numbers. 
 A \emph{singleton} is a set with precisely one element. 
-We write $a \in A$, or equivalently $a : A$, 
-    to indicate that $a$ is an element of the set $A$.
+We write $a \in A$, or $a : A$, 
+    to indicate that $a$ is an element of the set $A$
+    (and $a \notin A$ to indicate otherwise).
 For brevity, we write $a,b \in A$ to indicate that both $a \in A$ and $b \in A$. 
 $A$ is a \emph{subset} of $B$ (written $A \subseteq B$) means that every element of $A$ is also an element of $B$, and $2^A$ is the set of all subsets of $A$.
 % We write $\Set$ for the collection of all sets (which is not itself a set). 
@@ -106,16 +105,28 @@ If $f, g : A \to B$ have the same behavior (i.e., $\forall a\in A.~f(a) = f(a)$)
     then they are considered equal, and we write $f = g$. 
 Thus, a function can be specified with the notation $f = a \mapsto f(a)$,
     which allows us to talk about functions without naming them.
-The \emph{preimage} of a set $U \subseteq B$ is the set $\{a \in A : f(a) \in B \}$.
-As one might hope from the notation, $A \to B$ 
+The \emph{image} of a subset $U \subseteq A$ is the set $\im(f) := \{ f(b) : a \in A\} \subseteq B$ of possible results from applying $f$; meanwhile, the \emph{preimage} of a set $V \subseteq B$ is the set 
+$f^{-1}(V) := \{a \in A : f(a) \in V \} \subseteq A$ of inputs that land in $V$.
+We can \emph{compose} the functions $f : A \to B$ and $g : B \to C$
+to form a new function $g \circ f : A \to C$, defined by $(g \circ f) := a \mapsto g(f(a))$. 
+% We also regularly make use of the \emph{indicator function}
+When $A \subseteq X$, it is often very useful to refer to the \emph{indicator function} for membership in $A$,
+\[
+\mathbbm1[A]  := x \mapsto {\singlespacing\begin{cases}
+    1 & \text{ if } x \in A \\
+    0 & \text { if } x \notin A
+\end{cases}}
+\quad: X \to \{0,1\}
+\]
+
+As one might hope from the notation, ``$A \to B$''
     is the set of functions from $A$ to $B$; it is also written $B^A$. 
 It is worth pausing here to reflect on some implications of this notation.
 First, if $1 = \{ \star \}$ is a singleton set, then an element $a \in A$ is really no different from a map $a \in A^1 = 1 \to A$. 
 Second, if $2 = \{ 0, 1\}$ represents a set with 2 elements, then 
     the elements of $2^A$ are functions assigning either $0$ (absence) or $1$ (presence) to each element of $A$---that is, they are subsets of $A$. 
 Finally, $|A^B| = |A|^{|B|}$. 
-We can \emph{compose} the functions $f : A \to B$ and $g : B \to C$
-to form a new function $g \circ f : A \to C$, defined by $(g \circ f) := a \mapsto g(f(a))$. 
+
 
 % \paragraph{Indexed sets, Tuples, and Sequeces.}
 If $I$ is a set, then an \emph{indexed set}
@@ -128,7 +139,8 @@ A \emph{sequence} is the special case of a set indexed by $\mathbb N$, and is ty
 
 %%%%%% TODO %%%%
 % - convergence of sequences.
-
+% - distances
+% - min, max, argmin, argmax
 
 \paragraph{Linear Algebra.}
 For us, a \emph{vector} is a map from a finite set $I$, called its 
@@ -196,9 +208,11 @@ The \emph{convex hull} of a subset of $U \subseteq \Rext^I$ is the smallest conv
 The \emph{extreme points} or \emph{vertices} of a convex set $A$ is the smallest subset 
 % $\matrm{Ext}(A) 
 of $A$ whose convex hull is $A$. 
-For instance, $\mathrm{Ext}(\Delta \Omega) = \{ \delta_{\omega} : \omega \in \Omega \}$. 
-If $A$ is a convex set with $|\mathrm{Ext}(A)| \in \mathbb N$,
-then $A$ is the image of a linear map ....
+% For instance, $\mathrm{Ext}(\Delta \Omega) = \{ \delta_{\omega} : \omega \in \Omega \}$. 
+% If $A$ is a convex set with $|\mathrm{Ext}(A)| \in \mathbb N$,
+% then $A$ is the image of a linear map ....
+For instance, the convex hull of $\{ (0,0), (0,1), (1,0), (1,1) \}$
+is the unit square $[0,1]^2$, and the extreme points of the unit square are those four points. 
 
 %
 A funtion $f : \Rext^I \to \Rext$ is \emph{convex} iff
@@ -210,13 +224,13 @@ Recall that a linear map is one for which this relationship always holds with eq
 A \emph{strictly convex} function, on the other hand, is one where it never does, except when $\mat u = \mat v$. 
 
 % The two notions are closely related: a c 
-Convex functions and convex sets are closely related. The set of points that lie above a function (its \emph{epigraph}) is a convex set if and only if $f$ is convex. The level sets of a function $f$ (i.e., $\{ \mat u \in \Rext^I : f(\mat u) \le k \}$ for some $k \in \Rext$) are convex if $f$ is convex. And $\mat u \mapsto \infty \mathbbm 1[\mat u \in A]$ is a convex function iff $A$ is a convex set. 
+Convex functions and convex sets are closely related. The set of points that lie above a function $f$
+ (its so-called \emph{epigraph} $\{ (\mat u, f(\mat u)) : \mat u \in \Rext^I$) 
+is a convex set if and only if $f$ is convex. The level sets of a function $f$ (i.e., $\{ \mat u \in \Rext^I : f(\mat u) \le k \}$ for some $k \in \Rext$) are convex if $f$ is convex. And $\mat u \mapsto \infty \mathbbm 1[\mat u \in A]$ is a convex function iff $A$ is a convex set. 
 
+%%% TODO %%%%
+% - cones
 
-
-%%%%% TODO %%%%%
-% - matrices, matrix multiplication
-% - convex set, function
 
 
 \paragraph{}
@@ -224,7 +238,6 @@ Convex functions and convex sets are closely related. The set of points that lie
 %%%% TODO %%%%
 % - products
 % - sums
-% - converging sequence
 % - unit interval
 % - "space" = set + topology or geoemtry
 
@@ -477,11 +490,13 @@ The converse not well appreciated,
     the constraints involved in defining a variable.
 % Still, given 
 % Given an arbitrary random variable $Z : $
-If $\Omega = \Delta \V\!X$, we can include an arbitrary random variable 
-    $Z : \V\!\X \to \V Z$ in the set $\X' := \X \cup \{Z \}$ of all variables.
+If $\Omega = \Delta \V\!X$, and  
+    $\hat Z : \V\!\X \to \V Z$
+    is an arbitrary random variable, 
+    we can regard $\hat Z$ as a variable $Z$, and include it in the set $\X' := \X \cup \{ \hat Z \}$ of all variables.
 When we do so,  
 there is a natural 1-1 correspondence between distributions $\mu \in \Delta \V\!\X$ over the original variables, and ``extended'' distributions 
-$\bar\mu \in \Delta \V\!\X'$ in which variable $Z$ and the function $Z$ applied to the other variables coincide (i.e., $\bar\mu(Z(\X) = Z)=1$).
+$\bar\mu \in \Delta \V\!\X'$ in which variable $Z$ and the function $\hat Z$ applied to the other variables coincide (formally, where $\bar\mu(\hat Z(\X) = Z)=1$).
 
 %
 Although the two perspectives seem to be equally expressive, we opt for the one in which the variables $\X$ are primitive, rather than the one in which the sample space $\Omega$ is primitive. 
@@ -489,12 +504,12 @@ After all, we are interested in modeling epistemic states that undergo structura
 % We have already seen one benefit of this, in our compact discussion of 
 We will see an even deeper connection between the two ways of thinking about (random) variables in \cref{chap:PDG-cat}.
 
-\paragraph{Dependence and Independence.} 
+\paragraph{%Dependence and 
+    Independence.} 
 Suppose that $X$, $Y$, and $Z$ are (random) variables and $\mu(X,Y,Z)$ is a distribution over them.
-We say that $X$ and $Y$ are \emph{independent} if $\mu(X,Y) = \mu(X)\mu(Y)$.
-Precisely the same is true if $X$ and $Y$ are not variables, but rather events.
-
-We say that ${X}$ is \emph{conditionally independent of ${Y}$ given ${Z}$} 
+The variables $X$ and $Y$ are \emph{independent} (according to $\mu$) iff $\mu(X,Y) = \mu(X)\mu(Y)$.
+Often it is the case that two variables are independent only when we control for something else.
+The variable ${X}$ is \emph{conditionally independent of ${Y}$ given ${Z}$} 
 (according to $\mu$),  denoted 
  % ${X} \CI_\mu {Z} \mid {Y}$, 
 $\mu \models {X} \CI {Y} \mid {Z}$, 
@@ -502,6 +517,12 @@ only if $\mu(X | Z) \mu(Y | Z) = \mu(X,Y \mid Z)$,
 or equivalently, if
 $\mu(X,Z) \mu(Y,Z) = \mu(X,Y,Z) \mu(Z)$. 
 % By multiplying both sides by $\mu(Z)^2$,
+% If $X$ and $Y$ are not variables, but rather events, then they are independent iff the same formula holds. 
+Precisely the same formulas define (conditional) independence
+    when $X$,$Y$, and $Z$ are not events, but rather events
+    (modulo the fact that conditioning on an event of probability zero is undefined).
+
+
 
 %%% perhaps this can wait for QIM section...
 % We say that $X$ \emph{determines} $Y$, and write $\mu \models X \tto Y$ only if
@@ -509,19 +530,48 @@ $\mu(X,Z) \mu(Y,Z) = \mu(X,Y,Z) \mu(Z)$.
 % It is not hard to see that $X \tto Y$ if and only if there exists a function $f : \V\!X \to \V Y$ such that $\mu(f(X) = Y) = 1$. 
 
 
-\paragraph{Expectation and Utility.} 
+\paragraph{Expectation.%
+    % and Utility
+    } 
 If $\mu$ is a probability over $\Omega$, and $X$ is random variable 
-    taking values in a convex set (i.e., $\V \! X \subseteq \Rext^I$ cvx), then the \emph{expectation} of $X$ with respect to $\mu$ is its average value, written
+whose possible values are vectors of a given shape(i.e., $\V \! X \subseteq \Rext^I$), then the \emph{expectation} of $X$ with respect to $\mu$ is intuitively its mean or average value.
+Depending on which is clearer in context, 
+    an expectation may be notated in either of the following two ways:
 \[
     \Ex_{\omega \sim \mu} \Big[ X(\omega) \Big]
         = \Ex_{\mu}[ X ]  
         := \sum_{\omega \in \Omega} \mu(\omega) X(\omega).
 \]
-In some cases, we omit the braces to reduce clutter and improve readability.
+In some cases, we omit the brackets to reduce clutter and improve readability.
+For a fixed random variable $X$, the expectation operator $\mu \mapsto \Ex_\mu[X] : [0,1]^{\V\! X} \to \Rext^I$ is a linear function of the probability distribution $\mu$.
 
-The gold standard for decision making is expected utility maximization: an agent that has an internal probability $\mu$ and a utility function $U: $
 
-\TODO
+Expectations and probabilities are closely related to convexity. 
+% In a sense, the probability simplex $\Delta \Omega$ is the prototypical convex set. 
+% \mathbbm
+% For instance, if $A \in \Rext^{I \times J}$ is a matrix, then
+% the image of $\mu(X) \mapsto \Ex_\mu[f]$.
+For instance, 
+the convex hull of $A \subseteq \Rext^I$ 
+is set of possible expectations over the extreme points of $A$,
+or more formally,
+\[
+    \mathrm{conv}(A) = \im 
+        \Big( \Delta \mathrm{Ext}(A) \ni \mu \mapsto \Ex_{v \sim \mu} [ v ] \Big).
+\]
+Thus, if $A$ is convex, to specify $a \in A$, it suffices to specify a probability distribution over $\mathrm{Ext}(A)$.  
+% Such distributions are called \emph{barycentric coordinates} for $A$.
+The components of a distribution $\mu \in \Delta \mathrm{Ext}(A)$ are called \emph{barycentric coordinates} for the element $a = \Ex_{v \sim \mu}[v] \in A$.
+
+% For instance, $\mathrm{Ext}(\Delta \Omega) = \{ \delta_{\omega} : \omega \in \Omega \}$. 
+% If $A$ is a convex set with $|\mathrm{Ext}(A)| \in \mathbb N$,
+% then $A$ is the image of a linear map ....
+
+
+%%% UTILITIES??
+% The gold standard for decision making is expected utility maximization: an agent that has an internal probability $\mu \in \Delta \Omega$, a utility function $U: $
+% 
+% \TODO
 
 \subsection{Beyond Probability}
     \label{ssec:beyond-prob}
@@ -633,7 +683,14 @@ If $(\Omega, \mathcal F)$, and $(\Omega', \mathcal G)$ are two measurable spaces
 %  - integration
 %
 
-\section{Graph Theory}
+\section{The Basic Theory of Graphs and Hypergraphs}
+
+In this dissertation, as in much of mathematics and computer science,
+the term \emph{graph} refers not to a \emph{graph}ical depiction of a function or data,
+but rather to what is more commonly known as a \emph{network}. 
+
+Graphs come in two flavors: directed and undirected. 
+
 \begin{defn}
     A \emph{(directed) (multi)graph} $G = (N, A)$, or simply a \emph{graph}, is a set $N$ of nodes,
     and a collection $A$ of arcs, such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
@@ -731,7 +788,7 @@ $\mathit{anotate} \circ \mathit{forget}$ is not the identity on (directed) graph
     subsets of $V$. 
 \end{defn}
 
-An ordinary undirected graph may be viewed as the special case in which every hyperedge contains  two vertices.
+An ordinary undirected graph may be viewed as the special case in which every hyperedge contains two vertices.
 
 \begin{prop} 
 There is a natural bijection between hypergraphs and bipartite graphs:
@@ -783,21 +840,23 @@ If necessary, we can often add an ``identity'' arc
 For these reasons, we often leave $\N$ implicit,
 referring to the directed hypergraph simply as $\Ar$.
 
-
 A directed hypergraph $(N, \mathcal A)$ can be (equivalently) defined
 as an (ordinary) directed graph $(2^N, \Ar)$ whose set of nodes is the powerset of some set $N$. 
-% 
+
 % \medskip
 % \hrule
 % \medskip
 % 
-\begin{defn}
+% \begin{defn}
 The \emph{dual} of the hypergraph $G = (V, \mathcal E)$ is
-\[
-    \check G := (\mathcal E, \{\{e \in \mathcal E : v \in e\} : v \in V\})
-    .\qedhere
-\]
-\end{defn}
+the hypergraph
+% \[
+$
+    \check G := (\mathcal E, \{\{e \in \mathcal E : v \in e\} : v \in V\}),
+$
+% \]
+which in some sense, has swapped the roles of the vertices and the hyperedges.
+Interestingly, the concept applies equally well for directed hypergraphs, and the definition is even more symmetric---yet we are not aware of any published work on subject.
 
 \begin{defn}
     The \emph{dual} of a directed hypergraph $\mathcal H = (N, \Ar)$ is 
@@ -820,19 +879,22 @@ Observe that
 \begin{align*}
     \check{\check{\Src a}}
     &= \{ n \in N : a \in \check{\Tgt n} \} \\
-    &= \{ n \in N : a \in \{ a' \in \Ar :  n \in \Src a' \} \} \\
+    &= \{ n \in N : a \in \{ a' \in \Ar :  n \in \Src {a'} \} \} \\
     &= \{ n \in N : n \in \Src a\} 
-    = \Src a;
+    = \Src a.
 \end{align*}
 % \end{prop}
-symetrically, $\Tgt a = \check{\check{\Tgt a}}$. 
+A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$. 
 % What does this look like?
 % To visualize . 
 % One might wonder why $\check\Src n$ is definde in terms of $\Tgt a$ instead of $\Src a$.
 
-See \cref{fig:dhygraph-duals} for some visual illustrations.
+See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs and their duals.
 \begin{figure}%
     \centering
+    \renewcommand\arraystretch{1.6}
+    \setlength\tabcolsep{10pt}
+    \begin{tabular}{ccc}
 % \begin{tabular}{c}
     \begin{tikzpicture}[xscale=1.2,center base]
     \begin{scope}[every node/.style={draw,rounded corners=5pt,outer sep=2pt}]
@@ -843,16 +905,8 @@ See \cref{fig:dhygraph-duals} for some visual illustrations.
         \draw[arr1,<-] (X) to node[above]{\small 1} +(-0.9,0);
         \draw[arr1] (X) to node[above,pos=0.35]{\small 2} (Y);
         \draw[arr1] (Y) to node[above,pos=0.35]{\small 3} (Z);
-    % \end{tikzpicture}\\
-    % \begin{tikzpicture}
-        \node[draw,outer sep=2pt] (1) at (-0.5,0) {1};
-        \node[draw,outer sep=2pt] (2) at (0.5,0) {2};
-        \node[draw,outer sep=2pt] (3) at (1.5,0) {3};
-        \draw[->,arr1] (1) to node[below,pos=0.35]{\small X} (2);
-        \draw[->,arr1] (2) to node[below,pos=0.35]{\small Y} (3);
-        \draw[arr1,] (3) to node[below,pos=0.35]{\small Z} +(0.9,0);
     \end{tikzpicture}
-    \hfill
+    &
     \begin{tikzpicture}[xscale=1.2,center base]
     \begin{scope}[every node/.style={draw,rounded corners=5pt,outer sep=2pt}]
         \node (A) at (0,0) {A};
@@ -865,22 +919,9 @@ See \cref{fig:dhygraph-duals} for some visual illustrations.
         \draw[arr1] (A) to node[below,pos=0.35]{\small 3} (C);
         \mergearr[arr1] BCD
         \node[above=1pt of center-BCD]{\small 4};
-    % \end{tikzpicture}\\
-    % \begin{tikzpicture}
-    \begin{scope}[shift={(-0.5,-2)}]
-        \node[draw,outer sep=2pt] (1) at (0,0) {1};
-        \node[draw,outer sep=2pt] (2) at (1,0.6) {2};
-        \node[draw,outer sep=2pt] (3) at (1,-0.6) {3};
-        \node[draw,outer sep=2pt] (4) at (2,0) {4};
-        \unmergearr[arr1] 123
-        \node[above left=1pt and 1pt of center-123]{\small A};
-        \draw[arr1] (2) to node[above,pos=0.35]{\small B} (4);
-        \draw[arr1] (3) to node[below,pos=0.35]{\small C} (4);
-        \draw[arr1,] (4) to node[above]{\small D} +(0.9,0);
-    \end{scope}
-    \end{tikzpicture}% \end{tabular}
+    \end{tikzpicture}
     %
-    \hfill
+    &
     %
     \begin{tikzpicture}[xscale=1.2,center base]
     \begin{scope}[every node/.style={draw,rounded corners=5pt,outer sep=2pt}]
@@ -890,16 +931,43 @@ See \cref{fig:dhygraph-duals} for some visual illustrations.
         \draw[arr1] (X) to node[above,pos=0.35]{\small 1} (Y);
         \draw[arr1,<-] (Y) to node[above]{\small 2} +(0.9,0);
         %
-        \begin{scope}[shift={(0.5,-1.5)}]
+    \end{tikzpicture}
+    \\[2ex]
+    \begin{tikzpicture}[xscale=1.2,center base]
+        \node[draw,outer sep=2pt] (1) at (-0.5,0) {1};
+        \node[draw,outer sep=2pt] (2) at (0.5,0) {2};
+        \node[draw,outer sep=2pt] (3) at (1.5,0) {3};
+        \draw[->,arr1] (1) to node[below,pos=0.35]{\small X} (2);
+        \draw[->,arr1] (2) to node[below,pos=0.35]{\small Y} (3);
+        \draw[arr1,] (3) to node[below,pos=0.35]{\small Z} +(0.9,0);
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}[xscale=1.2,center base]
+    % \begin{scope}[shift={(-0.5,-2)}]
+        \node[draw,outer sep=2pt] (1) at (0,0) {1};
+        \node[draw,outer sep=2pt] (2) at (1,0.6) {2};
+        \node[draw,outer sep=2pt] (3) at (1,-0.6) {3};
+        \node[draw,outer sep=2pt] (4) at (2,0) {4};
+        \unmergearr[arr1] 123
+        \node[above left=1pt and 1pt of center-123]{\small A};
+        \draw[arr1] (2) to node[above,pos=0.35]{\small B} (4);
+        \draw[arr1] (3) to node[below,pos=0.35]{\small C} (4);
+        \draw[arr1,] (4) to node[above]{\small D} +(0.9,0);
+    % \end{scope}
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}[xscale=1.2,center base]
+    % \begin{scope}[shift={(0.5,-1.5)}]
         \node[draw,outer sep=2pt] (1) at (0,0) {1};
         \node[draw,outer sep=2pt] (2) at (1,0) {2};
         \draw[arr1,<-] (1) to node[above]{\small $X$} +(-0.9,0);
         % \draw[arr1] ()
         \coordinate (a) at (0.5,-0.5);
         \mergearr[arr1] 12a
-        \node at (0.5,0) {\small $Y$};
-        \end{scope}
+        \node at (0.5,0.2) {\small $Y$};
+    % \end{scope}
     \end{tikzpicture}
+    \end{tabular}
     \caption[Examples of directed hypergraphs and their duals]
     {Examples of directed hypergraphs (first row) and their duals (second row).}
         \label{fig:dhygraph-duals}
@@ -925,18 +993,53 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 % \subsection{Independencies}
 
 
-% \subsection{Graphical Models}
-\section{A Review of Graphical Models}
+% \section{A Review of Graphical Models}
+\section{Graphical Models}
+
+A \emph{graphical model structure}
+is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges 
+somehow
+indicate local influences between variables.
+A \emph{probabilistic graphical model},
+or simply  ``graphical model'',
+is a
+graphical model structure
+together with quantitative information about these local influences.
+Semantically,
+a graphical model $\cal M$
+typically
+represents a joint probability distribution $\Pr_{\!\cal M}
+ \in \Delta \V\!\X$ over its variables.
+% \discard{
+%     Although there is often more to the story,
+%     it can typically be
+%     expressed as a product
+%     $\Pr_{\!\cal M}(\X) \propto \prod_{E \in \Ed} \phi_{E}(E)$
+%     of factors $\boldsymbol   \phi = 
+%     \{ \phi_E : \V E \to \mathbb R_{\ge 0} \}_{E \in \Ed}$
+%     over a hypergraph $(\X, \Ed)$ closely related to the structure of $\cal M$.
+%     For this reason, some authors use the term ``graphical model'' to refer to a tuple $(\X ,\Ed, \boldsymbol\phi)$,
+%     i.e., a factor graph.
+%     PDGs, however, do not represent probabilities this way.}
 
 There are two aspects any graphical model: 
 a ``qualitative/structural'' aspect, which describes influences between variables, and
 a ``quantitative/observational'' aspect, 
     that annotates those influences with data.
+    
+\subsection{Bayesian Networks and Variants}
 
 A qualitative BN, for example, is a directed graph whose semantics are given in terms of independencies: any variable $X$ is independent of its non-descendents, given the values of its parents, $\mathbf{Pa}\, X$.  
 A quantitative BN, then, includes both that directed graph, and also each variable $X$ to a conditional probability distribution $\Pr_X(X|\mathbf{Pa}\, X)$.
 
+\subsection{Factor Graphs and Variants}
 
+
+\subsection{Other Graphical Models}
+
+
+
+% \section{A Primer on Information Theory}
 \section{Information Theory}
 
 % Perhaps surprisingly

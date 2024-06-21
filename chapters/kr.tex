@@ -937,14 +937,14 @@ which typechecks because a vertex $v$ is a distribution over $\Omega$.
 \dg M_{\cal P} :=~
 \begin{tikzpicture}[center base]
     \node[dpadded] (V) at (-2,0) {$V$};
-    \node[dpadded] (W) at (0,0) {$V$};
+    \node[dpadded] (W) at (0,0) {$W$};
     
     \draw[arr2] (V) to node[above]{$p$} (W);
 \end{tikzpicture}
 \]
 
 \begin{prop}
-    $\mu \in \mathcal P$ iff it can be extended to some $\bar\mu \in \SD{\dg M_{\cal P}}$
+    $\mu \in \mathcal P$ iff it can be extended to some $\bar\mu \in \SD{\dg M_{\cal P}}$.
     That is, 
     $\mathcal P = \{ \mu(W) : \mu \in \SD{\dg M_{\cal P}} \}$. 
 \end{prop}
@@ -959,8 +959,10 @@ $\mathcal P = \{ \mu_{.5}, \delta_H \}$, where $\mu_{.5}$ assigns probability 1/
 % According to the principle of maximum entropy, we should 
 % The principle of maximum entropy tells us to select as a representative distribution 
 From a set of distributions consistent with observations, the principle of maximum entropy tells us to select the one with the highest entropy---which is a fair coin. 
+This seems quite extreme; the possibility of the double headed coin has made no difference to the maximum-entropy distribution!
 
-Part of the problem, however, is that we haven't actually modeled the whole situation---we've left out an important part of the picture: our knowledge about the bias of the coin, and how that affects the outcome.  This information is extremely easy to add to a PDG: 
+
+Part of the problem, arguably, is that we haven't actually modeled the whole situation---we've left out an important part of the picture: our knowledge about the bias of the coin, and how that affects the outcome.  This information is extremely easy to add to a PDG: 
 
 \begin{center}
 \begin{tikzpicture}[center base]
@@ -1045,9 +1047,10 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
 \begin{theorem}
     If $m$ is the mass function the belief function $\Bel$ and the plausibility
     function $\Plaus$, and $\dg M := \dg M_{\Bel} = \dg M_{\Plaus}$, then:
-    \begin{enumerate}[wide,label={(\alph*)},topsep=0pt]
+    % \begin{enumerate}[wide,label={(\alph*)},topsep=0pt]
+    \begin{enumerate}[label={(\alph*)},topsep=0pt]
     \item 
-        a distribution $\mu \in \Delta \Omega$ is the marginal
+        A distribution $\mu \in \Delta \Omega$ is the marginal
         of an extended distribution
         $\bar\mu \in \SD[\big]{\dg M} \subseteq \Delta(2^\Omega \times \Omega)$ 
         if and only if
