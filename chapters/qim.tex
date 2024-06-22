@@ -5538,8 +5538,8 @@ some appropriate vector $\mat v$
 % The origin of this bound is actually the scoring function defined by \citet{pdg-aaai} to give qualitative semantics to PDGs.
 %spencer1
 % There is already a way to convert a \hgraph\ $\Ar$ to a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$, originally introduced for the purposes of giving qualitative semantics to PDG \cite{pdg-aaai}. 
-We now formally introduce the qualitative PDG scoring function $\SDef$, which interprets a hypergraph structure $\Ar$ as a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$.
-This \emph{information deficiency}, given by
+We now return to the qualitative PDG scoring function $\SDef$, which interprets a hypergraph structure $\Ar$ as a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$.
+Recall that this \emph{structural information deficiency}, given by
 \begin{equation}
 %joe13: There's somethng wrong with the layout here when I latex it.
 %I think the problem is with the definition of \Idef
@@ -5572,46 +5572,28 @@ the number of bits needed to specify a sample of $\mu$ according to its own stru
 %oli14*: This is an important concept. The fact that it is a linear function of the information profile is important because all standard information theoretic quantities (entropy, conditional entropy, mutual information, etc), as well as all independences, dependencies, and sets thereof, can all be written as linear combinations of the information profile.  This is a natural generalization. 
 %oli20: we now lead with this, so we can cut this whole thing
 % Because it is a linear combination of (conditional) entropies of $\mu$,  $\SDef_{\!\Ar}(\mu) = - \mat v_{\!\Ar} \cdot \mat I_{\mu}$, for some vector $\mat v_{\!\Ar}$ determined by the \hgraph\ $\Ar$. 
-While $\SDef$ has some nice properties\footnote{%
-%joe13*: this is *way* too much for an introductory few paragraphs.
-%This should ge shrunk to at most two examples.  Bringing in vector
-%fields here is a sure-fire way to confuse the reader.
-%oli14: fair enough; I wasn't proposing this as a final draft, I was just trying to be accurate and complete and get us on the same page about what is true. I'll cut it down to a couple now. 
-\commentout{
-These properties include:
-\begin{itemize}[nosep]
-    \item capturing BN independencies,
-    \item capturing the dependencies in of \cref{theorem:func},
-    \item nice interactions with the qualitative information in a PDG given by a sum of relative entropies,
-    \item capturing factor graphs and their associated exponential families (as a result of the previous point),
-    \item reducing to maximum entropy in the absence of structural information, 
-    \item being easy to calculate from $\mu$ in closed form, and
-    \item being the opposite of 
-    the corresponding quantitative term in $\Inc$,
-     in the sense of having the opposite vector field.
-\end{itemize}}%
-%oli14: a much shorter replacement
-%oli20: improved writing in footnote and rebalanced it to fit on two lines. Changes not carefully marked. 
-For instance, it
-% For instance, $\SDef$
-%spencer1: for readability
-% captures BN independencies, the dependencies of \cref{theorem:func}, 
-captures BN independencies and the dependencies of \cref{theorem:func}, 
-reduces to maximum entropy for the empty \hgraph, and
-% combines conveniently with the other PDG scoring function to capture factor graphs,
-%spencer1: for line shaving
-% interacts seamlessly with the quantitative PDG scoring function \cite{pdg-aaai} to capture factor graphs.
-combines with the quantitative PDG scoring function \cite{pdg-aaai} to capture factor graphs.
-},
+While we have seen that $\SDef$ has some nice properties,%
+    \footnote{%
+    %joe13*: this is *way* too much for an introductory few paragraphs.
+    %This should ge shrunk to at most two examples.  Bringing in vector
+    %fields here is a sure-fire way to confuse the reader.
+    \commentout{
+    These properties include:
+    \begin{itemize}[nosep]
+        \item capturing BN independencies,
+        \item capturing the dependencies in of \cref{theorem:func},
+        \item nice interactions with the qualitative information in a PDG given by a sum of relative entropies,
+        \item capturing factor graphs and their associated exponential families (as a result of the previous point),
+        \item reducing to maximum entropy in the absence of structural information, 
+        \item being easy to calculate from $\mu$ in closed form, and
+        \item being the opposite of 
+        the corresponding quantitative term in $\Inc$,
+         in the sense of having the opposite vector field.
+    \end{itemize}}%
+    For instance, it captures BN independencies and the dependencies of \cref{theorem:func}, reduces to maximum entropy for the empty \hgraph, and combines with the quantitative PDG scoring function \cite{pdg-aaai} to capture factor graphs.
+    }% end footnote
 it can also behave unintuitively in some cases; for instance, it can be negative.
-% when $\Ar$ is \subpartl\ or has cycles. 
-%oli-20: new *exactly and remove "in general"
 Clearly, it does not measure how close $\mu$ is to being structurally compatible with $\Ar$, in general. 
-%oli20: now that we've done a better job at the beginning, we can talk about this in the next section when we get there. 
-\commentout{%
-Nevertheless, if $\mu\models \Ar$, we prove that $- \SDef_{\Ar}(\mu) = \mat v_{\!\Ar} \cdot \mat I_\mu \ge 0$. 
-This is quite useful; by inspecting $\mat v_{\!\Ar}$, one can often directly interpret the constraints imposed by \scibility\  in terms of well-studied information-theoretic primitives. The same connection also allows \scibility\ to elucidate some of the less inuitive information-theoretic quantities. 
-}%
 Nevertheless, there is still a fundamental relationship 
 between $\SDef$ and \scibility, as we now show.
 %oli15*: removing the paragraph beginning " there is a school of thought" from here; moving it below. 
@@ -7492,7 +7474,8 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
 
 \begin{linked}{theorem}{siminc-idef-bounds}
     %oli7: implementing your desire for parts (a) and (b)
-    \begin{enumerate}[label={\normalfont(\alph*)},wide,topsep=0pt,itemsep=0pt,parsep=0pt] \item
+    \begin{enumerate}[label={\normalfont(\alph*)},wide,topsep=0pt,itemsep=0pt,parsep=0pt]
+    \item
     %oli3: rewriting the statement
     % Consider a joint distribution $\mu(\X)$, and
     % let $\nu(\X, \mathcal U)$ be a minimizer of the the infemum in \eqref{eq:siminc}.
@@ -7555,13 +7538,13 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
         % \SIMInc_{\Ar,\boldsymbol\lambda_0}(\mu)
         \SIMInc_{\Ar}(\mu)
         = \min \Big\{\ \SDef_{\!\Ar^\dagger}(\nu) : 
-            \begin{array}{c}
+            {\singlespacing\begin{array}{c}
             \nu \in  \Delta\V(\X,
             %oli10:
                 % \hat \U_\Ar^\X
                 \U
             ) \\ \nu(\X) = \mu(\X)
-            \end{array}
+            \end{array}}
          \Big\}
          %oli22
          .
@@ -7587,16 +7570,15 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
         defined in \cref{sec:responsvars}.
 }
 %oli22*: for space reasons
-\vfull{
+% \vfull{
 %oli10:
 where the minimization is over all possible ways of assigning values to 
 %joe10
 the variables in
 %oli15:
 % $\U$, and the
-$\U$. The
-minimum is achieved when $|\V(U_a)| \le |\V(\Tgt a)|^{|\V(\Src a)|}$.
-}
+$\U$. The minimum is achieved when $|\V(U_a)| \le |\V(\Tgt a)|^{|\V(\Src a)|}$.
+% }
 %oli15:
 % and so the entropy $\H(\U)$ needed to is at most
     \end{enumerate}
@@ -8948,20 +8930,21 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     % Therefore
     % $ \SDef_{\!\Ar^\dagger}(\nu)  = Q(\nu,\mu,\Ar) \le \SIMInc_{\Ar}(\mu)$, 
     This proves the right hand side of the inequality of part (a). 
-    Moreover, because the one inequality holds with equality when $\nu = \nu^*$ is a minimizer of this quantity (subject to having marginal $\mu(\X)$) we have shown part (b) as well.
-
-    %oli23: cut
-    \commentout{
+    Moreover, because the one inequality holds with equality when $\nu = \nu^*$ is a minimizer of this quantity (subject to having marginal $\mu(\X)$) we have shown part (b) as well,
+    \vfull{%
     modulo the final claim about the size of the variables $\U$.
-     To address that final missing piece, we claim that any minimizer $\nu(\U, \X)$ may be converted to another minimizing distribution $\hat \nu(\hat \U, \X)$ over the variables $\hat \U = \{ \hat U_a \}_{a \in \Ar}$, where $\V(U_a) = \{ \text{functions } \V(\Src a) \to \V(\Tgt a) \}$.
-    % according to the transformation $\hat U_a = \Tgt a$. 
-    To do this, we 
     
-    \TODO
-    }
-    % Part (b). 
-    % 
-    % because $\nu(\X) = \mu(\X)$
+    To address that final missing piece, 
+    we claim that any minimizer $\nu(\U, \X)$ may be converted to another minimizing distribution $\hat \nu(\hat \U, \X)$ over the
+    variables $\hat \U = \{ \hat U_a \}_{a \in \Ar}$ with
+    $\V(U_a) := \V(\Src a) \to \V(\Tgt a)$.
+    More precisely, 
+    we define
+    $\hat U_a = \Tgt a$
+    % according to the transformation $\hat U_a = \Tgt a$. 
+    % To do this, we 
+    
+    }%    
 \end{lproof}
 
 

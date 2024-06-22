@@ -2,7 +2,6 @@
 
 \let\parencite\cite
 \let\textcite\citet
-\newcommand{\ssub}[1]{_{\!_{#1}\!}}
 
 \begin{center}
     \small\singlespacing
@@ -189,7 +188,7 @@ quantitative
 discrepency between $\mu$ and
 $\dg M$'s cpds, and is given by
 \begin{equation}
-    \Inc_{\dg M}(\mu)\! := \!\!\!\sum_{\ed aXY}\!\! \beta\ssub a  \Ex_{{x \sim \mu(\mskip-2.6muX\mskip-2mu)}} \kldiv[\Big]{\mu(Y|\, x)}{p_a(Y |\, x)}.
+    \OInc_{\dg M}(\mu)\! := \!\!\!\sum_{\ed aXY}\!\! \beta\ssub a  \Ex_{{x \sim \mu(\mskip-2.6muX\mskip-2mu)}} \kldiv[\Big]{\mu(Y|\, x)}{p_a(Y |\, x)}.
     \label{eq:inc}
 \end{equation}
 % \vskip-2ex
@@ -200,7 +199,7 @@ of using codes optimized for $p$, when in fact samples are distributed according
 But if one uses edges in proportion to the confidence one has in
 them, then inefficiencies for of high-confidence cpds are compounded,
 and hence more costly.
-So $\Inc_{\dg M}(\mu)$ measures the total excess cost of
+So $\OInc_{\dg M}(\mu)$ measures the total excess cost of
 using $\dg M$'s cpds in proportion to their confidences $\bbeta$,
 when worlds are distributed according to $\mu$.
 
@@ -208,7 +207,7 @@ The \emph{inconsistency} of $\dg M$,
 denoted
 $\aar{\dg M}$,
 is the smallest possible incompatibility of $\dg M$ with any distribution:
-$\aar{\dg M} := \inf_\mu \Inc_{\dg M}(\mu)$.
+$\aar{\dg M} := \inf_\mu \OInc_{\dg M}(\mu)$.
 This quantity, which does not depend on $\balpha$, is the primary focus of this paper.
 
 The second scoring function defined by a PDG $\dg M$, called the \emph{I}nformation \emph{Def}iciency, measures the {qualitative} discrepency between $\dg M$ and $\mu$, and is given by
@@ -228,13 +227,13 @@ As shown by \textcite{pdg-aaai},
 it is via these two scoring functions that PDGs capture
 other graphical models.
 The distribution specified by a BN $\dg B$
-is the unique one that minimizes both $\Inc_{\dg B}$ and $\SDef_{\dg B}$ (and
+is the unique one that minimizes both $\OInc_{\dg B}$ and $\SDef_{\dg B}$ (and
 hence every positive linear combination of the two), while the
 distribution specfied by a factor graph $\Phi$ uniquely minimizes the
-sum $\Inc_{\Phi} + \SDef_{\Phi}$.
+sum $\OInc_{\Phi} + \SDef_{\Phi}$.
 In general, for any $\gamma > 0$, one can consider a weighted combination
 \(
-    \bbr{\dg M}_\gamma(\mu) \!:= \Inc_{\dg M}(\mu) + \gamma\; \SDef_{\dg M}(\mu),
+    \bbr{\dg M}_\gamma(\mu) \!:= \OInc_{\dg M}(\mu) + \gamma\; \SDef_{\dg M}(\mu),
 \)
 for which there is a corresponding $\gamma$-inconsistency $\aar{\dg M}_\gamma := \inf_\mu \bbr{\dg M}_\gamma(\mu)$.
 In the limit as $\gamma \to\! 0$, there is always a unique best distribution
@@ -3020,28 +3019,28 @@ We now enumerate the (in)equalities to prove them.
 \item Let $\mu(X)$ denote the (unique) optimal distribution for $\dg M_1$.
 	Now, the joint distribution $\mu(X,Y) := \mu(X) f(Y|X)$ has incompatibility with $\dg M_2$ equal to
 	\begin{align*}
-		&\Inc_{\dg M_2}(\mu(X,Y)) \\
+		&\OInc_{\dg M_2}(\mu(X,Y)) \\
         &=  \beta \kldiv{\mu(X)}{p(X)} +
 			\zeta \kldiv{\mu(X)}{q(X)} + (\beta\!+\!\zeta)\Ex_{x\sim\mu}\big[ \kldiv{\mu(Y|x)}{f(Y|x)} \big] \\
-			&= \Inc_{\dg M_1}(\mu(X)) + (\beta\!+\!\zeta) \Ex_{x \sim \mu}\kldiv{\mu(Y|x)}{f(Y|x)}
+			&= \OInc_{\dg M_1}(\mu(X)) + (\beta\!+\!\zeta) \Ex_{x \sim \mu}\kldiv{\mu(Y|x)}{f(Y|x)}
 				\\
 			&= \aar{\dg M_1}
 				& \hspace{-4in}{\singlespacing\Big[\begin{array}{c}
 					\text{as $\mu(Y|x) = f(Y|x)$ wherever $\mu(x)>0$,}\\
-					\text{and $\mu(X)$ minimizes $\Inc_{\dg M_1}$}
+					\text{and $\mu(X)$ minimizes $\OInc_{\dg M_1}$}
 			\end{array}\Big]}.
 	\end{align*}
-	So $\mu(X,Y)$ witnesses the fact that $\aar{\dg M_2} \le \Inc_{\dg M_2}(\mu(X,Y)) = \aar{\dg M_1}$.
+	So $\mu(X,Y)$ witnesses the fact that $\aar{\dg M_2} \le \OInc_{\dg M_2}(\mu(X,Y)) = \aar{\dg M_1}$.
 	Furthermore, every joint distribution $\nu(X,Y)$ must have at least this incompatibility,
-	as it must have some marginal $\nu(X)$, which, even by itself, already gives rise to incompatibility of magnitude $\Inc_{\dg
-	M_1}(\nu(X)) \ge \Inc_{\dg M_1}(\mu(X)) = \aar{\dg M_1} $.
+	as it must have some marginal $\nu(X)$, which, even by itself, already gives rise to incompatibility of magnitude $\OInc_{\dg
+	M_1}(\nu(X)) \ge \OInc_{\dg M_1}(\mu(X)) = \aar{\dg M_1} $.
 	And since this is true for all $\nu(X,Y)$, we have that $\aar{\dg M_2} \ge \aar{\dg M_1}$. So $\aar{\dg M_2} = \aar{\dg M_1}$.
 
 \item
 The equals sign in $\dg M_3$ may be equivalently interpreted as a cpd $\mathit{eq}_{}(X_1|X_2) := x_2 \mapsto \delta_{x_2}(X_1)$, a cpd
-$\mathit{eq'}_{}(X_2|X_1) := x_1 \mapsto \delta_{x_1}(X_2)$, or both at once; in each case, the effect is that a joint distribution $\mu$ with support on an outcome for which $X_1 \ne X_2$ gets an infinite penalty, so a minimizer $\mu(X_1,X_2,Y)$ of $\Inc{\dg M_3}$ must be isomorphic to a distribution $\mu'(X,Y)$.
+$\mathit{eq'}_{}(X_2|X_1) := x_1 \mapsto \delta_{x_1}(X_2)$, or both at once; in each case, the effect is that a joint distribution $\mu$ with support on an outcome for which $X_1 \ne X_2$ gets an infinite penalty, so a minimizer $\mu(X_1,X_2,Y)$ of $\OInc{\dg M_3}$ must be isomorphic to a distribution $\mu'(X,Y)$.
 
-Furthermore, it is easy to verify that $\Inc_{\dg M_2}(\mu'(X,Y)) = \Inc_{\dg M_3}(\mu(X,X,Y))$. More formally, we have:
+Furthermore, it is easy to verify that $\OInc_{\dg M_2}(\mu'(X,Y)) = \OInc_{\dg M_3}(\mu(X,X,Y))$. More formally, we have:
 \begin{align*}
 	\aar{\dg M_3} &= \inf_{\mu(X_1,X_2, Y)} \Ex_\mu\left[
         \begin{array}{cc}
@@ -3064,7 +3063,7 @@ Furthermore, it is easy to verify that $\Inc_{\dg M_2}(\mu'(X,Y)) = \Inc_{\dg M_
 		+ \zeta \log \frac{\mu(X)}{q(X)}
 		+ (\beta\!+\!\zeta) \log\frac{\mu(Y|X)}{f(Y|X)}
 		 \right] \\
-	&= \inf_{\mu(X,Y)} \Inc_{\dg M_2}(\mu)\\
+	&= \inf_{\mu(X,Y)} \OInc_{\dg M_2}(\mu)\\
 	&= \aar{\dg M_2}.
 \end{align*}
 
@@ -3284,7 +3283,7 @@ where $\mathit{const}$ does not depend on $h$. To see this, let $\dg M_2$ be the
 		\overbracket{
 		\gamma \log \frac{\mu(XY)}{s(XY)}
 		\frac{\mu(XY)}{d(XY)}
-		+ \log \frac{\mu(Y|X)}{h(Y|X)} }^{\Inc(\mu)}
+		+ \log \frac{\mu(Y|X)}{h(Y|X)} }^{\OInc(\mu)}
         \\[-0.5ex]
         &\hspace{3cm}
 		+

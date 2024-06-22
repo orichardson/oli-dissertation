@@ -838,10 +838,12 @@ to $Y$,  $x \in
 Formally, define
     \[ \SD[\big]{\dg M} :=
     \left\{\mu \in \Delta \V\!\X ~\middle|~
-        {\singlespacing\begin{array}{l}
-        \forall \ed aXY \in \Ar, x \!\in\!\V\!X, y \!\in\! \V Y.\\[0.1ex] 
-        ~~\mu(Y{=}y \mid X{=}x) \geq \p_a(y \mid x) 
-        \end{array}} \right\}.
+        % {\singlespacing\begin{array}{l}
+        % \forall \ed aXY \in \Ar, x \!\in\!\V\!X, y \!\in\! \V Y.\\[0.1ex] 
+        % ~~\mu(Y{=}y \mid X{=}x) \geq \p_a(y \mid x) 
+        % \end{array}}
+        \forall \ed aXY \in \Ar.~\mu(Y|X) = \p_a(Y|X)
+        \right\}.
     \]
     % }
 We say that
@@ -851,7 +853,7 @@ $\dg M$ is \emph{inconsistent} if $\SD{\dg M} = \emptyset$, and \emph{consistent
 % is really an observational notion---it takes into account 
 Note that $\SD{\dg M}$
 % is independent of 
-does not depepend on the weights $\balpha$ or $\bbeta$.
+does not depend on the weights $\balpha$ or $\bbeta$.
 Furthermore, it reflects only the quantiative probabilistic information in the PDG; it does not say anything about independencies, for example.
 Developping an analogous definition for a \emph{qualitative} information in a PDG is far more subtle, and is the subject of \cref{chap:QIM}. 
 
@@ -864,19 +866,23 @@ In the next subsection, we develop another semantics, which, among other things,
     \label{sec:scoring-semantics}   
 
 % We now explain the primary way that PDGs 
-We now develop the full PDG semantics. 
+We now present the full PDG semantics. 
 % We now give the full semantics . 
 Specifically, we will interpret a PDG $\dg M$ 
 not as a (convex) set of distributions, but rather as a
 (convex) \emph{scoring function} on distributions. 
 % given an arbitrary distribution 
-Given $\mu \in \Delta \V\!\X$,
-
+Given $\mu \in \Delta \V\!\X$, the scoring function for $\dg M$
 returns a real-valued score,
 % indicating the degree of \emph{incompatibility} between $\mu$ and $\dg M$.
 indiating how well (or, rather, how poorly) $\mu$ matches the information in $\dg M$. 
  % returns a real-valued score indicating how well $\mu$ fits $\dg M$.
 Distributions with the lowest (best) scores are those that most closely match the cpds in $\dg M$, and contain the fewest unspecified correlations.
+
+% This scoring function has two components: 
+%     one for the qualitative (observational) information in the PDG, 
+%     and one for the qualitative (structural information). 
+
 
 These two aspects of the scoring function corresond 
 to the two kinds of information present in a PDG:
@@ -888,237 +894,248 @@ that quantify discrepancy between
 each type of information and a distribution
 $\mu \in \Delta \V \!\X$ over its variables.
 
-The \emph{observational incompatibility} of $\mu$ with $\dg M$, which
-can be thought of as a ``distance''  between $\mu$ and the cpds of $\dg M$,
+\paragraph{Quantitative/Observational Scoring.}
+We need a function that measures ``distance'' between $\mu$ and the cpds of $\dg M$.
+The key desideratum for such a function is that it must assign higher scores to distributions $\mu$ when $\dg M$ requires larger changes to be consistent with $\dg M$. 
+In principle, there are many functions with this property. 
+Yet, because it is a discrepancy between beliefs ($\dg M$) and reality ($\mu$)
+    there is an especially natural way of measuring its magnitude: relative entropy.
+
+% remind reader about which argument is which and refresh on the formula.   
+Recall (from \cref{sec:relent-primer}) that relative entropy 
+% $\thickD(\mu\Vert p)$
+$\kldiv{\mu}{p} = \Ex_{\mu}[\log \frac\mu p]$
+measures divergence of a belief $p$ with respect to reality $\mu$.
+It can be viewed, for example, as the overhead (in extra bits per sample)
+of using representations optimized for $p$, when in fact samples are distributed according to $\mu$ \citep{mackay2003information}.
+This suggests scoring distributions with a weighted sum of relative entropies
+    of the appropriate types. 
+
+% We measure the magnitude of this perturbation with relative entropy.
+\begin{defn}
+    \label{def:inc}
+The \emph{observational incompatibility} of $\mu(\X)$ with 
+$\dg M 
+= (\X, \Ar, \mathbb P, \balpha, \bbeta)
+$
 is given by the weighted sum of relative entropies:
-\begin{align*}
+\begin{equation}
     \OInc_{\dg M}(\mu) :=
         \sum_{\ed aST \mathrlap{\,\in \Ar}} \subafalse
-        \beta_a\, \kldiv[\Big]{\mu(\Tgt a,\Src a)}{\p_a(\Tgt a | \Src a) \mu(\Src a)}.
-\end{align*}
-Under a standard interpretation of the relative entropy $\kldiv{\mu}{p} \mskip-1.5mu=\mskip-1.5mu \Ex_{\mu}[\log \frac\mu p]$,
-$\OInc_{\dg M}$ measures the excess cost of using codes optimized for the cpds of $\dg M$ 
-(weighted by their confidences),
-when reality is
-distributed according to $\mu$.
-
-The second scoring function measures
-the extent to which
-$\mu$ 
-is incompatible with 
-a causal picture consisting of independent mechanisms 
-along each hyperarc. 
-This is captured by the
-\emph{structural deficiency}
-(of $\mu$ with $\dg M$), 
-and given by
-\begin{equation*}
-    \SDef_{\dg M}(\mu) := \,
-        \pqty[\Big]{\; \sum_{\ed aST \mathrlap{\,\in \Ar}}\subafalse \alpha_a\, \H_\mu(\Tgt a | \Src a) } - \H(\mu).
-\end{equation*}
-Note that
-$\SDef_{\dg M}$
-does not depend on the cpds
-of $\dg M$, nor the possible values of the 
-variables; it
-is defined purely in terms of
-the weighted hypergraph structure $(\Ar,\balpha)$.
-
-
-If the observational and structural information conflict, 
-then the distribution(s) that best represent a PDG 
-will depend
-on the importance of structure relative to observation,
-% \discard{ This is captured by a trade-off 
-%     parameter $\gamma \ge 0$, which 
-%     can be used to define the scoring function
-%     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
-as captured by a trade-off parameter $\zogamma \in [0,1]$
-that controls the convex combination
-$(1-\zogamma)\OInc + \zogamma \SDef$. 
-So as to simplify the math
-and match the notation in
-previous work (\citeyear{pdg-aaai,one-true-loss}),
-we mostly use a rescaled variant with a different parameterization.
-Using
-$\gamma := \nicefrac{\zogamma}{(1-\zogamma)} \in [0,\infty]$,
-define the overall scoring function:
-\begin{align*}
-    \bbr{\dg M}_\gamma&(\mu) 
-        := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
-            \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
-        &= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\dg M}(\mu)\, \Big) \\[-0.1ex]
-        &= \Ex\nolimits_{\mu}\bigg[
-            \,
-            \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
-            \log \frac
-            {\mu(\Tgt a| \Src a)^{\beta_a - \gamma \alpha_a}}
-            {\p_a(\Tgt a | \Src a)^{\beta_a}}
-        \bigg] - \gamma \H(\mu)
-        .
-\end{align*}
-
-
-
-This scoring function has two components: 
-    one for the qualitative (observational) information in the PDG, 
-    and one for the qualitative (structural information). 
-We start with the first component of the score, which assigns higher scores to
-distributions that require a larger perturbation in order to be consistent with
-$\dg M$.  
-We measure the magnitude of this perturbation with relative entropy. In
-particular, for an arc $\ed aXY$ and $x \in \V(X)$, we measure
-the relative entropy from $\p_a(x)$ to $\mu(Y \!= \cdot\mid X=x)$, and take the
-expectation over $\mu_X$ (that is, the marginal of $\mu$ on $X$). We then sum
-over all the arcs $a$ in the PDG, weighted by their reliability.
-
-
-\begin{defn}\label{def:inc}
-    For a PDG $\dg M$, the (observational) \emph{incompatibility} of a
-    a joint distribution $\mu$ over $\V(\dg M)$, is given by
-    \[
-	\OInc_{\dg M }( \mu) := 
-		\!\!\!\!\!\!\sum_{\ed L{X\,}{\,Y} \in \Ar^{\dg M}} \!\!\!\!\!\beta_a^{\dg M} \Ex_{x \sim \mu_{_X}}\!\!
-\left[\kldiv[\Big]{ \mu(Y \mid X {=} x) }{\p_a^{\dg M}(x) } \right] , \]
-	where $\kldiv{\mu}{\nu} = \sum_{w \in \text{Supp($\mu$)}} \mu(w) \log\frac{\mu(w)}{\nu(w)}$ is the 
-	relative entropy from $\nu$ to $\mu$.
-% \vfull{
-	The (observational) \emph{inconsistency of PDG $\dg M = 
-        (\N, \Ar, \mathbb P, \balpha, \bbeta)
-        $}, 
-	\[ 
-        % \OInc(\dg M) 
-        \aar{\dg M}_0
-        := 
-        % \inf_{ \mu \in \Delta [W_{\cal V}]} 
-        \inf_{ \mu \in \Delta \V\!\X} 
-        \OInc_{\dg M}(\mu) . 
-    \]
-    is the minimum possible incompatibility of $\dg M$ with any distribution $\mu$.
-% }
+        \beta_a\, \kldiv[\Big]
+            {\mu(\Tgt a,\Src a)}
+            {\p_a(\Tgt a | \Src a)\, \mu(\Src a)}.
+        % \qedhere
+        \mathrlap{\qquad\qquad\popQED}
+        % \popQED
+            \label{eq:oinc1}
+\end{equation}
 \end{defn}
 
-\temphide{
-The idea behind this definition of inconsistency is to choose a
-distribution $\mu$ that minimizes the total number of bits required to
-encode all of the relevant conditional marginals. More precisely, fix
-a distribution $\mu$. For each arc $\ed aXY \in \Ar$ and $x \in \V X$,
-we are given a code for $Y$ optimized for the distribution $\p_a(x)$,
-and asked to transmit data from $\mu(Y\mid x)$; we incur a cost for
-each bit required beyond what we would have used had we used a code
-optimized for the actual distribution $\mu(Y\mid X=x)$. To obtain the
-cost for $a$, we take a weighted average of these costs, where the
-weight for the value $x$ is the probability $\mu_X(x)$. We do this for
-every arc $a \in \Ar$, summing the cost.
+As we have argued, not all inconsistencies are equally problematic. 
+% If one uses cpds in proportion to the confidence one has in them, then
+Discrepancies with low confidence cpds are not as problematic as  discrepancies with trusted, high-confidence ones.
+The confidences $\bbeta$ operationalize this relative importance. 
+% Discrepancies for low-confidence cpds are less costly for
+% Inefficiencies for of high-confidence cpds are compounded, and hence more costly
+So overall,
+% Under the standard interpretation of the relative entropy,
+$\OInc_{\dg M}$ measures the excess cost of using codes optimized for the cpds of $\dg M$ (weighted by their confidences $\bbeta$), when reality is
+distributed according to $\mu$.
+%%%%%%%%%%%%%%%%%%%%%%
+% If one uses cpds in proportion to the confidence one has in them, then inefficiencies for of high-confidence cpds are compounded,
+% and hence more costly.
+% So $\Inc_{\dg M}(\mu)$ measures the total excess cost of
+% using $\dg M$'s cpds in proportion to their confidences $\bbeta$,
+% when worlds are distributed according to $\mu$.
 
-For even more intuition, imagine two agents ($A$ and $B$) with
-identical beliefs described by a PDG $\dg M$ about a set of variables
-that are in fact distributed according to $\mu$. For each arc $\ed aXY
-\in \Ar^\dg M$, values $x,y \in \V(X,Y)$ are chosen according to
-$\mu(X,Y)$ and $x$ is given to both agents. 
 
-At this point, the agents, having the same conditional beliefs, and
-the same information about $Y$, agree on the optimal encoding of the
-possible values of $Y$ as sequences of bits, so that if $y$ were drawn
-from $\p_a(x)$, the fewest number of bits would be needed to
-communicate it in expectation. The value of $y$---which is distributed
-not according to $\p_a(x)$, but $\mu(Y \mid X=x)$---is now given to
-agent A. The agents pay a cost equal the number of bits needed to
-encode $y$ according to the agreed-upon optimal code, but reimbursed
-the (smaller) cost that would have been paid, had the agents beliefs
-lined up with the true distribution $\mu$.
+% There is actually more than one way of making this precise. 
 
-Repeating for each arc and summing the expectations of these costs, we
-can view $\OInc_{\dg M}(\mu)$ as the total number of \emph{additional}
-expected bits required to communicate $y$ with a code optimized for
-$\p_a(x)$ instead of the true conditional distribution   $\mu(Y \mid
-X=x)$. 
+In \eqref{eq:oinc1}, 
+% for each $a \in A$, 
+we have one ``belief'' distribution per hyperarc $\ed aXY \in \Ar$, 
+namely, the one induced by drawing $x \sim \mu(X)$ and applying 
+the cpd $\p_a(Y|X{=}x)$. 
+%
+At the same time, it also makes sense to model things at a finer level.
+A case could also be made that $\p_a$ describes not one context-dependent belief, but rather a separate belief $\p_a(Y|x)$ each 
+% value of $X$. 
+$x \in \V\!X$.
+This suggests a different approach:
+for each $\ed aXY$ and $x \in \V\!X$, start by measuring
+the relative entropy from $\p_a(Y|x)$ to $\mu(Y|X{=}x)$.
+% Just as different cpds are weighted differently,
+We still want to combine these into a single number, 
+and not all of these beliefs have equal importance--those
+% that correspond to $x$ that are  $\mu(X{=}x) \approx 0$
+that correspond to the likeliest values of $X$ should have the most weight---%
+which suggests taking an expectation of these quantities with respect to the marginal distribution $\mu(X)$.
+After taking a weighted sum over arcs as before, we would get the quantity
+% on the left of \eqref{eq:oinc2}. 
+\begin{equation}
+    \OInc_{\dg M }( \mu ) = 
+        \sum_{\ed aXY \mathrlap{\in \Ar}}~ \beta_a \cdot \Ex_{x \sim \mu(X)} 
+        \left[\kldiv[\Big]{ \mu(Y \mid X {=} x) }{\p_a(Y|\,x) } \right]
+    % \OInc_{\dg M}(\mu)  = \sum_{\ed aXY}\!\! \beta\ssub a  \Ex_{{x \sim \mu(X)}} \kldiv[\Big]{\mu(Y|\, x)}{p_a(Y |\, x)}
+    .
+        \label{eq:oinc2}
+\end{equation}
+% It is easy to show that this definition of $\OInc$ is the same
+% as the previous one.
+It is not hard to show that our two formulas for $\OInc$, 
+\eqref{eq:oinc1} and \eqref{eq:oinc2}, are in fact equal---%
+reflecting a(nother) virute of relative entropy.
+%
+% This is just one more 
+% The equality between our two expressions for $\OInc$, 
+% \eqref{eq:oinc1} and \eqref{eq:oinc2}, is
+%
+% This is one more virtue of relative entropy
+% not a given.
+(It would not have been the case, for instance, had we taken $\kldiv {q}{p}$ to be the Euclidean distance between $q$ and $p$ as vectors.)
+% is rather one of the many virtues of relative entropy.
+Over the course of this thesis, we will discover a great many more. 
+% The following just makes precise that 
+% But for the 
+Still, any measure of discrepancy $\thickD$ would have sufficed to get
+an analogue of the next result, which makes precise that
+    % the scoring semantics generalizes the first semantics.
+    the (observational) scoring function semantics of a PDG
+    generalizes the set-of-distributions semantics from 
+    the previous section (\ref{sec:set-of-distribution-semantics}).
 
-If $\dg M$ is inconsistent, then there will be a cost no matter what
-distribution $\mu$ is the true distribution. Conversely, if $\dg M$ is
-consistent, then any distribution $\mu \in \SD{\dg M}$ will have
-$\OInc_{\dg M}( \mu) = 0$.  
+\begin{linked}{prop}{sd-is-zeroset}
+    If $\dg M$ is a PDG with $\bbeta > 0$, then
+	% $\SD{\dg M} = \{ \mu : \OInc_{\dg M}(\mu) = 0\}$.
+	$\mu \in \SD{\dg M}$ iff  $\OInc_{\dg M}(\mu) = 0$.
+	% $\SD{\dg M} \!= \{ \mu : \bbr{\dg M}_0(\mu) \!=\! 0\}$ for 
+	% all $\dg M$ that satisfy $\bbeta^{\dg M} > 0$. 
+\end{linked}
 
-	% \begin{example}
-    %     % [continues=ex:worldsonly]
-	%     % Recall our simplest example, which directly encodes an entire distribution $p$
-    %     Consider a simple example in which encodes a distribution $p$ over the set $W$. In this case, there is only one arc, the expectation is over
-	%     a single element, and the marginal on $W$ is the entire distribution. Therefore,
-	%     $\OInc(\dg M; \mu) = \kldiv{\mu}{\mu}$, so the inconsistency is just the
-	%     information $\mu$ and $p$, so is minimized uniquely when $\mu$ is $p$
-	% \end{example}
-    It may be helpful to see what's going on in the simplest case, 
-    in which the PDG $\dg M$ contains just a single unconditional probability $p(W)$.
-    In this case, $\OInc_{\dg M}(\mu)$ is just the relative entropy of $p$ with respect to $\mu$, and is uniquely minimized when $\mu = p$. 
-}
+% Indeed, $\SD{\dg M} = \OInc_{\dg M}^{\matbbm 1}$
+It is worth pausing here to reflect on the meaning of $\bbeta$,
+which is not a collection of probabilities, but of confidences in a different sense 
+    (which we develop at full generality in \cref{chap:conf}).
+%
+A choice of $\beta_a = 0$ means that the cpd $\p_a$ is effectively ignored, in the sense that such a PDG is equivalent to one in which $a$ is attached to a different cpd $q \ne \p_a$ (or missing altogether, modulo the qualitative effect of removing the arc $a$).
+This is why \cref{prop:sd-is-zeroset} requires $\bbeta$ to be nonzero.
+At the the upper extreme, a large (or even infinite) value of $\beta_a$ indicates high (or absolute) confidence in $\p_a$. 
+By default, we assume an intermediate value of confidence $\beta = 1$, which is just a convenient choice of units---what’s important are the magnitudes of $\beta$ relative to one another.
 
-$\SD{\dg M}$ and $\OInc_{\dg M}$ distinguish %
-between distributions based on their compatibility with
-$\dg M$, but even among distributions that match the
-marginals, some more closely match the qualitative structure
-of the graph than others.  
-We think of each arc $\ed aXY$ as representing a
-qualitative claim
-(with confidence $\alpha_a$)
-that the value of $Y$ can be computed from
-$X$ alone.  
-To formalize this, we require only the 
-multigraph
-$\Gr^{\dg M}$.
+Here's an concrete way to think about it.
+In your head, fix a reference person---someone who is worth listening to a little bit, but far from infallible---and call that degree of trust ``$\beta = 1$''. 
+Let's call this person Bob. 
+To determine your degree of confidence in information
+    % more trustworthy than Bob, 
+ask yourself: how many times would I have to hear this independently from a person like Bob, before I got to this level of trust? The answer to that question is the value of $\beta$. 
+Thus, $\beta = 2$ on an arc $X \to Y$ is (quantitatively) indistinguishable from two distinct arcs from $X \to Y$. 
+% For information less trustworth than Bob, ask yourself the reciprocal question: 
 
-Given a multigraph $G$ and distribution $\mu$ on its variables,
-contrast the amount of
-information required to 
+\paragraph{Qualitative/Structural Scoring.}
+% $\SD{\dg M}$ and $\OInc_{\dg M}$ distinguish between distributions based on their compatibility with $\dg M$, but even among distributions that match the marginals, some more closely match the qualitative structure of the graph than others. 
+So far, we have said nothing about the semantics of the qualitative information in a PDG.  
+% Getting something of an analogue of 
+For traditional graphical models---that is, Bayesian Networks (BNs) and Markov Random Fields (MRFs)---the qualitative information is a conjunction of independencies implied by the graphical structure. 
+% But for PDGs, it's not 
+But what are the independencies implied by a directed hypergraph? Or even an ordinary directed graph with cycles?
+% But it's not clear what the independenc implied even for cyclic directed graphs---let alone directed hypergraphs. 
+Despite decades of interest in this simple question, no clear consensus has emerged.
+% In \cref{chap:QIM}, will develop a convincing answer to these questions, that suggest 
+% We will see in \cref{chap:QIM} that there is reason for this:
+%     the question is posed too narrowly:
+% Resolving these questions is the subject \cref{chap:QIM},
+%     in which we will see why they have remained unanswered: 
+% When we develop a qualitative set-of-distributions semantics for directed hypergraphs 
+As we shall see in \cref{chap:QIM}, there is a good reason why: qualitative information in an arbitrary directed (hyper)graph is not just about independence; in general, it can be far more subtle. 
+% Instead, we will develop this theory the other way around, starting with the scoring function. 
+% So in starting with the st
+% That development relies on the scoring function.
+Indeed, for the qualitative information, we have found it easier to motivate the scoring function directly.
+
+
+Intuitively, 
+    each arc $\ed aXY$ represents 
+    % the qualitative that there is an (independent), 
+    an independent randomized mechanism by which $X$ leads to $Y$. 
+Or, perhaps slightly more precisely, that $Y$ can be computed from $X$ alone (and independent random noise). 
+ % an \emph{independent mechanism}:
+% Recall frthat the degree of noise .
+So, given a (hyper)graph $\Ar$ whose nodes correspond to variables,
+    and distribution $\mu(\X)$ on over (the values of) those variables,
+% contrast the amount of information required to 
+% contrast the following two quantities:
+contrast the number of bits of randomness needed to do each of the following (in expectation):
+%
 \begin{enumerate}[label=(\alph*),nosep]
 \item 
 % directly describe a joint outcome 
 % $\mat w$ drawn from $\mu$, and 
 % $\omega \sim \mu$, and 
-directly specify the values of all variables $\X$, and
+% the number of bits of randomness needed to 
+directly specify the values of all variables $\X$, and 
  \label{item:globalinfo}
 \item 
 % separately specify, for each arc $\ed aXY$, the value $\mat w_Y$ (of $Y$ in world $\mat w$) given the value $\mat w_X$, in expectation.
 separately specify, for each arc $\ed aXY$, the value
 % $\omega[Y]$ (of $Y$ in world $\omega$) given the value $\omega[X]$, in expectation.
-of $Y$ given the value of $X$ in expectation.
+of $Y$ given the value of $X$.
 	\label{item:localinfo}
 \end{enumerate}
-In a sense, (a) is the information needed to determine $\mu$ along its own structure,
-while (b) is the information needed to determine $\mu$ along the structure of the hypergraph $\Ar$. 
+% Perhaps unsurprisingly, 
+As one might have expected, we measure the amount of randomness using entropy.
+In a sense, 
+(b) is the total amount of randomness we need in order to generate components of an outcome of $\mu$ along the structure of the hypergraph $\Ar$,
+while
+(a) is the amount of randomness needed to generate an outcome of $\mu = \mu(\X|\varnothing)$ along its own simple dependency structure ($\varnothing \to \X$). 
+Clearly, the two must be equal in order for $\Ar$ to be a complete and accurate causal explanation for $\mu$.
 
-If \ref{item:globalinfo} $=$ \ref{item:localinfo},
-a specification of (b) has
- exactly the same length as a full desciption of the world. 
+% We think of each arc $\ed aXY$ as representing a qualitative claim 
+% (with confidence $\alpha_a$) 
+% that the value of $Y$ can be computed from $X$ alone. 
+% To formalize this, we require only the multigraph $\Gr^{\dg M}$.
+
+But if they differ?
+% If \ref{item:globalinfo} $=$ \ref{item:localinfo},
+% a specification of (b) has
+%  exactly the same length as a full desciption of the world. 
 If \ref{item:localinfo} $>$ \ref{item:globalinfo}, then there are
 correlations in $\mu$ that allow for a more compact representation
-than $G$ provides. 
-The larger the difference,  the more information is needed to determine
-targets $Y$ beyond the conditional probabilities associated with the
-arcs $X \rightarrow Y$ leading to $Y$
-(which according to $G$ should be sufficient to compute them), 
-and the poorer the qualitative fit of $\mu$ to $G$.
-Finally,
-if \ref{item:globalinfo} $>$ \ref{item:localinfo}, then 
-$\mu$ requires
-additional information to specify, beyond
-what is necessary to determine outcomes of the marginals selected by $G$.
-
-\TODO[FIXME]
+than $\Ar$ represents---that is, $\mu$ is \emph{information deficient} for the structure $\Ar$. 
+The larger the difference, 
+% the more additional information is needed to determine
+% targets $Y$ beyond the conditional probabilities associated with the
+% arcs $X \rightarrow Y$ leading to $Y$
+% (which according to $G$ should be sufficient to compute them), 
+the larger the overhead of using the structure $\Ar$ to compute probabilities, compared to what is necessary,
+    and so the poorer the qualitative fit of $\mu$ to $\Ar$.
+% In a way, this is a direct qualitative analogue of the information-theoretic interpretation of $\OInc$.
+If \ref{item:globalinfo} $>$ \ref{item:localinfo}, 
+on the other hand, (like, for instance, if $\Ar$ is empty) then $\Ar$ must be an incomplete qualitative picture---because to explain everything in $\mu$, at least $\H(\mu)$ bits are required.
+An incomplete picture fits data better than a complete one.
+%
+% 
+% $\mu$ additional information to specify, beyond
+% what is necessary to determine $\mu$ along $\Ar$.
 
 \begin{defn}\label{def:info-deficiency}
 % For a multigraph $G = (\N, \Ar, \V)$ over a set $\N$ of variables,
-Given a directed (multi)(hyper)graph $\Ar$, 
-the \emph{information deficiency}
-of distribution $\mu$, denoted $\SDef_{\!\Ar}(\mu)$,
-is the difference between (a) and (b), 
-where we measure the amount of information needed for a description
-using entropy: 
+% Given a directed (multi)(hyper)graph $\Ar$, 
+The \emph{structural (information) deficiency}
+of distribution $\mu(\X)$, with respect to a directed (hyper)graph $(\X,\Ar)$ is given by:
+% denoted $\SDef_{\!\Ar}(\mu)$,
+% is the difference between (a) and (b), 
+% where we measure the amount of information needed for a description
+% using entropy: 
 \begin{equation}
-	\SDef_{G}(\mu) := \sum_{(X,Y) \in \Ar} \H_\mu(Y\mid X) - \H(\mu). 
+	\SDef_{\!\Ar}(\mu) := \sum_{\ed aXY \in \Ar}
+        \alpha_a
+        \H_\mu(Y\mid X) ~- \H_\mu(\X). 
 	\label{eqn:alt-extra}
 \end{equation}
 % (Recall that $H_\mu(Y\mid X)$, the \emph{conditional entropy of $Y$ given $X$}, is defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
-For a PDG ${\dg M}$, we take $\SDef_{\dg M} = \SDef_{\Ar^{\dg M}}$.   
+For a PDG ${\dg M}$, we take $\SDef_{\dg M} = \SDef_{\Ar^{\dg M}}$
+to be shorthand for the information deficiency relative to its structure.
 \end{defn}
 
 We illustrate $\SDef_{\dg M}$ with some simple examples.  
@@ -1153,6 +1170,42 @@ while maximizing $\H(\mu)$, for example, by taking $\mu(0,0)
 \input{fragments/idef-intuition}
 
 
+
+
+\paragraph{The Combined Scoring Funcion.}
+If the observational and structural information conflict, 
+then the distribution(s) that best represent a PDG 
+will depend
+on the importance of structure relative to observation,
+% \discard{ This is captured by a trade-off 
+%     parameter $\gamma \ge 0$, which 
+%     can be used to define the scoring function
+%     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
+as captured by a trade-off parameter $\zogamma \in [0,1]$
+that controls the convex combination
+$(1-\zogamma)\OInc + \zogamma \SDef$. 
+So as to simplify the math
+and match the notation in
+previous work (\citeyear{pdg-aaai,one-true-loss}),
+we mostly use a rescaled variant with a different parameterization.
+Using
+$\gamma := \nicefrac{\zogamma}{(1-\zogamma)} \in [0,\infty]$,
+define the overall scoring function:
+\begin{align*}
+    \bbr{\dg M}_\gamma&(\mu) 
+        := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
+            \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
+        &= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\dg M}(\mu)\, \Big) \\[-0.1ex]
+        &= \Ex\nolimits_{\mu}\bigg[
+            \,
+            \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
+            \log \frac
+            {\mu(\Tgt a| \Src a)^{\beta_a - \gamma \alpha_a}}
+            {\p_a(\Tgt a | \Src a)^{\beta_a}}
+        \bigg] - \gamma \H(\mu)
+        .
+\end{align*}
+
 $\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
 of compatibility between ${\dg M}$ and a distribution $\mu$.
 We take the score of interest to be their sum, with the tradeoff
@@ -1163,13 +1216,7 @@ controlled by a parameter $\gamma \ge 0$:
 	 := \OInc_{\dg M}(\mu) + \gamma \SDef_{\dg M}(\mu)  \label{eqn:full-score}
 \end{equation}
 
-The following just makes precise that the scoring semantics generalizes the first semantics.
 
-\begin{linked}{prop}{sd-is-zeroset}
-	$\SD{\dg M} \!= \{ \mu : \bbr{\dg M}_0(\mu) \!=\! 0\}$ for 
-	all $\dg M$
-    that satisfy $\bbeta^{\dg M} > 0$. 
-\end{linked}
           
 While we focus on this particular scoring function in the paper, 
 in part because
@@ -1193,7 +1240,7 @@ We thus define
 	\bbr{\dg M}_\gamma^* = \argmin_{\mu \in \Delta\V\!\X} \bbr{\dg M}_\gamma(\mu).
 \end{equation}   
 
-In general, $\bbr{\dg M}_\gamma^*$ does not give a unique distribution.  But if
+In general, $\bbr{\dg M}_\gamma^*$ does not yield a unique distribution.  But if
 $\gamma$ is sufficiently small, then it does:
 
 \begin{linked}{prop}{sem3}
@@ -1205,7 +1252,7 @@ $\gamma$ is sufficiently small, then it does:
 
 This is because the scoring function $\bbr{\dg M}_\gamma$ is 
 strictly convex for these (small) values of $\gamma$. 
-
+%
 % We will soon see that the 
 In much of this dissertation, we will be
     particularly interested in the case where $\gamma$ is small,
@@ -1213,10 +1260,9 @@ In much of this dissertation, we will be
     distribution as a description of probabilistic information,
     over the graphical structure of the PDG.  
 This motivates us to consider
-what happens as $\gamma$ goes to 0.
-If $S_\gamma$ is a set of
-probability distributions for all $\gamma \in [0,1]$, we define $\lim_{\gamma
-\rightarrow 0} S_\gamma$ to consist of all distributions $\mu$ such that there
+what happens as $\gamma$ goes to 0. If $S_\gamma$ is a set of
+probability distributions for all $\gamma > 0$,
+we define $\lim_{\gamma \rightarrow 0} S_\gamma$ to consist of all distributions $\mu$ such that there
 is a sequence $(\gamma_i, \mu_i)_{i \in \mathbb N}$ with $\gamma_i \to 0$ and
 $\mu_i \to \mu$ such that $\mu_i \in S_{\gamma_i}$ for all $i$. 
 It can be further shown that 
@@ -1238,25 +1284,45 @@ It has an important property:
     \texorpdfstring{\\}{}and as Transformations on Distributions}
 
 The three semantics given in the previous section are the ones presented in the original PDG paper \cite{pdg-aaai}, and hence the ones relevant for the present chapter based on it. 
-However, there are two other semantics that will play an important role later on. 
-The first is a PDG's degre of inconsistency: for each $\gamma$, we can define
+However, there are other semantics that will play an important role later on. 
+
+Far and away the most important semantics that we have not yet explicitly mentioned is the so
+is a PDG's \emph{(degree of) inconsistency}:
+% 
+% The (observational) \emph{inconsistency of PDG $\dg M = 
+%     (\N, \Ar, \mathbb P, \balpha, \bbeta)
+%     $}, 
+% \[ 
+%     % \OInc(\dg M) 
+%     \aar{\dg M}_0
+%     := 
+%     % \inf_{ \mu \in \Delta [W_{\cal V}]} 
+%     \inf_{ \mu \in \Delta \V\!\X} 
+%     \OInc_{\dg M}(\mu) . 
+% \]
+the smallest possible incompatibility of $\dg M$ with any distribution.
+More precisely, for each $\gamma$, we can define
 \[
     \aar[\big]{\dg M}_{\gamma} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu) 
     \quad \in \Rext.
 \] 
 Thus, it interprets a PDG as a single number.  This quantity may at first seem less important than the others, but we will see in \cref{chap:one-true-loss} that it is a ``universal loss function'', and then in \cref{chap:inc-infer-connection} that all of the other semantics can be derived from it. 
 
-In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from another perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function 
-$\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$.
+In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from another perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function $\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$
+that updates distributions.
+
+Both of these alternate semantics turn out to to be equivavlent to the scoring function semantics developped in \cref{sec:scoring-funs}. 
 
 \section{Relationships to Other Graphical Models}
-\label{sec:other-graphical-models} 
+    \label{sec:other-graphical-models} 
+
 We start by relating
 PDGs to two of the most popular graphical models: BNs and factor
 graphs. PDGs are strictly more general than BNs, and can emulate factor graphs
 for a particular value of $\gamma$. 
+
 \subsection{Bayesian Networks} 
-\label{sec:bn-convert}
+    \label{sec:bn-convert}
 
 \Cref{constr:hyperedge-reducton} can be generalized to convert arbitrary Bayesian Networks into PDGs.
 Given a BN $\mathcal B$ and a positive confidence $\beta_X$ for
