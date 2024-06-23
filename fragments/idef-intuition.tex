@@ -1,7 +1,7 @@
 %olli22*: rewriting this
-% To build some intuition for $\IDef$, we now go through some examples, illustrated in \cref{fig:info-diagram}.
-To build intuition for $\IDef$, which characterizes our bounds in \cref{sec:info},
-	we now visualize the vector $\mat v_{\!\Ar}$ for various example hypergraphs. 
+% To build some intuition for $\SDef$, we now go through some examples, illustrated in \cref{fig:sdef-example-panel}.
+% To build intuition for $\SDef$, which characterizes our bounds in \cref{sec:info},
+% 	we now visualize the vector $\mat v_{\!\Ar}$ for various example hypergraphs. 
 
 % \begin{example}
     %[visualizing the information profile]
@@ -375,14 +375,14 @@ To build intuition for $\IDef$, which characterizes our bounds in \cref{sec:info
 			% }
 	% }
 	\addtocounter{figure}{-1} %undo the thing I did to make subfigs work
-	% \captionof{figure}{\label{fig:info-diagram}
-	\caption[Illustrations of the information deficiency ($\IDef_{\!\Ar})$ 
+	% \captionof{figure}{\label{fig:sdef-example-panel}
+	\caption[Illustrations of the information deficiency ($\SDef_{\!\Ar})$ 
 		for various hypergraphs $\Ar$]
 	{
 		% \itshape
         % Illustrations of  example graph information functions
         % Illustrations of $\SDef
-        Illustrations of the structural deficiency $\IDef_{\Ar}$ underneath
+        Illustrations of the structural deficiency $\SDef_{\Ar}$ underneath
           % $\{ \SDef{G_i} \}$,
           drawn underneath their
 		  associated hypergraphs $\{ G_i\}$. Each circle represents a
@@ -391,60 +391,12 @@ To build intuition for $\IDef$, which characterizes our bounds in \cref{sec:info
 		  that is shared between all $C_j$'s, but not in any
 		  $D_k$. Variation of a candidate distribution $\mu$ in a
 		  green area makes its qualitative fit better (according to
-		  $\IDef{}$), while variation in a red area makes its
+		  $\SDef{}$), while variation in a red area makes its
 		  qualitative fit worse; grey is neutral.
 		  Only the boxed structures in blue,
-		  whose $\IDef$ can be seen as measuring distance to a particular set of (conditional) independencies, are expressible as BNs.}
-	\label{fig:info-diagram}
-	\end{figure}
-% 
-% The examples here are in reference to \Cref{fig:info-diagram}.
-\begin{itemize}
-	\item
-Subfigures \ref{subfig:justX-0}, \ref{subfig:justX-1}, 
-    and \ref{subfig:justX-2} show
-    how adding (hyper)arcs makes distriutions more deterministic.
-% As each edge $\ed LXY$ corresponds to an assertion about the ability to determine $Y$ from $X$, this should make some sense.
-% This makes intuitive sense, because each edge $\ed L{}X$ qualitatively indicates that $X$ is (unconditionally) determined.
-% In particular,
-% if $X$ is determined by two independent causal mechanisms
-% For exapmle, if you have two separate (i.e., independent) functions that generate the
-% same quantity, then that quantity is not random.
-% This is reflected in the the cost for entropy in \ref{subfig:justX-2}.
-% At the level of notation, we can write a double-headed arrow in place of two arrows---which lines up with our previous use of a double-headed arrow to indicate a deterministic function.
-		%oli11: note that it does not matter for the semantics, because failing to meet the constraint imposed by a double-headed arrow will give infinite cost anyway, for any edge, as \beta > 0.
-	%
-When $\Ar$ is the empty hypergraph, $\IDef$ reduces to negative entropy,
-and so prefers distributions that are ``maximally uncertain''
- 	(e.g., Subfigures \ref{subfig:justX-0} and \ref{subfig:justXY}).
-For this empty
-    but all distributions $\mu$ have negative $\IDef_{\Ar}(\mu) \le 0$.
-% Because an edge $X \to Y$ represents an assertion that $Y$ can be determined from $X$, we get a penalty $H(Y|X)$ for information present in $Y$ but not $X$.
-In the definition of $\IDef$, each hyperarc $X\to Y$ is compiled to a ``cost'' $H(Y|X)$ 
-    for uncertainty in $Y$ given $X$.
-One can see this visually in \cref{fig:info-diagram}
-    as a red crescent that's added to the information profile as we move 
-    from \ref{subfig:justXY} to \ref{subfig:XtoY} to \ref{subfig:XY-cycle}.
-	%
+		  whose $\SDef$ can be seen as measuring distance to a particular set of (conditional) independencies, are expressible as BNs.}
+	\label{fig:sdef-example-panel}
+\end{figure}
 
-\item
-Some hypergraphs (see \Cref{subfig:justX-1,subfig:1XY}) are \emph{indiscriminate}, in the sense that every distribution gets the same score
-% (so that score must be zero, beause this is the score a degenerate distribution gets).
-(of zero, because a point mass $\delta$ always has $\SDef_{\Ar}(\delta) = 0$).
-Such a graph has a structure such that \emph{any} distribution can be precisely encoded by the process in (b).
-	%
-% As shown here and also in \citet{pdg-aaai},
-As shown this dissertation
- $\IDef$ can indicate independencies and conditional independencies, illustrated respectively in Subfigures \ref{subfig:XYindep} and \ref{subfig:1XYZ}.
-
-\item
-For more complex structures, structural information deficiency $\IDef$ 
-can represent more than independence and dependence. 
-The cyclic structures in \cref{example:xy-cycle,example:xyz-cycle-1}, 
-    correspond to the structural deficiencies pictured
-    in Subfigures \ref{subfig:XY-cycle} and \ref{subfig:XYZ-cycle}, respectively,
-    which are functions that encourage shared information between the three variables. 
-
-\end{itemize}
 % In more complicated examples, where both penalties and rewards exist, we argue that the $G$-information still implicitly captures the qualitative structure. In \ref{subfig:XYZ-bichain}, $X$ and $Y$ determine one another, and $Z$ and $Y$ determine one another. It is clear that $X$ and $Z$ should be indpenedent given $Y$; it can also be argued that $Y$ should not have any randomness of its own (otherwise the draws from $X$ or $Z$ would likey not match one another) and that this structure suggests co-variation of all three variables.
 % \end{example}

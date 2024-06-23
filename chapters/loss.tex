@@ -113,12 +113,13 @@ and the monotonicity of R\'enyi divergence.
 
 
 
-In the coming sections, we show in more detail how this concept of inconsistency, beyond simply providing a permissive and intuitive modeling framework, reduces exactly to many standard objectives used in machine learning and to measures of statistical distance.
+In the remainder of this chapter, we show in more detail how this concept of inconsistency, beyond simply providing a permissive and intuitive modeling framework, reduces exactly to many standard objectives used in machine learning and to measures of statistical distance.
  We demonstrate that this framework clarifies the relationships between them, by providing clear derivations of otherwise opaque inequalities.
 
 
 
-\section{Preliminaries}
+% \section{Preliminaries}
+\paragraph{Preliminaries.}
 % We generally use capital letters for variables, and lower case letters for their values.
 % For variables $X$ and $Y$, a conditional probability distribution (cpd) $p$ on $Y$ given $X$, written $p(Y|X)$, consists of a probability distribution on $Y$ (denoted $p(Y| X\!=\!x)$ or $p(Y|\,x)$ for short), for each possible value $x$ of $X$.
 % If $\mu$ is a probability on outcomes that determine $X$ and $Y$,
@@ -171,80 +172,8 @@ In the coming sections, we show in more detail how this concept of inconsistency
 %     \end{itemize}%
 % \end{defn}
 
-How should one choose parameters $\bbeta$ and $\balpha$?
-A choice of $\beta\ssub a=0$ means that the cpd $\p_a$ is effectively ignored, in the sense that such a PDG is equivalent to one in which the edge is attached to a different cpd $q \ne \p_a$.
-On the other hand, a large value of $\beta\ssub a$ (or $\infty$) indicates high (or absolute) confidence in the cpd. By default, we suppose $\beta\!=\! 1$, which is just a convenient choice of units---what’s important are the magnitudes of $\beta$ relative to one another.
-The parameter $\balpha$, typically in $[0,1]$, represents certainty in the causal structure of the graph, and plays only a minor role in this paper.
-
-
-
-Like other graphical models, PDGs have semantics in terms of joint distributions $\mu$ over all variables.
-Most directly, a PDG $\dg M$ determines two scoring functions on joint
-distributions $\mu$. For the purposes of this paper, the more
-important of the two is
-the \emph{incompatibility} of $\mu$ with respect to $\dg M$, which
-measures the
-quantitative
-discrepency between $\mu$ and
-$\dg M$'s cpds, and is given by
-\begin{equation}
-    \OInc_{\dg M}(\mu)\! := \!\!\!\sum_{\ed aXY}\!\! \beta\ssub a  \Ex_{{x \sim \mu(\mskip-2.6muX\mskip-2mu)}} \kldiv[\Big]{\mu(Y|\, x)}{p_a(Y |\, x)}.
-    \label{eq:inc}
-\end{equation}
-% \vskip-2ex
-Relative entropy $\thickD(\mu\Vert p)$ measures divergence
-between $\mu$ and $p$,
-and can be viewed as the overhead (in extra bits per sample)
-of using codes optimized for $p$, when in fact samples are distributed according to $\mu$ \parencite{mackay2003information}.
-But if one uses edges in proportion to the confidence one has in
-them, then inefficiencies for of high-confidence cpds are compounded,
-and hence more costly.
-So $\OInc_{\dg M}(\mu)$ measures the total excess cost of
-using $\dg M$'s cpds in proportion to their confidences $\bbeta$,
-when worlds are distributed according to $\mu$.
-
-The \emph{inconsistency} of $\dg M$,
-denoted
-$\aar{\dg M}$,
-is the smallest possible incompatibility of $\dg M$ with any distribution:
-$\aar{\dg M} := \inf_\mu \OInc_{\dg M}(\mu)$.
-This quantity, which does not depend on $\balpha$, is the primary focus of this paper.
-
-The second scoring function defined by a PDG $\dg M$, called the \emph{I}nformation \emph{Def}iciency, measures the {qualitative} discrepency between $\dg M$ and $\mu$, and is given by
-% \vskip-3ex
-\[
-	\SDef_{\dg M}(\mu) := -\H(\mu) + \sum_{\ed aXY} \alpha\ssub a \H_\mu(Y\mid X).
-\]
-% \vskip-2ex
-$\SDef_{\dg M}(\mu)$ %
-can be thought of as the
-information
-needed to separately describe the target of each edge $a$ given the value of its source
-(weighted by $\alpha\ssub a$)
-beyond the information needed to fully describe a sample from $\mu$.
-
-As shown by \textcite{pdg-aaai},
-it is via these two scoring functions that PDGs capture
-other graphical models.
-The distribution specified by a BN $\dg B$
-is the unique one that minimizes both $\OInc_{\dg B}$ and $\SDef_{\dg B}$ (and
-hence every positive linear combination of the two), while the
-distribution specfied by a factor graph $\Phi$ uniquely minimizes the
-sum $\OInc_{\Phi} + \SDef_{\Phi}$.
-In general, for any $\gamma > 0$, one can consider a weighted combination
-\(
-    \bbr{\dg M}_\gamma(\mu) \!:= \OInc_{\dg M}(\mu) + \gamma\; \SDef_{\dg M}(\mu),
-\)
-for which there is a corresponding $\gamma$-inconsistency $\aar{\dg M}_\gamma := \inf_\mu \bbr{\dg M}_\gamma(\mu)$.
-In the limit as $\gamma \to\! 0$, there is always a unique best distribution
-whose score is
-$\aar{\dg M}$.
-
-
-
-
-
-
+This chapter focuses on primarily on \emph{quantitative} aspects of PDGs---after all, the idea behind modern machine learning is to always defer to data and emperics. 
+So, unless we say otherwise, we will take the inconsistency of a PDG refer to the purely observational inconsistency ($\gamma = 0$), dropping the subscript and writing $\aar{\dg M} := \inf_\mu \OInc_{\dg M}(\mu)$.
 
 
 Intuitively, believing more things can't make you any less inconsistent.
@@ -267,8 +196,6 @@ captures this formally: adding cpds or increasing confidences cannot decrease a 
 % \vspace{-1ex}
 
 As we will see, this tool is sufficient to derive many interesting relationships between loss functions.
-
-
 
 
 \section{Standard Metrics as Inconsistencies}
@@ -485,7 +412,12 @@ of the three axes we have described:
     \end{array}
     \bigg\}\!;
 \]
-See figure \cref{fig:entropy-cube} for a full illustration.
+See figure \cref{fig:entropy-cube} for an illustration.
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figs/entropy-cube.png}
+	\caption{All combinations of the three axes of cross entropy variants}
+\end{figure}
 
 \subsection{Accuracy and Square Loss}
 
@@ -1659,7 +1591,7 @@ may be of particular interest to the AI alignment community.
 \subsection{The Fine Print for Probability Densities}
 \label{appendix:density}
 % \textbf{Densities and Masses.} Many of our results (%
-Several of our results(%
+Several of our results (%
 \Cref{prop:pdg-Ix,%
 	prop:expected-surprise,%
 	prop:marginal-ll,%
@@ -1684,15 +1616,16 @@ On the other hand, this choice of scale ultimately amounts to an additive consta
 Moreover, beyond a certain point, decreasing the discretization size $k$ of a discretized approximation $\tilde p_k(X)$ \emph{also} contributes a constant that depends only on $k$.
 But such constants are irrelevant for optimization, and so, even though such quantities are ill-defined and arguably meaningless in the continuous limit, the use of the continuous analogs as loss functions is still justified.
 
-
 The bottom line is that all our results hold in a uniform way for every discretization size --- yet in the limit as the discretization becomes smaller, an inconsistency may diverge to infinity.
 However, this divergence stems from an additive constant that depends only on the discretization size, which is irrelevant to its employment as a loss function.
 As a result, using one of these ``unbalanced'' functions involving densities where the units do not work out properly, results in a morally equivalent loss function, except without a diverging constant.
 
+\commentout{%
 \textbf{Markov Kernels.} In the more general setting of measurable spaces, one may want to adjust the definition of a cpd that we gave, so that one instead works with \emph{Markov Kernels}.
 This imposes an additional constraint: suppose the variable $Y$ takes values in the measurable space $(\V(Y), \mathcal B)$. If $p(Y|X)$ is to be a \emph{Markov Kernel}, then for every fixed measurable subset $B \in \mathcal B$ of the measure space, the we must require that  $x \mapsto \Pr(B|x)$ be a measurable function (with respect to the measure space in which $X$ takes values).
 This too mostly does not bear on the present discussion, because the $\sigma$-algebras for all measure spaces of interest, are fine enough that one can get an arbitrarily close approximation of any cpd with a Markov Kernels.
 This means that the infemum defining the inconsistency of a PDG does not change.
+}%s
 
 \subsection{Maximum A Posteriori (MAP) updating, Priors, and Regularization}
     \label{appendix:MAP-and-priors}

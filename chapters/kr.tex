@@ -326,13 +326,14 @@ While it is not surprising that this construction encodes a relation
 % naturally wonder about databases.
 
 
+\temphide{
 \subsection{Costs: ``Soft Relations''}
     \label{sec:soft-constraint}
 
 TODO: Comparisons between factors and costs. 
 
 TODO: move in and split material from loss chapter.
-
+}
 
 \subsection{Couplings}
     \label{sec:coupling-widget}
@@ -577,6 +578,7 @@ We now explore two ways of making this precise with the semanics of PDGs.
 % , in the case we're interested in.
 
 \begin{prop}
+        \label{prop:individual-prob-1}
     If $\dg M$ is a PDG, then 
     % \[
     $
@@ -1304,4 +1306,4 @@ Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism 
 Visually, it is uncommon to use the notation of graphical models to describe the architecture of neural networks; instead, the standard is to represent operations and layers of a neural network as nodes, and their connections as edges---like a circuit diagram.
 In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.
 
-\TODO[TODO: diagram?]
+\TODO[TODO: diagram here would be nice touch!]

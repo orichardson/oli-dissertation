@@ -470,11 +470,10 @@ In the coming sections, we formalize PDGs and relate them to other approaches.
 	
 \section{Syntax}\label{sec:formal+syntax}
 % We now provide formal definitions for PDGs.        
-We now provide our first formal definition of a PDG.        
-Although it is possible to formalize PDGS with hyperarcs directly,
-    we opt for a different approach here, in which PDGs have only regular arcs,
-and hyperarcs are captured using a simple construction
-that involves adding an extra node.
+We now provide our first formal definition of a PDG.
+
+
+% Although it is possible to formalize PDGS with hyperarcs directly, we opt for a different approach here, in which PDGs have only regular arcs, and hyperarcs are captured using a simple construction that involves adding an extra node.
 %
 % \vfull{\unskip\footnote{
 %     In a large part of the graphical models community,
@@ -491,44 +490,54 @@ that involves adding an extra node.
     % \label{\OInc}
     \label{def:model}
 A \emph{Probabilistic Dependency Graph}
-is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \alpha, \beta)$, where 
+is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \balpha, \bbeta)$, where 
 %
 \begin{description}[topsep=0pt]%
-	\item[$\N$] \notation{$:\Set$}%
-		is a finite set of nodes, corresponding to variables;
-	\item[$\Ar$] \notation{$\subseteq \N \times \N \times \mathit{Label}$}%
-		is a set of labeled arcs $\{ \ed aXY \}$, each with a source 
-		$S$ and target $T$ in $\N$;
-	\item[$\V$] \notation{$: \N \to \Set$}%
-		associates each variable $N \in \N$ with a set $\V(N)$ of values that the variable $N$ can take;
+	\item[$\N$] 
+		% \notation{$:\Set$}%
+		is a finite set of nodes, corresponding to the identities of variables;
+	\item[$\Ar$] 
+		% \notation{$\subseteq \N \times \N \times \mathit{Label}$}%
+		% \notation{$: \sum_A 2^\N \times 2^\N$}%
+		is a collection of (hyper)arcs each $a\in \Ar$ of which has source(s) $S$ and target(s) $T$ in $\N$;
+	\item[$\V$]
+		% \notation{$: \N \to \Set$}%
+		associates each node $N \in \N$ with a set $\V(N)$ of possible values, allowing us to view it as a variable;
   	\item[$\mathbb P$]
         % \notation{$:\big(\!({A,B,\ell})\colon\!\Ar \big) \to \V(A) \to \Delta\V(B)$}%
-        \notation{$:\big(\!\ed aXY \in \Ar \big) \to \V(X) \to \Delta\V(Y)$}%
-	associates to each arc $\ed aXY \in \Ar$
-	a distribution $\p_a(x)$ on $Y$ for each $x \in \V(X)$; 
+        % \notation{$:\big(\ed aXY \in \Ar \big) \to \V(X) \to \Delta\V(Y)$}%
+		associates to each arc $\ed aXY \in \Ar$
+		% a distribution $\p_a(x)$ on $Y$ for each $x \in \V(X)$; 
+		a cpd $\p_a(Y|X)$;
 
-\item[$\balpha$] \notation{$:\Ar \to \mathbb R$}
+\item[$\balpha$] 
+	% \notation{$:\Ar \to \mathbb R$}
 associates to each arc $\ed aXY$ a number $\alpha_a$ which,
 roughly speaking, is the modeler's confidence in the functional
 dependence of $Y$ on $X$ implicit in $a$; 
 \item[$\bbeta$] 
-    \notation{$:\Ar \to \Rext$}
-associates to each arc $a$ a (possibly infinite) real number $\beta_a$,
-the modeler's 
-subjective confidence in the reliability of
-$\mathbb P$. 
+    % \notation{$:\Ar \to \Rext$}
+	associates to each arc $a \in \Ar$ a (possibly infinite) real number $\beta_a$,
+	the modeler's 
+	subjective confidence in the reliability of
+	$\mathbb P$. 
 \end{description}
 
-Note that we allow multiple arcs in $\Ar$ with the same source and
-target; thus $(\N,\Ar)$ is a multigraph.  We occasionally write a PDG
-as $\dg M = (\Gr,\mathbb P, \alpha,\beta)$, where $\Gr = (\N,\Ar,\V)$, 
-and abuse terminology by referring to $\Gr$ as a multigraph.
-We refer to 
-${\dg N} = (\Gr, \mathbb P)$ as an \emph{unweighted} PDG,
-and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
-$\bf 1$ is the constant function (i.e., so that $\alpha_a = \beta_a = 1$ for all $a$). 
-In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\balpha = {\bf 1}$
-and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.
+% Note that we allow multiple arcs in $\Ar$ with the same source and
+% target; thus $(\N,\Ar)$ is a multigraph.
+The definition is ambiguous about whether $(\N, \Ar)$ is a directed graph, multi-graph, or hypergraph. This is because, perhaps counter-intuitively, all of these variants will turn out to be equivalent.
+% We occasionally write a PDG
+% as $\dg M = (\Gr,\mathbb P, \alpha,\beta)$, where $\Gr = (\N,\Ar,\V)$, 
+% and abuse terminology by referring to $\Gr$ as a multigraph.
+Since $\Ar$ can be extended with identity arcs $\{ X \xrightarrow{id} X \}_{X\in \N}$, we make our usual assumption that $\N$ is implicit in $\Ar$. Furthermore, in this case, both $\Ar$ and $\V$ are then implicit in the type of $\mathbb P$. 
+Thus, we refer to $\mathbb P$ as an \emph{unweighted PDG};
+	we give it semantics as though it were the weighted PDG that has $\bbeta = \balpha = \mat 1$. 
+% We refer to 
+% ${\dg N} = (\Ar, \mathbb P)$ as an \emph{unweighted} PDG,
+% and give it semantics as though it were the (weighted) PDG $(\Gr, \mathbb P, \mat 1, \mat 1)$, where
+% $\bf 1$ is the constant function (i.e., so that $\alpha_a = \beta_a = 1$ for all $a$). 
+% In this chapter, with the exception of \cref{sec:expfam}, we implicitly take $\balpha = {\bf 1}$
+% and omit $\alpha$, writing $\dg M = (\Gr, \mathbb P, \beta)$.
 % \footnote{The appendix gives results for arbitrary $\alpha$.} 
 \end{defn}
 
@@ -537,7 +546,7 @@ $\N^{\dg M}, \Ar^{\dg M}, \ldots$,
 for the components of $\dg M$, so that we may reference one without naming them
 all explicitly.
 % We write $\V(S)$ for the set of possible joint settings of a set $S$ of variables.
-The pair $(\N, \V)$ describes a set of nodes $\N$ and a set of values $\V X$ for each node $X \in \N$;
+The pair $(\N, \V)$ describes a set of nodes $\N$ and a set of values $\V\!X$ for each node $X \in \N$;
     thus $(\N,\V)$ is equivalent to specifying a set $\X$ of variables.
 For this reason, we write 
 % $\V\!\X$
@@ -547,9 +556,10 @@ For this reason, we write
 for the set of all joint settings of the variables; we refer to $\omega \in \V\!\X$ as ``worlds''.
 Rather than specifying $\N$ and $\V$ separately, it is common practice in the graphical models community to instead specify a set $\X$ of variables directly \cite{koller2009probabilistic}.
 We have kept them them separate in \cref{def:model} to emphasize the separation between the qualitative information $(\N, \Ar, \balpha)$ and the quantitative information $(\V, \mathbb P, \bbeta)$ that annotates it. 
-This separation between qualitative and quantitative information will
-    play a large role in our semantics in the next section, 
-    and later on when we revisit the point in \cref{chap:QIM,chap:PDG-cat}.
+% This separation between qualitative and quantitative information will
+    % play a large role in our semantics in the next section, 
+	% play a large role in the theory of PDGs.
+% and later on when we revisit the point in \cref{chap:QIM,chap:PDG-cat}.
 
 We now present some shorthand to clarify the presentation.
 We typically conflate a cpd's symbol with its edge label,
@@ -560,34 +570,40 @@ the PDG with a single edge attached to $f(Y|X)$ as
 	\node[dpadinline] (Y) at (1.2,0){\small$Y$};
  	\draw[arr1,->] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
 \end{tikzpicture}\,.
-\Cref{defn:pdg} is equivalent to one in which edge sources and targets are both \emph{sets} of variables.
-This allows us to indicate joint dependence with multi-tailed arrows, joint distributions with multi-headed arrows,
+% \Cref{defn:pdg} is equivalent to one in which edge sources and targets are both \emph{sets} of variables.
+Regardless of the underlying definition of a PDG, we will use hypergraph notation, which is typically more compact and clearer. 
+Thus, we will indicate joint dependence with multi-tailed arcs, joint distributions with multi-headed arcs,
 and unconditional distributions with nothing at the tail.
 For instance, we draw
-\\[-0.5ex]
+% \\[-0.5ex]
+\[
 \phantom{aa}
-	$p(Y|X,Z)$ as
-	\begin{tikzpicture}[center base]
-		\node[dpadinline] (Y) at (0.9,0) {$Y$};
-		\node[dpadinline] (X) at (0,-0.4) {$X$};
-		\node[dpadinline] (Z) at (0, 0.4) {$Z$};
+	p(Y|X,Z) \text{~as~~}
+	\begin{tikzpicture}[center base,scale=1.2]
+		\begin{scope}[inner sep=3pt]
+		\node[dpad0] (Y) at (0.9,0) {$Y$};
+		\node[dpad0] (X) at (0,-0.4) {$X$};
+		\node[dpad0] (Z) at (0, 0.4) {$Z$};
+		\end{scope}
 		\mergearr[arr2] XZY
 		\node[above right=-1pt and -3pt of center-XZY] {$p$};
 	\end{tikzpicture}\,,
-    and $q(A,B)$ as
-	\begin{tikzpicture}[center base]
-		\node[dpadinline] (A) at (0,0) {$A$};
-        \node[dpadinline] (B) at (1,0) {$B$};
+   \text{ and } q(A,B) \text{~as~~}
+	\begin{tikzpicture}[center base,scale=1.2]
+		\begin{scope}[inner sep=3pt]
+		\node[dpad0] (A) at (0,0) {$A$};
+        \node[dpad0] (B) at (1,0) {$B$};
+		\end{scope}
         \coordinate (above) at (0.5,0.8);
         \coordinate (center) at (0.5,0.4);
-        \cunmergearr[arr1] {above}{A}{B}{center}
+        \cunmergearr[arr2] {above}{A}{B}{center}
         \node[above left=0pt and 0pt of center,inner sep=2pt]{$q$};
 	\end{tikzpicture}\,.
-\\
-To emphasize that a cpd $f(Y|X)$ is degenerate
-(a function $f:X\to Y$),
-we will draw it with two heads, as in:
-\begin{tikzpicture}[center base]
+\]
+To emphasize that a cpd $f(Y|X)$ is deterministic
+(i.e., a function $f:X\to Y$),
+we will draw its arc with two heads, as in:
+\begin{tikzpicture}[center base,scale=1.2]
 	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (X) at (0,0) {\small$X$};
 	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (Y) at (1.2,0){\small$Y$};
  	\draw[arr1,->>] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
@@ -595,18 +611,18 @@ we will draw it with two heads, as in:
 We identify an event $X\!\!=\!x$ with
 the degenerate unconditional distribution $\delta_x(X)$ that places all mass on $x$;
 hence it may be associated to an edge and drawn simply as
-\begin{tikzpicture}[center base]
-	\node[dpadinline] (Y) {\small$X$};
+\begin{tikzpicture}[center base,scale=1.0]
+	\node[dpad0] (X) {$X$};
  	\draw[arr1,<<-] (X) --
 		node[above, pos=0.60, inner sep=1pt]{$x$} +(-1,0);
 \end{tikzpicture}\,.
 To specify a confidence $\beta \ne 1$,
 we place the value near the edge, lightly colored and parenthesized, as in:
 \!\!\!\!
-\begin{tikzpicture}[center base]
+\begin{tikzpicture}[center base,scale=1.2]
 	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt](X){\small $X$};
     \draw[arr, <-]  (X) --
-        node[above,pos=0.62, inner sep=1pt, outer sep=-2pt, fill=white]{$p\!$}
+        node[above,pos=0.62, inner sep=1pt, outer sep=0pt, fill=white]{$p\!$}
         node[below,pos=0.55, inner sep=0, outer sep=1.5pt]{${\scriptscriptstyle\color{gray}(\beta)}$}
          ++(-1,0);
 \end{tikzpicture}\,,
@@ -614,60 +630,15 @@ and we write ${\scriptstyle\color{gray}(\infty)}$ for the limit of high confiden
 
 
 
-While the definition above is sufficient to represent the class of all legal
-PDGs, we often use two additional bits of syntax
-to indicate common constraints:  
-the special variable $\pdgunit$ such that $\V(\pdgunit)=\{\star\}$
-from \Cref{ex:guns-and-floomps,ex:smoking}, and
-double-headed arrows, $A \tto B$, which visually indicate 
-that the corresponding cpd is degenerate, effectively representing a deterministic
-function $f : \V(A) \to \V(B)$. 
-
-\begin{constr}\label{constr:hyperedge-reducton}
-We can now explain how we capture the multi-tailed arcs that 
-were used in 
-\Crefrange{ex:smoking}{ex:grok-union}. 
-That notation can be viewed as shorthand for the graph that results by adding a new node at the junction representing the joint value of the nodes at the tails, with projections going back.  For instance,
-the diagram displaying Grok's prior knowledge in \Cref{ex:grok-union}, on the left of \Cref{fig:grok-combine}
-is really shorthand for the following PDG, where
-where we insert a node labeled $C \times T$ at the junction:
-\smallskip
-	\begin{center}
-    \begin{tikzpicture}[paperfig]
-        \node[dpadded] (SL) at (1.0,0) {$\mathit{SL}$};
-        %
-        \node[dpadded] (C) at (-1.0, -0.6) {$C$};
-        \node[dpadded] (T) at (-1.0, 0.6) {$T$};
-        %
-        \cmergearr{C}{T}{SL}{0.2,0}
-        %
-        \draw[arr] (T) to [bend right=90, looseness=2] (C);
-    \end{tikzpicture}
-    $\qquad\rightsquigarrow\qquad$
-	\ifprecompiledfigs
-\raisebox{-0.5\height}{\includegraphics[scale=0.9]{figure-pdfs/widget.pdf}}
-	\else
-		\begin{tikzpicture}[paperfig]
-			\node[dpadded] (SL) at (-1.0,0) {$\mathit{SL}$};
-			
-			\node[dpadded,light pad] (CT) at (-2.9, 0){$\scriptstyle C \times T$};
-			\node[dpadded] (C) at (-4.8, -0.6) {$C$};
-			\node[dpadded] (T) at (-4.8, 0.6) {$T$};
-			
-			\draw[arr, ->>] (CT) -- (C);
-			\draw[arr, ->>] (CT) -- (T);
-			\draw[arr] (CT) -- (SL);
-			\draw[arr] (T) to [bend right=90, looseness=2] (C);
-	\end{tikzpicture}
-	\fi
-	\end{center}
-	\smallskip
-
-As the notation suggests, $\V( C \times T) = \V(C) \times \V(T)$.
-For any joint setting $(c,t) \in \V(C \times T)$ of both variables, the cpd for
-the arc from $C \times T$ to $C$ gives probability 1 to $c$;
-similarly, the cpd for the arc from $ C \times T$ to $T$ gives probability 1 to $t$.
-\end{constr}
+% While the definition above is sufficient to represent the class of all legal
+% PDGs, we often use two additional bits of syntax
+% to indicate common constraints:  
+% the special variable $\pdgunit$ such that $\V(\pdgunit)=\{\star\}$
+% from \Cref{ex:guns-and-floomps,ex:smoking},
+%  and
+% double-headed arrows, $A \tto B$, which visually indicate 
+% that the corresponding cpd represents a deterministic
+% function $f : \V\!A \to \V B$. 
 
 
 \subsection{Alternate, Equivalent Definitions of PDGs}
@@ -676,13 +647,76 @@ similarly, the cpd for the arc from $ C \times T$ to $T$ gives probability 1 to 
 % In fact, there are many 
 Indeed, there are many definitions of PDGs, and seeming generalizations
 or restrictions of them, all of which turn out to be essentially equivalent. 
-We now review a some important alternative ways of defining a PDG.
+We now give an overview of important alternative variants.
 
-\begin{enumerate}
-    \item The underlying graphical structure $(\N, \Ar)$ of a PDG can be taken to directly be a directed \emph{hypergraph}, rather than an ordinary directed (multi)graph. With this definition, we circumvent the need for \cref{constr:hyperedge-reducton}, and get a 
-    This is the appraoch taken in later chapters of the thesis. 
+\begin{enumerate}[wide]
+    \item As mentioned in the definition, the structure $(\N, \Ar)$ of a PDG can be taken to directly be a directed graph rather than the (seemingly more expressive) directed hypergraph. 
+	% With this definition, we circumvent the need for \cref{constr:hyperedge-reducton}, and get a 
+    % This is the approach taken in later chapters of the thesis. 
+	This approach is an instance of the approach to probabilistic modeling that emphasizes variables, detailed in \cref{sec:var-randomvar,ssec:fin-prob}
 
-    \item In the other direction, we can also define an equivalent variant of a PDG win which $(\N, \Ar)$ is not a multi-graph, but rather an ordinary directed graph. It is not hard to see that a multi-graph could be simulated in that formalism with the following widget:
+	\begin{constr}\label{constr:hyperedge-reducton}
+		% We can now explain how we capture the multi-tailed arcs that 
+		% were used in 
+		% \Crefrange{ex:smoking}{ex:grok-union}. 
+		We can capture multi-tailed arcs and joint dependence, even with ordinary graphs, at the cost of an extra node and a few extra arcs.
+		% That notation can be viewed as shorthand for the graph that results by adding a new node at the junction representing the joint value of the nodes at the tails, with projections going back.  
+		For instance,
+		the diagram displaying Grok's prior knowledge in \Cref{ex:grok-union}, on the left of \Cref{fig:grok-combine}
+		can be viewed shorthand for the following PDG, where
+		where we insert a node labeled $C \times T$ at the junction:
+		\smallskip
+			\begin{center}
+			\begin{tikzpicture}[paperfig]
+				\node[dpadded] (SL) at (1.0,0) {$\mathit{SL}$};
+				%
+				\node[dpadded] (C) at (-1.0, -0.6) {$C$};
+				\node[dpadded] (T) at (-1.0, 0.6) {$T$};
+				%
+				\cmergearr{C}{T}{SL}{0.2,0}
+				%
+				\draw[arr] (T) to [bend right=90, looseness=2] (C);
+			\end{tikzpicture}
+			$\qquad\rightsquigarrow\qquad$
+			\ifprecompiledfigs
+		\raisebox{-0.5\height}{\includegraphics[scale=0.9]{figure-pdfs/widget.pdf}}
+			\else
+				\begin{tikzpicture}[paperfig]
+					\node[dpadded] (SL) at (-1.0,0) {$\mathit{SL}$};
+					
+					\node[dpadded,light pad] (CT) at (-2.9, 0){$\scriptstyle C \times T$};
+					\node[dpadded] (C) at (-4.8, -0.6) {$C$};
+					\node[dpadded] (T) at (-4.8, 0.6) {$T$};
+					
+					\draw[arr, ->>] (CT) -- (C);
+					\draw[arr, ->>] (CT) -- (T);
+					\draw[arr] (CT) -- (SL);
+					\draw[arr] (T) to [bend right=90, looseness=2] (C);
+			\end{tikzpicture}
+			\fi
+			\end{center}
+			\smallskip
+		
+		As the notation suggests, $\V( C \times T) = \V(C) \times \V(T)$.
+		For all $(c,t) \in \V(C \times T)$ the cpd for the arc from $C \times T$ to $C$ gives probability 1 to $c$; similarly, the cpd for the arc from $ C \times T$ to $T$ gives probability 1 to $t$.
+		
+		More generally, a hyperarc $S \to T$, where $S, T \subseteq \N$, 
+			can be compiled to a fragment of an ordinary graph, containing:
+		\begin{enumerate}[nosep]
+			\item two additional ``super-nodes'' that are not elements of $\N$, corresponding to $S$ and $T$ respectively, whose possible values are joint settings of their constituent variables;
+			\item projections $S \to X$ for each $X \in S$, and projections $T \to Y$ for each $Y \in T$, all with high confidence ($\alpha = \beta = \infty$);
+			\item an arc $S \to T$, associated with the original cpd and confidences. 
+		\end{enumerate}
+		The special case of a hyperarc with no tails leads to the the special variable $\pdgunit$ such that $\V(\pdgunit)=\{\star\}$, 
+		as introduced in \Cref{ex:guns-and-floomps,ex:smoking}.
+		\end{constr}
+		
+		
+
+
+
+
+    \item Going even further, the restriction to PDGs in which $(\N, \Ar)$ is not a multi-graph, but rather an ordinary directed graph, is not a restriction at all. It is not hard to see that a multi-graph could be simulated in that formalism with the following widget:
     \[
         \begin{tikzpicture}[center base]
             \node[dpadded](X) at (0,0) {$X$};
@@ -719,20 +753,13 @@ We now review a some important alternative ways of defining a PDG.
     Once again it may seem that this is a more general setting, yet once again it turns out to be equivalent to all of the other variants of PDGs we have considered so far. 
 \end{enumerate}
 
-\subsection{PDG Superposition}
+\subsection{Combining PDGs}
 
 As illustrated \cref{ex:grok-union}, a significant advantage of PDGs is their modularity:
 we can combine the information in $\dg M_1$ and $\dg M_2$ 
 by taking the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
-
-% The most important operation we on PDGs is the sum,
-% 	which combines the information in $\dg M_1$ and $\dg M_1$
-% 	to form a new PDG $\dg M_1 + \dg M_2$.  
-% More precisely, this involves forming  the disjoint union of the (hyper)arcs
-% 	(because more arcs should count double), 
-%     but we don't want to duplicate variables.
-
-% If we're being extra careful,
+%
+%
 To be more precise, depending on the variant
 of the definition of a PDG, we might need another definition:	
 \begin{defn}
@@ -1088,14 +1115,15 @@ In a sense,
 (b) is the total amount of randomness we need in order to generate components of an outcome of $\mu$ along the structure of the hypergraph $\Ar$,
 while
 (a) is the amount of randomness needed to generate an outcome of $\mu = \mu(\X|\varnothing)$ along its own simple dependency structure ($\varnothing \to \X$). 
-Clearly, the two must be equal in order for $\Ar$ to be a complete and accurate causal explanation for $\mu$.
+Clearly, the two quantities must be equal in order for $\Ar$ to be a complete and accurate causal explanation for the origin of $\mu$.
 
 % We think of each arc $\ed aXY$ as representing a qualitative claim 
 % (with confidence $\alpha_a$) 
 % that the value of $Y$ can be computed from $X$ alone. 
 % To formalize this, we require only the multigraph $\Gr^{\dg M}$.
 
-But if they differ?
+% What if they differ?
+What if they differ?
 % If \ref{item:globalinfo} $=$ \ref{item:localinfo},
 % a specification of (b) has
 %  exactly the same length as a full desciption of the world. 
@@ -1108,11 +1136,15 @@ The larger the difference,
 % arcs $X \rightarrow Y$ leading to $Y$
 % (which according to $G$ should be sufficient to compute them), 
 the larger the overhead of using the structure $\Ar$ to compute probabilities, compared to what is necessary,
-    and so the poorer the qualitative fit of $\mu$ to $\Ar$.
+    and so the poorer the structural fit of $\mu$ to $\Ar$.
 % In a way, this is a direct qualitative analogue of the information-theoretic interpretation of $\OInc$.
+Notice how this parallels overhead of erroneous quantitative beliefs discussed above.
 If \ref{item:globalinfo} $>$ \ref{item:localinfo}, 
 on the other hand, (like, for instance, if $\Ar$ is empty) then $\Ar$ must be an incomplete qualitative picture---because to explain everything in $\mu$, at least $\H(\mu)$ bits are required.
-An incomplete picture fits data better than a complete one.
+Although an incomplete picture may not be a good thing, 
+	it certainly fits data better than a complete one. 
+So, in both cases, the fit is worst when (b) is large and (a) is small.
+This observation motivates our qualitative scoring function.
 %
 % 
 % $\mu$ additional information to specify, beyond
@@ -1138,64 +1170,139 @@ For a PDG ${\dg M}$, we take $\SDef_{\dg M} = \SDef_{\Ar^{\dg M}}$
 to be shorthand for the information deficiency relative to its structure.
 \end{defn}
 
-We illustrate $\SDef_{\dg M}$ with some simple examples.  
-Suppose that $\dg M$ has two nodes, $X$ and $Y$.  If $\dg M$ has no arcs, the
-$\SDef_{\dg M}(\mu) = - \H(\mu)$. There is no information required to specify, for
-each arc in ${\dg M}$ from $X$ to $Y$, the value ${\mat w}_Y$ given ${\mat
-w}_X$, since there are no arcs. Since we view smaller numbers as representing a
-better fit, $\SDef_{\dg M}$ in this case will prefer the distribution that
-maximizes entropy. If $\dg M$ has one arc from $X$ to $Y$, then since $\H(\mu) =
-\H_{\mu}(Y \mid X) + \H_\mu(X)$
-by the well known \emph{entropy chain rule} \cite{mackay2003information},
-$\SDef_{\dg   M}(\mu) = -\H_{\mu}(X)$. Intuitively,
-while knowing the conditional probability $\mu(Y \mid X)$ is helpful, to
-completely specify $\mu$ we also need $\mu(X)$. Thus, in this case, $\SDef_{\dg
-M}$ prefers distributions that maximize the entropy of the marginal
-on $X$. 
-If $\dg M$ has sufficiently many parallel arcs
+We illustrate $\SDef$ with some simple examples.
+	% the reader can follow along with graphical visualizations
+	% 	in \cref{fig:sdef-example-panel}.
+% in which $\Ar$ has just two variables, $X$ and $Y$. 
+First, when $\Ar$ has no arcs 
+% (e.g., subfigures \ref{subfig:justX-0} and \ref{subfig:justXY})
+\unskip, then $\SDef_{\!\Ar}(\mu) = - \H(\mu)$. 
+% There is no information required to specify, for
+% each arc in ${\dg M}$ from $X$ to $Y$, the value ${\mat w}_Y$ given ${\mat
+% w}_X$, since there are no arcs.
+Since smaller numbers represent a better fit, 
+	$\SDef_{\dg M}$ tells us to maximize entropy---%
+which is precisely what the literature tells us to do, at least, to break ties between distributions consistent with our observations in the absence of no structural or causal information \cite{jaynes1957information}. 
+% If $\dg M$ has one arc from $X$ to $Y$, then since $\H(\mu) =
+% \H_{\mu}(Y \mid X) + \H_\mu(X)$
+% by the well known \emph{entropy chain rule} \cite{mackay2003information},
+% $\SDef_{\dg   M}(\mu) = -\H_{\mu}(X)$.
+Next, suppose $\Ar = 
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (X) at (0,0) {$X$};
+	\node[dpadinline] (Y) at (1,0) {$Y$};
+	\draw[arr2] (X) to (Y);
+\end{tikzpicture}
+$
+% (\ref{subfig:XtoY})
+\unskip.
+% Intuitively, while knowing the conditional probability $\mu(Y \mid X)$ is helpful, to
+% completely specify $\mu$ we also need $\mu(X)$. Thus, in this case, $\SDef_{\dg
+% M}$ prefers distributions that maximize the entropy of the marginal on $X$. 
+In general, specifying $X$ and $Y$ together takes the same amount of information as first specifying $X$, and then using that value to specify $Y$ (recall the chain rule, from \cref{sec:qual-info-theory-primer}).
+So $\Ar$ is incomplete, and missing precisely an explanation for the origin of $X$. 
+By the same reasoning as before, the best bet is to maximize entropy (but now just of $X$); indeed, $\SDef_{\!\Ar} = - \H_\mu(X)$. 
+%
+If $\Ar$ has sufficiently many parallel arcs
  from $X$ to $Y$
  and $\H_{\mu}(Y \mid X) > 0$ 
 (so that $Y$ is not totally determined by $X$)
-then we have $\SDef_{\dg M}(\mu) > 0$, because the redundant arcs add no
+then we have $\SDef_{\!\Ar}(\mu) > 0$, because the redundant arcs add no
 information, but there is still a cost to specifying them.
-In this case, $\SDef_{\dg M}$ prefers distributions that make $Y$ a
-deterministic function of $X$ will maximizing the entropy of the
-marginal on $X$.
-Finally, if ${\dg M}$ has an arc from $X$ to $Y$ and another from $Y$
-to $X$, then a distribution $\mu$ minimizes $\SDef_{\dg M}$ when 
-$X$ and $Y$  vary together (so that $\H_\mu(Y \mid X) = \H_\mu(X \mid Y) = 0$)
-while maximizing $\H(\mu)$, for example, by taking $\mu(0,0)
-= \mu(1,1) = 1/2$. 
+In this case, $\SDef_{\!\Ar}$ prefers distributions that make $Y$ a
+deterministic function of $X$ (while still maximizing the entropy of $X$).
+%
+Finally, if $\Ar = \begin{tikzpicture}[center base]
+	\node[dpadinline] (X) at (0,0) {$X$};
+	\node[dpadinline] (Y) at (1,0) {$Y$};
+	\draw[arr2] (X) to[bend left] (Y);
+	\draw[arr2] (X) to[bend left] (Y);
+\end{tikzpicture}$,
+%  then a distribution $\mu$ minimizes $\SDef_{\!\Ar}$ when 
+% $X$ and $Y$  vary together (so that $\H_\mu(Y \mid X) = \H_\mu(X \mid Y) = 0$)
+% while maximizing $\H(\mu)$, 
+then $\SDef_{\!\Ar}(\mu) = - \I_\mu(X ; Y)$ encourages mutual information between $X$ and $Y$
+(and so it is optimal for $X$ and $Y$ to be functions of each other).
+% for example, by taking $\mu(0,0)
+% = \mu(1,1) = 1/2$. 
 
 \input{fragments/idef-intuition}
 
+% To build intuition for $\SDef$, which characterizes our bounds in \cref{sec:info},
+% we now visualize the vector $\mat v_{\!\Ar}$ for various example hypergraphs. 
+Since $\SDef_{\!\Ar}$ is a linear combination of (conditional) entropies,
+it is also a linear function of $\mu$'s information profile vector.
+Technically, this means $\SDef_{\!\Ar}$ is a dual vector in information profile space, and thus can be illustrated with the same diagram as used to show information profiles.
+A substantial number of small examples have been visualized this way in \cref{fig:sdef-example-panel}.
+We now make a few observations about that figure. 
 
+\begin{enumerate}
+\item
+Observe that, in the definition of $\SDef$, each arc $X\to Y$ is compiled to a ``cost'' $H(Y|X)$ for uncertainty in $Y$ given $X$.
+One can see this visually in \cref{fig:sdef-example-panel}
+in the form of a red crescent that's added to the information profile as we move 
+from \ref{subfig:justXY} to \ref{subfig:XtoY} to \ref{subfig:XY-cycle}.
+In the unconditional case,
+	Subfigures \ref{subfig:justX-0}, \ref{subfig:justX-1}, 
+    and \ref{subfig:justX-2} show
+    how adding arcs increases the incentive for determinism.
 
+\item 
+Some hypergraphs (see \Cref{subfig:justX-1,subfig:1XY}) are \emph{indiscriminate}, in the sense that every distribution gets the same score
+% (so that score must be zero, beause this is the score a degenerate distribution gets).
+(of zero, because a point mass $\delta$ always has $\SDef_{\!\Ar}(\delta) = 0$).
+For such a distribution, no randomness is required to generate anything at all.
+As we will soon see, 
+ $\SDef$ can indicate independencies and conditional independencies, illustrated respectively in Subfigures \ref{subfig:XYindep} and \ref{subfig:1XYZ}.
+
+\item
+ For more complex structures, structural information deficiency $\SDef$ 
+can represent more than independence and dependence. 
+The cyclic structures in \cref{example:xy-cycle,example:xyz-cycle-1}, 
+    correspond to the structural deficiencies pictured
+    in Subfigures \ref{subfig:XY-cycle} and \ref{subfig:XYZ-cycle}, respectively,
+    which are functions that encourage shared information between the three variables. 
+\end{enumerate}
 
 \paragraph{The Combined Scoring Funcion.}
-If the observational and structural information conflict, 
-then the distribution(s) that best represent a PDG 
-will depend
-on the importance of structure relative to observation,
+$\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
+of compatibility between ${\dg M}$ and a distribution $\mu$.
+The right way to combine them into a single score, as we must 
+	to handle cases in which the observational structural information conflict with one another, 
+depends on the importance of structure relative to observation. 
+% If the observational and structural information conflict, 
+% then the distribution(s) that best represent a PDG 
+% will depend
+% on the importance of structure relative to observation.
+%
 % \discard{ This is captured by a trade-off 
 %     parameter $\gamma \ge 0$, which 
 %     can be used to define the scoring function
 %     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
-as captured by a trade-off parameter $\zogamma \in [0,1]$
+This could be captured by a trade-off parameter $\zogamma \in [0,1]$
 that controls the convex combination
 $(1-\zogamma)\OInc + \zogamma \SDef$. 
-So as to simplify the math
-and match the notation in
-previous work (\citeyear{pdg-aaai,one-true-loss}),
-we mostly use a rescaled variant with a different parameterization.
+%
+For several reasons---%
+	most importantly, to simplify the math, 
+	and to bring out relationships with other graphical models and the thermodynamics literature%
+	% and so as not to create the impression that $\OInc$ and $\SDef$ 
+	% are playing the same role
+	---%
+% So as to simplify the math
+% and match the notation in
+% previous work (\citeyear{pdg-aaai,one-true-loss}),
+our primary definition will instead be a rescaled variant with a different parameterization.
+%
 Using
 $\gamma := \nicefrac{\zogamma}{(1-\zogamma)} \in [0,\infty]$,
 define the overall scoring function:
 \begin{align*}
     \bbr{\dg M}_\gamma&(\mu) 
-        := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
-            \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
-        &= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\dg M}(\mu)\, \Big) \\[-0.1ex]
+        := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\!\dg M}(\mu)
+            \numberthis\label{eqn:scoring-fn}  \\
+        &= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\!\dg M}(\mu)\, \Big) 
+		\\
         &= \Ex\nolimits_{\mu}\bigg[
             \,
             \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
@@ -1206,22 +1313,21 @@ define the overall scoring function:
         .
 \end{align*}
 
-$\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
-of compatibility between ${\dg M}$ and a distribution $\mu$.
-We take the score of interest to be their sum, with the tradeoff
-controlled by a parameter $\gamma \ge 0$:
+% $\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
+% of compatibility between ${\dg M}$ and a distribution $\mu$.
+% We take the score of interest to be their sum, with the tradeoff
+% controlled by a parameter $\gamma \ge 0$:
 
-\begin{equation}
-  	  \bbr{\dg M}_\gamma(\mu)
-	 := \OInc_{\dg M}(\mu) + \gamma \SDef_{\dg M}(\mu)  \label{eqn:full-score}
-\end{equation}
-
-
-          
-While we focus on this particular scoring function in the paper, 
-in part because
-it has deep connections to the free energy of a factor graph \cite{KF09},
-other scoring functions may well end up being of interest. 
+% \begin{equation}
+%   	  \bbr{\dg M}_\gamma(\mu)
+% 	 := \OInc_{\dg M}(\mu) + \gamma \SDef_{\dg M}(\mu)  \label{eqn:full-score}
+% \end{equation}
+% 
+%           
+% While we focus on this particular scoring function in the paper, 
+% in part because
+% it has deep connections to the free energy of a factor graph \cite{KF09},
+% other scoring functions may well end up being of interest. 
         
 
 
@@ -1283,10 +1389,9 @@ It has an important property:
 \subsection{Further Semantics: PDGs as Degrees of Inconsistency 
     \texorpdfstring{\\}{}and as Transformations on Distributions}
 
-The three semantics given in the previous section are the ones presented in the original PDG paper \cite{pdg-aaai}, and hence the ones relevant for the present chapter based on it. 
+The three semantics given in the previous section are the ones presented in the original PDG paper \cite{pdg-aaai}.
 However, there are other semantics that will play an important role later on. 
-
-Far and away the most important semantics that we have not yet explicitly mentioned is the so
+Far and away the most important semantics, which we have talked about at length but still not explicitly defined,  
 is a PDG's \emph{(degree of) inconsistency}:
 % 
 % The (observational) \emph{inconsistency of PDG $\dg M = 
@@ -1308,9 +1413,9 @@ More precisely, for each $\gamma$, we can define
 \] 
 Thus, it interprets a PDG as a single number.  This quantity may at first seem less important than the others, but we will see in \cref{chap:one-true-loss} that it is a ``universal loss function'', and then in \cref{chap:inc-infer-connection} that all of the other semantics can be derived from it. 
 
-In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from another perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function $\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$
+In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from a second perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function $\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$
 that updates distributions.
-
+%
 Both of these alternate semantics turn out to to be equivavlent to the scoring function semantics developped in \cref{sec:scoring-funs}. 
 
 \section{Relationships to Other Graphical Models}
@@ -1318,8 +1423,13 @@ Both of these alternate semantics turn out to to be equivavlent to the scoring f
 
 We start by relating
 PDGs to two of the most popular graphical models: BNs and factor
-graphs. PDGs are strictly more general than BNs, and can emulate factor graphs
-for a particular value of $\gamma$. 
+graphs. PDGs are strictly more general than BNs, and can emulate factor graphs for a particular value of $\gamma$. 
+More precisely, the distribution specified by a BN $\dg B$
+is the unique one that minimizes both $\OInc_{\dg B}$ and $\SDef_{\dg B}$ (and
+hence every positive linear combination of the two), while the
+distribution specfied by a factor graph $\Phi$ uniquely minimizes the
+sum $\OInc_{\Phi} + \SDef_{\Phi}$.
+Now for the details.
 
 \subsection{Bayesian Networks} 
     \label{sec:bn-convert}
@@ -1759,8 +1869,9 @@ Most notably:
     (the meaning of)
     previously-received information.
 \item They allow for a clean separation between quantitiatve information (the
-	cpds and weights $\beta$) and more qualitative information contained by
-	the graph structure (and the weights $\alpha$); this is captured by the
+	cpds $\mathbb P$ and weights $\bbeta$) and the qualitative information (carried by
+	the graph structure $\Ar$ and the weights $\balpha$); 
+	this separatoin is captured semantically by the
 	terms $\OInc$ and $\SDef$ in our scoring function.
 \item PDGs have (several) natural semantics; one of them allows us to
 pick out a unique distribution.  Using this distrbution, PDGs

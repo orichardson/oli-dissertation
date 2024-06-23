@@ -1,20 +1,25 @@
 % What is the problem I'm solving?
 
 %%% POINTS TO TOUCH ON %%%
-% - 
+% -  communities are not self consistent.
 
 \section{In Defense of Inconsistency}
 % \section{In Defense of Our Villain}
 
-\begin{quotation}
-    ``A man with one watch always knows the time;
+\begin{center}
+    \noindent\singlespacingplus
+% \begin{quotation}
+    \it
+    ``A man with one watch always knows the time;\\
     a man with two watches is never sure.''
-    \\
-    \hfill
-\end{quotation}
+% \end{quotation}
+\end{center}
 
-If you ever want to be right, it is important to acknowledge that you might now be wrong.  And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could have a fundamentally misguided understanding of how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in those that seek to manipulate you. 
-Most terrifying at all (at least for Descartes \cite{descartes}), your own internal calculations may not even be self-consistent.
+% A core tenet of science: 
+Science is built on simple tenet: if you want to someday understand things clearly, then it is important to acknowledge the possibility that your understanding today could be wrong.
+% If you want to be right, it is important to acknowledge that you might now be wrong.
+And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could have a fundamentally misguided understanding of how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in those that seek to manipulate you. 
+For those of us who prize logic and rationality (including, famously, Descartes \cite{descartes}), perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
 The foundational principles of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
 For without one, we risk being swindled \cite{RAT} or manipulated \cite{explosion}, if not humiliated \cite{logicalfalacy,emptysetthesis,politicians}.
@@ -70,10 +75,10 @@ But why perpetuate these unrealistic rationality standards?
 I argue that we should just call them what they are: (possibly) inconsistent belief states.
 
 Doing so intelligently unlocks a beautiful theory of probabilistic modeling, that unifies a broad range of concepts, representations, and algorithms across artificial intelligence, and the theory of rational mind. 
-The framework developped in this dissertation
+The framework developed in this dissertation
 gives us
 % The 
-ability to model, measure, and mitigate inconsistency 
+ability to model, measure, and mitigate inconsistency.
     % comes with an enormous amount of 
 This affords an agent an enormous amount of epistemic flexibility,
     making it far easier to make deep structural changes to its epistemic
@@ -91,53 +96,18 @@ than to avoid it entirely.
 
 % People, institutions, cultures, institutions of all shapes and sizes, 
 %
+Is really worse to be gullible than it is to be stuck and very wrong? 
 It is said that a man with two watches never knows the time.  
 But is a man with only one watch really better off?
 And how are you supposed to use multiple watches, anyway?
 % In the coming chapters, we will see. 
-We will soon see. 
+% We will soon see. 
+% Join me, and together we will soon see. 
+Let me show you. 
 
 
 \section{Themes and Motifs}
 
-
-
-\subsection{Mathematical Precision for Informal Reasoning}
-
-% definitional layering
- % good representation is that things that are actually different 
-Good notation has two critical properties
-\begin{enumerate}
-    \item Things that are different look different
-    \item Things that are the same look the same. 
-\end{enumerate}
-Through 
-
-It is not abuse if the two objects are in fact the 
-
-I have not shied away from defining the same symbol in more than one way---but I have done so in a way that the definitions never disagree.
-After all, that is the role of a theorem: to give two different 
-% symbol to have more than one formal meaning. 
-
-
-\TODO
-
-
-People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with many layers of definitions. 
-%
-The hallmark of a good formalism combined with good notation is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
-% Two particularly successful representations, for which I have only the highest respect, are for are string diagrams for operating with symmetric monoidal categories, and 
-% To my eyes, a primary strength of the formalism we develop in this dissertation 
-% This is a sign that the formalism could be improved.
-% The whole point of formalism is to support reasoning and thought, 
-%     in a way that aids precision; if it is too cumbersome to use properly,
-%     perhaps we would be better off with another formalism.
-    
-% Either it is too cumbersome to spea
-
-PDGs aim to be such a representation for manipulating probabilities.
-Some of the key reasoning principles have conjealed to form \cref{chap:reason},
-but a keen reader will see examples of how PDGs formalize intuitive probabilistic reasoning throughout. 
 
 
 %
@@ -154,13 +124,12 @@ So, despite appearances, $R_1$ turns out to be equivalent to $R_2$.
 To illustrate, consider an example that will soon appear in the mathematical preliminaries (\cref{chap:prelim}). 
 Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
 Also, hypergraphs clearly are generalization of graphs; only the special case where hyperedges have two vertices correspond meaningfully to graphs. 
-So, chaning these together, one might reasonably assume that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet they are naturally isomorphic. 
+So, chaning these together, one might reasonably assume that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet bipartite graphs and hypergraphs are naturally isomorphic. 
 % This pattern will be a recurring theme in this dissertation. 
 
 
-Here is another, more abstract example : verbs and nouns.
-
-\TODO
+% Here is another, more abstract example : verbs and nouns.
+% \TODO
 
 
 % Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
@@ -169,6 +138,75 @@ Not only can PDGs capture a great many things
 % (\cref{chap:pdg-repr,chap:repr-tools})
 \unskip, but they also capture most of the ``obvious generalizations'' of them that we could have wanted. 
 If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many variants of TMs aimed at extending their expressive power: ``generalized'' TMs that have multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary Turing Machines. 
+
+% \commentout{%
+
+\subsection{Mathematical Precision for Informal Reasoning}
+
+% definitional layering
+ % good representation is that things that are actually different 
+
+People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with many layers of definitions. 
+%
+The hallmark of a good formalism combined with good notation is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
+%
+Correspondingly, good representations, and tools for manipulating representations 
+    have two critical properties:
+\begin{enumerate}
+    \item things that are different look different, and
+    \item things that are the same look the same. 
+\end{enumerate}
+The first aids precision, and the latter aids ease of use. 
+% In math, it is common to use 
+% Often in mathematics, it is common to 
+It is very common for computer scientists and mathematicians 
+    % have an urge to prove their precision
+    \unskip,
+    in pursuit of precision,
+    to focus on distinguishing things that are even superficially different.  
+Failure to do so called ``abuse of notation''. 
+%
+We do it anyway, in service of making formalisms easier to work with. 
+But in some deep way, the notation is not really being abused if the two objects are really two different views of the same thing.
+% What is really important is 
+
+The idea can be described more precisely as etiquette for \emph{implicit conversion}.
+Whenever we define ways to implicitly regard objects of type $A$ to objects of type $B$, and a way of implicitly regarding objects of type
+    $B$ as objects of type $C$, then 
+    we have also defined way of implicitly converting an object of type $A$ to one of type $C$.
+%
+To avoid confusion, it is not strictly necessary to avoid implicit conversions---just to ensure that all ways implicitly converting $A$ to $C$ are equivalent. 
+%
+Doing so can be challenging, but it is often the best way to get representations that simultaneously attain both 1 and 2. 
+%
+
+Avoiding the challenge altogether----ensuring objects of different types of different types are given different symbols---is a direct analogue of forcing yourself to be consistent by construction. It is very clear and precise, but makes it difficult to think. 
+%
+In keeping with the theme of this dissertation, I have not shied away from defining the same symbol in more than one way---but I have tried to do so in a way that the definitions never disagree in any context. 
+%
+% After all, that is the role of a theorem: to give two different 
+% symbol to have more than one formal meaning. 
+
+% Two particularly successful representations, for which I have only the highest respect, are for are string diagrams for operating with symmetric monoidal categories, and 
+% To my eyes, a primary strength of the formalism we develop in this dissertation 
+% This is a sign that the formalism could be improved.
+% The whole point of formalism is to support reasoning and thought, 
+%     in a way that aids precision; if it is too cumbersome to use properly,
+%     perhaps we would be better off with another formalism.
+    
+% Either it is too cumbersome to spea
+
+The representation that lies at the heart of this thesis, called a probabilistic dependency graph (PDG), enables this kind of thinking in the probabilistic setting.
+They enable us to manipulate probabilistic primitives in ways that look just like standard intuitive short-hand, yet the machinery underneath makes the reasoning completely precise.
+Some of the key reasoning principles have conjealed to form \cref{chap:reason},
+but a keen reader will see examples of how PDGs formalize intuitive probabilistic reasoning throughout. 
+% Howevef the reasoning is consistent, which we do not require by construction. 
+But when we introduce probabilities, consistency is not just about ensure paths are equal;
+ it's about something else. 
+Making that something else precise is one objective of this thesis. 
+% It is a powerful way of formalizing these kinds of thought patterns for probabilistic reasoning. 
+% It aims to simultaneously 
+%
 
 
 %oli: don't talk about epistemic humility as a separate section if that's the hook.
@@ -188,37 +226,42 @@ The division between the two levels goes by different names in different communi
 In computer science, pehraps the most common
     widely appreciated version of this phenomenon is 
     the difference between types and values.
+A few others have are below.
+
+\begin{center}
+    \begin{tabular}{c|c}
+        Qualitative & Quantitative \\ 
+        Structural & Observational \\
+        Values & Types \\ 
+        Theorems & Proofs \\
+        Definitions & Examples \\
+        Schemas & Instances 
+    \end{tabular}
+    \end{center}
     
 Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
 % (although both can be numerical)
-\unskip, or alternatively as the divide between \emph{structural} and \emph{observational} information. 
-
-\begin{center}
-\begin{tabular}{c|c}
-    Qualitative & Quantitative \\ 
-    Structural & Observational \\
-    Values & Types \\ 
-    Theorems & Proofs \\
-    Definitions & Examples \\
-    Schemas & Instances 
-\end{tabular}
-\end{center}
-
+\unskip, or alternatively as the divide between \emph{structural} and \emph{observational} information (see \cref{sec:pgm-prelim}).
 The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
-
-Both kinds of information are important, and they are fundamentally very different. The former is about the graph structure, and the latter is about its annotation. Put differently (as we will see in \cref{chap:PDG-cat}), the former is a conceptual shape, and the latter interprets that shape in the language of probabilities and confidences. 
+%
+Both kinds of information are important, and they are fundamentally very different. The former is about the graph structure, and the latter is about its annotation. Put differently,
+% (as we will see in \cref{chap:PDG-cat}), 
+the former is a conceptual shape, and the latter interprets that shape in the language of probabilities and confidences. 
 
 % One unusual feature of PDGs is that the qualitative information has a numerical weight. 
-Different experts may have different relative strengths.
-For instance, one might want to trust one person to design a study to determine what causes what, and another person to independently design experiments aimed at determining the numerical probabilities. 
+% Different experts may have different relative strengths. For instance, one might want to trust one person to design a study to determine what causes what, and another person to independently design experiments aimed at determining the numerical probabilities. 
 
-% Practically, one benefit of separating these modeling choices is that it allows us to 
-%  [[ divide among experts / reason using structure /  ]]
-% One of the biggest benefits of this separation is that it 
+This line between these two kinds of information will be a recurring character in this work.
 
-For expressive enough languages, the lines become blurred. 
-Dependent types require one to think about values, leading to can get runtime errors at compile time. 
-PDGs, too, blur this line.  We will see that it is possible to define variables that correspond to specific values of a variable (\cref{?}).
+% Understanding the difference between these two 
+% Corresponding 
+% We will see 
+
+\commentout{
+For expressive enough languages, the lines become blurred. Dependent types require one to think about values, leading to can get runtime errors at compile time. 
+PDGs, too, blur this line.  We will see, for example, that it is possible to define variables that correspond to specific values of a variable (\cref{prop:individual-prob-1}).
+}
+
 
 \commentout{%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Not Nouns, but Verbs}
@@ -239,11 +282,10 @@ Then, in 20
 \]
 }%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
+\commentout{
 \section{Overview of Results}
 
-\TODO
-
-
-
-
-We---that is, the author(s) and reader(s)---explore together. 
+\TODO[TODO]
+}

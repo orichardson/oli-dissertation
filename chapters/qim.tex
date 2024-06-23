@@ -2872,7 +2872,7 @@ This set is defined by two (linear) constraints:
 %joe4*: this notation will only confuse th rader.  If you're going to
 %keep it (and I see no reason to), you have to explain it better.
 %oli5: I can run with your replacement explanation in English, but I find the symbolic version far more satisfying and precise. There is value to having both.  English is full of ambiguities, and I don't want definitions like this one to rest on interpretation. I've already compiled it to math, for the reader who would rather read math than English.  
-\vfull{
+% \vfull{
 Formally, for a PSEM $\mathcal M = (M, P)$, this means defining
 %oli2: slight notational change that might better suit our uses
 % $\SD[\big]{\mathcal F, \nu} := $\\[-0.2ex]
@@ -2941,21 +2941,18 @@ has the same value as $Y$ is an event
  % of interest that must always occur
 which, according to the equation $f_Y$,
 must always occur.
-}%
+% }%
 % In a probabilistic context such as this one, a (set of) variable(s) $\mat X \subseteq \U \cup \enV$ is also a \emph{random variable}, i.e., a function from the sample space $\Omega = \V(\enV \cup \U)$ to the range $\V \mat X$, by projection.
 % This makes $F_X(\mathcal U, \enV - \{ X \}) = X$,
 % an event $\{ (\mat u, \mat x) :  \mat u \in \V\U, \mat x \in \mathcal F(\mat u) \} \subseteq \Omega$, and hence we can require that it has probability 1, which is the second condition above.
 %%% END MATERIAL LIFTED FROM CAUSAL MODEL INTRO %%%
+\commentout{% 
 Given a 
-%oli21: we don't use the generality anymore for ordinary SEMs, I think
-% (P)SEM 
 PSEM
  $\mathcal M$, let $\SD{\mathcal M}$ consist of all 
 joint distributions $\nu(\U, \enV)$ that satisfy the two constraints above
-%cutting down
-% \vfull{%
-%oli21: this is clearly implied,  not helping the reader, and long (and unused, I think)
 (or just the first of them, in the case of a non-probabilistic SEM).
+}%
 %oli21: this is not as useful as the next sentence, which subsumes it; cutting for space. 
 $\SD{\cal M}$ can be thought of as the set of distributions compatible
 wth $\cal M$, and captures the behavior of the causal model $\cal M$ in
@@ -3485,7 +3482,7 @@ Based on their definitions, it should come as no surprise that randomized PSEMs 
 %need to be part of the title?
 %oli20: to be this precise, yes, but perhaps you'd prefer to be vaguer...
 % \subsection{The Equivalence Between \SCibility\ and Arising from a Randomized PSEM}
-\subsection{The Equivalence Between \SCibility\ and Solving a Randomized PSEM}
+\subsection{The Equivalence Between \SCibility\ \texorpdfstring{\\}{} and Solving a Randomized PSEM}
     \label{ssec:ssec:cm-arise}
 %oli18: replacing this section header
 \commentout{In this section, we give the top-level contour of the relationship between \scibility\ and causality: $\mu \models \Ar$ iff there is a causal model whose dependency structure is $\Ar$ that gives rise to $\mu$. To do this, we must be more precise about what it means to ``have dependency structure $\Ar$''. We do this by considering increasingly general classes of \hgraph s, which turn out to coincide with special classes of causal models. }
@@ -8943,6 +8940,8 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     $\hat U_a = \Tgt a$
     % according to the transformation $\hat U_a = \Tgt a$. 
     % To do this, we 
+
+    \TODO[TODO: figure out how to patch this or remove statement from theorem]
     
     }%    
 \end{lproof}

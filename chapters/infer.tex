@@ -10,10 +10,11 @@ On one hand, PDGs specify a joint distribution; in this capacity, they are an es
 On the other hand, PDGs have a natural inconsistency measure; in this capacity, they are a principled model-based way to specify a loss function.
 Yet, even several years after their introduction, there had been no practical way to compute with PDGs in either role: no inference algorithm, and no (provably correct) way to calculate the degree of inconsistency.
 % In this chapter, we address both issues.
-This chapter, based on a paper of the same name \cite{pdg-infer}, resolves both issues.
+This chapter is based on a paper that resolves both issues  \cite{pdg-infer}.
 
 \section{Introduction}
 
+As we have seen,
 \emph{Probabilistic dependency graphs (PDGs)} \parencite{pdg-aaai},
 form a very general class of probabilistic graphical models,
 that includes not only
@@ -41,16 +42,16 @@ PDGs can also capture inconsistent
 beliefs, and provide a useful way to measure the degree of this inconsistency;
 for a VAE, this is the loss function used in training
     \parencite{one-true-loss}.
-    PDGs have some
-significant advantages over other representations of probabilistic information. 
-    Their flexibility allows them to model beliefs that BNs cannot, 
-such as information from independent studies of the same variable
-(perhaps with different controls, yielding probabilistic observations $p(Y|X)$ and $q(Y|Z)$).
-PDGs
-can deal gracefully with conflicting information from multiple sources.
-Every subcomponent of a PDG has probabilistic
-    meaning, independent of the other components;
-compared to FGs, this makes PDGs more interpretable.
+% PDGs have some
+% significant advantages over other representations of probabilistic information. 
+%     Their flexibility allows them to model beliefs that BNs cannot, 
+% such as information from independent studies of the same variable
+% (perhaps with different controls, yielding probabilistic observations $p(Y|X)$ and $q(Y|Z)$).
+% PDGs
+% can deal gracefully with conflicting information from multiple sources.
+% Every subcomponent of a PDG has probabilistic
+%     meaning, independent of the other components;
+% compared to FGs, this makes PDGs more interpretable.
 But up to now, there has been no practical way to do inference for
 PDGs---that is,
 to answer questions of the form
@@ -76,15 +77,14 @@ and ``observational'' information
 about conditional probabilities.
 Unlike in a BN, the two can conflict in a PDG.
 Corresponding to these two types of information,
-a PDG has two
-loss functions,
+a PDG has two loss functions,
 which quantify how far a distribution $\mu$ is from
 modeling the information of each type.
 Given a number $\zogamma
 \in [0,1]
 $
 indicating the importance of structure relative to observation,
-we take the \emph{$\zogamma$-semantics} of a PDG to be the
+the \emph{$\zogamma$-semantics} of a PDG to be the
 set of distributions that minimize 
 the appropriate convex combination of
 losses.
@@ -272,9 +272,9 @@ We also refer to $\mu$'s entropy $\H(\mu) := \Ex_{\mu} [\log \frac1\mu]$ and con
 
 
 
-\textbf{Treewidth.}
+\paragraph{Treewidth.}
     \label{sec:tw}
-
+%
 % New material
 Recall that 
 %
@@ -419,58 +419,32 @@ many queries about $\Pr_{\bmu}$
     }
 Therefore, to answer probabilistic queries with respect to a distribution $\mu$, it suffices to find a \cactree\ $\bmu$ that represents $\mu$, and appeal to standard algorithms.
 
-\textbf{Probabilistic Dependency Graphs.}
-Our presentation of PDGs is slightly
-different from (but equivalent to) that of
-\textcite{pdg-aaai}, which
-the reader is encouraged to consult for more details and intuition.
-At a high level, a PDG
-is
-just
-a collection of cpds and causal assertions,
-    weighted by confidence. More precisely:
-
-\begin{defn}
+For the reader's convenience, we now repeat a (more compact) version of the definition of a PDG.
+% \begin{defn*}
     A PDG $\dg M \!=\! (\X\mskip-2mu, \Ar,
         \mathbb P, 
         \balpha, \bbeta )
     $
-    is     
-    a directed hypergraph 
-    $(\X\mskip-2mu, \Ar)$ 
-    whose nodes 
-    are
-    variables,
-    together with 
-    probabilities $\mathbb P$
-    and
-    confidence vectors
+    is a directed hypergraph $(\X\mskip-2mu, \Ar)$ 
+    whose nodes are variables, together with probabilities $\mathbb P$
+    and confidence vectors
     $\balpha \!=\! [\alpha_a]_{a \in \Ar}$ 
     and $\bbeta \!=\! [\beta_a]_{a \in \Ar}$,
-    so that
-    each $\ed aST \! \in\! \Ar$ is associated with:
+    so that each $\ed aST \! \in\! \Ar$ is associated with:
     
     \begin{itemize}[nosep,itemsep=2pt]
     \item
-    a conditional probability distribution
-    {\subafalse $\p_a(\Tgt a | \Src a)$}
-    on the target variables given 
-    values of
-    the source variables,
-    \item a weight 
-    $\beta_a \in \smash{\Rext}$ 
-    indicating
-    the modeler's confidence in 
-    the cpd {\subafalse $\p_a(\Tgt a | \Src a)$},
+    a conditional probability distribution {\subafalse $\p_a(\Tgt a | \Src a)$}
+    on the target variables given values of the source variables,
+    \item a weight $\beta_a \in \smash{\Rext}$ 
+    indicating the modeler's confidence in the cpd {\subafalse $\p_a(\Tgt a | \Src a)$},
     % \discard{(as measured by the number of independent observations that support $\p_a$), }
     and
     \item 
-    a weight $\smash{\alpha_a \in \mathbb R}$
-    indicating
+    a weight $\smash{\alpha_a \in \mathbb R}$ indicating
     the modeler's confidence in the functional dependence of 
     {\subafalse$\Tgt a\mskip-2mu$ on $\Src a\mskip-2mu$}
-    expressed by
-    $a$.
+    expressed by $a$.
     % \discard{
     % (as measured by the expected number of independent causal mechanisms corresponding to $a$,
     % that determine $\Tgt a$ given $\Src a$).%
@@ -482,8 +456,7 @@ If $\bbeta \ge \mat 0$ and $\alpha_a\! > 0$ implies $\beta_a\! > 0$, we
 write $\bbeta \gg \balpha$ and
 call $\dg M$ \emph{proper}.
 Note that  $\bbeta \gg \balpha$ if $\bbeta > \mat 0$.
-\end{defn}
-
+% \end{defn*}
 % \temphide{%
 % One significant advantage of PDGs is their modularity:
 % we can combine the information in $\dg M_1$ and $\dg M_2$ 
@@ -515,76 +488,20 @@ Note that  $\bbeta \gg \balpha$ if $\bbeta > \mat 0$.
 %     a joint distribution $\mu$ over (the possible values of) the variables
 %     in $\X$, and each of the two types of information. }%
 % %
-As mentioned in the introduction,
-a PDG contains two types of information:
+Recall that  PDG contains two types of information:
 ``structural'' information, in the hypergraph $\Ar$ and
 weights $\balpha$, and ``observational'' data,
 in the cpds  $\mathbb P$ and weights $\bbeta$.
-PDG semantics are based on two scoring functions
+PDG semantics are based on two scoring functions 
 that quantify discrepancy between 
 each type of information and a distribution
 $\mu \in \Delta \V \!\X$ over its variables.
-
-The \emph{observational incompatibility} of $\mu$ with $\dg M$, which
-can be thought of as a ``distance''  between $\mu$ and the cpds of $\dg M$,
-is given by the weighted sum of relative entropies:
-\begin{align*}
-    \OInc_{\dg M}(\mu) :=
-        \sum_{\ed aST \mathrlap{\,\in \Ar}} \subafalse
-        \beta_a\, \kldiv[\Big]{\mu(\Tgt a,\Src a)}{\p_a(\Tgt a | \Src a) \mu(\Src a)}.
-\end{align*}
-Under a standard interpretation of the relative entropy $\kldiv{\mu}{p} \mskip-1.5mu=\mskip-1.5mu \Ex_{\mu}[\log \frac\mu p]$,
-$\OInc_{\dg M}$ measures the excess cost of using codes optimized for the cpds of $\dg M$ 
-(weighted by their confidences),
-when reality is
-distributed according to $\mu$.
-
-The second scoring function measures
-the extent to which
-$\mu$ 
-is incompatible with 
-a causal picture consisting of independent mechanisms 
-along each hyperarc. 
-This is captured by the
-\emph{structural incompatibility}
-(of $\mu$ with $\dg M$), 
-and given by
-\begin{equation*}
-    \SDef_{\dg M}(\mu) := \,
-        \pqty[\Big]{\; \sum_{\ed aST \mathrlap{\,\in \Ar}}\subafalse \alpha_a\, \H_\mu(\Tgt a | \Src a) } - \H(\mu).
-\end{equation*}
-Note that
-$\SDef_{\dg M}$
-does not depend on the cpds
-of $\dg M$, nor the possible values of the 
-variables; it
-is defined purely in terms of
-the weighted hypergraph structure $(\Ar,\balpha)$.
-
-
-If the observational and structural information conflict, 
-then the distribution(s) that best represent a PDG 
-will depend
-on the importance of structure relative to observation,
-% \discard{ This is captured by a trade-off 
-%     parameter $\gamma \ge 0$, which 
-%     can be used to define the scoring function
-%     $\bbr{\dg M}_\gamma: \Delta \V\!\X \to \Rext$, as follows:}%
-as captured by a trade-off parameter $\zogamma \in [0,1]$
-that controls the convex combination
-$(1-\zogamma)\OInc + \zogamma \SDef$. 
-So as to simplify the math
-and match the notation in
-previous work (\citeyear{pdg-aaai,one-true-loss}),
-we mostly use a rescaled variant with a different parameterization.
-Using
-$\gamma := \nicefrac{\zogamma}{(1-\zogamma)} \in [0,\infty]$,
-define the overall scoring function:
+(See \cref{sec:scoring-funs} for details.)
+Given a value of $\gamma > 0$, a trade-off parameter that controls the strength of the structural information, the overall scoring function is given by
 \begin{align*}
     \bbr{\dg M}_\gamma&(\mu) 
         := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
             \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
-        &\!\!\!= \scalebox{0.85}{$\displaystyle\frac{1}{1-\zogamma}$} \Big(\, (1-\zogamma) \OInc_{\dg M}(\mu) + \zogamma \, \SDef_{\dg M}(\mu)\, \Big) \\[-0.1ex]
         &= \Ex\nolimits_{\mu}\bigg[
             \,
             \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
@@ -594,7 +511,7 @@ define the overall scoring function:
         \bigg] - \gamma \H(\mu)
         .
 \end{align*}
-Let $\bbr{\dg M}^*_\gamma := \argmin_\mu \bbr{\dg M}_\gamma(\mu)$ denote
+Recall that $\bbr{\dg M}^*_\gamma = \argmin_\mu \bbr{\dg M}_\gamma(\mu)$ denote
 the set of optimal distributions at a particular value $\gamma$.
 One natural conception of inference in PDGs is then parameterized by
 $\zogamma$:
@@ -611,17 +528,17 @@ under this condition.
 
 The limiting behavior of the $\zogamma$-semantics as $\zogamma \to 0$,
 which we denote $\bbr{\dg M}^*_{0^+}$ and call the \emph{$0^+$\!-semantics},
-has some special properties.
-If $\dg M$ is proper, then        
-$\bbr{\dg M}^*_{0^+}$ contains precisely one distribution.
+has some special properties (\cref{prop:theorem:limit-uniq}).
+% If $\dg M$ is proper, then        
+% $\bbr{\dg M}^*_{0^+}$ contains precisely one distribution.
 This distribution intuitively
 reflects an extreme empirical
 view: observational data trumps causal structure.
-Note that in the absence of a causal picture
-($\balpha = \mat0$), this
-corresponds to the well-established 
-practice of selecting
-the maximum entropy distribution consistent with some observational constraints \parencite{jaynes1957information}.
+% Note that in the absence of a causal picture
+% ($\balpha = \mat0$), this
+% corresponds to the well-established 
+% practice of selecting
+% the maximum entropy distribution consistent with some observational constraints \parencite{jaynes1957information}.
 One should be careful to distinguish 
 $\bbr{\dg M}^*_{0^+}$
 from $\bbr{\dg M}^*_0$,

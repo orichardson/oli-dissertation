@@ -7,14 +7,17 @@ but in their most precise forms, they are often quite mathematical.
 In this chapter, we build up a library of standard mathematical concepts and notation needed to fully understand them. 
 % While 
 Although one effect of this chapter is to develop standard notation for standard concepts, 
-    the way we get there is perhaps unusual. 
-
+    % the way we get there is perhaps unusual. 
+the way it all fits together may not be as familiar. 
+The notation is carefully selected to be extremely precise,
+    yet multi-purpose, and to look indistinguishable 
+    from various standard notations in different contexts. 
  
 % to motivate
 % to prime the reader 
 % to see the most important themes and design choices that go into 
 The chapter also serves a second purpose: 
-    
+to introduce the kinds of reasoning and representation patterns that will appear later in the text, especially when it comes to the notion of a \emph{variable}. 
 
 % \section{Background, Notation, and Critical Preliminaries}
 \section{Basic Concepts and Foundational Notation}
@@ -228,12 +231,11 @@ Convex functions and convex sets are closely related. The set of points that lie
  (its so-called \emph{epigraph} $\{ (\mat u, f(\mat u)) : \mat u \in \Rext^I$) 
 is a convex set if and only if $f$ is convex. The level sets of a function $f$ (i.e., $\{ \mat u \in \Rext^I : f(\mat u) \le k \}$ for some $k \in \Rext$) are convex if $f$ is convex. And $\mat u \mapsto \infty \mathbbm 1[\mat u \in A]$ is a convex function iff $A$ is a convex set. 
 
-%%% TODO %%%%
-% - cones
+% A \emph{conic combination} is a linear combination 
+A \emph{cone} is something between a linear space and a convex set: a linear space is one closed under linear combination with arbitrary coefficients, while a cone is one closed under linear combination with non-negative coefficients, and a convex space is closed under linear combination with non-negative coefficients that sum to one.
+It follows that linear spaces are cones, and cones are convex.
 
 
-
-\paragraph{}
 
 %%%% TODO %%%%
 % - products
@@ -573,12 +575,14 @@ The components of a distribution $\mu \in \Delta \mathrm{Ext}(A)$ are called \em
 % 
 % \TODO
 
+\temphide{%
 \subsection{Beyond Probability}
     \label{ssec:beyond-prob}
-
+}%
 %%% TODO %%%
 % sets of probability measures
 % dempster-shafer belief functions
+% Probability is 
 
 % \subsection{Probability, More Generally}
 \subsection{Probability, In General}
@@ -756,26 +760,29 @@ For example:
 \]
 
 A (directed) graph has more information than an undirected one.
-There are natural ways to convert between the two: one forgets the direction of arcs to turn a directed graph into an undirected one, and annotates each arc with arrows in both directions to make an undirected graph directed. These choices are essentially locked in if we want the correspondence with square matrices to hold properly. 
+There are some obvious ways to get a directed graph from an undirected one (add an arrow going in both directions) and to get an undirected graph from a directed one: forget the direction of the arc, making it an edge.
+These choices are illustrated in the following diagram:
 \[ 
 \begin{tikzcd}
 \text{(Directed) Graphs} \ar[r,bend left,"\mathit{forget}"]&
 \text{Undirected Graphs}
 \ar[l,bend left,"\mathit{annotate}"]
-\end{tikzcd}
+\end{tikzcd};
 \]
-in which
 $\mathit{forget} \circ \mathit{annotate}$
 is the identity on undirected graphs, but
-$\mathit{anotate} \circ \mathit{forget}$ is not the identity on (directed) graphs.
+$\mathit{anotate} \circ \mathit{forget}$ is 
+not the identity on (directed) graphs.
 % Technically, this makes $\mathit{forget}$ a \emph{retraction}, and $\mathit{annotate}$ a \emph{section}.
+These choices are essentially locked in if we want to preseve the validity of the representation in terms of square binary matrices. 
+
+A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ of its vertices, that are all connected by edges---that is, such that every distinct pair $\{x,y\}$ of vertices $x,y \in C$ is a member of $E$.  We write $\mathrm{cliques}(G)$ for the set of all cliques in a graph. 
 
 \begin{defn}
     A bipartite graph $G = (L, R, E)$ is a graph $(L \sqcup R, E)$ whose
     vertices are partiioned into two components $V = L \sqcup R$, 
     and whose edges $E \subset L \times R$ are only between $L$ and $R$. 
 \end{defn}
-
 
 % \fadeout{ \begin{defn}
 %     A directed bipartite graph $G = (L, R, E)$ is a bipartite graph $(L, R, E)$ whose edges $E \subset (L \times R) \cup (R \times L)$ are directed. 
@@ -819,6 +826,7 @@ By transitivity, one might expect bipartite graphs to naturally be an extremely 
 % \end{defn}
 
 \begin{defn}
+        \label{defn:hypergraph}
     A \emph{directed hypergraph}
     consists of a set $\N$ of nodes
     and a set $\Ar$ of 
@@ -996,19 +1004,15 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 % \section{A Review of Graphical Models}
 \section{Graphical Models}
 
-A \emph{graphical model structure}
-is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges 
-somehow
-indicate local influences between variables.
-A \emph{probabilistic graphical model},
-or simply  ``graphical model'',
-is a
-graphical model structure
-together with quantitative information about these local influences.
-Semantically,
-a graphical model $\cal M$
-typically
-represents a joint probability distribution $\Pr_{\!\cal M}
+Broadly speaking, a \emph{graphical model structure}, or a \emph{qualitative graphical model} is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges somehow indicate local influences between variables.
+Its quantiative analogue, \emph{probabilistic graphical model},
+or simply  ``graphical model'', is a
+graphical model structure together with 
+\emph{quantitative} or \emph{observational} information about these local influences.
+
+The point of a graphical model, at least historically, is to be a compact representation of a probability distribution (by exploiding independencies). 
+Thus, a graphical model $\cal M$
+typically represents a joint probability distribution $\Pr_{\!\cal M}
  \in \Delta \V\!\X$ over its variables.
 % \discard{
 %     Although there is often more to the story,
@@ -1023,22 +1027,139 @@ represents a joint probability distribution $\Pr_{\!\cal M}
 %     PDGs, however, do not represent probabilities this way.}
 
 There are two aspects any graphical model: 
-a ``qualitative/structural'' aspect, which describes influences between variables, and
-a ``quantitative/observational'' aspect, 
-    that annotates those influences with data.
+a ``qualitative/structural'' aspect, which describes influences between variables 
+    (which, critically, determine the independencies that can be exploited),
+and a ``quantitative/observational'' aspect, 
+    that annotates those influences with data, thereby providing enough information to 
+    flesh out a quantiatitve probability distribuiton. 
+
+We now review the basics of the most important classes of graphical models used in practice:
+    Bayesian Networks, which are based on directed (acyclic) graphs, and
+    what we will call factor graphs, which are based on undirected ones. 
+What follows is really a barebones sketch of the graphical models context for the ideas we present in this dissertation; for a proper treatment, we refer readers to 
+    \citet{koller2009probabilistic}.
+% These two models 
     
 \subsection{Bayesian Networks and Variants}
 
-A qualitative BN, for example, is a directed graph whose semantics are given in terms of independencies: any variable $X$ is independent of its non-descendents, given the values of its parents, $\mathbf{Pa}\, X$.  
-A quantitative BN, then, includes both that directed graph, and also each variable $X$ to a conditional probability distribution $\Pr_X(X|\mathbf{Pa}\, X)$.
+A qualitative Bayesian Network (BN),  is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
+An arc $X {\to} Y \in A$ intuitiely reflects a possibility that $X$ can influence $Y$. 
+The absence, of an edge, therefore, reflects some kind of (conditional) independence. 
+One standard way to say this is that
+\textit{every variable is conditionally independent of its non-descendents given its parents}.
+Another famous (and more algorithmic) characterization of the same independences is the \emph{d-separation} criterion  \cite{geiger-pearl-d-separation}. 
+It is helpful to look at some examples.
 
-\subsection{Factor Graphs and Variants}
+\begin{center}
+    \begin{tikzpicture}[xscale=1.3,center base]
+        \node[draw,circle] (X) at (-1,0) {$X$};
+        \node[draw,circle] (Y) at (0,0) {$Y$};
+        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \draw[->] (X) to (Y);
+        \draw[->] (Y) to (Z);
+    \end{tikzpicture};~~~
+    \begin{tikzpicture}[xscale=1.3,center base]
+        \node[draw,circle] (X) at (-1,0) {$X$};
+        \node[draw,circle] (Y) at (0,0) {$Y$};
+        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \draw[->] (X) to (Y);
+        \draw[->] (Y) to (Z);
+    \end{tikzpicture};~~~
+    \begin{tikzpicture}[xscale=1.3,center base]
+        \node[draw,circle] (X) at (-1,0) {$X$};
+        \node[draw,circle] (Y) at (0,0) {$Y$};
+        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \draw[->] (Y) to (X);
+        \draw[->] (Y) to (Z);
+    \end{tikzpicture};~~~
+    \begin{tikzpicture}[xscale=1.3,center base]
+        \node[draw,circle] (X) at (-1,0) {$X$};
+        \node[draw,circle] (Y) at (0,0) {$Y$};
+        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \draw[->] (X) to (Y);
+        \draw[->] (Z) to (Y);
+    \end{tikzpicture}
+\end{center}
+
+The first, second, and third, all give the same independencies: $X$ and $Z$ are conditionally independent given $Y$.  But the last is different: it states that $X$ and $Y$ are independent (but $Z$ can have an arbitrary relation with both).
+This intuition can be further clarified through the qualtiative perspective on BNs. 
+
+A quantiative BN, or simply a BN, 
+    $\mathcal B = (\X, A, \mathbb P)$ 
+    is a qualitative BN $(\X, A)$ together with a collection 
+    of cpds $\mathbb P = \{ P_X( X \mid \Pa(X)) \}_{X \in \Pa(X)}$,
+    one for each variable given its parents. 
+A BN then induces a probability distribution 
+\begin{equation}
+    \Pr_{\cal B}(\X) := \prod_{X \in \X} P_X( X \mid \Pa(X) );
+        \label{eq:bn-product}
+\end{equation}
+which indeed satisfies the independence properties specified its underlying qualitaitve BN. Moreover, its conditional marginals are the ones specified by 
+Indeed, the factorization \eqref{eq:bn-product} is yet another euquivalent characterization of the conditional independencies of this graph.  
+% because the underlying graph is directed, this formula can be viewed as
+% the chain rule of proability
+% $\Pr(X_1, \ldots, X_n) = \prod_{i=1}^n \Pr(X_i \mid X_1, \ldots, X_{i-1})$, 
+This quantiative view \eqref{eq:bn-product} is the primary way that the broader modern machine learning community views BNs.
+It also suggests a way of generalizing BNs to handle cycles and more: simply use the same equation.
+However, the resulting object will typically not be a probability distribution: its sum over all values of $\X$ may not equal 1. 
+But, in principle, it could be normalized;
+    this approach leads to the second major class of graphical models.  
+
+
+
+\subsection{Markov Random Fields, Factor Graphs, and Variants}
+
+Now, suppose $G = (\X, E)$ is an undirected graph over a set of variables.
+By interpreting an edge $X{-}Y \in E$ as a possibility of (bi-directional) influence by $X$ and $Y$ there are three different (but closely related), it also becomes a qualitative graphical model.
+A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it satisfies one of the following properites:
+
+\begin{itemize}[nosep]
+    \item (pairwise) If $X \ne Y$ and $\{X, Y\} \notin E$, then $X \CI Y \mid \X \setminus \{X, Y\}$.  
+    \item (local) For each $X \in \X$, let $\partial_E(X) = \{ Y \in \X : \{Y,X\} \in E \}$ be the set of then $X \CI \X \mid \partial_G(X)$.  
+    \item (global) If $(X,Y) \notin E$, then $X \CI Y \mid \X \setminus \{X, Y\}$.  
+    \item (factorization) there exists a collection of functions 
+        $\{ \phi_{\mat X} : \V(\mat X)\to \mathbb R_{\ge 0} \}_{\mat X \in \mathrm{cliques}(G)}$
+        indexed by the cliques of the graph $G$,
+        such that
+        \[
+            \mu(\X) = \prod_{J \in \mathrm{cliques}(G)} \phi_K(\X[J])
+        \]
+\end{itemize}
+
+In general, conditions are distinct, with (global) $\implies$ (local) $\implies$ (pairwise). 
+However, if we restrict to \emph{positive} distributions (i.e., $\forall \omega \in \V\!\X.~\mu(\omega) > 0 $), then all four conditoins are equivalent.
+The connection to the factorization property is a very deep result, known as the \emph{Clifford-Hammersly Theorem}, or the \emph{fundemental theorem of graphical models}. 
+
+% This suggests we can approach the idea from 
+If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \! X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ (for some arbitrary index set $J$), and then renormalize. 
+%
+The bipartite graph that corresponds naturally to this hypergraph is called a \emph{factor graph}. 
+More precisely, a factor graph has two kinds of nodes factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
+We will see more details in \cref{sec:factor-graphs}.
 
 
 \subsection{Other Graphical Models}
 
+Many other graphical models have been proposed as well, although
+the vast majority are variants on the two we have already described. 
+We now give a quick overview of some of these representations, although this list is far from complete. 
+% There are other ways of describing 
+
+There are \emph{conditional} Bayesian Networks and Causal Bayesian Networks, both of which are called CBNs, and, fortuantely, both of which make the same modification: marking some variables as ``observed'', so that they do not require probability distributions. 
+Writing $\U$ for the observed variables and $\V$ for the unobserved ones, a CBN $\mathcal B$ represents a cpd $\Pr_{\mathcal B}(\mathcal V \mid \mathcal U)$. 
+%
+\emph{Conditional random fields (CRFs)} are an analogue for factor graphs/MRFs.
+
+Graphs with both directed and undirected edges have also been studied. The most widely known graphical model of this kind is called a \emph{chain graph}, in part because it can be seen as a way of connecting conneted components (themselves factor graphs) along a directed acylcic chain.
+People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks, and a related cut-parameterized approaches to looking at fixed points \cite{Baier_2022}.
+
+A related notion is that of a \emph{Dependency Networks (DNs)}, which is like a cylic Bayesian Network, and defines a probability distribuiton as a fixed point of a Markov Chain. 
+% DNs can also be inconsistent in a sense, 
+``Consistent'' DNs turn out to be an alternate way of parameterizing undirected graphical models.
+There is also a notion of an \emph{inconsistent} DN, which turns out to be a very special case of a representation developed in this thesis (\cref{chap:relent-soup}).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{A Primer on Information Theory}
 \section{Information Theory}
 
@@ -1052,20 +1173,24 @@ The field is vast and heterogenous,
     yet much of it is built using a small set of 
     particularly nice ways of quantifying (un)certainty in a probabilistic
     context, which we will refer to throughout as \emph{information-theoretic primatives}.
+These quantities are all based on the concept of log probability, or \emph{surprisal} $\I_{\mu}[ X{=}x]$, which is
+\begin{itemize}[nosep]
+\item equal to zero if the event $X{=}x$ was certain to happen (i.e., totally unsurprising), and otherwise strictly positive;
+\item combines additively over independent events, just like most quantities in science.
+\end{itemize}
+
 
 Although not typically thought of in this way, 
     the basic information-theoretic quantities come in two flavors, mirroring the divide between qualitative and quantitative information that we saw in the presentation of graphical models. 
-
 % We start by recounting some standard results and notation,
-With the exception of these editorial comments,
-all of this material can be found in any introduction to information
-theory (e.g., \cite[Chapter 1]{mackay2003information}).  
+With the exception of these editorial comments on the theme of qualitative vs quantitative concepts, all of this material can be found in any introduction to information
+theory (e.g., \citet[Chapter 1]{mackay2003information} or \citet{CoverThomas}).  
 
 \subsection{Shannon Entropy and the Information Profile}
     \label{sec:qual-info-theory-primer}
 
 Let $\mu$ be a probability distribution, and be $X,Y,Z$
-    be (sets of) discrete random variables.
+    be (sets of) discrete (random) variables.
 The \emph{information content} $\I_{\mu}[ X{=}x ] := \log \frac1{\mu(X{=}x)}$ of an event $X{=}x$ quantifies one's surprisal at learning that $X{=}x$.
     
 The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed according to $\mu$, as measured by the number of bits of information needed (in expectation) needed to determine it, if the distribution $\mu$ is known.  It is given by 
@@ -1094,7 +1219,9 @@ and is equivalently defined as any of the following three quantities:
 .
 \]
 The fact that these three quantities coincide is a remarkable fact,
-and one that makes entropy particularly special. 
+% and one that makes entropy particularly special. 
+% and just one of many that make entropy paticularly special.
+and one reason that entropy is particularly special. 
 
 \begin{fact}[Entropy Chain Rule]\label{fact:entropy-chain-rule}
     If $X$ and $Y$ are random variables, then the entropy of the joint
@@ -1130,26 +1257,119 @@ Just as conditional entropy can be written as a linear combination of unconditio
 Thus conditional quantities are easily derived from the unconditional ones. But at the same time, the unconditional versions are clearly special cases of the conditional ones; for example, $\H_\mu(X)$ is clearly the special case of $\H(X|Z)$ when $Z$ is a constant (e.g., $Z = \emptyset$). 
 Furthermore, entropy and mutual information are also interdefinable and generated by linear combinations of one another. 
 It is easy to verify that 
-$\I_\mu(X;Y) 
+\begin{align*}
+    \I_\mu(X;Y) 
     % = \H_\mu(X,Y) - \H(Y|X) - \H(X|Y)
-    = \H_\mu(X) + \H_\mu(Y) - \H(X,Y)
-$
-and 
-$\I_\mu(X;Y|Z)
-    = \H_\mu(X|Z) + \H_\mu(Y|Z) - \H(X,Y|Z)
-$,
-and thus mutual information is derived from entropy. 
-Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is a special case of mutual information. 
+    &= \H_\mu(X) + \H_\mu(Y) - \H_\mu(X,Y)
+    \\&=  \H_\mu(X)  - \H_\mu(X|Y)
+% $ and $
+\\ \qquad\text{ and }\qquad
+    \I_\mu(X;Y|Z)
+    &= \H_\mu(X|Z) + \H_\mu(Y|Z) - \H_\mu(X,Y|Z)
+    \\&= \H_\mu(X \mid Y) - \H_\mu(X \mid Y, Z);
+\end{align*},
+thus mutual information is derived from entropy. 
+Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is also a special case of mutual information. 
+
+% Sums and differences of any of these quantities
+Information theoretic quantities such as (conditional) entropy and (conditional) mutual information for different subsets of a set of variables $\X$ fit together with an inclusion-exclusion rule. 
+% They are connected by an inclusion exclusion 
+There leads to an easy graphical way to quickly read of identities such as the ones above from an \emph{information diagram}, like the shown below for three variables. 
+
+\begin{center}
+    \def\circsize{1.6}
+    \def\radsize{0.8}
+    % \edef\outerrad{{\circsize/2+\radsize}}
+    \edef\outerrad{1.6}
+    \def\innerrad{1.00}
+    % \def\twosize{0.5}
+    \begin{tikzpicture}[center base,scale=1.2]
+        % \node at ({-\circsize-\radsize+0.1},{\circsize+\radsize-0.2}) {\underline{\textbf{(a)}}};
+
+        \path[fill=white!90!black] (210:\radsize) circle (\circsize) ++(225:\circsize) node[label={[label distance=2pt,inner sep=0pt]left:\Large $X$}]{};
+        \path[fill=white!90!black] (90:\radsize) circle (\circsize)
+            % ++(125:\circsize) node[label={left:$Y$}]{};
+            ++(65:\circsize) node[label={[label distance=1ex]right:\Large $Y$}]{};
+        \path[fill=white!90!black] (-30:\radsize) circle (\circsize) ++(-45:\circsize) node[label={[label distance=1pt,inner sep=0pt]right:\Large$Z$\!}]{};
 
 
-\TODO[ TODO: move information profile material here ]
+        \begin{scope}[gray]
+            \draw[] (-30:\radsize) circle (\circsize);
+            \draw[] (210:\radsize) circle (\circsize);
+            \draw[] (90:\radsize) circle (\circsize);
+        \end{scope}
+        
+        %oli9: replacing this mutual info circle with one more crescent.
+        \begin{scope} % I(B;C)
+            \clip (-30:\radsize) circle ({\circsize+0.03});
+            \clip (90:\radsize) circle ({\circsize+0.03});
+            \draw[ultra thick,blue,fill=blue,fill opacity=0.3] (-30:\radsize) circle (\circsize);
+            \draw[ultra thick,blue] (90:\radsize) circle (\circsize);
+        \end{scope}
+        % \begin{pgfinterruptboundingbox} % H(Z|X)
+        %     \begin{scope}[even odd rule]
+        %         \clip (210:\radsize) circle ({\circsize-0.03}) (-3,-3) rectangle (3,3);
+        %         \clip (-30:\radsize) circle ({\circsize+0.03});
+        %         \draw[ultra thick,blue,fill=blue, fill opacity=0.3] (-30:\radsize) circle (\circsize);
+        %         \draw[ultra thick,blue] (210:\radsize) circle (\circsize);
+        %     \end{scope}
+        % \end{pgfinterruptboundingbox}
+        \begin{pgfinterruptboundingbox} % H(X|Y)
+            \begin{scope}[even odd rule]
+                \clip (90:\radsize) circle ({\circsize-0.03}) (-3,-3) rectangle (3,3);
+                \clip (210:\radsize) circle ({\circsize+0.03});
+                \draw[ultra thick,purple,fill=purple, fill opacity=0.3] (210:\radsize) circle (\circsize);
+                \draw[ultra thick,purple] (90:\radsize) circle (\circsize);
+            \end{scope}
+        \end{pgfinterruptboundingbox}
+        \begin{pgfinterruptboundingbox} % H(Y|Z)
+            \begin{scope}[even odd rule]
+                \clip (-30:\radsize) circle ({\circsize-0.03}) (-3,-3) rectangle (3,3);
+                \clip (90:\radsize) circle ({\circsize+0.03});
+                \draw[ultra thick,violet!50!black,fill=violet, fill opacity=0.2] (90:\radsize) circle (\circsize);
+                \draw[ultra thick,violet!50!black] (-30:\radsize) circle (\circsize);
+            \end{scope}
+        \end{pgfinterruptboundingbox}
+        \node at (-90:\innerrad) {\small$\I(X;Z|Y)$};
+        \node[rotate=-60] at (30:\innerrad) {\small$\I(Y;Z|X)$};
+        \node[rotate=60] at (150:\innerrad) {\small$\I(X;Y|Z)$};
+        \node at (0:0){\small$\I(X;Y;Z)$};
+        \node at (90:\outerrad) {\small$\H(Y|X,Z)$};
+        \node[rotate=60] at (-30:\outerrad) {\small$\H(Z|Y,X)$};
+        \node[rotate=-60] at (-150:\outerrad) {\small$\H(X|Y,Z)$};
+        
+        %oli9:
+        % \node[purple!50!black,text opacity=1,fill=purple!15!white,fill opacity=1,
+        %         % rotate=0] (HAB) at (164:2.7) 
+        %         rotate=45] (HAB) at (164:2.3) 
+        %         % rotate=0] (HAB) at (164:2.3) 
+        %     {\small$\H(X|Y)$};
+        \node[purple!50!black,text opacity=1,fill=purple!15!white,fill opacity=1,
+                rotate=0] (HAB) at (-110:2.0) 
+            {\small$\H(X|Y)$};
+        % \node[violet!20!black,text opacity=1,fill=violet!15!white,fill opacity=1,
+        %         % rotate=0] (HBC) at (148:2.60) 
+        %         rotate=45] (HBC) at (125:2.40) 
+        %         % rotate=0] (HBC) at (125:2.40) 
+        %     {\small$\H(Y|Z)$};
+        \node[violet!20!black,text opacity=1,fill=violet!15!white,fill opacity=1,
+                rotate=0] (HBC) at (145:2.10) 
+            {\small$\H(Y|Z)$};
+        \node[blue!50!black,text opacity=1,fill=blue!15!white,fill opacity=1,
+            % rotate=0] (IBC) at (28:2.55)
+            % rotate=-50] (IBC) at (32:2.05)
+            rotate=0] (IBC) at (32:2.05)
+            {\small$\I(Y;Z)$};
+        % \node[blue!50!black,text opacity=1,fill=blue!15!white,fill opacity=1,
+        %     rotate=0] (IBC) at (15:2.1)
+        %     {\small$\H(Z|X)$};
+        % \draw[purple,ultra thick] (
+    \end{tikzpicture}
+\end{center}
 
-difference identity
-$\I_\mu(X ; Y \mid Z) =
-      \H_\mu(X \mid Y) - \H_\mu(X \mid Y, Z)$
 
 
-
+\paragraph{A Structural Information Measure.} 
 We claim that all of these (entropy-based) quantities are purely ``qualitative'' notions---although, because represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
 One way to see this is the way these concepts interact with variables. 
 Recall that $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as (random) variables, that take as input values of $X$ and $Y$. 
@@ -1159,7 +1379,7 @@ $\H_\mu(X)$, $\H_\mu(X,Y)$, and $\H_\mu(Y|X)$, however,
     of the variables themselves. 
 % Its argument is the identity of the variable $X$, 
 Indeed, it makes no sense to feed $(x,y)$ as an argument to any of these concepts. 
-Another sign that entropy and its cousins are structural notions is that they are invariant to relabelings of the values.
+% Another sign that entropy and its cousins are structural notions is that they are invariant to relabelings of the values.
 
 % This is because $\H_\mu(X)$ is fundementally a
 % ``qualitative'' notion,
@@ -1169,36 +1389,96 @@ Another sign that entropy and its cousins are structural notions is that they ar
     \label{sec:relent-primer}
 
 % We now move on to the quantiative 
-The \emph{quantiative} version of information 
-\[
+We now move on to a second kind of information theoretic primitve, called relative entropy, or KL divergence, of one distribution from another. If $\mu, \nu \in \Delta \Omega$, then the \emph{relative entroy} of $\nu$ with respect to $\mu$ is given by:
+%
+\begin{align*}
     \kldiv {\mu} {\nu} 
-    := 
-\]
+    &:= \sum_{ \omega \in \Omega } \mu(\omega) \log \frac{ \mu(\omega) }{ \nu(\omega) }
+    % \\&
+    = \Ex_{\omega \sim \mu} \Big[ \log \frac{\mathrm d \mu}{\mathrm d \nu}(\omega) \Big].
+\end{align*}
+
+One critical property of relative entorpy, known as \emph{Gibbs' inequality}, is that
+$\kldiv{\mu}{\nu} \ge 0$,
+%  and $\kldiv{\mu}{\nu} = 0$ 
+with equality if and only if $\mu = \nu$ (with probability 1). 
+This is why $\thickD$ is called a ``divergence''. 
+It is not, however, a ``distance measure'' in the standard sense, because it is not symmetric: typically $\kldiv{\mu}{\nu} \ne \kldiv{\nu}{\mu}$. 
+%
+But this is a good thing, because the concept of probabilistic discernability itself is inherrently asymmetric. 
+
+\begin{example}
+    Suppose that there are two coins: a fair one, and a double headed one. 
+    One of them (although you do not know which) has been selected, and flipped; you observe the result. 
+
+    First, suppose you believe the coin is fair, but in fact it is double-headed. 
+    You observe the only possible outcome: heads. This is totally within the realm of possibility. It would take many flips to convince yourself the coin was not fair, and even then you could not be completely sure. 
+    %
+    Now reverse the roles: suppose that in reality, the coin is fair, but you believe it is double-headed. With probability 1/2, you observe a tails and are immediately persuaded (with certainty) that your belief is incorrect. 
+
+    There is an inherrent asymmetry: it is far easier to ``distinguish the double-headed coin from the fair one'', than it is to ``distinguish the fair coin from the double-headed one''.
+\end{example}
+
+Relative entropy is arguably exactly the appropriate measure of discrepancy between belief and reality. 
+The most obvious argument for this is the empirical one:
+relative entropy has become the overwhelmingly standard measure of discrepancy between distributions used to train machine learning systems, where it is standardly known as Kullback Leibler (KL) divergence.
+\Cref{chap:one-true-loss} can be viewed as a significant strengthening of this argument.
 
 
-\paragraph{An Ode to Relative Entropy}
-In this dissertation, we will derive a 
+Here is a more theoretical argument, that allows us to interpret relative entorpy in terms of coding theory. 
+The length of an optimal code for a sample $\omega \sim \nu$ is proportional to its surprisal $\log \nf1{\nu(\omega)}$.
+Imagine that you have belief $\nu$ and the codes you are using reflect this, while in fact reality is distributed according to $\mu$.
+Upon seeing $\omega$, the length of your code is $\log\frac{1}{\nu(\omega)}$, while the length of an optimal one would be $\log\frac{1}{\mu(\omega)}$. 
+In expectation, the difference between these quantities,
+    which is the overhead of using your mis-specified codes, is 
+     $\Ex_{\omega \sim \mu}[ \log \frac{\mu(\omega)}{\nu(\omega)}] = \kldiv\mu\nu$.
 
-Relative entropy is extremely special, and arguably exactly the
-appropriate measure of discrepancy between belief and reality.  It has
-a clear information theoretic interpretation as communication overhead
-from an incorrect belief.  There are many nice axiomatizations of it;
-some important ones include Renyi's, Tom Leinster's result showing
+
+% Relative entropy is extremely special, and arguably exactly the
+% appropriate measure of discrepancy between belief and reality.  It has
+% a clear information theoretic interpretation as 
+There are a number of other results showing that relative entropy is the unique quantity with important properties of interest; treating them all is beyond the scope of this thesis.% 
+\footnote{%
+There are many nice axiomatizations of relative entropy;
+some important ones include Renyi's \cite{renyi1961measures}, Fadeev's \cite{fadeev1957begriff}, Tom Leinster's result showing
 that it is the only function satisfying three trivial regularity
 properties and the chain rule, and this characterization as the unique
-functor from statistical maps to the additive monoid $[0,\infty]$, which
-might be particularly persuasive to a category theorist.  It is the
+functor from statistical maps to the additive monoid $[0,\infty]$.  It is the
 only statistical divergence that is both a Bregman divergence and an
-f-divergence.  Its Hessian is the Fisher metric, which is the unique
-metric tensor that is invariant under sufficient statistics. In that
-geometry, I have recently shown that gradient flow of relative entropy
+f-divergence.  The Hessian of relative entropy is the Fisher metric, 
+which is the unique metric tensor that is invariant under sufficient statistics. 
+In that geometry, we will see (\cref{chap:relent-soup}) that the gradient flow of relative entropy
 with respect to its first (``belief'') argument amounts to
 multiplicative interpolation of probability measures, while gradient
 flow of relative entropy with respect to its second (``reality'')
 argument amounts to additive interpolation. 
+}
+%
+Suffice it to say that relative entropy is an extremely special,
+    and a natural measure of quantiative discrepancy between belief. 
+A great deal of this thesis can be viewed as further evidence of this. 
+    
+\commentout{%
+We conclude this section by drawing a connection with the previous one. 
+% While the entropy $\H(X)$ implicitly depends on $\mu$
+Let $\mu(X)$ be the distribution of reality (on the variable $X$),
+    $\nu(X)$ be a belief distribution over $X$.
+Let $\lambda(X)$ be the base measure over $X$, which is typically not a probability measure; 
+Observe the similarity:
+\[
+    \H( \mu ) = \Ex_{\mu}\Big[ \log \frac{\lambda(X)}{\mu(X)} \Big]
+    \qquad
+    \kldiv{\mu}{\nu} = \Ex_{\mu} \Big[ \log \frac{\mu(X)}(\nu(X)) \Big]
+\]
+}%
+
+% $
+%     \H_\mu(X) = \log |\V\!X| - \kldiv{\mu(X)}{ \Unif(X) }
+% $
 
 
 
+\temphide{
 \begin{subappendices}    
 \section{Primer on Advanded and Auxiliary Concepts}
 The main body of this chapter has focused on material that is directly in the critical path to understanding every important result in this dissertation. 
@@ -1274,3 +1554,4 @@ In this case, define $R(a,b,c) := R(\mat x)$.
 
     
 \end{subappendices}
+}
