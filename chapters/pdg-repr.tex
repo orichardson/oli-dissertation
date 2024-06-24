@@ -1214,9 +1214,9 @@ deterministic function of $X$ (while still maximizing the entropy of $X$).
 %
 Finally, if $\Ar = \begin{tikzpicture}[center base]
 	\node[dpadinline] (X) at (0,0) {$X$};
-	\node[dpadinline] (Y) at (1,0) {$Y$};
+	\node[dpadinline] (Y) at (1.3,0) {$Y$};
 	\draw[arr2] (X) to[bend left] (Y);
-	\draw[arr2] (X) to[bend left] (Y);
+	\draw[arr2] (Y) to[bend left] (X);
 \end{tikzpicture}$,
 %  then a distribution $\mu$ minimizes $\SDef_{\!\Ar}$ when 
 % $X$ and $Y$  vary together (so that $\H_\mu(Y \mid X) = \H_\mu(X \mid Y) = 0$)
@@ -1252,12 +1252,15 @@ Some hypergraphs (see \Cref{subfig:justX-1,subfig:1XY}) are \emph{indiscriminate
 % (so that score must be zero, beause this is the score a degenerate distribution gets).
 (of zero, because a point mass $\delta$ always has $\SDef_{\!\Ar}(\delta) = 0$).
 For such a distribution, no randomness is required to generate anything at all.
+
+\item
 As we will soon see, 
  $\SDef$ can indicate independencies and conditional independencies, illustrated respectively in Subfigures \ref{subfig:XYindep} and \ref{subfig:1XYZ}.
 
 \item
- For more complex structures, structural information deficiency $\SDef$ 
-can represent more than independence and dependence. 
+ For more complex structures, the
+    structural information deficiency $\SDef$ 
+    can represent more than independence and dependence. 
 The cyclic structures in \cref{example:xy-cycle,example:xyz-cycle-1}, 
     correspond to the structural deficiencies pictured
     in Subfigures \ref{subfig:XY-cycle} and \ref{subfig:XYZ-cycle}, respectively,
@@ -1854,7 +1857,7 @@ becomes quite different from Gibbs free energy.
 We have introduced PDGs, a powerful tool for representing
 % probabilistic information. 
 beliefs in the language of probabilities and confidences.
-They have a of advantages over other
+They have a number of advantages over other
     probablisitic graphical models. 
 Most notably:
 \begin{itemize}
@@ -2004,7 +2007,7 @@ Propositions~\ref{prop:sd-is-zeroset}, \ref{prop:sem3}, and
 			 constraints, so $\mu(Y = \cdot \mid X=x) =
 			 \p_a(x)$ for all arcs $X \rightarrow Y \in \Ar^{\dg
 			   M}$ and $x$ with 
-			 $\mu(X=x)>0$. By Gibbs inequality
+			 $\mu(X=x)>0$. By Gibbs' inequality
 			 \cite{mackay2003information}, 
 			 $\kldiv{\mu(Y|x)}{\p_a(x)} = 0$. Since this is true
 			 for all arcs, we must have $\OInc_{\dg M}( \mu) =

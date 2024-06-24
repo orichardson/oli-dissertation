@@ -108,8 +108,9 @@ If $f, g : A \to B$ have the same behavior (i.e., $\forall a\in A.~f(a) = f(a)$)
     then they are considered equal, and we write $f = g$. 
 Thus, a function can be specified with the notation $f = a \mapsto f(a)$,
     which allows us to talk about functions without naming them.
-The \emph{image} of a subset $U \subseteq A$ is the set $\im(f) := \{ f(b) : a \in A\} \subseteq B$ of possible results from applying $f$; meanwhile, the \emph{preimage} of a set $V \subseteq B$ is the set 
-$f^{-1}(V) := \{a \in A : f(a) \in V \} \subseteq A$ of inputs that land in $V$.
+% The \emph{image} of a subset $U \subseteq A$ is the set $\im(f) := \{ f(b) : a \in A\} \subseteq B$ of possible results from applying $f$; meanwhile,
+The \emph{preimage} of a set $V \subseteq B$ is the set 
+$f^{-1}(V) := \{a \in A : f(a) \in V \} \subseteq A$ of inputs to $f$, whose corresponding outputs are in $V$.
 We can \emph{compose} the functions $f : A \to B$ and $g : B \to C$
 to form a new function $g \circ f : A \to C$, defined by $(g \circ f) := a \mapsto g(f(a))$. 
 % We also regularly make use of the \emph{indicator function}
@@ -377,21 +378,23 @@ The \emph{probability simplex} $\Delta \Omega$ is defined as the set of all prob
 The \emph{support} of a distribution $\mu$
     is the set $\Supp \mu := \{ \omega \in \Omega : \mu(\omega) > 0 \}$
     of outcomes that have positive probability.
-For $U \subseteq \V\!X$, called \emph{events},
+For $U \subseteq \Omega$, called \emph{events},
     define $\mu(U) := \sum_{x \in U} \mu(x)$. 
 % Specifically, the event $X{=}x$ 
 % The prototypical event is of the form $X{=}x$. 
-While we just defined $\mu$ on events $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in general (i.e., beyond the finite case), it has to be the other way around: a probability distribution is defined as an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
+While we just defined $\mu$ on events $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in general (i.e., beyond the finite case), it has to be the other way around: 
+a probability distribution is defined as an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
 
 
-The standard way of updating a probability distribution based on new evidence is conditioning. Given a subset $A \subseteq \Omega$, the conditional measure
-$\mu \mid A$ according to 
+The standard way of updating a probability distribution based on new evidence is conditioning.
+Given a subset $A \subseteq \Omega$, the conditional measure
+$\mu \mid A$ is defined by
 $(\mu \mid A)(x) := \frac{1}{\mu(A)} \mathbbm 1[x \in A] \mu(x)$.
 % In other words, 
 That quantity is also given a shorter and more common name: $\mu(x \mid A)$. 
 From this definition, it is easy to recover the usual definition of conditional probability:
 $\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
-There is just one caveat: this formula is not meaningful when $\mu(A) = 0$, and in this case, we leave the conditional probability undefined.
+There is just one caveat: this formula is not meaningful when $\mu(A) = 0$; in this case, we leave the conditional probability undefined.
 Indeed, if $\mu(A) = 0$, it is arguably appropriate to say $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
 
 %% adding variables.
@@ -636,9 +639,9 @@ Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} f
 
 \paragraph{Statistics and (Random) Variables.} 
 If $(\Omega, \mathcal F)$ and $(Y, \mathcal G)$ are two measurable spaces, then
-a function $f : \Omega \to Y$ is said to be \emph{measurable} if $f(U) \in \mathcal F$ for all $U \in \mathcal G$. 
+a function $f : \Omega \to Y$ is said to be \emph{measurable} if $f^{-1}(U) \in \mathcal F$ for all $U \in \mathcal G$. 
 In a context where one is interested in probabilities over $\Omega$, 
-a measurable function $X : \Omega \to \V X$ is also called a \emph{random variable} or a \emph{statistic}.
+a measurable function $X : \Omega \to \V\!X$ is also called a \emph{random variable} or a \emph{statistic}.
 % Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore in the next two paragraphs.
 
 In this more general setting, we no longer require $\V(X)$ to be a finite set, but in exchange, we still require some structure---$\V(X)$ has to be a measurable space. At a technical level, this is compatible with our previous discussion about variables, because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces. 
@@ -674,7 +677,7 @@ in this more careful framework regarding measurability.
 If $(\Omega, \mathcal F)$, and $(\Omega', \mathcal G)$ are two measurable spaces, a \emph{Markov Kernel} $\kappa : \Omega \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
 \begin{enumerate}
     \item For every $x \in X$, the map $\kappa(x, -) : \mathcal U \to [0,1]$ is a probability measure. (So $\kappa$ is also a cpd.)
-    \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borell space $[0,1]$.
+    \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borel space $[0,1]$.
     Or more explicitly: for every open set $S \subseteq [0,1]$, and $U \in \mathcal G$, we have that
     $\{x : \kappa(x,U) \in S\} \in \mathcal F$. 
 \end{enumerate}
@@ -1004,13 +1007,16 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 % \section{A Review of Graphical Models}
 \section{Graphical Models}
 
-Broadly speaking, a \emph{graphical model structure}, or a \emph{qualitative graphical model} is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges somehow indicate local influences between variables.
-Its quantiative analogue, \emph{probabilistic graphical model},
+% Broadly speaking, probabilistic graphical levels 
+Like variables themselves, graphical models exist on two levels: a qualitative or structural one, and a quantiative observational one.
+%
+a \emph{graphical model structure}, or a \emph{qualitative graphical model} is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges somehow indicate local influences between variables.
+The quantiative form then annotates those concepts with data.
+A \emph{probabilistic graphical model},
 or simply  ``graphical model'', is a
-graphical model structure together with 
-\emph{quantitative} or \emph{observational} information about these local influences.
+graphical model structure together with  \emph{quantitative} or probabilistic information about these local influences.
 
-The point of a graphical model, at least historically, is to be a compact representation of a probability distribution (by exploiding independencies). 
+The purpose of a graphical model, at least historically, is to be a compact representation of a probability distribution (by exploiding independencies). 
 Thus, a graphical model $\cal M$
 typically represents a joint probability distribution $\Pr_{\!\cal M}
  \in \Delta \V\!\X$ over its variables.
@@ -1026,16 +1032,9 @@ typically represents a joint probability distribution $\Pr_{\!\cal M}
 %     i.e., a factor graph.
 %     PDGs, however, do not represent probabilities this way.}
 
-There are two aspects any graphical model: 
-a ``qualitative/structural'' aspect, which describes influences between variables 
-    (which, critically, determine the independencies that can be exploited),
-and a ``quantitative/observational'' aspect, 
-    that annotates those influences with data, thereby providing enough information to 
-    flesh out a quantiatitve probability distribuiton. 
-
 We now review the basics of the most important classes of graphical models used in practice:
-    Bayesian Networks, which are based on directed (acyclic) graphs, and
-    what we will call factor graphs, which are based on undirected ones. 
+Bayesian Networks, which are based on directed (acyclic) graphs, and
+what we will call factor graphs, which are based on undirected graphs. 
 What follows is really a barebones sketch of the graphical models context for the ideas we present in this dissertation; for a proper treatment, we refer readers to 
     \citet{koller2009probabilistic}.
 % These two models 
@@ -1082,16 +1081,16 @@ It is helpful to look at some examples.
 \end{center}
 
 The first, second, and third, all give the same independencies: $X$ and $Z$ are conditionally independent given $Y$.  But the last is different: it states that $X$ and $Y$ are independent (but $Z$ can have an arbitrary relation with both).
-This intuition can be further clarified through the qualtiative perspective on BNs. 
+This intuition can be further clarified once we add probabilities.
 
 A quantiative BN, or simply a BN, 
     $\mathcal B = (\X, A, \mathbb P)$ 
     is a qualitative BN $(\X, A)$ together with a collection 
     of cpds $\mathbb P = \{ P_X( X \mid \Pa(X)) \}_{X \in \Pa(X)}$,
     one for each variable given its parents. 
-A BN then induces a probability distribution 
+A BN then induces a joint probability distribution 
 \begin{equation}
-    \Pr_{\cal B}(\X) := \prod_{X \in \X} P_X( X \mid \Pa(X) );
+    \Pr\nolimits_{\cal B}(\X) := \prod_{X \in \X} P_X( X \mid \Pa(X) ),
         \label{eq:bn-product}
 \end{equation}
 which indeed satisfies the independence properties specified its underlying qualitaitve BN. Moreover, its conditional marginals are the ones specified by 
@@ -1110,24 +1109,30 @@ But, in principle, it could be normalized;
 \subsection{Markov Random Fields, Factor Graphs, and Variants}
 
 Now, suppose $G = (\X, E)$ is an undirected graph over a set of variables.
-By interpreting an edge $X{-}Y \in E$ as a possibility of (bi-directional) influence by $X$ and $Y$ there are three different (but closely related), it also becomes a qualitative graphical model.
+By interpreting an edge $X{-}Y \in E$ as a possibility of (bi-directional) influence between $X$ and $Y$
+% there are three different (but closely related), it also becomes a qualitative graphical model.
 A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it satisfies one of the following properites:
 
 \begin{itemize}[nosep]
-    \item (pairwise) If $X \ne Y$ and $\{X, Y\} \notin E$, then $X \CI Y \mid \X \setminus \{X, Y\}$.  
-    \item (local) For each $X \in \X$, let $\partial_E(X) = \{ Y \in \X : \{Y,X\} \in E \}$ be the set of then $X \CI \X \mid \partial_G(X)$.  
-    \item (global) If $(X,Y) \notin E$, then $X \CI Y \mid \X \setminus \{X, Y\}$.  
-    \item (factorization) there exists a collection of functions 
+    \item (pairwise) 
+        If $X \ne Y$ and $\{X, Y\} \notin E$, then $X \CI Y \mid \X \setminus \{X, Y\}$.  
+    \item (local) 
+        For each $X \in \X$, let $\partial_E(X) = \{ Y \in \X : \{Y,X\} \in E \}$ be the set of then $X \CI \X \mid \partial_G(X)$.  
+    \item (global)
+        If $(X,Y) \notin E$, then $X \CI Y \mid \X \setminus \{X, Y\}$.  
+    \item (factorization) 
+        There exists a collection of functions 
         $\{ \phi_{\mat X} : \V(\mat X)\to \mathbb R_{\ge 0} \}_{\mat X \in \mathrm{cliques}(G)}$
-        indexed by the cliques of the graph $G$,
-        such that
+        indexed by the cliques of the graph $G$
+        whose product is the distribution $\mu$,
+        i.e.,
         \[
-            \mu(\X) = \prod_{J \in \mathrm{cliques}(G)} \phi_K(\X[J])
+            \mu(\X) = \prod_{\mat X \in \mathrm{cliques}(G)} \phi_K(\mat X).
         \]
 \end{itemize}
 
 In general, conditions are distinct, with (global) $\implies$ (local) $\implies$ (pairwise). 
-However, if we restrict to \emph{positive} distributions (i.e., $\forall \omega \in \V\!\X.~\mu(\omega) > 0 $), then all four conditoins are equivalent.
+However, if we restrict to \emph{positive} distributions (i.e., $\forall \omega \in \V\!\X.~\mu(\omega) > 0 $), then all four conditions are equivalent.
 The connection to the factorization property is a very deep result, known as the \emph{Clifford-Hammersly Theorem}, or the \emph{fundemental theorem of graphical models}. 
 
 % This suggests we can approach the idea from 

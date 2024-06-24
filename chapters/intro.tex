@@ -15,9 +15,13 @@
 % \end{quotation}
 \end{center}
 
-% A core tenet of science: 
-Science is built on simple tenet: if you want to someday understand things clearly, then it is important to acknowledge the possibility that your understanding today could be wrong.
-% If you want to be right, it is important to acknowledge that you might now be wrong.
+% Science is built on simple tenet: if you want to someday understand things clearly, then it is important to acknowledge the possibility that your understanding today could be wrong.
+%
+% Science is built on a simple tenet: if you want to someday understand things clearly, then it is important to acknowledge the possibility that your understanding today could be wrong.
+% Science :
+% There is a central principle of scientific inquiry: 
+A central principle of scientific inquiry is this:
+    if you want to eventually understand things clearly, then you must take seriously the possibility that your understanding today might be wrong. 
 And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could have a fundamentally misguided understanding of how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in those that seek to manipulate you. 
 For those of us who prize logic and rationality (including, famously, Descartes \cite{descartes}), perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
@@ -25,21 +29,29 @@ The foundational principles of microeconomics entitle us to our own tastes (and 
 For without one, we risk being swindled \cite{RAT} or manipulated \cite{explosion}, if not humiliated \cite{logicalfalacy,emptysetthesis,politicians}.
 
 That is why theoretical computer scientists are careful to prove things about clearly defined models,
-and it is why applied computer scientists build artificial agents that are are consistent by construction:
-  it grants an invulnerability to our one common enemy: inconsistency.
+and it is why applied computer scientists often build artificial agents that are \emph{consistent-by-construction}.
 %
+% When given a 
+% Given a choice between two libraries for manipulating time and one, we choose the one. 
+% All else being equal, we'd rather have one way of computing things than two.
+We would rather have one definition of $X$ and one technique for computing $X$, than several different approaches and implementations. 
+We would rather use one library for getting the time than two. 
+And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
+%
+Why? Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
+
 Yet this invulnerability comes with shackles.
 Would \emph{you} trade \emph{your} freedom to see things from two angles at once---to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
-
+%
 In order to always present a consistent front, it is necessary to fully process new information before moving on. Mulling is prohibited, as
 is waiting for clarification.
 Half-baked ideas are a nonstarter.
 This regimented consistency-first lifestyle works well if you are only mistaken in the margins, and need only to occasionally update a few parameters.
-But what if you're wrong in a more fundamental way?
+But what if you're wrong in a deeper way?
 Can you imagine how hard it would be to learn to see things completely differently, without ever venturing into a confused state?
 % being even a little bit inconsiste
 Imagine having to implement a substantial refactor of a large codebase, with an interface that only allows you to see code that compiles.
-So if (by no fault of your own) you do happen to be wrong about how the world works---that is, really, fundamentally wrong---then taking on inconsistency may be worthwhile.
+So if (through no fault of your own) you do happen to be wrong about how the world works---that is, really, fundamentally wrong---then taking on inconsistency may be worthwhile.
 
 % By way of analogy, we all agree debt is bad, but would you willingly give up your freedom to take on debt?
 % Many of the most powerful people and institutions in this world would not.
@@ -49,41 +61,46 @@ In some sense, the opposite of inconsistency is \emph{redundancy}, which enginee
 % Another problem consistent by construction is that they also have no redundancy, which makes them fragile.
 % Apparently unfazed by the prospect of representing inconsistency, the cryptographers distributed systems people 
 But consistent-by-construction representations are also redundancy-free, by construction. 
-% The only way to make sure your beliefs cannot conflict is to only have one perspective on any 
-For if there is no opportunity for internal conflict, then there is also no opportunity for internal agreement. 
+For if we have two different representations that could conceivably agree, producing redundancy, then those two representations could conceivably be inconsistent with one another. 
+Without opportunity for internal conflict, there can be no opportunity for internal agreement. 
 % The only way to eliminate the possibility  opportunity for internal conflict, then there is also no opportunity for internal agreement. 
 
-For analogous reasons, modern AI systems have been slipping away from the consistency that they aspire to.
+% For analogous reasons, 
+Overlapping and redundant representations are incredibly useful in practice for guarding against catastrophic failure. 
+For this reason, modern AI systems have been slipping away from the probabilistic consistency that they aspire to.
 For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
 The priors are typically inconsistent with the data (which is arguably the point), although neither is ever modified. 
-Still, the result is a far more robust learning process, both theoretically \cite{ftrl} and practically \cite{regularizers}
+Still, the result is a far more robust learning process, both theoretically \cite{ftrl} and practically \cite{regularizers}.
 %
 % (maybe more?)
 % Perhaps clearer examples arise when people use multiple networks together, such as  
-Even clearer examples of inconsistency arise in variational inference,
-    (e.g., mean field approximation methods, variational autoencoders \cite{kingma2013autoencoding})
+Even clearer examples of inconsistency arise in variational inference
+    (e.g., mean field approximation methods, variational autoencoders \cite{kingma2013autoencoding}),
     and when combining multiple networks 
         in more complicated ways \cite{}.
-    In some cases, there is even a term reprsenting ``consistency'' in the learning objecctive \cite{cycle-gan}. 
+    In some cases, there is even a term reprsenting ``consistency'' in the learning objective \cite{cycle-gan}. 
 In all of these, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
 and tolerating inconsistency is critical for the learning process.
 %
 These techniques are billed
 % to our Bayesian overlords 
-as efficient approximations (i.e., cheap knockoffs) to the consistent thing we really mean.
+    as pragmatic ways of approximating
+    % (i.e., cheap knockoffs) 
+    % to the consistent thing we really mean.
+    some presumably consistent we must have intended.
 But why perpetuate these unrealistic rationality standards?
 I argue that we should just call them what they are: (possibly) inconsistent belief states.
 
-Doing so intelligently unlocks a beautiful theory of probabilistic modeling, that unifies a broad range of concepts, representations, and algorithms across artificial intelligence, and the theory of rational mind. 
+Doing so intelligently unlocks a beautiful theory of probabilistic modeling, that unifies a broad range of concepts, representations, and algorithms across artificial intelligence, and 
+    % the theory of rational mind. 
+    the study of rational belief and decision making.
 The framework developed in this dissertation
-gives us
-% The 
-ability to model, measure, and mitigate inconsistency.
+gives us the ability to model, measure, and mitigate inconsistency.
     % comes with an enormous amount of 
 This affords an agent an enormous amount of epistemic flexibility,
     making it far easier to make deep structural changes to its epistemic
     representations.
-So, in a sense, the possibility of internal inconsistency may be precisely what saves you from being deeply wrong. 
+So, in an ironic twist, the possibility of internal inconsistency might ultimately be what saves you from being deeply wrong. 
 %
 Make no mistake: inconsistency is still bad.
 % Indeed, it is the one true villain
@@ -91,7 +108,7 @@ Make no mistake: inconsistency is still bad.
 Indeed, our measure of it is the only conception of ``bad'' needed to do much of machine learning (\cref{chap:one-true-loss,chap:LIR}).
 There is no question that chronically exhibiting a high degree of inconsistency is problematic.
 %
-Yet, as with all internal conflict, it is better to engage with it and recognize it as a catalyst for positive change, 
+Yet, as with all internal conflict, it is better to engage with it and recognize it as a catalyst for positive change
 than to avoid it entirely. 
 
 % People, institutions, cultures, institutions of all shapes and sizes, 
@@ -124,7 +141,7 @@ So, despite appearances, $R_1$ turns out to be equivalent to $R_2$.
 To illustrate, consider an example that will soon appear in the mathematical preliminaries (\cref{chap:prelim}). 
 Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
 Also, hypergraphs clearly are generalization of graphs; only the special case where hyperedges have two vertices correspond meaningfully to graphs. 
-So, chaning these together, one might reasonably assume that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet bipartite graphs and hypergraphs are naturally isomorphic. 
+So, chaining these observations together, one might reasonably conclude that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet, as we will see (), bipartite graphs and hypergraphs are naturally isomorphic. 
 % This pattern will be a recurring theme in this dissertation. 
 
 
@@ -180,7 +197,10 @@ To avoid confusion, it is not strictly necessary to avoid implicit conversions--
 Doing so can be challenging, but it is often the best way to get representations that simultaneously attain both 1 and 2. 
 %
 
-Avoiding the challenge altogether----ensuring objects of different types of different types are given different symbols---is a direct analogue of forcing yourself to be consistent by construction. It is very clear and precise, but makes it difficult to think. 
+Avoiding the challenge altogether----ensuring objects of different types of different types are given different symbols---is 
+% a direct analogue of forcing yourself to be consistent by construction. 
+a
+It is very clear and precise, but makes it difficult to think. 
 %
 In keeping with the theme of this dissertation, I have not shied away from defining the same symbol in more than one way---but I have tried to do so in a way that the definitions never disagree in any context. 
 %
@@ -208,10 +228,6 @@ Making that something else precise is one objective of this thesis.
 % It aims to simultaneously 
 %
 
-
-%oli: don't talk about epistemic humility as a separate section if that's the hook.
-% \subsection{Epistemic Humility}
-% I distinguish between 
 
 % \subsection{A Division between Quantitative and Qualitative}
 \subsection{Qualitative and Quantitative}
@@ -284,8 +300,6 @@ Then, in 20
 
 
 
-\commentout{
 \section{Overview of Results}
 
 \TODO[TODO]
-}
