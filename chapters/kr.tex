@@ -6,18 +6,26 @@ We saw in \cref{sec:bn-convert,sec:factor-graphs,sec:expfam} that PDGs
 can capture graphical models such as Bayesian Networks and Factor graphs---but this is only the beginning. 
 %
 % This chapter, based on a collection of unpublished notes, 
-In this chapter, we will see how a wide variety of other mathematical models and fragments of epistemic information can be implicitly viewed as PDGs.
+In this chapter, we will see how a wide variety of other kinds of epistemic information can be captured with PDGs.
 
+\newmaterial{%
 We will begin with a simple but conceptually important observation: 
     a joint probability distribution is a special case of a PDG (\cref{sec:prob-as-pdg}). 
     % Thus, the standard epistemic state of a 
 % This means that a standard
 % So, because standard 
-In \cref{sec:widgets}, we develop a library of smaller tools that can capture 
+In \cref{sec:widgets}, we develop a library of smaller tools, which we call \emph{widgets}, that can capture various other important fragments of epistemic information. 
+% This will allow us to 
+%
+Doing so will enable us to deliver on the promises made in \cref{sec:alt-pdgs}, of being able to use the current PDG formalism to express seeming generalizations of PDGs. 
 
+In \cref{sec:other-uncertainty-repr}, we will then use many of the tools developed in \cref{sec:widgets} to show that PDGs capture other well-established representations of uncertainty, most notably sets of probability measures, known as credal sets \citep{Walley1991-SRIP} (\cref{ssec:cvx-prob-sets}) and Dempster-Shafer Belief functions \cite{shafer1976mathematical} (\cref{ssec:belplaus-as-pdg}).
+% In the remainder of the section, we 
+We also quickly overview other representations captured by PDGs that will play larger roles later on: cluster (pseudo)marginals, causal models, and neural networks. 
 
-The key . We will explore this in 
-
+But first, we start with probability.
+% The key . We will explore this in 
+}% end\newmaterial
 
 \section{Probabilities and Random Variables}
     \label{sec:prob-as-pdg}
@@ -926,6 +934,7 @@ Once these are defined (e.g., with constraints), it is not too difficult to enco
 A (perhaps clunky) way of fully formalizing this is fleshed out in \cref{fig:pyx-range-widget}.
 
 \section{Other Representations of Knowledge and Uncertainty}
+    \label{sec:other-uncertainty-repr}
 
 Probability is the dominant way of talking about epistemic uncertainty
 in economics and computer science, but it is far from the only one \cite{halpern-RAU}.
@@ -937,7 +946,7 @@ It turns out that several of the most celebrated generalizations of probabilitie
 
 
 \subsection{Convex Sets of Probabilities}
-
+    \label{ssec:cvx-prob-sets}
 We have seen that $\SD{\dg M}$ represents a convex set of probabilities. 
 But does this work the other way around? What if we already have a convex set $\mathcal P$ of distributions over $\Omega$ that we would like to model with a PDG? 
 There is actually a very straightforward way of doing this.
@@ -1005,7 +1014,8 @@ Furthermore, if we select $\alpha = 1$ for this edge,
 \end{example}
 
 \subsection{Belief and Plausibility Functions}
-    \label{sec:belplaus-as-pdg}
+    \label{ssec:belplaus-as-pdg}
+    
 We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \cite{shafer1990probability}. 
 Like a probability measure,
 a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \subseteq \Omega$.  

@@ -379,22 +379,29 @@
 	\caption[Illustrations of the information deficiency ($\SDef_{\!\Ar})$ 
 		for various hypergraphs $\Ar$]
 	{
-		% \itshape
-        % Illustrations of  example graph information functions
-        % Illustrations of $\SDef
-        Illustrations of the structural deficiency $\SDef_{\Ar}$ underneath
-          % $\{ \SDef{G_i} \}$,
-          drawn underneath their
-		  associated hypergraphs $\{ G_i\}$. Each circle represents a
-		  variable; an area in the intersection of circles $\{C_j\}$
-		  but outside of circles $\{D_k\}$ corresponds to information
-		  that is shared between all $C_j$'s, but not in any
-		  $D_k$. Variation of a candidate distribution $\mu$ in a
-		  green area makes its qualitative fit better (according to
-		  $\SDef{}$), while variation in a red area makes its
-		  qualitative fit worse; grey is neutral.
-		  Only the boxed structures in blue,
-		  whose $\SDef$ can be seen as measuring distance to a particular set of (conditional) independencies, are expressible as BNs.}
+    Illustrations of the structural deficiency $\SDef_{\Ar}$ 
+      % $\{ \SDef{G_i} \}$,
+    with their associated hypergraphs $\Ar$.
+	% The components of each Venn diagram 
+	% Each circle represents a variable; 
+	% an area in the intersection of circles $\{C_j\}$ but outside of circles $\{D_k\}$ corresponds to information that is shared between all $C_j$'s, but not in any $D_k$. 
+	% The components of each diagram correspond to 
+	Each subfigure depicts a hypergraph $\Ar$ (above), and a dual vector $\mat v_{\!\Ar}$ to the information profile (below), which represents $\SDef_{\!\Ar}$ in the sense 
+	that $\SDef_{\!\Ar}(\mu) = \mat v_{\!\Ar} \cdot \mat I_\mu$.
+	Each circle represents the information in a variable,
+	 	just as in \cref{fig:info-diag-prelim}.
+	Green stands for $-1$ (indicating that information in this component makes for a better fit to $\Ar$),
+		while red stands for $+1$ (indicating that information in this component makes for a worse fit to $\Ar$),
+		and gray stands for $0$ (which is neutral). 	
+	% 
+	% 	% linear functions (i.e.,)
+	% Variation of a candidate distribution $\mu$ in a
+	%   green area makes its qualitative fit better (according to
+	%   $\SDef$), while variation in a red area makes its
+	%   qualitative fit worse; grey is neutral.
+  	% Only the boxed structures in blue,
+	%   whose $\SDef$ can be seen as measuring distance to a particular set of (conditional) independencies, are expressible as BNs.
+	  }
 	\label{fig:sdef-example-panel}
 \end{figure}
 
