@@ -3,16 +3,14 @@
 \let\parencite\cite
 \let\textcite\citet
 
-\begin{center}
-    \small\singlespacing
-    Adapted and exteded from \textit{Loss as the Inconcsistency of a Probabilistic Dependency Graph: Choose Your Model, not Your Loss Function}, originally 
-    published in AISTATS 2022 \cite{one-true-loss}. 
-\end{center}
+% \begin{center}
+%     \small\singlespacing
+% \end{center}
 
 % \begin{abstract}
 In a world blessed with a great diversity of loss functions,
 we argue that that choice between them is not a matter of taste or pragmatics, but of model.
-Probabilistic depencency graphs (PDGs) are probabilistic models that come equipped with a measure of ``inconsistency''.
+Probabilistic dependency graphs (PDGs) are probabilistic models that come equipped with a measure of ``inconsistency''.
 We prove that many standard loss functions arise as the inconsistency of
 a natural PDG describing the appropriate scenario%
 , and use the same approach
@@ -34,7 +32,7 @@ Finally, we observe that inconsistency becomes the log partition function (free 
 Many tasks in artificial intelligence have been fruitfully cast as optimization problems, but often the choice of objective is not unique.
 For instance, a key component of a machine learning system is a loss
 function which the system must minimize,
-and a wide variety of losses are used in pratice.
+and a wide variety of losses are used in practice.
 Each implicitly represents different values and results in different
 behavior, so the choice between them can be quite important
 \parencite{wang2020comprehensive,jadon2020survey}.
@@ -55,7 +53,7 @@ discussion, in part because
 models are testable; it makes sense to ask if a model is accurate.
 This observation motivates our proposal: instead of specifying a loss function directly,
 one articulates a situation that gives rise to it, in the (more
-interpretable) language of probablistic beliefs and certainties. %
+interpretable) language of probabilistic beliefs and certainties. %
 Concretely, we use the machinery of Probabilistic Dependency Graphs (PDGs),
 a particularly expressive class of graphical models that can incorporate arbitrary (even inconsistent) probabilistic information in a natural way, and comes equipped with
 a well-motivated measure of inconsistency  \parencite{pdg-aaai}.
@@ -108,7 +106,7 @@ some mysterious construction borrowed from physics.
 Representing objectives as model inconsistencies, in addition to providing a principled way of selecting an objective, also has beneficial pedagogical side effects, because of the \emph{structural} relationships between the underlying models.
 For instance, these relationships will allow us to derive
 simple and intuitive visual proofs of technical results,
-such as the variational inequalitites that traditionally motivate the ELBO,
+such as the variational inequalities that traditionally motivate the ELBO,
 and the monotonicity of R\'enyi divergence.
 
 
@@ -172,7 +170,7 @@ In the remainder of this chapter, we show in more detail how this concept of inc
 %     \end{itemize}%
 % \end{defn}
 
-This chapter focuses on primarily on \emph{quantitative} aspects of PDGs---after all, the idea behind modern machine learning is to always defer to data and emperics. 
+This chapter focuses on primarily on \emph{quantitative} aspects of PDGs---after all, the idea behind modern machine learning is to always defer to data and empirics. 
 So, unless we say otherwise, we will take the inconsistency of a PDG refer to the purely observational inconsistency ($\gamma = 0$), dropping the subscript and writing $\aar{\dg M} := \inf_\mu \OInc_{\dg M}(\mu)$.
 
 
@@ -254,7 +252,7 @@ In some ways, this result is entirely unsurprising, given that
 \eqref{eq:inc} is a flexible formula built out of information theoretic primitives.
 Even so, note that
 the inconsistency of believing both a distribution and an event
-happens to be the standard measure of discrepency between the two%
+happens to be the standard measure of discrepancy between the two%
 ---and is even named after
 ``surprise'', a particular expression of epistemic conflict.
 
@@ -334,7 +332,7 @@ right hand side side of Equation \eqref{eq:mll} is localized to the variable $X$
     where the observation $x$ conflicts with $p(X)$.
 In other words, the only relevant aspect of the distribution $p(X,Z)$ is its marginal on $X$. 
 \Cref{prop:expected-surprise,prop:marginal-ll} extend the surprisal result (\cref{prop:pdg-Ix})
-    in two orthoganal directions: to settings with multiple observations, and with partial observation.
+    in two orthogonal directions: to settings with multiple observations, and with partial observation.
 The multi-sample partial-observation generalization also holds; see \cref{appendix:more-crossent}.
 % We now turn to a third axis
 We now introduce a third axis. 
@@ -531,7 +529,7 @@ Gaussian predictors, with arbitrary variances and confidences.
 
 \section{Regularizers and Priors as Inconsistencies}
 \label{sec:regularizers}
-Regularizers are extra terms added to loss funtions, which provide a source of inductive bias towards simple model parameters.
+Regularizers are extra terms added to loss functions, which provide a source of inductive bias towards simple model parameters.
 There is a well-known correspondence between using a regularizer and
 doing maximum \emph{a posteriori} inference with a prior
     (see \cref{appendix:MAP-and-priors}),
@@ -662,7 +660,7 @@ any of the objectives we describe can be regularized in this way.
 	\end{tikzpicture}
     }%
 	\caption[%
-        Statistical distances as inconsistencies: amap of the inconsistency of $p(X)$ and $q(X)$, as their respective confidences vary.]
+        Statistical distances as inconsistencies: a map of the inconsistency of $p(X)$ and $q(X)$, as their respective confidences vary.]
     {A map of the inconsistency of the PDG comprising $p(X)$ and $q(X)$, as we vary their respective confidences $\beta_p$ and $\beta_q$. Solid circles indicate well-known named measures, semicircles indicate limiting values, and the heavily dashed lines are well-established classes. }
 	\label{fig:statdistmap}
 \end{figure}
@@ -1285,7 +1283,7 @@ The exponential families generated by weighted factor graphs
 are a cornerstone of statistical mechanics, where $- \log Z_{\Psi}$ is known as the (Heimholz) free energy.
 It is also an especially natural quantity to minimize:
 the principle of
-free-energy minimization has been enormously succesful in describing
+free-energy minimization has been enormously successful in describing
 of not only chemical and biological systems \parencite{chipot2007free}, but also cognitive ones \parencite{friston2009free}.
 
 \section{Beyond Standard Losses: A Concrete Example}
@@ -1303,7 +1301,7 @@ By giving a principled model of the situation.
 Suppose we want to train a predictor network $h(Y|X)$ from two sources of information:
 partially corrupted data with distribution $d(X,Y)$,
 and a simulation with distribution $s(X,Y)$.
-If the simulation is excellent and the data unsalvagable, we would have high confidence in $s$ and low confidence in $d$,
+If the simulation is excellent and the data unsalvageable, we would have high confidence in $s$ and low confidence in $d$,
 in which case we would train with cross entropy with respect to $s$%
 , $\mathcal L_{\simsymb}\!:=\!\Ex_s [\log \nf1{h(Y|X)}]$.
 Conversely, if the simulation were bad and the data mostly intact, we would use
@@ -1349,7 +1347,7 @@ such as
 }
 	,
 \]
-in which a swich variable $Z$
+in which a switch variable $Z$
 with possible values
 $
 \{\simsymb,\datsymb\}$
@@ -1561,7 +1559,7 @@ What's more, we've dragged in the global parameter $\gamma$,
 further handicapping our ability to compose this model with others.
 To summarize: while model inconsistency readily generates appropriate loss functions,
 the converse does not work as well.
-Reverse-enerineering a loss may require making questionable modeling choices with absolute
+Reverse-engineering a loss may require making questionable modeling choices with absolute
 certainty, resulting in brittle models with limited potential for composition.
 In the end, we must confront our modeling choices;
 good loss functions come from good models.
@@ -1603,7 +1601,7 @@ Several of our results (%
 	prop:pdg-elbo-vae-whole%
 })
 technically require the distribution to be represented with a mass function (as opposed to a probability density function, or pdf).
-A PDG containg both pdf and a finitely supported distribution on the same variable
+A PDG containing both pdf and a finitely supported distribution on the same variable
 will typically have infinite inconsistency---%
 but this is not just a quirk of the PDG formalism.
 
@@ -1624,7 +1622,7 @@ As a result, using one of these ``unbalanced'' functions involving densities whe
 \textbf{Markov Kernels.} In the more general setting of measurable spaces, one may want to adjust the definition of a cpd that we gave, so that one instead works with \emph{Markov Kernels}.
 This imposes an additional constraint: suppose the variable $Y$ takes values in the measurable space $(\V(Y), \mathcal B)$. If $p(Y|X)$ is to be a \emph{Markov Kernel}, then for every fixed measurable subset $B \in \mathcal B$ of the measure space, the we must require that  $x \mapsto \Pr(B|x)$ be a measurable function (with respect to the measure space in which $X$ takes values).
 This too mostly does not bear on the present discussion, because the $\sigma$-algebras for all measure spaces of interest, are fine enough that one can get an arbitrarily close approximation of any cpd with a Markov Kernels.
-This means that the infemum defining the inconsistency of a PDG does not change.
+This means that the infimum defining the inconsistency of a PDG does not change.
 }%s
 
 \subsection{Maximum A Posteriori (MAP) updating, Priors, and Regularization}
@@ -1666,7 +1664,7 @@ Note that if negative log likelihood (or surprisal, $-\log \Pr(X|\theta)$) was o
 
 \section{Further Results and Generalizations}
 \subsection{Full Characterization of Gaussian Predictors}
-The inconsistency of a PDG containing two univariate Gaussian regressors of with arbitrary paremeters and confidences, is most cleanly articulated in terms of the geometric and quadratic means.
+The inconsistency of a PDG containing two univariate Gaussian regressors of with arbitrary parameters and confidences, is most cleanly articulated in terms of the geometric and quadratic means.
 
 \begin{defn}[Weighted Power Mean]
 	The weighted power mean $\mathrm M^w_p(\mathbf r)$ of the collection of real numbers $\mathbf r = r_1, \ldots, r_n$ with respect to the convex weights $w = w_1, \ldots, w_n$ satisfying $\sum_iw_i = 1$, is given by
@@ -1751,7 +1749,7 @@ It is well known that $\mathrm M_p^w(\mathbf r)$ is increasing in $p$, and stric
 			\begin{array}{l} - \beta_2 \log s(x)\\ - \beta_1 \log t(x) \end{array}
 		 \right]
 	\end{align*}
-	where  $\hat\beta = (\frac{\beta_2}{\beta_1+\beta_2}, \frac{\beta_1}{\beta_1+\beta_2})$ represents the normalized and reversed vector of conficences $\beta = (\beta_1, \beta_2)$ for the two distributions, and $\mu_1 = f(X)$, $\mu_2 = g(X)$, $\sigma_1 = s(X)$, $\sigma_2 = t(X)$ are random variables over $X$.
+	where  $\hat\beta = (\frac{\beta_2}{\beta_1+\beta_2}, \frac{\beta_1}{\beta_1+\beta_2})$ represents the normalized and reversed vector of confidences $\beta = (\beta_1, \beta_2)$ for the two distributions, and $\mu_1 = f(X)$, $\mu_2 = g(X)$, $\sigma_1 = s(X)$, $\sigma_2 = t(X)$ are random variables over $X$.
 \end{linked}
 
 
@@ -1813,7 +1811,7 @@ We now present the promised multi-sample analogs from \cref{sec:variational}.
 		\end{tikzpicture}} + \H(\datadist\xsamp). \]
 \end{linked}
 
-\Cref{prop:expected-surprise,prop:pdg-elbo-vae-whole} then give us an analog of the visual bounds in the body of the main paper (\cref{sec:variational}) for many i.i.d. datapoints at once, with only a single application of the inequality:
+\Cref{prop:expected-surprise,prop:pdg-elbo-vae-whole} then give us an analog of the visual bounds in the body of the main paper (\cref{sec:variational}) for many i.i.d. data points at once, with only a single application of the inequality:
 \begin{align*}
 	- \log \Pr(\xsamp) = - \log \prod_{i=1}^m \left(\Pr(x^{(i)})\right) &=
 	- \frac1{m}\sum_{i = 1}^m \log \Pr(x^{(i)})   = \\
@@ -1968,7 +1966,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 \begin{lproof}
 	\label{proof:!}
 	For every $\mu$, adding more edges only adds non-negative terms to \eqref{eq:inc}, while	increasing $\beta$ results in larger coefficients on the existing (non-negative) terms of \eqref{eq:inc}. So for every fixed distribution $\mu$, we have
-	$\bbr{\dg M}_\gamma(\mu) \le \bbr{\dg M'}_\gamma(\mu)$. So it must also be the case that the infemum over $\mu$, so we find that
+	$\bbr{\dg M}_\gamma(\mu) \le \bbr{\dg M'}_\gamma(\mu)$. So it must also be the case that the infimum over $\mu$, so we find that
 	$\aar{\dg M} \le \aar{\dg M'}$.
 \end{lproof}
 
@@ -2106,7 +2104,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 
 \recall{prop:accuracy}
 \begin{lproof}\label{proof:accuracy}
-	Becuase $f$ is deterministic, for every $x$ in the support of a joint distribution $\mu$ with finite score, we must have $\mu(Y\mid x) = \delta_f$, since if $\mu$ were to place any non-zero mass $\mu(x,y) = \epsilon > 0$  on a pont $(x,y)$ with $y \ne f(x)$ results in an infinite contribution to the KL divergence
+	Because $f$ is deterministic, for every $x$ in the support of a joint distribution $\mu$ with finite score, we must have $\mu(Y\mid x) = \delta_f$, since if $\mu$ were to place any non-zero mass $\mu(x,y) = \epsilon > 0$  on a pont $(x,y)$ with $y \ne f(x)$ results in an infinite contribution to the KL divergence
 	\[ \kldiv{\mu(Y\mid x)}{\delta_{f(x)}} =
 	 	\Ex_{x,y \sim \mu} \log \frac{\mu(y\mid x)}{\delta_{f(x)}} \ge \mu(y,x) \log \frac{\mu(x,y)}{\mu(x) \cdot \delta_{f(x)}(y)} =  \epsilon \log \frac{\epsilon}{0} = \infty.
 	\]
@@ -2265,7 +2263,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 			s(x)^{\hat \beta_1} t(x)^{\hat \beta_2} }
 			\exp \bigg\{ \frac{-1}{2(\beta_1+\beta_2)}\Big(\frac{y-g(x)}{\tilde\sigma(x)}\Big)^2\bigg\}.
 	\end{align*}
-	Recall that the Gaussian densitity $\mathcal N(y|\,g(x),\, \tilde\sigma(x) \sqrt{\beta_1+\beta_2})$ of mean $g(x)$ and variance $\tilde\sigma(x)^2(\beta_1+\beta_2)$ is given by
+	Recall that the Gaussian density $\mathcal N(y|\,g(x),\, \tilde\sigma(x) \sqrt{\beta_1+\beta_2})$ of mean $g(x)$ and variance $\tilde\sigma(x)^2(\beta_1+\beta_2)$ is given by
 	\[ \mathcal N\left(y\,\middle|\,g(x),\, \tilde\sigma(x) \sqrt{\beta_1+\beta_2}\right)
 		= \frac{1}{\sqrt{2\pi}\;\tilde\sigma(x) \sqrt{\beta_1+\beta_2}}
 		\exp \bigg\{ \!\frac{-1}{2(\beta_1+\beta_2)}\Big(\frac{y-g(x)}{\tilde\sigma(x)}\Big)^2\bigg\},
@@ -2357,8 +2355,8 @@ As promised, we now give the simultaneous generalization of the surprisal result
 					 { s(x)^{\hat\beta_2}\, t(x)^{\hat\beta_1} }
 				 + \xi(x)
 		   \Bigg] 
-	\intertext{but now the entire first term is the infemum
-        of a relative entropy, which is non-negative and equal to zero iff $\mu(y) = \mathcal N(y | g(x),\tilde\sigma(x)\sqrt{\beta_1\!+\!\beta_2})$. So the infemum on the left is equal to zero.
+	\intertext{but now the entire first term is the infimum
+        of a relative entropy, which is non-negative and equal to zero iff $\mu(y) = \mathcal N(y | g(x),\tilde\sigma(x)\sqrt{\beta_1\!+\!\beta_2})$. So the infimum on the left is equal to zero.
 	}
 		\aar{\dg M} &=\! \Ex_{x\sim D}\left[
 			(\beta_1 \!+\! \beta_2) \log \frac
@@ -3057,7 +3055,7 @@ Note that the quantity inside the second expectation does not depend on $x$. The
 the second expectation is just an explicit way of sampling $z$ from the mixture
 distribution $\Ex_{x \sim \mu(X|y)} \mu(Z|x,y)$, which is the definition of $\mu(Z|y)$.
 Once we make this replacement, it becomes clear that the only feature of $\mu(Z|Y,X)$ that
-matters is the mixture $\mu(Z|Y)$. Simplifying the second expectation in this way, and replacing the infemum over $\mu(Z|X,Y)$ with one over $\mu(Z|Y)$ yields:
+matters is the mixture $\mu(Z|Y)$. Simplifying the second expectation in this way, and replacing the infimum over $\mu(Z|X,Y)$ with one over $\mu(Z|Y)$ yields:
 \begin{equation*}
 	\aar{\dg M_4}
 	= \inf_{\mu(Y)} \inf_{\mu(X|Y)} \inf_{\mu(Z|Y)}
@@ -3070,13 +3068,13 @@ matters is the mixture $\mu(Z|Y)$. Simplifying the second expectation in this wa
 \end{equation*}
 Now, a cpd $\mu(X|Y)$ is
 just%
-	\footnote{modulo measurability concerns that do not affect the infemum; see \Cref{appendix:density}}
+	\footnote{modulo measurability concerns that do not affect the infimum; see \Cref{appendix:density}}
 a (possibly different) distribution $\nu_y(X)$ for every value of $Y$.
 Observe that, inside the expectation over $\mu(Y)$, the cpds $\mu(X|Y)$ and $\mu(Z|Y)$ are used only for the \emph{present} value of $y$, and do not reference, say,  $\mu(X|y')$ for $y'\ne y$.
 Because there is no interaction between the choice of cpd $\mu(X|y)$ and $\mu(X|y')$, it is not necessary to jointly optimize over entire cpds $\mu(X|Y)$ all at once.
-Rather, it is equivalent to to take the infemum over $\nu(X)$, separately for each $y$.
-Symmetrically, we may as well take the infemum over $\lambda(Z)$ separately for each $y$, rather than jointly finding the optimal $\mu(Z|Y)$ all at once.
-Operationallly, this means we can pull the infema inside the expectation over $Y$. And since the first term doesn't depend on $Z$ and the second doesn't depend on $X$, we get:
+Rather, it is equivalent to to take the infimum over $\nu(X)$, separately for each $y$.
+Symmetrically, we may as well take the infimum over $\lambda(Z)$ separately for each $y$, rather than jointly finding the optimal $\mu(Z|Y)$ all at once.
+Operationally, this means we can pull the infema inside the expectation over $Y$. And since the first term doesn't depend on $Z$ and the second doesn't depend on $X$, we get:
 %
 \begin{equation*}
 	\aar{\dg M_4}
@@ -3252,7 +3250,7 @@ where $\mathit{const}$ does not depend on $h$. To see this, let $\dg M_2$ be the
 $\thickD$ is $(\gamma m)$-strongly convex in a region around its minimizer for some $m>0$ that depends only on $s$ and $d$.
 Together with our assumption that $h$ is positive, we find that when $\gamma$ becomes large,
 the first term dominates, and the optimizing $\mu$ quickly approaches the normalized density $\nu := \frac1Csd$.
-Plugging in $\nu$, we find that the value of the infemum approaches
+Plugging in $\nu$, we find that the value of the infimum approaches
 \begin{align*}
 	\aar{\dg M_2} &\approx \Ex_{\nu} \bigg[ \log \frac1{h(Y|X)} \bigg] - H_{\nu}(Y|X) - \gamma \log C \\
 	&= \int_{XY} \frac1C \log \frac1{h(Y|X)} s(X,Y) d(X,Y) \quad- H_{\nu}(Y|X) - \gamma \log C \\
@@ -3311,7 +3309,7 @@ to be already compatible with this joint distribution, the inconsistency does no
 \subsubsection{Details for Claims made in \texorpdfstring{\Cref{sec:reverse-engineer}}{Section 9} }
 % \subsection{Details for Claims made in \texorpdfstring{\Cref{sec:reverse-engineer}}{Section 9} }
 \textbf{Distortion Due to Inconsistency.}
-In the footnote on \Cpageref{fn:logEexp}, we claimed that if the model confidence $\beta_p$ were 1 rather than $\infty$, we would have obtained an incconsistency of
+In the footnote on \Cpageref{fn:logEexp}, we claimed that if the model confidence $\beta_p$ were 1 rather than $\infty$, we would have obtained an inconsistency of
 $ - \log \Ex_{x\sim p} \exp(- c(x)) $,
 and that the optimal distribution would not have been $p(X)$.
 %

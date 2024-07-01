@@ -8,25 +8,38 @@ can capture graphical models such as Bayesian Networks and Factor graphs---but t
 % This chapter, based on a collection of unpublished notes, 
 In this chapter, we will see how a wide variety of other mathematical models and fragments of epistemic information can be implicitly viewed as PDGs.
 
+We will begin with a simple but conceptually important observation: 
+    a joint probability distribution is a special case of a PDG (\cref{sec:prob-as-pdg}). 
+    % Thus, the standard epistemic state of a 
+% This means that a standard
+% So, because standard 
+In \cref{sec:widgets}, we develop a library of smaller tools that can capture 
+
+
+The key . We will explore this in 
+
 
 \section{Probabilities and Random Variables}
     \label{sec:prob-as-pdg}
 
 Probability is the dominant way that computer computer scientists and
-microeconomics think about epistemic state.
+micro\-economists think about epistemic state.
 This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
 must act as if it had probabilistic beliefs \cite{..,savage}.
 % Nevertheless, not everything is probabilistic---at least, not 
-Still, probability does have shortcomings \cite{}, and there have been many other representations of uncertainty \cite{halpern2017reasoning}.
+Still, probability does have shortcomings \cite{}, and there have been many approaches to representing knowledge and uncertainty \cite{halpern2017reasoning}.
 % Many logics are based on binary truth/falsehood
-Many approach are built on binary truth and falsehood, and epistemic logics dealing with possibility and necessity are built on top of them.
+Some are built on binary truth and falsehood, and epistemic logics dealing with possibility and necessity are built on top of them.
 Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
 Perhaps surprisingly, many of these objects can be represented with PDGs as well.
 
 We start with an obvious construction, that is nonetheless important
 to keep in mind: a joint distribution can be viewed as a very special case of a PDG. 
 Let $\X$ be a set of variables, and recall that $\V\!\X$ is the set of all joint settings of the variables $\X$. 
-A joint distribution $\mu \in \Delta \V\!\X$ can be implicitly regarded as that has a single hyperarc $\emptyset \to \X$. We attach $\mu$ as the (c)pd, and give it weights $\alpha=0$ (if, as is usual, the distribution represents purely observational and not causal information) and $\beta = 1$ (default confidence). 
+A joint distribution $\mu \in \Delta \V\!\X$ can be implicitly regarded as a PDG that has a single hyperarc $\emptyset \to \X$.
+We attach $\mu$ as the (c)pd, and give it weights $\alpha=0$
+%
+(if, as is usual, the distribution represents purely observational and not causal information) and $\beta = 1$ (default confidence). 
 % We will see more about these parameters later on. 
 
 
@@ -53,8 +66,8 @@ in which $W$ is a variable with possible values $\V W := \Omega$:
 \end{center}
 %
 (In fact, this PDG happens to also be a BN, if one isn't worried about calling $W$, itself typically a product of variables, a variable.)
-% No matter what confidence paramteters we use, so long as $\beta_\mu > 0$, 
-It is easy to verify that these PDGs have inconsistency zero, and represent precisely the distribution $\mu$, no matter what confidence parameteters we select (so long as the confidence is positive). 
+% No matter what confidence parameters we use, so long as $\beta_\mu > 0$, 
+It is easy to verify that these PDGs have inconsistency zero, and represent precisely the distribution $\mu$, no matter what confidence parameters we select (so long as the confidence is positive). 
 
 Of course, the semantics of PDGs developed in \cref{sec:semantics}
 make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and thus it would be circular to were to implicitly convert joint distributions to PDGs before developing the results of the previous chapter. 
@@ -67,6 +80,7 @@ What makes PDGs special is their ability to do other things at the same time,
     simultaneously keeping many balls in the air, so to speak. 
 
 \section{Widgets}
+    \label{sec:widgets}
 
 PDGs may be expressive, but they are structured objects with clear and specific specific syntax.
 After some brief reflection, one might even find the syntax unnecessarily restrictive. 
@@ -106,7 +120,7 @@ they must be among $\Supp \mu = \{ \omega \in \Omega : \mu(\omega) > 0 \}$.
 
 % A relation $R(X_1, \ldots, )$
 A constraint on a set $\Omega$ of possible worlds is a subset $C \subseteq \Omega$
-of values that satisfy the constraint, or equivalntly, 
+of values that satisfy the constraint, or equivalently, 
 a function $\Omega \to \{\mathtt{true}, \mathtt{false}\}$ assigning to each $\omega \in \Omega$ a Boolean that indicates whether or not it is allowed by the constraint. 
     
 In a PDG, the sample space $\Omega$ consists of joint settings of
@@ -117,7 +131,7 @@ a constraint on joint settings of variables is known more familiarly as a
 We have already seen how PDGs can encode certain relations, such as
 in compiling a directed hypergraph to a graph (\cref{constr:hyperedge-reducton}),
 where we managed to enforce a constraint on the triple of variables $(\var A, \var B, \var A\times \var B)$ ensuring that the value of $\var A \times \var B$ is always the pair consisting of the value of $\var A$ and the value of $\var B$.
-But this is a very special kind or relation---an equality relationship between variables that already appear to have a clear structional relationship.
+But this is a very special kind or relation---an equality relationship between variables that already appear to have a clear structural relationship.
 Can we encode arbitrary relational constraints with a PDG? 
 It turns out we can.
 
@@ -1286,7 +1300,7 @@ Here, we aim only to make an orthogonal point: that these structures themselves 
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
     
-A \emph{sturctural equations model} \cite{pearl2009causality} is a collection of equations that explain how each ``endogenous variable'' gets its value, using a mechanism that can depend on other variables in the model.
+A \emph{structural equations model} (SEM) \citep{pearl2009causality} is a collection of equations that explain how each ``endogenous variable'' gets its value, using a mechanism that can depend on other variables in the model.
 In other words, a SEM is a collection of (deterministic) functions, each taking as input joint settings of variables, and outputting a single value.
 Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG, and moreover, the confidence weights do not impact the semantics when the cpd is deterministic.  
 Furthermore, the usual way of adding probability to a causal model is no different from adding a probability distribution to the corresponding PDG. 
@@ -1294,7 +1308,7 @@ The semantics of the resulting PDG exactly capture the behavior of causal model 
 
 We have not yet given an analogue of intervention for a general PDG, although it's straightforward to encode interventions by altering the functions in the usual way (i.e., replacing the causal equations with constants).
 We will make all of this precise in \cref{sec:causal}.
-More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibiilty} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
+More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibility} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
 
 \subsection{Implicit Neural Representations}
 

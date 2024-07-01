@@ -11,20 +11,34 @@ Define the self-consistency of a PDG to be
     \Xi(\dg M) := \mathfrak\exp( - \aar{\dg M}_\gamma). 
 \]
 
-Note that $\Xi(\dg M)$
+
+We can summarize and reframe a number of the properties we have seen in terms of
+    of the self-consistency $\Xi[\dg M]$
 % \begin{prop}
 \begin{enumerate}
-    \item If $E$ is an event, then $\Xi(E) = {\singlespacing\begin{cases}
-        0 & \text{ if } E = \emptyset \\
-        1 & \text{ if } E \ne \emptyset
+    \item If $U$ is an event, then $\Xi[U] = {\singlespacing\begin{cases}
+        0 & \text{ if } U = \emptyset \\
+        1 & \text{ if } U \ne \emptyset
     \end{cases}}$
 
-    \item If $\mu$ is a probability distribution, and $U$ is an event, 
-        then $\Xi(\mu + U) = \mu(U)$.
-    
-    \item If $\Plaus$ is a Dempster-Shafer probability measure, and $U$ is an event, then $\Xi(\Plaus + U) = \Plaus(U)$. 
+    \item If $U_1$ and $U_2$ are both events regarding the same set of variables, then 
+        $\Xi[U_1 + U_2] = \mathbbm 1[ U_1 \cap U_2 \ne \emptyset]$.  
 
-    \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
+    \item If $\mu$ is a probability distribution, and $U$ is an event, 
+        then $\Xi[\mu + U] = \mu(U)$.
+    
+    \item If $\Plaus$ is a Dempster-Shafer probability measure, and $U$ is an event, then $\Xi[\Plaus + U] = \Plaus(U)$. 
+
+    % \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
+    \item If $D = \{(x_i, y_i) \}$ is a set of training data and $f : X \to Y$ is a
+        deterministic classifier, 
+        then 
+        $\Xi[\Pr_D + f ]$ is the accuracy of $f$ on $D$. 
+
+    % If $p(Y|X)$ is instead a probabilistic classifier, then 
+    % $\Xi[ \Pr_D !  + p(Y|X)]$
+    % is the cross entropy 
+    % $\Ex_{D}[ \log \frac1{p(Y|X)} ]$.
     
 \end{enumerate}
 % \end{prop}

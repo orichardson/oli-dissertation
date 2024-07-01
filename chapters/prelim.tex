@@ -3,21 +3,47 @@
 Although the high-level ideas in this thesis are often intuitive and philosophical, 
 % our primary vehicle for results is the 
 % we make those ideas precise using some  
-but in their most precise forms, they are often quite mathematical.
+% but in their most precise forms, they are often quite mathematical.
+the most precise forms of those ideas are quite mathematical.
 In this chapter, we build up a library of standard mathematical concepts and notation needed to fully understand them. 
 % While 
-Although one effect of this chapter is to develop standard notation for standard concepts, 
-    % the way we get there is perhaps unusual. 
-the way it all fits together may not be as familiar. 
-The notation is carefully selected to be extremely precise,
-    yet multi-purpose, and to look indistinguishable 
+% One effect of this chapter is to develop standard notation for standard concepts, 
+% the way we get there is perhaps unusual. 
+\newmaterial{%
+A reader with a firm grasp of probability, graph theory, probabilistic graphical models, convex geometry, and information theory, should already be equipped to understand the later chapters;
+these readers should feel free to skip to \cref{part:univ-model}.
+%
+% Still, the way it all fits together may not be as familiar. 
+Still, even for such readers,
+the way these concepts fit together formally may be less familiar.
+}%
+% The notation is carefully selected to be extremely precise,
+The notation is carefully selected to be precise,
+    yet serve multiple purposes,
+    and look indistinguishable 
     from various standard notations in different contexts. 
  
 % to motivate
 % to prime the reader 
 % to see the most important themes and design choices that go into 
 The chapter also serves a second purpose: 
-to introduce the kinds of reasoning and representation patterns that will appear later in the text, especially when it comes to the notion of a \emph{variable}. 
+    to introduce the kinds of reasoning and representation patterns that appear in later chapters.
+%
+% , 
+% and to reconcile those representations and reasoning patterns with the 
+% especially when it comes to the notion of a \emph{variable}. 
+% The principle such pattern is the notion of a \emph{variable}, 
+\newmaterial{%
+The principle such pattern is the concept of a \emph{variable}, 
+which has several closely related meanings.
+One typically takes care to distinguish these different meanings, 
+    but we do some extra leg work in this chapter to justify using them interchangeably. 
+% The result is a simulacrum of the reasoning patterns that undergird 
+% These patterns directly undergird the notion of a PDG.
+In this chapter, we will get a chance to work with these ideas in a familiar context.
+% We return to this in \cref{ssec:basic-vars}.
+}%
+
 
 % \section{Background, Notation, and Critical Preliminaries}
 \section{Basic Concepts and Foundational Notation}
@@ -28,6 +54,8 @@ There are two kinds of equalities: definitions, and assertions.
 We distinguish between the two.
 Namely, we write ``$A := B$'' when we want to (re)defines the symbol $A$ so stand for $B$,
 but write ``$A = B$'' to assert that the (already defined) expressions $A$ and $B$ stand for the same object.
+%
+
 
 % \subsection
 % \paragraph
@@ -188,8 +216,16 @@ Observe that a vector $\mu \in \mathbb R^I$ can be seamlessly viewed as
     a matrix $\mat u \in \mathbb R^{I \times 1}$ for the purposes of composition; in this form, they it is called a \emph{column vector}.
 This establishes that linear maps can be viewed as vectors, 
     and vectors can be viewed as linear maps.
+\newmaterial{%
+    The \emph{transpose} of a matrix $A \in \mathbb R^{I \times J}$ is 
+    the matrix $A^{\sf T} \in \mathbb R^{J \times I}$ that results 
+        from swapping the rows and columns of $A$. 
+    In particular, the transpose $\mat u^{\sf T}$ of a column vector $\mat u \in \mathbb R^{I}$ 
+        is a \emph{row vector} or \emph{dual vector}, 
+        and represents a linear function $\mat v \mapsto \mat u^{\sf T} \mat v ~:~ \mathbb R^{I} \to \mathbb R$.
+}%
 % This is yet another instance
-The result is another 
+% The result is another 
 % This illustrates a general guiding principle in this thesis: 
 %     the nouns (here, the vectors), but rather the maps between sets. 
 
@@ -254,7 +290,8 @@ It follows that linear spaces are cones, and cones are convex.
 We now turn to the concept of a \emph{variable}.
 Intuitively, a variable represents some feature of the world or some property of some object. 
 Although variables are widely used across computer science---in programming languages, graphical models, causality, and probability theory, to name a few---there are actually several different closely related formalisms. 
-We give a (perhaps somewhat opinionated) account here that simultaneously explicates many of approaches in the literature. 
+% We give a (perhaps somewhat opinionated) account here that simultaneously explicates many of approaches in the literature. 
+The account presented here simultaneously explicates many of approaches in the literature. 
 
 % Our presentation of it is not standard, but largely because it incorprorates standard 
 Mathematically, our notion of a variable exists on two levels.
@@ -539,7 +576,9 @@ Precisely the same formulas define (conditional) independence
     % and Utility
     } 
 If $\mu$ is a probability over $\Omega$, and $X$ is random variable 
-whose possible values are vectors of a given shape(i.e., $\V \! X \subseteq \Rext^I$), then the \emph{expectation} of $X$ with respect to $\mu$ is intuitively its mean or average value.
+whose possible values are vectors 
+% of a given shape(i.e., $\V \! X \subseteq \Rext^I$)
+\unskip, then the \emph{expectation} of $X$ with respect to $\mu$ is intuitively its mean or average value.
 Depending on which is clearer in context, 
     an expectation may be notated in either of the following two ways:
 \[
@@ -567,6 +606,11 @@ or more formally,
 Thus, if $A$ is convex, to specify $a \in A$, it suffices to specify a probability distribution over $\mathrm{Ext}(A)$.  
 % Such distributions are called \emph{barycentric coordinates} for $A$.
 The components of a distribution $\mu \in \Delta \mathrm{Ext}(A)$ are called \emph{barycentric coordinates} for the element $a = \Ex_{v \sim \mu}[v] \in A$.
+%
+\newmaterial{%
+    A cpd $p(Y|X)$ can be viewed as providing a barycentric coordinate system for 
+    $\Delta \V Y$ whose vertices correspond to $\V\!X$. 
+}
 
 % For instance, $\mathrm{Ext}(\Delta \Omega) = \{ \delta_{\omega} : \omega \in \Omega \}$. 
 % If $A$ is a convex set with $|\mathrm{Ext}(A)| \in \mathbb N$,
@@ -598,9 +642,9 @@ Still, we reiterate that the full account of measure theory needed to define pro
 
 \paragraph{Measures.}
 A \emph{measurable space} $(\Omega, \mathcal F)$ is a set $\Omega$,
-called the \emph{outcome space}, together with a collection $\mathcal F \subseteq 2^\Omega$ of subsets of $\Omega$, which considered \emph{measurable}, and called \emph{events}. 
+called the \emph{outcome space}, together with a collection $\mathcal F \subseteq 2^\Omega$ of subsets of $\Omega$ that are considered \emph{measurable}, called \emph{events}. 
 The elements of $\Omega$, should be thought of \emph{possible outcomes} or \emph{possible worlds} for in the model.
-The set $\mathcal F$ of events must also be an algebra, meaning that it contains $\Omega$, and is closed under complement and countable union---%
+The set $\mathcal F$ of events must also be a \emph{$\sigma$-algebra}, meaning that it contains $\Omega$, and is closed under complement and countable union---%
 that is, $\Omega \in \mathcal F$, if $U \in \mathcal F$ then $\Omega \setminus U \in \mathcal F$, and if $U_1, U_2, \ldots \in \mathcal F$, then $U_1 \cup U_2 \cup \cdots \in \mathcal F$.  
 % One should think of $\mathcal A = 2^\Omega$ as consisting of every 
 % For all but a few select places, one can ignore $\mathcal F_\Omega$ in this dissertation.
@@ -644,13 +688,18 @@ In a context where one is interested in probabilities over $\Omega$,
 a measurable function $X : \Omega \to \V\!X$ is also called a \emph{random variable} or a \emph{statistic}.
 % Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore in the next two paragraphs.
 
-In this more general setting, we no longer require $\V(X)$ to be a finite set, but in exchange, we still require some structure---$\V(X)$ has to be a measurable space. At a technical level, this is compatible with our previous discussion about variables, because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces. 
+In this more general setting, we no longer require $\V\!X$ to be a finite set, but in exchange, we require some structure: $\V\!X$ has to be a measurable space (i.e., come equipped with a $\sigma$-algebra).
+At a technical level, this is compatible with our previous discussion about variables, because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces. 
 \begin{enumerate}
     \item Recall that we regard a tuple $\mat X = (X_1, \ldots, X_n)$ of variables as itself a variable, with $\V(X_1, \ldots, X_n) = \prod_{i=1}^n \V(X_i)$.
         But if each $\mathcal V(X_i)$ comes with an algebra $\mathcal F_i$ of events, then there is a natural product algebra $\mathcal F_{1:n}$ generated by complements and countable unions of events of the form $U = U_1 \times \cdots \times U_n$ with each $U_i \in \mathcal F_i$. 
 
     \item Similarly, recall that when $X$ is a variable and $f : \V X \to S$ is a function, we regard $f(X)$ as a variable. In this setting, we add only the minimal requirement that $S$ be a measurable space and that $f$ be a measurable function.  
 \end{enumerate}
+
+
+
+
 % 
 % Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
 % With that definition, a variable $X$ can be viewed as a random variable $X : \V\!\X \to \V\!X$ that selects the value of $X$ from the joint setting.  
@@ -700,7 +749,7 @@ Graphs come in two flavors: directed and undirected.
 
 \begin{defn}
     A \emph{(directed) (multi)graph} $G = (N, A)$, or simply a \emph{graph}, is a set $N$ of nodes,
-    and a collection $A$ of arcs, such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
+    and a collection $A$ of \emph{directed edges} (or \emph{arcs}), such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
     So, formally, the definition is
     $G = (N, A, \Src{}, \Tgt{})$, with $\Src{},\Tgt{}: A \to N$ often left implicit.
 \end{defn}
@@ -1005,7 +1054,7 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 
 
 % \section{A Review of Graphical Models}
-\section{Graphical Models}
+\section{(Probabilistic) Graphical Models}
 
 % Broadly speaking, probabilistic graphical levels 
 Like variables themselves, graphical models exist on two levels: a qualitative or structural one, and a quantiative observational one.
@@ -1019,7 +1068,7 @@ graphical model structure together with  \emph{quantitative} or probabilistic in
 The purpose of a graphical model, at least historically, is to be a compact representation of a probability distribution (by exploiding independencies). 
 Thus, a graphical model $\cal M$
 typically represents a joint probability distribution $\Pr_{\!\cal M}
- \in \Delta \V\!\X$ over its variables.
+ \in \Delta \V\!\X$ over the values its variables $\X$.
 % \discard{
 %     Although there is often more to the story,
 %     it can typically be
@@ -1041,40 +1090,45 @@ What follows is really a barebones sketch of the graphical models context for th
     
 \subsection{Bayesian Networks and Variants}
 
-A qualitative Bayesian Network (BN),  is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
+A \emph{qualitative Bayesian Network} (qualitative BN) is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
 An arc $X {\to} Y \in A$ intuitiely reflects a possibility that $X$ can influence $Y$. 
-The absence, of an edge, therefore, reflects some kind of (conditional) independence. 
-One standard way to say this is that
+The absence of an arc, then, reflects a kind of (conditional) independence. 
+% One standard way to say this is that
+% Here is one standard description of these independencies: 
+% Here is n of these independencies: 
+More precisely, a qualitative BN states that
 \textit{every variable is conditionally independent of its non-descendents given its parents}.
-Another famous (and more algorithmic) characterization of the same independences is the \emph{d-separation} criterion  \cite{geiger-pearl-d-separation}. 
+Another famous (and more algorithmic) characterization of the same conditional independences is the \emph{d-separation} criterion  \cite{geiger-pearl-d-separation}. 
 It is helpful to look at some examples.
 
 \begin{center}
+    \tikzset{bnnode/.style={dpad1,circle}}
+    % \tikzset{bnnode/.style={draw,circle}}
     \begin{tikzpicture}[xscale=1.3,center base]
-        \node[draw,circle] (X) at (-1,0) {$X$};
-        \node[draw,circle] (Y) at (0,0) {$Y$};
-        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \node[bnnode] (X) at (-1,0) {$X$};
+        \node[bnnode] (Y) at (0,0) {$Y$};
+        \node[bnnode] (Z) at (1,0) {$Z$};
         \draw[->] (X) to (Y);
         \draw[->] (Y) to (Z);
     \end{tikzpicture};~~~
     \begin{tikzpicture}[xscale=1.3,center base]
-        \node[draw,circle] (X) at (-1,0) {$X$};
-        \node[draw,circle] (Y) at (0,0) {$Y$};
-        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \node[bnnode] (X) at (-1,0) {$X$};
+        \node[bnnode] (Y) at (0,0) {$Y$};
+        \node[bnnode] (Z) at (1,0) {$Z$};
         \draw[->] (X) to (Y);
         \draw[->] (Y) to (Z);
     \end{tikzpicture};~~~
     \begin{tikzpicture}[xscale=1.3,center base]
-        \node[draw,circle] (X) at (-1,0) {$X$};
-        \node[draw,circle] (Y) at (0,0) {$Y$};
-        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \node[bnnode] (X) at (-1,0) {$X$};
+        \node[bnnode] (Y) at (0,0) {$Y$};
+        \node[bnnode] (Z) at (1,0) {$Z$};
         \draw[->] (Y) to (X);
         \draw[->] (Y) to (Z);
     \end{tikzpicture};~~~
     \begin{tikzpicture}[xscale=1.3,center base]
-        \node[draw,circle] (X) at (-1,0) {$X$};
-        \node[draw,circle] (Y) at (0,0) {$Y$};
-        \node[draw,circle] (Z) at (1,0) {$Z$};
+        \node[bnnode] (X) at (-1,0) {$X$};
+        \node[bnnode] (Y) at (0,0) {$Y$};
+        \node[bnnode] (Z) at (1,0) {$Z$};
         \draw[->] (X) to (Y);
         \draw[->] (Z) to (Y);
     \end{tikzpicture}
@@ -1133,10 +1187,11 @@ A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it sa
 
 In general, conditions are distinct, with (global) $\implies$ (local) $\implies$ (pairwise). 
 However, if we restrict to \emph{positive} distributions (i.e., $\forall \omega \in \V\!\X.~\mu(\omega) > 0 $), then all four conditions are equivalent.
-The connection to the factorization property is a very deep result, known as the \emph{Clifford-Hammersly Theorem}, or the \emph{fundemental theorem of graphical models}. 
+% The connection to the factorization property is a very deep result,
+This result is
+known as the \emph{Clifford-Hammersly Theorem}, or the \emph{fundemental theorem of graphical models}. 
 
-% This suggests we can approach the idea from 
-If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \! X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ (for some arbitrary index set $J$), and then renormalize. 
+If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \! \mat X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ (for some arbitrary index set $J$, and each $\mat X_j \subseteq \X$), and then renormalize. 
 %
 The bipartite graph that corresponds naturally to this hypergraph is called a \emph{factor graph}. 
 More precisely, a factor graph has two kinds of nodes factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
@@ -1150,7 +1205,7 @@ the vast majority are variants on the two we have already described.
 We now give a quick overview of some of these representations, although this list is far from complete. 
 % There are other ways of describing 
 
-There are \emph{conditional} Bayesian Networks and Causal Bayesian Networks, both of which are called CBNs, and, fortuantely, both of which make the same modification: marking some variables as ``observed'', so that they do not require probability distributions. 
+There are \emph{conditional} Bayesian Networks and Causal Bayesian Networks, both of which are called CBNs, and, fortuantely, both of which make the same modification: marking some variables as ``observed'' so that they do not require probability distributions. 
 Writing $\U$ for the observed variables and $\V$ for the unobserved ones, a CBN $\mathcal B$ represents a cpd $\Pr_{\mathcal B}(\mathcal V \mid \mathcal U)$. 
 %
 \emph{Conditional random fields (CRFs)} are an analogue for factor graphs/MRFs.
@@ -1373,8 +1428,13 @@ There leads to an easy graphical way to quickly read of identities such as the o
 \end{center}
 
 
+\subsubsection{The Principle of Maximum Entropy}
 
-\paragraph{A Structural Information Measure.} 
+\TODO
+
+
+% \paragraph{A Structural Information Measure.} 
+\subsubsection{A Structural Information Measure.} 
 We claim that all of these (entropy-based) quantities are purely ``qualitative'' notions---although, because represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
 One way to see this is the way these concepts interact with variables. 
 Recall that $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as (random) variables, that take as input values of $X$ and $Y$. 
@@ -1389,6 +1449,7 @@ Indeed, it makes no sense to feed $(x,y)$ as an argument to any of these concept
 % This is because $\H_\mu(X)$ is fundementally a
 % ``qualitative'' notion,
 %     that operates on the identities of variables, and not their values.
+
 
 \subsection{Relative Entropy}
     \label{sec:relent-primer}

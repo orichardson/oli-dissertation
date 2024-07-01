@@ -13,6 +13,10 @@
 
 \setlength{\skip\footins}{4ex}
 
+
+% \usepackage{tocloft}
+% \renewcommand\cftpartpresnum{Part~}
+
 %%%%%%%%%%%%%%%% FLAGS %%%%%%%%%%%%%%%%%
 \newif\ifprecompiledfigs
 	\precompiledfigsfalse
@@ -40,10 +44,6 @@
 %the tolerance to 9999
 \tolerance=9999
 
-% \bibliographystyle{plain}
-% \bibliographystyle{alpha}
-\bibliographystyle{plainnat}
-% \bibliographystyle{IEEEbib}
 
 
 \newsavebox\dpineqbox
@@ -106,7 +106,7 @@ TODO
 % \dominitoc% do I want mini toc?
 % {%
 % \renewcommand{\thepart}{\Roman{part} :}
-\renewcommand{\thepart}{Part~\Roman{part} :}
+% \renewcommand{\thepart}{Part~\Roman{part} :}
 % \renewcommand\cftpartpresnum{Part~}
 \contentspage
 % }%
@@ -124,7 +124,9 @@ TODO
 \chapter{Background and Mathematical Preliminaries}
     \input{chapters/prelim}
 
-\part{A Universal Modeling Language}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{A Universal Modeling Language} \label{part:univ-model}
+% \part{Structured Modeling} \label{part:univ-model}
 
 \chapter{Probabilistic Dependency Graphs (PDGs)} 
     \input{chapters/pdg-repr}
@@ -137,19 +139,22 @@ TODO
 \chapter{Qualitative Mecahnism Independence}
     \input{chapters/qim}
 
-\part{A Universal Objective}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \part{A Universal Objective} \label{part:univ-objective}
+\part{A Universal Objective} \label{part:univ-objective}
 
 \chapter{Loss as the Inconsistency of a PDG: 
     Choose your Model, not your Loss}
     \input{chapters/loss}
 \chapter{ The Local Inconsistency Resolution (LIR) Algorithm }
-    \label{chap:lir}
-    % \input{chapters/lir}
+    % \label{chap:lir}
+    \input{chapters/lir}
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \part{Algorithms and Complexity}
 \part{Algorithms, Logic, and Complexity%
     % : Reasoning about (and with) PDGs
-    }
+    } \label{part:algo-logic-complexity}
 
 \chapter{Inference for PDGs, via Exponential Conic Programming}
     \input{chapters/infer}
@@ -163,7 +168,8 @@ TODO
     % \input{chapters/rwpdg}
 
 
-\part{Foundations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Foundations} \label{part:foundations}
 
 \chapter{Learner's Confidence}
     \label{chap:conf}
@@ -177,6 +183,7 @@ TODO
     \label{chap:PDG-cat}
     % \input{chapters/cat}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Conclusions}
 \chapter{}
     \input{chapters/end}

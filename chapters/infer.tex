@@ -21,7 +21,7 @@ that includes not only
 Bayesian Networks (BNs) and
 Factor Graphs (FGs),
 but also more recent statistical models built out of neural networks,
-such as Variational Autoencoders (VAEs) \parencite{kingma2013autoencoding}.
+such as Variational AutoEncoders (VAEs) \parencite{kingma2013autoencoding}.
 % \expandafter\discard\vjoe{
 %  They can also capture inconsistent beliefs; moreover, we can measure how
 %  inconsistent a probability distribution is with a PDG.  This allows us
@@ -914,7 +914,7 @@ we start by characterizing the minimizers of $\OInc$.
     \onlyfirsttime{\footnotemark}
     }
 \end{linked}
-\footnotetext{Intuitively, this assserts 
+\footnotetext{Intuitively, this asserts 
 $\mu_1(\Tgt a | \Src a) = \mu_2(\Tgt a | \Src a)$,
 but also handles cases where some
 $\mu_1(\Src a {=} s)$ or $\mu_2(\Src a {=} s)$ 
@@ -1271,7 +1271,7 @@ whose details we defer to \cref{appendix:prob-details} as well.
 At this point, standard algorithms can use $\bmu$
 to answer probabilistic queries about $\Pr_{\!\bmu}$ in polynomial time \parencite[\S 10.3.3]{koller2009probabilistic}.
 \unskip\footnote{%
-    Concretely: marginal probabilities can essentially be read off of a cailbrated a \actree,
+    Concretely: marginal probabilities can essentially be read off of a calibrated a \actree,
     and evidence $X{=}x$ may be incorporated by
     setting $\mu_C(c) := 0$ for every $C{=}c$ that conflicts with $X{=}x$
     and recalibrating the \actree\ (e.g., with belief propagation). }
@@ -1402,7 +1402,7 @@ Indeed, this scoring function has several properties
     infinitely differentiable, $\gamma$-strongly convex, and its
     derivatives have simple closed-form expressions.
 So it may seem surprising that $\bbr{\dg M}_\gamma$ poses
-a challege to standard optimization tools---%
+a challenge to standard optimization tools---%
 but it does, 
 even when we optimize directly over joint distributions.
 
@@ -1456,14 +1456,14 @@ and also much faster for small PDGs.
 Our implementation of $0^+\!$-inference (gold) also appears to scale better than L-BFGS
     in this regime, although
     that of $\zogamma$-inference (purple) seems to scale much worse. 
-We suspect that the difference comes from \verb|cvxpy|'s complilation process,
+We suspect that the difference comes from \verb|cvxpy|'s compilation process,
     because the two use similar amounts of memory (\cref{fig:joint-mem}),
     and so are problems of similar sizes.
 
 
 
 \textbf{Synthetic Experiment 2 ({\normalfont over \actree s}).~~} 
-For PDGs of bounded treewidth, \Cref{coro:can-use-cliquetree} allows us to express these optimzation problems compactly not just for the convex solver, but for the black-box baseline approaches as well.
+For PDGs of bounded treewidth, \Cref{coro:can-use-cliquetree} allows us to express these optimization problems compactly not just for the convex solver, but for the black-box baseline approaches as well.
 We adapt the previous experiment for \actree s as follows.
 First randomly sample a maximal graph $G$ of tree-width $k$, called a 
     $k$-tree \parencite{patil1986structure}; 
@@ -1482,7 +1482,7 @@ In the latter case, however, there is now an additional difficulty:
     it is not easy to strictly enforce the calibration constraints with the black-box methods.
 Common practice is to instead add extra loss terms to ``encourage'' calibration---%
 but
-    it can still be worthwile for the optimizer to simply incur that loss 
+    it can still be worthwhile for the optimizer to simply incur that loss 
     in order to violate the constraints.
 Thus, for fairness, we must recalibrate the 
     the \actree s returned by all methods before evaluation.
@@ -1516,7 +1516,7 @@ inference inference for BNs and FGs, can be solved in time $O(N)$.
 
 
 Furthermore, we have shown how to do inference for only a subset of
-possible paramer values, specifically, 
+possible parameter values, specifically, 
 when
 either $\bbeta \ge \gamma \balpha$ or $\bbeta \gg \balpha$. 
 The remaining cases are also of interest, and likely require different techniques. 
@@ -1589,7 +1589,7 @@ Our results fall broadly into three categories:
     \begin{align*}
         F(t) := \kldiv[\Big]{ \mu_t(\Src a, \Tgt a) }{  \mu_t(\Src a) \p_a(\Tgt a|\Src a) }.
     \end{align*}
-    Since $\mu_0(\Src a, \Tgt a)$ and  $\mu_1(\Src a, \Tgt a)$ are joint distributions voer two variables, with different conditional marginals, as above, \cref{lem:seg-strictcvx} applies, and so $F(t)$ is strictly convex.
+    Since $\mu_0(\Src a, \Tgt a)$ and  $\mu_1(\Src a, \Tgt a)$ are joint distributions over two variables, with different conditional marginals, as above, \cref{lem:seg-strictcvx} applies, and so $F(t)$ is strictly convex.
 
     Let
     \[ \OInc_{\dg M \setminus \hat a}
@@ -1623,7 +1623,7 @@ Our results fall broadly into three categories:
         &= \sum_{w \in \V\!\X} \mu(w) \left[ \log \mu(w) + \sum_{a \in \Ar} \log \frac{1}{\mu(\Tgt a(w)|\Src a(w))^{\alpha_a}} \right] \\
         &= \sum_{w \in \V\!\X} \mu(w) \log \pqty[\bigg]{ \faktor{\mu(w)~}{~\prod_{a \in \Ar}\mu(\Tgt a(w)|\Src a(w))^{\alpha_a}}}
     \end{align*}
-    But, by \cref{prop:marginonly}, if we restrict $\mu \in \bbr{\dg M}_0^*$, then the conditoinal marginals in the denominator do not depend on the particular choice of $\mu$; they're shared among all $\nu \in \bbr{\dg M}_0^*$.
+    But, by \cref{prop:marginonly}, if we restrict $\mu \in \bbr{\dg M}_0^*$, then the conditional marginals in the denominator do not depend on the particular choice of $\mu$; they're shared among all $\nu \in \bbr{\dg M}_0^*$.
 \end{lproof}
 
 
@@ -1681,15 +1681,15 @@ Our results fall broadly into three categories:
     \[
         \I_\mu(\mat Z; \mat X| \mat S) = \I_\mu(\X_1; \X_2 \mid \X_1 \cap \X_2) = 0,
     \]
-    showing that $\X_1$ and $\X_2$ are conditionally independent given the varaibles that they have in common. \\
+    showing that $\X_1$ and $\X_2$ are conditionally independent given the variables that they have in common. \\
     (The fact that $\I_\mu(\mat Z; \mat X| \mat S) = \I_\mu(\X_1; \X_2 \mid \X_1 \cap \X_2)$ is both easy to show and an instance of a well-known identity; see CIRV2 in Theorem 4.4.4 of \textcite{halpern2017reasoning}, for instance.)
 \end{lproof}
 
 \recall{coro:can-use-cliquetree}
 \begin{lproof}\label{proof:can-use-cliquetree}
 
-    The set of distributions that can be represented by a \cactree\ over $(\C,\cal T)$ is the same as the set of distributions that can represeted by a factor graph for which $(\C, \cal T)$ is a tree decomposition.
-    One direction holds because any such product of factors ``calibrated'', via message passing algorithms such as belief propogation, to form a \actree.
+    The set of distributions that can be represented by a \cactree\ over $(\C,\cal T)$ is the same as the set of distributions that can represented by a factor graph for which $(\C, \cal T)$ is a tree decomposition.
+    One direction holds because any such product of factors ``calibrated'', via message passing algorithms such as belief propagation, to form a \actree.
     The other direction holds because $\Pr_{\bmu}$ itself is a product of factors that decomposes over $(\C, \cal T)$.
 
 
@@ -1711,7 +1711,7 @@ Our results fall broadly into three categories:
 
     Let $\cal T'$ be the graph that results from removing each edge $(C{-}D) \in \cal T$ that satisfies $C \cap D \subseteq \mat Z$, which is a disjoint union  $\mathcal T' = \mathcal T_1 \sqcup \ldots \sqcup \mathcal T_n$ of subtrees that have no clusters in common.
     To parallel this notation, let $\C_1, \ldots, \C_n$ be their respective vertex sets.
-    Note that for every edge $e=(C{-}D)\in \cal T'$, there must by definiton be some variable $U_e \in (C \cap D) \setminus \mat Z$.
+    Note that for every edge $e=(C{-}D)\in \cal T'$, there must by definition be some variable $U_e \in (C \cap D) \setminus \mat Z$.
 
     We claim that no subtree $\mathcal T_i$ can have both a cluster $D_X$ containing a variable $X \in \mat X \setminus \mat Z$ and also a cluster $D_Y$ containing a variable $Y \in \mat Y \setminus \mat Z$.
     Suppose that it did.
@@ -1753,7 +1753,7 @@ Our results fall broadly into three categories:
     \def\CNX{\C_{\mat{Y}}^+}
     We can now partition the clusters as $\C = \CX \sqcup \CNX$, where
     $\CX$ is the set of the clusters that belong to subtrees $\mathcal T_i$ with a cluster containing some $X \in \mat X \setminus \mat Z$, and
-    its $\CNX$ is its complement, which in particular contains those subrees have some $Y \in \mat Y \setminus \mat Z$.
+    its $\CNX$ is its complement, which in particular contains those subtrees have some $Y \in \mat Y \setminus \mat Z$.
     Or, more formally, we define
     \[
         \CX :=~ \bigcup_{\mathclap{\substack{i \in \{1,\ldots,n\}\\ (\cup\C_i) \cap (\mat X\setminus\mat Z) \ne \emptyset }}}\, \C_i
@@ -1894,7 +1894,7 @@ Our results fall broadly into three categories:
     $(\mu, \mat u)$ is equal to the observational incompatibility $\OInc_{\dg M}(\mu)$ of $\mu$ with $\dg M$.
     And, because $(\mu, \mat u)$ minimizes this value among all joint distributions, $\mu$ must be a minimum of $\OInc_{\dg M}$.
 
-    More formally: assume for contradiciton that $\mu$ is not a minimizer of $\OInc_{\dg M}$. Then there would be some other distribution $\mu'$ for which $\OInc_{\dg M}(\mu') < \OInc_{\dg M}(\mu)$.
+    More formally: assume for contradiction that $\mu$ is not a minimizer of $\OInc_{\dg M}$. Then there would be some other distribution $\mu'$ for which $\OInc_{\dg M}(\mu') < \OInc_{\dg M}(\mu)$.
     Let $\mat u'' := [ \mu'(s,t) \log \frac{\mu'(s,t)}{\p_a(t|s) \mu'(s)} ]_{(a,s,t) \in \V\!\Ar}$. Clearly $(\mu', \mat u'')$ satisfies the constraints of the problem, and moreover,
     \[
         \sum_{(a,s,t)\in \V\!\Ar} \beta_a u_{a,s,t} =
@@ -1981,7 +1981,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         v_{w} \ge \mu(w) \log \mu(w).
     \]
     As in the previous proof, we claim that these must hold with equality (except possibly for $u_{a,s,t}$ at indices satisfying $\beta_a = \gamma \alpha_a$, when it doesn't matter).
-    This is because otherwise one could reduce the value of a component of $u$ or $v$ while still satisfying all of the constraints, to obtain a strictly smaller objective, contradicing the assumption that $(\mu, \mat u, \mat v)$ minimizes it.
+    This is because otherwise one could reduce the value of a component of $u$ or $v$ while still satisfying all of the constraints, to obtain a strictly smaller objective, contradicting the assumption that $(\mu, \mat u, \mat v)$ minimizes it.
 
     Thus, $\mat v$ is a function of $\mu$, as is every value of $\mat u$ that affects the objective value of \eqref{prob:joint-small-gamma}, meaning that this objective value can be written as a function of $\mu$ alone:
     \begin{align*}
@@ -2031,11 +2031,11 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
            \H_{\mu}(\Tgt a | \Src a)
         - \gamma \H(\mu).
     \end{align*}
-    ( In the third step, we were able to convert $\V\!\Ar^+$ to $\V\!\Ar$ because, as usual in when dealing with information-therotic quantities, we take $0 \log \frac{1}0$ to equal zero, which is its limit. )
+    ( In the third step, we were able to convert $\V\!\Ar^+$ to $\V\!\Ar$ because, as usual in when dealing with information-theoretic quantities, we take $0 \log \frac{1}0$ to equal zero, which is its limit. )
 
     The algebra for the right side variant
     \eqref{prob:joint-small-gamma-b}
-    is slightly simpler. In this case the middle conic constraint is almost the same, except for that $\p_a(t|s)$ has been replaced with $1$, and so it ensures that $u_{a,s,t} = \mu(s,t) \log \mu(t\mid s)$ (i.e., the same as before, but without the probability in the denomiator). So,
+    is slightly simpler. In this case the middle conic constraint is almost the same, except for that $\p_a(t|s)$ has been replaced with $1$, and so it ensures that $u_{a,s,t} = \mu(s,t) \log \mu(t\mid s)$ (i.e., the same as before, but without the probability in the denominator). So,
     \begin{align*}
         &\sum_{\mathrlap{\!\!\!(a,s,t) \in \V\!\Ar}}
             (\beta_a \!- \alpha_a \gamma) u_{a,s,t}
@@ -2370,7 +2370,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
     Because $\bmu$ is optimal, it is the choice of \cactree\ that minimizes this quantity.
     By \cref{coro:can-use-cliquetree}, the distribution $\bbr{\dg M}^*$ can be represented by such a \actree, and by \textcite[Prop. 3.4]{pdg-aaai},
     this distribution minimizes $\OInc_{\dg M}$.
-    All this is to say that there exist \actree s of this form whose corresonding distributions attain the minimum value $\OInc_{\dg M}(\Pr_{\bmu}) = \aar{\dg M}_0$.
+    All this is to say that there exist \actree s of this form whose corresponding distributions attain the minimum value $\OInc_{\dg M}(\Pr_{\bmu}) = \aar{\dg M}_0$.
     So $\bmu$ must be one of them, as it minimizes $\OInc(\Pr_{\bmu})$ among such \actree s by assumption. Thus $\Pr_{\bmu} \in \bbr{\dg M}^*_0$ and the objective value of \eqref{prob:cluster-inc} equals $\aar{\dg M}_0$.
 \end{lproof}
 
@@ -2482,7 +2482,7 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         &= \SDef_{\dg M}(\Pr\nolimits_{\bmu}).
     \end{align*}
 
-    To summarize: $\Pr_{\bmu}$ minimizes $\SDef_{\dg M}(\Pr\nolimits_{\bmu})$ among \cactree s with condtional marginals matching those of $\boldsymbol\nu$.
+    To summarize: $\Pr_{\bmu}$ minimizes $\SDef_{\dg M}(\Pr\nolimits_{\bmu})$ among \cactree s with conditional marginals matching those of $\boldsymbol\nu$.
     Since we know that there is a unique distribution that minimizes $\SDef_{\dg M}$ among the elements $\bbr{\dg M}_0^*$, and also that this distribution can be represented by a \actree\ (by \cref{coro:can-use-cliquetree}), we conclude that $\bmu$ must represent this distribution. Thus, $\Pr_{\bmu} = \bbr{\dg M}^*$ as desired.
 \end{lproof}
 
@@ -2791,11 +2791,11 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
                 (z^{\sf N}).
     \]
     This witnesses that $z^{\sf N} = \frac{z}{\epsilon}$ satisfies equation (81) of \citeauthor{nesterov1996infeasible}, which allows us to apply one of their main theorems, which addresses these issues.
-    Supposing that the orignal problem is solvable,
+    Supposing that the original problem is solvable,
     let $(x^*, s^*)$ be any solution to the primal and dual problems,
     and define the value $\psi := 1 + \langle s_0, x^*\rangle + \langle s^*, x_0 \rangle \ge 1$,
     which depends only on the problem and the choice of initialization.
-    Then Theroem 1, part 1 of \citeauthor*{nesterov1996infeasible}, allows us to conclude that
+    Then Theorem 1, part 1 of \citeauthor*{nesterov1996infeasible}, allows us to conclude that
     \[
         \frac{\kappa}{\epsilon}  \le \psi
         \quad\text{and}\quad
@@ -3085,7 +3085,7 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     Also like before, it is easy to see that the components of $A$ and $b$ are all at most 1.  However, we will need to rescale the objective $c$ in order for each of its components to be most 1. We can do this by dividing it by
     $\max \{ - \beta_a \log {p_a(t|s)} \}_{(a,s,t) \in \V\!\Ar} \cup \{ 1 \}$.
 
-    Finally, to ensure that we have a solution that is $\epsilon$-close to the end of the central path, as opposed to one that is merely $\epsilon$-close in compelementarity gap, we must appeal to convexity.
+    Finally, to ensure that we have a solution that is $\epsilon$-close to the end of the central path, as opposed to one that is merely $\epsilon$-close in complementarity gap, we must appeal to convexity.
     As in the proof of \cref{lem:cluster-inc-polytime}, this amounts to reducing the target accuracy by a factor of the smallest possible coefficient of strong convexity, along the next step direction.
     In this case, the bound is simpler: because negative entropy is (unconditionally) 1-strongly convex, and since $\bbeta \ge \balpha \gamma$, the remaining terms are convex, this could be, at worst, $\frac1\gamma$.
 
@@ -3689,8 +3689,8 @@ on joint distributions, which contrasts the convex optimization approaches of \c
      \qquad\text{ is given by normalizing appropriately.}
     \]
     This defines a PDG $\dg M = (\X, \Ar, \mathbb P, \mat 1, \mat 1)$, that
-    has $\balpha = \bbeta = \mat 1$, which will allow us to comapre against
-    belief propogation and other graphical models at $\gamma = 1$.
+    has $\balpha = \bbeta = \mat 1$, which will allow us to compare against
+    belief propagation and other graphical models at $\gamma = 1$.
     The complexity of this PDG is summarized by two numbers:
     \begin{itemize}[nosep]
         \item \texttt{n\_params}$\,:= \V\!\Ar$, the total number of parameters in all cpds of $\dg M$, and
@@ -3717,7 +3717,7 @@ on joint distributions, which contrasts the convex optimization approaches of \c
     \end{align*}
     See \cref{fig:representation} for a visual representation of the (relatively minor) effect of this choice. 
     \item
-    For each value of the trade-off paramteter 
+    For each value of the trade-off parameter 
     $\gamma \in \{0, 10^{-8}, 10^{-4}, 10^{-2}, 1\}$, and each learning rate $\texttt{lr} \in 1E-3, 1E-2, 1E-1, 1E0$, and each optimizer $\mathit{opt} \in \{\texttt{adam}, \texttt{L-BFGS}\}$,
     run $\mathit{opt}$ over the parameters $\theta$ to minimize $\bbr{\dg M}_\gamma(\mu_{\theta})$
      until convergence (or a maximum of 1500 iterations)
@@ -3725,7 +3725,7 @@ on joint distributions, which contrasts the convex optimization approaches of \c
      \item We collect the following data about the resulting distribution and the process of computing it:
      \begin{itemize}[nosep]
          \item the total time taken to arrive at $\mu$;
-         \item the maximmum memory taken by the process computing $\mu$;
+         \item the maximum memory taken by the process computing $\mu$;
          \item the objective and its component values:
          \vspace{-1ex}
          \[
@@ -3782,7 +3782,7 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
 %     \caption{
 %         A graph of the gap (the difference between the attained objective value, and the best objective value obtained across all methods for that value of $\gamma$),
 %         as $\gamma$ varies. The x-axis is $\log_{10} ( \gamma + 10^{-15})$.
-%         As before, colors indicate the optimization method; here blue corresponds to \eqref{prob:joint+idef}, while orange corresonds to \eqref{prob:joint-small-gamma}, and green, as before, correponds to all optimization baselines.
+%         As before, colors indicate the optimization method; here blue corresponds to \eqref{prob:joint+idef}, while orange corresponds to \eqref{prob:joint-small-gamma}, and green, as before, corresponds to all optimization baselines.
 %         The size of the circle illustrates the relative number of worlds.
 %         See \cref{fig:gamma-v-gap-fine} for a more detailed breakdown.
 %     }\label{fig:gamma-v-gap}
@@ -3815,14 +3815,14 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
     \caption[Objective gap vs time in the cluster setting; shows more separation]
         {An analogue of \cref{fig:joint-gap-time}, for the cluster setting.
     Note that there is even more separation between the exponential-cone based approaches, and the black-box optimization based ones.
-    The new grey points on the bottom correspond to belief propogation, which is both faster and typically the most accurate.}
+    The new grey points on the bottom correspond to belief propagation, which is both faster and typically the most accurate.}
     \label{fig:clus-gap-vs-time--appendix}
 \end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=0.67\linewidth]{figs/rand-clus/resource-costs}
     \caption[Resource costs for the cluster setting.]
-        {Resource costs for the cluster setting. Once again, the $\OInc$-optimimzing exponential cone methods are in gold, the small-gamma and CCCP is in violet, and the baselines are in green. The bottom line is belief propogation, which is significantly faster and requires very little memory, but also only gives the correct answer under very specific cirucumstances.}
+        {Resource costs for the cluster setting. Once again, the $\OInc$-optimizing exponential cone methods are in gold, the small-gamma and CCCP is in violet, and the baselines are in green. The bottom line is belief propagation, which is significantly faster and requires very little memory, but also only gives the correct answer under very specific circumstances.}
     \label{fig:clus-resource-costs}
 \end{figure}
 
@@ -3853,7 +3853,7 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
 \end{enumerate}
 
 \textbf{Analyzing the Results.}
-Observe in \cref{fig:clus-gap-vs-time} that the separation between the \actree\ convex solver and the black-box algorithms is even more distinct. This is because, in this case, the penalty for violating constraints was too small, and the optimization effort was largely wiped out by the calibration before evalution.
+Observe in \cref{fig:clus-gap-vs-time} that the separation between the \actree\ convex solver and the black-box algorithms is even more distinct. This is because, in this case, the penalty for violating constraints was too small, and the optimization effort was largely wiped out by the calibration before evaluation.
 
 
 \begin{figure}
@@ -3866,7 +3866,7 @@ Observe in \cref{fig:clus-gap-vs-time} that the separation between the \actree\ 
 This illustrates another general advantage that the convex solver has over black-box optimizers: it is much less brittle and reliant and exactly tuning parameters correctly. Note that even in this minimal example, there were many hyper-parameters that require tuning:
 the regularization strengths that enforce soft constraints (\actree\ calibration, normalization), as well as learning rate, not to mention
 various other structural choices: the optimizer, the representation of the distribution, and the maximum number of iterations, none of which are clear-cut choices, but rather require first being tuned to the data.
-While the convex solver does have internal parameters (tolerences and such) these do not need to be tuned to the problem under normal circumstances.
+While the convex solver does have internal parameters (tolerances and such) these do not need to be tuned to the problem under normal circumstances.
 
 \subsection{Comparing to Belief Propagation, on \AcTree s.}
     \label{sec:bn-expt-details}

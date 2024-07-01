@@ -27,7 +27,7 @@ It is based on the theory of
 % What causes a person to change their beliefs?
 % Often it is to resolve inconsistencies, amongst one's beliefs and observations.
 % How do you change a person's mind?
-% One way is to present evidence that contradicts their beliefs; another is to point out inconsistencies between the beleifs they already hold.
+% One way is to present evidence that contradicts their beliefs; another is to point out inconsistencies between the beliefs they already hold.
 What causes a person to change their mind?
 % One theory suggests
 % Some say
@@ -36,7 +36,7 @@ According to some,
     it is a response to internal conflict:
     the result of
     discovering new information that contradicts our beliefs, or
-    becoming aware of discrepancies between beleifs we already hold
+    becoming aware of discrepancies between beliefs we already hold
     \cite{festinger1962cognitive}.
 % The process is often a gradual one: inconsistencies are dealt with incrementally, and one at a time.
 % However, people do not change their minds all at once, keeping in mind everything they know;
@@ -54,11 +54,11 @@ Inconsistencies
 % Some things may also be
 Some things are also
  beyond our control;
-    for example, we might recieve conflicting information
+    for example, we might receive conflicting information
         from two trusted sources and be unable to resolve
         their disagreement.
     % impossible to respond to this inconsistency all at once, keeping in mind everything you know;
-% So in practice, we resolve inconsistencies \emph{locallly}---little by little, and one at a time.
+% So in practice, we resolve inconsistencies \emph{locally}---little by little, and one at a time.
 So in practice, we resolve inconsistencies \emph{locally}---%
     % by looking at only a small part of the picture,
     % and changing another part of it.
@@ -91,7 +91,7 @@ We formalize the process
     and show how that many popular techniques in the literature
     % can be viewed as local inconsistency resolution.
     arise naturally as instances of it.
-    % Finally, we propse a new algorithm
+    % Finally, we propose a new algorithm
 % We argue that this intuition applies not only to people, but also to a
     % broad class of AI systems from the last 20 years.
 % This paper describes a general process by which this occurs,
@@ -216,9 +216,8 @@ This observation suggests a generic approach to learning and
 \section{Mathematical Preliminaries}
 % \section{Mathematical Formalism}
 % Each variable $X$ can take on values from a set $\V\!X$ of possible values.
-We write $\V\! X$ for the set of values that a varible $X$ can take on,
+We write $\V\! X$ for the set of values that a variable $X$ can take on,
 and $\Delta \V \! X $ for the set of distributions over $\V\!X$.
-% Glump glump glump glump glump glump glump.
 A conditional probability distribution (cpd) is a map
 % (cpd)
 $p(Y|X) : \V \!X \to \Delta\mskip-1mu \V \mskip-1mu Y$.
@@ -254,7 +253,7 @@ The \emph{gradient} of a twice differentiable map $f : \Theta \to \mathbb R$,
 Given a vector field  $X$ and an initial point $\theta_0 \in \Theta$, there is a unique trajectory $y(t)$ that solves the ODE
 $\{\frac{\mathrm d }{\mathrm d t}y(t) = X_{y(t)}$,  $y(0) = \theta_0\}$,
 and we adopt the notation $\exp_{\theta_0}( X ) := y(1)$
-    % which is standard in differntial geometry,
+    % which is standard in differential geometry,
     for a compact description of it.
     % this trajectory.
     % compactly refer to this curve, which is standard in many contexts \cite{lee.smooth-manifolds}.
@@ -279,7 +278,7 @@ $
 at each $\theta \in \Theta$
  % forms such a Riemannian metric;
 gives rise to a Riemannian metric;
-thus the mere fact that $\Theta$ parameterizes a family of
+thus the mere fact that $\Theta$ parametrizes a family of
 probability distributions is enough to make it a Riemannian manifold.
 % by $\mat u, \mat v \mapsto \mat u^{\sf T} \mathcal I(\theta) \mat v$.
 Moreover, $\mathcal I(\theta)$ is particularly natural in a probabilistic context;
@@ -288,18 +287,12 @@ Moreover, $\mathcal I(\theta)$ is particularly natural in a probabilistic contex
 
 % \subsection{PDGs}
 % \paragraph{Probabilistic Dependency Graphs.}
-\textbf{Probabilistic Dependency Graphs.}
-% \paragraph{PDG Syntax.}
-A PDG is a
-    directed
-    graph whose arcs carry
-    probabilistic and causal information, weighted by confidence \cite{pdg-aaai}.
-% Equivalent variants of PDGs were defined by \citet{one-true-loss,pdg-infer};
-% we give another variant whose explicit parametric nature is useful for our purposes.
-% We now introduce a new, equally expressive variant,
-We now introduce an equally expressive variant,
-    whose explicit parametric nature will prove useful for our purposes.
-    % whose explicit parametric nature will prove useful.
+\textbf{Parametric Probabilistic Dependency Graphs.}
+% PDG is a directed graph whose arcs carry probabilistic and causal information, weighted by confidence.
+% We now introduce an equally expressive variant, whose explicit parametric nature will prove useful for our purposes.
+We now formally introduce an equally expressive \emph{parametric} variant of a PDG,
+    that was first mentioned in \cref{sec:var}
+% whose explicit parametric nature will prove useful.
 % ---%
     % yet it too is essentially equivalent to the others.
 % We give yet another variant
@@ -374,7 +367,7 @@ We now introduce an equally expressive variant,
 %      % ison $\Tgt a$ given $\Src a$,
 % thus,
 % %
-% In addition, we require that there be a special default paramter setting $0_a \in \Theta_a$, such that $\p_a(\Tgt a | \Src a=s; 0_a) \propto \lambda_{\Tgt a}$, for every $s \in \V\Src a$.
+% In addition, we require that there be a special default parameter setting $0_a \in \Theta_a$, such that $\p_a(\Tgt a | \Src a=s; 0_a) \propto \lambda_{\Tgt a}$, for every $s \in \V\Src a$.
 
 
 \begin{defn}
@@ -470,193 +463,15 @@ special case of a PPDG in which every $\Theta_a = \{ \theta_a^{\text{init}} \}$ 
 %  recovers the definition given by \citet{pdg-infer};
 % is clearly a PDG;
 Conversely, a PPDG may be viewed as a PDG by adding each $\Theta_a$ as
-    a variable, as illustrated in \cref{fig:adv}.
-% which is how we will draw such PDGs.
-% We can take the disjoint union of two PDGs with
-%
-% We generally specify PDGs with graphical notation, so that a cpd
-% Both PDGs and PPDGs can be specified with graphical notation, drawing \\
-We often identify the label $a$ with the cpd $\p_a$,
-    and specify (P)PDGs in graphical notation, drawing \\
-% $f(Y|X)$ is written
-% \begin{tikzpicture}[center base]
-% 	\node[dpadinline] (X) at (0,0) {$X$};
-% 	\node[dpadinline] (Y) at (1.1,0){\small$Y$};
-%  	\draw[arr1,->] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
-% \end{tikzpicture}\,,
-a cpd
-$p(Y|X,Z)$ as
-\begin{tikzpicture}[center base]
-    \node[dpadinline] (Y) at (0.95,0) {$Y$};
-    \node[dpadinline] (X) at (0,-0.25) {$X$};
-    \node[dpadinline] (Z) at (0, 0.25) {$Z$};
-    \coordinate (ctr) at (0.38,0);
-    \cmergearr[arr2] {X.0}{Z.0}Y{ctr}
-    \node[above right=-1pt and -3pt of ctr] {$p$};
-\end{tikzpicture}\,
-% ~~\text{and $q(Y)$ as }~~
-% \begin{tikzpicture}[center base]
-% 	\node[dpad0] (Y) at (1,0) {$Y$};
-% 	\draw[arr2, <-] (Y) -- node[left,inner sep=2pt]{$q$} ++(0,1);
-% \end{tikzpicture}~.
-% ~\text{and $q(A,B)$ as }~
-and $q(A,B)$ as
-\begin{tikzpicture}[center base]
-    \node[dpadinline] (A) at (1,0.25) {$A$};
-    \node[dpadinline] (B) at (1,-0.25) {$B$};
-    \coordinate (tip) at (0.15, 0);
-    \coordinate (center) at (0.45,0);
-    % \draw[arr2, <-] (Y) -- node[left,inner sep=2pt]{$q$} ++(0,1);
-    \cunmergearr[arr1] {tip}{A.180}{B.180}{center}
-    \node[above left=0pt and 0pt of center,inner sep=2pt]{$q$};
-\end{tikzpicture}\,.
-$\vphantom{\Bigg|}$
-\\
-%
-% By default, take $\beta,\alpha{=}1$.
-Unless otherwise specified, take $\beta,\alpha{=}1$ by default.
-    % , but we will sometimes specify ``high confidence''
-    % ($\beta{=}\infty$).
-% Given PDGs $\dg M_1$ and \vphantom{$\big|$}$\dg M_2$,
-%     we write $\dg M_1 + \dg M_2$ for the PDG
-% Given PDGs $\dg M_1$ and \vphantom{$\big|$}$\dg M_2$,
-We write $\dg M_1 + \dg M_2$ for the PDG
-        % with their combined information.
-        % with the arcs of both $\dg M_1$ and $\dg M_2$.
-        that has the arcs of both $\dg M_1$ and $\dg M_2$,
-        and represents their combined information.
-% $\odot$ denotes pointwise multiplication.
-% , or reweighting of a PDG's confidences.
-% % If $\psi \in \mathbb R^{2\Ar}$,
-% % If $\psi \in \mathbb R^{\Ar+ \Ar}$,
-% If $\psi \in \mathbb R^{\Ar}$,
-% we write $\psi \odot \dg M$ for the PDG $\dg M'$ re-weights $\bbeta$,
-%     multiplying by $\psi$ pointwise.
-%     %  i.e., $\beta_a' = \beta_a \psi_{0,a}$ and $\alpha_a' = \alpha_a\psi_{1,a}$.
-% We the same symbol for pointwise vector multiplication generally.
-% % \begin{itemize}[nosep,itemsep=2pt]
-% %     \item a space $\Theta_a$ of parameters, and a
-% % \end{itemize}
+    a variable, as depicted in \cref{fig:adv}.
 
 
-% \paragraph{Semantics.}
-% What makes PDGs interesting are
-\textbf{PDG Semantics and Inconsistency.}
-The power of PDGs comes from their semantics, which sew their (possibly inconsistent)
-% constituent
-cpds and confidences together into joint probabilistic information.
-% a measure of inconsistency, which are equivalent.
-% Recall that
-A PDG contains two kinds of information: structural information about
-causal mechanisms, (the graph $\Ar$ and weights $\balpha$),
-and observational data (the cpds $\mathbb P$ and confidences $\bbeta$).
-% Corespondingly, we can score a candidate joint distribution $\mu \in \Delta \V\!\X$ by its incompatibility with each kind of information.
-% This is done by scoring joint distributions $\mu \in \Delta \V\!\X$
-    % by their incompatibility
-With respect to a PDG $\dg M$,
-the \emph{observational incompatibility}
-of a joint probability measure
-$\mu \in \Delta \V\!\X$ is given by
-a weighted sum of relative entropies
-\begin{equation}
-\OInc_{\dg M}(\mu) :=
-    % \sum_{L \in \Ed} \beta\ssub L\, \kldiv[\Big]{\mu(\Tgt L,\Src L)}{p\ssub L(\Tgt L | \Src L) \mu(\Src L)}.
-    %oli5:
-    % \sum_{a \in \Ar}
-    \!
-    \sum_{\smash{\ed aST \mathrlap{\,\in \Ar}}} \subafalse
-    \beta_a\, \kldiv[\Big]{\mu(\Tgt a,\Src a)}{\p_a(\Tgt a | \Src a) \mu(\Src a)}
-        ,
-        \label{eq:oinc}
-\end{equation}
-and can be thought of as the excess cost of using codes
-optimized for each cpd, weighted by the confidence we have in them, if $\X \sim \mu$.
-If $\dg M$'s observational confidences are positive ($\bbeta > \mat 0$), then $\OInc_{\dg M}(\mu) = 0$
-% iff $\mu$ satisfies the constraints imposed by every cpd of $\mathbb P$.
-if and only if $\mu$ has every conditional marginal described by $\mathbb P$.
-
-We can also score $\mu$ by its incompatibility
-with the structural information $(\Ar,\balpha)$.
-This \emph{structural deficiency} is given by:%
-    \footnote{In \eqref{eq:sdef}, $\lambda$ is base measure,
-        a property of $\X$. The precise choice is not important, but
-        think: uniform or an appropriate analogue.}
-    % with respect to a PDG $\dg M$ is
-\begin{align*}
-    % \SInc_{\dg M}(\mu) := - \H(\mu) + \sum_{L \in \Ed} \alpha\ssub L\, \H_\mu(\Tgt L | \Src L),
-    \SDef_{\!\dg M}(\mu) &:=
-    % \SDef_{\!(\Ar,\balpha)}(\mu) &:=
-        % - \H(\mu) + \sum_{a \in \Ar} \alpha_a\, \H_\mu(\Tgt a | \Src a).
-        % \pqty[\Big]{\; \sum_{\ed aST \mathrlap{\,\in \Ar}}\subafalse \alpha_a\, \H_\mu(\Tgt a | \Src a) } - \H(\mu).
-        %%%%
-        % \kldiv{\mu}{\lambda_{\X}} -
-        % \sum_{\ed aST \mathrlap{\,\in \Ar}}\subafalse \alpha_a\,
-        %     \kldiv{\mu (\Tgt a\Src a)} { \lambda_{\Tgt a} \mu(\Src a) }
-        \numberthis
-         \label{eq:sdef}
-        %%%%
-        % \\ &=
-            \Ex_{\mu}  \bigg[ \log\; \frac{\mu(\X)}{\lambda(\X)}
-            % \prod_{\vphantom{\big|}\ed aST \mathrlap{\,\in \Ar}}\subafalse
-            \prod_{\ed aST }\subafalse
-                \left(\frac{\lambda(\Tgt a|\Src a)}{\mu(\Tgt a | \Src a)}\right)^{\!\alpha_a}
-            \bigg]
-    ,
-    % \vspace{-1ex}
-\end{align*}
-% can be thought of as measuring how effectively $\mu$ factors along the arcs $\Ar$.
-and, roughly, measures $\mu$'s failure to arise as a result of
-    independent causal mechanisms along each edge.
-% There is not space to motivate it fully, but here are a few nice properties.
-If $\Ar$ is a qualitative Bayesian Network, for instance,
-    then $\SDef_{\!\Ar}(\mu) \ge 0$ with equality
-    iff $\mu$ has the independencies of $\Ar$.
-% It turns out that this information can also be expressed
-% We point the reader to
-%  \citet{pdg-aaai,one-true-loss,pdg-infer}
-% % for further details, examples, and motivation.
-% for more details, motivation, and examples.
-We encourage the reader
-to consult previous work for further details.
-
-% that if $\Ar$ has the structure of $\SDef_{\!\dg M}(\mu) > 0$
-% which itself has a confidence $\gamma$,
-
-
-% \begin{align*}
-%     \bbr{\dg M}_\gamma&(\mu)
-%         := \OInc_{\dg M}(\mu) + \gamma \, \SInc_{\dg M}(\mu)
-%             \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
-%         % =& \Ex_{\mu}\left[\, \sum_{L \in \Ed} \log \frac
-%         %     {\mu(\Tgt L| \Src L)^{\beta\ssub L - \gamma \alpha \ssub L}}
-%         %     {p\ssub L(\Tgt L | \Src L)^{\beta \ssub L}}
-%         % \right] - \gamma \H(\mu)
-%         &= \Ex\nolimits_{\mu}\bigg[
-%             \,
-%             % \gamma \log \mu(\X) +
-%             % \sum_{a \in \Ar}
-%             \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
-%             % \sum_{a,S,T,\alpha,\beta,p \in \hat{\dg M}} \subafalse
-%                 % \let\plainbeta\beta \def\beta_a{\plainbeta} \let\plainalpha\alpha\def\alpha_a{\plainalpha} \def\p_a{p}
-%             \log \frac
-%             {\mu(\Tgt a| \Src a)^{\beta_a - \gamma \alpha_a}}
-%             {\p_a(\Tgt a | \Src a)^{\beta_a}}
-%         \bigg] - \gamma \H(\mu)
-% \end{align*}
-
-With confidence $\gamma \ge 0$ in the structural information overall,
-the $\gamma$-\emph{inconsistency} of $\dg M$ is the smallest possible overall incompatibility of any distribution with $\dg M$, and denoted
-% \vskip-1ex
-\begin{equation}\label{eq:inconsistency}
-    \aar{\dg M}_\gamma :=
-        % \smash
-        {\inf_{\mu}\,  \Big( \OInc_{\dg M}(\mu) +  \gamma \SDef_{\dg M}(\mu) \Big).}
-\end{equation}
-\citet{one-true-loss} argues that this inconsistency measure
+% \citet{one-true-loss} argues that this inconsistency measure
     % $\aar{- }_\gamma$
-    \eqref{eq:inconsistency}
-    is a ``universal'' loss function, largely showing how it
-    specializes to standard loss functions in a wide variety of situations.
+    % \eqref{eq:inconsistency}
+As argued in \cref{chap:one-true-loss}, PDG inconsistency
+    is a ``universal'' loss function, and
+     specializes to standard loss functions in a wide variety of standard situations.
 It follows that, at an abstract level,
     much of machine learning can be viewed as inconsistency resolution.
 %
@@ -682,7 +497,7 @@ We take this idea a few steps further, by operationalizing the
 PDG inference is fixed-parameter tractable:
 assuming a graph with bounded tree-width, the  can be computed in polynomial time.
 and it appears that \cite{pdg-infer}.
-Several important algorithms can alredy be seen as inconsistency reduction.
+Several important algorithms can already be seen as inconsistency reduction.
 When viewed as a graphical model}
 
 % A surprisingly broad class of algorithms already
@@ -896,11 +711,11 @@ We focus mostly on the case where $\gamma$ is fixed, and
     $,
 which we call \emph{foci}.
 \cref{algo:LIR} also allows us to a select a second procedure, \textsc{Refresh},
-    which makes it easier to model recieving new information
+    which makes it easier to model receiving new information
     in online settings.
-% The other procedure, \textsc{Refresh} is the identity by defualt, and can be removed in theory by making supplying an infinitely large initial context containing every possible result of refresh.
+% The other procedure, \textsc{Refresh} is the identity by default, and can be removed in theory by making supplying an infinitely large initial context containing every possible result of refresh.
 % The other procedure,
-% \---that is, procedures that continually recieve inputs.
+% \---that is, procedures that continually receive inputs.
 
 The ODE on the last line of \cref{algo:LIR}, which is
     an instance of gradient flow, may be approximated with an
@@ -918,7 +733,7 @@ At the other extreme: if $\chi$ is infinite in every component,
             % ~~~\text{because of}
     \]
 at least in the typical case in which
-the parameterizations $\mathbb P$ unconditioanl and log-concave.
+the parameterizations $\mathbb P$ unconditional and log-concave.
 This is because of the following result.
 
  % so long as the parameterizations $\mathbb P$ are log-concave, because of
@@ -938,7 +753,7 @@ This is because of the following result.
 % \end{proof}
 %
 %
-% We now consider some important speical cases.
+% We now consider some important special cases.
 In the remaining sections, we give a sample of
 some historically important algorithms that are instances of LIR.
 
@@ -968,7 +783,7 @@ some historically important algorithms that are instances of LIR.
 % in which (i.e., every $A_t = \Ar$) amounts to \emph{global} inconsistency reduction, i.e.,
 % the universal training objective of \cite{one-true-loss}. which is \#P-hard.
 % In this case, supposing $\bbeta \ge 0$,
-% then the global inconsitency $\aar{\dg M}
+% then the global inconsistency $\aar{\dg M}
 % $ can only decrease in time
 % It is worth noting that LIR does not always converge.
 
@@ -979,13 +794,13 @@ arising from a neural network whose final layer is a softmax.
 Suppose $\V Y$ is a finite set of classes.
 If $\V\!X$ is itself a manifold (such as the space of images), we can regard a value $x \in \V\!X$ as parameterizing a deterministic cpd, written
 \tikz[center base]{\node[dpadinline](X) {$X$}; \draw[arr1, <<-](X.-165) to node[above,inner sep=1pt,pos=0.7]{$x$} +(-0.6,0);}.
-% Viewing $\Theta$ as a variable, the discrimainator
+% Viewing $\Theta$ as a variable, the discriminator
 % as a conditional probability $p(Y| X, \Theta)$.
 Together with a labeled sample $(x,y)$,
 %  and parameter setting $\theta$,
     we get a PPDG
 %
-% \[ %%%>>  EXPLICIT PARAMTERIZATION; THETA IS A VARIABLE  <<%%
+% \[ %%%>>  EXPLICIT PARAMETERIZATION; THETA IS A VARIABLE  <<%%
 %     \dg M := ~~
 %     \begin{tikzpicture}[center base]
 %         \node[dpad1] (X) at (0,0) {$X$};
@@ -1369,8 +1184,8 @@ This result is closely related to one due to
 \citet{neal1998view},
 who view it as an intuitive explanation of why the EM
 algorithm works.  Indeed, it is obvious in this form that
-every adjustement reduces the overall inconsistency.
-The result can also be readily adapted to an entire dataset by replacing $x$ with a high confidence emperical distribution, or batched with the same technique in \cref{sec:SGD}.
+every adjustment reduces the overall inconsistency.
+The result can also be readily adapted to an entire dataset by replacing $x$ with a high confidence empirical distribution, or batched with the same technique in \cref{sec:SGD}.
 It also captures fractional EM when $\chi < \infty$.
  % (\citeyear{neal1998view})
 % By monotonicity, it is also clear that
@@ -1477,21 +1292,19 @@ The discriminator has full control over $D$, and attends to
 everything but $e$.
 That inconsistency of this PDG is what might be called
 the discriminator's objective:
-% the KL divergen
-% $\Ex[ \kldiv{D(C|X)}]$
 the expected KL divergence from $D$ to the optimal discriminator.
 If $D$ also disbelieves that any image is equally likely to be fake as real
-(by chosing $\varphi(e) = -1$),
+(by choosing $\varphi(e) = -1$),
 % (i.e., $\begin{matrix}\varphi(e) = -1\\ \varphi(D) =+1\end{matrix}$),
 then the inconsistency becomes $-\mathcal L^{\text{GAN}}$.
 % $D(C|X)$ to the
-% true probabililty of $C$ given $X$.
+% true probability of $C$ given $X$.
 % while the generator has control over $G$.
 
 \textbf{The Generator's Focus.}
 The generator has control over $G$.
 If it ignores $D$ attends only to $e$, the inconsistency
-is the Jenson-Shanon Divergence between $G$ and $\pdata$.
+is the Jensen-Shannon Divergence between $G$ and $\pdata$.
 If the generator also disbelieves the discriminator $D$
 (i.e., $ \varphi(D) =-1$),
 then the inconsistency becomes $+\mathcal L^{\text{GAN}}$.
@@ -1502,9 +1315,9 @@ so that the discriminator is well-adapted to the generator.
 \section{Message Passing Algorithms as LIR}
 
 Nearly every standard graphical model can be viewed
-    as a factor graph, and correspondlingly admits an
+    as a factor graph, and correspondingly admits an
     (approximate) inference procedure known
-    variously as (loopy) belief propogation \cite{koller2009probabilistic},
+    variously as (loopy) belief propagation \cite{koller2009probabilistic},
     the generalized distributive law \cite{aji2000gendistriblaw},
     and the sum-product algorithm \cite{kschischang2001factor}.
 It also turns out to be the special case of LIR specialized to factor graphs.
@@ -1537,16 +1350,16 @@ corresponds to a PDG
     \end{tikzpicture}~\Big\}_{a \in \Ar}
 % $
 \]
-% ~\parbox{0.45\linewidth}{\!\!that specifies the same\\\hspace{1em}distirbution, when $\gamma=1$.}
-that specifies the same joint distirbution $\Pr_{\Phi}$, when
+% ~\parbox{0.45\linewidth}{\!\!that specifies the same\\\hspace{1em}distribution, when $\gamma=1$.}
+that specifies the same joint distribution $\Pr_{\Phi}$, when
     observation and structure are weighted equally (i.e., $\gamma=1$).
 % be the corresponding PDG.
-% There are several different variants of beleif propogation;
+% There are several different variants of belief propagation;
 % each can be written as an instance of LIR.
 
 % \paragraph{Sum Product Belief Propogation.}
 % The state for standard sum-product belief
-Sum-product belief propogation \cite{kschischang2001factor}
+Sum-product belief propagation \cite{kschischang2001factor}
     aims to approximate marginals of $\Pr_{\Theta}$
     with only local computations: messages sent between factors and
         the variables they have in scope.

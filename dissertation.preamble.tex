@@ -1,6 +1,11 @@
 
 %%%%% BIBLIO AND STRUCTURE
-\usepackage[numbers]{natbib}
+\usepackage{natbib}
+% \bibliographystyle{plain}
+% \bibliographystyle{alpha}
+% \bibliographystyle{}
+\bibliographystyle{plainnat}
+% \bibliographystyle{IEEEbib}
 \usepackage{appendix}
 % for sub-appendices
 % https://tex.stackexchange.com/questions/120716/appendix-after-each-chapter
@@ -39,6 +44,7 @@
 \newcommand\discard[1]{{\color{orange!80!black}$\blacksquare$}}
 \newcommand{\TODO}[1][INCOMPLETE]{{\centering\Large\color{red}$\langle$~\texttt{#1}~$\rangle$\par}}
 \newcommand\hidewithbox[1]{{\color{red}$\blacksquare$}}
+\newcommand{\newmaterial}[1]{{\color{violet}#1}}
 
 %%%%% STANDARD PACKAGES
 \usepackage{mathtools}		%also loads amsmath
@@ -64,7 +70,8 @@
 \usepackage[noabbrev,nameinlink,capitalize]{cleveref}% n.b. cleveref after! hyperref
 
 %%%%% visual appearance
-\colorlet{color1}{blue}
+% \colorlet{color1}{blue}
+\colorlet{color1}{Emerald}
 \colorlet{color2}{color1>wheel,1,3}
 \colorlet{color3}{color1>wheel,2,3}
 \definecolor{deepgreen}{rgb}{0,0.5,0}
@@ -73,7 +80,8 @@
 \usepackage{wrapfig}
 \usepackage{scalerel}
 % \hypersetup{colorlinks=true, linkcolor=blue, urlcolor=magenta, citecolor=deepgreen}
-\hypersetup{colorlinks=true, linkcolor=color1, urlcolor=magenta, citecolor=color2}
+% \hypersetup{colorlinks=true, linkcolor=color1, urlcolor=magenta, citecolor=color2}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=magenta, citecolor=Emerald}
 % \usepackage{parskip}
 \usepackage{microtype}      % microtypography
 % \usepackage[format=plain,labelfont={sl},textfont={it,small},margin=1cm]{caption}
