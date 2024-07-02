@@ -676,11 +676,25 @@ and if events cannot co-occur, then the probability that one of them occurs is t
 % \end{enumerate}
 % We need a few more definitions about measures. 
 
-We will need two additional concepts about measures.
+We will need a few additional concepts about measures.
 First, if $\mu$ and $\nu$ are measures over a space $(X, \mathcal F)$, 
 and $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
 $\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\nu \ll \mu$.
 Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is said to be \emph{strictly positive} (with respect to $\cal T$).
+
+
+\paragraph{The Radon-Nikodym Derivative.}
+Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
+The Radon-Nikodym theorem states that there then exissts a unique $\mathcal F$-measurable function $f$
+such that for all $A \in \mathcal F$,
+\[
+    \mu(A) = \int_{A} f \,\mathrm d \nu.
+\]
+The function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
+
+
+\TODO[TODO: base measures]
+
 
 \paragraph{Statistics and (Random) Variables.} 
 If $(\Omega, \mathcal F)$ and $(Y, \mathcal G)$ are two measurable spaces, then
@@ -711,15 +725,6 @@ But if each $\V(X_i)$ comes with a $\sigma$-algebra $\mathcal F_i$ , then there 
 % Although the two perspectives seem to be equally expressive, we opt for the variable-based one. 
 % After all, we are interested in modeling epistemic states that undergo structural changes, and it is conceptually simpler to add and remove variables of interest, than it is to change sample spaces and figure out how to properly translate the random variables on them.  
 
-
-\paragraph{The Radon-Nikodym Derivative.}
-Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
-The Radon-Nikodym theorem states that there is then a unique $\mathcal F$-measurable function $f$
-such that for all $A \in \mathcal F$,
-\[
-    \mu(A) = \int_{A} f \,\mathrm d \nu.
-\]
-The function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
 
 
 \paragraph{Markov Kernels.}
@@ -1350,7 +1355,7 @@ It is easy to verify that
     \I_\mu(X;Y|Z)
     &= \H_\mu(X|Z) + \H_\mu(Y|Z) - \H_\mu(X,Y|Z)
     \\&= \H_\mu(X \mid Y) - \H_\mu(X \mid Y, Z);
-\end{align*},
+\end{align*}
 thus mutual information is derived from entropy. 
 Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is also a special case of mutual information. 
 
@@ -1358,7 +1363,9 @@ Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X
 \paragraph{Information Diagrams and the Information Profile.}
 Information theoretic quantities such as (conditional) entropy and (conditional) mutual information for different subsets of a set of variables $\X$ fit together with an inclusion-exclusion rule. 
 % They are connected by an inclusion exclusion 
-There leads to an easy graphical way to quickly read of identities such as the ones above from an \emph{information diagram}, like the shown below for three variables. 
+There leads to an easy graphical way to quickly read of identities such as the ones above from an \emph{information diagram}, 
+% like the shown below for three variables. 
+as depicted in \cref{fig:info-diag-prelim}.
 
 % \begin{center}
 \begin{figure}
@@ -1458,9 +1465,16 @@ There leads to an easy graphical way to quickly read of identities such as the o
 % \end{center}
 \end{figure}
 
-
 \paragraph{Entropy for Continuous Variables.}
-So far, everything 
+So far, everything we have said depends on the variables being discrete,
+% so that $\mu(X{=}x)$ = $\mu(x)$. 
+
+More generally, when $X$ is a variable, we assume that $\V\!X$
+    not only comes equipped with $\sigma$-algebra $\mathcal F_X$, but also with a base measure $\lambda_X$.
+When we write $\mu(x)$, we mean the density $\frac{\mathrm d\mu}{d \lambda}$. 
+
+
+\TODO
 
 \paragraph{The Principle of Maximum Entropy.}
 
