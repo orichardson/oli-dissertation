@@ -34,7 +34,7 @@
 
 In \cref{sec:set-of-distribution-semantics}, we defined what it meant
 for a joint distribution $\mu$ to be \emph{quantitatively} compatible with the information in a PDG---it must match all of the cpds. 
-But conspiciously absent is a qualitative analogue. 
+But conspicuously absent is a qualitative analogue. 
 What should it mean for a distribution to be compatible with the qualitative structure of a PDG, i.e., with a hypergraph?
 
 
@@ -680,16 +680,21 @@ a PDG.
 %arbitrary directed hypergraph.
 % We develop precisely such a notion. 
 % In this work, we develop such a notion from first principles.
-Although the qualitative aspects of PDGs were characterized  
-by
+Although some qualitative aspects of PDGs were characterized  
 %oli21: expanding your citation
-% Richardson and Halpern \cite{} 
-\citeauthor{pdg-aaai} \cite{pdg-aaai}
+% by Richardson and Halpern \cite{} 
+% by \citeauthor{pdg-aaai} \cite{pdg-aaai}
 % \citet{pdg-aaai}
-using a scoring function, that scoring function does not seem to get at the qualitative aspects that we are most interested in here.
+using a scoring function (\cref{ssec:qual-scoring}), that scoring function 
+does not obviously correspond to an analogue of our set-of-distributions semantics $\SD{-}$ for quantitative information (\cref{sec:set-of-distribution-semantics}).
+Part of the problem is that it is not even clear what the analogue of
+a BN's independencies should be for a cyclic graph, let alone for an
+arbitrary directed hypergraph.
+% We now develop precisely such a notion. 
 %oli21: removing implication that this neatly plugs the hole in the PDG framework. 
 % In this work, we develop a semantics that does so from first principles.
-In this work, we develop from first principles an alternate qualtiative semantics for directed hypergraphs.
+% In this chapter, we develop from first principles an alternate qualitative semantics for directed hypergraphs.
+In this chapter, we develop precisely such a notion.
 %oli20: now, drawing from \vjoe. Below %oli20 modifications are relative to Joe's initial version.
 More precisely, we define what it means for a distribution to be 
 %oli20: cut
@@ -941,7 +946,7 @@ causal models as representing independent mechanisms suggests that
 there might be a connection between causality and
 %joe18
 %comptability; in fact, there is.
-comptability. In fact, there is.
+QIM-compatibility. In fact, there is.
 %oli21: line shaving + getting rid of a QIM
 % Furthermore, as we hinted above, \scibility
 %joe17: integrated with setences above
@@ -1457,7 +1462,7 @@ Thus, a set of variables $\X$ is equivalent to
 \commentout{
     % Thus, a set of variables $\X$ is equivalent to 
     %     a set $\N$ and a map $\V : \N \to \mathbf{FinSet}$.
-    We draw a distinction between $\N$ and $\X$ to emphasize that $\X$ can be decomposed into its qualitative part $\N$ the set of variable symbols, and the map $\V$ which gives a quantiative interpretation of each variable as a set of possible values.
+    We draw a distinction between $\N$ and $\X$ to emphasize that $\X$ can be decomposed into its qualitative part $\N$ the set of variable symbols, and the map $\V$ which gives a quantitative interpretation of each variable as a set of possible values.
     It is convenient (and common practice) to conflate a variable name $X \in \N$ with  its corresponding variable $(X, \V\!X ) \in \X$.
 }%
 %oli1: trying to keep this in a different form.

@@ -848,7 +848,7 @@ In any case, the point is the following formal definition for how to combine ind
 	Explicitly, if
 	$\dg M_1 = (\N_1, \V_1, \Ar_1, \mathbb P_1, \balpha_1,\bbeta_1)$ and
 	$\dg M_2 = (\N_2, \V_2, \Ar_2, \mathbb P_2, \balpha_2,\bbeta_2)$
-	are $\V$-comatible PDGs, then
+	are $\V$-compatible PDGs, then
 	\[
 		\dg M_1 + \dg M_2 :=
 			\Big(
@@ -890,7 +890,7 @@ we can form
 \]
 in this case, $\V$-compatibility is handled automatically by
 the meaning of variable equality. 
-While the formalism is simpler, this appraoch really just sweeps the issue under the rug. 
+While the formalism is simpler, this approach really just sweeps the issue under the rug. 
 For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts. 
 
 
@@ -941,8 +941,8 @@ $\dg M$ is \emph{inconsistent} if $\SD{\dg M} = \emptyset$, and \emph{consistent
 Note that $\SD{\dg M}$
 % is independent of 
 does not depend on the weights $\balpha$ or $\bbeta$.
-Furthermore, it reflects only the quantiative probabilistic information in the PDG; it does not say anything about independencies, for example.
-Developping an analogous definition for a \emph{qualitative} information in a PDG is far more subtle, and is the subject of \cref{chap:QIM}. 
+Furthermore, it reflects only the quantitative probabilistic information in the PDG; it does not say anything about independencies, for example.
+Developing an analogous definition for a \emph{qualitative} information in a PDG is far more subtle, and is the subject of \cref{chap:QIM}. 
 
 This semantics is useful, and we will make frequent use of it, 
 but it has one other extremely important shortcoming: viewed through the lens of this semantics, all inconsistent PDGs are equivalent, no matter how small the inconsistency.
@@ -962,7 +962,7 @@ not as a (convex) set of distributions, but rather as a
 Given $\mu \in \Delta \V\!\X$, the scoring function for $\dg M$
 returns a real-valued score,
 % indicating the degree of \emph{incompatibility} between $\mu$ and $\dg M$.
-indiating how well (or, rather, how poorly) $\mu$ matches the information in $\dg M$. 
+indicating how well (or, rather, how poorly) $\mu$ matches the information in $\dg M$. 
  % returns a real-valued score indicating how well $\mu$ fits $\dg M$.
 Distributions with the lowest (best) scores are those that most closely match the cpds in $\dg M$, and contain the fewest unspecified correlations.
 
@@ -971,7 +971,7 @@ Distributions with the lowest (best) scores are those that most closely match th
 %     and one for the qualitative (structural information). 
 
 
-These two aspects of the scoring function corresond 
+These two aspects of the scoring function correspond 
 to the two kinds of information present in a PDG:
 ``structural'' information, in the (hyper)graph $\Ar$ and
 weights $\balpha$, and ``observational'' data,
@@ -1072,7 +1072,7 @@ After taking a weighted sum over arcs as before, we would get the quantity
 % as the previous one.
 It is not hard to show that our two formulas for $\OInc$, 
 \eqref{eq:oinc1} and \eqref{eq:oinc2}, are in fact equal---%
-reflecting a(nother) virute of relative entropy.
+reflecting a(nother) virtue of relative entropy.
 %
 % This is just one more 
 % The equality between our two expressions for $\OInc$, 
@@ -1117,9 +1117,10 @@ To determine your degree of confidence in information
     % more trustworthy than Bob, 
 ask yourself: how many times would I have to hear this independently from a person like Bob, before I got to this level of trust? The answer to that question is the value of $\beta$. 
 Thus, $\beta = 2$ on an arc $X \to Y$ is (quantitatively) indistinguishable from two distinct arcs from $X \to Y$. 
-% For information less trustworth than Bob, ask yourself the reciprocal question: 
+% For information less trustworthy than Bob, ask yourself the reciprocal question: 
 
 \paragraph{Qualitative/Structural Scoring.}
+	\label{ssec:qual-scoring}
 % $\SD{\dg M}$ and $\OInc_{\dg M}$ distinguish between distributions based on their compatibility with $\dg M$, but even among distributions that match the marginals, some more closely match the qualitative structure of the graph than others. 
 So far, we have said nothing about the semantics of the qualitative information in a PDG.  
 % Getting something of an analogue of 
@@ -1186,7 +1187,7 @@ Clearly, the two quantities must be equal in order for $\Ar$ to be a complete an
 What if they differ?
 % If \ref{item:globalinfo} $=$ \ref{item:localinfo},
 % a specification of (b) has
-%  exactly the same length as a full desciption of the world. 
+%  exactly the same length as a full description of the world. 
 If \ref{item:localinfo} $>$ \ref{item:globalinfo}, then there are
 correlations in $\mu$ that allow for a more compact representation
 than $\Ar$ represents---that is, $\mu$ is \emph{information deficient} for the structure $\Ar$. 
@@ -1451,7 +1452,7 @@ In the case of no qualitative information (i.e., $\balpha = \mat 0$),
     the scoring function \eqref{eqn:scoring-fn}
     is a direct analogue of the Gibbs free energy $G = U - T \H$,
     where $T = \gamma$ is temperature and $\H$ is entropy. 
-Furhtermore, when $\bbeta = \gamma \balpha$,
+Furthermore, when $\bbeta = \gamma \balpha$,
     we will see soon see that \eqref{eqn:scoring-fn} is the free energy
     of a factor graph with weights $\bbeta$ and temperature $\gamma$
     (\cref{theorem:wfg-is-pdg}).

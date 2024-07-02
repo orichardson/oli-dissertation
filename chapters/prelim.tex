@@ -256,7 +256,7 @@ For instance, the convex hull of $\{ (0,0), (0,1), (1,0), (1,1) \}$
 is the unit square $[0,1]^2$, and the extreme points of the unit square are those four points. 
 
 %
-A funtion $f : \Rext^I \to \Rext$ is \emph{convex} iff
+A function $f : \Rext^I \to \Rext$ is \emph{convex} iff
 \[
     \forall \mat u, \mat v \in \Rext^I,~\forall \lambda \in (0,1).\quad
     f( (1-\lambda) \mat u + \lambda \mat v ) \le (1-\lambda) f(\mat u) + \lambda f(\mat v).
@@ -516,13 +516,13 @@ Why?  When $\mu(X{=}x) = 0$, then $\mu(Y{=}y|X{=}x)$ is undefined, meaning
 \paragraph{Variables and Random Variables.}
     \label{sec:var-randomvar}
 In the context of a probability distribution $\mu \in \Delta \Omega$,
-% a \emph{random variable} is a function $X : \Omega \to S$, where $S$ is a set called the domain of $X$. In serivce of unified notation, let $\V\!X := S$ denote the domain of the random variable $X$. 
+% a \emph{random variable} is a function $X : \Omega \to S$, where $S$ is a set called the domain of $X$. In service of unified notation, let $\V\!X := S$ denote the domain of the random variable $X$. 
 a \emph{random variable} is a function $X : \Omega \to \V X$, where $\V\! X$ is some set called the \emph{domain} of $X$.
 % Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore.
-Despite the superficial simiarity induced by our choice of notation, random variables and variables are different formal objects;
+Despite the superficial similarity induced by our choice of notation, random variables and variables are different formal objects;
     hence the mantra, 
     ``a random variable is neither random nor a variable''. 
-Yet at an even deeper level, variables and random variables are interchangable, and fundementally represent the same concept, as we now explore. 
+Yet at an even deeper level, variables and random variables are interchangeable, and fundamentally represent the same concept, as we now explore. 
 
 Whereas the traditional foundations of probability start with a sample space $\Omega$ and defines random variables $X : \Omega \to \V\!X$ in terms of it, 
 probabilistic modeling is often done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
@@ -685,7 +685,7 @@ Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} f
 
 \paragraph{The Radon-Nikodym Derivative.}
 Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
-The Radon-Nikodym theorem states that there then exissts a unique $\mathcal F$-measurable function $f$
+The Radon-Nikodym theorem states that there then exists a unique $\mathcal F$-measurable function $f$
 such that for all $A \in \mathcal F$,
 \[
     \mu(A) = \int_{A} f \,\mathrm d \nu.

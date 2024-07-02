@@ -10,12 +10,14 @@ On one hand, PDGs specify a joint distribution; in this capacity, they are an es
 On the other hand, PDGs have a natural inconsistency measure; in this capacity, they are a principled model-based way to specify a loss function.
 Yet, even several years after their introduction, there had been no practical way to compute with PDGs in either role: no inference algorithm, and no (provably correct) way to calculate the degree of inconsistency.
 % In this chapter, we address both issues.
-This chapter is based on a paper that resolves both issues  \cite{pdg-infer}.
+This chapter is based on a paper that resolves both issues \cite{pdg-infer}.
 
 \section{Introduction}
 
 As we have seen,
-\emph{Probabilistic dependency graphs (PDGs)} \parencite{pdg-aaai},
+% \emph{Probabilistic dependency graphs (PDGs)} \parencite{pdg-aaai},
+% Probabilistic Dependency Graphs (PDGs) 
+PDGs (\cref{def:model})
 form a very general class of probabilistic graphical models,
 that includes not only
 Bayesian Networks (BNs) and
@@ -41,7 +43,8 @@ such as Variational AutoEncoders (VAEs) \parencite{kingma2013autoencoding}.
 PDGs can also capture inconsistent 
 beliefs, and provide a useful way to measure the degree of this inconsistency;
 for a VAE, this is the loss function used in training
-    \parencite{one-true-loss}.
+    % \parencite{one-true-loss}.
+    (\cref{sec:variational}).
 % PDGs have some
 % significant advantages over other representations of probabilistic information. 
 %     Their flexibility allows them to model beliefs that BNs cannot, 
@@ -95,7 +98,7 @@ arises as $\zogamma$ goes to zero
 This set
 can be shown to contain precisely one distribution
 for PDGs satisfying a mild regularity condition 
-(required by definition by \citeauthor{pdg-aaai});
+% (required by definition by \citeauthor{pdg-aaai});
 we call such PDGs \emph{proper}.
 Thus, we have
  a parameterized family of inference notions:
@@ -547,7 +550,7 @@ $\OInc_{\dg M}$; the latter  set
 includes
  $\bbr{\dg M}^*_{0^+}$
 % \parencite[Prop 3.4]{pdg-aaai},
-(\cref{prop:consist}; \parencite{pdg-aaai})
+(\cref{prop:consist})
 but may also contain other distributions.
 This paper also shows how to efficiently answer queries with respect 
 to the unique distribution in $\bbr{\dg M}^*_{0^+}$, which we call
@@ -811,7 +814,10 @@ in addition to $\OInc$.
 When $\gamma > 0$ is small enough,
 the scoring function \eqref{eqn:scoring-fn} is not only convex,
 but admits a straightforward representation as an exponential conic program.
-To see this, note that \eqref{eqn:scoring-fn} can be rewritten \parencite[Prop 4.6]{pdg-aaai} as:
+To see this, note that \eqref{eqn:scoring-fn} can be rewritten
+% \parencite[Prop 4.6]{pdg-aaai}
+\cref{prop:alts}
+as:
 \begin{equation}
     \begin{aligned}
         \bbr{\dg M}_\gamma(\mu) = &-\gamma\H(\mu) -
@@ -3847,7 +3853,7 @@ which contains a break-down of the information in \cref{fig:joint-gap-time}. The
     this time, we use only the simplex representation of $\bmu_\theta$.
     More importantly, we want these clusters to share appropriate marginals; to encourage this, we add a terms to the loss function, so overall, it is
     \[
-        \ell(\theta) := \bbr{\dg M}_{\gamma}(\bmu_{\theta}) + \sum_{C{-}D \in \mathcal T} \exp \left(\sum_{w \in \V(C\cap D)} \Big(\mu_C(C\cap D{=}w) - \mu_D(C \cap D {=}w)\Big)^2 \right) - 1.
+        \ell(\theta) := \bbr{\dg M}_{\gamma}(\bmu_{\theta})  + \sum_{\mathclap{C{-}D \in \mathcal T}}\exp \!\left(\sum_{w \in \V(C\cap D)\!\!\!\!} \big(\mu_C(C\cap D{=}w) - \mu_D(C \cap D {=}w)\big)^2 \right) - 1.
     \]
     This is admittedly pretty ad-hoc; the point is just that it is zero and does not contribute to the gradient if $\bmu_\theta$ is calibrated, and otherwise quickly becomes overwhelmingly important.
 \end{enumerate}

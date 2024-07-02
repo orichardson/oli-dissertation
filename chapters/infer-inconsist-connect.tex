@@ -265,9 +265,9 @@ to do so? In general, the answer is no.
     \end{enumerate}
 \end{linked}
 
-\textcite{pdg-aaai}'s original approach to  
-inferring the probability of 
-$Y$ in a PDG $\dg M$ was to minimize their combined inconsistency. 
+% \textcite{pdg-aaai}'s original approach to  
+Historically, our original approach to inferring the probability of 
+$Y$ in a PDG $\dg M$ was to minimize their combined inconsistency \cite{pdg-aaai}. 
 The idea is to add a hypothesis distribution $h(Y)$ to $\dg M$, and 
 adjust $h$ to minimize the overall inconsistency $\aar{\dg M + h}_\gamma$.
 Parts (b) and (c) of \cref{prop:sharp-p-hard} significantly undermine this approach, because even just calculating $\aar{\dg M + h}_\gamma$ is intractable. 
@@ -838,7 +838,7 @@ the proof of part (a).
             + \frac{\partial}{\partial p} \kldiv{\mu^*_p(Y{=}y)}{p}
             \\
         &= \frac{\partial}{\partial p} \kldiv{\mu^*_p(Y{=}y)}{p}
-        & \text{by \eqref{eqn:matching-gradients-at-optimum}}.
+        & \mathllap{\text{by \eqref{eqn:matching-gradients-at-optimum}}}.
     \end{align*}
 
     Finally,
@@ -863,7 +863,7 @@ the proof of part (a).
     \]
 \end{lproof}
 \footnotetext{{
-Law of total derivative:
+Law of total derivative:\\
 $\displaystyle
     \frac{\mathrm d f}{\mathrm d p}
     = \sum_{w \in \V\!\X} \frac{\partial \kldiv{\mu(y|x)}{p}}{\partial \mu^*_p(w)}
@@ -936,6 +936,7 @@ $}}
         &\bbr{\dg M}_\gamma(\mu_\lambda) + \kldiv{m_{\lambda}}{p_\lambda} \\
         & \le (1-\lambda) \Big( \bbr{\dg M}_\gamma(\mu_1) + \kldiv{m_1}{p_1} \Big)
             + \lambda \Big( \bbr{\dg M}_\gamma(\mu_2) + \kldiv{m_2}{p_2} \Big)
+        \\ &\qquad\qquad
              - \frac\gamma2 (1-\lambda)\lambda \Vert \mu_1 - \mu_2 \Vert^2_1
             \\
         &= (1-\lambda) f(p_1)
@@ -1111,14 +1112,19 @@ But first, we need two intermediate technical results.
     \quad+( m_b + {\color{zero}m_z - m_z} ) \log \frac{m_b}b
     \\&\qquad\qquad
      + \Big( (1-m_b) +{\color{zero}(1-m_z) - (1-m_z)} \Big)\log\frac{1-m_b}{1-b}
-     &\text{(add {\color{zero}zero})}
+    %  \qquad
+    &\hspace{-0.5cm}\text{(add {\color{zero}zero})}
  \\ &=
      m_z \Big( \log \frac{z}{m_z} + \log \frac{m_b}{b} \Big) +
      (1-m_z) \Big( \log \frac{1-z}{1-m_z} + \log \frac{1-m_b}{1-b} \Big)
         \\&\qquad\qquad
      + (m_b - m_z) \log \frac{m_b}{b}
      + \Big( (1-m_b) - (1-m_z) \Big) \log \frac{1-m_b}{1-b}
-    &\text{(collect $z$-marginal terms)}
+    % \quad
+    \\
+        &&\mathllap{\text{(collect $z$-marginal terms)}}
+        % \Big({\singlespacing\begin{array}{c} \text{collect terms}\\\text{for $z$-marginal} \end{array}}\Big)
+        % \text{(collect $z$-marginal terms)}
 \\&=
     m_z \log \frac z b {\color{err1}\frac{m_b}{m_z}}
     + (1-m_z) \log \frac{1-z}{1-b} {\color{err1}\frac{1-m_b}{1-m_z}}
