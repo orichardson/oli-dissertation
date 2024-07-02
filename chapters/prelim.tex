@@ -743,7 +743,7 @@ If $(\Omega, \mathcal F)$, and $(\Omega', \mathcal G)$ are two measurable spaces
 
 \section{The Basic Theory of Graphs and Hypergraphs}
 
-In this dissertation, as in much of mathematics and computer science,
+In this dissertation (as in much of mathematics and computer science),
 the term \emph{graph} refers not to a \emph{graph}ical depiction of a function or data,
 but rather to what is more commonly known as a \emph{network}. 
 
@@ -754,7 +754,24 @@ Graphs come in two flavors: directed and undirected.
     and a collection $A$ of \emph{directed edges} (or \emph{arcs}), such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
     So, formally, the definition is
     $G = (N, A, \Src{}, \Tgt{})$, with $\Src{},\Tgt{}: A \to N$ often left implicit.
+    \newmaterial{%
+    We write $\ed auv \in A$ to indicate that there is some $a \in A$
+    with source $\Src a = u$ and target $\Tgt a = v$,
+    and we call $a$ an arc ``from $u$ to $v$''. 
+    }%
 \end{defn}
+
+\newmaterial{%
+% A graph that has at most one arc from $u$ to $v$
+% Given a graph $G = (N,A)$ and a node $u \in N$,
+In a graph $G = (N,A)$, the \emph{parents} of a node $u \in N$ 
+are the nodes
+\[
+    \Pa_G(u) := \Big\{  v \in N : \exists \ed auv \in A \Big\}
+\]
+that are sources of arcs leading to $u$. 
+    % we write $$
+}
 
 \begin{defn}
     % [Undirected (Multi) Graph]
@@ -813,6 +830,8 @@ For example:
     \end{tikzpicture}
 \]
 
+
+\commentout{%
 A (directed) graph has more information than an undirected one.
 There are some obvious ways to get a directed graph from an undirected one (add an arrow going in both directions) and to get an undirected graph from a directed one: forget the direction of the arc, making it an edge.
 These choices are illustrated in the following diagram:
@@ -829,6 +848,8 @@ $\mathit{anotate} \circ \mathit{forget}$ is
 not the identity on (directed) graphs.
 % Technically, this makes $\mathit{forget}$ a \emph{retraction}, and $\mathit{annotate}$ a \emph{section}.
 These choices are essentially locked in if we want to preseve the validity of the representation in terms of square binary matrices. 
+}%
+
 
 A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ of its vertices, that are all connected by edges---that is, such that every distinct pair $\{x,y\}$ of vertices $x,y \in C$ is a member of $E$.  We write $\mathrm{cliques}(G)$ for the set of all cliques in a graph. 
 
@@ -1334,6 +1355,7 @@ thus mutual information is derived from entropy.
 Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is also a special case of mutual information. 
 
 % Sums and differences of any of these quantities
+\paragraph{Information Diagrams and the Information Profile.}
 Information theoretic quantities such as (conditional) entropy and (conditional) mutual information for different subsets of a set of variables $\X$ fit together with an inclusion-exclusion rule. 
 % They are connected by an inclusion exclusion 
 There leads to an easy graphical way to quickly read of identities such as the ones above from an \emph{information diagram}, like the shown below for three variables. 
@@ -1437,13 +1459,14 @@ There leads to an easy graphical way to quickly read of identities such as the o
 \end{figure}
 
 
-\subsubsection{The Principle of Maximum Entropy}
+\paragraph{Entropy for Continuous Variables.}
+So far, everything 
 
-\TODO
+\paragraph{The Principle of Maximum Entropy.}
 
 
-% \paragraph{A Structural Information Measure.} 
-\subsubsection{A Structural Information Measure.} 
+\paragraph{A Structural Information Measure.} 
+% \subsubsection{A Structural Information Measure.} 
 We claim that all of these (entropy-based) quantities are purely ``qualitative'' notions---although, because represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
 One way to see this is the way these concepts interact with variables. 
 Recall that $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as (random) variables, that take as input values of $X$ and $Y$. 

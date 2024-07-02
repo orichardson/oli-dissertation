@@ -669,9 +669,9 @@ We now give an overview of important alternative variants.
 
 
     \item 
-	\textbf{``True'' PDGs. }
+	\textbf{Probabilistic Dependency Multigraphs. }
 	As mentioned previously,
-    the structure $(\N, \Ar)$ of a PDG can be taken to directly be an (ordinary) directed graph rather than the (seemingly more expressive) directed \emph{hyper}graph. 
+    the structure $(\N, \Ar)$ of a PDG can be taken to directly be an (ordinary) directed multigraph rather than the (seemingly more expressive) directed \emph{hyper}graph. 
 	% With this definition, we circumvent the need for \cref{constr:hyperedge-reducton}, and get a 
     % This is the approach taken in later chapters of the thesis. 
 	This approach is an instance of the
@@ -739,7 +739,9 @@ We now give an overview of important alternative variants.
 
 
 
-    \item Going even further, the restriction to PDGs in which $(\N, \Ar)$ is not a multi-graph, but rather an ordinary directed graph, is not a restriction at all. It is not hard to see that a multi-graph could be simulated in that formalism with the following widget:
+    \item 
+    \textbf{Strict PDGs.}
+    Going even further, the restriction to PDGs in which $(\N, \Ar)$ is not even a multi-graph, but rather an ordinary directed graph, is not a restriction at all. It is not hard to see that a multi-graph could be simulated in that formalism with the following widget:
     \[
         \begin{tikzpicture}[center base]
             \node[dpadded](X) at (0,0) {$X$};
@@ -772,10 +774,10 @@ We now give an overview of important alternative variants.
     We show in \cref{sec:prob-widget} that these two seeming generalizations of a PDG are equivalent to the definition we already have. 
 
     \item 
-    \textbf{Parametric PDGs (PPDGs).}
+    \textbf{Parametric PDGs.}
     % The conditional probabilities needn't be 
     One might want to also consider a \emph{parametric} variant of a PDG,
-		 in which each cpd is not fixed, but dependent on some hyper\-parameters. 
+		 in which each cpd is not fixed, but dependent on some hyper\-parameters---like a neural network. 
     This approach, which we take in \cref{chap:LIR}, 
 		may be especially appropriate if the cpds represent parametric models.
     Like the others, this parametric variant appears to be a more general object---%
@@ -1224,15 +1226,17 @@ of distribution $\mu(\X)$, with respect to a directed (hyper)graph $(\X,\Ar)$ is
 	\label{eqn:alt-extra}
 \end{equation}
 % (Recall that $H_\mu(Y\mid X)$, the \emph{conditional entropy of $Y$ given $X$}, is defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
-For a PDG ${\dg M}$, we take $\SDef_{\dg M} = \SDef_{\Ar^{\dg M}}$
-to be shorthand for the information deficiency relative to its structure.
+For a PDG ${\dg M}$, we take $\SDef_{\dg M} := \SDef_{\!\Ar^{\dg M}}$
+to be shorthand for the information deficiency with respect to the  structure of $\dg M$.
 \end{defn}
 
 
 %%%%%%%%%%%%%%%%%%%%% FROM LIR %%%%%%%%%%%%%%%%%%%%%%
-
-\TODO[ FIX ME ]
- 
+\commentout{
+%%%%
+% UPDATE:
+% This material does not need to be done separately so long as we do entropy properly in the preliminaries section, including its continuous variant. 
+%
 \begin{align*}
     % \SInc_{\dg M}(\mu) := - \H(\mu) + \sum_{L \in \Ed} \alpha\ssub L\, \H_\mu(\Tgt L | \Src L),
     \SDef_{\!\dg M}(\mu) &:=
@@ -1255,14 +1259,13 @@ to be shorthand for the information deficiency relative to its structure.
     ,
     % \vspace{-1ex}
 \end{align*}
-% can be thought of as measuring how effectively $\mu$ factors along the arcs $\Ar$.
+%UPDATE: 
 and, roughly, measures $\mu$'s failure to arise as a result of
     independent causal mechanisms along each edge.
 If $\Ar$ is a qualitative Bayesian Network, for instance,
     then $\SDef_{\!\Ar}(\mu) \ge 0$ with equality
     iff $\mu$ has the independencies of $\Ar$.
-
-
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We illustrate $\SDef$ with some simple examples.
@@ -1438,14 +1441,17 @@ Because of the inherent asymmetry,
     it is not particularly desirable to use the symmetrical trade-off parameter $\zogamma$.
 
 In addition, there are benefits to using $\gamma$ and the scoring function as we have defined it. 
-For instance, $\gamma$ may be seen as analogous to a \emph{temperature}.
-Thermodynamically, 
+% For instance, $\gamma$ may be seen as analogous to a \emph{temperature}.
+The first is to draw an analogy with thermodynamics, that is 
+    common in some subcommunities that study graphical models.
+% Thermodynamically, 
+A basic principle of thermodynamics is that
     macro-states (i.e., distributions) with higher entropy are more stable at higher temperatures, while macro-states with with lower entropy are more stable at lower temperatures.
 In the case of no qualitative information (i.e., $\balpha = \mat 0$),
     the scoring function \eqref{eqn:scoring-fn}
     is a direct analogue of the Gibbs free energy $G = U - T \H$,
     where $T = \gamma$ is temperature and $\H$ is entropy. 
-In addition, when $\bbeta = \gamma \balpha$,
+Furhtermore, when $\bbeta = \gamma \balpha$,
     we will see soon see that \eqref{eqn:scoring-fn} is the free energy
     of a factor graph with weights $\bbeta$ and temperature $\gamma$
     (\cref{theorem:wfg-is-pdg}).
@@ -1453,9 +1459,9 @@ In addition, when $\bbeta = \gamma \balpha$,
 %     the stability of a system is quantified by its \emph{Gibbs Free Energy} $G = H - TS$, where $H$ represents the 
 % In the case of no qualitative information (i.e., $\balpa = \mat 0$),
 % the scoring equation \cref{} 
-Alternatively, $\gamma$ can be thought of as one final degree of confidence, in the same scale as the $\beta$'s, in the overall qualitative picture (relative to the other pieces of quantitative information).
+Alternatively, $\gamma$ can be thought of as one final degree of confidence, relative to the $\beta$'s, in the qualitative information overall.
 
-For all of these reasons, and also to simplify the math, we have chosen to use the asymmetric variant in \eqref{eqn:scoring-fn} that uses the parameter $\gamma \in [0,\infty]$ to control the strength of $\SDef$, rather than the symmetric trade-off parameter $\zogamma \in [0,1]$.
+For these reasons, and also to simplify the math, we have chosen to use the asymmetric variant in \eqref{eqn:scoring-fn} that uses the parameter $\gamma \in [0,\infty]$ to control the strength of $\SDef$, rather than the symmetric trade-off parameter $\zogamma \in [0,1]$.
 }
 
 % $\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
@@ -2001,10 +2007,12 @@ Suppose further that $p$ and $q$ are both associated with the same distribution 
 For definiteness, suppose that
 $\V(X) = \{x_1,x_2\}$, and
 that the distribution associated with both arcs is $\mu_{.7}$, which ascribes
-probability $.7$ to $x_1$. Then, as we would hope  $\bbr{\dg M}^* =
+probability $.7$ to $x_1$. Then, as we would hope  $\bbr{\dg M}^*_{0^+} =
 \{\mu_{.7}\}$; after all, both sources agree on the information.
 However, it can be shown that 
 $\Pr_{\WFGof{\dg M}} = \mu_{.85}$, so  $\bbr{\dg M}_1^* = \{\mu_{.85}\}$.
+
+
 \end{example}
 
 
@@ -2084,6 +2092,7 @@ In the special case where $\dg M$ represents or is equivalent to a joint distrib
 This account of conditioning generalizes
 without modification to give Jeffrey's Rule \citep{Jeffrey68}, a more
 general approach to belief updating. 
+This will be made precise in \cref{sec:prob-as-pdg}.
 
 % Issues of updating and inconsistency also arise in variational inference. A  
 % variational autoencoder \citep{kingma2013autoencoding}, for instance, 
@@ -2104,47 +2113,22 @@ can be represented by PDGs but not by other graphical models.
 % and the resolution of inconsistency in PDGs.
 In the coming chapters, we will explore these connections, and the broader theory of probabilistic modeling that is enabled by the PDG representation.
 	
-\commentout{	
-\section*{Ethics Statement}
+% \section*{Ethics Statement}
+% 
+% Because PDGs are a recent theoretical development, there is a lot of guesswork in evaluating the impact. Here are two views of opposite polarity.
+% 
+% \subsection*{Positive Impacts}
+% One can imagine many applications of enabling simple and coherent aggregation of (possibly inconsistent) information. In particular we can imagine using PDGs to build and interpret a communal and global database of statistical models, in a way that may not only enable more accurate predictions, but also highlights conflicts between information.
+% 
+% This could have many benefits. Suppose, for instance, that two researchers train models, but use datasets with different racial makeups. Rather than trying to get an uninterpretable model to ``get it right'' the first time, we could simply highlight any such clashes and flag them for review.
+% 
+% Rather than trying to ensure fairness by design, which is both tricky and costly, we envision an alternative: simply aggregate (conflicting) statistically optimal results, and allow existing social structure to resolve conflicts, rather than sending researchers to fiddle with loss functions until they look fair.
+% 
+% \subsection*{Negative Impacts}
+% We can also imagine less rosy outcomes. To the extent that PDGs can model and reason with inconsistency, if we adopt the attitude that a PDG need not wait until it is consistent to be used, it is not hard to imagine a world where a PDG gives biased and poorly-thought out conclusions. It is clear that PDGs need a great deal more vetting before they can be used for such important purposes as aggregating the world's statistical knowledge.
+% 
+% PDGs are powerful statistical models, but are by necessity semantically more complicated than many existing methods. This will likely restrict their accessibility. To mitigate this, we commit to making sure our work is widely accessible to researchers of different backgrounds.
 
-Because PDGs are a recent theoretical development, there is a lot of
-guesswork in evaluating the impact. Here are two views of opposite polarity.
-
-\subsection*{Positive Impacts}
-One can imagine many applications of enabling simple and coherent
-aggregation of (possibly inconsistent) information. In particular we
-can imagine using PDGs to build and interpret a communal and global
-database of statistical models, in a way that may not only enable more
-accurate predictions, but also highlights conflicts between
-information.
-
-This could have many benefits. Suppose, for instance, that two researchers train
-models, but use datasets with different racial makeups. Rather than trying to
-get an uninterpretable model to ``get it right'' the first time, we could simply
-highlight any
-such clashes and flag them for review.
-
-Rather than trying to ensure fairness by design, which is both tricky and
-costly, we envision an alternative: simply aggregate (conflicting) statistically
-optimal results, and allow existing social structure to resolve conflicts,
-rather than sending researchers to fiddle with loss functions until they look fair. 
-
-
-\subsection*{Negative Impacts}
-We can also imagine less rosy outcomes. To the extent that PDGs can
-model and reason with inconsistency, if we adopt the attitude that a PDG need
-not wait until it is consistent to be used, it is not hard to imagine a world
-where a PDG gives biased and
-poorly-thought out conclusions. It is clear that PDGs need a great deal more
-vetting before they can be used for such important purposes as
-aggregating the world's statistical knowledge.
-
-PDGs are powerful statistical models, but are by necessity semantically more
-complicated than many existing methods. This will likely restrict their
-accessibility. To mitigate this, we commit to making sure our work is widely
-accessible to researchers of different
-backgrounds.
-}
 
 
 \begin{subappendices}

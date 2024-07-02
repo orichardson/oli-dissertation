@@ -8,53 +8,60 @@ can capture graphical models such as Bayesian Networks and Factor graphs---but t
 % This chapter, based on a collection of unpublished notes, 
 In this chapter, we will see how a wide variety of other kinds of epistemic information can be captured with PDGs.
 
+
 \newmaterial{%
-We will begin with a simple but conceptually important observation: 
-    a joint probability distribution is a special case of a PDG (\cref{sec:prob-as-pdg}). 
+Probability is the dominant way that computer computer scientists and
+micro\-economists think about epistemic state.
+This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
+must act as if it had probabilistic beliefs \citep{..,savage}.
+This leads us to make a simple but conceptually important observation: a joint probability distribution is itself a special case of a PDG (\cref{sec:prob-as-pdg}). 
+% Nevertheless, not everything is probabilistic---at least, not 
+% Many logics are based on binary truth/falsehood
+%
+\commentout{%
+Some are built on binary truth and falsehood, and epistemic logics dealing with possibility and necessity are built on top of them.
+Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
+Perhaps surprisingly, many of these objects can be represented with PDGs as well.
+}%
+
     % Thus, the standard epistemic state of a 
 % This means that a standard
 % So, because standard 
-In \cref{sec:widgets}, we develop a library of smaller tools, which we call \emph{widgets}, that can capture various other important fragments of epistemic information. 
+In \cref{sec:widgets}, we develop a library of more intricate tools, which we call \emph{widgets}, that can capture various modeling tools and fragments of epistemic information.
+    % constraints, costs, couplings, 
 % This will allow us to 
 %
 Doing so will enable us to deliver on the promises made in \cref{sec:alt-pdgs}, of being able to use the current PDG formalism to express seeming generalizations of PDGs. 
 
-In \cref{sec:other-uncertainty-repr}, we will then use many of the tools developed in \cref{sec:widgets} to show that PDGs capture other well-established representations of uncertainty, most notably sets of probability measures, known as credal sets \citep{Walley1991-SRIP} (\cref{ssec:cvx-prob-sets}) and Dempster-Shafer Belief functions \cite{shafer1976mathematical} (\cref{ssec:belplaus-as-pdg}).
+Probability, despite its dominance, does have shortcomings, and is not the only tool we have for representing knowledge and uncertainty \citep[\S2]{halpern2017reasoning}.
+% Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
+% Perhaps surprisingly, many of these objects can be represented with PDGs as well.
+In \cref{sec:other-uncertainty-repr}, we will use the tools developed in \cref{sec:widgets} to show that PDGs capture some of these other well-established representations of uncertainty, most notably sets of probability measures, known as credal sets \citep{Walley1991-SRIP} (\cref{ssec:cvx-prob-sets}) and Dempster-Shafer Belief functions \citep{shafer1976mathematical} (\cref{ssec:belplaus-as-pdg}).
 % In the remainder of the section, we 
-We also quickly overview other representations captured by PDGs that will play larger roles later on: cluster (pseudo)marginals, causal models, and neural networks. 
-
-But first, we start with probability.
+We also quickly overview other representations captured by PDGs that will play larger roles later on: cluster (pseudo)marginals, causal models, and neural networks (\cref{ssec:capture-causal-models,ssec:implicit-neural-repr,ssec:pseudomarginal-cluster-graph}). 
 % The key . We will explore this in 
 }% end\newmaterial
 
 \section{Probabilities and Random Variables}
     \label{sec:prob-as-pdg}
 
-Probability is the dominant way that computer computer scientists and
-micro\-economists think about epistemic state.
-This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
-must act as if it had probabilistic beliefs \cite{..,savage}.
-% Nevertheless, not everything is probabilistic---at least, not 
-Still, probability does have shortcomings \cite{}, and there have been many approaches to representing knowledge and uncertainty \cite{halpern2017reasoning}.
-% Many logics are based on binary truth/falsehood
-Some are built on binary truth and falsehood, and epistemic logics dealing with possibility and necessity are built on top of them.
-Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
-Perhaps surprisingly, many of these objects can be represented with PDGs as well.
 
-We start with an obvious construction, that is nonetheless important
-to keep in mind: a joint distribution can be viewed as a very special case of a PDG. 
+We start with an obvious construction
+% that is nonetheless important to keep in mind
+\unskip: a joint distribution can be viewed as a very special case of a PDG. 
 Let $\X$ be a set of variables, and recall that $\V\!\X$ is the set of all joint settings of the variables $\X$. 
 A joint distribution $\mu \in \Delta \V\!\X$ can be implicitly regarded as a PDG that has a single hyperarc $\emptyset \to \X$.
 We attach $\mu$ as the (c)pd, and give it weights $\alpha=0$
 %
-(if, as is usual, the distribution represents purely observational and not causal information) and $\beta = 1$ (default confidence). 
+(at least, if the distribution is intended to represent purely observational information), and 
+$\beta = 1$ (default confidence). 
 % We will see more about these parameters later on. 
 
-
-We start by recounting an observation we already made in \cref{sec:var-randomvar},
-    but in a new light now that we can talk about PDGs. 
+With this simple construction in mind,  
+    let's revisit the a point made \cref{sec:var-randomvar}
+    now that we can talk about PDGs. 
 To a probability theorist, these joint distributions $\mu$ may seem to be of a very special form, because they are over product spaces. 
-In probability theory, the setup is typically instead that one has a (measurable) set $\Omega$ of outcomes, and then random variables are in fact \emph{(measurable) functions} $X : \Omega \to \V\!\X$. 
+In probability theory, the setup is typically instead that one has a (measurable) set $\Omega$ of outcomes, and then random variables are in fact \emph{(measurable) functions} $X : \Omega \to \V\!X$. 
 Observe that this too is an immediate special case of a PDG
 in which $W$ is a variable with possible values $\V W := \Omega$:
 %
@@ -75,17 +82,21 @@ in which $W$ is a variable with possible values $\V W := \Omega$:
 %
 (In fact, this PDG happens to also be a BN, if one isn't worried about calling $W$, itself typically a product of variables, a variable.)
 % No matter what confidence parameters we use, so long as $\beta_\mu > 0$, 
-It is easy to verify that these PDGs have inconsistency zero, and represent precisely the distribution $\mu$, no matter what confidence parameters we select (so long as the confidence is positive). 
+It is easy to see that these PDGs are consistent, and represent precisely the distribution $\mu$ and the set of random variables, no matter what $\bbeta > 0$ we select.
 
 Of course, the semantics of PDGs developed in \cref{sec:semantics}
-make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and thus it would be circular to were to implicitly convert joint distributions to PDGs before developing the results of the previous chapter. 
-But now that the theory of PDGs is on solid ground, we may freely regard joint distribution as a PDG. 
-This will be useful to keep in mind later, 
-    but it is neither surprising,
-    nor is this property unique to PDGs. 
+make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and so it would be circular to implicitly convert joint distributions to PDGs before developing the results of the previous chapter---%
+but now that PDG semantics are on solid ground, we may freely regard a joint distribution as a PDG. 
+% This will be useful to keep in mind later, 
+%     but it is neither surprising,
+%     nor is this property unique to PDGs. 
 % Indeed, $\mu$ can also be viewed as a factor graph with only one factor. 
-What makes PDGs special is their ability to do other things at the same time,
-    simultaneously keeping many balls in the air, so to speak. 
+% What makes PDGs special is their ability to do other things at the same time, simultaneously keeping many balls in the air, so to speak. 
+What makes PDGs special is their capability to do this while simultaneously representing other things. 
+
+\paragraph{Updating with Combination.}
+
+\TODO
 
 \section{Widgets}
     \label{sec:widgets}
@@ -115,7 +126,7 @@ Yet it turns out that each of these concepts can be concepts can be compiled to 
 
 
 \subsection{Relations and Constraints}
-\label{sec:relation-widget}
+    \label{sec:relation-widget}
 
 % Although PDGs may seem as though they can only describe 
 A probability distribution $\mu \in \Delta \Omega$ over 
@@ -167,8 +178,9 @@ We associate $R$  with a PDG
     \end{tikzpicture},
 \]
 where $\Tru$ is a variable that intuitively represents ``truth'';
-    it technically can take on two possible values $\V\Tru := \{\trut, \truf\}$,
-    but it always takes on $\truf$. 
+    it technically can take on two possible values:
+     $\V\Tru := \{\trut, \truf\}$,
+    but it always takes on $\trut$. 
       % the event $\Tru \!\!=\! \trut$,
 Note that the arc labeled ``$R$'' is attached to the obvious way of regarding $R$ as a conditional probability distribution, i.e., the cpd $\delta R(\Tru \mid \var A_1, \ldots, \var A_n)$. 
 
@@ -362,8 +374,8 @@ TODO: move in and split material from loss chapter.
 % The set of couplings $\
 Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
 A \emph{coupling} between $p$ and $q$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
-Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \cite{optimal-transport}, 
-a wide range of programming logics \cite{Kaminski_Katoen_Matheja_2020}.
+Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \citep{optimal-transport}, 
+a wide range of programming logics \citep{Kaminski_Katoen_Matheja_2020}.
 %
 % Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
 % the set of joint distributions that have respective marginals $p$ and $q$.
@@ -402,7 +414,7 @@ The Wasserstein distance between $p,q \in \Delta X$, given by
 \[  
     W_1(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big],
 \]
-is a foundational quantity in optimal transport \cite{}.
+is a foundational quantity in optimal transport \citep{}.
 %
 This definition effectively takes $p(X)$ and $q(X)$ with
     high confidence, by constraining to $\mu \in \Pi(p,q)$.
@@ -925,7 +937,7 @@ A widget for it is illustrated in \cref{fig:guard-variable}.
 
 Probability requires the modeler to assign a specific number to every event $U \subseteq \Omega$. This can be restrictive; what if you simply don't know, and so are not prepared to assign a probability to $U$? 
 One heavily studied line of work aimed at addressing this issue allows the modeler to instead specify a range of values rather than a single one; thus one can say ``the probability of $U$ lies between $\frac13$ and $\frac12$'', for example.
-It is easy to see that specifying an actual probability distribution is the special case where the upper and lower bounds are equal, but in general, this approach yields a far richer theory \cite{Walley1991-SRIP}.
+It is easy to see that specifying an actual probability distribution is the special case where the upper and lower bounds are equal, but in general, this approach yields a far richer theory \citep{Walley1991-SRIP}.
 
 At first, it appears that allowing a modeler to specify beliefs this way would require us to define an generalized PDG in which the modeler specifies not a cpd $p(Y|X)$, but rather upper and lower bounds on it. But yet again, it turns out to be possible with the definition we already have.
 
@@ -937,11 +949,11 @@ A (perhaps clunky) way of fully formalizing this is fleshed out in \cref{fig:pyx
     \label{sec:other-uncertainty-repr}
 
 Probability is the dominant way of talking about epistemic uncertainty
-in economics and computer science, but it is far from the only one \cite{halpern-RAU}.
+in economics and computer science, but it is far from the only one \citep{halpern-RAU}.
 Probability---at least, in the form of a joint distribution $\mu$---has some shortcomings. 
 One of the biggest is its inability to represent ignorance well
     (a point we will return to in \cref{chap:conf}).
-This has lead many to develop generalizations of probability that are \cite{shafer1990probability,Walley1991-SRIP}.
+This has lead many to develop generalizations of probability that are \citep{shafer1990probability,Walley1991-SRIP}.
 It turns out that several of the most celebrated generalizations of probabilities can be viewed as special cases of PDGs. 
 
 
@@ -1016,7 +1028,7 @@ Furthermore, if we select $\alpha = 1$ for this edge,
 \subsection{Belief and Plausibility Functions}
     \label{ssec:belplaus-as-pdg}
     
-We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \cite{shafer1990probability}. 
+We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \citep{shafer1990probability}. 
 Like a probability measure,
 a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \subseteq \Omega$.  
 Belief functions must satisfy certain axioms ensuring that $\Bel(U) + \Bel(\bar U) \le 1$, and thus $\Plaus(U) := 1 - \Bel(\bar U) \ge \Bel(U)$. 
@@ -1139,7 +1151,7 @@ Now for the proof of the theorem.
     % For the reverse direction, 
     The reverse direction is far more subtle than it appears;
         here we present a relatively compact proof of it based on Hall's
-        Mariage Theorem \cite{Hall1935}. 
+        Mariage Theorem \citep{Hall1935}. 
     Suppose that $\mu \in \Delta \Omega$ satisfies
         $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$.
     Assume for simplicity that the possible outputs of $m$ and $\mu$ are rational numbers, and let $N$ be their common denominator. 
@@ -1265,7 +1277,7 @@ Now for the proof of the theorem.
     \ge \Big({\textstyle\sum_{A \in \mathcal A_U} \nu(A)} \Big)
         \log \frac{\textstyle\sum_{A \in \mathcal A_U} \nu(A)}{{\textstyle\sum_{A \in \mathcal A_U} m(A)}},
     \end{align*}
-    by the log-sum inequality \cite{CoverThomas}.
+    by the log-sum inequality \citep{CoverThomas}.
     Moreover, the log-sum inequality states that this holds 
     with equality if and only if there is some constant $k$ so that
         $\nu(A) = k m(A)$ for all $A \in \mathcal A_U$. 
@@ -1281,9 +1293,10 @@ Now for the proof of the theorem.
 
 
 \subsection{Pseudomarginals on Cluster Graphs}
+    \label{ssec:pseudomarginal-cluster-graph}
 
-Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \cite{wainwright2003tree,wainwright2008graphical,koller2009probabilistic},
-sometimes called a \emph{pseudomarginal} \cite{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \cite{koller2009probabilistic}; we will call them \emph{cluster marginals}.
+Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \citep{wainwright2003tree,wainwright2008graphical,koller2009probabilistic},
+sometimes called a \emph{pseudomarginal} \citep{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \citep{koller2009probabilistic}; we will call them \emph{cluster marginals}.
 
 Concretely, given a set of variables $\X$, a cluster graph is 
 graph, whose node set is a collection $\C$ of clusters, each $C \in \C$ of which is a subset of $\X$. 
@@ -1300,8 +1313,8 @@ A cluster marginal is said to be \emph{calibrated} if, for every edge $C{-}D$ in
 Belief propogation is a way of calibrating these objects, and effectively is a way of reducing local inconsistencies between pairs of clusters. We will return to this in \cref{chap:LIR}. 
 
 When the cluster graph has a special property that makes it a \emph{tree decomposition} 
-    (see \cref{sec:tw} or ```clique tree'' in \cite{koller2009probabilistic}),
-then local consistency is equivalent to global consistency \cite{wainwright2008graphical},
+    (see \cref{sec:tw} or ```clique tree'' in \citep{koller2009probabilistic}),
+then local consistency is equivalent to global consistency \citep{wainwright2008graphical},
 and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
 We will cover these concepts in detail when we
     use them when we develop an inference algorithm for PDGs in \cref{chap:infer};
@@ -1321,6 +1334,7 @@ We will make all of this precise in \cref{sec:causal}.
 More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibility} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
 
 \subsection{Implicit Neural Representations}
+    \label{ssec:implicit-neural-repr}
 
 A more modern way to represent knowledge is implicitly, within the parameters of a neural network. 
 But neural networks are often viewed as conditional probability distributions, and hence can be directly included as the quantitative data for an arc of a PDG.
