@@ -168,6 +168,7 @@ If $\forall i.~a_i \in A$, then $\mat a$ is just a function $\mat a : I \to A$.
 % Therefore, if each $a_i \in A_i$, then  $\mat a : \sqcup_{i \in I} A_i  
 A \emph{tuple} is the special case of a set indexed by $[n]$ for some natural number $n \in \mathbb N$, and typically written with parentheses in order, as in $(a_1, \ldots, a_n)$.
 A \emph{sequence} is the special case of a set indexed by $\mathbb N$, and is typically also written with parentheses, as in $(a_1, a_2, \ldots)$. 
+For tuples and sequences (and more generally for ordered sets)
 
 %%%%%% TODO %%%%
 % - convergence of sequences.
@@ -276,6 +277,9 @@ It follows that linear spaces are cones, and cones are convex.
 
 
 %%%% TODO %%%%
+% - limits (?)
+% - computational complexity / big O
+%
 % - products
 % - sums
 % - unit interval
@@ -676,6 +680,8 @@ and if events cannot co-occur, then the probability that one of them occurs is t
 % \end{enumerate}
 % We need a few more definitions about measures. 
 
+%%TODO: marginal measures, integration, expectation.
+
 We will need a few additional concepts about measures.
 First, if $\mu$ and $\nu$ are measures over a space $(X, \mathcal F)$, 
 and $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
@@ -683,17 +689,7 @@ $\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\nu \
 Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is said to be \emph{strictly positive} (with respect to $\cal T$).
 
 
-\paragraph{The Radon-Nikodym Derivative.}
-Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
-The Radon-Nikodym theorem states that there then exists a unique $\mathcal F$-measurable function $f$
-such that for all $A \in \mathcal F$,
-\[
-    \mu(A) = \int_{A} f \,\mathrm d \nu.
-\]
-The function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
-
-
-\TODO[TODO: base measures]
+% \TODO[TODO: base measures]
 
 
 \paragraph{Statistics and (Random) Variables.} 
@@ -714,7 +710,40 @@ But if each $\V(X_i)$ comes with a $\sigma$-algebra $\mathcal F_i$ , then there 
 \end{enumerate}
 
 
+% One way of 
+\newmaterial{%
+% The last property of measures
+% is a  of simplifying the theory for general measures,
+One way to dramatically simplify working with general measures,
+and the way we will develop the analogues of information theory in the general case (), is to endow a measurable space with a fixed ``base measure'', and describe all measures on a space relative to that measure. To make this precise, we need:
+% which we will need to make use of information theory. 
+% A common way of simplifying the theory for general measures,
+}
 
+\paragraph{The Radon-Nikodym Derivative.}
+Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
+The Radon-Nikodym theorem states that there then exists a unique 
+% $\mathcal F$-measurable function $f$
+    measurable function $f : X \to \mathbb R$
+such that, for all $A \in \mathcal F$,
+$
+    \mu(A) = \int_{A} f \,\mathrm d \nu.
+$
+This function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
+
+\newmaterial{%
+Here on out, we will assume that for each variable $X$, the possible values $\V\!X$ not only comes with a $\sigma$-algebra $\mathcal F_X$ (making it a measurable space), but also a base measure $\lambda_X$. 
+In the case of a discrete variable that takes on finitely or countably many values, we assume the counting measure: for $U \subseteq \V\!X$ $\lambda_X(U) = |U|$ is the number of elements in $U$. 
+When $\V\!X$ is a subset of real space $\mathbb R^I$, we use the \emph{lebesque measure}, which agrees with the standard notions of length, area, and volume.
+}%
+
+% Technically speaking $\mu(X)$ is not a random variable 
+Recall how $\mu(X)$ was a random variable in the finite case. 
+In the more general setting, the appropriate analogue is the
+    % is not $\mu(X)$, but rather 
+    derivative
+    $\frac{\mathrm d\mu(X)}{\mathrm d \lambda_X}$
+of $\mu$ with respect to the base measure, which is the random variable of interest.
 
 % 
 % Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
@@ -730,13 +759,22 @@ But if each $\V(X_i)$ comes with a $\sigma$-algebra $\mathcal F_i$ , then there 
 \paragraph{Markov Kernels.}
 Finally, we get to the precise notion of a conditional probability distribution (cpd) 
 in this more careful framework regarding measurability.
-If $(\Omega, \mathcal F)$, and $(\Omega', \mathcal G)$ are two measurable spaces, a \emph{Markov Kernel} $\kappa : \Omega \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', is a function $\kappa : X \times \mathcal G \to \mathbb R$, such that
+If $(\Omega, \mathcal F)$, and $(\Omega', \mathcal G)$ are two measurable spaces, a \emph{Markov Kernel} 
+% $\kappa : \Omega \to \mathcal Y$, which we sometimes write as ``$\kappa(Y|X)$'', 
+$\kappa$ from $(\Omega,\mathcal F)$ to $(\Omega', \mathcal G)$
+is a function $\kappa : \Omega \times \mathcal G \to \mathbb R$, such that
+
 \begin{enumerate}
-    \item For every $x \in X$, the map $\kappa(x, -) : \mathcal U \to [0,1]$ is a probability measure. (So $\kappa$ is also a cpd.)
-    \item For every $U \in \mathcal G$, the map $\kappa(-, U) : X \to [0,1]$ is a measurable function from $\mathcal X$ to the Borel space $[0,1]$.
+    \item For every $\omega \in \Omega$, the map $\kappa(\omega, -) : \mathcal G \to [0,1]$ is a probability measure on $\Omega'$. 
+        (So $\kappa$ is also a cpd.)
+    \item For every $U \in \mathcal G$, the map $\kappa(-, U) : \Omega \to [0,1]$ is a measurable function from $\Omega$ to the Borel space $[0,1]$.
     Or more explicitly: for every open set $S \subseteq [0,1]$, and $U \in \mathcal G$, we have that
-    $\{x : \kappa(x,U) \in S\} \in \mathcal F$. 
+    $\{\omega \in \Omega : \kappa(\omega,U) \in S\} \in \mathcal F$. 
 \end{enumerate}
+
+\newmaterial{%
+The second condition is the new one, and it is necessary to ensure that we can compose cpds and use them as randomized functions, just as in the finite case.
+}
 
 
 %%% TODO %%%%
@@ -772,9 +810,11 @@ Graphs come in two flavors: directed and undirected.
 In a graph $G = (N,A)$, the \emph{parents} of a node $u \in N$ 
 are the nodes
 \[
-    \Pa_G(u) := \Big\{  v \in N : \exists \ed auv \in A \Big\}
+    \Pa_G(u) := \Big\{  v \in N : \exists \, \ed auv \in A \Big\}
+        \subseteq N
 \]
-that are sources of arcs leading to $u$. 
+that are sources of arcs leading to $u$.
+Dually, the \emph{children} of $u \in N$ are the nodes $\Ch_G(u)$ that are targets of some arc whose source is $u$. 
     % we write $$
 }
 
@@ -875,10 +915,16 @@ A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ o
     subsets of $V$. 
 \end{defn}
 
-An ordinary undirected graph may be viewed as the special case in which every hyperedge contains two vertices.
+An ordinary undirected graph is the special case in which every hyperedge contains two vertices.
+In turn, a bipartite graph is a (very) special case of an ordinary undirected graph.
+By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet, perhaps counter-intuitively, they are in fact they are naturally isomorphic. 
+% , which themselves are a strict (particularly easy to draw) special case of hypergraphs.  
 
 \begin{prop} 
-There is a natural bijection between hypergraphs and bipartite graphs:
+There is a 
+% natural bijection 
+an isomorphism
+between hypergraphs and bipartite graphs:
 % \def\bitgr{\mathit{BG}}
 \def\bigr{\mathit{bipart}}
 % \def\bitgr{\mathit{HG}}
@@ -895,9 +941,22 @@ There is a natural bijection between hypergraphs and bipartite graphs:
     \]
 \end{prop}
 
-The consequences of this can be unintuitive.
-It is common to think of bipartite graphs as a strict (particularly nice) special case of ordinary undirected graphs, which themselves are a strict (particularly easy to draw) strict special case of hypergraphs.  
-By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet in fact they are naturally isomorphic. 
+% The consequences of this can be unintuitive.
+% This fact can be be unintuitive.
+% Bipartite graphs are of course a strict (particularly nice) special case of ordinary undirected graphs, which themselves are a strict (particularly easy to draw) special case of hypergraphs.  
+% By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet in fact they are naturally isomorphic. 
+\newmaterial{%
+% In fact, there are two isomorphisms. 
+A second isomorphism can be obtained by swapping roles of the left and right parts of the bipartite graph. 
+These two isomorphisms plays an important role in traditional graphical models, as we will see in \cref{sec:prelim-fgs}.
+
+
+What about the directed analogue of a hypergraph? 
+While these objects have been defined and studied before
+    \citep{gallo-dirhypergraphs1993}, they are far less
+    common in computer science than (ordinary) directed graphs, or (undirected) hypergraphs.
+These directed hypergraphs will form the basis of the representations at the heart of this thesis (\cref{chap:pdg-repr,chap:QIM}).
+}%
 
 % \begin{defn}
 %     A \emph{directed} hypergraph $(N, \mathcal A)$ is a set $N$ of nodes,
@@ -930,6 +989,20 @@ referring to the directed hypergraph simply as $\Ar$.
 
 A directed hypergraph $(N, \mathcal A)$ can be (equivalently) defined
 as an (ordinary) directed graph $(2^N, \Ar)$ whose set of nodes is the powerset of some set $N$. 
+\newmaterial{%
+Just as hypergraphs and bipartite graphs are isomorphic,
+    so too are directed hypergraphs and directed bipartite graphs:
+\begin{align*}
+    (N, \Ar) \mapsto \Big(N, \Ar, 
+        \{ u{\to}a : a \in \Ar, u \in \Src a \} \cup
+        \{ a{\to}v : a \in \Ar, v \in \Tgt a \}
+         \Big) \\
+    (L, R, A) \mapsto (L, \{ \Pa(r){\to}\Ch(r) : r \in R \}).
+\end{align*}
+% The analogue of that for (directed) graphs
+There is an obvious symmetry in the definition of a bipartite graph: one can swap the left and the right parts to obtain another bipartite graph that is isomorphic to the first one. 
+The corresponding symmetry for hypergraphs is known as duality, and is a bit less obvious.
+}%
 
 % \medskip
 % \hrule
@@ -944,7 +1017,13 @@ $
 $
 % \]
 which in some sense, has swapped the roles of the vertices and the hyperedges.
-Interestingly, the concept applies equally well for directed hypergraphs, and the definition is even more symmetric---yet we are not aware of any published work on subject.
+Interestingly, the concept applies equally well for directed hypergraphs, and the definition is even more symmetric---yet we are not aware of 
+% any published work on subject.
+% substantial work on the subject.
+any thorough treatment of duality for directed hypergraphs. 
+% \newmaterial{%
+% We mention it here because some representations of interest 
+% }%
 
 \begin{defn}
     The \emph{dual} of a directed hypergraph $\mathcal H = (N, \Ar)$ is 
@@ -977,7 +1056,8 @@ A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
 % To visualize . 
 % One might wonder why $\check\Src n$ is definde in terms of $\Tgt a$ instead of $\Src a$.
 
-See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs and their duals.
+% See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs and their duals.
+A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 \begin{figure}%
     \centering
     \renewcommand\arraystretch{1.6}
@@ -1020,7 +1100,7 @@ See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs
         \draw[arr1,<-] (Y) to node[above]{\small 2} +(0.9,0);
         %
     \end{tikzpicture}
-    \\[2ex]
+    \\[2ex]\\
     \begin{tikzpicture}[xscale=1.2,center base]
         \node[draw,outer sep=2pt] (1) at (-0.5,0) {1};
         \node[draw,outer sep=2pt] (2) at (0.5,0) {2};
@@ -1083,6 +1163,7 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 
 % \section{A Review of Graphical Models}
 \section{(Probabilistic) Graphical Models}
+    \label{sec:prelim-pgms}
 
 % Broadly speaking, probabilistic graphical levels 
 Like variables themselves, graphical models exist on two levels: a qualitative or structural one, and a quantiative observational one.
@@ -1117,52 +1198,66 @@ What follows is really a barebones sketch of the graphical models context for th
 % These two models 
     
 \subsection{Bayesian Networks and Variants}
+    \label{sec:prelim-bns}
 
 A \emph{qualitative Bayesian Network} (qualitative BN) is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
 An arc $X {\to} Y \in A$ intuitiely reflects a possibility that $X$ can influence $Y$. 
-The absence of an arc, then, reflects a kind of (conditional) independence. 
+% The absence of an arc, then, reflects a kind of (conditional) independence. 
+The absence of an arc, then, in context, reflects a kind of 
+    independence. 
 % One standard way to say this is that
 % Here is one standard description of these independencies: 
 % Here is n of these independencies: 
 More precisely, a qualitative BN states that
 \textit{every variable is conditionally independent of its non-descendents given its parents}.
-Another famous (and more algorithmic) characterization of the same conditional independences is the \emph{d-separation} criterion  \cite{geiger-pearl-d-separation}. 
+Another famous (and more algorithmic) characterization of the same conditional independences is the \emph{d-separation} criterion  \citep{geiger-pearl-d-separation}. 
 It is helpful to look at some examples.
 
 \begin{center}
-    \tikzset{bnnode/.style={dpad1,circle}}
+    \tikzset{bnnode/.style={dpad1,circle,inner sep=3pt}}
     % \tikzset{bnnode/.style={draw,circle}}
-    \begin{tikzpicture}[xscale=1.3,center base]
-        \node[bnnode] (X) at (-1,0) {$X$};
+% \begin{tabular}{c}
+    \def\XYZnodes{%
+        % \node[bnnode] (X) at (-1,0) {$X$};
+        % \node[bnnode] (Y) at (0,0) {$Y$};
+        % \node[bnnode] (Z) at (1,0) {$Z$};
+        \node[bnnode] (X) at (0,-1) {$X$};
         \node[bnnode] (Y) at (0,0) {$Y$};
-        \node[bnnode] (Z) at (1,0) {$Z$};
-        \draw[->] (X) to (Y);
-        \draw[->] (Y) to (Z);
-    \end{tikzpicture};~~~
-    \begin{tikzpicture}[xscale=1.3,center base]
-        \node[bnnode] (X) at (-1,0) {$X$};
-        \node[bnnode] (Y) at (0,0) {$Y$};
-        \node[bnnode] (Z) at (1,0) {$Z$};
-        \draw[->] (X) to (Y);
-        \draw[->] (Y) to (Z);
-    \end{tikzpicture};~~~
-    \begin{tikzpicture}[xscale=1.3,center base]
-        \node[bnnode] (X) at (-1,0) {$X$};
-        \node[bnnode] (Y) at (0,0) {$Y$};
-        \node[bnnode] (Z) at (1,0) {$Z$};
-        \draw[->] (Y) to (X);
-        \draw[->] (Y) to (Z);
-    \end{tikzpicture};~~~
-    \begin{tikzpicture}[xscale=1.3,center base]
-        \node[bnnode] (X) at (-1,0) {$X$};
-        \node[bnnode] (Y) at (0,0) {$Y$};
-        \node[bnnode] (Z) at (1,0) {$Z$};
-        \draw[->] (X) to (Y);
-        \draw[->] (Z) to (Y);
+        \node[bnnode] (Z) at (0,1) {$Z$};
+    }
+    \begin{tikzpicture}[scale=1.4,center base]
+        \XYZnodes
+        \draw[arr2] (X) to (Y);
+        \draw[arr2] (Y) to (Z);
+    \end{tikzpicture}
+    ~~~
+    % \\
+    \begin{tikzpicture}[scale=1.4,center base]
+        \XYZnodes
+        \draw[arr2] (Z) to (Y);
+        \draw[arr2] (Y) to (X);
+    \end{tikzpicture}
+    ~~~
+    % \\
+    \begin{tikzpicture}[scale=1.4,center base]
+        \XYZnodes
+        \draw[arr2] (Y) to (X);
+        \draw[arr2] (Y) to (Z);
+    \end{tikzpicture}
+    % ;~~~
+% \end{tabular}
+    \hspace{2cm}
+    \begin{tikzpicture}[scale=1.4,center base]
+        \XYZnodes
+        \draw[arr2] (X) to (Y);
+        \draw[arr2] (Z) to (Y);
     \end{tikzpicture}
 \end{center}
 
-The first, second, and third, all give the same independencies: $X$ and $Z$ are conditionally independent given $Y$.  But the last is different: it states that $X$ and $Y$ are independent (but $Z$ can have an arbitrary relation with both).
+% The first, second, and third, all give the same independencies:
+The three qualitative BNs on the left all encode the same independence information:
+$X$ and $Z$ are conditionally independent given $Y$.
+But the last is different: it states that $X$ and $Y$ are independent (but $Z$ can have an arbitrary relation with both).
 This intuition can be further clarified once we add probabilities.
 
 A quantiative BN, or simply a BN, 
@@ -1189,6 +1284,7 @@ But, in principle, it could be normalized;
 
 
 \subsection{Markov Random Fields, Factor Graphs, and Variants}
+    \label{sec:prelim-fgs}
 
 Now, suppose $G = (\X, E)$ is an undirected graph over a set of variables.
 By interpreting an edge $X{-}Y \in E$ as a possibility of (bi-directional) influence between $X$ and $Y$
@@ -1227,6 +1323,7 @@ We will see more details in \cref{sec:factor-graphs}.
 
 
 \subsection{Other Graphical Models}
+    \label{sec:prelim-other-pgms}
 
 Many other graphical models have been proposed as well, although
 the vast majority are variants on the two we have already described. 
@@ -1239,7 +1336,7 @@ Writing $\U$ for the observed variables and $\V$ for the unobserved ones, a CBN 
 \emph{Conditional random fields (CRFs)} are an analogue for factor graphs/MRFs.
 
 Graphs with both directed and undirected edges have also been studied. The most widely known graphical model of this kind is called a \emph{chain graph}, in part because it can be seen as a way of connecting conneted components (themselves factor graphs) along a directed acylcic chain.
-People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks, and a related cut-parameterized approaches to looking at fixed points \cite{Baier_2022}.
+People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks, and a related cut-parameterized approaches to looking at fixed points \citep{Baier_2022}.
 
 A related notion is that of a \emph{Dependency Networks (DNs)}, which is like a cylic Bayesian Network, and defines a probability distribuiton as a fixed point of a Markov Chain. 
 % DNs can also be inconsistent in a sense, 
@@ -1552,7 +1649,7 @@ In expectation, the difference between these quantities,
 There are a number of other results showing that relative entropy is the unique quantity with important properties of interest; treating them all is beyond the scope of this thesis.% 
 \footnote{%
 There are many nice axiomatizations of relative entropy;
-some important ones include Renyi's \cite{renyi1961measures}, Fadeev's \cite{fadeev1957begriff}, Tom Leinster's result showing
+some important ones include Renyi's \citep{renyi1961measures}, Fadeev's \citep{fadeev1957begriff}, Tom Leinster's result showing
 that it is the only function satisfying three trivial regularity
 properties and the chain rule, and this characterization as the unique
 functor from statistical maps to the additive monoid $[0,\infty]$.  It is the

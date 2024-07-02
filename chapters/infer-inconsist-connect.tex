@@ -11,8 +11,15 @@ We then build on this semantic connection by describing a surprisingly strong al
 % We prove  (rather substantial) proof to \cref{proofs:the-reductions}.
 % In this sense, precisely quantifying one's inconsistencies is no easier than optimally resolving them.  
 Thus, the two views of PDGs are essentially equivalent---not only semantically, but algorithmically as well.
+%
+\newmaterial{%
+    % This 
+The result is a deep and rather philosophical conclusion: precisely quantifying the degree of one's inconsistency is no easier than optimally resolving those inconsistencies. 
+}%
 
-In between, we formally describe the two computational problems of interest in \cref{sec:approximate-inference}, and finish off the upper bounds developped in \cref{chap:infer}.
+To get there, we first need to formally describe the two computational problems of interest (\cref{sec:approximate-inference}) as approximate inference problems,
+which allows us to also
+formally finish the upper bounds developped in \cref{chap:infer}.
 
  
 % \section{A Semantic Connection}
@@ -267,7 +274,7 @@ to do so? In general, the answer is no.
 
 % \textcite{pdg-aaai}'s original approach to  
 Historically, our original approach to inferring the probability of 
-$Y$ in a PDG $\dg M$ was to minimize their combined inconsistency \cite{pdg-aaai}. 
+$Y$ in a PDG $\dg M$ was to minimize their combined inconsistency \citep{pdg-aaai}. 
 The idea is to add a hypothesis distribution $h(Y)$ to $\dg M$, and 
 adjust $h$ to minimize the overall inconsistency $\aar{\dg M + h}_\gamma$.
 Parts (b) and (c) of \cref{prop:sharp-p-hard} significantly undermine this approach, because even just calculating $\aar{\dg M + h}_\gamma$ is intractable. 
@@ -275,7 +282,9 @@ Typically minimizing a function is more difficult than evaluating it, so one mig
 There is a strong sense in which being able to calculate inconsistency is enough to perform inference efficiently.
 Specifically, 
 with oracle access to the inconsistency $\aar{\dg M + h}_\gamma$\,, 
-\citeauthor{pdg-aaai}'s approach gives right answer with the best possible asymptotic time complexity.
+% \citeauthor{pdg-aaai}'s
+our original
+ approach gives right answer with the best possible asymptotic time complexity.
 Thus, while it may not be a practical inference algorithm, it is a powerful reduction from inference to inconsistency calculation. 
 
 \begin{linked}{theorem}{inf-via-inc-oracle}
@@ -540,8 +549,10 @@ by reduction to SAT and \#SAT, respectively.
 \subsection{Inference via Inconsistency Minimization.}
 We now address
 \cref{theorem:inf-via-inc-oracle},
-which is closely related to \textcite{pdg-aaai}'s original idea for an inference
-algorithm.  While that idea does not yield an efficient inference algorithm,
+which is closely related to 
+    % \textcite{pdg-aaai}'s
+    our original idea for an inference algorithm, via inconsistency minimization.
+While that idea does not yield an efficient inference algorithm,
 it does yield an efficient reduction from inconsistency minimization to inference.
 In order to prove this, we first need another construction with PDGs.
 A probability over a (set of) variables can be viewed as a vector whose
@@ -627,8 +638,11 @@ semantically, in the case we're interested in.
 \end{lemma}
 \begin{lproof}
     The inequality is immediate; it is an instance of monotonicity of inconsistency
-    \cite[Lemma 1]{one-true-loss}. Intuitively: believing more cannot make you any less
-    inconsistent.  We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
+    % \cite[Lemma 1]{one-true-loss}
+    (\cref{lemma!}).
+    % Intuitively: believing more cannot make you any less
+    % inconsistent.
+    We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
 
     $(\impliedby)$. Suppose that there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y) = p$.
     Because $\mu \in \bbr{\dg M}^*_\gamma$, we know that

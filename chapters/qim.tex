@@ -118,7 +118,7 @@ Yet these kinds of independencies are not the only important
 %oli22: historical accuracy is far less important than telling a story. Besides, we'll make the connection soon enough.
 %joe18: I agree in general abot the story
 %oli21: Trying for a replacement. 
-% In this paper, we focus on the qualitative aspects of probabilistic dependency graphs (PDGs) \cite{} or, more precxisely, the hypergraphs that describe their struture, and show how they can be used to describe far more than just conditional independencies.
+% In this paper, we focus on the qualitative aspects of probabilistic dependency graphs (PDGs) \citep{} or, more precxisely, the hypergraphs that describe their struture, and show how they can be used to describe far more than just conditional independencies.
 In this paper, we study a natural generalization of standard graphical model structures that can describe far more than conditional independence. 
 
 %oli16:
@@ -144,7 +144,7 @@ functional \emph{dependence},
     cause is determined outside the model) 
     together with a collection of equations (i.e., functional dependencies)
     describing how each non-exogenous variable can be determined
-        as a function of other variables \cite{pearl:2k}.
+        as a function of other variables \citep{pearl:2k}.
 }%
 %joe16
 %An acyclic causal model, for example, specifies a distribution  via a
@@ -309,7 +309,7 @@ these relationships.
 %reasonable reference.  (I suspect, but am anot sure, that Koller and
 %Friedman discuss them too.)
 % Indeed, the graphoid axioms \citep{PP86} and axiomatizations of conditional independence \citep{NN13} 
-Indeed, the graphoid axioms (which describe BNs and MRFs) \cite{pearl1987graphoids} and axioms for conditional independence \citep{naumov2013re},
+Indeed, the graphoid axioms (which describe BNs and MRFs) \citep{pearl1987graphoids} and axioms for conditional independence \citep{naumov2013re},
 do not even consider statements like $A \CI A$ to be syntactically valid. 
 %oli20: shortening
 %  ``$A$ is independent of itself ($A \CI A$)'' 
@@ -343,348 +343,43 @@ Yet such statements are perfectly meaningful,
 %joe17*: They definitely do not belie it.  It's the opposite of belie!
 %spencer3: revert with better word choice, thanks!
 and reflect a deep relationship between independence, dependence, and generalizations of both notions (grounded in information theory, a point we will soon revisit).
-%joe16
-%oli21: I don't want to talk about PDGs yet, or even hypergraphs; that's coming later on. This also makes the sentence clunkier. Spencer and I have agreed to cut. 
-% and can be captured by our semantics for hypergraphs based on PDGS.
 
-%joe16*: added.  We want to bring causality in early
-%oli21*: Ok; we'll try to bring it in earlier, but we decided it makes a lot more sense to do this in the middle of the next paragraph, after we've described our contribution and brought up "independent mechanisms". 
-%joe17: WE also want to bring in compatibilty early.  Bear with me.
-\commentout{%
-Yet another critical qualitative aspect of a distribution is the
-causal connections it describes. As we shall see, this too can be
-captured in our framework, and doing so allows us to capture
-connections between causality, independence, and interventions.
-Indeed, our approach brings causal reasoning to the forefront.
-}%
-
-% joe1*: You were apparently not able to talk about PDGs, despite my
-%insistence.  What you wrote is not acceptable.  It gives the
-%impression we're introducting a new approach. We'r not. Rather, we're
-%giving a new semantics to PDGs.  I feel quite strongly we should
-%talk about PDGs at this point.  
-%oli*:    Putting aside the pragmatics of how best to tell the story,
-% I believe it's mathematically closer to the truth to say this is
-% an entirely new way of describing structure in probability
-% distributions, than to say this is a previously unexplored 
-% aspect of PDGs.  More importantly, I  feel quite strongly that
-% we should be careful not to overemphasize this as a new semantics for PDGs,
-% because it is a special case of the old PDG semantics,
-%    I'll try to bring PDGs closer to the front more carefully, 
-% combining elements of our two writeups. 
-%oli1*: the rest of the intro has been significantly rewritten with
-% aspects of both writeups, and not all changes have been marked. 
-%joe2*: I strongly disagree (scientifically and pedagogically).  We
-%have to relate this immediately to PDGs.
-%oli2*: Why do you disagree? You haven't provided arguments or adressed mine!
-% You're just asserting your perspective again. This isn't helpful. As it 
-% stands, I don't understand your objections and stand by what I said above.
-% If this is what counts for an interation, I certainly will not agree to doing
-% things your way after just one iterations. 
-% While it may be possible to come to common ground, I strongly object
-% to the new changes you made here, which range from misleading to incorrect.
-%
-%joe2: ((replaced the fragment below))
-% This paper describes a simple yet expressive graphical
-%
-%oli2*: PDGs are not (primarily) a graphical language for describing structure
-% such as independence and dependence in probability distributions; they are
-% also a language for describing probability distributions themselves, and epistemic
-% state.  This sentence also undermines your claim that previous PDG work did not
-% interpret or give semantics to the causal PDG part of PDGs.
-%
-% \emph{Probabilistic dependency graphs (PDGs)}, introduced in
-% \citep{pdg-aaai}), are a 
-% graphical 
-%
-%oli2*: I am very annoyed with you for bringing PDGs back to the very
-% begining of the paragraph, especially in such a sloppy way. In our last
-% in-person meeting of 2023, you agreed that it made sense to begin this with a discussion
-% of independent mechanisms. We even mostly agreed on the wording. Then, without
-% asking, you modify the draft to be right back to what you were arguing for at
-% the start. And what you say is misleading!  
-%
-%oli2: What is the point of this next paragraph? My objective in writing the
-% first 6 drafts was to finally get to our contribution and talk about how 
-% we have a language that can cleanly model both independence and dependence
-% (among other things, that we needn't name here).
-% The focus is "our definition of independent mechanisms" does the right thing.
-%
-% At your insistance, I've now also integrated a lot of information on  what a
-% hypergraph is, and also mentioned qualitative PDGs in the first  
-%
-%oli2: At a higher level, I still object to your framing, and I don't want
-% you to force your story into the document unless we can come to an agreement. 
-% I think perhaps the best thing to do is to write this part synchronously,
-% together. I think that will dramatically speed up convergence. 
-%
-%oli2: reverting for now, because your version doesn't make sense. Let's
-% figure out how to compromise in our next meeting. 
-%joe16: we've now said this above
-%oli21: Spencer and I don't think the way you did it above is as effective. For a number of reasons, we can't end the first paragraph with enough detail to replace this text. 
-%spencer2: In particular, I think the way this is done in Oli's draft is nice; it ends the first paragraph with a high level comment about graphical mdoel structures, and then is more specific about the connections to dependence and independence in this paragraph. 
-%joe17: Here's a tory I thibnk you'll like ...  Bear with me for a paragraph
-%oli22: Ok, but I don't get it; this is what we had before, except for the first two words.
-%joe18: right; see below (that's the "bear with me" part)
-% This paper
 % So the paper
 This chapter describes a simple yet expressive graphical
     language for describing qualitative
     structure such as dependence and independence
     in probability distributions.
-\commentout{%
-%joe2*: I strongly disagree (scientifically and pedagogically).  We
-%have to related this immediately to PDGs
-%oli2*: While I think I understand why you want to do it this way,
-% I strongly disagree with your approach. Let me lay out some reasons.
-% First, as far as the writing is concerned, we have put off how our
-% paper ties into things long enough.  This is the place where we must
-% connect the  motivation we've spent so long building up, to our the 
-% present paper.
-% It is NOT right place to to do a hard right turn into related work
-% (relevant as it is), because understanding PDGs is not in the 
-% critical path for understanding what our paper is about, at the highest level.
-% Yes, you can view it as a semantics for PDGs (warry as I am of 
-% presenting it that way), but you can also understand it without
-% PDGs at all. Furthermore, for a reader who does know about PDGs,
-% it is important to add this extra distancing material, because this
-% is semantics only works for unweighted qualitative PDGs, and it 
-% assigns each PDG the old semantics that corresponds to a different PDG.
-% I find this very confusing, and it is certaintly not of the flavor
-% of when 
-%oli2: At a lower level, I really don't like the replacement material.
-% I've commented it out and started to explain why.
-\emph{Probabilistic dependency graphs (PDGs)}, introduced in
-\citep{pdg-aaai}), are a 
-graphical 
-%oli2: PDGs have not in the past been used explicitly as a graphical langauge
-% for describing dependence and independence. Rather, that has been 
-% a capability we have occasionally used and never directly addressed.
-% One possibility is to emphasize that this is the result of our work,
-% e.g., "This paper shows that the graphical structure of PDGs, introduced by [...], when given a new intrerpretation, can be used as a language for describing structure such as dependence and independence.".
-% If we omit the "when given a new interpretation", the sentence is true
-% but does not accurately reflect what we are doing in our paper. 
-% No matter how we do it, we've now brought PDGs into scope and 
-% must explain them, which you do ... but that delays the important 
-% material motivating independent causal mechanisms (which is what this)
-% paper is really about, and moves it further from the motivation. 
-    language for describing structure such as dependence and independence
-    in probability distributions.
-%joe2*: added.  This is the right place for it.
-They are a generalization of
-BNs and factor graphs, that can capture inconsistent beliefs \citep{pdg-aaai},
-Roughly speaking, a PDG is a graphical model where,
-like a Bayesian network (BN), nodes are associated with variables, and
-are related by \hyperarc s.  
-%oli2: people might think there's something wrong here, because in a BN that they're related by ordinary directed edges.
-In a (quantitative) PDG, these \hyperarc s
-are associated conditional probability tables, in the spirit of a BN.
-%oli2: I think the sentence below is deceptive. Qualitative PDGs are defined
-% to be directed hypergraphs (plus weights).  "Can be viewed as" is 
-% way too weak, and the sentence is technically wrong because of the weights.
-In this paper, we focus on qualitative PDGs, which can be viewed as
-%joe3*: Since you consider only directed hypergraphs, I would say that
-%here, and say that, from here on, when you say "hypergraph", you mean
-%"directed hypergraph".
-%oli3: I agree that something has to be done; we can't simply abbreviate
-% "directed hypergraph" with "hypergraph" silently. I'm also happy to do
-% as you suggest.  But in my view even better would be to use a
-% new shortened version, e.g., "dhypergraph". 
-%joe4*: NO!!!
-%oli5: fine, I'll do as you originally asked. 
-\emph{directed hypergraph s}.
-We provide a novel semantics for qualitative PDGs that allows us to
-capture dependence and independence in a way that generalizes the
-semantics of qualitative BNs and, as we show, has a variety of useful
-applications (including, among other things, allowing us to capture
-the reasoning dependency described above).
-}%
-%joe16
-%    The idea is for the modeler to specify 
-%oli21: line shaving
-% The idea behind our approach is for the modeler to specify 
+\commentout{
+    % Roughly speaking, a PDG is a graphical model where,
+    % like a Bayesian network (BN), nodes are associated with variables, and are related by \hyperarc s.  
+    Recall from \cref{chap:pdg-repr} that a PDG is a graphical model
+    where, like a Bayesian Network (BN), nodes are associated with variables,
+        and related by \hyperarc s. 
+    In a (quantitative) PDG, these \hyperarc s
+    are associated conditional probability tables, in the spirit of a BN.
+    In this paper, we focus on qualitative PDGs, which can be viewed as
+    \emph{directed hypergraph s}.
+    We provide a novel semantics for qualitative PDGs that allows us to
+    capture dependence and independence in a way that generalizes the
+    semantics of qualitative BNs and, as we show, has a variety of useful
+    applications (including, among other things, allowing us to capture
+    the reasoning dependency described above).
+    }%
 The idea behind our approach
-%joe17: we should acknowledge Pearl early here, otherwise reviewers might be unhappy
-%oli22: I disagree; I think Pearl did not quite have this definition or intuition, and that we should not be giving him credit for our contribution. The point of this paragraph is to bring up the structure of a hypergraph. By saying "graph" here, we lose the careful building up we have been doing. 
-%oli22: reverted
 is to specify 
-% goes back to Pearl \cite{pearl:2k}; we view the graph as specifying    is to specify 
-%joe18: I actually think that he did have this idea, but I can't look
-%inside his head.  More importantly, this is a time to be gracious.
-%Even if it's just that he ight have had the idea, we should give him credit.
 the inputs and outputs of a set of \emph{independent mechanisms}.
 % (a directed hypergraph, which is the graphical structure of a Probabilistic Dependency Graph (PDG) \citep{pdg-aaai}).
-%oli21*: new causal material goes here
-%joe17*: This breaks the flow.  I moved it to the end fo the
-%paragraph, without the net sentence.  I don't see anything here
-%that's reminiscent of causality.  It's true that Pearl interprets the
-%edgs in a causal model this way.  That's what we should say
-%joe18*: NO!  I keep cutting this from here, saying I don't find it at
-%all reminiscent of causality.  I think what makes it reminimiscent is
-%treating edges as independent causal mechanisms, and we should say
-%that.  That's what I did below.  reverting yet again,  What I added
-%below (which you didn't change) should be enough.
-% This notion is reminiscent of causality, and there is indeed a deep connection. Our graphical language essentially captures, and expands upon, the qualitative structures in causality---namely, causal graphs.
-%oli21: further 
-%joe17: misplaced; we need to get to compatibility right away.
-% We will later see how this framing will allow us to better understand cyclic causal models.
-%
-%oli21
-% By ``mechanism'' we mean a process by which
-%spencer2.1:
-% By an ``independent mechanism'', we mean a process by which
 In slightly more detail, by ``independent mechanism'', we mean a process by which
-%joe2
-%some (set of)
-%    target variables $\mat T$ are determined as a function of 
-%    source variables % (the ``parents'' of $\mat X$).   
-%    $\mat S$ and independent noise.
-%oli2: I like the wording change, but would prefer to introduce the 
-% symbols S,T,U early. More importantly, the "plus independent noise"
-% part is critical.
-%
-% the target variables of the \hyperarc\ are determined as a
-% (possibly randomized) function of its source variables.
-%oli3: revisiting: there's no "\hyperarc" in scope, so this needs to be done differently.
-% the target variables of the \hyperarc\ are determined as a
-% (possibly randomized) function of its source variables.
 some (set of) the target variables $T$ are determined as a
-% function of a source variables $S$ and independent noise $U$.
 (possibly randomized) function of a (set of) source variables $S$.
-%joe2*: cut all this.  The discussion may be useful to clarify what's
-%going on for you and, but is totally inappropriate for an
-%introduction (and, indeed, for this paper).  It's way too far down
-%the tree.  Oliver, at some point you'll have to accept my judgment
-%here.  I don't know how to convince you that I'm right, and I'm not
-%prepared to go back and forth on this.
-%oli4:
-% At a qualitative level, the 
-So, at a
-%oli20
-% structural
-qualitative
-level, the modeler 
-%oli20: trying to embelish the graph -> hypergraph thread of the story
-% specifies 
+So, at a qualitative level, the modeler 
 specifies not a graph, but rather
-% $\{ \mat S \to \mat T \}$
-%joe3: I don't think of mechanisms as having inputs and outputs.  I
-%would cut "mechanism"
-%oli3: ok
-    % set of mechanism inputs and outputs form a \emph{directed hypergraph},
-%oli3: ... on second thought, we just defined a mechanism as having inputs and outputs, in the previous sentence. Or sources / targets. I'll use those words instead.
-    % set of inputs and outputs form a \emph{directed hypergraph},
-%oli4:
-    % mechanisms form a \emph{directed hypergraph}, which happens to be
-    %oli7: 
-    % modeler's specified mechanisms form
-%joe7*: I strongly object to this; it certainly misrepresents history
-%I insist that we do it my way here.
-%oli16: I have added the original citation 
-\expandafter\commentout
-\vjoe{
-    a \emph{directed hypergraph}, which can be viewed as 
-    capturing the qualitiative structure of a \emph{probabilistic
-dependency graph (PDG)} \citep{pdg-infer}.
-}%
-%oli8*: It is your version (above) that misrepresents history. In the original
-% PDG paper, the structure is given by a graph, not a hypergraph. By doing it
-% this way, you either imply that our inference paper was the first place
-% PDGs were introduced (which is false), or that in our AAAI paper PDGs
-% have the structure of a hypergraph (which is also false).  What
-% is it exactly that you are objecting to? In order to fix this, I need
-% to understand why you think my version (below) misrepresents history. 
-%
-%oli8: Are you unhappy because of the words "another graphical model"?
-% If so, that's it's just the truth that PDGs (as defined in the
-% reference) there are a different mathematical concept from what we
-% describe here --- even if, historically, we came to this one by
-% trying to understand that one.  Nobody cares how we came to work on
-% this; what they care about is what's true. 
-%oli16: reinstating, with a few minor modifications
-%oli20: in NeurIPS format, citations are cheap, so we don't have to 
-% do the "by some accounts" thing. 
-% a \emph{directed hypergraph}---which by some accounts \citep{pdg-infer} is the qualitative structure of a newer kind of probabilistic graphical model, called a \emph{probabilistic dependency graph (PDG)} \citep{pdg-aaai}.
 a \emph{directed hypergraph}---which, as we have already seen,
 is the structure of
 a PDG.
-% \citep{pdg-aaai,pdg-infer,one-true-loss}.
 
-% Compared to modeling with BNs, the key conceptual shift is to
-%     use a directed hypergraph instead of a directed graph. 
-% After all, each ``independent mechanism'',
-%     i.e., each random process by which a variable $X$ is determined,
-%     corresponds not to a directed \arc\ between a pair of variables, but to 
-%     a directed \emph{hyper}arc with multiple sources (the parents of $X$).
-% As with PDGs, the key conceptual shift is to use a directed hypergraph
-% instead of a directed graph.
-% There is a close relationship between the qualitative information
-%     of a PDG (\cref{sec:pdgs}), and in particular, we will see how 
-% There is a close (but far from obvious) relationship between the
-%     qualitative information
-%     of a PDG (\cref{sec:pdgs}),
-% However, we will later see that this definition
-%     of \scibility\ actually corresponds to a different PDG,
-%     which explicitly models the noise variables. 
-% This allows for the distinction between being causally independent 
-%     of all other variables (no parents in a BN) and no .
-% Similarly, it enables a distinction between a joint dependence 
-%     (two distinct mechanisms that are both responsible for $X$)
-%
-
-%oli3: moving this here; 
-%joe4: ... where it breaks the flow and is unconnected to anything
-%else.  I tried to fix that.
-%oli5: Simulatenously, I had fixed it in a way that I think you'll find is much closer to your original writing.
-\commentout{
-    PDGs
-    are a generalization of
-    BNs and factor graphs, that can capture inconsistent beliefs,
-    and come equipped with a natural measure of that inconsistency,
-        which functions as a ``universal loss function'' \citep{one-true-loss}.
-}
-%oli4: then changing it to look more like your writing; see below.
-\commentout{
-    PDGs are a generalization of
-    BNs and factor graphs that can capture inconsistent beliefs,
-    and come equipped with a natural measure of that inconsistency,
-        which functions as a ``universal loss function'' \citep{one-true-loss}.
-}
-%oli4: moving the above closer to what you had above, but with some
-% crucial modifications. 
-%joe7*: I find this completely unacceptable.  I will not agree to
-%submitting a paper with this paragraph.
-%oli8*: I will change this paragraph, but I also find your approach unacceptable. I wish we could have talked about this synchronously, instead of wasting so much of both fo our time rewriting things when we're not converging at all. 
-%oli8: starting the same way as before, because I don't think that was the primary objection, but rather a change you made as a result of your misguided change above, which I reverted. 
-%oli20*: I'm now happy to cut this material.  (I have a better idea for how to say this, that I think Joe will be happier about. )
-% \voli{ \emph{Probabilistic Dependency Graphs (PDGs)}, introduced in \citet{pdg-aaai}, are also a graphical language for describing probabilistic dependence and independence, and they too can model structural information. }
-%
-%oli20: don't want to focus on PDGs so much; let's start by cutting the background material that's not relevant ot the present paper.
-% PDGs generalize BNs and factor graphs, can capture inconsistent beliefs,
-%     and provide a natural (entropy-based)
-%     way to measure the degree of that inconsistency.
-%oli-20: bringing up from below
-% Prior work \citep{pdg-aaai,one-true-loss,pdg-infer} focused primarily on the quantitative, probabilistic information in a PDG, rather than the qualitative information.
-% \citet{pdg-aaai}, for instance, define what it means for a distribution to be compatible with the probabilistic information in a PDG, but do not provide an analogous definition for the qualitative information.
-%oli20*: rewriting; new compromise material!
-  %joe16: I really don't like this.  Why is it only "seemingly" very
-  %expressive?  It's a bad idea to say it's not well understood (as
-  %opposed to pointing out cases where it gives problematic answers)
-%oli21*: Your replacement is very good, and in particular far better than what I wrote. Thank you! 
-
-%  PDGs have a qualitative semantics (in terms of a   function on
-%distributions) that is seemingly very expressive, but not
-  %well-understood beyond the BN case.
-%Part of the problem is that it is not even clear what the analogue of
-%a BN's independencies should be for a cyclic graph, let alone for an
-%arbitrary directed hypergraph.
-% We develop precisely such a notion. 
-% In this work, we develop such a notion from first principles.
+\newmaterial{%
 Although some qualitative aspects of PDGs were characterized  
-%oli21: expanding your citation
-% by Richardson and Halpern \cite{} 
-% by \citeauthor{pdg-aaai} \cite{pdg-aaai}
-% \citet{pdg-aaai}
 using a scoring function (\cref{ssec:qual-scoring}), that scoring function 
 does not obviously correspond to an analogue of our set-of-distributions semantics $\SD{-}$ for quantitative information (\cref{sec:set-of-distribution-semantics}).
 Part of the problem is that it is not even clear what the analogue of
@@ -695,6 +390,7 @@ arbitrary directed hypergraph.
 % In this work, we develop a semantics that does so from first principles.
 % In this chapter, we develop from first principles an alternate qualitative semantics for directed hypergraphs.
 In this chapter, we develop precisely such a notion.
+}%
 %oli20: now, drawing from \vjoe. Below %oli20 modifications are relative to Joe's initial version.
 More precisely, we define what it means for a distribution to be 
 %oli20: cut
@@ -705,23 +401,10 @@ More precisely, we define what it means for a distribution to be
 %simple as possible.  I would %(unhappily) be willing to use it the
 %first time we define the notion, and then get rid of it all later times.
 %oli21*: Ok. I see why having QIM QIM QIM over the page is distracting and unnecessarily formal. I'm willing to use the approach you suggest to cut a supermajority of these instances. However, I still find it very important that we occasionally refer to "QIM-compatibility" in various places throughout the paper. "Compatibility" on its own is such a generic English term, and a close match to many of the concepts we describe.
-\emph{\scible} (qualitatively independent-mechanism compatible, or just \emph{compatible} when unambiguous) with
-% \emph{(QIM-)compatible} (qualitatively independent-mechanism compatible) with
-% \emph{(QIM-)compatible} (qualitatively independent-mechanism compatible) with
-% \emph{QIM}(qualitatively independent-mechanism)\emph{-compatible} with
-%oli20: 
-% the set of independent mechanisms represented by
-a directed hypergraph $\Ar$.
+\emph{\scible} (qualitatively independent-mechanism compatible, or just \emph{compatible} when unambiguous) with a directed hypergraph $\Ar$.
 This definition allows us to use directed hypergraphs as
     a language for specifying structure in 
     probability distributions,
-%joe16: No!  The theorem doesn't say that BNs are a special case of
-%directed hypergraphs; that would be totally uninteresting!  It says 
-%oli21: of which "BNs *and their independencies* are a special case". We see where you're coming from, so we clarified it.
-    % of which qualitative BNs and their
-    % corresponding independencies are a special case (\cref{theorem:bns}).
-%oli21%spencer2:
-% which extends the language of qualitative BNs for specifying independencies. 
 of which the semantics of qualitative BNs are a special case (\cref{theorem:bns}).
 %
 %joe16: (new material)
@@ -733,7 +416,7 @@ of which the semantics of qualitative BNs are a special case (\cref{theorem:bns}
     any of the standard ways of specifying conditional independencies in a
     BN, a distribution is \scible\ with a hypergraph corresponding to a BN
     iff it satisfies all the conditional independencies associated with
-    the BN according to the standard definitions (\cref{theorem:bns})..
+    the BN according to the standard definitions (\cref{theorem:bns}).
     Thus, by reasoning directly about independent causal mechanisms, we
     can recover the standard semantics of BNs.
 }
@@ -908,108 +591,29 @@ For one thing, it can encode arbitrary
 %joe16: already said this
 %oli21: Spencer and I would prefer to do it in this order, because we can get the "functional dependence" out of the way quickly, but we have a lot more to say about cylic models below. 
 for another, it gives meaningful semantics to cyclic models.
-%oli21: the material you added above has been rewritten here. 
+
+\commentout{%
+    \Scibility\ satisfies a \emph{monotonicity} property (\cref{sec:monotone}) that helps us begin to understand these cyclic models.}%
 %
-%joe16: putting causality and information theory ahead of monotonicity.
-%Showing that compatibility has deep connections between causality and
-%information theory shows that it is deeply embeded into notions that
-%we have long recognized are important.  
-%oli21: I agree that causality and information theory are clearly more important, but I was going for a story structure that goes from simple and easy to understand, to important and general. 
-%joe16: I would frankly cut the material on monotonicity,
-%which I view as technical material far down the tree.  Even if you
-%need some results from the monotonicity section to prove your results
-%on infomration theory, the releveant material can go in the appendix.
-%oli21: I hear you and see where you're coming from. That said, I think the primary value of the monotonicity material is conceptual, for, me, and so I would strongly prefer to keep it in the main body of the paper. I will do what I can to cut from that section to make our page limit. 
-%joe16*: I cut this.  As I said, it's down the tree.  You can include
-%it in the paper (although I would argue against it), but I don't
-%think it rises to what belongs in an introduction.
-%oli21: I see your point, and will minimize this further. Monotonicity fits well here conceptually, and it's already pretty tucked away and de-emphasized. Let me try to further minimize it. 
-% \Scibility\ satisfies an intuitive \emph{monotonicity} property (\cref{sec:monotone}),
-%joe17*: I cut this from here.  I hope that you abd Spoebcer can
-%disucss it and see that the tighter story (less is ore!) helps make
-%your case (or what I understand to be the story that you're trying to
-%tell) better.
-%oli22: oops! I had already done a lot more minimziation that somehow got lost. But I can live with this cut. 
-\commentout{\Scibility\ satisfies a \emph{monotonicity} property (\cref{sec:monotone}) that helps us begin to understand these cyclic models.}%
-%oli21: more minimization
-% which is the basis of an intuitive calculus that helps us begin to understand these cyclic models. 
-% It can handle cyclic models in an non-trivial way, and in doing so, sinks a standard counter-example in information theory (Example \cref{sec:cyclediscussion}). 
-% It applies even when there are cycles, and the result
-%     can be clarifying; in one case, it undermines 
-%     a standard counter-example in information theory
-%     (\cref{sec:cyclediscussion}). 
-%joe17: Here's a story that I think you'll like; it's what I was
-%hinting at above.  Bringing in causality
 Indeed, compatibility lets us go well beyond capturing dependence
 and independence. The fact that \citet{pearl:2k} also views
 causal models as representing independent mechanisms suggests that
 there might be a connection between causality and
-%joe18
-%comptability; in fact, there is.
 QIM-compatibility. In fact, there is.
-%oli21: line shaving + getting rid of a QIM
-% Furthermore, as we hinted above, \scibility
-%joe17: integrated with setences above
-%As hinted above, \cibility\
-%has deep connections with causality (\cref{sec:causal});
-%for instance, a
-%oli21: embelishing causal story
-% 
-%joe16: we haven't defined witness yet; adding \emph
+
 A \emph{witness} that a distribution $\mu$ is \cible\ with a 
 \hgraph\ $\Ar$ is an extended distribution $\bar\mu$ that 
-%oli21:
-% can be naturally converted to
 is nearly equivalent to (and guarantees the existence of)
-%oli20: want to speak more abstractly; no need to define SEM acronym yet, as it won't be used for until section 3. Besides, it's not even that more more accurate, because really we turn it into a randomized PSEM, and non-deterministically. 
-% a \emph{structural equations model (SEM)} \citep{pearl:2k}.
 a causal model
-%oli21: adding the key property? otherwise what does it have to do with \mu and \Ar? Some options below
-%
 that explains $\mu$ with dependency structure $\Ar$. 
-%joe17: adding more motivation
 As we shall see, thinking in terms of witnesses and compatibility
 allows us to tie together causality, dependence, and independence.
 
-
-% that explains the causal origins of $\mu$. 
-% that gives rise to $\mu$. %oli21: our terminology
-% with structure $\Ar$ that gives rise to $\mu$. %oli21: extra precise, uses \A
-%joe16: added next line
-Perhaps
-%joe17
-%oli21: this will be least surprising to an information theorist; I don't want to suggest our own surprisal here, for fear of looking like we don't know that information theory already combines independence and dependence.
-% most
-surprisingly,
-%oli21: cutting a QIM
-% \Scibility\ 
+Perhaps surprisingly,
 \cibility\ 
 also has deep connections with information theory
 (\cref{sec:info}).
-%joe16*: This seem so incredibly weak!   Just reading it (without all
-%your preconceptions) does not it seen that way to you?.  Who cares
-%that it has a "certain [undefined] information-theoretic property"?
-%oli21: Totally agree; thanks for pointing this out. Instead of cutting, Spencer and I have decided to rewrite it to say something more substantial.
-%in particular, compatibility with $\Ar$ implies
-%that a distribution has a certain information-theoretic property
-%(related to the PDG scoring function for $\Ar$).   
-% For instance, 
-% for instance, 
-%
-%oli21: cutting the weak material
-\commentout{%
-    These connections turn out to be quite useful: they yield a generic
-    information-theoretic test for complex (e.g., cyclic) dependency
-    structures, and enable causality to clarify some important
-    misunderstandings in information theory
-    (\cref{example:nonneg-ii,example:ditrichotomy}).
-}%oli21*:%spencer2*: rewrote
-%joe17
-%Observe that the
-The
-conditional independencies of a BN can be viewed as a very specific kind of information-theoretic constraint.
-% Our generalized notion of compatibility with a hypergraph A also implies an information-theoretic constraint (related to the PDG scoring function).
-% There turns out to be a generalization of this constraint 
+The conditional independencies of a BN can be viewed as a very specific kind of information-theoretic constraint.
 Our notion of compatibility with a hypergraph $\Ar$ 
     turns out to imply a generalization of this
     constraint (closely related to the qualitative PDG scoring function)
@@ -1103,97 +707,23 @@ Last but far from least,
 \commentout{%
 Clearly the applicaitons of \scibility\ extend far beyond providing a compatibility semantics for the qualitative information in a PDG. 
 Yet, on that original front, the situation is only partially resolved.
-% But has our approach 
-%joe7
-%    Prior work \citep{pdg-aaai,one-true-loss,pdg-infer} has focused on 
-%oli20:
-% As we said, prior work \citep{pdg-aaai,one-true-loss,pdg-infer} focused on the quantitative, probabilistic information in a PDG, rather than the qualitative information. 
-%
 \commentout{
-\citet{pdg-aaai}, for instance, define what it means for a distribution
-    to be compatible with the probabilistic information in a PDG,
-    but do not provide an analogous definition for the qualitative information.
-They do, however, provide a scoring function quantifying the discrepancy between a probability distribution and the qualitative information in a PDG.  
-While that scoring function   has some nice properties,
-it is not well-justified, and can also behave unintuitively.
-(For example, it can be negative, making it difficult to interpret 
-%oli4: saving space
-    % as a degree of incompatibility
-    \unskip.) 
-%joe1*: added
-We derive an arguably 
-%oli1:
-% better-justified scoring
-    more intuitive scoring function here, 
-    based on \scibility.
-%oli1*: added in response
-%joe2*: Again, you're going into more depth than is appropriate for an
-%intro, and saying things that I don't understand (which means that
-%the typical reader won't understand them either).  You either have to
-%say more, providing motivation and intuition, or say less.  I opted
-%for the latter.
-%oli-2: Personally, I'm not a fan of our new scoring function, and I don't want anyone who reads just the intro and skims the rest to be under the false impression that I think it is better.  
-% Surprisingly, this new scoring function turns out to be
-% an instance of the original PDG scoring function 
-%oli-2: clarifying
-%% applied to a ``causally extension'' of that PDG explicitly models independent noise. 
-% applied to a modified PDG that explicitly models the independent noise. 
-%joe2
-%    Surprisingly, this new scoring function turns out to 
-%    be    an instance of the original PDG scoring function 
-%        applied to a ``causal extension'' of that PDG explicitly 
-%        models independent noise. 
-%
-%oli1:
-%% There turn out to be 
-%This is one of several
-%    deep (but far from obvious)
-%    connections between 
-%%oli1:
-%    the scoring function we give here and that
-%        used by \cite{pdg-that}
-%     gives us a deeper understanding of the latter.  
-%oli4: 
-% The new scoring function turns out to several surprising and deep
-%joe7
-%    Our new scoring function turns out to have deep and complex
-    Our new scoring function turns out to have deep
-connections to the original
-%oli4:
-% scoring function;
-one:
-%oli4:
-% indeed, although this is far from obvious, it can be viewed
-% for example, it can be viewed
-% as a special case of the original scoring function.
-the former is both a pointwise upper bound on the latter, 
-% and also, in a sense, a special case of it.
-and also a special case of it (when applied to a transformed PDG).
-We explore these connections in \cref{sec:pdgs}. 
+    \citet{pdg-aaai}, for instance, define what it means for a distribution
+        to be compatible with the probabilistic information in a PDG,
+        but do not provide an analogous definition for the qualitative information.
+    They do, however, provide a scoring function quantifying the discrepancy between a probability distribution and the qualitative information in a PDG.  
+    While that scoring function   has some nice properties,
+    it is not well-justified, and can also behave unintuitively.
+    (For example, it can be negative, making it difficult to interpret 
+        as a degree of incompatibility.) 
+    We derive an arguably more intuitive scoring function here, based on \scibility. Our new scoring function turns out to have deep connections to the original one: the former is both a pointwise upper bound on the latter, and also a special case of it (when applied to a transformed PDG). We explore these connections in \cref{sec:pdgs}. 
 }%
-%
-%oli20: now, drawing from \voli.
-%
-% At this point, we skip to the end. It is important to realize 
-% So as not to leave the reader hanging, at this point we skip to the end of the story. 
-% While PDGs ultimately play a major role, 
 Although the two are very closely related, we have found that \scibility\ is not quite the same as the qualitative aspect of a PDG (at least, not with its current scoring function semantics). 
 In fact, we will see (\cref{sec:pdgs}) that PDGs are actually more expressive, in the sense that our concept of mechanism independence can be naturally encoded within them. 
-% But qualitative PDGs do not have an interpretation nearly as clear as the one we offer here. 
-% This paper can therefore be interpreted in two ways: 
-% With respect to the PDG formalism, this paper has two interpretations: 
-So, as far as PDGs are concerned, this paper can be interpreted in two ways: as an alternative, more restrictive but causally grounded semantics for all PDGs, 
-% or as causal motivation for the special subclass of PDGs in the image of the encoding, according to their original semantics
+
+So, as far as PDGs are concerned, this chapter can be interpreted in two ways: as an alternative, more restrictive but causally grounded semantics for all PDGs, 
 or as a case study on just those PDGs in the image of the encoding (under their original semantics).
-% Either way, we present a 
 Either way, the concept has implications far beyond PDGs.
-% Either way, the biggest contributions of this paper are arguably not about PDGs at all.
-% In either case, the biggest contributions of the paper lie beyond the PDG formalism.
-% We are optimistic that further investigation 
-%
-% ---objects that, have evidently proved of independent interest.
-%
-% But the real contributions of our paper lie beyond PDGs. 
 }
 %joe16: \end{commentout}
 
@@ -1203,98 +733,26 @@ Saying that one approach to
 %oli21: streamline
 % doing
 qualitative graphical modeling has
-connections to so many different notions is a rather bold claim.  We spend the rest of the paper justifying it.
+connections to so many different notions is a rather bold claim.  We spend the rest of the chapter justifying it.
 
-% This exemplifies one aspect of a  
-%     deep (but far from obvious)
-%     connection between this scoring function
-%     and our own definition of \scibility.   
-    % which we explore in \cref{sec:pdgs}.
-%joe2:
-% We explore this further in \cref{sec:pdgs}.
-%oli1*: After some thought, I no longer think this is accurate in general. 
-% From this perspective, our work forms a principled foundation for the qualitative or structural half of the PDG formalism, rooted in causality. 
-%joe2: unnecessary and arguably inappropraite
-% From this perspective, our work forms a 
-%     principled foundation for the structural half 
-%     of (a large subclass of) PDGs. 
-%
-%joe7*: let's cut this; no point in ending the intro on a down note.
-%We can mention this issue in the conclusion
-%oli8: I had the same thought. 
 \commentout{
-%joe1*: added.  Can we apply the results of our inference paper to
-%the inference problem with these semantics?  We need to say
-%something about inference, in any case.
 To summarize, our semantics for qualitative PDGs gives us a powerful modeling
 tool to capture dependencies and independencies; when combined with the
 quantitative information in a full PDG, we can go well beyond standard
 graphical models.  
-%oli1: cleaning up the next sentence:
-% An obvious question is how difficult inference is how difficult inference is in such PDGs. 
 An obvious question is how difficult inference is for such PDGs. 
-%oli1*: saying something about inference.
-%joe2
-%Even though this definition is captured by the original PDG semantics, 
-%oli2: I like the change, except for the "in a sense" which weakens the statement beyond what I would prefer, and also disrupts the flow of the sentence.
-% Although our results show that the current semantics can, in a sense,
 Although our results show that 
-    %oli7:
-    % the current semantics can
     \scibility\ 
     be viewed as a special case of 
-    %oli7:
-    % the original semantics for PDGs,
     PDG semantics,
     the inference algorithm provided by
     \citet{pdg-infer}, unfortunately, does not apply.
-%joe2
-%This is because these PDGs do not exhibit the ``observational dominance''
-%    property that is required by that work.
-%
-%oli2: what you say below is true, but much weaker than the point I 
-% was trying to make. This scoring function and the original one
-% are alike in that we do not know how to do inference for purely qualitative
-% PDGs. But the new scoring function is much worse: it is intractable even
-% if we have quantiative information (and large values of observational confidence)
-% along all of the edges.  
-%joe3: I don't understand this point.  The new scoring function does
-%not use quantitative information.  It does not apply if you have it
-%(which doesn't mean it's intractable if you have it).  Clearly, if
-%you have quantitative information, you have to extend the scoring
-%function to deal with it.
-%oli3: we went over this and clarified in our meeting today. To 
-% recap: while the problem is convex if you extend the previous scoring
-% function with quantitative information, it is not if you start with 
-% this scoring function.  In that sense, this scoring function interacts
-% much less well with the quantitative half, and the semantics based on
-% that scoring function are far less tractable. 
-%
-% cannot be applied to purely qualitative semantics, since it applies
-% only when the focus is on the probabilistic
-% part of the semantics. 
-%
-%oli2: we're not really talking about inference in this section;
-% we're talking about the decision problem that corresponds to 
-% SIM-compatibility.  This probablem is actually easy
-% if we use semantics induced by the original scoring function, but
-% much more difficult with these semantics.
-%joe3: What decision problem are you talking about
-%oli3: The following decision problem: Given a distribution \mu and
-% a directed hypergraph \Ar, tell me whether or not \mu \models \Ar. 
-%
-% We discuss this issue and possible solutions in \cref{sec:null}.
-%
-%joe2: While we should be intellectually honest, we on't want to end
-%on such a down note
-%oli1: 
-%oli7: moving this to the discussion:
-\commentout{
-We describe an alternative approach in \cref{sec:null}
-    that works well for small PDGs, 
-    but we do not have a proof that it succeeds in all cases, 
-    and it scales very poorly.
-}
+    \commentout{
+    We describe an alternative approach in \cref{sec:null}
+        that works well for small PDGs, 
+        but we do not have a proof that it succeeds in all cases, 
+        and it scales very poorly.
+    }
 }
     % although provably bounding its running time remains an open problem.
 
@@ -1308,7 +766,7 @@ We describe an alternative approach in \cref{sec:null}
 %oli16: also moving it to the front of the section.
 %oli20:
 % \Scibility\ gives us a way to make precise
-In this section, we present the central definition of our paper: a way of making precise
+In this section, we present the central definition of the chapter: a way of making precise
 Pearl's notion of ``independent mechanisms'', used to motivate Bayesian Networks from a causal perspective. 
 %oli20: moving up from the end of the paragraph.
 %oli20*: actually, I think the story is better if we cut this. Or we could move it, or trim it down.
@@ -1332,7 +790,7 @@ states that
 % a directed hypergraph.
 %
 % Secretly, this is also an unweighted structure
-% for a probabilistic dependency graph \cite{},
+% for a probabilistic dependency graph \citep{},
 % If we annotate
 %oli1:
 % Technically speaking, 
@@ -1353,10 +811,10 @@ the mechanism.  Instead, the autonomous mechanism that determines the child is r
 % So, the qualitative aspect of a mechanism is a is a directed \emph{hyper}arc, and can have multiple sources.
 So, the qualitative aspect of a mechanism is best represented as a directed \emph{\hyperarc}
 %oli6: adding citation
-\citep{gallo-dirhypergraphs1993}
+% \citep{gallo-dirhypergraphs1993}
 %joe16
 %\unskip, and can have multiple sources.
-\unskip, that can have multiple sources.
+that can have multiple sources.
 %oli16: second part comes here. 
 
 Recall that a directed hypergraph (\cref{defn:hypergraph}) consists consists of a set $\N$ of nodes
@@ -1370,129 +828,19 @@ simply a \emph{hypergraph}, since all our hypergraphs will be directed.
 A directed hypergraph---henceforth, simply a \hgraph, since it's the only kind we discuss---can be viewed as 
     an \emph{(unweighted) qualitative PDG} \citep{pdg-infer}
     by identifying its nodes with variable names.
-%oli1: moving what was previously the next
-% paragraph here, before continuing with the nod to qualitative
-% PDGs. 
-%
-%joe1*: 
-%The distinction between "variable" and "variable name" may occur 
-%in the PL community, but I have never seen it made in the AI
-%community.  Nor have I seen the values be part of the definition of a
-%variable.  This will hurt *much* more than help.
-%joe3: I would cut the rest of this paragraph.   For what it's worth,
-%there's no reason that hte set of values of a variable has to be
-%finite.  But I don't see what we gain by saying this.  It also breaks
-%the flow.  I would just go right to the next paragraph (without a
-%paragraph breaak)
-%oli3:  I see your point.  At the same time, I think this material
-% is very valuable (see next %oli3 for reasons why). Perhaps it can go 
-% elsewhere?  But the previous sentence leads into it so nicely...
-%oli3: the rest of this paragraph does two important things. The first
-% sentence sets up how nodes (the qualitative notion) are related to variables
-% (the quantitative notion), and defines the "values of" notation; both 
-% are needed before we get to joint distributions in the paragraph after next.
-% The second sentence gives an important recurring theme: the values
-% of the variables should not be thought of as part of the qualitative
-% picture. This is worth emphasizing because it may not be standard, 
-% but it is the right way to think of things.  This will come back
-% into play in example 6, if not beforehand. 
-%joe4*: I strongly disagree.  Note that the definition of
-%compatibility talks about probability measures, and to define \mu you
-%need to have a set of values.  Now you cay say that you can consider
-%consider probability measures for all possible choice of values.
-%That would mean that we have this huge class of compatible
-%probability measures (no longer a set).
-%oli5*: so what? We're not packaging those as a class. We never refer to "the set of all distributions over anything consistent with a hypergraph". We're just talking about a binary relation between a directed hypergraph (which, as a graph, does not have a set of values, just like a qualitative BN does not encode sets of values).  This tell us how, for a SPECIFIC joint probability distribution (which is where the value sets come from), we can define whether or not it's compatible with a directed hypergraph.  I don't see why you feel a need to come up with a an artificial extension of a directed hypergraph, and then afterwards require that the values of that hyeprgraph match the ones specified by the distribuiton. Not only is that unnecessary and different from what's done in the literature, but it would also take more space. As a side note this approach conflicts heavily with my own intuition for what "structural" means. 
-%joe4*: You'd also already have a
-%problem in Example 2.  The generality you're gaining by not fixing a
-%set of values for each variable is simply not worth it.  You'd
-%certainly have to explain this issue to the reader if you were going
-%to ojmit the set of values.  
-%oli5*: I don't see any deep problem with example 2. If we want to be very precise, we could simply replace "variable X" with "node X", which I have now done. 
-%joe6*: I know you won't believe me, but since readers can't read your
-%mind, they will find this very confusing and completely miss the
-%point.  If you insist on doing it this way, you *must* say explicitly
-%that variable values are not included in the hypergraph, and explain
-%where they're coming from (the distribution).  
-%oli7: Great, I'll do that.  (I tried to do something like this some time ago, but you didn't see why and asked me to cut it.)
-%oli7: math is the same; rewording so that "variable" is still a valid thing to call a hypergraph node (that doesn't have values). 
-To \emph{fully} interpret a node $X \in \N$ as a variable, it must
-% To use a node $X \in \N$ as a variable quantitatively, it must
-% To interpret a node $X \in \N$ quantitatively, it must
-be
-% associated with a (measurable) set of possible values $\V(X)$.
-% associated with a (finite) set $\V(X)$ of possible values.
-%oli3: no longer insisting on finite (but measurable is definitely
-% a necessary technical requirement.)
-% associated with a (finite) set $\V(X)$ 
-%joe7: I've cut the word 'measurable" from my description.  It's not
-%defined, as I understand it, unless you have an outer measure or a
-%\sigma-algebra 
-%(depending on which definition you use; there doesn't seem to be a
-%universally agree-upon definition).  I'm more used to thinking of a
-%measurable set as being an element of a sigma-algebra, but we don't
-%have a sigma-algebra (or outer measure) anywhere in sight.
-%
-%oli8:  "measurable" has a standard definition: it means precisely
-% the thing you say is missing, i.e., coming equipped with a \sigma-algebra.
-% A measurable set is a set together with a \sigma-algebra over it.  
-% I'd be willing to put this in a footnote, but if we remove "measurable"
-% then we need to say "finite" to be precise. Finite might actually be
-% better for simplicity, especially once we get to the entropy part of the
-% paper. 
-% associated with a (measurable) set $\V(X)$
-associated with a (finite) set $\V(X)$
-%joe1*: NO!  Pleasee add the parens everywhere.  I really find this
-%notation annoying.  It makes reading this material nontrivially harder for me.
-% (or simply $\V\!X$) 
-%oli1: Ok. While I still have a strong preference and several arguments
-% in support of this notation, I will cede the parentheses in this paper.
-% The compactness lost by adding parens is less important in this
-% context than it is for the inference material. 
-of possible values.
-%oli1: my concession is to delete the following material:
-%oli3: pulling this out from below so that the symbol $\X$ is
-% bound and we can talk about sets of variables.
-% Thus, a set of variables $\X$ is equivalent to 
+To \emph{fully} interpret a node $X \in \N$ as a variable, it must be associated with a (finite) set $\V(X)$ of possible values.
 Thus, a set of variables $\X$ is equivalent to 
-    %oli7: I suspect you won't like this, but here I think the types clarify a lot. 
-    % the pair $(\N, \V)$---%
     the pair $(\N, \V \colon \N \to \mathbf{Sets})$.
     % a set $\N$ and a map $\V : \N \to \mathbf{Meas}$.
 \commentout{
-    % Thus, a set of variables $\X$ is equivalent to 
-    %     a set $\N$ and a map $\V : \N \to \mathbf{FinSet}$.
     We draw a distinction between $\N$ and $\X$ to emphasize that $\X$ can be decomposed into its qualitative part $\N$ the set of variable symbols, and the map $\V$ which gives a quantitative interpretation of each variable as a set of possible values.
     It is convenient (and common practice) to conflate a variable name $X \in \N$ with  its corresponding variable $(X, \V\!X ) \in \X$.
 }%
-%oli1: trying to keep this in a different form.
-% However, it is important to remember that qualitative properties such
-%     as dependence and independence are meaningful no matter how one
-%     selects the quantitative interpretation $\V$ of the variables.
-%oli2:
-% remain valid no matter how one 
-% selects the concrete interpretation $\V$ of
-% the variables.
-%oli3:
-% Structural properties of a distribution, however, do not depend on the concrete interpretation $\V$ of the variables.
-%oli7: adding emphasis, beginning new sentence. 
-% but structural properties of a joint distribution $\mu(\X)$
 \emph{Structural} properties of a joint distribution $\mu(\X)$, however,
 can depend only on $\N$, not on $\V$.
-%oli7: 
-With that in mind, we use the same symbol 
-    % $X = (X, \V(X))$ 
-    for a variable and its name,
-    and abuse terminology by calling both objects ``variables'' when no ambiguity can result.
-For example, 
-    % the statement 
-    ``$X$ determines the variable $Y$''
-    is meaningful across distributions in 
-        % which $Y$ can take on different sets of possible values,
-        which $V(Y)$ can vary, 
+With that in mind, we use the same symbol for a variable and its name, and abuse terminology by calling both objects ``variables'' when no ambiguity can result. For example, ``$X$ determines the variable $Y$''
+    is meaningful across distributions in which $V(Y)$ can vary, 
     because ``$Y$'' here refers only to a variable name.
-        % until a distribution is specified.
-% Keeping that in mind, we conflate variable names and nodes in the \hgraph, as is standard.
 }
 %oli16: compromise version:
 %oli19*: a peace offering, so that we can confuse variables and nodes
@@ -1500,11 +848,16 @@ For example,
 It makes perfect sense to say that $X$ is independent of $Y$ without specifying possible values of $X$ and $Y$. Of course, when we talk concretely about a distribution $\mu$ on a set of variables $\X \cong (\N, \V)$, those variables must have possible values. The key point is that \emph{qualitative} properties of $\mu$, such as (in)dependence are expressible purely in terms of $\N$, not $\V$. }
 %
 %
-Following the graphical models literature, we are interested in \hgraph s whose nodes represent variables,
+% Following the graphical models literature, 
+As before,
+we are interested in \hgraph s whose nodes represent variables,
 so that each $X \in \N$ will ultimately be associated with a
-(for simplicity, finite)
-set $\V(X)$ of possible values.
+% (for simplicity, finite)
+set $\V\!X$ of possible values.
 However, one should not think of $\V$ as part of the information carried by the hypergraph. 
+\newmaterial{%
+(Indeed, $\V$ and $(\N,\Ar)$ are separate components of a PDG.)
+}%
 %oli21: cutting for space
 %joe17: Why are you cutting this; I actually found it helpful.  There
 %are other things I'd rather cut.  Reinstated for now.
@@ -2050,29 +1403,6 @@ then $\mu \models \Diamond \Ar_G$ if and only if
 % arcs for context, there's not always a functional dependency here. 
 %
 %
-%joe2:  The story in the rest of this section should be about non-regular
-%hypergraphs.  You should review the arguments of the Beier et
-%al. paper saying that cycles are interest, and our approach gives
-%them perfectly reasonable semantics.  (A comparison with the Beier et
-%al. paper should go here.)  % Can we say anything of interest about
-%cyclic hypergraphs?  If so, it should go here.  
-%
-%oli2: I disagree that this is the right place to talk about cyclic BNs
-% or give the comparison with the Berier paper. Yes, cycles are of interest,
-% and yes our approach gives them reaosnable semantics. But we don't have clean answers to exaclty what those semantics look like in general, and we won't get the tools to get anywhere close to analyzing them until we've finished the sections on monotonicity and on what I view as the most important theorem of this paper: the structural deficiency bound.
-%joe3: somewhere around here you should discuss that types of PDGs
-%we're intersted in.  Cyclic PDGs fit into that story.  I could live
-%with just a pointer to th Beier et al. paper, with a more detailed
-%coparison to follow.
-%oli3: ok; I've now added some text with a forward pointer, as you suggest.
-%
-%We definitely need
-%some discussion.  I find the material on equivalence weak.  You don't
-%do anything intersting with it.  If you can't find an interesting
-%application, I would cut it.  It weakens the paper. In any case, it
-%doesn't belong in this %section.  
-%
-%oli2: The material on equivalence is conceptually very important, and the proposition about equivalence of -> X -> Y and X <- Y <- is incredibly useful for playing with and understanding these graphs. It makes the definition far easier to work with.  Most of what I've proved with it so far aren't so important as to make it into the main paper, but I would be surprised if we can't find a really compelling use case.  If we can prove my conjecture that all equivalent BN structures can be proved equivalent using instances of this theorem, would that fit the bill? 
 %joe3: Conceptually important to whom?  Not to me (at least, not for this paepr).  I don't think it fits our story well.
 %oli3: I think the story should be molded by the important mathematical properties of the object in question.  So the concept of equivalence ends up being important for the I'm trying to tell, which is about motivating, understanding, and detailing the most important properties of mechanism independence.
 %
@@ -2356,16 +1686,6 @@ iff
 }
     \end{enumerate}
 \end{linked}
-%joe8*: The discussion after the theorem is far too rambly,
-% and is really unnecessary for the paper. I cut the rest
-%oli19: I feel some of it is necessary.  Let me try to dramatically reduce it and produce a less rambly critical path.
-\commentout{
-Part (c) generalizes \cref{example:two-edge-det}. 
-Based only on that example, it may seem unnecessary to ever add more than two arcs, as in part (a). 
-Intuitively, if two independent randomized procedures (always) obtain the same value of $Y$ from input $X$, then neither one can be using its randomness, and so $Y$ is a (deterministic) function of $X$.
-However, this intuition (based on randomized algorithms) implicitly assumes not only that the randomness $U_1$ and $U_2$ for the two mechanisms are not only independent, but also conditionally independent given $X$. 
-Indeed the right hand side of (a) cannot be replaced by any fixed finite number of arcs without similarly strong assumptions on $\Ar$; see \cref{sec:func-counterexamples} for (non-trivial) counterexamples when $\Ar$ comes from a cyclic graph. 
-}
 %joe14: I can live with this, but what or whom is it necessary for?
 %oli20: for people who want to understand the theorem more deeply, or people who might be convinced to work with QIM-compatibility as a notion of structure.  This is a critical aspect of the intuition that, from personal experience, is easy to get very wrong. 
 %oli19*: replacement. 
@@ -2425,8 +1745,8 @@ We start with some simple examples.
 \end{example}
 The logic above is an instance of an important reasoning principle,
     which we develop in \cref{sec:monotone}. 
-Although the 2-cycle in \cref{example:xy-cycle} is straightforward, generalizing it even slightly to a 3-cycle raises a not-so-straightforward question, 
-    whose answer will turn out to have surprisingly broad implications.
+Although the 2-cycle in \cref{example:xy-cycle} is straightforward, generalizing it even slightly to a 3-cycle raises a not-so-straightforward question.
+% whose answer will turn out to have surprisingly broad implications.
     % and has which we will return to later on. 
 % We now apply it to 
 %     a more complex example, which will play a surprisingly large role 
@@ -2919,7 +2239,7 @@ $\SD{\mathcal M} := $
 % $
 % \vspace{-1ex}
 \]
-and define $\SD{M}$ for an ``ordinary'' SEM $M$ in the same way,
+and defining $\SD{M}$ for an ``ordinary'' SEM $M$ in the same way,
     except without the constraint involving $P$.
 % This definition might be clarified if we unpack it slightly
 % The final line may be difficult to read;
@@ -3084,7 +2404,7 @@ $\langle \mat Y {\gets} \mat y\rangle \varphi := \lnot [\mat Y{\gets }\mat y]\ln
 is equivalent 
 %oli17: needed, I think
 to $[\mat Y {\gets} \mat y]\varphi$
-in SEMs where each context $\mat u$ induces a unique setting of the endogenous variables \cite{halpern-2000}.
+in SEMs where each context $\mat u$ induces a unique setting of the endogenous variables \citep{halpern-2000}.
 A PSEM $\mathcal M = (M, P)$ assigns probabilities to causal formulas according to $\Pr_{\mathcal M}(\varphi) := P(\{ \mat u \in \V(\U) : (M, \mat u) \models \varphi \})$.
 %By supplying values of the variables $\U$, one can also determine the truth of counterfactual statements.  
 %To make this precise, we need some more notation.
@@ -3487,7 +2807,10 @@ Based on their definitions, it should come as no surprise that randomized PSEMs 
 %need to be part of the title?
 %oli20: to be this precise, yes, but perhaps you'd prefer to be vaguer...
 % \subsection{The Equivalence Between \SCibility\ and Arising from a Randomized PSEM}
-\subsection{The Equivalence Between \SCibility\ \texorpdfstring{\\}{} and Solving a Randomized PSEM}
+\subsection{The Equivalence Between \SCibility\ \texorpdfstring{\\}{} and 
+% Solving a Randomized PSEM
+Arising from a Randomized PSEM
+}
     \label{ssec:ssec:cm-arise}
 %oli18: replacing this section header
 \commentout{In this section, we give the top-level contour of the relationship between \scibility\ and causality: $\mu \models \Ar$ iff there is a causal model whose dependency structure is $\Ar$ that gives rise to $\mu$. To do this, we must be more precise about what it means to ``have dependency structure $\Ar$''. We do this by considering increasingly general classes of \hgraph s, which turn out to coincide with special classes of causal models. }
@@ -3926,7 +3249,7 @@ can capture functional dependencies, and constraints.
 %*not* similar (intriguingly or otherrwise) to these other models
 %(This will also save space)
 %oli22: I disagree and like this intuition, but I'll keep it surpressed for NeurIPS
-% and constraints, making them intriguingly similar to other generalizations of SEMs that have been proposed \cite{peters-halpern-GSEMs,blom2019structural,beckers2023causal}. 
+% and constraints, making them intriguingly similar to other generalizations of SEMs that have been proposed \citep{peters-halpern-GSEMs,blom2019structural,beckers2023causal}. 
 %oli19: cutting back on examples:
 % Recall \cref{example:two-edge-det,theorem:func} for examples of functional dependencies; for an example of a constraint, note that
 %joe17
@@ -3949,11 +3272,11 @@ Indeed, we believe that
 % this class of generalized causal models
 can capture a wide class of constraints, 
 and are closely related to
-\emph{causal models with constraints} \cite{beckers2023causal},
+\emph{causal models with constraints} \citep{beckers2023causal},
 %oli22: line shave
 % although we defer this discussion to future work.
 a discussion we defer to future work.
-% We believe that GRPSEMs are actually eqiuvalent to causal models with constraints \cite{beckers2023causal}, but defer that discussion to future work.
+% We believe that GRPSEMs are actually eqiuvalent to causal models with constraints \citep{beckers2023causal}, but defer that discussion to future work.
 %oli18: cutting old material
 \commentout{
 GRPSEMs, and hence \scibility\ in its most general form, 
@@ -4773,7 +4096,7 @@ Even when $\mathrm{do}_M(\mat X{=}\mat x)$ has probability zero,
      %oli23: 
      % results of conditioning a non-standard conditional probability
      possible outcomes of conditioning a \emph{non-standard} probability measure
-        \cite{halpern-RAU}
+        \citep{halpern-RAU}
      on this probability-zero event.
      % }% end vfull
     } % end footnote
@@ -5074,7 +4397,7 @@ The fact that the dependency structure of a (causal) Bayesian network describes 
 It makes explicit the distributional consequences of BN structure.
 %spencer3: moved below
 % Yet, despite
-% substantial interest \cite{Baier_2022},
+% substantial interest \citep{Baier_2022},
 % giving a similar explanation for more complex (e.g., cyclic) dependency structures
 % remains largely an open problem. 
 %joe17*: This seems to have come out of the blue.  We haven't talked
@@ -5085,7 +4408,7 @@ It makes explicit the distributional consequences of BN structure.
 %the distributions that can arise from a given Bayesian network
 %structure in terms of information-theoretic constraints.
 Yet, despite
-substantial interest \cite{Baier_2022},
+substantial interest \citep{Baier_2022},
 %joe17
 %generalizing this fact to more
 %spencer3: reverting. This is probably the single edit I feel strongest about :)
@@ -5112,10 +4435,10 @@ capable of capturing conditional independence, functional dependence, and more,
 on the distributions that can arise from an \emph{arbitrary} 
 %spencer3:
 % dependency structure $\Ar$, in terms of $\SDef$, 
-% the scoring function used for the qualitative structure of PDGs \cite{pdg-aaai}.
+% the scoring function used for the qualitative structure of PDGs \citep{pdg-aaai}.
 dependency structure.
 %spencer3: moving below
-% in terms of $\SDef$, the scoring function used for the qualitative structure of PDGs \cite{pdg-aaai}. 
+% in terms of $\SDef$, the scoring function used for the qualitative structure of PDGs \citep{pdg-aaai}. 
 This connection between causality and information theory has implications for both fields. It grounds the cyclic dependency structures found in causality in concrete constraints on the distributions they represent. 
 %joe17*: You had promised references here.  We cannot include this in
 %the paper without such references.
@@ -5129,7 +4452,7 @@ In \cref{sec:scoring-funs}, we strengthen this connection. Using entropy to meas
 %oli20: connect new scoring function in terms of idef, as agreed:
 % structure, and
 structure.  
-This function turns out to have an intimate relationship with the qualitative PDG scoring fucntion $\SDef$, which we use to 
+This function turns out to have an intimate relationship with the qualitative PDG scoring function $\SDef$, which we use to 
 %spencer3
 %oli22: I think the flow got worse in some ways; reverting, but will come back to this.
 % Interestingly, both our constraint and our scoring function have a close relationship with the qualitative PDG scoring function $\SDef$. We use this to show that our constraint not only applies to compatible distributions, it also applies (with some loss) to distributions that are only ``near-compatible''.
@@ -5462,7 +4785,7 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
 % \end{wrapfigure}
 \end{figure}
 %oli20: replacement
-We now review the critical information theoretic concepts and their relationships to
+We now review the critical information-theoretic concepts and their relationships to
     (in)dependence
     (see \cref{sec:qual-info-theory-primer} for a full primer).
 % oli13: shortening:
@@ -5539,7 +4862,7 @@ some appropriate vector $\mat v$
 %oli20*: rewriting this story as well
 % The origin of this bound is actually the scoring function defined by \citet{pdg-aaai} to give qualitative semantics to PDGs.
 %spencer1
-% There is already a way to convert a \hgraph\ $\Ar$ to a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$, originally introduced for the purposes of giving qualitative semantics to PDG \cite{pdg-aaai}. 
+% There is already a way to convert a \hgraph\ $\Ar$ to a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$, originally introduced for the purposes of giving qualitative semantics to PDG \citep{pdg-aaai}. 
 We now return to the qualitative PDG scoring function $\SDef$, which interprets a hypergraph structure $\Ar$ as a function of the form $\mat I_\mu \cdot \mat v_{\!\Ar}$.
 Recall that this \emph{structural information deficiency}, given by
 \begin{equation}
@@ -5571,11 +4894,11 @@ the number of bits needed to specify a sample of $\mu$ according to its own stru
 %you making a fuss about this.  I would cut all this and the long
 %discussion in the previous paragraph on the information profile. 
 %It's not appropriate introductory material.  
-%oli14*: This is an important concept. The fact that it is a linear function of the information profile is important because all standard information theoretic quantities (entropy, conditional entropy, mutual information, etc), as well as all independences, dependencies, and sets thereof, can all be written as linear combinations of the information profile.  This is a natural generalization. 
+%oli14*: This is an important concept. The fact that it is a linear function of the information profile is important because all standard information-theoretic quantities (entropy, conditional entropy, mutual information, etc), as well as all independences, dependencies, and sets thereof, can all be written as linear combinations of the information profile.  This is a natural generalization. 
 %oli20: we now lead with this, so we can cut this whole thing
 % Because it is a linear combination of (conditional) entropies of $\mu$,  $\SDef_{\!\Ar}(\mu) = - \mat v_{\!\Ar} \cdot \mat I_{\mu}$, for some vector $\mat v_{\!\Ar}$ determined by the \hgraph\ $\Ar$. 
 While we have seen that $\SDef$ has some nice properties,%
-    \footnote{%
+\footnote{%
     %joe13*: this is *way* too much for an introductory few paragraphs.
     %This should ge shrunk to at most two examples.  Bringing in vector
     %fields here is a sure-fire way to confuse the reader.
@@ -5592,8 +4915,9 @@ While we have seen that $\SDef$ has some nice properties,%
         the corresponding quantitative term in $\Inc$,
          in the sense of having the opposite vector field.
     \end{itemize}}%
-    For instance, it captures BN independencies and the dependencies of \cref{theorem:func}, reduces to maximum entropy for the empty \hgraph, and combines with the quantitative PDG scoring function \cite{pdg-aaai} to capture factor graphs.
-    }% end footnote
+    For instance, it captures BN independencies and the dependencies of \cref{theorem:func}, reduces to maximum entropy for the empty \hgraph, and combines with the quantitative PDG scoring function \citep{pdg-aaai} to capture factor graphs.
+}
+%    
 it can also behave unintuitively in some cases; for instance, it can be negative.
 Clearly, it does not measure how close $\mu$ is to being structurally compatible with $\Ar$, in general. 
 Nevertheless, there is still a fundamental relationship 
@@ -5626,81 +4950,11 @@ scoring function.
 % Finally, we show that \emph{even} \scibility\ has an even closer relationship to  $\SDef$. 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %oli14*: cutting old S5 intro
 \commentout{
 \clearpage
 \subsection*{Previous \S5 Intro}
-%joe3*: As you know, I strongly disagree with your next comment.  The
-%"story" of the paper should be the new semantics.  That's what you
-%need for the causality section and what you used in Section 2.  That
-%means that you should use a scoring function that fits naturally with
-%the new semantics.  I view that scoring function as one of the main
-%contributions of this paper.  Of course, you should relate it to the
-%scoring function that we used originally.  Following your email, I
-%did not read the rest of the paper; I just responded to a few of your
-%comments.  But on a fast scan, it seems to me like a completely
-%random collection of observations, with no story.  Even if you don't
-%like my story, you need to have a much better story.
-%oli3: We agree that this section needs a significant overhaul, which I will now attempt. I still think the emphasis you are trying to bring forward is deceptive and muddies the picture of what a PDG is. I will try to tell a crisper story that avoids what I see as the issues with your approach, and I will make sure to tie it into the rest of the paper nicely. 
-%oli2*: This is the wrong order.  The original scoring function needs
-% to come first. It's more important, and I don't want to highlight 
-% the new one. 
-%joe3: I strongly disagree, but, as always, I don't know how to
-%convince you.  The new one is what this paper should be about, in
-%my opinion. 
-%oli4: Oops, in the previous version I accidentally reinstated this whole paragraph instead of telling tell. Although the start is OK, I'm replacing the rest of it with something more in line with what I intended.
-\commentout{    
-\citet{pdg-aaai} provided a scoring function that 
-    was intended to measure 
-    how far a probability distribution was from being structurally  compatible with a PDG, viewed as a hypergraph.
-    We discuss this
-    scoring function below; for now, we just mention that the scoring
-    function was rather difficult to interpret as a degree of
-    incompatibility since, for example, it could be negative.
-    Fortunately, the definition of structural incompatibility we have
-    given here leads to a natural scoring function, which we now describe.
-}
-%
-%
-%oli6*: I think one reason you're not seeing my story is that I based my writing on yours, so in many ways this is really motivating your story.  I'm commenting out the old text at the top of this section, and trying to tell my story properly, rather than something halfway between them. See my other %oli6* comments responding to you inside this environment for more details. 
-%joe6*: Even if you were going to start with the old scoring function
-%(which I continue to think is a bad idea), why not just cut the first
-%two paragraph in the section, and the accompanying figure.  (If
-%necessary, you can add a sentence to explain entropy and conditional
-%entropy.  
-%oli7*: You're missing the point.  The first two paragraphs are laid out this way on purpose, and that purpose is not just to introduce conditional entropy and mutual information.  There is a deeper relationship I was trying to point to. Below, I will annotate the first two paragraphs with the purposes they serve.
-\commentout{
-    \citet{pdg-aaai} defined an entropy-based scoring function ($\SDef$) that 
-        was intended to measure discrepancy between a probability distribution
-        and a PDG's underlying (weighted) directed hypergraph structure.
-    Although that scoring function has many nice properties,
-    %joe5: what nice properties does it have?  You can't just say "it has
-    %nice properties" any more than you can say "it is useful".  You have
-    %to say something about hose properties.
-        it is rather difficult to interpret directly as a ``degree of
-        incompatibility'' since, for example, it could be negative.
-    %joe5*: The natural thing to do at this point, if you were trying to
-    %tell a good story, is to say "So here's a nice scoring function that
-    %is never negative and captures directly the discrepancy between a
-    %probability distribution and a PDG's digraph structure".  (No need to
-    %confuse the issue and get into weighting.)  To me this is obvious.
-    %What you're talking about hext does not make for a good story.
-    %You haven't motivated the issues that you discuss, and don't follow
-    %the story line that you've set yourself up for.
-    %oli6**: You are right: the beginning of a story above does naturally lead to the story you have in mind.  This is because you wrote it with that story in mind; it's here in my story because I liked your words, agreed with them, and thought I could get you to like it better by drawing from your story. But, because you are a good writer, your story leads to more of your story---especially for you, because you wrote it.  I have a different story in mind, which I think is far more fundemental and has the potential to be be much more engaging.
-    In \cref{sec:sc-infobound}, we discuss an important
-    % information-theoretic connection between $\SDef$ and \scibility,  which works in two directions.
-     connection between \scibility\ and the information theory behind $\SDef$, which works in two directions.
-    On one hand, it gives us an entropy-based criterion to conclude that a distribution cannot be \scible\ with a directed hypergraph; on the other, our definition of \scibility\ can be used to shine light on a (seeming) counterexample in the information theory literature.
-    Nevertheless, $\SDef$ still does not exactly coincide with \scibility.
-        In \cref{sec:scoring-funs}, we derive a new scoring function that
-        directly measures how far a distribution is being \scible\ with a 
-        given directed hypergraph---%
-        %oli4:
-        which, perhaps surprisnigly, turns out to be an instance of the original scoring function, applied to a transformed directed hypergraph.
-    To understand these information theoretic issues, we begin by reviewing some standard definitions.
-}
-%oli9: new lead: 
 Just as \scibility\ has 
 %oli11:
 % a deep relationship with causal models
@@ -5709,677 +4963,101 @@ Just as \scibility\ has
 %way a weakening of "deep".  It's saying something different.
 an important relationship with causal models
  (\cref{sec:causal}), so too does it have 
-%oli10: parallel phrasing
-%oli11: 
-% a deep relationship with information theory.
 an important relationpship with information theory.
-%
 We have seen how \scibility\ can capture 
-%oli10:
-% the conditional indepependencies of BNs (\cref{theorem:bns})
 certain conditional indepependencies (\cref{theorem:bns})
-%oli9: since Theorem 2 is now weaker...
-% dependencies (\cref{theorem:func}),
-%oli10:
-% and dependencies (in some contexts, \cref{theorem:func}),
 and dependencies (\cref{theorem:func}),
-%oli9:
-% and the structures of causal models (\cref{prop:causal-model-structure-capture}),
 by restricting to special classes of \hgraph s. 
-% But what can be said about \hgraph s more broadly?
-% It turns out that \scibility\ can 
 But, for \hgraph s outside these classes (such as those generated by cyclic graphs), \scibility\ can 
-% mean something much subtler. 
-impose much subtler constraints on a
-    distribution
-%oli9:
-% \unskip.
-%oli10: I don't really want to be precise about this yet. This is for the next paragraph. 
-%joe10*: the fact that it requires information theory to describe
-%these constraints (which are just an inequality connecting SIM
-%compatibility and various quantities involving entropy) doesn't make
-%me feel like there's a deep relationship between compatibility and
-%information theory. 
-%oli11: Of course, that's only one of several strands of the story, and that inequality is far tighter than you might imagine. (Empirical results suggest that the converse holds on the vast majoroity of the volume of the probability simplex.)  Perhaps the wording can be clarified to make this feel less jaring for people jaded with infromation theory, but there's enough here to support the claim that there's a deep relationship.
-%joe11: Oliver, readers can't read your mind, as I've said
-%repeatedly.  Based on what you wrote below, there is not a deep
-%relationship.  If there are other facts that make you feel like
-%there's a deep relationship, you have to spell them out *in the
-%paper*.  FOr what it's worth, based on what you said, I don't find
-%the case compelling, but it's hard to know, because I don't know
-%what's in uor head.
-%oli12: ok, but we can't have to describe everything all at the beginning. I think the next sentence is a good way to motivate why we're talking about this without getting into the details yet.
+impose much subtler constraints on a distribution
 \unskip, which require information theory to describe
-%oli10: if not the above, then the below is better than what I had before:
-% \unskip---namely, inequalities between integer linear combinations of information-theoretic primitives
-% \unskip---namely, linear inequalitites between 
-%     the entropies of subsets of variables
-     % (\cref{theorem:sdef-le0})
-     % (\cref{sec:sc-infobound})
-     \unskip.
-%oli10:
-% Conversely, \scibility\ can clarify important misunderstandings in information theory
-%joe10*: What is the following sentence a converse to?  In any case,
-%this doesn't make me feel like there's a "deep relationship".  It
-%just says that SIM compatibility is a useful tool.  This is very
-%different from the relationship between causality and compatibility.
-%oli11: The previous sentence says information theory can elucidate SIM-compatibility; this sentence says the connection works in reverse, and SIM-compatibility can elucidate information theory.  Together the suggest a bi-directional connection. 
-%joe11: I In what way does one elucidate the other?  ("Elucidate" means
-%"make clear".  I don't think an inequality makes SIM compatibility
-%clear (at least, not to me).  Nor does explaining what going on in
-%one example involving three nodes make nformation theory clear.
-%oli12: without this inequality, we really have no idea what the implications of SIM-compatibility are for most hypergraphs (aside from those of very special forms). If \mu is SIM-compatible with the 3-cycle, what can you tell me about \mu? Without this inequality, all we you can do is regurgitate the definition.  This information theoretic perspective allows people who understand some information theory to understand the implications of SIM compatibility. THat's one form of elucidation.  In the other direction: I think examples 5 and 6 clearly demonstrate how a misunderstanding in information theory can be clarified by SIM-compatibility.  Yes, this is only one (particularly important) simple example, but it is enough to claim that we can clarify information theory. Surely we don't need to have a positive impact on every single paper in information theory in order to claim that we can clarify what's going on in information theory. 
-%oli11:
-% Conversely,
 The connection also useful in the other direction:
- \scibility\ can clarify important misunderstandings in information theory
-    % (\cref{example:ditrichotomy})
-    \unskip.
-%oli11: undecided as to whether something like this is appropriate.
-%joe11: I really don't like this sentence.
-%oli12: OK; why not?  
+ \scibility\ can clarify important misunderstandings in information theory.
 It is also possible to directly capture \scibility\ with 
 an entropy-based scoring function and an infemum.
-%oli10: rather than summarizing at the beginning, like you suggested, I still think the story is better if we leave this for later. 
 \commentout{
     %oli10:
     We detail both phenomena in \cref{sec:sc-infobound}.
-    %joe9: the next sentence seems to be missing some words.
-    %oli10: adding missing words, and other minor restructuring
-    % In addition, can
     In \cref{sec:scoring-funs}, we derive an entropy-based scoring function that measures how far a distribution is from being \scible\ with a given \hgraph. 
-    % and discover that it is intimately connected to the original scoring function for PDGs 
-    %oli10: splitting second half into new sentence
     But, perhaps surprisingly,
-    % To our surprise, 
     this new scoring function coincides with the original PDG scoring function
-    % , applied to a transformation of the hypergraph
-    %oli10:
-    % if we first transform the hypergraph appropriately
-    % if we first appropriately transform the underlying hypergraph
-    %joe10
-%    if underlying hypergraph is first transformed appropriately
-    if the underlying hypergraph is first transformed appropriately
-        % (\cref{theorem:siminc-idef-bounds}). 
-        \unskip.
-    %oli10: 
-%joe10: I don't have any problem interepreting PDGs.  I have a problem interpreting the scoring function.   I also don't think that the way it captures scibility is the least bit natural
-%oli11: "PDGs as originally defined" includes their scoring function.
-%joe11: the scoring function is absolutely *not* part of the
-%defintion.  We hae a definition (Definition 2.1).  It doesn't mention
-%scoring functions.
-%oli12: I take "PDGs" to mean both their syntax and their semantics, and I find it hard to imagine doing otherwise. If you think it is meaningful to say "PDGs can capture BNs", then you agree with me at some level.  
-%joe11: Socring functions are one approach to giving PDGs semantics. 
-%
-%oli12: OK, but any reasonable other semantics we give for PDGs should coincide with the scoring function semantics at some level. Otherwise, we're creating confusion. If it has different behavior, it needs to be thought of differently. We could "give an alternate semantics" to first order logic, that interperets all quantifiers as \exists, and variables containing the letter "e" as the constant 7.  Yet it would be counterproductive to think of this as a different interpretation of first order logic, and also call such formulas "first order logic" under this interpretation---you'd want to think of it as its own thing. Similarly, because SIM-compatiility does NOT coincide with the scoring-function for the same PDG hypergraph, but rather for a different hypergraph, I maintain that SIM-compatibility should not be thought of as a semantics for PDGs, but its own separate thing. (And, just as in the example above, the new conept can be compiled to the old one, and thought of in those terms). 
-%
-%oli11: You're saying you don't have a problem re-interpreting PDG syntax differently, but I do. I think the way that it captures SIM-compatibility is very natural, and I would like an opportunity to discuss that in person. 
-%(Fortunately for you, this part is now commented out.)
+    if the underlying hypergraph is first transformed appropriately.
     Thus PDGs as originally defined, difficult as they may be to interperet in general, capture \scibility\ in a natural way.
-    % To understand these connections, we have to understand a little bit about information theory itself.
 }
 
-%oli10: instead, say
-% Why should \scibility\ be related to information theory?
-% Why might this be so?
-% To understand these connections, it is important to realize that
-%oli11: removing again, to say something shorter below.
-% To understand how such a connection is possible, note that
-%
-%(oli7): paragraph break?
-%oli8: 
-% To understand why (or, indeed, to even articulate the constraints),
-%oli9:
-% To understand why (or indeed, to even describe these constraints),
-% To understand these interactions,
-% we need some ideas from information theory---a field with much to say 
-% Information theory has much to say
-% % about precisely the topics we have discussed so far.
-% about  
-% %(oli8?)
-% % generalized
-% probabilistic (in)dependencies.
-%oli9:
-%joe9*: It does nothing of the kind.  Perhaps you can express
-%independence using information theory.  BUt that doesn't make
-%information theory a "generalization" of independence.
-%oli10*: It very much a generalization of independence! Independence is the special case in which mutual information is zero, but with information theory you can relax that and say things like: "variables A and B share less than 1% of their information". I think your position is very extreme, and that you'll find it very difficult to convince anyone that information theory does not generalize (in)dependence. 
-%joe10: I think you misunderstood myu intent.    I agree that
-% information theory (or, more precisely, entropy) can capture
-% independence.  But it seems like a type mismatch to say that
-% information theory generalizes independence.  Saying "probability
-% theory generalizes independence" sounds equally strange to me.
-%oli11: hmmmm... I think I understand where you're coming from regarding the wording. Your example of "probability theory generalizes independence" is a much more flagrant violation, since probability theory revolves around structural questions like independence less than information theory. 
-%oli11:
-% information theory generalizes probabilitic (in)dependence;
-%joe11: I *really* don't like this (I actually think you're selling
-%information theory short here).  It's much more than a continuous
-%relaxation of independence.  But it does let us define a continuous
-%relaxation of independence.
-%oli12: OK; I will change it. I see how this could be contentious, although I still think it's accurate. I'm selling information theory short because extolling the many nice properties and applications of this particularly natural relaxation of probabilistic independence would take us far away from the story. 
 In some sense, information theory is a continuous relaxation of probabilitic (in)dependence:
-%oli10: adding, although I believe this is overkill, and overfit to explaining things to you:
-%joe10: cut this, once byou get a better version of the above
-%oli11:
-% for example, it let us us talk about variables being only \emph{mostly} (in)dependent.
-%
-%joe5*: This takes us way to far afield.  The fact that you feel you
-%need to put this here is a strong indicuation that you're not telling
-%the right story. 
-%oli6: I hear you, and I will now work to tighten up this material and relationships it has with other concepts in our paper, so it does not feel as far afield.  But, while I undersand why you feel this way, I very much do not buy the structure of your argument: you view the fact that this is here (when you don't find it necessary to tell your story) as evidence that it's the wrong story.  But in fact it only tells you that it's not *your* story.
-%oli6: I am removing this section title, to better integrate this material with the rest of the motivation. 
-% \subsection{Primer on PDGs and Multivariate (Shannon) Information Theory}
-% \subsection{Primer on Multivariate (Shannon) Information Theory and PDGs}
-%
-% {\color{red}\small [This paragraph to be redone much better, but it is not the top priority]}
-%oli4: redoing this where $\mu$ is general, not just over a product space.
-% Let $\X$ be a set of variables, 
-%     % with $\V(X)$ a finite set for all $X \in \X$
-%     each taking on finitely many values,
-%     and $\mu(\X)$ be a joint distribution over them. 
-% Let $\mat X, \mat Y \subseteq \X$ be subsets of variables.
-%oli6: significantly cutting this down, putting in appendix for conference version
-%oli6*: replacement material, for conference version.
-% Observe, for instance, that the standard quantities in information
-% Observe: the directed versions
-%joe10: What would be an "undirected form" of the quantity
-%oli11: the "undirected forms" are ordinary (unconditional) entropy H(X), and ordinary (unconditional) mutual information I(X;Y), respectively.  They measure distance from determination, and distance from independence.  Since we're working with directed hypergraphs and focused on their conditional versions (which are more expressive anyhow), I think it's worth the 2 extra words to make this distinction.  
-%joe11*: It's not worth it if the reader doesn't understand it.  I
-%didn't understand it.  Either cut it or explain it.
-%oli12: I did change it, so I don't understand why you left this comment and gave it a star.
-%oli11: here two possible improvements to keep people from getting hung up on this (1) use consistent lettering "S" for the conditioned variable, just like the source "S"; (2) say "conditional" instead of "directed", although the latter ties in better with our focus on directed hypergraphs. 
-%oli11:
-% Observe: the directed forms
-% Observe: the conditional forms of the two most basic quantities in information theory
 the conditional forms of mutual information $\I_\mu(Y;Z|X)$
 and entropy $\H_\mu(Y|X)$%
-\footnote{
-Either quantity can be derived from the other. 
-In particular, $\H_\mu(Y|X) = \I_{\mu}(Y;Y|X)$, deepening 
-the observation made in \cref{eq:conditional-self-independence-det}.
-See \cref{sec:qual-info-theory-primer} for definitions and a short review.}---the most important quantities in the field---measure
-%oli11: silently rearranged the letters so we're always conditioning on X below. 
-%oli11: worked this material into the above.
-%of its two most basic quantities%
-%---conditional entropy $\H_\mu(Y|X)$ and conditional mutual information $\I_\mu(Y;Z|X)$\footnote{See \cref{sec:qual-info-theory-primer} for definitions and a short review.}---are 
-% natural ways of quantifying 
-% ways to quantify 
+\footnote{%
+    Either quantity can be derived from the other. 
+    In particular, $\H_\mu(Y|X) = \I_{\mu}(Y;Y|X)$, deepening 
+    the observation made in \cref{eq:conditional-self-independence-det}.
+    See \cref{sec:qual-info-theory-primer} for definitions and a short review.}%
+---the most important quantities in the field---measure
 how far a distribution $\mu$ is from satisfying
-%oli11: swapping order of the below, for new sentence structure above:
 a conditional independence $Y \CI Z \mid X$ and
 a functional dependence $X \tto Y$,
 respectively. 
-%oli9: removing
-% It turns out that SIM-compatibility with any (even cyclic) hypergraph implies interpretable inequalities between such quantities, generalizing many of the results we've seen so far (\cref{theorem:sdef-le0}). 
-%
-% All of these quantities are related with the inclusion-exclusion rule.
-%oli9: paragraph merge
-%
-%oli6 reorder
-%oli6: completely rewrote, but forgot to copy oldest version.
-% Multivariate information theory promises to capture precisely the structural relationships between a set $\X$ of variables as a vector of $2^{|\X|}-1$ numbers such as these ones,
-% The vector of all $2^{|\X|}-1$ numbers needed to describe all such quantities is sometimes called $\mu$'s \emph{information profile}.
-% Multivariate information theory promises to capture exactly the {structural} relationships between a set $\X$ of variables as a vector of $2^{|\X|}-1$ numbers such as these ones,
-%joe11: Yet again "multivariate" comes out of teh blue.  WHyu do we
-%even need to use the word.
-%oli12: Many information theorists use only mutual information and entropy; I've seen "multivariate information theory" as code for "stuff you can do with the whole information profile". 
 Multivariate information theory promises
 % The central promise of multivariate information theory is
-to distill \emph{all} {structural} relationships between a 
-set $\X$ of variables 
-%oli11:
-% (in a distribution $\mu$)
-(distributed according to $\mu$)
-into a vector of $2^{|\X|}-1$ 
-%oli11: adding
-such
-numbers 
-% set $\X$ of variables into a vector of $2^{|\X|}-1$ numbers 
-% such as these,
-%oli11: removing
-% such as those depicted in \cref{fig:info-diag}(a)
-%oli6: next two lines are out of place now.
-% (all sums and differences of entropies of subsets of $\X$), 
-% i.e., the mathematical object depicted above, 
-%oli11: bringing back one aspect of the below 
-that fit together with an inclusion-exclusion rule,
-called
-    %oli6:
-    the
-    % an
-    % $\mu$'s
-    \emph{information profile}
-    %oli11: 
-    of $\mu$.
-%oli11:
+to distill \emph{all} {structural} relationships between a set $\X$ of variables (distributed according to $\mu$) into a vector of $2^{|\X|}-1$ such numbers that fit together with an inclusion-exclusion rule, called the \emph{information profile} of $\mu$.
 This is depicted for $\X = \{X,Y,Z\}$ in \cref{fig:info-diag}(a).
-%oli9: 
-% These quantities are related through an inclusion-exclusion rule,
-%oli10: perhaps not critical to the story, althgouth getting
-% people to think about this will make it easier to understand
-% some of what comes later
-%joe10: If it's not critical to the story (which it definitely isn't), it doesn't belong here!  Tell a story
 \commentout{ 
-This representation is made possible by the fact that
-    these quantities are related (defined, in fact)
-    by an inclusion-exclusion rule, 
-which allows us to read off
-identities like
-%oli9: 
-\commentout{
-    %oli8: more relevant example
-    % $\H(X,Y) = {\color{purple!60!black}\H(X|Y)} + {\color{violet!65!black}\H(Y|Z)} + {\color{blue!50!black}\I(Y;Z)}$ 
+    This representation is made possible by the fact that
+        these quantities are related (defined, in fact)
+        by an inclusion-exclusion rule, 
+    which allows us to read off
+    identities like
     $\I(X;Y;Z) = \H(X,Y,Z) -  {\color{purple!60!black}\H(X|Y)} + {\color{violet!65!black}\H(Y|Z)} + {\color{blue!50!black}\H(Z|X)}$ 
-        % can easily be read 
-        %oli7:
-        % off a diagram like the one in \cref{fig:info-diag}(a).
-        %oli9:
-        (which will soon play an important role)
-        off such a diagram.
-}
-%oli9: replaced the above with:
-$\H(X|Y) = \H(X|Y,Z)+ \I(X;Z|Y)$. 
+    (which will soon play an important role) off such a diagram.
+    %oli9: replaced the above with:
+    $\H(X|Y) = \H(X|Y,Z)+ \I(X;Z|Y)$. 
 }%oli10: endcommentout
 %
-%oli4: previous sentence
-% The relationships between them are perhaps most easily seen with a diagram like the one below.
-% The relationships between them
-%
-% But does 
-%oli9:
 Does multivariate information theory deliver on its promises? 
 %oli11: I think the below is where I most need to put a few citations.
 Many have argued that the answer is no.
-Yet one of the most intuitively powerful arguments rests on 
-a poorly motivated notion
- of structure in distributions
-%oli10:
-% , and  when
-\unskip. When
-%joe10: You've never mentioned a counterexample before.  You've just
-%mentioned an argument for information theory not delivering on its
-%promises.  
-we replace that notion with \scibility, the
-%oli11: addressing your comment above
-% counterexample
-argument
-is not only defused, but 
-%oli11:
-% also
- supports the opposite of its intended purpose (\cref{example:ditrichotomy}).
+Yet one of the most intuitively powerful arguments rests on a poorly motivated notion of structure in distributions.
+When we replace that notion with \scibility, the argument is not only defused, but supports the opposite of its intended purpose (\cref{example:ditrichotomy}).
 
-%oli4: This isn't actually important for the current story.
 \commentout{
-\begin{defn}[Qualitative PDG]
-    % A Qualitative Dependency Graph (QDG), is a directed weighted
-    % hypergraph $(\N, \Ar, \balpha)$.
-    % Concretely, it consists of
-    % \begin{itemize}[nosep]
-    % \item a set $\N$ of nodes interpreted as variable names;
-    % \item a set $\Ar$ of (hyper)arcs connecting them,
-    %     each $a \in \Ar$ of which is
-    %     associated with a set of source nodes $\Src a \subseteq \N$ and
-    %     target nodes $\Tgt a \subseteq \N$;
-    % \item
-    %     % a weight $\alpha_a \in \mathbb R$,
-    %     % which together form a vector
-    %     % $\balpha = [\alpha_a]_{a \in \Ar} \in \mathbb R^{\Ar}$.
-    %     weights $\balpha = \{ \alpha_a \}_{a \in \Ar} \in \mathbb R^{\Ar}$ for each arc.
-    % \qedhere
-    % \end{itemize}
-    A Qualitative Dependency Graph (QDG) $\dg Q = (\N, \Ar, \balpha)$,
-    is a directed hypergraph $(\N, \Ar)$, together with a vector
-    $\balpha = \{ \alpha_a \}_{a \in \Ar} \in \mathbb R^{\Ar}$ of
-    weights for each \arc.
-\end{defn}
-
-For completeness, a (purely) quantitative probabilistic
-dependency graph is a tuple $(\X, \mathbb P, \bbeta)$,
-%joe2*: I found this very confusing
-%oli2: oof, on re-reading, I agree.
-% in which each $X \in \N$ has been given a quantative interpretation
-% by associating $X \in \N$ a set $\V(X)$ of possible values (so $\X \equiv (\N, \V)$)
-% and each \arc\ $a \in \Ar$ has been given a quantitative interpretation
-% by associating each $\ed aST \in \Ar$ to a conditional probability distribution
-% $\p_a(T|S)$ on its target given its source.
-%oli2: bringing back and reworking the first part that you cut, because it's a key point: the variables \X are the result of annotating the (qualitative) nodes \N  with concrete values \V; meanwhile the cpds \P are the result of annotating the (qualitative) arcs \Ar  with concrete cpds.
-% deeper reasons for why this is important that have to do with the categorical
-% definition of a PDG, but here it is important.
-%oli2: 
-in which each node $N \in \N$ is interpreted a variable $X_N \in \X$
-by associating it with a set $\V(N)$ of possible values,
-%oli2: continuing with your more compact version below
-and each \arc\ $\ed aST \in \Ar$ is 
-%oli2: adding parallel wording (& a form of the missing word "associated")
-    interpreted as a mechanism by associating it
-with a conditional probability distribution
-$\p_a(\Tgt a | \Src a)$ on its target given its source.
+With multivariate information theory, we can describe the ``subtler constraints'' imposed by \scibility: they are linear inequalities of the form $\mat{i}_\mu \cdot \mat v \ge 0$, where $\mat i_{\mu}$ is $\mu$'s information profile, and $\mat v$ is a vector of integers.
 }
-%oli4: end of cut
-%oli4: merging paragraphs
-%
-%oli3: removing heading
-% \textbf{Structural Information Deficiency.}
-%joe2*: let's not proliferate names.  We called it information
-%deficiency in the original paper
-%oli2*: Ok, but after years of playing with the name, I've come to think
-% "structural deficiency" is the better term.  The more papers we 
-% publish where it is called the wrong thing, the harder it is to change.
-% Also, my AISTATS paper (which is the only of our papers that is cited)
-% outside of our own work calls it structural deficiency, 
-% as do my ICML workshop papers. 
-%joe3: I still have no clue with "deficiency" means in this context,
-%and find it a horrible name.
-%oli3: "Deficiency", because it's the amount information that is
-%lacking in the structure, relative to what one would expect from a
-%generic structure for describing a distribution \X.  I sent you a
-%different writeup (on Wed, Jan 24, at 12:42am EST) that explains it
-%in more detail. I'd be happy to discuss.  If I recall correctly,
-%I believe you also find "information deficiency" to be a terrible name.
-%oli6: paragraph break
-
-%oli10: rewriting this to explicitly tie things together. 
-%joe10: Another non sequitur here.  You've just talked about the
-%counterexample not fulfilling its intended purpose, and then
-%suddently switch to the "subtler constraints", which involves the
-%information profile.  At a minimum, you have to rearrange the
-%sentences so that you're not jumping back and forth between ideas, 
-%to make for a better flow.
-%oli11: I see what you're saying but I don't find it problematic, and I don't see what you are suggesting to fix it. This sentence can't come before we describe the information profile, and if we place it immediately after the that, the material at the end of the last paragraph becomes a bigger nonsequitur. The sentences in this paragraph are already in a very linear order, and cannot be reordered. 
-%joe11: I don't know how to convince you that this is a badly written
-%story, but it is.  If anything, it's gotten worse.  I have no clue of
-%what the first few sentences are trying to tell me, how they relate
-%to the rest of the papragraph, which seems to me like a bunch of
-%disconnected sentences.  I see no discrenible story in this
-%paragraph, and I don't see how it first int othe larger story of the
-%first three paragraphs of this section (which is not surprising,
-%since I don't think they're a good story at all).
-%oli12: All the sentences are connected, but I see a way of making it smoother by putting the second one into the footnote. The story is that multivariate information theory (paragraph 2) give us tools to talk about the constraints we motivated with (paragraph 1), via the IDef (the next paragraph).
-%oli12: minor rewrite:
-\commentout{
-%oli11: the best resolution I can see is a minor rewording to ease the suddenness. 
-% We can now be more precise about the ``subtler constraints'' imposed by \scibility\ that we alluded to in the first paragraph:
-With multivariate information theory, we can describe the ``subtler constraints'' imposed by \scibility:
-%oli11:
-% we mean constraints
-% we mean conditions
-they are linear inequalities
-of the form $\mat{i}_\mu \cdot \mat v \ge 0$, 
-    where $\mat i_{\mu}$ is $\mu$'s information profile, and $\mat v$ is a vector of integers.
-% The constraints on $\mu$ that can be specified by requiring the inner product of the information profile with some vector of integers to be non-negative. 
-% By this, we mean
-}
-%oli12: instead
 SIM-compatibility with a hypergraph imposes a fundemental constraint on a distribution's information profile,
-% It is the information profile---and, more precisely, linear inequalities of it
-%oli9: adding
-%oli10: rewrote above
-% It is easy to capture arbitrary (conditional) (in)dependencies by requiring the inner product of the information profile with some vector of integers to be non-negative. 
-%oli9: adding
-%joe10*: Yet another example of a bad story.  You're trying (should be
-%trying) to explain the deep connections between entropy and
-%compatibility.  WHy bring you the issue of representing independence
-%in a compact, graphical manner.  What does it have to do with the
-%conections  between entropy and compatibility?
-%oli11: hmm. I like the story here, even though it does not directly supporing the main claim. 
-%joe11: If it doesn't support the claim, then it doesn't belong here!
-%oli11: One role it plays is to head off the obvious doubts that might come to mind---after all, we motivated SIM-compatibility by wanting to capture independencies and unify them, and at this point it is clear that information theory fills both roles strictly better. I think some defense of SIM-compatibility here would be worthwhile.  In addition, the conceptual transition (if not the one I wrote, exactly) to the next paragraph is smooth.  
-%joe11: I found what you wrote makes for a transition that's not the
-%least bit smooth.  Maybe you have something better in your head, as
-%uyo hinted "not the one I wrote, exactly"), but in our head doesn't
-%count.  The reader can't read your ind.
-%oli11: defering to you by demoting this to a footnote
 \unskip\footnote{
-%oli12: moved here (i.e., into footnote) from above
-Specifically, a constraint of the form $\mat{i}_\mu \cdot \mat v \ge 0$, where $\mat i_{\mu}$ is $\mu$'s information profile, and $\mat v$ is a vector of integers.
-It is not hard to see that arbitrary collections of (conditional) (in)dependencies can be captured by specifying $\mat v$ appropriately. 
-%
-    Given this, the reader might wonder: why bother with \scibility\ at all? 
-    Here are two reasons: the dimension of the information profile is exponential in $|\X|$, and its components become increasingly unintuitive as the number of variables grows. 
-    Our goal is not only to capture (in)dependence 
-    %joe9
-    %(indeed, (in)dependence itself does this),
-    %oli10:
-    % but rather to do so in 
-    \unskip, but to do so in 
-    %oli10:
-    % an intuitive, visual, and causally motivated manner. 
-    a compact, graphical, and causally motivated manner. 
-    %oli11: giving a smaller paired down version of the cut material below to bring out connection to the next paragraph.
-    %oli11: then commenting it out, as the transition is not as useful in footnote form.
-    % One solution is to compile a \hgraph\ to a linear inequality like the one above.
-}
-%oli10: this text is not as valuable as the space it takes up. Making connection to IDef more directly.
-\commentout{
-To this end, we would like to compile a \hgraph\ to a function of an information profile, which we do directly in \cref{sec:scoring-funs}. 
-But there is a simpler and more fundemental scoring function in the literature that has a more intricate and useful relationship with \scibility, an even closer relationship with \scibility, and ultimately will be able to capture both notions indirectly. 
-}
-%oli11: merge paragraphs
-%
-%oli10: instead, say:
-%joe10*: similar to what? 
-%oli11: Similar to our goal in the previous sentence. But perhaps it will be gramatically clearer if I say "like this" because the point of coreference is a verb phrase, not a noun phrase. 
-%joe10*: In any case, you're jumping to yet another part of the story now.  
-%oli11: Perhaps there is a rough transition in the wording, but fs conceptually it's a natural next step. 
-%joe11: Maybe that's true in your head, but certainly not in mind,
-%based on what you wrote.
-%oli11: We just talked about the kinds of constraints that are possible; we now show how the original PDG scoring function compiles a hypergraph to such a constraint. This ties together all of the threads.  
-%joe11: In what sense does the scoring function "compile a hypergrah"
-%to anything.  I'm lost.
-%oli12:  This formula (IDef) can be seen as converting a hypergraph into a linear function of a distribution's information profile. Is that much clear?
-%oli11: I played with a few possibilities in the wording, but I still like what I had before best. 
-%joe10*:Here's what I've gotten so far: (1) There is
-%a constraint on compatibility that can be expressed in terms of
-%entropy; (2) Thinking in terms of compability helps you better
-%understand what is going on in a certain example (which is way down
-%the tree!), and stops it from being an argument that information
-%theory cannot capture all structural relationships between variables
-%(but ceratinly does not indicate that information theory can capture
-%all structural relationships between variables); (3) the scoring
-%function for PDGs (that was designed by you), which uses entropy, is
-%closely related to compatibility.  All this comes nowhere close to
-%indicating a "deep relationship" between entropy and compatibility
-%(at least, not to me).
-%oli11: Okay, well I think you got the techncal content I wanted to convey, even if I think you are not adequately appreciating the importance of (1,3) or the fact that (2) is merely an illustrative example and not the extent of the relationship (and I disagree that it's far down the tree; it's the key application. What other problems that people care about have we addressed?). I've slightly toned down the language at the beginning of the section to keep expectations more reasonable, because I think the deeper story about how they're connected requires a different approach, using SDef. 
-%joe10*: Moreover, the story itself is poorly told.
-%If you really want to tell this story, you need to tell it much better
-%oli11:
-% \citet{pdg-aaai} attempt something similar in giving qualitative semantics for PDGs. 
-% \citet{pdg-aaai} attempt something like this in giving qualitative semantics for PDGs. 
-%
-%oli12:
+    Specifically, a constraint of the form $\mat{i}_\mu \cdot \mat v \ge 0$, where $\mat i_{\mu}$ is $\mu$'s information profile, and $\mat v$ is a vector of integers.
+    It is not hard to see that arbitrary collections of (conditional) (in)dependencies can be captured by specifying $\mat v$ appropriately. 
+    Given this, the reader might wonder: why bother with \scibility\ at all? Here are two reasons: the dimension of the information profile is exponential in $|\X|$, and its components become increasingly unintuitive as the number of variables grows. Our goal is not only to capture (in)dependence \unskip, but to do so in a compact, graphical, and causally motivated manner. 
+    }
 
-\citet{pdg-aaai} define
-%oli8:
-% an entropy-based
-a 
-scoring function 
-% they call \emph{information deficiency}
-%oli7: 
-% which is $\SDef_{\!\Ar}(\mu)$ is a linear function of $\mu$'s information profile.
-%oli9:
-% that is a linear function of $\mu$'s information profile. It was intended to quantify discrepancy between a distribution $\mu$ and a PDG's \hgraph\ structure $\Ar$;
-that converts a \hgraph\ to 
-%oli11: adding
-such
-a linear function of $\mu$'s information profile, which was intended to quantify discrepancy between $\mu$ and a PDG's underlying structure.
-%oli6: replacing
-\commentout{
-    %oli6: compressing:
-    % In the original paper on PDGs, \cite{pdg-aaai}
-    \Citet{pdg-aaai}
-    %oli6: although it doesn't really reduce the proliferation of names, because both names are present and I will go back to "structural deficiency" in my thesis, I admit that is fewer words to just use what it was called where we cite it. 
-    % define what we will call the \emph{structural (information) deficiency} of
-    define the \emph{information deficiency} of
-    a distribution $\mu$ with respect to a directed hypergraph $\Ar$
-    %joe2
-    %as the following quanitity:
-    %oli6:
-    % as follows:
-    as:
-}
-% this so-called \emph{information deficiency} is given by
-%oli9:
-% this so-called \emph{information deficiency}, given by
+\Citet{pdg-aaai} define a scoring function that converts a \hgraph\ to such a linear function of $\mu$'s information profile, which was intended to quantify discrepancy between $\mu$ and a PDG's underlying structure.
 This \emph{information deficiency}, given by
 \begin{equation}
     \SDef_{\!\Ar}(\mu) := - \H_\mu(\X)  + \sum_{a \in \Ar} \H_\mu(\Tgt a \mid \Src a),
 \end{equation}
 %oli6.2: replacing these two sentences with one
-\commentout{
-    %
-    The first term is the number of bits needed to specify an outcome of
-    $\mu$
-    %joe5*: Why does the first term specify \my in an *unstructured*
-    %fashion.  You seem to have some intuitions about structure that you
-    %haven't let the reader in on.
-    %oli6: good point; I have something interesting to say here, so I'll expand. 
-    % in an unstructured fashion,
-    according to $\mu$'s own structure $(\to \X)$
-    while the second
-    %oli6
-    % is the number of bits need to specify randomness in a structured way, following the \arc s of $\Ar$.
-    is the number of bits needed to (independently) specify randomness along the \arc s of $\Ar$.
-    The structural deficiency $\SDef_{\!\Ar}(\mu)$ is
-    therefore the difference between the cost of a sample of
-        $\mu$ along the structure $\Ar$, and describing it directly.
-}
 is the difference between the number of bits needed to (independently) specify the randomness in $\mu$ along the \arc s of $\Ar$, and the number of bits needed to specify a sample of $\mu$ according to its own structure $(\to \X)$.
-%oli5: altering this sentence (which used to be at the beginning of this paragraph), and moving it here.
-% Note that $\SDef_{\!\Ar}(\mu)$ is a sum of conditional entropies, and thus a linear function of $\mu$'s information profile.
-% Observe that 
-%oli5: adding some important links to section 4. 
-%oli9: making this less of a nonsequitur, and introducing another important property.
 $\SDef$ has many nice properties.%
-%oli10: these properties can go in a footnote. 
 \footnote{
-%oli10:
-% When $\Ar = \Ar_G$ for a dag $G$, then it
-When $G$ is a dag, then $\SDef_{\!\Ar_G}(\mu)$
-is non-negative, and
-%oli10
-%joe10
-%equals zero iff $\mu$ has the independencies of the corresponding BN, 
-is zero iff $\mu$ has the independencies of the corresponding BN, 
-%oli10:
-% an
-which is a direct
-analogue of our \cref{theorem:bns}.
-% It is easy to verify that $\SDef_{\!\Ar}$
-%oli10:
-% it is also easy to see that $\SDef_{\!\Ar}$
-$\SDef$ also
-% equivalence and monotonicity (\cref{sec:equivalence,sec:monotone})
-%oli6: because I cut the equivalence material from the main body, this can be compressed and done inline
-\ifvfull\vfull{
-also satisfies analogues of
-\cref{prop:equiv-factorizations-cnd,theorem:strong-mono}.%
-    \footnote{
-    % By inspecting \cref{fig:info-diag}, $\H(X,Y \mid Z) = \H(X \mid Z) + \H()$. 
+    When $G$ is a dag, then $\SDef_{\!\Ar_G}(\mu)$
+    is non-negative, and
+    is zero iff $\mu$ has the independencies of the corresponding BN, 
+    which is a direct
+    analogue of our \cref{theorem:bns}.
+    $\SDef$ also
+    satisfies analogues of
+    \cref{prop:equiv-factorizations-cnd,theorem:strong-mono}.%
     Specifically, if $\Ar_1, \Ar_2, \Ar_3$ are the three \hgraph s in \cref{prop:equiv-factorizations-cnd}, then it is easy to prove that $\SDef_{\!\Ar_1} = \SDef_{\!\Ar_2} = \SDef_{\!\Ar_3}$.
     In addition,
     If $\Ar \rightsquigarrow \Ar'$, then it is easy to show that $\SDef_{\!\Ar} \ge  \SDef_{\!\Ar'}$.
     See appendix for details.}
-}
-\else
-%oli6: for the conference version:
-satisfies an analogue of \cref{theorem:strong-mono}: if $\Ar \rightsquigarrow \Ar'$, then $\SDef_{\!\Ar}(\mu) \ge \SDef_{\!\Ar'}(\mu)$.
-%oli10: save a line in the footnote
- % for all $\mu$. 
-\fi
-%oli10: end footnote
-}
-%
-%
-%oli5: reintroducing subject because it is now further away, and fixing double "note".
-% Note, however, note that it can be 
-%oli11:
-% Note, however, that $\SDef_{\!\Ar}(\mu)$ can be
-However $\SDef_{\!\Ar}(\mu)$ can be
-%oli11:
-% negative---for instance, if $\Ar$ is empty.
-negative in some cases (e.g., when $\Ar = \emptyset$)),
-% This can make it somewhat confusing, despite its very nice properties. 
-and so clearly it does not measure ``how far a $\mu$ is from being compatible with $\Ar$''
-%oli6: flourish?
-% for any sense of the word ``compatible''
-%oli10:  partial reinstatement of flourish
-% \unskip.
-%oli11:
-% \unskip, in any sense.
-\unskip, in general.
-%oli9:
-% But, as we shall see, 
-%oli10:
-% Nevertheless, as we shall soon see, 
-Nevertheless,
-%joe5*: indeed, this is clear.  What's not at all clear (at least, not
-%to me) is why this is a good scoring function.  But even if you could
-%give intuition for that, THIS IS NOT THE PAPER YOU SHOULD PUT IT IN.
-%That intuition belongs in the (jhournal version of) the first paper.
-%oli6*: As you correctly point out, explaining why this is a reasonable scoring function is not the point of this section. The point is not to *defend* the scoring function, but to lay out what it is as clearly and concisely as we can.  
-% the two constructions are
-\scibility\ and $\SDef$ are
-%oli11:
-% closely related.
-deeply connected.
-%oli10:
-% , 
-% as we will now see.
-%oli11:
-% We will demonstrate this close relationship in a different way in each of the the three remaining subsections.
+
+However $\SDef_{\!\Ar}(\mu)$ can be negative in some cases (e.g., when $\Ar = \emptyset$)), and so clearly it does not measure ``how far a $\mu$ is from being compatible with $\Ar$'', in general.
+Nevertheless, \scibility\ and $\SDef$ are deeply connected.
 We will demonstrate a different aspect of that connection in each of the coming subsections.
 
-%oli10: this summary was now moved up to the front, and can be cut
-\commentout{
-In \cref{sec:sc-infobound}, we describe a deep and nontrivial connection between \scibility\ and
-%oli8:
-% $\SDef$, 
-% the information profile (via $\SDef$)
-information deficiency ($\SDef$),
-which works in two directions.  In one direction, it gives us an entropy-based criterion to conclude that a distribution cannot be \scible\ with a \hgraph; in the other, 
-%oli8:
-%this connection allows
-it enables
- our definition of \scibility\ to clarify some important
-%oli8: I think we've earned the right to be more forceful here
- % points
- misunderstandings
-in information theory. 
-%
-% Then, in \cref{sec:scoring-funs}, we derive our own scoring function, 
-We then (\cref{sec:scoring-funs}) derive a new entropy-based scoring function to directly measure how far a distribution is being \scible\ with a given \hgraph.
-%oli6:
-% ---%
-% which, perhaps surprisnigly, turns out to be an instance of the original scoring function, applied to a transformed directed hypergraph.
-But, perhaps surpringly, the new function turns out to be an instance of 
-% the original scoring function, 
-$\SDef$ applied to a transformed \hgraph.
-% a (seeming) counterexample
-% the more opaque aspects of 
-% in the information theory literature.
-% some historically contentious
-}
-
-\commentout{
-In the PDG formalism
-%  \citep{pdg-aaai},
-the idea is to find a distribution $\mu$ that minimizes $\SDef_{\!\Ar}(\mu)$
-plus an observational incompatibility $\Inc_{\dg M}(\mu)$ with the qualitative information.
-}
-% \begin{prop}
-% \end{prop}
-% Recall how one benefit of independence is that it allows for a more compact
-% representation of a probability distribution. Note that $\SDef(\mu) \le 0$
-% if and only if it is cheaper to specify randomness along the edges of $\Ar$
-% than it is to specify
-%oli2*: Although I'm very unhappy about it, I'm willing to try to 
-% write a version in which the material interpreting qualitative PDGs
-% is part of the appendix instead of the main body. 
-%
-% \input{original-scoring-function-intuition.tex}
-%oli14: end of long \commentout
-}
+} %oli14: end of long \commentout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %oli4:
 % \subsection{ \SCibility, and an Information Bound}
@@ -6804,7 +5482,7 @@ Our next example builds on this one.
 %oli8: end{commentout}
 
 % $\I(X;Y;Z)$ should not be negative 
-% \cite{mackay2003information,cover}
+% \citep{mackay2003information,cover}
 For many, there is an
 % Many people develop an
 intuition that
@@ -6816,12 +5494,12 @@ a fundementally ``3-way'' interaction between the variables,
 %oli10:
 % and cannot arise through pairwise relationships alone.
 %oli21: adding citation
-and should not arise through pairwise interactions alone \cite{dit-stumble}.
+and should not arise through pairwise interactions alone \citep{dit-stumble}.
 % This has historically been a problem,
 % But this intuition should be quashed
 This has been a source of conflict 
 %oli21: adding citations
-\cite{williams2010nonnegative,mackay2003information,1219753,CoverThomas},
+\citep{williams2010nonnegative,mackay2003information,1219753,CoverThomas},
 % \cite[Ex 8.8]{mackay2003information},
 % This has created some tension,
 %
@@ -7056,7 +5734,10 @@ This example has been used to argue that multivariate Shannon
 % While there are other responses to this criticism,%
 %oli11
 % we are in a position to give a novel and particularly persuasive one,
-We are now in a position to give a novel and particularly persuasive response, by appealing to \scibility.%
+We are now in a position to give a novel
+ % and particularly persuasive 
+ and far deeper
+ response, by appealing to \scibility.%
 %oli11: moved footnote + comments here
 %joe10: this footnote is a distraction.  I strongly suggest that you
 %cut it (or, at a minimum, drastically shorten it) and add a
@@ -7302,7 +5983,7 @@ Therefore:
 %oli20: cutting, as agreed
 \commentout{
 Although it is built from a sum of entropies, $\SIMInc_{\Ar}$ is not a linear function of its argument's information profile; rather, because of the infemum, it is an optimization problem over the information profiles of extended distributions.
-This makes it difficult to compute, and obfuscates the connection to information theoretic primitives. 
+This makes it difficult to compute, and obfuscates the connection to information-theoretic primitives. 
 }%
 %oli20: replacement
 Although they seem to be very different, $\SIMInc$ and $\SDef$ turn out to be closely related.  
@@ -8020,7 +6701,7 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
         \bigwedge_{i=1}^n g_i(\mat x[\Src i]) = \mat x[X_i]. 
     \end{equation}
     To quickly verify this: if $f(\mat g) = \mat x$, then in particular, for $i \in [n]$, then $\mat x[X_i] = f(\mat g)[X_i] = g_i( \mat x[\Src i])$ by the definition above.
-    Conversely, if the right hand side of \eqref{eq:bn-func-char} holds, then we can prove $f(\mat g) = \mat x$ by induction over our construction of $f$: if $f(\mat g)[X_{j}] = \mat x[X_j]$ for all $j < i$, then $f(\mat g)[X_i] = g_i( f(\mat g) [\Src i]) = g_i(\mat x[\Src i]) = \mat x[X_i]$.
+    Conversely, if the right-hand side of \eqref{eq:bn-func-char} holds, then we can prove $f(\mat g) = \mat x$ by induction over our construction of $f$: if $f(\mat g)[X_{j}] = \mat x[X_j]$ for all $j < i$, then $f(\mat g)[X_i] = g_i( f(\mat g) [\Src i]) = g_i(\mat x[\Src i]) = \mat x[X_i]$.
     % that $f(\mat g)[X_i] = g_i( (f))$
     % Call this property ($\star$). 
     
@@ -8079,7 +6760,7 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
                     g( \mat s_i ) = x_i
                 \Big\}\Big)
                 \quad\text{ where }
-                \begin{array}{l}
+                \begin{array}{l} 
                     x_i := \mat x[X_i],\\
                     \mat s_i := \mat x[\Src i]
                 \end{array} \\
@@ -8093,14 +6774,17 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
 \end{lproof}
 
 %oli17:
-Before we move on to proving the other results in the paper, we first illustrate how this relatively substantial first half of the proof of \cref{theorem:bns} can be dramatically simplified by relying on two information theoretic arguments.
+Before we move on to proving the other results in the chapter, we first illustrate how this relatively substantial first half of the proof of \cref{theorem:bns} can be dramatically simplified by relying on two information-theoretic arguments.
  % Here is an alternate proof of \cref{theorem:bns}.
 
 \begin{lproof}[Alternate, information-based proof]
     \textbf{($\implies$).}
     Let $G$ be a dag.     
     If $\mu \models \Ar_{G}$, then by \cref{theorem:sdef-le0}, 
-    $\SDef_{\Ar_{G}}(\mu) \le 0$. In the appendix of \cite{pdg-aaai}, it is shown that $\SDef_{\Ar_G}(\mu) \ge 0$ with equality iff $\mu$ satisfies the BN's independencies. 
+    $\SDef_{\Ar_{G}}(\mu) \le 0$.
+    % In the appendix of \citep{pdg-aaai},
+    In the proof of \cref{theorem:bns-are-pdgs},
+    it is shown that $\SDef_{\Ar_G}(\mu) \ge 0$ with equality iff $\mu$ satisfies the BN's independencies. 
     Thus $\mu$ must satisfy the appropriate independencies.
     % 
     % \textbf{($\impliedby$).}
@@ -8147,7 +6831,10 @@ The forward direction of the equivalence is strictly weaker than the one we alre
 The reverse direction is what's interesting.
 As before, we will take a significant shortcut by using \cref{theorem:sdef-le0}. 
 Suppose $\mu \models \Diamond \ArXY 1$. 
-In this case where $\Ar = \Ar_G$, it was shown by \citet{pdg-aaai} that  $\SDef_{\Ar}(\mu) \ge 0$.
+In this case where $\Ar = \Ar_G$, we have already shown
+% by \citet{pdg-aaai}
+(in the proof of \cref{theorem:bns-are-pdgs})
+that  $\SDef_{\Ar}(\mu) \ge 0$.
 It follows that
 \[
     0 ~\overset{\text{(\cref{theorem:sdef-le0})}}\ge~  \SDef_{\ArXY n}(\mu) = \SDef_{\Ar}(\mu) + \H_\mu(Y|X) 
@@ -8856,14 +7543,14 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 \begin{lproof}
         \label{proof:siminc-idef-bounds}
     %oli14*: complete overhaul of proof, since statement has changed since the proof sketch was added
-    Part (a).  The left hand side of the theorem 
+    Part (a).  The left-hand side of the theorem 
     ($\SDef_{\Ar}(\nu)\le\SIMInc_{\Ar}(\mu)$)
     is a strengthening of the argument used to prove \cref{theorem:sdef-le0}. 
     Specifically,
-    let $\nu^*$ be a minimizer of 
+    letting $\nu^*$ be a minimizer of 
     % $Q(~\cdot~, \mu, \Ar)$.
-        the optimization problem defining $\SIMInc$
-    We calculate
+        the optimization problem defining $\SIMInc$,
+    % We calculate
     % , subject to the constraint $\nu^*(\)$
     \allowdisplaybreaks
     \begin{align*}
@@ -8905,7 +7592,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     The final inequality holds because of our assumption that the marginal $\nu^*(\X)$ equals $\mu(\X)$. 
     Thus, $\SIMInc_{\Ar}(\mu) \ge \SDef_{\Ar}(\mu)$, as proimised.
 
-    We now turn to the right hand inequality, and part (b) of the theorem. 
+    We now turn to the right-hand inequality, and part (b) of the theorem. 
     Recall that $\nu^*$ is defined to be a minimizer of the optimization problem defining $\SIMInc$. 
     For the right inequality $(\SIMInc_{\Ar}(\mu) \le \SDef_{\!\Ar^\dagger}(\nu))$ of part (a), observe that
     \begin{align*}
@@ -8931,7 +7618,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     % Since $\SIMInc_{\Ar}(\mu)$ is defined to be $\inf_{\nu'} Q(\nu', \Ar)$, it must be at most $Q(\nu, \Ar)$ for this particular choice of $\nu$.  
     % Therefore
     % $ \SDef_{\!\Ar^\dagger}(\nu)  = Q(\nu,\mu,\Ar) \le \SIMInc_{\Ar}(\mu)$, 
-    This proves the right hand side of the inequality of part (a). 
+    This proves the right-hand side of the inequality of part (a). 
     Moreover, because the one inequality holds with equality when $\nu = \nu^*$ is a minimizer of this quantity (subject to having marginal $\mu(\X)$) we have shown part (b) as well,
     \vfull{%
     modulo the final claim about the size of the variables $\U$.
@@ -9205,7 +7892,8 @@ We now give a counterexample to a
 % earlier version
 simpler previously conjectured strengthening of \cref{theorem:func},
 in which part (a) is an if-and-only-if. 
-This may be surprising.
+% This may be surprising.
+% We were rather surprised to discover a counterexample.
 In the unconditional case, it is true that, two arcs $\{ \ed1{}X, \ed2{}X \}$ precisely encode that $X$ is a constant, as illustrated by \cref{example:two-edge-det}.
 The following, slightly more general result, 
     is an immediate correlary of \cref{theorem:func}(c).

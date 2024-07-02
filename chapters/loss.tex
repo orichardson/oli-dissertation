@@ -1,17 +1,16 @@
 \label{chap:one-true-loss}
 
-% \begin{center}
-%     \small\singlespacing
-% \end{center}
-
 % \begin{abstract}
 In a world blessed with a great diversity of loss functions,
 we argue that that choice between them is not a matter of taste or pragmatics, but of model.
-Probabilistic dependency graphs (PDGs) are probabilistic models that come equipped with a measure of ``inconsistency''.
-We prove that many standard loss functions arise as the inconsistency of
-a natural PDG describing the appropriate scenario%
-, and use the same approach
-to justify a well-known
+% Probabilistic Dependency Graphs (PDGs) are probabilistic models that come equipped with a measure of ``inconsistency''.
+\newmaterial{%
+% Recall that PDGs come equipped with a natural way to measure  inconsistency measure.
+Recall that there is a natural way to measure the degree of a PDG's inconsistency.
+In this chapter, 
+}%
+we prove that many standard loss functions arise as the inconsistency of
+a natural PDG describing the appropriate scenario, and use the same approach to justify a well-known
 	connection between regularizers and priors.
 We also show that the PDG inconsistency captures a
 large class of statistical divergences, and detail benefits of
@@ -199,8 +198,9 @@ As we will see, this tool is sufficient to derive many interesting relationships
 \def\xysamp{{\mathcal D}}
 
 % \subsection{Cross Entropy and }
-\paragraph{Three  of Log-Likelihood.}
-Suppose you believe that $X$ is distributed according to $p(X)$,
+% \paragraph{Three  of Log-Likelihood.}
+\subsection{Three Dimensions of Log-Likelihood}
+Suppose that you believe that $X$ is distributed according to $p(X)$,
 and also that it (certainly) equals some value $x$. These beliefs are consistent if $p(X\!\!=\!x) =\! 1$
 but become less so
  as $p(X\!\!=\!x)$ decreases.
@@ -246,7 +246,7 @@ generative models
 \end{linked}
 
 In some ways, this result is entirely unsurprising, given that
-\eqref{eq:inc} is a flexible formula built out of information theoretic primitives.
+\eqref{eq:inc} is a flexible formula built out of information-theoretic primitives.
 Even so, note that
 the inconsistency of believing both a distribution and an event
 happens to be the standard measure of discrepancy between the two%
@@ -411,7 +411,7 @@ See figure \cref{fig:entropy-cube} for an illustration.
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{figs/entropy-cube.png}
-	\caption{All combinations of the three axes of cross entropy variants}
+	\caption{Variants of log-probability based losses, across three  orthogonal dimensions: conditional vs unconditional, multi-sample vs single-sample, and latent-variable vs full-information}
 \end{figure}
 
 \subsection{Accuracy and Square Loss}
@@ -692,12 +692,11 @@ We start with a familiar one.
 \]
 \end{prop}
 % \vskip-1.3ex
-This result gives us an intuitive interpretation of the asymmetry of relative entropy (i.e., KL divergence), and a prescription for when it makes sense to use it.
+This result gives us an(other) intuitive interpretation of the asymmetry of relative entropy (i.e., KL divergence), and a prescription for when it makes sense to use it.
 $\kldiv p q$ is the inconsistency of a mental state containing both $p$ and $q$, when absolutely certain of $p$ (and not willing to budge on it).
 This concords with the standard intuition that $\kldiv pq$ reflects the amount of information required to change $q$ into $p$, which is why
 it is usually called the relative entropy ``from $q$ to $p$''.
-
-
+%
 We now consider the general case of a PDG comprising $p(X)$ and $q(X)$ with arbitrary confidences.
 \begin{linked}{lemma}{pdgdiv}
     The inconsistency
@@ -1566,7 +1565,9 @@ good loss functions come from good models.
 \section{Conclusions}
 
 
-We seen that that PDG semantics, in the same stroke by which they capture Bayesian Networks and Factor Graphs \parencite{pdg-aaai}, also generate
+We seen that that PDG semantics 
+%\unskip, in the same stroke by which they 
+not only capture Bayesian Networks and Factor Graphs \parencite{pdg-aaai}, but also generate
 many standard loss functions, including some non-trivial ones.
 In each case, the appropriate loss arises simply by articulating modeling assumptions, and then measuring inconsistency.
 Viewing loss functions in this way also has beneficial side effects, including an intuitive visual proof language for reasoning about the relationships between them.
@@ -1900,7 +1901,7 @@ As a specific case (i.e., effectively by setting $\beta_p := 0$), we get the rec
 \]
 \end{coro}
 
-\subsection{More Variants of Cross Entropy Results} \label{appendix:more-crossent}
+\subsection{More Variants of Log Likelihood Results} \label{appendix:more-crossent}
 
 First, we show that our cross entropy results hold for all $\gamma$, in the sense that $\gamma$ contributes only a constant.
 
@@ -3384,7 +3385,7 @@ Why is this? For such a setting of $\alpha$, which intuitively articulates a cau
 	 	&= \H_\mu(Y'|X) - \H_\mu(Y' | X, Y)  \\
 		&= \I_\mu(Y;Y'|X).
 \end{align*}
-Both equalities of the derivation above standard information theoretic identities \parencite[See, for instance,][]{mackay2003information}, and the final quantity $\I_{\mu}(Y;Y'|X)$ is the \emph{conditional mutual information} between $Y$ and $Y'$ given $X$, and is a non-negative number that equals zero if and only if $Y$ and $Y'$ are conditionally independent given $X$.
+Both equalities of the derivation above standard information-theoretic identities \parencite[See, for instance,][]{mackay2003information}, and the final quantity $\I_{\mu}(Y;Y'|X)$ is the \emph{conditional mutual information} between $Y$ and $Y'$ given $X$, and is a non-negative number that equals zero if and only if $Y$ and $Y'$ are conditionally independent given $X$.
 
 As a result, as $\gamma\to\infty$ any distribution that for which  $Y'$ and $Y$ are not independent given $X$ will incur infinite cost. Since the confidences in $h$ and $\datadist\xysamp$ are also infinite, so will a violation of either cpd.
 There is only one distribution that has both cpds and also this independence; that distribution is $\mu(X,Y,Y') := \datadist\xysamp(X,Y)h(Y'|X)$.

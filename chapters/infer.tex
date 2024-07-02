@@ -8,9 +8,13 @@ So far, we have seen that PDGs are a flexible modeling tool that
     plays two seemingly very different roles.
 On one hand, PDGs specify a joint distribution; in this capacity, they are an especially modular and interpretable generalization of standard probabilistic graphical models.
 On the other hand, PDGs have a natural inconsistency measure; in this capacity, they are a principled model-based way to specify a loss function.
-Yet, even several years after their introduction, there had been no practical way to compute with PDGs in either role: no inference algorithm, and no (provably correct) way to calculate the degree of inconsistency.
+% Yet, even several years after their introduction, 
+% Yet, up until this point, there 
+Yet our discussion so far leaves a burning question: how can we compute with PDGs? Is it even possible? 
+So far, we have seen no reason that there should be any practical way to compute with PDGs in either role: no inference algorithm, and no (provably correct) way to calculate the degree of inconsistency.
 % In this chapter, we address both issues.
-This chapter is based on a paper that resolves both issues \cite{pdg-infer}.
+% This chapter is based on a paper that resolves both issues \cite{pdg-infer}.
+In this chapter, we solve both problems. 
 
 \section{Introduction}
 
@@ -59,7 +63,7 @@ But up to now, there has been no practical way to do inference for
 PDGs---that is,
 to answer questions of the form
 ``what is the probability of $Y$ given $X$?''
-This paper presents the first algorithm to do so.
+This chapter presents the first algorithm to do so.
 
 
 
@@ -87,7 +91,7 @@ Given a number $\zogamma
 \in [0,1]
 $
 indicating the importance of structure relative to observation,
-the \emph{$\zogamma$-semantics} of a PDG to be the
+the \emph{$\zogamma$-semantics} of a PDG is the
 set of distributions that minimize 
 the appropriate convex combination of
 losses.
@@ -97,9 +101,9 @@ arises as $\zogamma$ goes to zero
  on observation, using structure only to break ties).
 This set
 can be shown to contain precisely one distribution
-for PDGs satisfying a mild regularity condition 
-% (required by definition by \citeauthor{pdg-aaai});
-we call such PDGs \emph{proper}.
+for PDGs satisfying a mild regularity condition,
+% (required by definition by \citeauthor{pdg-aaai}); we call such PDGs \emph{proper}.
+which we call \emph{proper}. 
 Thus, we have
  a parameterized family of inference notions:
 to do $\zogamma$-inference, for $\zogamma \in [0,1] \cup \{0^+\}$,
@@ -552,7 +556,7 @@ includes
 % \parencite[Prop 3.4]{pdg-aaai},
 (\cref{prop:consist})
 but may also contain other distributions.
-This paper also shows how to efficiently answer queries with respect 
+This chapter also shows how to efficiently answer queries with respect 
 to the unique distribution in $\bbr{\dg M}^*_{0^+}$, which we call
 \emph{$0^+$\!-inference}.
 
@@ -1507,7 +1511,7 @@ and many more figures, can be found in \cref{sec:expt-setup}.
 
 \section{Discussion and Conclusion}
 
-In this paper, we have provided the first practical algorithm for
+In this chapter, we have provided the first practical algorithm for
     inference in PDGs. 
 In more detail, we have defined a parametric family of PDG inference notions, 
 given a fixed-parameter tractable inference algorithm for a subset of these parameters,
@@ -1535,7 +1539,7 @@ our methods can be augmented with the convex-concave procedure
     \parencite{yuille2003concave} to obtain an inference
     algorithm that applies slightly more broadly; see \cref{sec:cccp}.
 We imagine that this extension could also be useful for computing with PDGs 
-    beyond the specific inference problem considered in this paper.
+    beyond the specific inference problem considered in this chapter.
 
 % \vfull{
 Our analysis does not resove these problems, but it
@@ -1570,7 +1574,7 @@ Our results fall broadly into three categories:
         for anyone working with PDGs
             (\cref{proofs:novel-pdg-results});
     \item Correctness and efficiency results, showing that the optimization
-        problems we present in the main paper give the correct answers,
+        problems we present in the body of the chapter give the correct answers,
         and that they can be formulated and solved in polynomial time;
             (\cref{proofs:expcone-efficient-correct})
     \item Hardness results, i.e., \cref{theorem:inf-via-inc-oracle} and
@@ -1579,7 +1583,7 @@ Our results fall broadly into three categories:
 \end{enumerate}
 
 % \subsection{Novel Results about PDGs}
-\subsection{Properties of PDG Semantics needed for Inference}
+\subsection{Properties of PDG Semantics Needed for Inference}
     \label{proofs:novel-pdg-results}
 
 \recall{prop:marginonly}
@@ -2374,7 +2378,9 @@ For convenience, we repeat problem \eqref{prob:joint-small-gamma}
         &= \OInc_{\dg M}(\Pr\nolimits_{\bmu}).
     \end{align*}
     Because $\bmu$ is optimal, it is the choice of \cactree\ that minimizes this quantity.
-    By \cref{coro:can-use-cliquetree}, the distribution $\bbr{\dg M}^*$ can be represented by such a \actree, and by \textcite[Prop. 3.4]{pdg-aaai},
+    By \cref{coro:can-use-cliquetree}, the distribution $\bbr{\dg M}^*$ can be represented by such a \actree, and by 
+    % \textcite[Prop. 3.4]{pdg-aaai},
+    \cref{prop:consist}
     this distribution minimizes $\OInc_{\dg M}$.
     All this is to say that there exist \actree s of this form whose corresponding distributions attain the minimum value $\OInc_{\dg M}(\Pr_{\bmu}) = \aar{\dg M}_0$.
     So $\bmu$ must be one of them, as it minimizes $\OInc(\Pr_{\bmu})$ among such \actree s by assumption. Thus $\Pr_{\bmu} \in \bbr{\dg M}^*_0$ and the objective value of \eqref{prob:cluster-inc} equals $\aar{\dg M}_0$.
@@ -3372,7 +3378,10 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
         &\iff~~&
         - \log_2 3 - 2^{m-2} \log_2 \epsilon ~&\le& - \log_2 & \Pr(A) &&<~ - \log_2 3 - 2^{m-1} \log_2 \epsilon \\
         &\iff~~&
-        2^{m-2} ~&\le& \Big(\log_2 \frac3{\Pr(A)} \Big) & / \log_2(\nf1\epsilon) &&<~ 2^{m-1}
+    %    
+        % 2^{m-2} ~&\le& \Big(\log_2 \frac3{\Pr(A)} \Big) & / \log_2(\nf1\epsilon) &&<~ 2^{m-1}
+        && \mathllap{2^{m-2} ~\le~ \Big(\log_2 \frac3{\Pr(A)} \Big)} &
+            \mathrlap{~/ \log_2(\nf1\epsilon) ~<~ 2^{m-1} }&&
         .
             \numberthis\label{eq:bound2}
     \end{align*}
@@ -3390,7 +3399,8 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
         &= m \Phi K +  \Phi \sum_{i=1}^k K_i \log^i \frac1\epsilon\, \, 
             \frac{2^{im} - 1}{2^i -1}
              \\
-        &< \Big(\log \log \frac3{\Pr(A)} - \log \log \frac1\epsilon \Big) \Phi K_0  + \Phi \,  
+        &< \Big(\log \log \frac3{\Pr(A)} - \log \log \frac1\epsilon \Big) \Phi K_0 
+        \\&\qquad\quad + \Phi \,  
             \sum_{i=1}^k K_i \Cancel{\log^i (\nf1\epsilon)} \cdot \left[ 
             4^i \Big(\log^i \frac3{\Pr(A)} \Big) ~/~ \Cancel{\log^i(\nf1\epsilon)}
             \right] / (2^i-1) \\
@@ -3459,11 +3469,12 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     prescribed by $x$. Then    
     \begin{align*}
         \big| \Pr\nolimits_{\!\bmu}(X{=}x) - \Pr\nolimits_{\!\bmu^*}(X{=}x) \big|
-        ~\le~ \sum_{C \in \C} \big|
+        ~&\le~ \sum_{C \in \C} \big|
             \Pr\nolimits_{\!\bmu^*_C}(E_C) - 
             \Pr\nolimits_{\!\bmu_C}(E_C)
         \big|
-        ~\le~
+        \\
+        ~&\le~
         \sum_{C \in \C} \big\Vert \bmu^*_C - \bmu_C \big\Vert_1
         ~=~
         \big\Vert \bmu^* - \bmu \big\Vert_1
@@ -3507,7 +3518,7 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     Thus, unconditional inference can be done in 
     \begin{align*}
         O\bigg( 
-            (N{+}A)^{4.5} V^{4.5(T+1)}
+            \begin{matrix}{}(N{+}A)^{4.5} \\ V^{4.5(T+1)}\end{matrix}
             \log \Big( \frac{(N{+}A)^4 V^{4(T+1)}\cdot N^{\frac12} V^{\frac{T+1}{2}}}{\epsilon} \frac{\beta^{\max}}{\beta^{\min}} + \log \frac1{p^{\min}} \Big) 
             \log\frac{1}{\epsilon} \log\log\frac{1}{\epsilon}
         \bigg) \\
@@ -3588,7 +3599,7 @@ Once we sort the terms into convex terms $f(\mu)$ and strictly concave terms $g(
         linear approximation to $g$.
 In more detail, the algorithm proceeds as follows.
 First, choose an initial guess $\mu_0$, and iteratively use the convex solver
-    as in the main paper to compute
+    as in the main part of the chapter to compute
 \begin{align*}
     \mu_{t+1} &:= \argmin_{\mu} f(\mu) + (\mu - \mu_{t})^{\sf T}
         \nabla g(\mu_t).
