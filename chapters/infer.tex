@@ -374,7 +374,7 @@ Nearly all \emph{exact} inference algorithms
     and without division \parencite{shafer1990probability},
     among others \parencite{wainwright2003tree})
 effectively construct a tree decomposition, and can be
-viewed as running on a tree \parencite[\S9-11]{koller2009probabilistic}.
+viewed as running on a tree \parencite[\S9-11]{KF09}.
 Indeed,
 under widely believed assumptions,
 every class of graphical models
@@ -392,7 +392,7 @@ that we will call a \emph{\actree},
 which
 is a collection
 $\bmu = \{\mu_C(C)\}_{ C \in \C}$ 
-of probabilities over the clusters \parencite[\S10]{koller2009probabilistic}.
+of probabilities over the clusters \parencite[\S10]{KF09}.
 A \actree\
 $\bmu$ 
 is said to be \emph{calibrated} if neighboring clusters' distributions agree on the variables 
@@ -412,13 +412,13 @@ all
 $C \in \C$.
 A \cactree\ summarizes the answers to
 many queries about $\Pr_{\bmu}$
-\parencite[see][\S 10.3.3]{koller2009probabilistic}.
+\parencite[see][\S 10.3.3]{KF09}.
     \unskip\footnote{To see why
     in a simple case, note that 
     for an unconditional query about $Y$ contained within a single cluster $C$, we have
     $\Pr_{\bmu}(Y) = \mu_C(Y)$.
     With some care, the general idea can be extended to arbitrary queries 
-        \parencite[see][\S 10.3.3]{koller2009probabilistic};
+        \parencite[see][\S 10.3.3]{KF09};
         those conditional on evidence $X{=}x$ can be handled
         by conditioning the clusters that contain $X$,
         and then recalibrating $\bmu$ with 
@@ -1081,7 +1081,7 @@ Problem \eqref{prob:cluster-inc} is similar to \eqref{prob:joint-inc}, except
 that it requires local marginal constraints to restrict our search to \cactree s.
 It is analogous to problem 
 \textsc{CTree-Optimize-KL}
-of \textcite[pg. 384]{koller2009probabilistic}.
+of \textcite[pg. 384]{KF09}.
 
 \begin{linked}{prop}{cluster-inc-correct}
     If $(\bmu, \mat u)$ is a solution to \eqref{prob:cluster-inc}, then
@@ -1279,7 +1279,7 @@ whose details we defer to \cref{appendix:prob-details} as well.
 
 
 At this point, standard algorithms can use $\bmu$
-to answer probabilistic queries about $\Pr_{\!\bmu}$ in polynomial time \parencite[\S 10.3.3]{koller2009probabilistic}.
+to answer probabilistic queries about $\Pr_{\!\bmu}$ in polynomial time \parencite[\S 10.3.3]{KF09}.
 \unskip\footnote{%
     Concretely: marginal probabilities can essentially be read off of a calibrated a \actree,
     and evidence $X{=}x$ may be incorporated by
@@ -1692,7 +1692,7 @@ Our results fall broadly into three categories:
         \I_\mu(\mat Z; \mat X| \mat S) = \I_\mu(\X_1; \X_2 \mid \X_1 \cap \X_2) = 0,
     \]
     showing that $\X_1$ and $\X_2$ are conditionally independent given the variables that they have in common. \\
-    (The fact that $\I_\mu(\mat Z; \mat X| \mat S) = \I_\mu(\X_1; \X_2 \mid \X_1 \cap \X_2)$ is both easy to show and an instance of a well-known identity; see CIRV2 in Theorem 4.4.4 of \textcite{halpern2017reasoning}, for instance.)
+    (The fact that $\I_\mu(\mat Z; \mat X| \mat S) = \I_\mu(\X_1; \X_2 \mid \X_1 \cap \X_2)$ is both easy to show and an instance of a well-known identity; see CIRV2 in Theorem 4.4.4 of \textcite{halpern-RAU}, for instance.)
 \end{lproof}
 
 \recall{coro:can-use-cliquetree}
@@ -1714,7 +1714,7 @@ Our results fall broadly into three categories:
     for sets of variables $\mat X, \mat Y, \mat Z \subseteq \X$,
     $\I(\mat X; \mat Y|\mat Z)$ is an independence
     described by $G$.
-    This means \parencite[Defn 4.8]{koller2009probabilistic} that
+    This means \parencite[Defn 4.8]{KF09} that
     if $X \in \mat X$, $Y \in \mat Y$, and $\pi$ is a path in $G$ between them, then
     some node along $\pi$ lies in $\mat Z$.
 
@@ -1797,27 +1797,28 @@ Our results fall broadly into three categories:
     We can then apply \cref{theorem:markov-property}, to find that
     $\XX$ and $\XNX$ are independent given $\XX \cap \XNX$.
     We use standard standard properties of random variable independence
-        \parencite[CIRV1-5 of][Theorem 4.4.4]{halpern2017reasoning} to find that $\mu$ must satisfy:
+        \parencite[CIRV1-5 of][Theorem 4.4.4]{halpern-RAU} to find that $\mu$ must satisfy:
     \begin{align*}
         \XX  &\CI \XNX \mid \XX \cap \XNX\\
-    \implies\quad
+    \implies~~~
         (\XX \setminus \mat Z) &\CI (\XNX\setminus \mat Z) \mid (\XX \cap \XNX) \cup \mat Z
             & \big[\,\text{CIRV3}\,\big] \\
     \implies\quad
         (\mat X \setminus \mat Z) &\CI (\mat Y \setminus \mat Z) \mid (\XX \cap \XNX) \cup \mat Z
-        & \big[\,\text{by CIRV2, as $\mat X \subseteq \XX$ and $\mat Y \subseteq \XNX$}\,\big] \\
+        % & \big[\,\text{by CIRV2, as $\mat X \subseteq \XX$ and $\mat Y \subseteq \XNX$}\,\big] \\
+        & \Big[\singlespacing\begin{array}{l}\text{by CIRV2, as }\\\mat X \subseteq \XX\text{ and }\mat Y \subseteq \XNX \end{array}\big] \\
     \implies\quad
         (\mat X \setminus \mat Z) &\CI (\mat Y \setminus \mat Z) \mid \mat Z
-        & \big[\,\text{since $(\XX \cap \XNX) \cup \mat Z = \mat Z$}\,\big] \\
+        & \big[\,\text{since $(\XX \cap \XNX) \cup \mat Z = \mat Z$}\,\Big] \\
     \iff\quad
         \mat X &\CI \mat Y \mid \mat Z
-        & \hspace{-4em}\big[\,\text{standard; e.g., Exercise 4.18 of \textcite{halpern2017reasoning}}\,\big] \\
+        & \hspace{-6em}\big[\,\text{standard; e.g., Exercise 4.18 of \textcite{halpern-RAU}}\,\big] \\
     \end{align*}
 
     Using only the PDG Markov property, we have now shown that every independence
     modeled by the Markov Network $G$ also holds
     in every distribution $\mu \in \bbr{\dg M}^*_\gamma$. Moreover, $G$ is chordal (as we will prove momentarily),
-    and is well-known that distributions that have the independencies of a chordal graph can be can be represented by \actree s \parencite[Theorem 4.12]{koller2009probabilistic}.
+    and is well-known that distributions that have the independencies of a chordal graph can be can be represented by \actree s \parencite[Theorem 4.12]{KF09}.
     Therefore, there is a \actree $\bmu$ representing every $\mu \in \bbr{\dg M}^*_\gamma$.
 
     \begin{iclaim}
@@ -3455,7 +3456,7 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     looking to find $\mu^*(X{=}x)$, where $\mu^* \in \bbr{\dg M}_\gamma$. 
     Once we have a \cactree\ $\bmu$ that represents $\mu^*$, 
     calcluating a marginal $\mu^*(X{=}x)$ (exactly) from $\bmu$ 
-    can be done with standard methods \parencite[][\S 10.3.3]{koller2009probabilistic}.
+    can be done with standard methods \parencite[][\S 10.3.3]{KF09}.
     In the worst case, it requires taking a marginal of every cluster,
     which can be done in $O(|\V\C|) \subseteq O(N V^{T+1})$ arithmetic operations. 
     

@@ -12,6 +12,7 @@
     \it
     ``A man with one watch always knows the time;\\
     a man with two watches is never sure.''
+    \citep{segal-law}
 % \end{quotation}
 \end{center}
 
@@ -23,10 +24,13 @@
 A central principle of scientific inquiry is this:
     if you want to eventually understand things clearly, then you must take seriously the possibility that your understanding today might be wrong. 
 And not only might you be wrong in the margins---wrong about the details of a calculation or under-informed---you could have a fundamentally misguided understanding of how the world works. You could be using meaningless concepts, confusing cause and effect, and misplacing your trust in those that seek to manipulate you. 
-For those of us who prize logic and rationality (including, famously, Descartes \cite{descartes}), perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
+For those of us who prize logic and rationality (including, famously, 
+% Descartes \citeyear{descartes}
+\citet{descartes},
+perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
 The foundational principles of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
-For without one, we risk being swindled \cite{RAT} or manipulated \cite{explosion}, if not humiliated \cite{logicalfalacy,emptysetthesis,politicians}.
+For without one, we risk being swindled \citep{RAT} or manipulated \citep{explosion}, if not humiliated \citep{logicalfalacy,emptysetthesis,politicians}.
 
 That is why theoretical computer scientists are careful to prove things about clearly defined models,
 and it is why applied computer scientists often build artificial agents that are \emph{consistent-by-construction}.
@@ -69,16 +73,15 @@ Overlapping and redundant representations are incredibly useful in practice for 
 For this reason, modern AI systems have been slipping away from the probabilistic consistency that they aspire to.
 For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
 The priors are typically inconsistent with the data (which is arguably the point), although neither is ever modified. 
-Still, the result is a far more robust learning process, both theoretically \cite{ftrl} and practically \cite{regularizers}.
+Still, the result is a far more robust learning process, both theoretically \citep{ftrl} and practically \citep{girosi1995regularization}.
 %
 % (maybe more?)
 % Perhaps clearer examples arise when people use multiple networks together, such as  
 Even clearer examples of inconsistency arise in variational inference
-    (e.g., mean field approximation methods, variational autoencoders \cite{kingma2013autoencoding}),
-    and when combining multiple networks 
-        in more complicated ways \cite{}.
-    In some cases, there is even a term representing ``consistency'' in the learning objective \cite{cycle-gan}. 
-In all of these, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
+    (e.g., mean field approximation methods, variational autoencoders \citep{kingma2013autoencoding}),
+    and more generally when combining multiple networks in nontrivial ways.
+    In some cases, there is even a term representing ``consistency'' in the training objective \citep{CycleGAN2017}, or the name of the approach \citep{learning-loc-glob-consistency,temp-cycle-consist-2019CVPR}. 
+In each case, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
 and tolerating inconsistency is critical for the learning process.
 %
 These techniques are billed
@@ -125,9 +128,9 @@ Let me show you.
 \section{Themes and Motifs}
 
 \newmaterial{%
-Before we get to the primary thread of the dissertation
-(which we will overview in \cref{sec:overview-of-results}),
-we first mention some recurring themes.
+Before we get to the primary thread of the dissertation,
+which we will overview in \cref{sec:overview-of-results},
+we first prime the reader to notice a few recurring themes.
 }% 
 
 
@@ -142,27 +145,38 @@ we first mention some recurring themes.
 When working with abstract representations, often it is the case that one class of models (representation $R_1$) seems clearly more general than another (representation $R_2$).
 To prove this, you show that anything with representation $R_2$ can be converted to $R_1$; perhaps $R_2$ is even literally a subset of $R_1$. 
 You convince yourself that the relationship is strict, because very little of $R_1$ is in the image of this transformation---and besides, how could you possibly represent a generic element of $R_1$ with $R_2$? 
-Suppose that, sometimes later,
- you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
-So, despite appearances, $R_1$ turns out to be equivalent to $R_2$. 
+% Suppose that, sometimes later,
+Yet it is still possible that, sometime later,
+you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
+So, despite appearances, $R_1$ may turn out to be equivalent to $R_2$. 
 
+\commentout{%
 To illustrate, consider an example from \cref{chap:prelim}. 
 Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
 Also, hypergraphs clearly are generalization of graphs; only the special case where hyperedges have two vertices correspond meaningfully to graphs. 
 So, chaining these observations together, one might reasonably conclude that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet, as we will see, bipartite graphs and hypergraphs are naturally isomorphic. 
+}%
+\newmaterial{%
+We will see this with hypergraphs and bipartite graphs (\cref{sec:prelim-graphs}), with variables, sets of variables, and random variables (\cref{ssec:basic-vars,sec:var-randomvar}) causal models and randomized causal models (\cref{sec:causal}),
+    before we even get to our own novel contributions.
+}
 % This pattern will be a recurring theme in this dissertation. 
 
-
-% Here is another, more abstract example : verbs and nouns.
-% \TODO
 
 
 % Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
 Probabilistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are a particularly special representation in this regard. 
 Not only can PDGs capture a great many things 
 % (\cref{chap:pdg-repr,chap:repr-tools})
-\unskip, but they also capture most of the ``obvious generalizations'' of them that we could have wanted. 
+\unskip, but they also capture many natural ``obvious generalizations'' of PDGs themselves. 
 If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many variants of TMs aimed at extending their expressive power: ``generalized'' TMs that have multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary Turing Machines. 
+\newmaterial{%
+    % For PDGs, this is true not only 
+PDGs push this idea even further.
+Not only are many different ways of specifying a PDG equivalent according to a single semantics, 
+    but also there are also several different (seemingly less expressive) semantics for PDGs, which are also equivalent.     
+}
+
 
 % \commentout{%
 
@@ -194,14 +208,16 @@ Failure to do so called ``abuse of notation''.
 But in some deep way, the notation is not really being abused if the two objects are really two different views of the same thing.
 % What is really important is 
 
-The idea can be described more precisely as etiquette for \emph{implicit conversion}.
-Whenever we define ways to implicitly regard objects of type $A$ to objects of type $B$, and a way of implicitly regarding objects of type
-    $B$ as objects of type $C$, then 
-    we have also defined way of implicitly converting an object of type $A$ to one of type $C$.
+The idea can be described more precisely as etiquette for \emph{implicit conversion}: when one defines a way of regarding one type of mathematical object as another that is so transparent that it can be implied. 
+% Whenever we define ways to implicitly regard objects of type $A$ to objects of type $B$, and a way of implicitly regarding objects of type
+%     $B$ as objects of type $C$, then 
+%     we have also defined way of implicitly converting an object of type $A$ to one of type $C$.
+% %
+% To avoid confusion, it is not strictly necessary to avoid implicit conversions---just to ensure that all ways implicitly converting $A$ to $C$ are equivalent. 
 %
-To avoid confusion, it is not strictly necessary to avoid implicit conversions---just to ensure that all ways implicitly converting $A$ to $C$ are equivalent. 
+To avoid confusion, it is not strictly necessary to avoid implicit conversions---but it is necessary to ensure that all ways implicitly converting an of type $A$ to an object of type $B$ are equivalent. 
 %
-Doing so can be challenging, but it is often the best way to get representations that simultaneously attain both 1 and 2. 
+Doing so can be challenging, but it is often the best way to get representations that simultaneously attain both properties 1 and 2 above. 
 %
 
 Avoiding the challenge altogether----ensuring objects of different types of different types are given different symbols---is 
@@ -244,12 +260,13 @@ Making that something else precise is one objective of this thesis.
 % on two levels: a high-level structure
 % There is an important conceptual division,
 Broadly speaking, most modeling happens at two different levels: 
-    at an abstract conceptual level, and a concrete 
-The division between the two levels goes by different names in different communities. 
+    at an abstract conceptual level, and a concrete fully detailed one.
+The division between the two kinds of objects
+    goes by different names in different communities. 
 % Here, we will largely call the distinction one between \emph{qualitative } 
 In computer science, perhaps the most common
     widely appreciated version of this phenomenon is 
-    the difference between types and values.
+    the distinction between types and values.
 A few others have are below.
 
 \begin{center}
@@ -266,16 +283,17 @@ A few others have are below.
     
 Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
 % (although both can be numerical)
-\unskip, or alternatively as the divide between \emph{structural} and \emph{observational} information (see \cref{sec:pgm-prelim}).
-The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
+\unskip, or alternatively as the divide between \emph{structural} and \emph{observational} information.
+% (see \cref{sec:pgm-prelim}).
+% The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
 %
-Both kinds of information are important, and they are fundamentally very different. The former is about the graph structure, and the latter is about its annotation. Put differently,
+Both kinds of information are important, and they are fundamentally very different.
+% The former is about the graph structure, and the latter is about its annotation.
+% Put differently,
 % (as we will see in \cref{chap:PDG-cat}), 
-the former is a conceptual shape, and the latter interprets that shape in the language of probabilities and confidences. 
-
+% the former is a conceptual shape, and the latter interprets that shape in the language of probabilities and confidences. 
 % One unusual feature of PDGs is that the qualitative information has a numerical weight. 
 % Different experts may have different relative strengths. For instance, one might want to trust one person to design a study to determine what causes what, and another person to independently design experiments aimed at determining the numerical probabilities. 
-
 This interplay and division between these two kinds of information will be a recurring theme in this work.
 
 % Understanding the difference between these two 
@@ -321,8 +339,9 @@ Both aspects serve as the building blocks for the theory that follows.
 The rest of the material is based on three previously published conference papers
     \citep{pdg-aaai,one-true-loss,pdg-infer},
 two workshop papers
-    \citep{lir,mixlang},
-several additional papers in earlier stages of the peer review process,
+    \citep{LIR,mixture-langs},
+additional papers in earlier stages of the peer review process
+    \citep{qim},
 and a trove of original unpublished notes. 
 
 % \citet{pdg-aaai}, \citet{one-true-loss}, \citet{LIR}, \citet{pdg-infer}
@@ -382,10 +401,11 @@ This process turns out to be a generalization of {belief propagation}, but one w
 meanwhile, 
 \cref{part:univ-objective} establishes calculating (and minimizing) a PDG's degree of inconsistency as an important problem of interest. 
 In \cref{part:algo-logic-complexity}, we solve both problems (\cref{chap:infer}), characterize their computational complexity, and investigate the deep connection between them (\cref{chap:inc-infer-connection}). 
+Both \cref{chap:infer,chap:inc-infer-connection} are based on the full version of the PDG inference paper \citep{pdg-infer}.
 % We conclude by further developing a 
-\Cref{chap:reason} then fleshes out 
-    reasoning principle that appears in
-    \cref{chap:one-true-loss,chap:QIM},
+In \cref{chap:reason}, we then flesh out a
+    reasoning principle that appears in previous chapters
+    (\ref{chap:one-true-loss} and \ref{chap:QIM}),
     called \emph{monotonicity of inconsistency}: 
     believing more things cannot make you any less inconsistent. 
 This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
@@ -401,5 +421,9 @@ We describe this in \cref{chap:PDG-cat}.
 % \Cref{chap:PDG-cat} concludes by investigating the category theory of PDGs.
     % The departure between Bayesian Networks originally inspired the representation.
 %
-% Finally, we conclude with open questions in \cref{part:}
+
+Finally, we conclude and discuss important open questions in 
+    % \cref{part:}
+    \cref{part:conclusions}
+    (\cref{chap:end}). 
 }

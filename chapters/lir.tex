@@ -37,7 +37,7 @@ According to some,
     the result of
     discovering new information that contradicts our beliefs, or
     becoming aware of discrepancies between beliefs we already hold
-    \cite{festinger1962cognitive}.
+    \citep{festinger1962cognitive}.
 % The process is often a gradual one: inconsistencies are dealt with incrementally, and one at a time.
 % However, people do not change their minds all at once, keeping in mind everything they know;
 % However, it is impossible to respond to this inconsistency all at once, keeping in mind everything you know;
@@ -45,7 +45,7 @@ According to some,
 % Inconsistency
 Inconsistencies
     can be difficult to detect, however
-    \cite{selman1996generating}, and indeed can only
+    \citep{selman1996generating}, and indeed can only
     be resolved once we are aware of them.
 % Further complicating things,
 % Typically
@@ -97,29 +97,33 @@ We formalize the process
 % This paper describes a general process by which this occurs,
 
 % Historically, much of the belief revision literature has focused on
-% conflicts between propositions and entrenchment \cite{agm,...}.
+% conflicts between propositions and entrenchment \citep{agm,...}.
 
 
 Our approach leans heavily on the theory of
 Probabilistic Dependency Graphs (PDGs), which are very flexible graphical
     models that allow for arbitrary---even inconsistent---%
-    probabilistic information, weighted by confidence \cite{pdg-aaai}.
+    probabilistic information, weighted by confidence 
+        % \citep{pdg-aaai}.
+        (see \cref{chapPDG-repr}).
 % In addition, PDG semantics
 There is a natural way
 % information-theoretic way
     % of measuring the inconsistency of a PDG,
-    to measure how inconsistent a PDG is,
-    and many standard loss functions
+    to measure how inconsistent a PDG is;
+    we saw in \cref{chap:one-true-loss} that
+    many standard loss functions
     can be viewed as measuring the inconsistency of a PDG that
-    describes the appropriate situation \cite{one-true-loss}.
+    describes the appropriate situation.
+        % \citep{one-true-loss}.
 % \vfull{
 %     Recently, techniques have been developed to calculate this inconsistency
 %     in polynomial time for bounded tree-width,
-%     although it scales exponentially with the tree-width of the graph \cite{pdg-infer}.
+%     although it scales exponentially with the tree-width of the graph \citep{pdg-infer}.
 %     As we move to variables that are continuous variables of large dimension,
 %         it becomes intractable to calculate this global inconsistency
 %         even for small graphs---the log evidence
-%         of a latent variable model \cite{one-true-loss} can be
+%         of a latent variable model \citep{one-true-loss} can be
 %         represented as a PDG inconsistency, for example.
 % }
 % Our work
@@ -153,8 +157,8 @@ Much of variational inference can be understood as
     adopting extra beliefs to
     % overapproximate the overall inconsistency in a way that is easier to calculate.
     % in a tractable way.
-    % overapproximate it in a way that is easier to calculate \cite{one-true-loss}.
-    minimize an over\-approximation of it that is easier to calculate \cite{one-true-loss}.
+    % overapproximate it in a way that is easier to calculate \citep{one-true-loss}.
+    minimize an over\-approximation of it that is easier to calculate \citep{one-true-loss}.
 % Our algorithm allows for this kind of
 % Our approach extends this by also enabling the opposite:
 Our approach can capture this, but also enables the opposite:
@@ -256,7 +260,7 @@ and we adopt the notation $\exp_{\theta_0}( X ) := y(1)$
     % which is standard in differential geometry,
     for a compact description of it.
     % this trajectory.
-    % compactly refer to this curve, which is standard in many contexts \cite{lee.smooth-manifolds}.
+    % compactly refer to this curve, which is standard in many contexts \citep{lee.smooth-manifolds}.
 At first glance,
 % Although on the surface
 % Although it may seem
@@ -282,7 +286,7 @@ thus the mere fact that $\Theta$ parametrizes a family of
 probability distributions is enough to make it a Riemannian manifold.
 % by $\mat u, \mat v \mapsto \mat u^{\sf T} \mathcal I(\theta) \mat v$.
 Moreover, $\mathcal I(\theta)$ is particularly natural in a probabilistic context;
-    up to a multiplicative constant, it is the \emph{only} such metric on $\Theta$ that is invariant under sufficient statistics, \cite{chentsov}. \cite{amari2016information}
+    up to a multiplicative constant, it is the \emph{only} such metric on $\Theta$ that is invariant under sufficient statistics, \citep{chentsov}. \citep{amari2016information}
 }
 
 % \subsection{PDGs}
@@ -491,15 +495,6 @@ We take this idea a few steps further, by operationalizing the
     % procedures are special cases.
      % of our algorithm.
     % of an algorithm we call \emph{local inconsistency resolution}.
-
-
-\vfull{
-PDG inference is fixed-parameter tractable:
-assuming a graph with bounded tree-width, the  can be computed in polynomial time.
-and it appears that \cite{pdg-infer}.
-Several important algorithms can already be seen as inconsistency reduction.
-When viewed as a graphical model}
-
 % A surprisingly broad class of algorithms already
 % \begin{itemize}
 %     [nosep]
@@ -623,7 +618,7 @@ Calculate
 % the inconsistency of $\varphi\odot(\dg M(\Theta) + \Ctx)$,
 $\aar{\varphi\odot(\dg M(\theta) + \Ctx)}_\gamma$, the inconsistency of
     the combined context and memory, weighted by attention.
-(For discrete PDGs, this can be done with the methods of \citet{pdg-infer}.)
+(For discrete PDGs, this can be done with the methods of \cref{chap:infer}.)
 Then mitigate this local inconsistency
     by updating
      mutable memory
@@ -781,7 +776,7 @@ some historically important algorithms that are instances of LIR.
     the optimal distribution, albeit in a roundabout manner.
     }
 % in which (i.e., every $A_t = \Ar$) amounts to \emph{global} inconsistency reduction, i.e.,
-% the universal training objective of \cite{one-true-loss}. which is \#P-hard.
+% the universal training objective of \citep{one-true-loss}. which is \#P-hard.
 % In this case, supposing $\bbeta \ge 0$,
 % then the global inconsistency $\aar{\dg M}
 % $ can only decrease in time
@@ -831,7 +826,7 @@ $
 whose observational inconsistency is
 $
     \aar{\dg M}_0 = - \log p_\theta(y|x)
-$, the standard training objective for such a classifier \cite{one-true-loss}.
+$, the standard training objective for such a classifier \citep{one-true-loss}.
 % This inconsistency is irreducible, since removing any of
 % If $X$ and $\Theta$ are expressive enough, any of the four edges will make the inconsistency disappear
 % All four components play a major role in giving rise to this inconsistency.
@@ -1020,7 +1015,7 @@ By adding arcs corresponding to $x'$ and $y'$ to $\dg M$,
 % Taking a view of
 An iteration of LIR
 whose focus is the edges marked in green (with control over the dashed green edge)
-is then an adversarial attack with Euclidean distance \cite{biggio2013advattk}.
+is then an adversarial attack with Euclidean distance \citep{biggio2013advattk}.
 % Taking the blue focus, on the other hand,
 The blue focus, by contrast, ``patches'' the adversarial example by
     adjusting the model parameters to again classify it correctly.
@@ -1033,7 +1028,7 @@ in which $\textsc{Refresh}$ selects a fresh $(x,y,x'=x)$ from the dataset
 % refreshes $(x,x',y,y')$
 % amounts to
 is
-adversarial training, a standard defense to adversarial attacks \cite{goodfellow2014explaining}.
+adversarial training, a standard defense to adversarial attacks \citep{goodfellow2014explaining}.
 %
 
 The ML community's focus on adversarial examples
@@ -1045,7 +1040,7 @@ The ML community's focus on adversarial examples
      it is no accident.
 At this level of abstraction, there is no difference between
     model parameters and inputs.
-% We can highlight this visually by observing that, after adding L2 regularization \cite{one-true-loss}, translating the previous diagram to an ordinary PDG gives us the symmetrical:
+% We can highlight this visually by observing that, after adding L2 regularization \citep{one-true-loss}, translating the previous diagram to an ordinary PDG gives us the symmetrical:
 % Making the parameterization of $p$ explicit
 Indeed, if we make the parameterization of $p$ explicit
 and add L2 regularization
@@ -1059,8 +1054,8 @@ becomes striking (\cref{fig:adv}, right).
 This may help explain why,
     even outside of adversarial contexts,
     % even in contexts,
-% it is just as sensible to train the inputs, as the network \cite{FNNS}.
-it can be just as sensible to train an input, as a model \cite{FNNS}.
+% it is just as sensible to train the inputs, as the network \citep{FNNS}.
+it can be just as sensible to train an input, as a model \citep{FNNS}.
 % (S, right.)
 % \[
 %     \begin{tikzpicture}[center base,atkv/.style={red!50!white},defv/.style={green!50!gray}]
@@ -1199,7 +1194,7 @@ yields the usual training algorithm for variational autoencoders (VAEs).
 \def\real{{\mathrm{real}}}
 \def\fake{{\mathrm{fake}}}
 LIR also subsumes more complex training procedures such as the one used to train
-GANs \cite{goodfellow2020generative}.
+GANs \citep{goodfellow2020generative}.
 % The general idea is that
 The goal is to train a network $G$ to generate images that cannot be distinguished
     from real ones.
@@ -1317,9 +1312,9 @@ so that the discriminator is well-adapted to the generator.
 Nearly every standard graphical model can be viewed
     as a factor graph, and correspondingly admits an
     (approximate) inference procedure known
-    variously as (loopy) belief propagation \cite{koller2009probabilistic},
-    the generalized distributive law \cite{aji2000gendistriblaw},
-    and the sum-product algorithm \cite{kschischang2001factor}.
+    variously as (loopy) belief propagation \citep{KF09},
+    the generalized distributive law \citep{aji2000gendistriblaw},
+    and the sum-product algorithm \citep{kschischang2001factor}.
 It also turns out to be the special case of LIR specialized to factor graphs.
     % which correspond to PDGs that have equal weighting in .
 
@@ -1359,7 +1354,7 @@ that specifies the same joint distribution $\Pr_{\Phi}$, when
 
 % \paragraph{Sum Product Belief Propogation.}
 % The state for standard sum-product belief
-Sum-product belief propagation \cite{kschischang2001factor}
+Sum-product belief propagation \citep{kschischang2001factor}
     aims to approximate marginals of $\Pr_{\Theta}$
     with only local computations: messages sent between factors and
         the variables they have in scope.
@@ -1419,7 +1414,7 @@ The traditional depiction of messages
     moving between variables and factors (see \cref{sec:bp-details}) is not so different from the PDG
 % \begin{quotation}\it
 %     the message sent from a vertex $v$ on an edge $e$ is the product of the local function at $v$, with all messages recieved at $v$ (other than from $e$),
-%     summarized for $e$'s variable node. \cite{kschischang2001sumproduct}
+%     summarized for $e$'s variable node. \citep{kschischang2001sumproduct}
 % \end{quotation}
 % \vskip
 % The PDG $\Msg$ is not so different from this schematic:
@@ -1553,7 +1548,7 @@ Indeed, it can be shown that (\ref{eq:X->a},\ref{eq:a->X}) minimize inconsistenc
 
 There are many established variants of this algorithm.
 Some of them are generated different by clustering factors together---%
-    in the language of \citet{koller2009probabilistic},
+    in the language of \citet{KF09},
     that is to say choosing something other than the Bethe cluster graph
     as the basis for message passing.
 Our analysis immediately applies to these other cluster graphs.
@@ -1567,15 +1562,15 @@ Our analysis immediately applies to these other cluster graphs.
 \citet{minka2005divergence} offers a different perspective,
 in which a broader class of message passing algorithms can be viewed as iteratively
 adjusting some local context to minimize an $\alpha$-divergence.
-% that are generated from the $\alpha$-divergences \cite{minka2005divergence}, because
-% of the close relationship those divergences have with simple PDGs \cite{one-true-loss}.
+% that are generated from the $\alpha$-divergences \citep{minka2005divergence}, because
+% of the close relationship those divergences have with simple PDGs \citep{one-true-loss}.
 % In particuar, he shows minimizing $\alpha$-divergences
 We suspect that LIR generalizes thses procedure as well---not only
 because it is similar in spirit, but also because because
 these divergences can be viewed as the degree of inconsistency
-of a PDG containing two distributions \cite{one-true-loss}.
+of a PDG containing two distributions \citep{one-true-loss}.
 % generalized belief propogation
-    % \cite{generalized-bp} as well.
+    % \citep{generalized-bp} as well.
 
 % \paragraph{Message Passing from Divergences}
 % \citet{}
@@ -1641,7 +1636,7 @@ Is this effective?  We are excited to find out!
 % \appendix
 
 \section{Details on Belief Propogation} \label{sec:bp-details}
-The usual schematic illustration of belief propogation \cite{kschischang2001factor}
+The usual schematic illustration of belief propogation \citep{kschischang2001factor}
 looks something like:
 \begin{center}
     \begin{tikzpicture}[xscale=1.8]
@@ -1883,7 +1878,7 @@ the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is c
         
     For all of our examples, and indeed, 
     if $\gamma$ is chosen small enough, 
-    the sum of the two terms is convex in $\mu$ \cite{pdg-aaai}.
+    the sum of the two terms is convex in $\mu$ \citep{pdg-aaai}.
     Then we have
     \begin{align*}
         &\aar[\Big]{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma
@@ -1904,7 +1899,7 @@ the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is c
         they are jointly convex in $(\mu,\theta)$.
     And, as we have seen, the third term is linear in $\mu$ and convex in $\theta$, so it is also jointly convex in $(\mu, \theta)$.
     Thus, the sum of all three terms in the infemum is jointly convex in $(\theta, \mu)$. 
-    Taking an infemum over $\mu$ pointwise, the result is still convex in $\theta$     \cite{boyd2004convex}.
+    Taking an infemum over $\mu$ pointwise, the result is still convex in $\theta$     \citep{boyd2004convex}.
     % Since $\varphi \ge 0$ and $\bbeta  > 0$ this is effectively just the inconsistency of a PDG.
 \end{proof}
 

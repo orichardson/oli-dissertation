@@ -14,7 +14,8 @@ Thus, the two views of PDGs are essentially equivalent---not only semantically, 
 %
 \newmaterial{%
     % This 
-The result is a deep and rather philosophical conclusion: precisely quantifying the degree of one's inconsistency is no easier than optimally resolving those inconsistencies. 
+% The result is a deep and rather philosophical conclusion:
+This leads to a philosophically profound result: precisely quantifying one's degree of inconsistency is no easier than optimally resolving those inconsistencies. 
 }%
 
 To get there, we first need to formally describe the two computational problems of interest (\cref{sec:approximate-inference}) as approximate inference problems,
@@ -86,8 +87,8 @@ All of this suggests at a theoretical level something we
 % Conceptually, this result is not so different from the relation between a factor graph and its partition function 
 Indeed, as previously mentioned (e.g., in \cref{sec:free-energy-fg-inc}),
     a factor graph (a special case of a PDG, by \cref{theorem:fg-is-pdg})
-    is associated with a similarly important number, called its \emph{free energy} or \emph{log partition function} (which is the inconsistency of this factor graph when viewed as a PDG, by \cref{proprop:fg-inconsistency-is-partition-function}).
-Calculating this number is computationally difficult, but if it is known, then inference becomes far easier \cite{ma2013estimating,koller2009probabilistic}. 
+    is associated with a similarly important number, called its \emph{free energy} or \emph{log partition function} (which is the inconsistency of this factor graph when viewed as a PDG, by \cref{prop:fg-inconsistency-is-partition-function}).
+Calculating this number is computationally difficult, but if it is known, then inference becomes far easier \citep{ma2013estimating,KF09}. 
 % The results of this chapter de-mystify the nature of this relationship
 This chapter will clarify the nature of this relationship, generalize it to a far wider class of probabilistic models, and significantly strengthen the reduction.
 More precisely, we will show that an inconsistency oracle on its own can be used to perform inference in time linear in the length of its required output length.
@@ -837,8 +838,8 @@ the proof of part (a).
     Then
     \begin{align*}
         f'(p) &= f'_{\dg M}(p) + f'_{\Pr}(p) \\
-        &= \big(\nabla \bbr{\dg M}(\mu^*_p)\big)^{\sf T} \mat J_{\mu^*_p}
-            + \left(\nabla_\mu
+        =& \big(\nabla \bbr{\dg M}(\mu^*_p)\big)^{\!\sf T} \mat J_{\mu^*_p}
+            + \left(\!\nabla_\mu
                 \Big[ \mu(x) \kldiv{\mu(y|x)}{p}\Big]_{\mu = \mu^*_p} \right)^{\sf T} \mat J_{\mu^*_p} +
                 \frac{\partial}{\partial p} \Big[ \kldiv{\mu^*_p(Y{=}y)}{p}\Big] \\
 \shortintertext{\centering
@@ -852,7 +853,7 @@ the proof of part (a).
             + \frac{\partial}{\partial p} \kldiv{\mu^*_p(Y{=}y)}{p}
             \\
         &= \frac{\partial}{\partial p} \kldiv{\mu^*_p(Y{=}y)}{p}
-        & \mathllap{\text{by \eqref{eqn:matching-gradients-at-optimum}}}.
+        \qquad\qquad\text{by \eqref{eqn:matching-gradients-at-optimum}}.
     \end{align*}
 
     Finally,
@@ -891,12 +892,14 @@ $}}
     If $0 < p_1 < p_2 < 1$
     and $\mu_1^*, \mu_2^*$ are respective minimizing distributions,
     then
-    \[
+    % \[
+    $
         f(p_2) \ge f(p_1) + f'(p_1) (p_2-p_1) +
             \frac 12\gamma
             \Vert \mu_1^* - \mu_2^* \Vert_1^2
             .
-    \]
+    $
+    % \]
 \end{lemma}
 \begin{lproof}
     The general approach is to adapt and strengthen
@@ -1005,7 +1008,7 @@ $}}
         &= \sum_i q_i \log \frac{q_i}{p_i} \\
         &= \kldiv{q}{p} \\
         &\ge 2 \delta(\mat p, \mat q)^2
-            \qquad[\text{by Pinsker's inequality
+            \qquad\qquad[\text{ by Pinsker's inequality
                 \parencite{pinsker-inequality}
             }] \\
         &= 2 \Big(\frac12 \Vert \mat p - \mat q \Vert_1 \Big)^2 \\
@@ -1370,7 +1373,7 @@ that converges exponentially to
 through a variant of binary search.
 More precisely, the algorithm we present below is an extremely close relative of 
     an algorithm known to the competitive programming community 
-    as \emph{trinary search} \cite{trinary-search}.
+    as \emph{trinary search} \citep{trinary-search}.
 In some ways it is slightly more efficient,
     but its analysis is more complex. 
 

@@ -33,7 +33,7 @@ In \cref{sec:widgets}, we develop a library of more intricate tools, which we ca
 %
 Doing so will enable us to deliver on the promises made in \cref{sec:alt-pdgs}, of being able to use the current PDG formalism to express seeming generalizations of PDGs. 
 
-Probability, despite its dominance, does have shortcomings, and is not the only tool we have for representing knowledge and uncertainty \citep[\S2]{halpern2017reasoning}.
+Probability, despite its dominance, does have shortcomings, and is not the only tool we have for representing knowledge and uncertainty \citep[\S2]{halpern-RAU}.
 % Possibility is one important one; others include belief/plausibility measures, which have been touted as generalizations of probability. 
 % Perhaps surprisingly, many of these objects can be represented with PDGs as well.
 In \cref{sec:other-uncertainty-repr}, we will use the tools developed in \cref{sec:widgets} to show that PDGs capture some of these other well-established representations of uncertainty, most notably sets of probability measures, known as credal sets \citep{Walley1991-SRIP} (\cref{ssec:cvx-prob-sets}) and Dempster-Shafer Belief functions \citep{shafer1976mathematical} (\cref{ssec:belplaus-as-pdg}).
@@ -1295,8 +1295,8 @@ Now for the proof of the theorem.
 \subsection{Pseudomarginals on Cluster Graphs}
     \label{ssec:pseudomarginal-cluster-graph}
 
-Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \citep{wainwright2003tree,wainwright2008graphical,koller2009probabilistic},
-sometimes called a \emph{pseudomarginal} \citep{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \citep{koller2009probabilistic}; we will call them \emph{cluster marginals}.
+Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \citep{wainwright2003tree,wainwright2008graphical,KF09},
+sometimes called a \emph{pseudomarginal} \citep{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \citep{KF09}; we will call them \emph{cluster marginals}.
 
 Concretely, given a set of variables $\X$, a cluster graph is 
 graph, whose node set is a collection $\C$ of clusters, each $C \in \C$ of which is a subset of $\X$. 
@@ -1313,7 +1313,7 @@ A cluster marginal is said to be \emph{calibrated} if, for every edge $C{-}D$ in
 Belief propogation is a way of calibrating these objects, and effectively is a way of reducing local inconsistencies between pairs of clusters. We will return to this in \cref{chap:LIR}. 
 
 When the cluster graph has a special property that makes it a \emph{tree decomposition} 
-    (see \cref{sec:tw} or ```clique tree'' in \citep{koller2009probabilistic}),
+    (see \cref{sec:tw} or ```clique tree'' in \citep{KF09}),
 then local consistency is equivalent to global consistency \citep{wainwright2008graphical},
 and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
 We will cover these concepts in detail when we
