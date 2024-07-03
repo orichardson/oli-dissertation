@@ -720,7 +720,7 @@ and the way we will develop the analogues of information theory in the general c
 % A common way of simplifying the theory for general measures,
 }
 
-\paragraph{The Radon-Nikodym Derivative.}
+\paragraph{The Radon-Nikodym Derivative and Base Measures.}
 Suppose $\mu$ and $\nu$ are both measures over a measurable space $(X,\mathcal F)$, and $\mu \ll \nu$. 
 The Radon-Nikodym theorem states that there then exists a unique 
 % $\mathcal F$-measurable function $f$
@@ -732,20 +732,21 @@ $
 This function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
 
 \newmaterial{%
-Here on out, we will assume that for each variable $X$, the possible values $\V\!X$ not only comes with a $\sigma$-algebra $\mathcal F_X$ (making it a measurable space), but also a base measure $\lambda_X$. 
-In the case of a discrete variable that takes on finitely or countably many values, we assume the counting measure: for $U \subseteq \V\!X$ $\lambda_X(U) = |U|$ is the number of elements in $U$. 
-When $\V\!X$ is a subset of real space $\mathbb R^I$, we use the \emph{lebesque measure}, which agrees with the standard notions of length, area, and volume.
-}%
-
+From here on out, we will assume that for each variable $X$, the possible values $\V\!X$ not only comes with a $\sigma$-algebra $\mathcal F_X$ (making it a measurable space), but also a base measure $\lambda_X$. 
+In the case of a discrete variable $X$ that takes on finitely or countably many values, we take $\lambda_X$ to be the counting measure: for $U \subseteq \V\!X$ $\lambda_X(U) = |U|$ is the number of elements in $U$. 
+When $\V\!X$ is a subset of real space $\mathbb R^I$, we use the \emph{Lebesque measure}, which agrees with the standard notions of length, area, and volume.
 % Technically speaking $\mu(X)$ is not a random variable 
+%
 Recall how $\mu(X)$ was a random variable in the finite case. 
-In the more general setting, the appropriate analogue is the
+In the more general setting, the appropriate analogue is 
     % is not $\mu(X)$, but rather 
-    derivative
+    the derivative
     $\frac{\mathrm d\mu(X)}{\mathrm d \lambda_X}$
 of $\mu$ with respect to the base measure, which is the random variable of interest.
+% So in particular, when we define 
+}%%%%%%%%%%
 
-% 
+ 
 % Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
 % With that definition, a variable $X$ can be viewed as a random variable $X : \V\!\X \to \V\!X$ that selects the value of $X$ from the joint setting.  
 % Conversely, an arbitrary random variable $Z : \V\!\X \to \V Z$ can be included in the set of all variables; there is a natural 1-1 correspondence between distributions $\mu \in \Delta \V\!\X$ over the original variables, and ``extended'' distributions $\bar\mu \in \Delta \V(\X \cup Z)$ with the property that variable $Z$ and the function $Z$ applied to the other variables coincide (i.e., $\bar\mu(Z(\X) = Z)=1$).
@@ -1385,6 +1386,7 @@ The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed acco
 and has several very important properties. 
 Chief among them, $\H_\mu(X)$ is non-negative, and equal to zero iff $X$ 
     is a constant according to $\mu$. 
+
 The ``joint entropy'' $\H(X,Y)$ is just the entropy of the combined variable $(X,Y)$ whose values are pairs $(x,y)$ for $x \in \V(X),y \in \V(Y)$; this is the same as the entropy of the variable $X \cup Y$ when $X$ and $Y$ are themselves sets of variables. 
     % takes as input not the value of a variable
 
@@ -1562,23 +1564,84 @@ as depicted in \cref{fig:info-diag-prelim}.
 % \end{center}
 \end{figure}
 
+\newmaterial{%
 \paragraph{Entropy for Continuous Variables.}
-So far, everything we have said depends on the variables being discrete,
+So far, everything we have said depends on the variables being discrete.
 % so that $\mu(X{=}x)$ = $\mu(x)$. 
+In the general case, we need only replace instances of $\mu(X)$ used as a random variable with its derivative $\frac{\mathrm d\mu}{\mathrm d \lambda}$ with respect to $X$'s base measure $\lambda_X$.
+So, for instance, the entropy of a variable $X$ is
+\[
+    \H_\mu(X) 
+    = \Ex_{\mu} [\log \frac{\mathrm d\lambda_X}{\mathrm d \mu(X)}]
+    = \int_{\V\!\X} \log \frac{\mathrm d\lambda_X}{\mathrm d \mu(X)} \mathrm d \mu
+    .
+\]
+}%
 
-More generally, when $X$ is a variable, we assume that $\V\!X$
-    not only comes equipped with $\sigma$-algebra $\mathcal F_X$, but also with a base measure $\lambda_X$.
-When we write $\mu(x)$, we mean the density $\frac{\mathrm d\mu}{d \lambda}$. 
+% More generally, when $X$ is a variable, we assume that $\V\!X$
+%     not only comes equipped with $\sigma$-algebra $\mathcal F_X$, but also with a base measure $\lambda_X$.
+% When we write $\mu(x)$, we mean the density $\frac{\mathrm d\mu}{d \lambda}$. 
 
 
-\TODO
-
+\newmaterial{%
 \paragraph{The Principle of Maximum Entropy.}
+%
+% What should one do
+Suppose that, with rigorous emperical invetigation, we have determined some statistics about a variable $X$---perhaps its mean, and the proportion of the time it takes on a certain value---but have not (yet) collected enough information to uniquely determine the distribution of $X$. 
+How should we proceed?
+The most faithful representation of our knowledge, of course, is just the information we have---those statistics, and perhaps the set of probability distributions consistent with them. 
+But what should we do if we are obligated to give a probability distribution 
+    (as one often is, e.g., by the axioms of rationality \citep{RAT})?
+% Here there is an important principle in the literature: 
+% If forced to select a probability distribution, however, there is one principle
+There is a well-established principle stating that among all possible distributions, the one with maximum entropy is most appropriate. 
+
+% Here is a high-level reason for this: 
+At a high level, this is because 
+    entropy measures uncertainty in a distribution, and we do not want to assume things that we do not know.
+% Since entropy measures uncertainty,
+% \begin{quotation}
+%     ``The maximum-entropy distribution may be asserted for the positive reason that it is uniquely determined as the one which is maximally noncomittal with regard to missing information, instead of the negative one that there is no reason to think otherwise''
+% \end{quotation}
+\begin{quotation}
+    \it\singlespacingplus
+    ``This is the only unbiased assignment we can make; to use any other would amount to arbirary assumption of informaiton which by hypothesis we do not have.'' 
+        \citep[p.623]{jaynes1957information}
+\end{quotation}
+Imagine, for example, that our friend is undergoing a secret but important evaluation, 
+and we know nothing about her score except that it will be a number between 1 and 5.
+It would be inappropriate to assume that she will scored a 5 (or a 1) simply because it's consistent with what we know, because that does not adequately represent our ignorance. 
+The principle of maximum entropy states that we should assume a uniform distribution over scores until we learn more.  
+% If we discover that the average score is a 4, then the maximum entropy distribution 
 
 
-\paragraph{A Structural Information Measure.} 
+There are many other theoretical arguments in favor of the principle as well \citep{wallis}.
+% Many years later, another strong argument can be made 
+Many decades later, we are now also in a position to make an empirical argument for the principle of maximum entropy: it validates many standard and intuitively natural choices made in the literature.
+% The uniform distribution over a finite set of outcomes is the distribution with maximum entropy.
+The uniform distribution over an interval $[a,b]$ is the maximum entropy distribution with that support. 
+A gaussian with mean $m$ and variance $\sigma^2$ is the maximum entropy distribution with that mean and variance. 
+Among distributions supported on $[0,\infty]$ with mean $\lambda$, the exponential distribution $\mu(X) = \lambda e^{\lambda X}$ is the one that maximizes entropy. 
+% Logitstic regression is the maximum entropy classifier consistent with \citep{}
+Logitstic regression 
+    % (i.e., a softmax layer)
+    outputs the maximum entropy distribution over class labels,
+    among those that share certain means with the training data.
+More generally, \emph{exponential families}, an important class of models that capture not only many of the examples above but also undirected graphical models---all maximize entropy subject to an expectation matching constraint. 
+
+But what about directed graphical models? Bayesian Networks, so far, have resisted such a clean characterization in terms of maximum entropy; maximum entropy approaches seem to require some sort of deference to a causal structure \citep{}. 
+One contribution of this thesis is to expand the principle of maximum entropy to account for qualitative information. 
+%
+% It may be worth noting that these two arguments for maximum entropy---the high-level interpretation of the quantity as measuring the right thing, and the sociological argument to unity---directly parallel the two kinds of arguments we give for the semantics of PDGs, in \cref{chap:pdg-repr,chap:one-true-loss}, respectively.
+}%
+
+
+\paragraph{Entropy as a Structural Information Measure.} 
 % \subsubsection{A Structural Information Measure.} 
-We claim that all of these (entropy-based) quantities are purely ``qualitative'' notions---although, because represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
+Entropy and 
+% its ilk
+the other quantitie 
+are purely ``qualitative'' notions---although, because represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
 One way to see this is the way these concepts interact with variables. 
 Recall that $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as (random) variables, that take as input values of $X$ and $Y$. 
 % Unlike their counterparts, 
