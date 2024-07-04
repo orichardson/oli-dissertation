@@ -93,8 +93,8 @@ $
 % \]
 
 We write $|A|$ or $\# A$ for the \emph{cardinality} of a set $A$;
-    typically when we write this,  $A$ will be \emph{finite}, 
-    meaning it contains $|A| \in \mathbb N$ distinct elements. 
+    when we write $\#A$, that means $A$ is \emph{finite}, 
+    meaning it contains $\#A = |A| \in \mathbb N$ distinct elements. 
 When $n \in \mathbb N$ is a natural number, let
     $[n] := \{ 0, 1, \ldots, n-1 \}$ denote the set of the first $n$ natural numbers.
 When $a$ and $b$ are numbers (e.g., elements of $\mathbb N$ or $\mathbb R$), we denote their product by $a \cdot b$, or, more commonly, simply $a b$.
@@ -1658,6 +1658,7 @@ So, for instance, the entropy of a variable $X$ is
     = \int_{\V\!\X} \log \frac{\mathrm d\lambda_X}{\mathrm d \mu(X)} \mathrm d \mu
     .
 \]
+% Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 }%
 
 % More generally, when $X$ is a variable, we assume that $\V\!X$

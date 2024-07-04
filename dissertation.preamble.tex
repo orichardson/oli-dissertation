@@ -249,6 +249,7 @@
 
 		
 %%%%%  SPECIAL COMMANDS FOR LIR %%%%%%%%%
+\newcommand\btheta{\boldsymbol\theta}
 \newcommand\Ctx{\dg{C\mskip-2mut\mskip-2mux}}
 \newcommand\Mm{\dg{M}}
 \newcommand\MThetadense{\dg{M}(\mskip-1mu\Theta\mskip-1mu)}
@@ -259,14 +260,29 @@
 \newcommand\ctrl{C}
 
 \relax % Short arrows.
-    \newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
-	    \vcenter{\hbox{\rule[-.5\fontdimen8\textfont3]{#1}{\fontdimen8\textfont3}}}%
-	    \mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+    % \newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
+	%     {\hbox{\rule[-.5\fontdimen8\textfont3]{#1}{\fontdimen8\textfont3}}}%
+	%     \mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+	\newcommand{\veryshortarrow}[1][3pt]{\mathrel{%
+		\hbox{\rule[\dimexpr\fontdimen22\textfont2-.2pt\relax]{#1}{.4pt}}%
+		\mkern-4mu\hbox{\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+	\makeatletter
+	\setbox0\hbox{$\xdef\scriptratio{\strip@pt\dimexpr
+		\numexpr(\sf@size*65536)/\f@size sp}$}
+
+	\newcommand{\scriptveryshortarrow}[1][3pt]{{%
+		\hbox{\rule[\scriptratio\dimexpr\fontdimen22\textfont2-.2pt\relax]
+				   {\scriptratio\dimexpr#1\relax}{\scriptratio\dimexpr.4pt\relax}}%
+	   \mkern-4mu\hbox{\let\f@size\sf@size\usefont{U}{lasy}{m}{n}\symbol{41}}}}
+	\makeatother
+
+	% \let\sto\veryshortarrow
+	\newcommand\sto{\mathchoice{{\to}}{\veryshortarrow}{\scriptveryshortarrow}{{\to}}}
     % \newcommand\sto{{{\scalebox{1}[1]{$\scriptstyle\to$}}}}
     %
     \newsavebox{\stosbox}
     \sbox{\stosbox}{\begin{tikzpicture}\draw[->] (0,0) to (0.15,0);\end{tikzpicture}}
-    \newcommand\sto{\usebox\stosbox}
+    % \newcommand\sto{\usebox\stosbox}
     %%%
     %%% hacky: now I have to do the same thing for green and blue
     \newsavebox{\stosboxgreen}
@@ -495,7 +511,10 @@ innertopmargin=2pt, frametitlebelowskip=3pt, frametitleaboveskip=2pt, frametitle
 % 
 	\usetikzlibrary{decorations.pathmorphing}
 	\tikzset{fgnode/.style={dpadded,inner sep=0.6em, circle},
-	factor/.style={light pad, fill=black}}
+		factor/.style={light pad, fill=black}}
+
+	\tikzset{lirfactor/.style={draw,minimum width=1.5em, minimum height=1.5em,fill=gray!50!black,text=white,font=\mathversion{bold}\bfseries}}
+
 % 
 % 	% For illustrating what's inside of nodes:
 % 	\tikzset{alternative/.style args={#1|#2|#3}{name=#1, circle, fill, inner sep=1pt,label={[name={lab-#1},gray!30!black]#3:\scriptsize #2}} }

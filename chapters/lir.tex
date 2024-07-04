@@ -100,14 +100,12 @@ We formalize the process
 % conflicts between propositions and entrenchment \citep{agm,...}.
 
 
-Our approach leans heavily on the theory of
-Probabilistic Dependency Graphs (PDGs), which are very flexible graphical
-    models that allow for arbitrary---even inconsistent---%
-    probabilistic information, weighted by confidence 
+Our approach leans heavily on the theory of PDGs. 
         % \citep{pdg-aaai}.
-        (see \cref{chapPDG-repr}).
+        (\cref{chapPDG-repr}).
 % In addition, PDG semantics
-There is a natural way
+% As illstrated in \cref{chap:one-true-loss},
+As we have seen, there is a natural way
 % information-theoretic way
     % of measuring the inconsistency of a PDG,
     to measure how inconsistent a PDG is;
@@ -217,6 +215,7 @@ This observation suggests a generic approach to learning and
 
 % \section{Background and Preliminaries}
 % \section{Technical Preliminaries}
+\commentout{%
 \section{Mathematical Preliminaries}
 % \section{Mathematical Formalism}
 % Each variable $X$ can take on values from a set $\V\!X$ of possible values.
@@ -243,37 +242,18 @@ $p(Y|X) : \V \!X \to \Delta\mskip-1mu \V \mskip-1mu Y$.
     We also write $\ed {\scriptstyle a}{S}{T} \in \Ar$ to specify an
     arc $a$ together with its sources $S = \Src a$ and targets $T = \Tgt a$.
 % \end{defn}
+}%
 
+\section{Parametric PDGs}
+The main tool of this chapter is a parametric version of a PDG. 
+For this reason, we
 % \paragraph{Geometry.}
-\textbf{Geometry.}
+% \textbf{Preliminaries: Geometry.}
 % We will need various parameter spaces $\Theta$; to simplify the presentation, assume that parameter spaces are a convex subsets of $\mathbb R^n$ (not necessarily of the same dimension).
-We will need various parameter spaces $\Theta$.
-    To simplify the presentation, assume that each $\Theta$ is a convex subset of $\mathbb R^n$ (not necessarily of the same dimension).
-A \emph{vector field} over $\Theta$ is a differentiable
-    map $X$ assigning to each $\theta \in \Theta$ a vector $X_\theta \in \mathbb R^n$.
-The \emph{gradient} of a twice differentiable map $f : \Theta \to \mathbb R$,
-    % written $\nabla_\theta f(\theta)$,
-    which we write $\nabla_\Theta f(\Theta)$, is a vector field.
-Given a vector field  $X$ and an initial point $\theta_0 \in \Theta$, there is a unique trajectory $y(t)$ that solves the ODE
-$\{\frac{\mathrm d }{\mathrm d t}y(t) = X_{y(t)}$,  $y(0) = \theta_0\}$,
-and we adopt the notation $\exp_{\theta_0}( X ) := y(1)$
-    % which is standard in differential geometry,
-    for a compact description of it.
-    % this trajectory.
-    % compactly refer to this curve, which is standard in many contexts \citep{lee.smooth-manifolds}.
-At first glance,
-% Although on the surface
-% Although it may seem
- $\exp$ only gives us access to $y(1)$,
-    but
-    % it is easy to show
-     it is easily verified
-     that $\exp_{\theta_0}(t X) = y(t)$.
-% Although it may not be obvious, $\exp$ indeed allows us to describe the entire trajectory, because $\exp_{p_0}(tX) = p(t)$.
-So altogether, the map $t\mapsto \exp_\theta(t \nabla_\Theta f(\Theta))$ is the smooth path beginning at $\theta$ that follows the gradient of $f$. It is known as
-\emph{gradient flow}.
-
-\vfull{
+will need various parameter spaces $\Theta$.
+To simplify the presentation, assume that each $\Theta$ is a convex subset of $\mathbb R^n$ (not necessarily of the same dimension).
+%
+\commentout{
 Given a manifold $\Theta$ and a differentiable map $P : \Theta \to \Delta \V\! X$,
      the Fisher Information Matrix
 $\mathcal I(\theta)
@@ -291,11 +271,11 @@ Moreover, $\mathcal I(\theta)$ is particularly natural in a probabilistic contex
 
 % \subsection{PDGs}
 % \paragraph{Probabilistic Dependency Graphs.}
-\textbf{Parametric Probabilistic Dependency Graphs.}
+% \textbf{Parametric Probabilistic Dependency Graphs.}
 % PDG is a directed graph whose arcs carry probabilistic and causal information, weighted by confidence.
 % We now introduce an equally expressive variant, whose explicit parametric nature will prove useful for our purposes.
 We now formally introduce an equally expressive \emph{parametric} variant of a PDG,
-    that was first mentioned in \cref{sec:var}
+    that was first mentioned in \cref{sec:alt-pdgs}.
 % whose explicit parametric nature will prove useful.
 % ---%
     % yet it too is essentially equivalent to the others.
@@ -503,6 +483,33 @@ We take this idea a few steps further, by operationalizing the
 % However, global inference
 
 \section{Local Inconsistency Resolution (LIR)}
+
+\paragraph{Geometric Preliminaries}
+To describe how those parameters evolve over time, we will need some additional geometric concepts.
+A \emph{vector field} over $\Theta$ is a differentiable
+    map $X$ assigning to each $\theta \in \Theta$ a vector $X_\theta \in \mathbb R^n$.
+The \emph{gradient} of a twice differentiable map $f : \Theta \to \mathbb R$,
+    % written $\nabla_\theta f(\theta)$,
+    which we write $\nabla_\Theta f(\Theta)$, is a vector field.
+Given a vector field  $X$ and an initial point $\theta_0 \in \Theta$, there is a unique trajectory $y(t)$ that solves the ODE
+$\{\frac{\mathrm d }{\mathrm d t}y(t) = X_{y(t)}$,  $y(0) = \theta_0\}$,
+and we adopt the notation $\exp_{\theta_0}( X ) := y(1)$
+    % which is standard in differential geometry,
+    for a compact description of it.
+    % this trajectory.
+    % compactly refer to this curve, which is standard in many contexts \citep{lee.smooth-manifolds}.
+At first glance,
+% Although on the surface
+% Although it may seem
+ $\exp$ only gives us access to $y(1)$,
+    but
+    % it is easy to show
+     it is easily verified
+     that $\exp_{\theta_0}(t X) = y(t)$.
+% Although it may not be obvious, $\exp$ indeed allows us to describe the entire trajectory, because $\exp_{p_0}(tX) = p(t)$.
+So altogether, the map $t\mapsto \exp_\theta(t \nabla_\Theta f(\Theta))$ is the smooth path beginning at $\theta$ that follows the gradient of $f$. It is known as
+\emph{gradient flow}.
+
 % Two knobs to control the model. The first one controls what you're looking at and what you get to change.
 % We now describe the local inconsistency reduction algorithm.
 % There are two distinct senses in which inconsistency resolution can be done locally:
@@ -511,7 +518,7 @@ We take this idea a few steps further, by operationalizing the
 %     we can restrict what we can see, or what we can do.
 % There are two aspects of resolving inconsistency: what
 % We can either
-\textbf{Attention and Control.}
+\paragraph{Attention and Control.}
 There are two distinct senses in which inconsistency resolution can
     be \emph{local}: we can restrict what we can see, or what we can do about it.
 Correspondingly, there are two ``focus'' knobs for our algorithm:
@@ -591,7 +598,7 @@ Either mask can then be applied to
 % The full algorithm, formalized in \cref{algo:LIR},
 % The aim of LIR is to
 % The LIR algorithm
-\textbf{The Algorithm.}
+\paragraph{The Algorithm.}
     LIR
     modifies
     the parameters $\theta$ of a
@@ -733,14 +740,14 @@ This is because of the following result.
 
  % so long as the parameterizations $\mathbb P$ are log-concave, because of
 % This is because of
-\begin{theorem} \label{thm:cvx}
+\begin{linked}{prop}{logccave}
     % If $\,\mathbb P$ is log-concave, then
-    If $\mathcal M(\Theta)$ is a PPDG whose parameters
-    $\mathbb P$ is log-concave, then
+    If $\dg M(\Theta)$ is a PPDG whose parameterizations
+    $\mathbb P$ are either constant or unconditional and log-concave, then
     for small enough $\gamma$, the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is convex.%
         % \footnote{All proofs can be found in the appendix.}
     % and strictly so for $\gamma > 0$.
-\end{theorem}
+\end{linked}
 % \begin{proof}
 %     It is known that $p \mapsto \aar{\dg M + p}$ is convex (see appendix),
 %     and also that $\aar{\dg M + p}$
@@ -766,15 +773,15 @@ some historically important algorithms that are instances of LIR.
 % then $\textsc{LIR}(\Ctx, \dg M)$ equals $\bbr{\chi\odot\Ctx}^*_\gamma$,
 % the optimal distribution, albeit in a roundabout manner.
 %%%%%
-\vfull{
+\commentout{
     If $\dg M$ is a PDG with discrete variables $\X$
     and we regard $\mu(X)$
     $\dg M(\Theta)$ consists of a single joint distribution $\mu(\X)$
         parameterized as a vector $[0,1]^{\V\!\X}$,
-    and \textsc{Refocus} always produces constant $\chi,\gamma$,
+    and \textsc{Refocus} always produces the same constant $\phi$ and $\gamma$,
     then $\textsc{LIR}(\Ctx, \dg M)$ equals $\bbr{\chi\odot\Ctx}^*_\gamma$,
     the optimal distribution, albeit in a roundabout manner.
-    }
+}
 % in which (i.e., every $A_t = \Ar$) amounts to \emph{global} inconsistency reduction, i.e.,
 % the universal training objective of \citep{one-true-loss}. which is \#P-hard.
 % In this case, supposing $\bbeta \ge 0$,
@@ -810,7 +817,7 @@ Together with a labeled sample $(x,y)$,
 % \]
 $
     \dg M(\theta) :=
-    \begin{tikzpicture}[center base]
+    \begin{tikzpicture}[center base,scale=1.3]
         % \node[dpad1] (X) at (0,0) {$X$};
         % \node[dpad1] (Y) at (1.5,0) {$Y$};
         % \draw[arr1, <<-] (X) to node[above,pos=0.65]{$x$} +(-1,0);
@@ -840,15 +847,16 @@ by modifying the parameters associated to different arcs?
 \begin{itemize}
     \item Adjusting $\theta$
     % (i.e, $C = \{\theta\}$)
-    amounts to training the network in the standard way.
+    amounts to training the network in the standard way---that is, changing the parameters little by little to minimize cross entropy.
         % In more detail, $\chi$
         % In this case, the value $\chi$ of the control mask corresponds to the number of optimization iterations.
-        In this case, the value $\chi$ of the control mask corresponds roughly
-        to the product of the learning rate and the number of optimization iterations.
+    In this case, the value $\chi$ of the control mask corresponds roughly
+    to the product of the learning rate and the number of optimization iterations.
 
     \item Adjusting $y$
     % (i.e., $C = \{y\}$)
-    is like a  forward pass, in that it adjusts $y$ to match distribution $p_\theta(Y|x)$.
+    is like a  forward pass, in that it changes the label $y$ to match the distribution $p_\theta(Y|x)$.
+    that the model predicts over labels, given the input $x$. 
         % In particular, $\chi=\infty$ corresponds to selection $y(
         % If there is also a qualitative edge that states that $Y$ is deterministic
 
@@ -888,7 +896,7 @@ If $\eta := \chi(p) \varphi(p)$ is small, then
     % \tikzset{atkv/.style={red!50!white},defv/.style={green!50!gray}}
     \tikzset{atkv/.style={green!70!black},defv/.style={blue}}
     \phantom{a}\hfill
-    \begin{tikzpicture}[center base,scale=1.2]
+    \begin{tikzpicture}[center base,scale=1.6]
         % \node[dpad1] (X) at (0,1) {$X$};
         % \node[dpad1] (X') at (0,0) {$X'$};
         \node[dpad1] (X) at (0,0) {$X$};
@@ -920,7 +928,7 @@ If $\eta := \chi(p) \varphi(p)$ is small, then
     \end{tikzpicture}
     % $\cong$
     \hfill
-    \begin{tikzpicture}[center base,scale=1.2]
+    \begin{tikzpicture}[center base,scale=1.6]
         \def\outspray{.24}
         \def\inspray{.18}
         \def\yspray{.5}
@@ -1138,12 +1146,12 @@ the missing data is called the EM algorithm. It iteratively computes
     % LIR on the PDG
     % \[
     LIR$\Bigg(\!
-        \begin{tikzpicture}[center base]
+        \begin{tikzpicture}[center base,scale=1.3]
 			\node[dpad0] (X) {$X$};
 			\draw[arr2, <<-] (X) --  node[above,pos=0.8]{$ x$} +(-0.9, 0);
 		\end{tikzpicture}
         ~,~
-        \begin{tikzpicture}[center base]
+        \begin{tikzpicture}[center base,scale=1.3]
 			\node[dpad0] (Z) {$Z$};
 			\node[dpad0,left=.5 of Z] (X) {$X$};
 			\coordinate (A) at ($ (X)!.5!(Z) + (0,0.8)$);
@@ -1220,7 +1228,7 @@ This state of affairs is summarized below.
 \[
     % \dg M:=
     \dg M(\Theta) := \quad
-    \begin{tikzpicture}[center base,Dcolor/.style={green!70!black},Gcolor/.style={blue}]
+    \begin{tikzpicture}[center base,Dcolor/.style={green!70!black},Gcolor/.style={blue},scale=1.4]
         % \node[dpad1](Z) at (0, 0.6){$Z$};
         \node[dpad1](Xfake) at (0,1) {$X_{\fake}$};
         \node[dpad1](Xreal) at (0,0){$X_{\real}$};
@@ -1274,8 +1282,9 @@ $
 $, where
 \[
 \mathcal L^{\text{GAN}}(G,D) = \Ex_{\vphantom{|}x \mathrlap{\sim \pdata}}
-    [\log D(x)] + \Ex_{x' \sim G} [\log (1- D(x'))].
+    [\, \log D(x) \, ] + \Ex_{x' \sim G} [\,\log (1- D(x')) \,],
 \]
+and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X={x})$. 
 % Now consider the two perspectives: the generator's perspective $G$, with
 % \textbf{The Discriminator's View.}
 % % According to the discriminator,
@@ -1320,14 +1329,15 @@ It also turns out to be the special case of LIR specialized to factor graphs.
 
 % \paragraph{Belief Propogation.}
 % % Let $\X$ be a set of variables,
-% Consider a factor graph
-A \emph{factor graph} over a set of variables $\X$ is a set of factors
+% Consider a factor 
+Recall (from \cref{sec:prelim-fgs}) that a
+\emph{factor graph} over a set of variables $\X$ is a set of factors
 % Let $\X$ be a set of variables, and consider a set of factors
- $\Phi = \{ \phi_a : \mathbf X_a \to \mathbb R_{\ge 0}\}_{a \in \Ar}$,
+$\Phi = \{ \phi_a : \mathbf X_a \to \mathbb R_{\ge 0}\}_{a \in \Ar}$,
 where each $\mathbf X_a \subseteq \mathcal X$ is called the \emph{scope} of $a$.
 Conversely, for $X \in \X$, let
 $\partial X
-    \vfull{ := \{a \in \Ar : X \in \mat X_a\}}
+ := \{a \in \Ar : X \in \mat X_a\}
 $ be the set of factors with $X$ in scope.
 $\Phi$ specifies a distribution
 $\Pr_\Phi(\X) \propto \prod_a \phi_a(\mat X_a)$, and
@@ -1338,7 +1348,7 @@ corresponds to a PDG
 % this factor graph is $\Phi$ is
 \[
 % $
-    \dg M_\Phi = \Big\{ \begin{tikzpicture}[center base]
+    \dg M_\Phi = \Big\{ \begin{tikzpicture}[center base,scale=1.3]
         \node[dpadinline] (X) {$\mathbf X_a$};
         \draw[arr,<-] (X) to node[above, pos=0.65,inner sep=3pt]{$\propto \smash{\phi_a}$}
             node[below,pos=0.7,inner sep=1.5pt]{\color{gray}\scriptsize$(\alpha,\beta{=}1)$} +(-1.4,0);
@@ -1411,27 +1421,76 @@ Observe that every calculation is a (marginal of) a product of factors,
 % The process can be visualized as propogation along the edges of the factor graph.
 % The standard illustration of it is not so different from the PDG $\Msg$
 The traditional depiction of messages
-    moving between variables and factors (see \cref{sec:bp-details}) is not so different from the PDG
-% \begin{quotation}\it
-%     the message sent from a vertex $v$ on an edge $e$ is the product of the local function at $v$, with all messages recieved at $v$ (other than from $e$),
-%     summarized for $e$'s variable node. \citep{kschischang2001sumproduct}
-% \end{quotation}
-% \vskip
-% The PDG $\Msg$ is not so different from this schematic:
-\begin{center}
-    % \vspace{-1ex}
-    % $\begin{matrix}\Msg\\+
-    %     {\color{blue!50!black}\dg M_\Phi}
-    % \end{matrix}\!\cong\,$
-    \begin{tikzpicture}[xscale=2,center base]
-        % \node[factor] (a) at (0,0) {$a$};
+    moving between variables and factors
+    \citep{kschischang2001factor}
+    looks something like this:
+    \begin{center}
+        \begin{tikzpicture}
+                % [xscale=1.8]
+                [xscale=2,yscale=1.3]
+            \node[lirfactor] (a) at (0,0) {$a$};
+            \node[draw,circle,inner sep=4px] (X) at (1,0) {$X$};
+            \node[lirfactor] (b1) at (2,0.5){$b_1$};
+            \node[lirfactor] (bm) at (2,-0.5){$b_m$};
+            \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
+            \node[draw,circle,inner sep=2px] (Yn) at (-1,-0.5){$Y_n$};
+            % \node[anchor=center] at (-1,0){$\scalebox{1}[1]{\vdots}$};
+            % \node[anchor=center,draw] at (2,0){$\scalebox{1}[1]{\vdots}$};
+            \draw (a) -- (X);
+            \draw (b1) -- (X);
+            \draw (bm) -- (X);
+            \draw (Y1) -- (a);
+            \draw (Yn) -- (a);
+    
+            % \draw[arr0,red,arrows={->[harpoon,swap]}]
+            %     (1.6,0.7) to[in=23,out=-80] node[left, pos=0]{$m_{b_1 \!\sto \!X}$\!\!} (X);
+            % \draw[arr0,red,arrows={->[harpoon,swap]},dashed]
+            %     (0.5,0.7) to[in=0,out=-90] node[left, pos=0]{$m_{X \!\sto a}$\!} (a);
+            % \draw[arr0,blue,arrows={->[harpoon,swap]}]
+            %     (0.5,-0.7) to[in=180,out=90] node[right, pos=0]{\!$m_{a \sto \!X}$} (X);
+            \begin{scope}[transform canvas={yshift=2px},green!70!black]
+                \let\stogreen\sto
+            \draw[arr,arrows={->[harpoon,swap]}]
+                (b1) to node[above=-0.5pt,rotate=15]{$m_{b_1 \!\stogreen \mskip-2muX}$\!\!} (X);
+            \draw[arr,arrows={->[harpoon,swap]}]
+                (bm) to node[above=-0.5pt,rotate=-5,pos=0.3]{$m_{b_m \!\stogreen \mskip-2muX}$\!\!} (X);
+            \draw[arr,arrows={->[harpoon,swap]},densely dotted]
+                (X) to node[above]{$m_{X \!\stogreen a}$\!} (a);
+            \end{scope}
+    
+            \begin{scope}[transform canvas={yshift=-2px},blue]
+                \let\stoblue\sto
+            \draw[arr,arrows={->[harpoon,swap]}]
+            % \draw[blue,arrows={->[harpoon,swap]}]
+                (Y1) to node[below=-0.5pt, rotate=-5,pos=0.35]{$m_{Y_{\!1} \!\stoblue a}$\!\!} (a);
+            \draw[arr,arrows={->[harpoon,swap]}]
+                (Yn) to node[below, rotate=17]{$m_{Y_{\!n} \!\stoblue a}$\!\!} (a);
+            \draw[arr,arrows={->[harpoon,swap]},densely dotted]
+                (a) to node[below]{\!$m_{a \stoblue \mskip-2muX}$} (X);
+            \end{scope}
+            % \draw (current bounding box.north west) rectangle (current bounding box.south east);
+        \end{tikzpicture}~\raisebox{1ex}.
+    \end{center}%
+    
+    This is only a schematic,
+        but the PDG $\Msg$ can be made to look similar to it.
+    Adding a variable $X^{a}$ for every pair
+        % $(a \in \Ar, X \in \mat X_a)$,
+        $(X,a)$ with $X \in \mat X_a$
+    along with edges asserting that $X^{a} = X$,
+    we obtain an equivalent PDG that does not look so different: 
+    \begin{center}
+    \begin{tikzpicture}[center base,
+            % [xscale=2,center base]
+            xscale=2.4,yscale=1.5]
+        % \node[lirfactor] (a) at (0,0) {$a$};
     \begin{scope}[os1/.style={outer sep=1pt},dpad0/.append style={fill=gray!50!black,text=white,font=\mathversion{bold}}]
         % \node[] (a) at (0,0) {$a$};
         % \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{(a)}$}};
         \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{a}$}};
         \node[dpadded,os1] (X) at (1,0) {$X$};
-        % \node[factor] (b1) at (2,0.5){$b_1$};
-        % \node[factor] (bm) at (2,-0.5){$b_m$};
+        % \node[lirfactor] (b1) at (2,0.5){$b_1$};
+        % \node[lirfactor] (bm) at (2,-0.5){$b_m$};
         \node[dpad0,os1] (b1X) at (1.8,0.5){\scalebox{0.7}{$X^{b_1}$}};
         \node[dpad0,os1] (bmX) at (1.8,-0.5){\scalebox{0.7}{$X^{b_m}$}};
         % \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
@@ -1459,36 +1518,24 @@ The traditional depiction of messages
         % \draw (bm) -- (X);
         % \draw (Y1) -- (a);
         % \draw (Yn) -- (a);
-
+    
         % red arrows X->a
     \begin{scope}[green!70!black]
-        \draw[arr0,
-            % arrows={->[harpoon,swap]}
-            ]
+        \draw[arr0,arrows={->[harpoon,swap]}]
             (1.5,0.8) to[in=20,out=-80] node[left, pos=0.1]{$m_{b_1 \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.24);
-        \draw[arr0,
-            % arrows={->[harpoon,swap]}
-            ]
+        \draw[arr0,arrows={->[harpoon,swap]}]
             (1.6,0.1) to[in=-23,out=-95] node[right, pos=0.25]{$m_{b_m \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.-15);
-        \draw[arr0,
-            % arrows={->[harpoon,swap]},
-                dashed]
+        \draw[arr0,arrows={->[harpoon,swap]},dashed]
             (0.6,0.7) to[in=0,out=-90] node[left, pos=0.1]{$m_{X \!\stogreen a}$\!} ([yshift=2px]aX.east);
     \end{scope}
         % blue arrows a -> X
     \begin{scope}[blue]
-        \draw[arr0,
-            % arrows={->[harpoon,swap]}
-            ]
+        \draw[arr0,arrows={->[harpoon,swap]}]
             (-0.85,-0.1) to[in=160,out=110] node[right, pos=0.1]{$m_{Y_1 \!\stoblue a}$\!} ([yshift=-2px]aY1.175);
-        \draw[arr0,
-            % arrows={->[harpoon,swap]}
-            ]
-            (-0.8,-0.9) to[in=-157,out=100] node[right, pos=0.1]{\mbox{$m_{Y_n \!\stoblue a}$\!}} ([yshift=-1px]aYn.-166);
-
-        \draw[arr0,
-            % arrows={->[harpoon,swap]},
-            dashed]
+        \draw[arr0,arrows={->[harpoon,swap]}]
+            (-0.8,-0.9) to[in=-157,out=100] node[right, pos=0.1]{$m_{Y_n \!\stoblue a}$\!} ([yshift=-1px]aYn.-166);
+    
+        \draw[arr0,arrows={->[harpoon,swap]},dashed]
             (0.6,-0.7) to[in=180,out=90] node[right, pos=0.1]{\!$m_{a \stoblue \mskip-2muX}$} ([yshift=-2px]X.west);
     \end{scope}
     \begin{scope}[blue!50!black]
@@ -1499,33 +1546,206 @@ The traditional depiction of messages
         \draw[arr0,-,shorten >=0] (0.3,-0.9) to[in=-50,out=90]
             node[left]{$\phi_a$} (amerge);
     \end{scope}
-\end{tikzpicture}
-% \!\!\!\raisebox{-1em}.
-\raisebox{-1em}{
-\!\!\!\!\!
-$\subseteq\begin{matrix}\Msg\\+
-    {\color{blue!50!black}\dg M_\Phi}
-    \text{.\!}
-\end{matrix}$}
-\end{center}
+    \end{tikzpicture}
+    $\subseteq \Msg +
+        {\color{blue!50!black}\dg M_\Phi}
+    $.
+    \end{center}
+
+    Indeed, it can be shown that (\ref{eq:X->a},\ref{eq:a->X}) minimize inconsistency of
+    the dotted components in their appropriate contexts  (shown in green and blue above).
+
+    % Formally, let's 
+    % We now define the views.
+    This means that LIR with the appropriate views computes belief propagation. 
+    To show this formally, we need a few definitions.
+    % To a first approximation
+    % Modulo a small subtlety,
+    % the following is essentially true:
+    % In particular,
+    Equation
+    \eqref{eq:X->a}
+    adjusts the parameters of
+    $C_{X \sto a} := \{ m_{X \sto a} \}$ so as to
+    minimize 1-inconsistency in context
+    $A_{X \sto a} := \{ m_{b \sto X} \}_{b \in \partial X \setminus a} \cup \{m_{X \sto a}\}$,
+    while
+    % $m_{a \sto X}$
+    % the mesage from $a$ to $X$
+    \eqref{eq:a->X}
+    % is the one that minimizes the 1-inconsistency of
+    adjusts
+    $C_{a \sto X} := \{ m_{a \sto X} \}$
+    so as to minimize the 1-inconsistency in
+    context
+    $A_{a \sto X} := \{ \phi_a, m_{a \sto X} \} \cup \{ m_{Y \sto a} \}_{Y \in \mat X_a \setminus X}$.
+    %
+    The only wrinkle is that we do not want to attend to
+        the structural aspect of a message $e$ that we are updating---%
+        that is, we must select $\varphi$ so as to ignore its causal weight $\alpha_e$.
+    % Intuitively: although all of the input messages summarize causal information,
+    %     we're trying to capture that information with a distribution.
+    % Thus, it's not appropriate to attend to the causal structure
+    %     of the edges that we're
+    % Intuitively: when we are updating some message (say $m_{X \sto a}$), we
+    Intuitively: when we are updating some message $e$, we
+    are interested in summarizing information in the other messages
+    (both observational and causal information), purely with an observation.
+    % Put another way, we do not wa
+    % This means that the foci correspond to elements of
+    % \[
+    %     \mat L := \bigcup_{a\in \Ar,X \in \mat X_a}\Big\{a \sto X,\, X \sto a,\, X\Big\},
+    % \]
+    % such that $\mat F := \{ (\varphi_l, \chi_l) : l \in \mat L \}$.
+    
+    More precisely, the foci
+    \[
+        \mat F :=  \bigg\{ (\varphi_j, \chi_j) ~:~ j \in \bigcup_{\substack{a\in \Ar \\ X \in \mat X_a}}\Big\{a \sto X,\, X \sto a,\, X\Big\},\bigg \}
+    \]
+    are indexed by messages and variables, and defined as follows.
+    % such that $\mat F := \{ (\varphi_l, \chi_l) : l \in \mat L \}$.
+    % This means that for each focus
+    % \[
+    % (\varphi,\chi) \in \mat F ~~:= \bigcup_{a\in \Ar,X \in \mat X_a}\{a \sto X, X \sto a, X\},
+    % \]
+    The attention mask $\varphi_j$ is given by:
+    \[
+        \varphi_j(a) :=  {\singlespacing\begin{cases}
+            \binom 11 & \text{ if } a \in A_{j} \setminus C_{j} \\
+            \binom 10 & \text{ if } a \in C_{j} \\
+            \binom 00 & \text{otherwise}
+        \end{cases}},
+    \]
+    where $\binom{\phi_1}{\phi_2}$ scales $\beta_a$ by $\phi_1$ and $\alpha_a$ by $\phi_2$.
+    Finally,
+    % for each focus $l \in \mat F$, define
+    full control over $C_j$ means defining
+    % \[
+    % \chi_j(a) := 
+    % \begin{cases}
+    %     \infty & \text{ if } a \in C_{j} \\
+    %     0 & \text{ otherwise}.
+    % \end{cases}
+    % \]
+    $\chi_j(a) := \infty \cdot \mathbbm 1[ a \in C_j]$. 
+    With these choices
+    % \cref{prop:bp} follows easily.
+    in place, it's not hard to show that \cref{algo:LIR} amounts to belief propogation.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+    
+% \begin{quotation}\it
+%     the message sent from a vertex $v$ on an edge $e$ is the product of the local function at $v$, with all messages recieved at $v$ (other than from $e$),
+%     summarized for $e$'s variable node. \citep{kschischang2001sumproduct}
+% \end{quotation}
+% \vskip
+% The PDG $\Msg$ is not so different from this schematic:
+% \begin{center}
+%     % \vspace{-1ex}
+%     % $\begin{matrix}\Msg\\+
+%     %     {\color{blue!50!black}\dg M_\Phi}
+%     % \end{matrix}\!\cong\,$
+%     \begin{tikzpicture}[xscale=2,center base]
+%         % \node[lirfactor] (a) at (0,0) {$a$};
+%     \begin{scope}[os1/.style={outer sep=1pt},dpad0/.append style={fill=gray!50!black,text=white,font=\mathversion{bold}}]
+%         % \node[] (a) at (0,0) {$a$};
+%         % \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{(a)}$}};
+%         \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{a}$}};
+%         \node[dpadded,os1] (X) at (1,0) {$X$};
+%         % \node[lirfactor] (b1) at (2,0.5){$b_1$};
+%         % \node[lirfactor] (bm) at (2,-0.5){$b_m$};
+%         \node[dpad0,os1] (b1X) at (1.8,0.5){\scalebox{0.7}{$X^{b_1}$}};
+%         \node[dpad0,os1] (bmX) at (1.8,-0.5){\scalebox{0.7}{$X^{b_m}$}};
+%         % \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
+%         % \node[draw,circle,inner sep=2px] (Yn) at (-1,-0.5){$Y_n$};
+%         \node[dpadded,os1] (Y1) at (-1.1,0.5){$Y_1$};
+%         \node[dpadded,os1] (Yn) at (-1.1,-0.5){$Y_n$};
+%         % \node[dpad0,os1] (aY1) at (-0.2,0.3){\scalebox{0.7}{$Y_{1}^{(a)}$}};
+%         % \node[dpad0,os1] (aYn) at (-0.2,-0.3){\scalebox{0.7}{$Y_{n}^{(a)}$}};
+%         \node[dpad0,os1] (aY1) at (-0.2,0.3){\scalebox{0.7}{$Y_{1}^{a}$}};
+%         \node[dpad0,os1] (aYn) at (-0.2,-0.3){\scalebox{0.7}{$Y_{n}^{a}$}};
+%     \end{scope}
+%         % \node[anchor=center] at (-1,0){$\scalebox{1}[1]{\vdots}$};
+%         % \node[anchor=center,draw] at (2,0){$\scalebox{1}[1]{\vdots}$};
+%         % \draw (a) -- (X);
+%         % \draw[double equal sign distance,shorten <=0,shorten >=0] (aX.center) to (X.center);
+%         % \draw[double equal sign distance,shorten <=0,shorten >=0] (aX) to (X);
+%     \begin{scope}[every path/.append style={gray!50,double equal sign distance}]
+%         \draw (aX) to (X);
+%         \draw (aY1) to (Y1);
+%         \draw (aYn) to (Yn);
+%         \draw (b1X) to (X);
+%         \draw (bmX) to (X);
+%     \end{scope}
+%         % \draw (b1) -- (X);
+%         % \draw (bm) -- (X);
+%         % \draw (Y1) -- (a);
+%         % \draw (Yn) -- (a);
+
+%         % red arrows X->a
+%     \begin{scope}[green!70!black]
+%         \draw[arr0,
+%             % arrows={->[harpoon,swap]}
+%             ]
+%             (1.5,0.8) to[in=20,out=-80] node[left, pos=0.1]{$m_{b_1 \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.24);
+%         \draw[arr0,
+%             % arrows={->[harpoon,swap]}
+%             ]
+%             (1.6,0.1) to[in=-23,out=-95] node[right, pos=0.25]{$m_{b_m \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.-15);
+%         \draw[arr0,
+%             % arrows={->[harpoon,swap]},
+%                 dashed]
+%             (0.6,0.7) to[in=0,out=-90] node[left, pos=0.1]{$m_{X \!\stogreen a}$\!} ([yshift=2px]aX.east);
+%     \end{scope}
+%         % blue arrows a -> X
+%     \begin{scope}[blue]
+%         \draw[arr0,
+%             % arrows={->[harpoon,swap]}
+%             ]
+%             (-0.85,-0.1) to[in=160,out=110] node[right, pos=0.1]{$m_{Y_1 \!\stoblue a}$\!} ([yshift=-2px]aY1.175);
+%         \draw[arr0,
+%             % arrows={->[harpoon,swap]}
+%             ]
+%             (-0.8,-0.9) to[in=-157,out=100] node[right, pos=0.1]{\mbox{$m_{Y_n \!\stoblue a}$\!}} ([yshift=-1px]aYn.-166);
+
+%         \draw[arr0,
+%             % arrows={->[harpoon,swap]},
+%             dashed]
+%             (0.6,-0.7) to[in=180,out=90] node[right, pos=0.1]{\!$m_{a \stoblue \mskip-2muX}$} ([yshift=-2px]X.west);
+%     \end{scope}
+%     \begin{scope}[blue!50!black]
+%         \coordinate (amerge) at (-70:0.6);
+%         \draw[arr0,shorten <=0] (amerge) to[out=130,in=-90] (aX);
+%         \draw[arr0,shorten <=0] (amerge) to[out=130,in=-45] (aY1);
+%         \draw[arr0,shorten <=0] (amerge) to[out=130,in=-10] (aYn);
+%         \draw[arr0,-,shorten >=0] (0.3,-0.9) to[in=-50,out=90]
+%             node[left]{$\phi_a$} (amerge);
+%     \end{scope}
+% \end{tikzpicture}
+% % \!\!\!\raisebox{-1em}.
+% \raisebox{-1em}{
+% \!\!\!\!\!
+% $\subseteq\begin{matrix}\Msg\\+
+%     {\color{blue!50!black}\dg M_\Phi}
+%     \text{.\!}
+% \end{matrix}$}
+% \end{center}
 %
 % Computing
 % Calculating
 % $m_{X \sto a}$
 % the message from $X$ to $a$
 % Our observation here is that the message computations are
-Indeed, it can be shown that (\ref{eq:X->a},\ref{eq:a->X}) minimize inconsistency of
-    the dotted components in their appropriate contexts
-    (shown in green and blue above, and formalized
-        in \cref{sec:bp-details}).
-    % shown above in orange and blue, respectively.
+% shown above in orange and blue, respectively.
 % Once the details are in place, we find that
 
 % Thus, for any schedule of messages
 \begin{prop} \label{prop:bp}
     If \textsc{Refocus} selects a focus non-deterministically from
     $\{ a\sto\mskip-2mu X, X\! \sto a, X\}_{X \in \X, a \in \partial X}$
-    (details in \cref{sec:bp-details}), then
+    % (details in \cref{sec:bp-details})
+    \unskip, then
     % with attention and control sets as above and
     % $\gamma=1$, then
     % \[ \Big\{
@@ -1568,7 +1788,9 @@ adjusting some local context to minimize an $\alpha$-divergence.
 We suspect that LIR generalizes thses procedure as well---not only
 because it is similar in spirit, but also because because
 these divergences can be viewed as the degree of inconsistency
-of a PDG containing two distributions \citep{one-true-loss}.
+of a PDG containing two distributions
+    (\cref{sec:statdist}).
+    %  \citep{one-true-loss}.
 % generalized belief propogation
     % \citep{generalized-bp} as well.
 
@@ -1635,205 +1857,211 @@ Is this effective?  We are excited to find out!
 \begin{subappendices}
 % \appendix
 
-\section{Details on Belief Propogation} \label{sec:bp-details}
-The usual schematic illustration of belief propogation \citep{kschischang2001factor}
-looks something like:
-\begin{center}
-    \begin{tikzpicture}[xscale=1.8]
-        \node[factor] (a) at (0,0) {$a$};
-        \node[draw,circle,inner sep=4px] (X) at (1,0) {$X$};
-        \node[factor] (b1) at (2,0.5){$b_1$};
-        \node[factor] (bm) at (2,-0.5){$b_m$};
-        \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
-        \node[draw,circle,inner sep=2px] (Yn) at (-1,-0.5){$Y_n$};
-        % \node[anchor=center] at (-1,0){$\scalebox{1}[1]{\vdots}$};
-        % \node[anchor=center,draw] at (2,0){$\scalebox{1}[1]{\vdots}$};
-        \draw (a) -- (X);
-        \draw (b1) -- (X);
-        \draw (bm) -- (X);
-        \draw (Y1) -- (a);
-        \draw (Yn) -- (a);
+% \section{Details on Belief Propogation} \label{sec:bp-details}
+% The usual schematic illustration of belief propagation \citep{kschischang2001factor}
+% looks something like:
+% \begin{center}
+%     \begin{tikzpicture}
+%             % [xscale=1.8]
+%             [xscale=2,yscale=1.3]
+%         \node[lirfactor] (a) at (0,0) {$a$};
+%         \node[draw,circle,inner sep=4px] (X) at (1,0) {$X$};
+%         \node[lirfactor] (b1) at (2,0.5){$b_1$};
+%         \node[lirfactor] (bm) at (2,-0.5){$b_m$};
+%         \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
+%         \node[draw,circle,inner sep=2px] (Yn) at (-1,-0.5){$Y_n$};
+%         % \node[anchor=center] at (-1,0){$\scalebox{1}[1]{\vdots}$};
+%         % \node[anchor=center,draw] at (2,0){$\scalebox{1}[1]{\vdots}$};
+%         \draw (a) -- (X);
+%         \draw (b1) -- (X);
+%         \draw (bm) -- (X);
+%         \draw (Y1) -- (a);
+%         \draw (Yn) -- (a);
 
-        % \draw[arr0,red,arrows={->[harpoon,swap]}]
-        %     (1.6,0.7) to[in=23,out=-80] node[left, pos=0]{$m_{b_1 \!\sto \!X}$\!\!} (X);
-        % \draw[arr0,red,arrows={->[harpoon,swap]},dashed]
-        %     (0.5,0.7) to[in=0,out=-90] node[left, pos=0]{$m_{X \!\sto a}$\!} (a);
-        % \draw[arr0,blue,arrows={->[harpoon,swap]}]
-        %     (0.5,-0.7) to[in=180,out=90] node[right, pos=0]{\!$m_{a \sto \!X}$} (X);
-        \begin{scope}[transform canvas={yshift=2px},green!70!black]
-        \draw[arr,arrows={->[harpoon,swap]}]
-            (b1) to node[above=-0.5pt,rotate=15]{$m_{b_1 \!\stogreen \mskip-2muX}$\!\!} (X);
-        \draw[arr,arrows={->[harpoon,swap]}]
-            (bm) to node[above=-0.5pt,rotate=-5,pos=0.3]{$m_{b_m \!\stogreen \mskip-2muX}$\!\!} (X);
-        \draw[arr,arrows={->[harpoon,swap]},densely dotted]
-            (X) to node[above]{$m_{X \!\stogreen a}$\!} (a);
-        \end{scope}
+%         % \draw[arr0,red,arrows={->[harpoon,swap]}]
+%         %     (1.6,0.7) to[in=23,out=-80] node[left, pos=0]{$m_{b_1 \!\sto \!X}$\!\!} (X);
+%         % \draw[arr0,red,arrows={->[harpoon,swap]},dashed]
+%         %     (0.5,0.7) to[in=0,out=-90] node[left, pos=0]{$m_{X \!\sto a}$\!} (a);
+%         % \draw[arr0,blue,arrows={->[harpoon,swap]}]
+%         %     (0.5,-0.7) to[in=180,out=90] node[right, pos=0]{\!$m_{a \sto \!X}$} (X);
+%         \begin{scope}[transform canvas={yshift=2px},green!70!black]
+%         \draw[arr,arrows={->[harpoon,swap]}]
+%             (b1) to node[above=-0.5pt,rotate=15]{$m_{b_1 \!\stogreen \mskip-2muX}$\!\!} (X);
+%         \draw[arr,arrows={->[harpoon,swap]}]
+%             (bm) to node[above=-0.5pt,rotate=-5,pos=0.3]{$m_{b_m \!\stogreen \mskip-2muX}$\!\!} (X);
+%         \draw[arr,arrows={->[harpoon,swap]},densely dotted]
+%             (X) to node[above]{$m_{X \!\stogreen a}$\!} (a);
+%         \end{scope}
 
-        \begin{scope}[transform canvas={yshift=-2px},blue]
-        \draw[arr,arrows={->[harpoon,swap]}]
-        % \draw[blue,arrows={->[harpoon,swap]}]
-            (Y1) to node[below=-0.5pt, rotate=-5,pos=0.35]{$m_{Y_{\!1} \!\stoblue a}$\!\!} (a);
-        \draw[arr,arrows={->[harpoon,swap]}]
-            (Yn) to node[below, rotate=17]{$m_{Y_{\!n} \!\stoblue a}$\!\!} (a);
-        \draw[arr,arrows={->[harpoon,swap]},densely dotted]
-            (a) to node[below]{\!$m_{a \stoblue \mskip-2muX}$} (X);
-        \end{scope}
-        % \draw (current bounding box.north west) rectangle (current bounding box.south east);
-    \end{tikzpicture}~\raisebox{1ex}.
-\end{center}%
+%         \begin{scope}[transform canvas={yshift=-2px},blue]
+%         \draw[arr,arrows={->[harpoon,swap]}]
+%         % \draw[blue,arrows={->[harpoon,swap]}]
+%             (Y1) to node[below=-0.5pt, rotate=-5,pos=0.35]{$m_{Y_{\!1} \!\stoblue a}$\!\!} (a);
+%         \draw[arr,arrows={->[harpoon,swap]}]
+%             (Yn) to node[below, rotate=17]{$m_{Y_{\!n} \!\stoblue a}$\!\!} (a);
+%         \draw[arr,arrows={->[harpoon,swap]},densely dotted]
+%             (a) to node[below]{\!$m_{a \stoblue \mskip-2muX}$} (X);
+%         \end{scope}
+%         % \draw (current bounding box.north west) rectangle (current bounding box.south east);
+%     \end{tikzpicture}~\raisebox{1ex}.
+% \end{center}%
 
-This is only a schematic,
-    but the PDG $\Msg$ can be made to look similar to it.
-Adding a variable $X^{a}$ for every pair
-    % $(a \in \Ar, X \in \mat X_a)$,
-    $(X,a)$ with $X \in \mat X_a$
-along with edges asserting that $X^{a} = X$,
-we obtain the equivalent PDG in the main body of the paper:
-\begin{center}
-\begin{tikzpicture}[xscale=2,center base]
-    % \node[factor] (a) at (0,0) {$a$};
-\begin{scope}[os1/.style={outer sep=1pt},dpad0/.append style={fill=gray!50!black,text=white,font=\mathversion{bold}}]
-    % \node[] (a) at (0,0) {$a$};
-    % \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{(a)}$}};
-    \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{a}$}};
-    \node[dpadded,os1] (X) at (1,0) {$X$};
-    % \node[factor] (b1) at (2,0.5){$b_1$};
-    % \node[factor] (bm) at (2,-0.5){$b_m$};
-    \node[dpad0,os1] (b1X) at (1.8,0.5){\scalebox{0.7}{$X^{b_1}$}};
-    \node[dpad0,os1] (bmX) at (1.8,-0.5){\scalebox{0.7}{$X^{b_m}$}};
-    % \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
-    % \node[draw,circle,inner sep=2px] (Yn) at (-1,-0.5){$Y_n$};
-    \node[dpadded,os1] (Y1) at (-1.1,0.5){$Y_1$};
-    \node[dpadded,os1] (Yn) at (-1.1,-0.5){$Y_n$};
-    % \node[dpad0,os1] (aY1) at (-0.2,0.3){\scalebox{0.7}{$Y_{1}^{(a)}$}};
-    % \node[dpad0,os1] (aYn) at (-0.2,-0.3){\scalebox{0.7}{$Y_{n}^{(a)}$}};
-    \node[dpad0,os1] (aY1) at (-0.2,0.3){\scalebox{0.7}{$Y_{1}^{a}$}};
-    \node[dpad0,os1] (aYn) at (-0.2,-0.3){\scalebox{0.7}{$Y_{n}^{a}$}};
-\end{scope}
-    % \node[anchor=center] at (-1,0){$\scalebox{1}[1]{\vdots}$};
-    % \node[anchor=center,draw] at (2,0){$\scalebox{1}[1]{\vdots}$};
-    % \draw (a) -- (X);
-    % \draw[double equal sign distance,shorten <=0,shorten >=0] (aX.center) to (X.center);
-    % \draw[double equal sign distance,shorten <=0,shorten >=0] (aX) to (X);
-\begin{scope}[every path/.append style={gray!50,double equal sign distance}]
-    \draw (aX) to (X);
-    \draw (aY1) to (Y1);
-    \draw (aYn) to (Yn);
-    \draw (b1X) to (X);
-    \draw (bmX) to (X);
-\end{scope}
-    % \draw (b1) -- (X);
-    % \draw (bm) -- (X);
-    % \draw (Y1) -- (a);
-    % \draw (Yn) -- (a);
+% This is only a schematic,
+%     but the PDG $\Msg$ can be made to look similar to it.
+% Adding a variable $X^{a}$ for every pair
+%     % $(a \in \Ar, X \in \mat X_a)$,
+%     $(X,a)$ with $X \in \mat X_a$
+% along with edges asserting that $X^{a} = X$,
+% we obtain the equivalent PDG in the main body of the paper:
+% \begin{center}
+% \begin{tikzpicture}
+%         % [xscale=2,center base]
+%         [xscale=2.4,yscale=1.5]
+%     % \node[lirfactor] (a) at (0,0) {$a$};
+% \begin{scope}[os1/.style={outer sep=1pt},dpad0/.append style={fill=gray!50!black,text=white,font=\mathversion{bold}}]
+%     % \node[] (a) at (0,0) {$a$};
+%     % \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{(a)}$}};
+%     \node[dpad0,os1] (aX) at (0.22,0){\scalebox{0.7}{$X^{a}$}};
+%     \node[dpadded,os1] (X) at (1,0) {$X$};
+%     % \node[lirfactor] (b1) at (2,0.5){$b_1$};
+%     % \node[lirfactor] (bm) at (2,-0.5){$b_m$};
+%     \node[dpad0,os1] (b1X) at (1.8,0.5){\scalebox{0.7}{$X^{b_1}$}};
+%     \node[dpad0,os1] (bmX) at (1.8,-0.5){\scalebox{0.7}{$X^{b_m}$}};
+%     % \node[draw,circle,inner sep=2px] (Y1) at (-1,0.5){$Y_1$};
+%     % \node[draw,circle,inner sep=2px] (Yn) at (-1,-0.5){$Y_n$};
+%     \node[dpadded,os1] (Y1) at (-1.1,0.5){$Y_1$};
+%     \node[dpadded,os1] (Yn) at (-1.1,-0.5){$Y_n$};
+%     % \node[dpad0,os1] (aY1) at (-0.2,0.3){\scalebox{0.7}{$Y_{1}^{(a)}$}};
+%     % \node[dpad0,os1] (aYn) at (-0.2,-0.3){\scalebox{0.7}{$Y_{n}^{(a)}$}};
+%     \node[dpad0,os1] (aY1) at (-0.2,0.3){\scalebox{0.7}{$Y_{1}^{a}$}};
+%     \node[dpad0,os1] (aYn) at (-0.2,-0.3){\scalebox{0.7}{$Y_{n}^{a}$}};
+% \end{scope}
+%     % \node[anchor=center] at (-1,0){$\scalebox{1}[1]{\vdots}$};
+%     % \node[anchor=center,draw] at (2,0){$\scalebox{1}[1]{\vdots}$};
+%     % \draw (a) -- (X);
+%     % \draw[double equal sign distance,shorten <=0,shorten >=0] (aX.center) to (X.center);
+%     % \draw[double equal sign distance,shorten <=0,shorten >=0] (aX) to (X);
+% \begin{scope}[every path/.append style={gray!50,double equal sign distance}]
+%     \draw (aX) to (X);
+%     \draw (aY1) to (Y1);
+%     \draw (aYn) to (Yn);
+%     \draw (b1X) to (X);
+%     \draw (bmX) to (X);
+% \end{scope}
+%     % \draw (b1) -- (X);
+%     % \draw (bm) -- (X);
+%     % \draw (Y1) -- (a);
+%     % \draw (Yn) -- (a);
 
-    % red arrows X->a
-\begin{scope}[green!70!black]
-    \draw[arr0,arrows={->[harpoon,swap]}]
-        (1.5,0.8) to[in=20,out=-80] node[left, pos=0.1]{$m_{b_1 \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.24);
-    \draw[arr0,arrows={->[harpoon,swap]}]
-        (1.6,0.1) to[in=-23,out=-95] node[right, pos=0.25]{$m_{b_m \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.-15);
-    \draw[arr0,arrows={->[harpoon,swap]},dashed]
-        (0.6,0.7) to[in=0,out=-90] node[left, pos=0.1]{$m_{X \!\stogreen a}$\!} ([yshift=2px]aX.east);
-\end{scope}
-    % blue arrows a -> X
-\begin{scope}[blue]
-    \draw[arr0,arrows={->[harpoon,swap]}]
-        (-0.85,-0.1) to[in=160,out=110] node[right, pos=0.1]{$m_{Y_1 \!\stoblue a}$\!} ([yshift=-2px]aY1.175);
-    \draw[arr0,arrows={->[harpoon,swap]}]
-        (-0.8,-0.9) to[in=-157,out=100] node[right, pos=0.1]{$m_{Y_n \!\stoblue a}$\!} ([yshift=-1px]aYn.-166);
+%     % red arrows X->a
+% \begin{scope}[green!70!black]
+%     \draw[arr0,arrows={->[harpoon,swap]}]
+%         (1.5,0.8) to[in=20,out=-80] node[left, pos=0.1]{$m_{b_1 \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.24);
+%     \draw[arr0,arrows={->[harpoon,swap]}]
+%         (1.6,0.1) to[in=-23,out=-95] node[right, pos=0.25]{$m_{b_m \!\stogreen \mskip-2muX}$\!} ([yshift=1px]X.-15);
+%     \draw[arr0,arrows={->[harpoon,swap]},dashed]
+%         (0.6,0.7) to[in=0,out=-90] node[left, pos=0.1]{$m_{X \!\stogreen a}$\!} ([yshift=2px]aX.east);
+% \end{scope}
+%     % blue arrows a -> X
+% \begin{scope}[blue]
+%     \draw[arr0,arrows={->[harpoon,swap]}]
+%         (-0.85,-0.1) to[in=160,out=110] node[right, pos=0.1]{$m_{Y_1 \!\stoblue a}$\!} ([yshift=-2px]aY1.175);
+%     \draw[arr0,arrows={->[harpoon,swap]}]
+%         (-0.8,-0.9) to[in=-157,out=100] node[right, pos=0.1]{$m_{Y_n \!\stoblue a}$\!} ([yshift=-1px]aYn.-166);
 
-    \draw[arr0,arrows={->[harpoon,swap]},dashed]
-        (0.6,-0.7) to[in=180,out=90] node[right, pos=0.1]{\!$m_{a \stoblue \mskip-2muX}$} ([yshift=-2px]X.west);
-\end{scope}
-\begin{scope}[blue!50!black]
-    \coordinate (amerge) at (-70:0.6);
-    \draw[arr0,shorten <=0] (amerge) to[out=130,in=-90] (aX);
-    \draw[arr0,shorten <=0] (amerge) to[out=130,in=-45] (aY1);
-    \draw[arr0,shorten <=0] (amerge) to[out=130,in=-10] (aYn);
-    \draw[arr0,-,shorten >=0] (0.3,-0.9) to[in=-50,out=90]
-        node[left]{$\phi_a$} (amerge);
-\end{scope}
-\end{tikzpicture}.
-\end{center}
+%     \draw[arr0,arrows={->[harpoon,swap]},dashed]
+%         (0.6,-0.7) to[in=180,out=90] node[right, pos=0.1]{\!$m_{a \stoblue \mskip-2muX}$} ([yshift=-2px]X.west);
+% \end{scope}
+% \begin{scope}[blue!50!black]
+%     \coordinate (amerge) at (-70:0.6);
+%     \draw[arr0,shorten <=0] (amerge) to[out=130,in=-90] (aX);
+%     \draw[arr0,shorten <=0] (amerge) to[out=130,in=-45] (aY1);
+%     \draw[arr0,shorten <=0] (amerge) to[out=130,in=-10] (aYn);
+%     \draw[arr0,-,shorten >=0] (0.3,-0.9) to[in=-50,out=90]
+%         node[left]{$\phi_a$} (amerge);
+% \end{scope}
+% \end{tikzpicture}.
+% \end{center}
 
-We now define the views.
-% To a first approximation
-Modulo a small subtlety,
-the following is essentially true:
-% In particular,
-Equation
-\eqref{eq:X->a}
-adjusts the parameters of
-$C_{X \sto a} := \{ m_{X \sto a} \}$ so as to
-minimize 1-inconsistency in context
-$A_{X \sto a} := \{ m_{b \sto X} \}_{b \in \partial X \setminus a} \cup \{m_{X \sto a}\}$,
-while
-% $m_{a \sto X}$
-% the mesage from $a$ to $X$
-\eqref{eq:a->X}
-% is the one that minimizes the 1-inconsistency of
-adjusts
-$C_{a \sto X} := \{ m_{a \sto X} \}$
-so as to minimize the 1-inconsistency in
-context
-$A_{a \sto X} := \{ \phi_a, m_{a \sto X} \} \cup \{ m_{Y \sto a} \}_{Y \in \mat X_a \setminus X}$.
+% We now define the views.
+% % To a first approximation
+% Modulo a small subtlety,
+% the following is essentially true:
+% % In particular,
+% Equation
+% \eqref{eq:X->a}
+% adjusts the parameters of
+% $C_{X \sto a} := \{ m_{X \sto a} \}$ so as to
+% minimize 1-inconsistency in context
+% $A_{X \sto a} := \{ m_{b \sto X} \}_{b \in \partial X \setminus a} \cup \{m_{X \sto a}\}$,
+% while
+% % $m_{a \sto X}$
+% % the mesage from $a$ to $X$
+% \eqref{eq:a->X}
+% % is the one that minimizes the 1-inconsistency of
+% adjusts
+% $C_{a \sto X} := \{ m_{a \sto X} \}$
+% so as to minimize the 1-inconsistency in
+% context
+% $A_{a \sto X} := \{ \phi_a, m_{a \sto X} \} \cup \{ m_{Y \sto a} \}_{Y \in \mat X_a \setminus X}$.
 
-The only wrinkle is that we do not want to attend to
-    the structural aspect of a message $e$ that we are updating---%
-    that is, we must select $\varphi$ so as to ignore its causal weight $\alpha_e$.
-% Intuitively: although all of the input messages summarize causal information,
-%     we're trying to capture that information with a distribution.
-% Thus, it's not appropriate to attend to the causal structure
-%     of the edges that we're
-% Intuitively: when we are updating some message (say $m_{X \sto a}$), we
-Intuitively: when we are updating some message $e$, we
-are interested in summarizing information in the other messages
-(both observational and causal information), purely with an observation.
-% Put another way, we do not wa
-% This means that the foci correspond to elements of
+% The only wrinkle is that we do not want to attend to
+%     the structural aspect of a message $e$ that we are updating---%
+%     that is, we must select $\varphi$ so as to ignore its causal weight $\alpha_e$.
+% % Intuitively: although all of the input messages summarize causal information,
+% %     we're trying to capture that information with a distribution.
+% % Thus, it's not appropriate to attend to the causal structure
+% %     of the edges that we're
+% % Intuitively: when we are updating some message (say $m_{X \sto a}$), we
+% Intuitively: when we are updating some message $e$, we
+% are interested in summarizing information in the other messages
+% (both observational and causal information), purely with an observation.
+% % Put another way, we do not wa
+% % This means that the foci correspond to elements of
+% % \[
+% %     \mat L := \bigcup_{a\in \Ar,X \in \mat X_a}\Big\{a \sto X,\, X \sto a,\, X\Big\},
+% % \]
+% % such that $\mat F := \{ (\varphi_l, \chi_l) : l \in \mat L \}$.
+
+% More precisely, the foci
 % \[
-%     \mat L := \bigcup_{a\in \Ar,X \in \mat X_a}\Big\{a \sto X,\, X \sto a,\, X\Big\},
+%     \mat F :=  \bigg\{ (\varphi_j, \chi_j) ~:~ j \in \bigcup_{\substack{a\in \Ar \\ X \in \mat X_a}}\Big\{a \sto X,\, X \sto a,\, X\Big\},\bigg \}
 % \]
-% such that $\mat F := \{ (\varphi_l, \chi_l) : l \in \mat L \}$.
-
-More precisely, the foci
-\[
-    \mat F :=  \bigg\{ (\varphi_j, \chi_j) ~:~ j \in \bigcup_{\substack{a\in \Ar \\ X \in \mat X_a}}\Big\{a \sto X,\, X \sto a,\, X\Big\},\bigg \}
-\]
-are indexed by messages and variables, and defined as follows.
-% such that $\mat F := \{ (\varphi_l, \chi_l) : l \in \mat L \}$.
-% This means that for each focus
+% are indexed by messages and variables, and defined as follows.
+% % such that $\mat F := \{ (\varphi_l, \chi_l) : l \in \mat L \}$.
+% % This means that for each focus
+% % \[
+% % (\varphi,\chi) \in \mat F ~~:= \bigcup_{a\in \Ar,X \in \mat X_a}\{a \sto X, X \sto a, X\},
+% % \]
+% The attention mask $\varphi_j$ is given by:
 % \[
-% (\varphi,\chi) \in \mat F ~~:= \bigcup_{a\in \Ar,X \in \mat X_a}\{a \sto X, X \sto a, X\},
+%     \varphi_j(a) :=  {\singlespacing\begin{cases}
+%         \binom 11 & \text{ if } a \in A_{j} \setminus C_{j} \\
+%         \binom 10 & \text{ if } a \in C_{j} \\
+%         \binom 00 & \text{otherwise}}
+%     \end{cases},
 % \]
-The attention mask $\varphi_j$ is given by:
-\[
-    \varphi_j(a) :=  \begin{cases}
-        \binom 11 & \text{ if } a \in A_{j} \setminus C_{j} \\
-        \binom 10 & \text{ if } a \in C_{j} \\
-        \binom 00 & \text{otherwise}
-    \end{cases},
-\]
-where $\binom{\phi_1}{\phi_2}$ scales $\beta_a$ by $\phi_1$ and $\alpha_a$ by $\phi_2$.
-Finally,
-% for each focus $l \in \mat F$, define
-full control over $C_j$ means defining
-\[
-\chi_j(a) := \begin{cases}
-    \infty & \text{ if } a \in C_{j} \\
-    0 & \text{ otherwise}.
-\end{cases}
-\]
-With these definitions, \cref{prop:bp} follows easily.
+% where $\binom{\phi_1}{\phi_2}$ scales $\beta_a$ by $\phi_1$ and $\alpha_a$ by $\phi_2$.
+% Finally,
+% % for each focus $l \in \mat F$, define
+% full control over $C_j$ means defining
+% % \[
+% % \chi_j(a) := 
+% % \begin{cases}
+% %     \infty & \text{ if } a \in C_{j} \\
+% %     0 & \text{ otherwise}.
+% % \end{cases}
+% % \]
+% $\chi_j(a) := \infty \cdot \mathbbm 1[ a \in C_j]$. 
+% With these definitions, \cref{prop:bp} follows easily.
 %
-Continue to \cref{lir-appendix:proofs} for proofs!
+% Continue to \cref{lir-appendix:proofs} for proofs!
 
-\onecolumn
+% \onecolumn
 \section{Proofs}
     \label{lir-appendix:proofs}
 
-First, some extra details for \cref{thm:cvx}.
+First, some extra details for \cref{prop:logccave}.
 By parameteriations $\mathbb P$ log-concave, we mean that, for every $a \in \Ar$, and $(s,t) \in \V(\Src a,\Tgt a)$, the function
 $$
     \theta \mapsto -\log \p_a^{\,\theta}(\Tgt a =t\mid\Src a = a) \quad: \Theta_a \to [0,\infty]
@@ -1857,9 +2085,10 @@ $(\mat A, b, 1/\sigma^2)$, then
 which is convex in $(\mat A, b, \frac1{\sigma^2})$.  Now, for the proof.
 
 
-\textbf{\cref{thm:cvx}}. \textit{If $\mathbb P$ is log-concave, then
-for small enough $\gamma$,
-the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is convex.}
+% \textbf{\cref{thm:cvx}}. \textit{If $\mathbb P$ is log-concave, then
+% for small enough $\gamma$,
+% the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is convex.}
+\recall{prop:logccave}
 
 \begin{proof}
     By definition,
@@ -1878,7 +2107,7 @@ the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is c
         
     For all of our examples, and indeed, 
     if $\gamma$ is chosen small enough, 
-    the sum of the two terms is convex in $\mu$ \citep{pdg-aaai}.
+    we have seen that the sum of the two terms is convex in $\mu$.
     Then we have
     \begin{align*}
         &\aar[\Big]{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma

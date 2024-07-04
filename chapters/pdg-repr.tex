@@ -798,27 +798,32 @@ independently: take the union of their variables and the disjoint union of their
 % In many cases, this operation does exactly what one would want.
 
 \newmaterial{%
+\paragraph{An Important Caveat For Qualitative (Structural) Information.}
+% It is important to keep in mind, however, that this means treating the information in the PDGs 
 For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
 % In some cases, it may also appropriate for the qualitative data ($\balpha$), although not always, and it is important to keep in mind the meaning of this operation in that case.
-In some cases, it may also appropriate for the qualitative data ($\balpha$), although not always, and it is important to keep in mind the meaning of this operation in that case.
+% For the qualitative information, however, independent combination might not 
+Independently combining the qualitative information, however, could have unintended effects if the qualitative information has any overlap. 
 % By forming the independent combination of two qualitat/
 To illustrate, suppose that $\dg M_1$ and $\dg M_2$ both contain a single arc from $X$ to $Y$,
 	both intuitively indicating a single causal mechanism by which $X$ gives rise to $Y$. 
 In the independently combined PDG $\dg M_1 + \dg M_2$, then, contains two distinct mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
 % However, one might well have intended to 
-However, rather than viewing them as two different mechanisms, one might well have intended something else: two independent accounts that there is a single such causal mechanism.
-Similarly, 
+However, rather than viewing them as two different mechanisms, one might well have wanted something else: two independent accounts that there is a \emph{single} such causal mechanism. 
+% This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
+The latter is not captured by PDG union; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
+% This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
+We mention that there is an even bigger problem in combining factor graphs, because the parameters $\balpha$ and $\bbeta$ are essentially ``fused together'', as we will see in \cref{sec:factor-graphs},
+and thus this leads to an even bigger problem in combining factor graphs; we will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
+It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ do work as one might hope. If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$, there is no problem with taking $\balpha$ to be $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively.  For instance, if $G_1$ and $G_2$ represent the same independencies, then $\balpha$ will encode those shared independencies. 
 
-
-The remainder 
+Still, there are some cases where independent combination is appropriate even for causal information; we now proceed with the formal details.
 }
 
-\TODO
-
-
-Formally, to be more precise, depending on the variant
+\paragraph{Formal Details of PDG Sums.}
+To be more precise, depending on the variant
 of the definition of a PDG, we might need another definition:	
 \begin{defn}
     % [$\V$-compatibility]
@@ -834,10 +839,12 @@ of the definition of a PDG, we might need another definition:
 	$
 \end{defn}
 
+\commentout{%
 This definition is the same as the one given by \citet{halpern-combining-causal-models}, in combining causal models (structural equations models, or SEMs, to be precise).
 It is worth noting that SEMs are another formalism in which the variables and their possible values are given separately. 
-But the definition is unnecessary if we take the traditional approach in graphical models and rely on implicit variable equality.
-Indeed, if in a PDG is specified not as a pair $(\N, \V)$ but rather as a set $\X$ of variables, then \cref{defn:v-compat} is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
+But the definition is unnecessary if we take the traditional approach in graphical models and rely on implicit variable equality.}
+% Indeed, if
+If in place of the pair $(\N, \V)$, a PDG is specified directly using a set $\X$ of variables, then \cref{defn:v-compat} is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
  % $N \in \N$ in $\dg M_1$ and $\dg M_2$ if their interpretations can be identified as one variable. With that, we can make
 %
 In any case, the point is the following formal definition for how to combine independent information in two different PDGs:
@@ -885,13 +892,14 @@ we can form
 			\Ar_1 \sqcup \Ar_2,~~
 			\mathbb P_1 \sqcup \mathbb P_2,~~
 			\balpha \sqcup \balpha,~~
-			\bbeta \sqcup \bbeta,
+			\bbeta \sqcup \bbeta
 		\Big);
 \]
 in this case, $\V$-compatibility is handled automatically by
 the meaning of variable equality. 
 While the formalism is simpler, this approach really just sweeps the issue under the rug. 
-For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts. 
+For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts.
+% and nor are they considered equal simply because they happen to have been given the same generic name ($X$) by two people modeling different things.  
 
 
 \section{The Semantics of PDGs}

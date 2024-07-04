@@ -94,9 +94,10 @@ but now that PDG semantics are on solid ground, we may freely regard a joint dis
 % What makes PDGs special is their ability to do other things at the same time, simultaneously keeping many balls in the air, so to speak. 
 What makes PDGs special is their capability to do this while simultaneously representing other things. 
 
+\temphide{
 \paragraph{Updating with Combination.}
-
 \TODO
+}
 
 \section{Widgets}
     \label{sec:widgets}
@@ -998,8 +999,7 @@ $\mathcal P = \{ \mu_{.5}, \delta_H \}$, where $\mu_{.5}$ assigns probability 1/
 From a set of distributions consistent with observations, the principle of maximum entropy tells us to select the one with the highest entropy---which is a fair coin. 
 This seems quite extreme; the possibility of the double headed coin has made no difference to the maximum-entropy distribution!
 
-
-Part of the problem, arguably, is that we haven't actually modeled the whole situation---we've left out an important part of the picture: our knowledge about the bias of the coin, and how that affects the outcome.  This information is extremely easy to add to a PDG: 
+Part of the problem, arguably, is that we haven't actually modeled the whole situation---we've left out an important part of the picture: our knowledge about the bias of the coin, and how that affects the outcome.  This information is very easy to add to a PDG: 
 
 \begin{center}
 \begin{tikzpicture}[center base]
@@ -1023,7 +1023,18 @@ $
 Now, in the maximum entropy distribution, the coin is twice as likely to be fair as it is to be one-sided, and overall it has a 2/3 chance of landing heads. 
 This is a more reasonable summary of our belief state---we do not truly believe that the coin is fair.
 Furthermore, if we select $\alpha = 1$ for this edge, 
+\newmaterial{%
+then the distribution with minimal structural deficiency (the analogue of maximum-entropy when there is causal information present) prescribes the distribution that says the coin has a 3/4 chance of landing heads, which is in the very middle of our range. 
+%
+It is well-known that different representations can change the result of maximizing entropy. But some representations better capture a scenario more naturally than others, and PDGs make it easy to select representations that interact appropriately with entropy. 
+}
 \end{example}
+
+
+\newmaterial{%
+In the next section, we show that a more specific representation of uncertainty
+    can be captured with PDGs in a more targeted way.
+}
 
 \subsection{Belief and Plausibility Functions}
     \label{ssec:belplaus-as-pdg}
@@ -1130,8 +1141,16 @@ Indeed, if we follow the conventions of \citet[Theorem 2.6.1]{halpern-RAU} and d
 \unskip\footnote{For observant readers who followed the reference: it is not hard to see that the upper and lower bounds are equivalent; \citet{halpern-RAU} uses only the lower bound, but we give both for symmetry.}
 then we have shown that $\mu$ is compatible with $\dg M_{\Bel}$ if and only if is an element of $\mathcal P_{\Bel}$. 
 
-Meanwhile, part (b) states that something quite intuitive: after adding a constraint
-that event $U$ occurs, the resulting degree of inconsistency is a direct function of the (im)plausibility of $U$ to begin with---if $U$ was completely plausible, there is no inconsistency in learning $U$. 
+Meanwhile, part (b) states that something quite intuitive
+%
+% : after adding a constraint
+% that event $U$ occurs, the resulting degree of inconsistency is a direct function of the (im)plausibility of $U$ to begin with---if $U$ was completely plausible, there is no inconsistency in learning $U$. 
+\newmaterial{%
+\unskip, but might benefit from being unpacked somwhat.  The PDG on the left-hand side is just $\dg M_{\Bel}$ plus a constraint representing the event $U$. 
+How inconsistent is it to have belief function $\Bel$ and also believe $U$ occurs with certainty? 
+It's the analogue of the information content $\I_\mu[U] = - \log \mu(U)$, but with plausbility instead of probability. 
+Indeed, if $\Plaus(U) = 1$, then there is no inconsistency to also believing $U$ occurs, and if $\Plaus(U) = 0$, then it's so implausible so as to be infinitely inconsistent. 
+}
 
 Now for the proof of the theorem.
 

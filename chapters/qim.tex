@@ -4826,10 +4826,11 @@ Linear combinations of these quantities
 %spencer1:
 % can be viewed as the inner product between a vector $\mat v$ of integers
 can be viewed as the inner product between a coefficient vector $\mat v$
-and a $2^{|\X|}-1$ dimensional vector $\mat I_\mu$ that we will call the \emph{information profile} of $\mu$. For three variables, the components of this vector are illustrated in 
+and a $2^{|\X|}-1$ dimensional vector $\mat I_\mu$ that we will call the \emph{information profile} of $\mu$. 
+For three variables, the components of this vector are illustrated in 
 %oli21:
 % \cref{fig:info-diag}(a).
-\cref{fig:info-diag-a} (right).
+\cref{fig:info-diag-a}.
 %
 %oli15: moved above:
 % This is illustrated for three variables in \cref{fig:info-diag}(a).
@@ -6253,7 +6254,7 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
         defined in \cref{sec:responsvars}.
 }
 %oli22*: for space reasons
-% \vfull{
+\commentout{
 %oli10:
 where the minimization is over all possible ways of assigning values to 
 %joe10
@@ -6261,7 +6262,7 @@ the variables in
 %oli15:
 % $\U$, and the
 $\U$. The minimum is achieved when $|\V(U_a)| \le |\V(\Tgt a)|^{|\V(\Src a)|}$.
-% }
+}
 %oli15:
 % and so the entropy $\H(\U)$ needed to is at most
     \end{enumerate}
@@ -7619,8 +7620,10 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     % Therefore
     % $ \SDef_{\!\Ar^\dagger}(\nu)  = Q(\nu,\mu,\Ar) \le \SIMInc_{\Ar}(\mu)$, 
     This proves the right-hand side of the inequality of part (a). 
-    Moreover, because the one inequality holds with equality when $\nu = \nu^*$ is a minimizer of this quantity (subject to having marginal $\mu(\X)$) we have shown part (b) as well,
-    \vfull{%
+    Moreover, because the one inequality holds with equality when $\nu = \nu^*$ is a minimizer of this quantity (subject to having marginal $\mu(\X)$) we have shown part (b) as well
+    \unskip.
+    \commentout{%
+    \unskip,
     modulo the final claim about the size of the variables $\U$.
     
     To address that final missing piece, 
@@ -7635,7 +7638,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 
     \TODO[TODO: figure out how to patch this or remove statement from theorem]
     
-    }%    
+    }%   
 \end{lproof}
 
 
