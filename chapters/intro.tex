@@ -33,7 +33,7 @@ The foundational principles of microeconomics entitle us to our own tastes (and 
 For without one, we risk being swindled \citep{RAT} or manipulated \citep{explosion}, if not humiliated \citep{logicalfalacy,emptysetthesis,politicians}.
 
 That is why theoretical computer scientists are careful to prove things about clearly defined models,
-and it is why applied computer scientists often build artificial agents that are \emph{consistent-by-construction}.
+and it is why applied computer scientists often build artificial agents that are \emph{consistent by construction}.
 %
 % When given a 
 % Given a choice between two libraries for manipulating time and one, we choose the one. 
@@ -89,6 +89,7 @@ These techniques are billed
     as pragmatic ways of approximating
     % (i.e., cheap knockoffs) 
     % to the consistent thing we really mean.
+    % some presumably consistent we must have intended.
     some presumably consistent we must have intended.
 But why perpetuate these unrealistic rationality standards?
 I argue that we should just call them what they are: (possibly) inconsistent belief states.
@@ -124,67 +125,130 @@ And how are you supposed to use multiple watches, anyway?
 % Join me, and together we will soon see. 
 Let me show you. 
 
+\oldnewmaterial{%
+\section{Overview of Results}
+    \label{sec:overview-of-results}
 
+This thesis endeavors to provide a broad unified picture of many representations, concepts, and algorithms used in modern AI systems.
+At a high level, the idea is simple: represent everything in probabilistic terms, and then identify and resolve inconsistencies between them.
+The details, of course, are more involved.
+\Cref{chap:prelim} reviews the relevant background material, focusing particularly on those elements of the theory of probabilistic graphical models and information theory.
+We also develop a perhaps unusual account of the notion of a variable, which provides a unified formal foundation for the standard notation and terminology across several different communities.
+Both aspects serve as the building blocks for the theory that follows.
+%
+The rest of the material is based on three previously published conference papers
+    \citep{pdg-aaai,one-true-loss,pdg-infer},
+two workshop papers
+    \citep{LIR,mixture-langs},
+additional papers in earlier stages of the peer review process
+    \citep{qim},
+and a trove of original unpublished notes. 
+
+% \citet{pdg-aaai}, \citet{one-true-loss}, \citet{LIR}, \citet{pdg-infer}
+%
+
+% \TODO[TODO]
+% The remainder of the Thesis is laid out as follows. 
+% In \cref{chap:prelim}, we will review the foundational building blocks or 
+
+\Cref{part:univ-model} is about subjective representations of knowledge and uncertainty. 
+%
+\Cref{chap:pdg-repr} introduces the key mathematical object at the heart of this dissertation, called a \emph{probabilistic dependency graph (PDG)}. 
+It is based on our AAAI paper of the same name \citep{pdg-aaai}, but augmented with significant elements from the other papers. 
+In that chapter, we motivate by example the need for a representation with the kind of flexibility and modularity offered by PDGs, develop their formal syntax and semantics, and relate them to traditional graphical models---which are special cases. 
+%
+\cref{chap:repr-tools} takes the PDG representation further, showing how PDGs not only capture graphical models, but also other notions of uncertainty, such as credal sets \citep{Walley1991-SRIP} and Dempster-Shafer belief functions \citep{shafer1976mathematical}.  
+In the process, we will develop a number of smaller tools, which we call \emph{widgets}, which capture small fragments of epistemic states as PDGs---enabling us to seamlessly convert things like on the values of variables, or on their probability ranges, to PDGs.
+% Both \cref{chap:pdg-repr,chap:repr-tools} primarily use quantitative PDGs; we then turn to qualitative ones.
+In \cref{chap:QIM},
+    based on joint work with Peters and Halpern \citep{qim},
+    we develop a concept that we call \emph{qualitative mechanism independence}.
+The concept is a significant generalization of independencies in other graphical models that can also describe functional dependencies and give meaning to cyclic structures. 
+As we shall see, qualitative mechanism independence is closely related to (and can be captured by) the qualitative information in a PDG.
+%
+To summarize, \cref{part:univ-model} establishes PDGs as a sweeping generalization of classical knowledge and uncertainty representations, especially those that have formed the backbone of AI systems in the last 25 years. 
+
+
+As we will see in \cref{part:univ-objective}, 
+PDGs also turn out to capture not only more modern learned representations, 
+    but also learning algorithms and objectives behind them. 
+% While we have seen the benefits of being able to tolerate inconsistency, we have not yet 
+Up until this point, we will have seen a few benefits of being able to tolerate inconsistency, but here we will begin to see the benefits of of measuring inconsistency precisely the way we have. 
+In \cref{chap:one-true-loss}, 
+% based on a paper called \textit{Loss as the Inconsistency of a Probabilistic Dependency Graph}
+based on
+% a paper titled
+\textit{Loss as the Inconsistency of a Probabilistic Dependency Graph: Choose Your Model, not Your Loss Function} \citep{one-true-loss}, 
+we will see that PDGs not only capture the part of a modern machine learning system typically thought of as the representation---i.e., the networks and their architectures---but at the same time, also the loss function used to train it.  
+Previously, these two concepts were considered separate design considerations. 
+In \cref{chap:one-true-loss}, we will see that a wide variety of losses can be viewed as measuring the inconsistency of a PDG that models the situation appropriately. 
+%
+At the same time, it also gives a principled way of selecting a loss function in new learning settings. 
+%
+From these results, it follows that much of machine learning can be viewed as resolving inconsistencies. 
+%
+In \cref{chap:LIR}, we operationalize this process, by giving a generic recipe for \emph{how} one might resolve inconsistencies:
+% The subject of the chapter is a heuristic algorithm called the \emph{local inconsistency resolution (LIR) algorithm}, which gives one simple prescription:
+% The recipe calls for a
+focus your attention to some (small) view of the picture, and then make (small) changes to reduce the inconsistency of that picture. 
+%
+This process turns out to be a generalization of {belief propagation}, but one which applies to arbitrary PDGs, thereby also capturing techniques such as adversarial training and variational inference. 
+% Perhaps surprisingly, training, inference, and the production of adversarial examples, are all instances of this simple recipe. 
+
+
+
+\Cref{part:algo-logic-complexity} develops algorithms and reasoning techniques for PDGs.
+% \Cref{part:algo-logic-complexity} develops useful algorithms and connections between the computational problems that PDGs pose.  
+\Cref{part:univ-model} positions PDG semantics as a potentially quite useful generalization of traditional graphical models, but to actualize any of that potential, we need to able to do inference on them;
+meanwhile, 
+\cref{part:univ-objective} establishes calculating (and minimizing) a PDG's degree of inconsistency as an important problem of interest. 
+In \cref{part:algo-logic-complexity}, we solve both problems (\cref{chap:infer}), characterize their computational complexity, and investigate the deep connection between them (\cref{chap:inc-infer-connection}). 
+Both \cref{chap:infer,chap:inc-infer-connection} are based on the full version of the PDG inference paper \citep{pdg-infer}.
+% We conclude by further developing a 
+In \cref{chap:reason}, we then flesh out a
+    reasoning principle that appears in previous chapters
+    (\ref{chap:one-true-loss} and \ref{chap:QIM}),
+    called \emph{monotonicity of inconsistency}: 
+    believing more things cannot make you any less inconsistent. 
+This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
+
+
+\Cref{part:foundations} develops foundational concepts of PDGs. 
+In \cref{chap:conf}, we develop a generic framework for describing the notion of \emph{(learner's) confidence} that underlies the definition of a PDG---a concept that is fundamentally different from probability, but complements it.
+In \cref{chap:relent-soup}, we describe several ways in which PDGs fit into the general framework developed in \cref{chap:conf}.
+PDGs also have a rich foundation in category theory.
+In fact, the PDG representation was inspired by categorical thinking. 
+We describe this in \cref{chap:PDG-cat}.
+% This categorical flavor is actually 
+% \Cref{chap:PDG-cat} concludes by investigating the category theory of PDGs.
+    % The departure between Bayesian Networks originally inspired the representation.
+%
+
+Finally, we conclude and discuss important open questions in 
+    % \cref{part:}
+    \cref{part:conclusions}
+    (\cref{chap:end}). 
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Themes and Motifs}
 
-\newmaterial{%
-Before we get to the primary thread of the dissertation,
-which we will overview in \cref{sec:overview-of-results},
-we first prime the reader to notice a few recurring themes.
-}% 
+% \oldnewmaterial{%
+% Before we get to the primary thread of the dissertation,
+% which we will overview in \cref{sec:overview-of-results},
+% we first prime the reader to notice a few recurring themes.
+% }% 
 
-
-%
-% \subsection{Equivalent Representations}
-% \subsection{Equivalent Representations, Surprisingly}
-\subsection{Equivalent Representations}
-
-% Hilbert's Hotel \cite{hilbert-hotel} is an 
-
-% Suppose I learn that 
-When working with abstract representations, often it is the case that one class of models (representation $R_1$) seems clearly more general than another (representation $R_2$).
-To prove this, you show that anything with representation $R_2$ can be converted to $R_1$; perhaps $R_2$ is even literally a subset of $R_1$. 
-You convince yourself that the relationship is strict, because very little of $R_1$ is in the image of this transformation---and besides, how could you possibly represent a generic element of $R_1$ with $R_2$? 
-% Suppose that, sometimes later,
-Yet it is still possible that, sometime later,
-you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
-So, despite appearances, $R_1$ may turn out to be equivalent to $R_2$. 
-
-\commentout{%
-To illustrate, consider an example from \cref{chap:prelim}. 
-Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
-Also, hypergraphs clearly are generalization of graphs; only the special case where hyperedges have two vertices correspond meaningfully to graphs. 
-So, chaining these observations together, one might reasonably conclude that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet, as we will see, bipartite graphs and hypergraphs are naturally isomorphic. 
-}%
-\newmaterial{%
-We will see this with hypergraphs and bipartite graphs (\cref{sec:prelim-graphs}), with variables, sets of variables, and random variables (\cref{ssec:basic-vars,sec:var-randomvar}) causal models and randomized causal models (\cref{sec:causal}),
-    before we even get to our own novel contributions.
+\newmaterial{
+Our last order of business before starting in earnest is to prime ourselves to notice some important recurring themes. 
 }
-% This pattern will be a recurring theme in this dissertation. 
-
-
-
-% Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
-Probabilistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are a particularly special representation in this regard. 
-Not only can PDGs capture a great many things 
-% (\cref{chap:pdg-repr,chap:repr-tools})
-\unskip, but they also capture many natural ``obvious generalizations'' of PDGs themselves. 
-If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many variants of TMs aimed at extending their expressive power: ``generalized'' TMs that have multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary Turing Machines. 
-\newmaterial{%
-    % For PDGs, this is true not only 
-PDGs push this idea even further.
-Not only are many different ways of specifying a PDG equivalent according to a single semantics, 
-    but also there are also several different (seemingly less expressive) semantics for PDGs, which are also equivalent.     
-}
-
-
-% \commentout{%
 
 \subsection{Mathematical Precision for Informal Reasoning}
 
-\commentout{%
-People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with many layers of definitions. 
-}%
+% \commentout{People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with many layers of definitions. }%
 %
 The hallmark of a good formalism combined with good notation is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
 %
@@ -222,7 +286,7 @@ Doing so can be challenging, but it is often the best way to get representations
 
 Avoiding the challenge altogether----ensuring objects of different types of different types are given different symbols---is 
 % a direct analogue of forcing yourself to be consistent by construction. 
-\newmaterial{%
+\oldnewmaterial{%
     one way of ensuring consistency by construction.
 This practice is precise and grants a certain peace of mind, but makes it difficult to think. 
 }%
@@ -241,7 +305,8 @@ In keeping with the theme of this dissertation, I have not shied away from defin
     
 % Either it is too cumbersome to spea
 
-The representation that lies at the heart of this thesis, called a probabilistic dependency graph (PDG), enables this kind of thinking in the probabilistic setting.
+% The representation that lies at the heart of this thesis, called a probabilistic dependency graph (PDG), enables this kind of thinking in the probabilistic setting.
+PDGs, the representation at the heart of this thesis, enables this kind of thinking in the probabilistic setting.
 They enable us to manipulate probabilistic primitives in ways that look just like standard intuitive short-hand, yet the machinery underneath makes the reasoning completely precise.
 Some of the key reasoning principles have congealed to form \cref{chap:reason},
 but a keen reader will see examples of how PDGs formalize intuitive probabilistic reasoning throughout. 
@@ -306,7 +371,7 @@ PDGs, too, blur this line.  We will see, for example, that it is possible to def
 }
 
 
-\commentout{%%%%%%%%%%%%%%%%%%%%%%%%%%
+\commentout{%%%%%%
 \subsection{Not Nouns, but Verbs}
 
 I grew up programming in Java. I loved the \href{https://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html}{kingdom of nouns}.
@@ -322,108 +387,46 @@ Then, in 20
 ~~::~~
 \text{GOFAI} : \text{ML Systems}
 \]
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+}%%%%
 
 
-\newmaterial{%
-\section{Overview of Results}
-    \label{sec:overview-of-results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Equivalent Representations}
 
-This thesis endeavors to show a broad unified picture of many representations, concepts, and algorithms used in modern AI systems.
-At a high level, the idea is simple: represent everything in probabilistic terms, and then identify and resolve inconsistencies between them.
-The details, of course, are more involved.
-\Cref{chap:prelim} reviews the relevant background material, focusing particularly on those elements of the theory of probabilistic graphical models and information theory.
-We also develop a perhaps unusual account of the notion of a variable, which provides a unified formal foundation for the standard notation and terminology across several different communities.
-Both aspects serve as the building blocks for the theory that follows.
-%
-The rest of the material is based on three previously published conference papers
-    \citep{pdg-aaai,one-true-loss,pdg-infer},
-two workshop papers
-    \citep{LIR,mixture-langs},
-additional papers in earlier stages of the peer review process
-    \citep{qim},
-and a trove of original unpublished notes. 
+% Hilbert's Hotel \cite{hilbert-hotel} is an 
 
-% \citet{pdg-aaai}, \citet{one-true-loss}, \citet{LIR}, \citet{pdg-infer}
-%
+% Suppose I learn that 
+When working with abstract representations, often it is the case that one class of models (representation $R_1$) seems clearly more general than another (representation $R_2$).
+To prove this, you show that anything with representation $R_2$ can be converted to $R_1$; perhaps $R_2$ is even literally a subset of $R_1$. 
+You convince yourself that the relationship is strict, because very little of $R_1$ is in the image of this transformation---and besides, how could you possibly represent a generic element of $R_1$ with $R_2$? 
+% Suppose that, sometimes later,
+Yet it is still possible that, sometime later,
+you discover that there is in fact a much more subtle way of capturing $R_1$ with $R_2$. 
+So, despite appearances, $R_1$ may turn out to be equivalent to $R_2$. 
 
-% \TODO[TODO]
-% The remainder of the Thesis is laid out as follows. 
-% In \cref{chap:prelim}, we will review the foundational building blocks or 
-
-\Cref{part:univ-model} is about subjective representations of knowledge and uncertainty. 
-%
-\Cref{chap:pdg-repr} introduces the key mathematical object at the heart of this dissertation, called a \emph{probabilistic dependency graph (PDG)}. 
-It is based on our AAAI paper of the same name \citep{pdg-aaai}, but augmented with significant elements from the other papers. 
-In that chapter, we motivate by example the need for a representation with the kind of flexibility and modularity offered by PDGs, develop their formal syntax and semantics, and relate them to traditional graphical models---which are special cases. 
-%
-\cref{chap:repr-tools} takes the PDG representation further, showing how PDGs not only capture graphical models, but also other notions of uncertainty, such as credal sets \citep{Walley1991-SRIP} and Dempster-Shafer belief functions \citep{shafer1976mathematical}.  
-In the process, we will develop a number of smaller tools, which we call \emph{widgets}, which capture small fragments of epistemic states as PDGs---enabling us to seamlessly convert things like on the values of variables, or on their probability ranges, to PDGs.
-% Both \cref{chap:pdg-repr,chap:repr-tools} primarily use quantitative PDGs; we then turn to qualitative ones.
-In \cref{chap:QIM}, we develop a concept that we call \emph{qualitative mechanism independence}, a generalization of independencies in other graphical models, that can also describe functional dependencies and also gives meaning to cyclic structures. 
-As we shall see, this concept is closely tied to (and can be captured by) 
-    the qualitative information in a PDG.
-%
-To summarize, \cref{part:univ-model} establishes PDGs as a sweeping generalization of classical knowledge and uncertainty representations, especially those that have formed the backbone of AI systems in the last 25 years. 
-
-
-As we will see in \cref{part:univ-objective}, 
-PDGs also turn out to capture not only more modern learned representations, 
-    but also learning algorithms and objectives behind them. 
-% While we have seen the benefits of being able to tolerate inconsistency, we have not yet 
-Up until this point, we will have seen a few benefits of being able to tolerate inconsistency, but here we will begin to see the benefits of of measuring inconsistency precisely the way we have. 
-In \cref{chap:one-true-loss}, 
-% based on a paper called \textit{Loss as the Inconsistency of a Probabilistic Dependency Graph}
-based on
-% a paper titled
-\textit{Loss as the Inconsistency of a Probabilistic Dependency Graph: Choose Your Model, not Your Loss Function} \citep{one-true-loss}, 
-we will see that PDGs not only capture the part of a modern machine learning system typically thought of as the representation---i.e., the networks and their architectures---but at the same time, also the loss function used to train it.  
-Previously, these two concepts were considered separate design considerations. 
-In \cref{chap:one-true-loss}, we will see that a wide variety of losses can be viewed as measuring the inconsistency of a PDG that models the situation appropriately. 
-%
-At the same time, it also gives a principled way of selecting a loss function in new learning settings. 
-%
-From these results, it follows that much of machine learning can be viewed as resolving inconsistencies. 
-%
-In \cref{chap:LIR}, we operationalize this process, by giving a generic recipe for \emph{how} one might resolve inconsistencies:
-% The subject of the chapter is a heuristic algorithm called the \emph{local inconsistency resolution (LIR) algorithm}, which gives one simple prescription:
-% The recipe calls for a
-focus your attention to some (small) view of the picture, and then make (small) changes to reduce the inconsistency of that picture. 
-%
-This process turns out to be a generalization of {belief propagation}, but one which applies to arbitrary PDGs, thereby also capturing techniques such as adversarial training and variational inference. 
-% Perhaps surprisingly, training, inference, and the production of adversarial examples, are all instances of this simple recipe. 
+\commentout{%
+To illustrate, consider an example from \cref{chap:prelim}. 
+Bipartite graphs are clearly a very special class of graphs, with special properties; not every graph is bipartite. 
+Also, hypergraphs clearly are generalization of graphs; only the special case where hyperedges have two vertices correspond meaningfully to graphs. 
+So, chaining these observations together, one might reasonably conclude that bipartite graphs are an \emph{extremely} special case of hypergraphs---yet, as we will see, bipartite graphs and hypergraphs are naturally isomorphic. 
+}%
+\oldnewmaterial{%
+We will see this with hypergraphs and bipartite graphs (\cref{sec:prelim-graphs}), with variables, sets of variables, and random variables (\cref{ssec:basic-vars,sec:var-randomvar}) causal models and randomized causal models (\cref{sec:causal}),
+    before we even get to our own novel contributions.
+}
+% This pattern will be a recurring theme in this dissertation. 
 
 
 
-\Cref{part:algo-logic-complexity} develops algorithms and reasoning techniques for PDGs.
-% \Cref{part:algo-logic-complexity} develops useful algorithms and connections between the computational problems that PDGs pose.  
-\Cref{part:univ-model} positions PDG semantics as a potentially quite useful generalization of traditional graphical models, but to actualize any of that potential, we need to able to do inference on them;
-meanwhile, 
-\cref{part:univ-objective} establishes calculating (and minimizing) a PDG's degree of inconsistency as an important problem of interest. 
-In \cref{part:algo-logic-complexity}, we solve both problems (\cref{chap:infer}), characterize their computational complexity, and investigate the deep connection between them (\cref{chap:inc-infer-connection}). 
-Both \cref{chap:infer,chap:inc-infer-connection} are based on the full version of the PDG inference paper \citep{pdg-infer}.
-% We conclude by further developing a 
-In \cref{chap:reason}, we then flesh out a
-    reasoning principle that appears in previous chapters
-    (\ref{chap:one-true-loss} and \ref{chap:QIM}),
-    called \emph{monotonicity of inconsistency}: 
-    believing more things cannot make you any less inconsistent. 
-This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
-
-
-\Cref{part:foundations} develops foundational concepts of PDGs. 
-In \cref{chap:conf}, we develop a generic framework for describing the notion of \emph{(learner's) confidence} that underlies the definition of a PDG---a concept that is fundamentally different from probability, but complements it.
-In \cref{chap:relent-soup}, we describe several ways in which PDGs fit into the general framework developed in \cref{chap:conf}.
-PDGs also have a rich foundation in category theory.
-In fact, the PDG representation was inspired by categorical thinking. 
-We describe this in \cref{chap:PDG-cat}.
-% This categorical flavor is actually 
-% \Cref{chap:PDG-cat} concludes by investigating the category theory of PDGs.
-    % The departure between Bayesian Networks originally inspired the representation.
-%
-
-Finally, we conclude and discuss important open questions in 
-    % \cref{part:}
-    \cref{part:conclusions}
-    (\cref{chap:end}). 
+% Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
+Probabilistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are a particularly special representation in this regard. 
+Not only can PDGs capture a great many things 
+% (\cref{chap:pdg-repr,chap:repr-tools})
+\unskip, but they also capture many natural ``obvious generalizations'' of PDGs themselves. 
+If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many variants of TMs aimed at extending their expressive power: ``generalized'' TMs that have multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary Turing Machines. 
+\oldnewmaterial{%
+    % For PDGs, this is true not only 
+PDGs push this idea even further.
+Not only are many different ways of specifying a PDG equivalent according to a single semantics, 
+    but also there are also several different (seemingly less expressive) semantics for PDGs, which are also equivalent.     
 }
