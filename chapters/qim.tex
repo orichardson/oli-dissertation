@@ -591,7 +591,7 @@ For one thing, it can encode arbitrary
 %joe16: already said this
 %oli21: Spencer and I would prefer to do it in this order, because we can get the "functional dependence" out of the way quickly, but we have a lot more to say about cylic models below. 
 for another, it gives meaningful semantics to cyclic models.
-
+%
 \commentout{%
     \Scibility\ satisfies a \emph{monotonicity} property (\cref{sec:monotone}) that helps us begin to understand these cyclic models.}%
 %
@@ -612,7 +612,7 @@ allows us to tie together causality, dependence, and independence.
 Perhaps surprisingly,
 \cibility\ 
 also has deep connections with information theory
-(\cref{sec:info}).
+(\cref{sec:qim-info}).
 The conditional independencies of a BN can be viewed as a very specific kind of information-theoretic constraint.
 Our notion of compatibility with a hypergraph $\Ar$ 
     turns out to imply a generalization of this
@@ -820,9 +820,8 @@ that can have multiple sources.
 Recall that a directed hypergraph (\cref{defn:hypergraph}) consists consists of a set $\N$ of nodes
 and a set $\Ar$ of hyperarcs, each $a \in \Ar$ of which is associated with
 a set  $\Src a \subseteq \N$ of source nodes and a set $\Tgt a \subseteq \N$ of target nodes.  
-For the rest of \cref{chap:QIM}, we will $(\N, \Ar) = \Ar$
+For the rest of \cref{chap:QIM}, we will call $(\N, \Ar) = \Ar$
 simply a \emph{hypergraph}, since all our hypergraphs will be directed.
-
 
 \commentout{
 A directed hypergraph---henceforth, simply a \hgraph, since it's the only kind we discuss---can be viewed as 
@@ -1500,7 +1499,7 @@ Among \partl\ \hgraph s, cyclic models \citep{Baier_2022} are
 of particular interest. Our definition of \scibility\ 
 gives rise to an interesting generalization of BN independencies 
 for such \hgraph s, but we will need the tools developed in 
-\cref{sec:monotone,sec:info} to better understand what \scibility\ means in these cases.
+\cref{sec:monotone,sec:qim-info} to better understand what \scibility\ means in these cases.
 Non-partitional \hgraph s are also of interest since they allow us to express determinism, as the following example shows.
 }
 
@@ -1706,9 +1705,9 @@ See \cref{sec:func-counterexamples} for counterexamples
 
 %oli22*: critial shard (from monotonicity section) on cycles goes here.
 Finally, as alluded to above, \scibility\ gives meaning to cyclic structures,
-    a topic that we will revisit often in \cref{sec:causal,sec:info}. 
+    a topic that we will revisit often in \cref{sec:causal,sec:qim-info}. 
 We start with some simple examples. 
-% We'll return to this in \cref{sec:info}, but for now we content ourselves with two simple examples. 
+% We'll return to this in \cref{sec:qim-info}, but for now we content ourselves with two simple examples. 
 % As we discuss in \cref{sec:monotone}, 
 \begin{example}
         \label{example:xy-cycle}
@@ -1750,7 +1749,7 @@ Although the 2-cycle in \cref{example:xy-cycle} is straightforward, generalizing
     % and has which we will return to later on. 
 % We now apply it to 
 %     a more complex example, which will play a surprisingly large role 
-%     % in \cref{sec:info}
+%     % in \cref{sec:qim-info}
 %     later on
 %     \unskip.
      
@@ -1823,7 +1822,7 @@ but it is unavoidable (see \cref{sec:monotone}) if we wish to also capture causa
 
 
 %oli19: I had thought you would like this because of the storytelling and the roadmap, but I'm OK with cutting it.
-\commentout{In this section, we have seen how \scibility\ with a single graph can represent many (in)dependencies of interest. But we have only scratched the surface here; in the remaining sections, we will come to understand how \scibility\ works in general: its connection to causality (\cref{sec:causal}), to information theory (\cref{sec:info}), and a simple principle for reasoning about it (\cref{sec:monotone}). 
+\commentout{In this section, we have seen how \scibility\ with a single graph can represent many (in)dependencies of interest. But we have only scratched the surface here; in the remaining sections, we will come to understand how \scibility\ works in general: its connection to causality (\cref{sec:causal}), to information theory (\cref{sec:qim-info}), and a simple principle for reasoning about it (\cref{sec:monotone}). 
 }
 
 
@@ -2973,7 +2972,7 @@ arises from such a causal model.
 %causality". Also, the rest of the material is far too rambly
 %\Cref{prop:sc-graph-arise} grounds the result in causality,
 %    and provides similar grounding for cyclic models,
-%    which we will exploit in \cref{sec:info}. 
+%    which we will exploit in \cref{sec:qim-info}. 
 
 
 %joe8*:  I cut Proposition 4.  First, I don't see why it's not
@@ -4364,7 +4363,7 @@ are the corresponding lower and upper probabilities, respectively.
 % \section{\SCibility\ and Entropy}
 \section{\SCibility\ and Information Theory}
     \label{sec:pdgs}
-    \label{sec:info}
+    \label{sec:qim-info}
     
 %oli12*: a rewrite from scratch, as requested. I will not look at (or copy) any material from the previous draft while writing this, with the exception of the sentence that defines and explains IDef. 
 %oli14: removing heading
@@ -4378,7 +4377,7 @@ are the corresponding lower and upper probabilities, respectively.
 % In this section, we investigate the rich relationship between \scibility\ and information theory, which is mediated by the theory of probabilistic dependency graphs. 
 In this section, we investigate the rich relationship between \scibility\ and information theory, which is mediated by the theory of probabilistic dependency graphs. 
 %oli15**: a nod to your story. 
-One aspect, which we will develop in \cref{sec:scoring-funs}, is an entropy-based scoring function that measures a distribution's degree of \SQIM-incompatibility. That function is quite different from (although can be viewed as essentially a special case of), the original qualitative PDG scoring function \citep{one-true-loss,pdg-infer}. 
+One aspect, which we will develop in \cref{sec:qim-scoring-funs}, is an entropy-based scoring function that measures a distribution's degree of \SQIM-incompatibility. That function is quite different from (although can be viewed as essentially a special case of), the original qualitative PDG scoring function \citep{one-true-loss,pdg-infer}. 
 %oli15: removed paragraph break
 %
 %oli14:
@@ -4448,7 +4447,7 @@ At the same time, it allows us to resolve longstanding confusion about structure
 % { reframing, recontextualizing }
 % overturning a standard counterexample. 
 recasting a standard counterexample to substantiate the claim it was intended to oppose.
-In \cref{sec:scoring-funs}, we strengthen this connection. Using entropy to measure distance to (in)dependence, we develop a scoring function to measure how far a distribution is from being QIM-compatible with a given dependency 
+In \cref{sec:qim-scoring-funs}, we strengthen this connection. Using entropy to measure distance to (in)dependence, we develop a scoring function to measure how far a distribution is from being QIM-compatible with a given dependency 
 %oli20: connect new scoring function in terms of idef, as agreed:
 % structure, and
 structure.  
@@ -4773,11 +4772,14 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
         % \draw[purple,ultra thick] (
     \end{tikzpicture}
     }
-    \caption[Illustration of the information profile $\mat I_\mu$]{%
-        The components of the information profile $\mat I_\mu$
-        for three variables $\X = \{X,Y,Z\}$,
-        and a graphical illustration that 
-        $\I(X;Y;Z) = \H(X,Y,Z) -  {\color{purple!60!black}\H(X|Y)} + {\color{violet!65!black}\H(Y|Z)} + {\color{blue!50!black}\H(Z|X)}$.
+    \caption[An illustration of the interaction information identity]{%
+        % The components of the information profile $\mat I_\mu$
+        % for three variables $\X = \{X,Y,Z\}$,
+        \newmaterial{%
+        A graphical illustration that 
+        $\I(X;Y;Z) = \H(X,Y,Z) -  {\color{purple!60!black}\H(X|Y)} + {\color{violet!65!black}\H(Y|Z)} + {\color{blue!50!black}\H(Z|X)}$,
+        on an information diagram.
+        }%
     % and their relationships.
      % for $\X {=} \{X,Y,Z\}$.
      }
@@ -4933,7 +4935,7 @@ between $\SDef$ and \scibility, as we now show.
 % Still, $\SDef$ does not exactly capture \scibility.
 Still, the quantity $\SDef_{\!\Ar}(\mu)$ does not determine whether or not $\mu \models \Ar$. 
 %oli14: minor tweaks to this to make it read better, that I forgot to mark precisely. 
-In \cref{sec:scoring-funs}, we derive an entropy-based scoring function that does, by directly translating conditions (a-c) to  scoring functions on witnesses, and then adding an infemum to take care of the existential quantifier (i.e. the choice of witness) implicit in \cref{defn:qim}.
+In \cref{sec:qim-scoring-funs}, we derive an entropy-based scoring function that does, by directly translating conditions (a-c) to  scoring functions on witnesses, and then adding an infemum to take care of the existential quantifier (i.e. the choice of witness) implicit in \cref{defn:qim}.
 %oli13: shortening:
 % Perhaps surprisingly, it turns out that the inner part of this formula (i.e., without the existential quantifier) is in fact
 Perhaps surprisingly, without the infemum, this function is
@@ -4979,7 +4981,7 @@ an entropy-based scoring function and an infemum.
 \commentout{
     %oli10:
     We detail both phenomena in \cref{sec:sc-infobound}.
-    In \cref{sec:scoring-funs}, we derive an entropy-based scoring function that measures how far a distribution is from being \scible\ with a given \hgraph. 
+    In \cref{sec:qim-scoring-funs}, we derive an entropy-based scoring function that measures how far a distribution is from being \scible\ with a given \hgraph. 
     But, perhaps surprisingly,
     this new scoring function coincides with the original PDG scoring function
     if the underlying hypergraph is first transformed appropriately.
@@ -5873,7 +5875,7 @@ This will allow us to generalize \cref{theorem:sdef-le0} to distributions that a
 %oli10:
 % \subsection{Scoring Functions for \SCibility}
 \subsection{A Scoring Function for \SCibility}
-    \label{sec:scoring-funs}
+    \label{sec:qim-scoring-funs}
 %oli3:
 % For each $a \in \Ar$, fix a positive real number $\lambda_a > 0$. Also, fix $\lambda_0 > 0$. With these, we can define a new scoring function paramaterized by
 %oli3:  changing labels
@@ -7294,7 +7296,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 
 
 
-\subsection{Information Theoretic Results of \Cref{sec:info}}
+\subsection{Information Theoretic Results of \Cref{sec:qim-info}}
 %oli14*: writing up proof of the bound that I view as the centerpiece of section 5. 
 To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we will need the following Lemma. 
 
@@ -7741,7 +7743,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 %     \label{sec:qual-info-theory-primer}
 % %oli16: expanded this primer a bit
 % %oli22: adding a link back
-% We now expand on the fundemental information quantities introduced at the beginning of \cref{sec:info}.
+% We now expand on the fundemental information quantities introduced at the beginning of \cref{sec:qim-info}.
 % Let $\mu$ be a probability distribution, and be $X,Y,Z$
 % %oli6:
 % % (sets of) random variables (taking on finitely many values).
@@ -8048,7 +8050,11 @@ Here is another counter-example, of a very different kind.
     
 %oli16:
 We now return to the ``easy'' direction of the correspondence between \scibility\ witnesses and causal models, mentioned at the beginning of \cref{sec:witness-to-causal-model}.
-Given a (generalized) randomized PSEM $\cal M$, we now show that distributions $\nu \in \SD{\cal M}$, are \scibility\ witness showing that the marginals of $\nu$ are \scible\ with the hypergraph $\Ar_{\cal M}$. 
+Given a (generalized) randomized PSEM $\cal M$, we now show that distributions $\nu \in \SD{\cal M}$ 
+% are \scibility\ witnesses showing that the marginals of $\nu$ are \scible\ with the hypergraph $\Ar_{\cal M}$. 
+\newmaterial{%
+are witnesses to the \scibility\ of the marginals of $\nu$ with the hypergraph $\Ar_{\cal M}$. 
+}%
 More formally:
 
 %oli22: killing this material; was a dumping ground
@@ -8095,8 +8101,11 @@ More formally:
 \begin{prop}
     %oli15: now part of the definition; cutting
     % Suppose $\mathcal M = (M, P)$ is a randomized PSEM whose noise variables $\{ U_X \}_{X \in \X}$ are mutually independent according to $P$. Then
-    If $\mathcal M = (M
-        {=} (\U,\enV,\mathcal F)
+    If $\mathcal M = (
+        % M {=}
+        %  (
+         \U,\enV,\mathcal F
+         % )
         , P)$ is a randomized PSEM, then
     every $\nu \in \SD{\mathcal M}$ 
     witnesses

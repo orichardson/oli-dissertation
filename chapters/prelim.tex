@@ -191,7 +191,10 @@ Given a number $\alpha \in \mathbb R$ and a vector $\mat u \in \Rext^I$,
 Vectors of the same shape
 % Suppose that $\mat u, \mat v \in \Rext^S$ are two vectors of 
 can be added ($+$) or multiplied ($\odot$) pointwise as usual,
-    and we say that $\mat u \le \mat v$ iff $\mat u(i) \le \mat v(i)$ for all $i \in I$.
+and we say that $\mat u \le \mat v$ iff $\mat u(i) \le \mat v(i)$ for all $i \in I$.
+\newmaterial{%
+We write $\mat u \propto \mat v$ iff there exists some a scalare $\alpha \in \mathbb R$ such that $\mat u = \alpha \mat v$.
+}%
 % $\mat 1$ denotes an all-ones vector, of a shape implied by context.
 $\mat 1$ and $\mat 0$ denote all-ones and all-zeros vectors, of a shape implied by context.
 If $\mat u$ and $\mat v$ are both of shape $I$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
@@ -438,7 +441,10 @@ For $U \subseteq \Omega$, called \emph{events},
 % Specifically, the event $X{=}x$ 
 % The prototypical event is of the form $X{=}x$. 
 While we just defined $\mu$ on events $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in general (i.e., beyond the finite case), it has to be the other way around: 
-a probability distribution is defined as an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
+a probability distribution is an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
+\newmaterial{%
+We return to this in \cref{ssec:gen-prob}.
+}%
 
 
 The standard way of updating a probability distribution based on new evidence is conditioning.
@@ -882,6 +888,7 @@ are the nodes
 that are sources of arcs leading to $u$.
 Dually, the \emph{children} of $u \in N$ are the nodes $\Ch_G(u)$ that are targets of some arc whose source is $u$. 
     % we write $$
+There is no distinction between the two notions if the edges do not have direction.
 }
 
 \begin{defn}
@@ -1015,7 +1022,7 @@ The functions
     % (L, \{\{x \in L : \} \}) &\maspfrom (L, R, E)
     \bigr^{-1}(L,R,E) = \hygr(L, R, E) &:= (L, \{\{v \in L : (v,r) \in E\} : r \in R\})
 \end{align*}   
-define an isomorphism between hypergraphsa and bipartite graphs.
+define an isomorphism between hypergraphs and bipartite graphs.
     % \[
     %     \bigr \circ \hygr = \mathrm{id}_{BG}
     %     \quad\text{and}\quad
@@ -1300,7 +1307,6 @@ Another famous (and more algorithmic) characterization of the same conditional i
 It is helpful to look at some examples.
 
 \begin{center}
-    \tikzset{bnnode/.style={dpad1,circle,inner sep=3pt}}
     % \tikzset{bnnode/.style={draw,circle}}
 % \begin{tabular}{c}
     \def\XYZnodes{%
@@ -1428,14 +1434,21 @@ We will see more details in \cref{sec:factor-graphs}.
 Many other graphical models have been proposed as well, although
 the vast majority are variants on the two we have already described. 
 We now give a quick overview of some of these representations, although this list is far from complete. 
+\newmaterial{%
+These models make only minor appearances in the text, but knowing about them may nontheless be helpful for situating PDGs
+    % (the subject of \cref{chap:pdg-repr})
+    in the literature. 
+}%
 % There are other ways of describing 
 
-There are \emph{conditional} Bayesian Networks and Causal Bayesian Networks, both of which are called CBNs, and, fortuantely, both of which make the same modification: marking some variables as ``observed'' so that they do not require probability distributions. 
+The most important for our purposes, will be \emph{conditional} Bayesian Networks and \emph{causal} Bayesian Networks, both of which are called CBNs, and, fortuantely, both of which make the same modification: marking some variables as ``observed'' so that they do not require probability distributions. 
 Writing $\U$ for the observed variables and $\V$ for the unobserved ones, a CBN $\mathcal B$ represents a cpd $\Pr_{\mathcal B}(\mathcal V \mid \mathcal U)$. 
 %
 \emph{Conditional random fields (CRFs)} are an analogue for factor graphs/MRFs.
 
-Graphs with both directed and undirected edges have also been studied. The most widely known graphical model of this kind is called a \emph{chain graph}, in part because it can be seen as a way of connecting conneted components (themselves factor graphs) along a directed acylcic chain.
+
+Graphs with both directed and undirected edges have also been used as the basis for probabilistic models.
+The most widely known graphical model of this kind is called a \emph{chain graph}, in part because it can be seen as a way of connecting conneted components (themselves factor graphs) along a directed acylcic chain.
 People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks \citep{dean1989model}\citep[\S6.2]{KF09}, and a related cut-parameterized approaches to looking at fixed points \citep{Baier_2022}.
 \oldnewmaterial{%
     \emph{Directed factor graphs} \citep{frey2012extending}
@@ -1565,7 +1578,7 @@ It is easy to verify that
     \\&= \H_\mu(X \mid Y) - \H_\mu(X \mid Y, Z);
 \end{align*}
 thus mutual information is derived from entropy. 
-Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$---thus entropy is also a special case of mutual information. 
+Yet on the other hand, $\I_\mu(Y;Y) = \H_\mu(Y)$ and $\I_\mu(Y;Y|X) = \H_\mu(Y|X)$, at least in the discrete case---thus entropy is also a special case of mutual information. 
 
 % Sums and differences of any of these quantities
 \paragraph{Information Diagrams and the Information Profile.}
@@ -1674,22 +1687,32 @@ as depicted in \cref{fig:info-diag-prelim}.
 \end{figure}
 
 \paragraph{Entropy for Continuous Variables.}
-So far, everything we have said depends on the variables being discrete.
+    \label{sec:prelim-gen-ent}
+So far, everything we have said relies on intuitions that the variables are discrete.
+% It is not hard to see that trying to take a limit 
+If we continous variables by discretizing them, it is not hard
+    to see that the entropy as defined goes to $\infty$ as the discritization becomes fine.
+Indeed, this is appropriate, because there is a sense in which a real number sampled from $[0,1]$ contains infinite information.
+However, it is difficult to work with divergent limits in this way;
+    instead, we define a much more useful quantity.
+
 % so that $\mu(X{=}x)$ = $\mu(x)$. 
 In the general case, we need only replace instances of $\mu(X)$ used as a random variable with its derivative $\frac{\mathrm d\mu}{\mathrm d \lambda}$ with respect to $X$'s base measure $\lambda_X$.
 So, for instance, the entropy of a variable $X$ in the general case is
-\[
+\begin{equation}
     \H_\mu(X) 
     = \Ex_{\mu} \left[
         \log \frac{\mathrm d\lambda_X}{\mathrm d \mu(X)} \right]
     = \int_{\V\!\X} \log \frac{\mathrm d\lambda_X}{\mathrm d \mu(X)} \mathrm d \mu
     .
-\]
+    \label{eq:gen-entropy}
+\end{equation}
 \newmaterial{%
+In the finite case, this is just what we had before. 
 However, it is important to keep in mind that this quantity can be negative in general (because, outside of the finite case, is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$). 
 The reader should also be aware that, for real-valued variables, $\H(X) = 0$ no longer means that $X$ is a constant, but rather that $X$ has expected unit density (like the uniform distirbution over $[0,1]$). 
 % Intuitively, the scale has been shifted by $$
-Aside from these unwelcome developments, this analogue of entropy acts otherwise just like the original, but shifted by an additive constant.  
+Aside from these unwelcome developments, this analogue of entropy acts otherwise just like the original, but shifted by an additive constant to keep it in a more useful range.
 It still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization.  
 Fortunately, (conditional) mutual information works just as before: it is non-negative and zero iff there is a (conditional) independence. 
 }
@@ -1702,6 +1725,7 @@ Fortunately, (conditional) mutual information works just as before: it is non-ne
 
 
 \paragraph{The Principle of Maximum Entropy.}
+    \label{sec:prelim-maxent}
 %
 % What should one do
 Suppose that, with rigorous emperical investigation, we have determined some statistics about a variable $X$---perhaps its mean, and the proportion of the time it takes on a certain value---but have not (yet) collected enough information to uniquely determine the distribution of $X$. 
@@ -1712,7 +1736,7 @@ But what should we do if we are obligated to give a probability distribution
 % Here there is an important principle in the literature: 
 % If forced to select a probability distribution, however, there is one principle
 There is a well-established principle stating that among all possible distributions, the one with maximum entropy is most appropriate. 
-
+%
 % Here is a high-level reason for this: 
 At a high level, this is because 
     entropy measures uncertainty in a distribution, and we do not want to assume things that we do not know.
@@ -1731,8 +1755,14 @@ It would be inappropriate to assume that she will scored a 5 (or a 1) simply bec
 The principle of maximum entropy states that we should assume a uniform distribution over scores until we learn more.  
 % If we discover that the average score is a 4, then the maximum entropy distribution 
 
+\newmaterial{%
+% There are many other theoretical arguments in favor of the principle as well \citep{wallis}.
+% Despite its successes, 
+The principle of maximum entropy has also faced significant criticism, from a number of different angles \citep{seidenfeld1986entropy,critique-maxent,friedman1971jaynes}.
+An recurring theme in the attacks is the dependence on representation---
+}
 
-There are many other theoretical arguments in favor of the principle as well \citep{wallis}.
+
 % Many years later, another strong argument can be made 
 Many decades later, we are now also in a position to make an empirical argument for the principle of maximum entropy: it validates many standard and intuitively natural choices made in the literature.
 % The uniform distribution over a finite set of outcomes is the distribution with maximum entropy.
@@ -1744,40 +1774,34 @@ Logitstic regression
     % (i.e., a softmax layer)
     outputs the maximum entropy distribution over class labels,
     among those that share certain means with the training data.
-More generally, \emph{exponential families}, important classes of models that capture not only many of the examples above but also undirected graphical models, all maximize entropy subject to an expectation matching constraint. 
+More generally, \emph{exponential families}, important classes of models that subsume the examples above as well as undirected graphical models, also maximize entropy subject to an expectation matching constraint. 
 
 But what about directed graphical models? Bayesian Networks, so far, have resisted such a clean characterization in terms of maximum entropy; maximum entropy approaches seem to require some sort of deference to a causal structure \citep{williamson2001foundations}. 
-One contribution of this thesis is to expand the principle of maximum entropy to account for qualitative information. 
+One contribution of this thesis is to expand the principle of maximum entropy to account for qualitative information (\cref{sec:bn-maxent}). 
 %
 % It may be worth noting that these two arguments for maximum entropy---the high-level interpretation of the quantity as measuring the right thing, and the sociological argument to unity---directly parallel the two kinds of arguments we give for the semantics of PDGs, in \cref{chap:pdg-repr,chap:one-true-loss}, respectively.
 
-% Despite its successes, 
-The principle of maximum entropy has also faced significant challenges
-\citep{seidenfeld1986entropy,}
 
-\TODO
+A related concern with maximum entropy in the face of conditional information is addressed in \citep{Grove1997ProbabilityUC}.
 
-
+\newmaterial{%
 \paragraph{Entropy as a Structural Information Measure.} 
-% \subsubsection{A Structural Information Measure.} 
-Entropy and 
-its ilk
-are purely ``qualitative'' notions---although, because they represent real numbers (i.e., ``quantities''), we will instead use the word \emph{structural} to refer to the concept here.
-One way to see this is the way in which entropy interacts with variables. 
-Recall that $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as (random) variables, that take as input values of $X$ and $Y$. 
+Throughout this thesis, we will argue that entropy and its ilk are purely ``qulitative'' or ``structural'' aspects of a probability distribution (although perhaps the latter term is clearer in this context, because we are still talking about real numbers, i.e., ``quantities''). 
+% One reason for this is that we don't need to know any of the quantitative information to be able to talk about and use entropy intelligently. 
+One reason is that we do not need to know anything about $\V\!X$ in order make full use of these quantities.
+Just like the qualitative notion of independence $X \CI Y$, the mutual information $\I(X;Y)$ is fully defined and makes complete sense without knowing what values the variables can take on.
+Even the notation reflects this. 
+Recall that, at least in the discrete case, $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as random variables, taking as input values of $X$ and $Y$. 
 % Unlike their counterparts, 
 $\H_\mu(X)$, $\H_\mu(X,Y)$, and $\H_\mu(Y|X)$, however, 
-    are not functions of the values of $X$ and $Y$, but rather functions 
-    of the variables themselves. 
-% Its argument is the identity of the variable $X$, 
-Indeed, it makes no sense to feed $(x,y)$ as an argument to any of these concepts. 
+    are not functions of the values of $X$ and $Y$, but rather functions of (the identities of) the variables themselves. 
+% Indeed, it makes no sense to feed $(x,y) \in \V(X,Y)$ as an argument to any of these concepts, even if we wanted to.
+In other words, the operate on the qualitative aspect of a variable, not its quantitative aspect. 
 
-\TODO[TODO: strengthen the above]
-% Another sign that entropy and its cousins are structural notions is that they are invariant to relabelings of the values.
-
-% This is because $\H_\mu(X)$ is fundementally a
-% ``qualitative'' notion,
-%     that operates on the identities of variables, and not their values.
+A second reason to view entropy as structural appears in its general definition \eqref{eq:gen-entropy}.
+There, the derivative is taken with respect to structural information about the variable: the base measure, which describes only agreed-upon coordinates, not observational data about what is likely. 
+But if we replace that base measure with a \emph{probability measure} of our choosing, we get a closely related (but quite different) kind of entropy that is appropriate for working with observational information. 
+}
 
 
 \subsection{Relative Entropy}
@@ -1838,19 +1862,13 @@ In expectation, the difference between these quantities,
 % a clear information theoretic interpretation as 
 There are a number of other results showing that relative entropy is the unique quantity with important properties of interest; treating them all is beyond the scope of this thesis.% 
 \footnote{%
-There are many nice axiomatizations of relative entropy;
-some important ones include Renyi's \citep{renyi1961measures}, Fadeev's \citep{fadeev1957begriff}, Tom Leinster's result showing
-that it is the only function satisfying three trivial regularity
-properties and the chain rule, and this characterization as the unique
-functor from statistical maps to the additive monoid $[0,\infty]$.  It is the
-only statistical divergence that is both a Bregman divergence and an
-f-divergence.  The Hessian of relative entropy is the Fisher metric, 
-which is the unique metric tensor that is invariant under sufficient statistics. 
-In that geometry, we will see (\cref{chap:relent-soup}) that the gradient flow of relative entropy
-with respect to its first (``belief'') argument amounts to
-multiplicative interpolation of probability measures, while gradient
-flow of relative entropy with respect to its second (``reality'')
-argument amounts to additive interpolation. 
+    There are many nice axiomatizations of relative entropy;
+    some important ones include Renyi's \citep{renyi1961measures}, Fadeev's \citep{fadeev1957begriff}, Leinster's result showing
+    that it is the only function satisfying three trivial regularity
+    properties and the chain rule \citep{leinster2017shortcharacterizationrelativeentropy}, and a characterization as the unique functor from statistical maps to the additive monoid $[0,\infty]$ \citep{baez2014bayesiancharacterizationrelativeentropy}.
+    It is the only statistical divergence that is both a Bregman divergence and an f-divergence. 
+    The Hessian of relative entropy is the Fisher metric, which is the unique metric tensor that is invariant under sufficient statistics. 
+    In that geometry, we will see (\cref{chap:relent-soup}) that the gradient flow of relative entropy with respect to its first (``belief'') argument amounts to multiplicative interpolation of probability measures, while gradient flow of relative entropy with respect to its second (``reality'') argument amounts to additive interpolation. 
 }
 %
 Suffice it to say that relative entropy is an extremely special,
@@ -1874,8 +1892,18 @@ Observe the similarity:
 % $
 %     \H_\mu(X) = \log |\V\!X| - \kldiv{\mu(X)}{ \Unif(X) }
 % $
-
-
+\newmaterial{%
+\paragraph{Cross Entropy.}
+Finally, to head off confusion, we mention that the \emph{cross entropy}
+\[
+    \XEnt(p,q) := \Ex_{p} \left[\log\frac{1}{q}\right]
+         = \Ex_{\omega \sim p}\left[\log\frac{\mathrm d\lambda_{\Omega}}{\mathrm d q} \right]
+         \qquad = \kldiv pq + \H(p),
+\]
+the standard function used to train a statistical model $q$ using data $p$, is not the same as relative entropy $\kldiv pq$.
+However, as can be seen on the right-hand side of the equation above, minimizing it is equivalent to minimizing $\kldiv pq$, because the entropy $\H(p)$ of the data is a constant and does not affect the optimization process. 
+We view use cross entropy as a small shortcut that simplifies computing with relative entropy in some contexts; we will only use it when comparing with standard learning objectives (in \cref{chap:one-true-loss,chap:LIR}).
+}%
 
 \temphide{
 \begin{subappendices}    

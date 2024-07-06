@@ -203,11 +203,12 @@ In \cref{chap:one-true-loss},
 based on
 % a paper titled
 \textit{Loss as the Inconsistency of a Probabilistic Dependency Graph: Choose Your Model, not Your Loss Function} \citep{one-true-loss}, 
-we will see that PDGs not only capture the part of a modern machine learning system typically thought of as the representation---i.e., the networks and their architectures---but at the same time, also the loss function used to train it.  
-Previously, these two concepts were considered separate design considerations. 
-In \cref{chap:one-true-loss}, we will see that a wide variety of losses can be viewed as measuring the inconsistency of a PDG that models the situation appropriately. 
-%
-At the same time, it also gives a principled way of selecting a loss function in new learning settings. 
+we will see that PDGs not only capture the part of a modern machine learning system typically thought of as the representation (i.e., the networks and their architectures), but also the loss function used to train that system.  
+% Previously, these two concepts were considered separate design considerations, 
+In a more standard telling, these two concepts completely separate design considerations, and a loss function is about pragmatics, rather than truth. 
+In \cref{chap:one-true-loss}, we argue that this is not the case, and there is a ``universal'' way of getting at the ``correct'' loss function simply by laying out your (possibly inconsistent) beliefs. 
+We will see that a wide variety of losses can be viewed as measuring the inconsistency of a PDG that models the situation appropriately. 
+This framing also gives a principled way of selecting a loss function in new learning settings. 
 %
 From these results, it follows that much of machine learning can be viewed as resolving inconsistencies. 
 %
@@ -230,8 +231,8 @@ In \cref{part:algo-logic-complexity}, we solve both problems (\cref{chap:infer})
 Both \cref{chap:infer,chap:inc-infer-connection} are based on the full version of the PDG inference paper \citep*{pdg-infer}.
 % We conclude by further developing a 
 In \cref{chap:reason}, we then flesh out a
-    reasoning principle that appears in previous chapters
-    (\ref{chap:one-true-loss} and \ref{chap:QIM}),
+    reasoning principle that appears in both \cref{part:univ-model,part:univ-objective}
+    (\cref{chap:one-true-loss,chap:QIM}),
     called \emph{monotonicity of inconsistency}: 
     believing more things cannot make you any less inconsistent. 
 This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
@@ -277,9 +278,9 @@ By recognizing these patterns, it may be easier to digest the material that succ
 
 % \commentout{People---and I am certainly no exception---are often fast and loose with their notation and their math, especially when talking about complicated topics with many layers of definitions. }%
 %
-The hallmark of a good formalism combined with good notation is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
+The hallmark of a good formalism is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
 %
-Correspondingly, good representations (and tools for manipulating them)
+Correspondingly, our representations representations (and tools for manipulating them)
     strive for two fundemental virtues:
 \begin{enumerate}[nosep]
     \item things that are different look different, and
@@ -372,8 +373,8 @@ A few examples of the distinction we're getting at are given below.
 \end{center}
 
 \newmaterial{%
-Some readers might immediately recognize this division; others may find it sweeping at first glance. 
-By the end of the thesis, hopefully we will have a better appreciation for why the analogy is appropriate, and specifically its importance for probabilistic modeling. 
+Some readers might immediately recognize this division; others may find it confusing or react against it. 
+By the end of the thesis, hopefully we will have a better appreciation for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
 }%    
 Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
 % (although both can be numerical)
@@ -455,6 +456,7 @@ Yet ``generalized'' TMs with multiple tapes, multiple heads, tapes of higher dim
 
 \oldnewmaterial{%
     % For PDGs, this is true not only 
+    % PDGs push this idea even further.
 PDGs push this idea even further.
 % PDGs exhibit this kind of equivalence in an in.
 Not only is it the case that there are many different ways of specifying a PDG that are all equivalent, 
@@ -466,6 +468,7 @@ This property, together with their ability to capture seemingly every other epis
 \Cref{part:univ-model} aims to justify this rather bold terminology.
 \Cref{part:univ-objective} explores a different aspect
     in which PDGs are universal: minimizing inconsistency appears to be a \emph{universal objective}. 
-Then, in \cref{part:algo-logic-complexity}, we will see how these two aspects of PDGs are deeply related.  
+The two aspects of PDGs are deeply related, as we will see in \cref{part:algo-logic-complexity}.  
+
 But first, we should review some math. 
 }%

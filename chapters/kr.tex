@@ -9,7 +9,6 @@ can capture graphical models such as Bayesian Networks and Factor graphs---but t
 In this chapter, we will see how a wide variety of other kinds of epistemic information can be captured with PDGs.
 
 
-\newmaterial{%
 Probability is the dominant way that computer computer scientists and
 micro\-economists think about epistemic state.
 This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
@@ -40,7 +39,6 @@ In \cref{sec:other-uncertainty-repr}, we will use the tools developed in \cref{s
 % In the remainder of the section, we 
 We also quickly overview other representations captured by PDGs that will play larger roles later on: cluster (pseudo)marginals, causal models, and neural networks (\cref{ssec:capture-causal-models,ssec:implicit-neural-repr,ssec:pseudomarginal-cluster-graph}). 
 % The key . We will explore this in 
-}% end\newmaterial
 
 \section{Probabilities and Random Variables}
     \label{sec:prob-as-pdg}
@@ -391,7 +389,7 @@ As before add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the 
     we can regard $s$ as a cpd $s(\Tru \mid X)$ with $s(\Tru{=}\trut|X{=}x) = s(x)$. 
 
     Just as with a hard constraint, we have
-    (a)  $\mu \in \SD{ \dg M + s \}$ iff $\mu(\X) \in \SD{\dg M}$ and $\mu(s(X)=1) = 1$
+    (a)  $\mu \in \SD{ \dg M + s }$ iff $\mu(\X) \in \SD{\dg M}$ and $\mu(s(X)=1) = 1$
     (c)  For all $\gamma \ge 0$,
         $\aar{\dg M + s}_\gamma \ge \aar{\dg M}_\gamma$ 
 
@@ -1053,6 +1051,7 @@ Interestingly, this approach also resolves some confusion about maximum entropy.
 Let's look at an example.
 
 \begin{example}
+    \label{ex:coin}
 Suppose we are about to flip a coin; but we know that it is either fair or double-headed, but do not know which.
 One way of modling this is might be to take $\Omega = \{ H, T\}$ to be the possible outcomes of the coin flip, and represent our belief with the set of distributions
 $\mathcal P = \{ \mu_{.5}, \delta_H \}$, where $\mu_{.5}$ assigns probability 1/2 to both $H$ and $T$, and $\delta_H$ assigns probability 1 to $H$. 
@@ -1085,18 +1084,23 @@ $
 Now, in the maximum entropy distribution, the coin is twice as likely to be fair as it is to be one-sided, and overall it has a 2/3 chance of landing heads. 
 This is a more reasonable summary of our belief state---we do not truly believe that the coin is fair.
 Furthermore, if we select $\alpha = 1$ for this edge, 
-\newmaterial{%
 then the distribution with minimal structural deficiency (the analogue of maximum-entropy when there is causal information present) prescribes the distribution that says the coin has a 3/4 chance of landing heads, which is in the very middle of our range. 
-%
-It is well-known that different representations can change the result of maximizing entropy. But some representations better capture a scenario more naturally than others, and PDGs make it easy to select representations that interact appropriately with entropy. 
-}
 \end{example}
 
-
+It is well-known that different representations can change the result of maximizing entropy. 
+But some representations better capture a scenario more naturally than others, and PDGs 
+% make it easy to select representations that interact appropriately with entropy. 
 \newmaterial{%
+facilitate the choice of representations that interact well with entropy. 
+% As discussed in \cref{sec:bns}, \cref{theorem:bns-are-pdgs} is a powerful example of how 
+In \cref{ex:coin}, the PDG representation lead us to a space which, upon applying the principle of maximum entropy (or better yet, of minimum information deficiency) leads to a more reasonable answer than the naive space given by the set of possible marginals over the coin outcome. 
+% It is worth noting that the naive space is not even 
+It is difficult to imagine how one could even obtain the naive maximum entropy result with a PDG.
+}
+
+
 In the next section, we show that a more specific representation of uncertainty
     can be captured with PDGs in a more targeted way.
-}
 
 \subsection{Belief and Plausibility Functions}
     \label{ssec:belplaus-as-pdg}
@@ -1113,7 +1117,7 @@ Belief functions admit an alternate representation in terms of a \emph{mass func
     \qquad\text{and}\qquad
     \Plaus_m(U) := \sum_{\substack{V \subseteq \Omega \\ V \cap U \ne \emptyset}} m(V).
 \]
-Moreover, the the correspondince is unique.  That is, there are 1-1 correspondence between belief functions $\Bel$, plausibility functions $\Plaus$, and mass functions $m$ \cite[Thm 2.6.3]{halpern-RAU}. 
+Moreover, the correspondince is unique.  That is, there are 1-1 correspondence between belief functions $\Bel$, plausibility functions $\Plaus$, and mass functions $m$ \cite[Thm 2.6.3]{halpern-RAU}. 
 The only requirements on $m$ are that:
 \[
 m(\emptyset) = 0
@@ -1190,8 +1194,9 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
         \end{tikzpicture}}
          = - \log \Plaus ( U ).
         $
+        That is, the inconsistency of simultaneously
+        having belief function $\dg M_{\Bel}$ and also that the event $U$ occurs, is the analogue of the information content but for plausibility.
     % \item 
-    
     \end{enumerate}
 \end{theorem}
 
@@ -1207,12 +1212,10 @@ Meanwhile, part (b) states that something quite intuitive
 %
 % : after adding a constraint
 % that event $U$ occurs, the resulting degree of inconsistency is a direct function of the (im)plausibility of $U$ to begin with---if $U$ was completely plausible, there is no inconsistency in learning $U$. 
-\newmaterial{%
 \unskip, but might benefit from being unpacked somwhat.  The PDG on the left-hand side is just $\dg M_{\Bel}$ plus a constraint representing the event $U$. 
 How inconsistent is it to have belief function $\Bel$ and also believe $U$ occurs with certainty? 
 It's the analogue of the information content $\I_\mu[U] = - \log \mu(U)$, but with plausbility instead of probability. 
 Indeed, if $\Plaus(U) = 1$, then there is no inconsistency to also believing $U$ occurs, and if $\Plaus(U) = 0$, then it's so implausible so as to be infinitely inconsistent. 
-}
 
 Now for the proof of the theorem.
 
@@ -1236,7 +1239,7 @@ Now for the proof of the theorem.
     Suppose that $\mu \in \Delta \Omega$ satisfies
         $\Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega$.
     Assume for simplicity that the possible outputs of $m$ and $\mu$ are rational numbers, and let $N$ be their common denominator. 
-    We now construct a bipartite graph $G = (L, R, \mathcal E)$ be a bitartite graph with $|L| = |R| = N$ vertices in each part.
+    We now construct a bipartite graph $G = (L, R, \mathcal E)$ with $|L| = |R| = N$ vertices in each part.
     The left part $L = \sqcup_{\omega \in \Omega} L_\omega$ 
     is partitioned to be in bijection with the elements of $\Omega$, with
         $|L_\omega| = \mu(\omega)\cdot N$. 
@@ -1383,8 +1386,8 @@ Concretely, given a set of variables $\X$, a cluster graph is
 graph, whose node set is a collection $\C$ of clusters, each $C \in \C$ of which is a subset of $\X$. 
 % When adjacent clusters agree on the marginal distr
 A cluster marginal $\bmu = \{ \mu_C(C) \}_{C \in \C}$ consists of a distribution $\mu_C \in \Delta \V C$ over the variables in each cluster $C \in \C$.
-Because $\bmu$ is just a collection of joint distributions, it exactly
-    is exactly the shape of the observational data for a hypergraph
+Because $\bmu$ is just a collection of joint distributions, 
+it is exactly what is needed to supply observational data for a hypergraph
 $
     \Ar = \{ \varnothing \to C \}_{C \in \C}.
 $
@@ -1398,7 +1401,7 @@ When the cluster graph has a special property that makes it a \emph{tree decompo
 then local consistency is equivalent to global consistency \citep{wainwright2008graphical},
 and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
 We will cover these concepts in detail when we
-    use them when we develop an inference algorithm for PDGs in \cref{chap:infer};
+    use them to an inference algorithm for PDGs in \cref{chap:infer};
 Here, we aim only to make an orthogonal point: that these structures themselves are PDGs. 
 
 \subsection{Causal Models}
@@ -1417,7 +1420,7 @@ More broadly, \cref{chap:QIM} develops a framework that allows us to something m
 \subsection{Implicit Neural Representations}
     \label{ssec:implicit-neural-repr}
 
-A more modern way to represent knowledge is implicitly, within the parameters of a neural network. 
+A more modern way to represent knowledge is implicitly, by means of the parameters of a neural network. 
 But neural networks are often viewed as conditional probability distributions, and hence can be directly included as the quantitative data for an arc of a PDG.
 So too can the other components of machine learning systems such as data, priors, and observations. 
 Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism has a great deal to say about modern neural representations as well.

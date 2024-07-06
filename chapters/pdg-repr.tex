@@ -34,7 +34,7 @@ inconsistency. We want to be able to model the process of resolving
 inconsistency; to do so, we have to model the inconsistency itself. But our
 approach to modeling inconsistency has many other advantages. 
 In particular, PDGs are significantly more modular than other directed graphical models: operations like restriction and 
-combination (\cref{sec:combine}) that are easily done with PDGs are difficult or impossible to do with other representations.
+combination (\cref{sec:pdg-combine}) that are easily done with PDGs are difficult or impossible to do with other representations.
 The following examples motivate PDGs and illustrate some of
 their advantages.
 
@@ -165,14 +165,8 @@ distribution, she must resolve the inconsistency.
 
 
 
-However,
-sorting this out immediately may not be ideal.
-For instance, if the inconsistency arises from a conflation between
-two definitions 
-of ``gun'', a resolution will have destroyed the original cpds. A
-better use of computation may be to notice the inconsistency and look
-up the actual law. 
-
+However, sorting this out immediately may not be ideal. For instance, if the inconsistency arises from a conflation between two definitions of ``gun'', a resolution will have destroyed the original cpds. A better use of computation may be to notice the inconsistency and look up the actual law. 
+%
 By way of contrast, consider the corresponding PDG. In a PDG, the cpds are
 attached to arcs, rather than nodes of the graph.
 In order to represent unconditional probabilities, we introduce
@@ -187,14 +181,7 @@ arcs between $F$ and $G$ are associated with $p$ and $p'$.
 
 
 
-The original state of knowledge consists of all three nodes and the two
-solid
-arcs from $\pdgunit$. This is like Bayes Net that we considered above,
-except that we 
-no longer
-explicitly
-take  $F$ and $G$ to be independent; we merely record the constraints
-imposed by the given probabilities.  
+The original state of knowledge consists of all three nodes and the two solid arcs from $\pdgunit$. This is like Bayes Net that we considered above, except that we no longer explicitly take  $F$ and $G$ to be independent; we merely record the constraints imposed by the given probabilities.  
 	
 The key point is that we can incorporate the new information into our original
 representation (the graph in \Cref{fig:gun-floomp-diagram} without the arc from
@@ -203,7 +190,7 @@ $p$ (the new information is shown in blue).
 % Doing so does not change the meaning of the original arcs.
 Doing so does not change the meaning of the original arcs.
 \unskip\footnote{%
-    While the meaning of the original arcs does not change, one might want something different at a qualitative level, as we will explore in \cref{sec:combine}).
+    While the meaning of the original arcs does not change, one might want something different at a qualitative level, as we will explore in \cref{sec:pdg-combine}).
 }
 Unlike a Bayesian update, the operation is even reversible: all we need
 to do recover our original belief state is delete the new arc, 
@@ -393,7 +380,8 @@ variables in \Cref{ex:smoking} match the ones she already knows about. When she
 finishes reading the statistics on smoking and the original study on tanning
 beds (associated to a cpd $p$ in \Cref{ex:smoking}), but before she has
 time to reflect, we can represent her (conflicted) knowledge state as the sum
-of the two graphs, depicted graphically on the right of \Cref{fig:grok-combine}.  
+of the two graphs, depicted graphically on the right of \Cref{fig:grok-combine}.
+\forjoe{ I still believe the text above is accurate. It  }
 
 
 \begin{figure}
@@ -530,7 +518,10 @@ The definition is ambiguous about whether $(\N, \Ar)$ is a directed graph, multi
 % We occasionally write a PDG
 % as $\dg M = (\Ar,\mathbb P, \alpha,\beta)$, where $\Ar = (\N,\Ar,\V)$, 
 % and abuse terminology by referring to $\Ar$ as a multigraph.
-Since $\Ar$ can be extended with identity arcs $\{ X \xrightarrow{id} X \}_{X\in \N}$, we make our usual assumption that $\N$ is implicit in $\Ar$. Furthermore, in this case, both $\Ar$ and $\V$ are then implicit in the type of $\mathbb P$. 
+Since $\Ar$ can be extended with identity arcs $\{ X \xrightarrow{id} X \}_{X\in \N}$, we make our usual assumption that $\N$ is implicit in $\Ar$.
+Furthermore, in this case, both $\Ar$ and $\V$ are then implicit in 
+% the type of $\mathbb P$ 
+$\mathbb P = \{ \p_a : \V \Src a \to \Delta \V \Tgt a \}_{a \in \Ar}$.
 Thus, we refer to $\mathbb P$ as an \emph{unweighted PDG};
 	we give it semantics as though it were the weighted PDG that has $\bbeta = \balpha = \mat 1$. 
 % We refer to 
@@ -653,7 +644,6 @@ or restrictions of them, all of which turn out to be essentially equivalent.
 We now give an overview of important alternative variants.
 
 \begin{enumerate}[wide, label={\textbf{PDG Variant \arabic{*}:}}]
-	\newmaterial{%
 	\item
 	\textbf{Segregated PDGs.}
 	% A PDG can also taken to contain arcs of two different kinds
@@ -667,7 +657,6 @@ We now give an overview of important alternative variants.
 	Indeed, a PDG can be equivalently defined with two distinct kinds of arcs, each of which only play one role. An arc that plays both roles can be separated into two separate arcs, one for each kind of information. Conversely, an arc with only one kind of information can be specified by spacing $\alpha = 0$ or $\beta = 0$ to nullify the other kind of information, as appropriate. 
 	%
 	We have opted for combined edges because certain semantic and inference properties of PDGs are easier to describe in this presentation (e.g., \cref{theorem:limit-uniq,theorem:wfg-is-pdg,theorem:approx-infer}). 
-	}%	
 
 
     \item 
@@ -789,9 +778,7 @@ We now give an overview of important alternative variants.
 \subsection{Combining PDGs}
     \label{sec:pdg-combine}
 
-\newmaterial{%
-	How should we combine independent sources of information? 
-}%
+How should we combine independent sources of information? 
 %
 As illustrated by \cref{ex:grok-union}, a significant advantage of PDGs is their modularity:
 % we can combine the information in $\dg M_1$ and $\dg M_2$ 
@@ -800,7 +787,6 @@ independently: take the union of their variables and the disjoint union of their
 % Quantitatively, the resulting PDG is 
 % In many cases, this operation does exactly what one would want.
 
-\newmaterial{%
 \paragraph{An Important Caveat For Qualitative (Structural) Information.}
 % It is important to keep in mind, however, that this means treating the information in the PDGs 
 For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
@@ -813,21 +799,20 @@ Rather than adopting two distinct mechanisms, one might well have intended to me
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 Yet PDG union performs no such merge.
 Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which qualitative mechanisms ought to be merged together, after independent combination. 
-We will return to this in \cref{ex:qual-merge}. 
-
+We will return to this in \cref{ex:overdet}.
+The
 % ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 % We mention that there is an even bigger problem in combining factor graphs, because the parameters 
-The analogue of this problem is even bigger 
+analogue of this problem is even bigger 
     for factor graphs, because 
     $\balpha$ and $\bbeta$ are essentially ``fused together'' in these models, as we will see in \cref{sec:factor-graphs}.
-We will explore this in \cref{ex:overdet}. 
+% We will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
 It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ do work as one might hope. If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$, there is no problem with taking $\balpha$ to be $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively.  For instance, if $G_1$ and $G_2$ represent the same independencies, then $\balpha$ will encode those shared independencies. 
 
 Still, there are some cases where independent combination is appropriate even for causal information; we now proceed with the formal details.
-}
 
 
 \paragraph{Formal Details of PDG Sums.}
@@ -1458,7 +1443,6 @@ define the overall scoring function:
         .
 \end{align*}
 
-\newmaterial{%
 % We would like to point out that whil
 While $\gamma$ and $\zogamma$ do indeed parameterize a trade-off between observational and structural information, the two quantities are not really symmetric.
 % At an intuitive level, the quantitative information 
@@ -1468,7 +1452,10 @@ At a lower level, $\OInc$ is unbounded and non-negative, while $\SDef$ is bounde
 % This asymmetry is clearer 
 % Thus, we should not particularly 
 Because of the inherent asymmetry, 
-    it is not particularly desirable to use the symmetrical trade-off parameter $\zogamma$.
+    % it is not particularly desirable 
+    % to use the symmetrical trade-off parameter $\zogamma$.
+    there is no inherrent reason to prefer
+    a symmetrical formalims (like the one with $\zogamma$). 
 
 In addition, there are benefits to using $\gamma$ and the scoring function as we have defined it. 
 % For instance, $\gamma$ may be seen as analogous to a \emph{temperature}.
@@ -1492,7 +1479,6 @@ Furthermore, when $\bbeta = \gamma \balpha$,
 Alternatively, $\gamma$ can be thought of as one final degree of confidence, relative to the $\beta$'s, in the qualitative information overall.
 
 For these reasons, and also to simplify the math, we have chosen to use the asymmetric variant in \eqref{eqn:scoring-fn} that uses the parameter $\gamma \in [0,\infty]$ to control the strength of $\SDef$, rather than the symmetric trade-off parameter $\zogamma \in [0,1]$.
-}
 
 % $\OInc_{\dg M}(\mu)$ and $\SDef_{\dg M}(\mu)$ give us two measures
 % of compatibility between ${\dg M}$ and a distribution $\mu$.
@@ -1556,10 +1542,8 @@ It can be further shown that
 
 \begin{linked}{theorem}{limit-uniq}
     % For all $\dg M$
-    % \newmaterial{%
     % with $\bbeta \gg \balpha$
     %     (and, in particular, if $\bbeta > \mat 0$)
-    % }%
     For all proper PDGs (such as when $\bbeta > 0$),
     $\lim\limits_{\gamma\to0}\bbr{\dg M}_\gamma^*$ is a singleton.
 \end{linked}
@@ -1567,7 +1551,7 @@ Let $\bbr{{\dg M}}_{0^+}^*$ be the unique element of $\smash{\lim\limits_{\gamma
 	\rightarrow 0}} \bbr{{\dg M}}_\gamma^*$. 
 This limiting semantics intuitively represents the ``quantitative'' or ``observational'' extreme, in which the quantitative probabilities and their confidences $(\mathbb P, \bbeta)$ dominate, and the qualitative information $(\Ar, \balpha)$ is used only to break ties. 
 %
-\newmaterial{%
+\oldnewmaterial{%
 This makes the semantics $\bbr{ - }_{0^+}^*$ a direct analogue of (and, indeed, a generalization of) the principle of maximum entropy. 
 }%
 This semantics has an important property: 
@@ -1578,11 +1562,9 @@ This semantics has an important property:
 \end{linked}
 
 % Thus, all of our semantics are compatible 
-\newmaterial{%
 % In this sense, all of our semantics that focus on observation are compatible with one another.
 % Thus, all of our quantitatively focused semantics capture
 Thus, $\bbr{\dg M}_{0^+}^*$ is the unique distribution among those consistent with the cpds of a consistent PDG, that has minimal structural deficiency. 
-}%
 
 \subsection{Further Semantics: PDGs as Degrees of Inconsistency 
     \texorpdfstring{\\}{}and as Transformations on Distributions}
@@ -1614,7 +1596,7 @@ Thus, it interprets a PDG as a single number.  This quantity may at first seem l
 In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from a second perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function $\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$
 that updates distributions.
 %
-Both of these alternate semantics turn out to to be equivalent to the scoring function semantics developped in \cref{sec:scoring-funs}. 
+Both of these alternate semantics turn out to to be equivalent to the scoring function semantics developped in \cref{sec:scoring-semantics}. 
 
 \section{Relationships to Other Graphical Models}
     \label{sec:other-graphical-models} 
@@ -1623,11 +1605,12 @@ Both of these alternate semantics turn out to to be equivalent to the scoring fu
 In this section, we relate
 PDGs to two of the most popular graphical models: 
 BNs and factor graphs.
-PDGs are strictly more general than BNs, and can emulate factor graphs for a particular value of $\gamma$. 
+PDGs are strictly more general than BNs, and emulate factor graphs for the particular value $\gamma = 1$. 
 More precisely, the distribution specified by a BN $\dg B$
 is the unique one that minimizes both $\OInc_{\dg B}$ and $\SDef_{\dg B}$ (and hence every positive linear combination of the two), while the
 distribution specfied by a factor graph $\Phi$ uniquely minimizes the
-sum $\OInc_{\Phi} + \SDef_{\Phi}$.
+sum $\OInc_{\Phi} + \SDef_{\Phi}$
+in which the observational and structural information are weighted equally.
 Now for the details.
 
 \subsection{Bayesian Networks} 
@@ -1638,7 +1621,8 @@ Given a BN $\mathcal B$ and a positive confidence $\beta_X$ for
 the cpd of each variable $X$ of $\cal B$,
 let $\PDGof{\mathcal B, \beta}$
 be the PDG comprising the cpds of $\cal B$
-in this way; we defer the straightforward formal details to the appendix. 
+in this way.
+% ; we defer the straightforward formal details to the appendix. 
 
 	
 \begin{linked}{theorem}{bns-are-pdgs}
@@ -1652,8 +1636,75 @@ and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.
 \Cref{theorem:bns-are-pdgs} is quite robust to parameter choices: it holds for every
 weight vector $\beta$ and all $\gamma > 0$.
 However, it does lean heavily on our assumption that $\alpha = \mathbf 1$, intuitively because that is what encodes the BN's independencies. 
+
+\newmaterial{%
+An intuitive proof sketch explains why: a distribution $\mu$ minimizes $\OInc_{\cal B}$ iff it has the right cpds (no matter the value of $\bbeta$), and (as we show in the appendix) it minimizes $\SDef_{\cal B}$ iff it has the appropriate independencies. 
+We know that the BN's distribution $\Pr_{\cal B}$ is the unique distribution with both of these properties. So, no matter how the two quantities are weighted (i.e., for all $\gamma > 0$), it is the unique optimal distribution.
+}%
+
 % making it our only result that does not have a natural analog for general $\alpha$.
 
+\newmaterial{%
+\paragraph{BNs and Maximum Entropy?}
+One welcome side effect of this result is to shine light on an old question about the role of maximum entropy in directed graphical models.
+% As mentioned in \cref{sec:prelim-maxent}, 
+In \cref{sec:prelim-maxent}, we mentioned that BNs 
+are among the few standard ways of specifying probabilistic information that are not maximum-entropy distributions subject to the observational constraints (the specified cpds). 
+To get any result of the kind, prior work has resorted to building up the distribution ``in causal order'', applying the principle of maximum entropy many times \citep{williamson2001foundations}.
+% Why is this? 
+This makes some sense, but why should it be necessary?
+
+First, we note that maximum entropy does not always miss the mark:
+if the BN happens to have the structure of a Markov chain, or more generally be absent of joint dependence, then it is not hard to show that the maximum entropy distribution is in fact the correct one. 
+Here's a broader but more subtle class of BNs for which maximum entropy produces the right answer: 
+if for every node $X$ with multiple parents, the entropy of conditional probabiliy $\mathbb P_X(X \mid \Pa(X){=}\mat z) \in \Delta \V \! X$ does not depend on $\mat z$. 
+To see why this would help, it is helpful to see
+    an example of a BN whose distribution does not encode maximum entropy. 
+    % a case where it isn't true. 
+
+\begin{example}\label{ex:counterexample}
+	Consider the BN
+	% \begin{tikzcd}[cramped, sep=small]
+	% 	A \ar[r] & C & B \ar[l]
+ 	% \end{tikzcd}
+    \begin{center}
+    \begin{tikzpicture}
+        \node[bnnode] (A) at (-1.5,0){$A$};
+        \node[bnnode] (C) at (0,-0.5){$C$};
+        \node[bnnode] (B) at (1.5,0){$B$};
+        \draw[arr2] (A) to (C);
+        \draw[arr2] (B) to (C);
+    \end{tikzpicture}
+    \end{center}
+	where $A$ and $B$ are binary, and $C$ can take $2^k$ values, including $c_0$. 
+    As for the probability tables, suppose that both $A$ and $B$ get uniform unconditional probabilities ($\nf12$ apiece), and set $C$'s cpt to be
+	\[
+        \p_C(C \mid A,B) = 
+		\begin{idxmat}{{$a$, $b$},{$\lnot a$, $b$},{$a$, $\lnot b$},{$\lnot a$, $\lnot b$}}{$\Delta C$}
+			\mathit{Unif}(C) \\ \delta_{c_0}(C)\\ \delta_{c_0(C)} \\ \mathit{Unif}(C) \\
+		\end{idxmat}
+	\]
+	where $\delta_{c_0}$ places all probability on $c_0$.
+    It has zero entropy, while the uniform distribution on $C$ has $k$ bits of entropy, and $A$ and $B$ both have one bit of entropy. 
+	The semantics of a BN require that $A$ and $B$ are independent.
+    Thus, the BN's distribution has entropy $H(\mu_{\text{BN}}) = 2 + k/2$ (one for each of the independent bits, and an expected k/2 bits from getting the uniform distribution on $C$ half the time).
+    However, a distribution in which $A$ and $B$ are correlated so as to always be equal has $1 + k$ bits (one bit from $A$ and $B$, and $k$ bits from $C | A,B$). 
+    % The maximum entropy distribution becomes closer and c
+    For $k > 2$, the latter distribution has larger entropy.
+    % For large $k$, this is still not the maximum entropy distribution, but it is much higher entropy than the one the BN suggests.	
+	Therefore, the maximum entropy distribution consistent with the tables does not encode the independece assumption that a BN does. 
+\end{example}
+
+The key observation is that the cpds
+    (because they encode \emph{conditional} information), 
+can carry different amounts of entropy depending on the realized values of the variables. 
+But intuitively, the principle of maximum entropy was trying to maximize entropy \emph{beyond} the constraints---not within them. 
+Adjusting the principle of maximum entropy so as not to account for the entropy implied by the given cpds leads us directly back to the formula for $\SDef$; indeed, this is how we initially discovered it.
+%
+We argue that the princple of \emph{minimizing structural deficiency} ($\SDef$) subject to observational constraints (i.e., the $0^+$ semantics of a PDG) is the appropriate generalization of the principle of maximum entropy, when there is conditional (and especially causal) information involved. 
+%
+\Cref{theorem:bns-are-pdgs} is our first illustration of this. 
+}
 
 
 \subsection{Factor Graphs} 
@@ -1695,10 +1746,13 @@ How do PDG semantics as we have already defined them compare to this
 To answer this, we start by making the translation precise.
 
 \begin{defn}[unweighted PDG to factor graph]\label{def:PDG2fg}
-When $\dg N = (\Ar, \mathbb P)$ is an unweighted PDG with variables $\X$, 
+% When $\dg N = (\Ar, \mathbb P)$ is an unweighted PDG with variables $\X$, 
+Given an unweighted PDG $\mathbb P = \{ \p_a(\Tgt a|\Src a) \}_{a \in \Ar}$ 
+% over the variables $\X$,
 define the associated FG $\FGof{\dg N}$ as follows:
 take $\mathcal J := \Ar$, 
-and for each $\ed aZY$, let $X_{a} := \{Z,Y\}$, and $\phi_a(z,y) := \p_a^{\dg M}(y \mid z)$ 
+and for each $\ed aZY \in \mathcal J$, let $X_{a} := \{ Z,Y\}$
+with factor $\phi_a(z,y) := \p_a(y \mid z)$ 
 % (i.e., $(\p_a^{\dg M}(z))(y)$)
 \unskip.
 \end{defn}
@@ -1711,51 +1765,104 @@ probability distribution over the variables associated to each
 factor.  
 
 \begin{defn}[factor graph to unweighted PDG] \label{def:fg2PDG}
-For a FG $\Phi$, let $\UPDGof{\Phi}$ be
-the unweighted PDG consisting of
-\begin{itemize}[nosep]
-	\item the variables in $\Phi$ together
-   with $\pdgunit$ and a variable $X_{\!J} := \prod_{j \in J} X_j$ for every factor $J \in \mathcal J$%
-   , and
-   \item arcs ${\pdgunit} \!\!\to\! X_{\!J}$ for each $J$ and $X_{\!J} \!\!\tto\! X_j$ for each $X_j \in \mat X_J$,
-\end{itemize}
-where the arcs $ X_{\!J} \!\tto\! X_j$ are associated with the appropriate projections, and each ${\pdgunit} \!\to\! X_{\!J}$ is associated with the unconditional joint distribution on $X_J$ obtained by normalizing $\phi_J$. 
+For a FG $\Phi = \{ \phi_J : \mat X_J \to \mathbb R \}_{J \in \mathcal J}$ over variables $\X$, let $\UPDGof{\Phi}$ be
+% the unweighted PDG consisting of
+% \begin{itemize}[nosep]
+% 	\item the variables in $\Phi$ together
+%    with $\pdgunit$ and a variable $X_{\!J} := \prod_{j \in J} X_j$ for every factor $J \in \mathcal J$%
+%    , and
+%    \item arcs ${\pdgunit} \!\!\to\! X_{\!J}$ for each $J$ and $X_{\!J} \!\!\tto\! X_j$ for each $X_j \in \mat X_J$,
+% \end{itemize}
+% where the arcs $ X_{\!J} \!\tto\! X_j$ are associated with the appropriate projections, and each ${\pdgunit} \!\to\! X_{\!J}$ is associated with the unconditional joint distribution on $X_J$ obtained by normalizing $\phi_J$. 
+the unweighted PDG over the same variables $\X$,
+with hypergraph $\Ar = \{ \varnothing \to \mat X_J \}_{J \in \mathcal J} $,
+such that each arc $J$ is associated with the renormalized distribution $\p_J(\mat X_J) :\propto \phi_J(\mat X_J) ~=~ \phi_J(\mat X_J) / \sum_{{\mat x \in \mat X_J}} \phi_J(\mat x)$.
 The process is illustrated in \cref{fig:fg2PDG}.
 \end{defn}
 
-
-
 \begin{figure*}[htb]
 	\centering
-	\hfill
-	\ifprecompiledfigs
-\raisebox{-0.5\height}{\includegraphics{figure-pdfs/smoking-FG.pdf}}
-	\else
-	\begin{tikzpicture}[center base, xscale=1.4,
-		fgnode/.append style={minimum width=2.7em, inner sep=0.3em}]
+	\begin{tikzpicture}[center base, xscale=1.4, yscale=1.2,
+		fgnode/.append style={minimum width=2.4em, inner sep=0.2em}]
 		\node[factor] (prior) at (1.65,-1) {};
-		\node[factor] (center) at (3.75, 0.1){};
-		
+		\node[factor] (center) at (3.85, 0.5){};
+
 		\node[fgnode] (PS) at (1.65,0.5) {$\mathit{PS}$};
-		\node[fgnode] (S) at (3.1, 0.8) {$S$};
+		\node[fgnode] (S) at (3.1, 0.8) {$\mathit S$};
 		\node[fgnode] (SH) at (3.0, -0.8) {$\mathit{SH}$};
-		\node[fgnode] (C) at (4.8,0.5) {$C$};
-		
+		\node[fgnode] (C) at (4.8,0.5) {$\mathit C$};
+
 		\draw[thick] (prior) -- (PS);
 		\draw[thick] (PS) --node[factor](pss){} (S);
 		\draw[thick] (PS) --node[factor](pssh){} (SH);
 		\draw[thick] (S) -- (center) (center) -- (SH) (C) -- (center);
 
-		
-		\node[fgnode] (T) at (4.8, -1.3) {$T$};
-		\draw[thick] (T) -- node[factor]{}  (C);	
-	\end{tikzpicture}
-	\fi
-	\hfill\vrule\hfill
+
+		\node[fgnode] (T) at (4.8, -1.3) {$\mathit T$};
+		\draw[thick] (T) -- node[factor]{}  (C);
+		\end{tikzpicture}
+	~{\Huge$~\boldsymbol\rightsquigarrow~$}~
+	\begin{tikzpicture}[center base, xscale=1.5]
+		\coordinate (prior) at (1.65,-1) ;
+		\coordinate (center) at (4.1, 0.5);
+
+		\node[dpadded] (PS) at (1.65,0.5) {$\mathit{PS}$};
+		\node[dpadded] (S) at (3.3, 0.8) {$\mathit S$};
+		\node[dpadded] (SH) at (3.3, -0.6) {$\mathit{SH}$};
+		\node[dpadded] (C) at (4.9,0.5) {$\mathit C$};
+
+		\node[inner sep=1em, circle] (1) at (2.7,-1.8) {};
+
+		% \coordinate (pss) at (barycentric cs:PS=1,S=1.2);
+		% \coordinate (pssh) at (barycentric cs:PS=1.2,SH=1);
+		% \coordinate (tc) at (barycentric cs:T=1.2,C=1);
+        \coordinate (pss-origin) at (2.5,1.35);
+		\coordinate (pssh-origin) at (2.35,-0.6);
+		\coordinate (tc-origin) at (4.7, -0.65);
+
+		\draw[arr2, <-] (PS) to +(0,-1.5);
+		% \draw[arr,shorten <=0pt] (pss) to[out=95, in=20] (PS);
+		% \draw[arr,shorten <=0pt] (pss) to[out=95, in=180] (S);
+        \unmergearr[arr1]{pss-origin}{PS}{S}
+
+		% \draw[arr,shorten <=0pt] (pssh) to[out=85, in=-20] (PS);
+		% \draw[arr,shorten <=0pt] (pssh) to[out=85, in=150] (SH);
+        \unmergearr[arr1]{pssh-origin}{PS}{SH}
+
+		% \draw[blue!50,arr, <->] (PS) -- (S);
+		% \draw[blue!50,arr, <->] (PS) --coordinate(pssh) (SH);
+		\draw[arr2, <-, shorten >=0pt] (S) to[out=-20, in=-110] (center);
+		\draw[arr2, <-, shorten >=0pt, shorten <=0pt] (SH) to[out=45, in=-110] (center);
+		\draw[arr2, <-, shorten >=0pt] (C) to[out=180, in=-110] (center);
+
+
+		% \draw[blue!50, thick, shorten <=3pt] (1) -- (prior);
+		\draw[thick, shorten >=3pt] (center) to[out=70] +(0.1,0.4);
+		% \draw[thick, shorten <=3pt] (1) to[bend right = 5] (pss);
+		% \draw[thick, shorten <=3pt] (1) to[bend left = 10] (pssh);
+
+
+		\node[dpadded] (T) at (5.1, -1.5) {$T$};
+		% \draw[arr, shorten <=0pt] (tc) to[out=40,in=-110]  (C);
+		% \draw[arr, shorten <=0pt] (tc) to[out=30,in=115]  (T);
+		% \draw[ thick, shorten <=3pt] (1.east) to[bend right = 15] (tc);
+        \unmergearr[arr2]{tc-origin}{T}{C}
+		\end{tikzpicture}
+    \caption[Illustration of how a factor graph is converted to a PDG]{
+        Conversion of the PDG in \cref{ex:smoking} to a factor graph
+        according to \cref{def:PDG2fg} (left), and from that factor graph back
+        to a PDG by \cref{def:fg2PDG} (right). 
+        The factors are associated with
+        the unconditional distribution obtained by normalizing the appropriate factor.
+    } 
+	\label{fig:fg2PDG}
+\end{figure*}
+\begin{figure*}[htb]
+	\centering
 	\ifprecompiledfigs
 \raisebox{-0.5\height}{\includegraphics{figure-pdfs/smoking-convert.pdf}}
 	\else
-	\begin{tikzpicture}[center base, xscale=1.6,
+	\begin{tikzpicture}[center base, xscale=1.7, yscale=1.2,
         newnode/.style={rectangle, inner sep=5pt, fill=gray!30, rounded corners=3, thick,draw}]
 		\node[newnode] (prior) at (1.65,-1) {};
 		\node[newnode] (center) at (4.1, 0.25){};
@@ -1765,12 +1872,12 @@ The process is illustrated in \cref{fig:fg2PDG}.
 		\node[dpadded] (SH) at (3.3, -0.6) {$\mathit{SH}$};
 		\node[dpadded] (C) at (4.9,0.5) {$C$};
 		
-		\draw[arr, ->>, shorten <=0pt] (prior) -- (PS);
-		\draw[arr, <<->>] (PS) --node[newnode](pss){} (S);
-		\draw[arr, <<->>] (PS) --node[newnode](pssh){} (SH);
-		\draw[arr, <<-, shorten >=0pt] (S) -- (center); 
-		\draw[arr, <<-, shorten >=0pt] (SH)-- (center); 
-		\draw[arr, <<-, shorten >=0pt] (C) -- (center);
+		\draw[arr1, ->>, shorten <=0pt] (prior) -- (PS);
+		\draw[arr1, <<->>] (PS) --node[newnode](pss){} (S);
+		\draw[arr1, <<->>] (PS) --node[newnode](pssh){} (SH);
+		\draw[arr1, <<-, shorten >=0pt] (S) -- (center); 
+		\draw[arr1, <<-, shorten >=0pt] (SH)-- (center); 
+		\draw[arr1, <<-, shorten >=0pt] (C) -- (center);
 		
 		\node[dpadded, fill=blue] (1) at (2.7,-1.8) {$\pdgunit$};
 		
@@ -1781,30 +1888,30 @@ The process is illustrated in \cref{fig:fg2PDG}.
 
 		
 		\node[dpadded] (T) at (4.8, -1.7) {$T$};
-		\draw[arr, <<->>] (T) -- node[newnode](tc){}  (C);	
+		\draw[arr1, <<->>] (T) -- node[newnode](tc){}  (C);	
 
 		\draw[blue!50, arr] (1) to[bend right = 10] (tc);
 	\end{tikzpicture}
 	\fi
-	\hfill~
 	\caption[Illustration of how a factor graph is converted to a PDG]{
-Conversion of the PDG in \cref{ex:smoking} to a factor graph
-according to \cref{def:PDG2fg} (left), and from that factor graph back
-to a PDG by \cref{def:fg2PDG} (right). 
-In the latter, for each $J$ we introduce a new variable $X_J$ (displayed as a
-smaller darker rectangle), whose values are joint settings of the
-variables connected it, and also an arc $1 \to X_J$ 
-(shown in blue),
-to which we associate the unconditional 
-distribution given by normalizing $\phi_J$.
+The conversion from a factor graph to 
+to a \emph{strict} PDG, as done in the original paper \citep{pdg-aaai}
+In this case, for each factor $\phi_J$ we introduce a new variable
+    $X_J$ (displayed as a smaller darker rectangle), whose values are joint settings of the
+variables connected it, and also an arc $1 \to X_J$ (shown in blue),
+to which we associate the unconditional distribution given by normalizing $\phi_J$.
 } 
-	\label{fig:fg2PDG}
+	\label{fig:fg2PDG-strict}
 \end{figure*}
 
 
 PDGs are directed graphs, while factors graphs are undirected. The
-map from PDGs to factor graphs thus loses some important structure.
-As shown in \Cref{fig:fg2PDG}, this mapping can change the graphical structure significantly.
+map from PDGs to factor graphs thus loses this structure, 
+\newmaterial{%
+as shown in \cref{fig:fg2PDG}.
+The resulting PDG is also typically inconsistent.
+The structural changes are even more significant if we convert it to a \emph{strict} PDG that does not have hyperedges, as done in the original paper \citep{pdg-aaai} and illustrated in \cref{fig:fg2PDG-strict}. 
+}%
 Nevertheless, when $\gamma = 1$, so that the quantitative and qualitative terms are weighted equally, the semantics coincide. 
 
 
@@ -1881,27 +1988,29 @@ Indeed, this is an alternate and in principle equally expressive
 appraoch to modeling with factor graphs: instead of choosing the factors $\Phi$
 based on data and assuming weight $\mat 1$ on all factors,
 it is possible to instead choose $\Phi$ beforehand to be a suitibly expressive basis, 
-and then use data to inform the choice of \emph{weights} $\boldsymbol\theta$. 
+and then use data to inform the choice of \emph{weights} $\theta$. 
 
-PDGs can in fact capture the full exponential family of a factor graph, but only
-by allowing values of $\alpha$ other than ${\bf 1}$. In this case, the
-only definition  
-that requires alteration is $\SDef$, which now depends on the \emph{weighted multigraph}
-$(\Ar^{\dg M}, \alpha^{\dg M})$, and is given by
-\begin{equation}
-	\SDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_a \H_\mu(Y\mid X) - \H(\mu). 
-	\label{eqn:alt-extra2}
-\end{equation}
-Thus, the conditional entropy $\H_\mu(Y\mid X)$ associated with the
-arc $\ed aXY$ is multiplied by the weight $\alpha_a$ of that arc.
 
-One important use case for $\alpha$ is 
-    it enables us to capture arbitrary weighted factor graphs
+PDGs can capture the full exponential family of a factor graph, 
+    % but only by allowing values of $\alpha$ other than ${\mat 1}$. 
+    but it requires value of $\balpha$ other than $\mat 1$. 
+\commentout{%
+    In this case, the
+    only definition  
+    that requires alteration is $\SDef$, which now depends on the \emph{weighted multigraph}
+    $(\Ar^{\dg M}, \alpha^{\dg M})$, and is given by
+    \begin{equation}
+    	\SDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_a \H_\mu(Y\mid X) - \H(\mu). 
+    	\label{eqn:alt-extra2}
+    \end{equation}
+    Thus, the conditional entropy $\H_\mu(Y\mid X)$ associated with the
+    arc $\ed aXY$ is multiplied by the weight $\alpha_a$ of that arc.
+}%
+% One important use case for $\alpha$ is 
+%     it enables us to capture arbitrary weighted factor graphs
 % not just ones with a constant weight vector.
-All we have to do is to ensure that in our translation from
-factor graphs to PDGs, the ratio $\alpha_a/\beta_a$ is a
-constant.  (Of course, if we allow arbitrary weights, we cannot hope
-to do this if $\balpha = \mat 1$.)  
+It turns out that the key is to ensure that the ratio $\alpha_a/\beta_a$ is constant across arcs $a$.  
+% (Of course, if we allow arbitrary weights, we cannot hope to do this with $\balpha = \mat 1$.) 
 We therefore define a family of translations, parameterized by the
 ratio of $\alpha_a$ to $\beta_a$.
 \begin{defn}[WFG to PDG]\label{def:wfg2pdg}
@@ -1910,8 +2019,8 @@ $\Psi=(\Phi, \theta)$,
 and postive number $k$, 
 we define the corresponding PDG $\PDGof{\Psi,k} = (\UPDGof{\Phi},\alpha_{\theta}, \beta_{\theta})$ 
 by taking $\beta_J = k \theta_J$ and $\alpha_J = \theta_J$ for the arc
- $\pdgunit  \rightarrow X_J$, and
-taking $\beta_a = k$ and $\alpha_a = 1$ for the projections $X_J \!\tto\! X_j$.
+ $\pdgunit  \rightarrow X_J$.
+% and taking $\beta_a = k$ and $\alpha_a = 1$ for the projections $X_J \!\tto\! X_j$.
 \end{defn}
 
 We now extend Definitions~\ref{def:PDG2fg} and \ref{def:fg2PDG} to
@@ -1949,60 +2058,102 @@ In particular, for $k\!=\!1$, so that $\theta$ is used for both the functions
 $\alpha$ and $\beta$ of the resulting PDG,
 \cref{theorem:wfg-is-pdg} strictly generalizes \cref{theorem:fg-is-pdg}.
 \begin{coro}
-	For all weighted factor graphs $(\Phi, \theta)$,
+	For all WFGs $(\Phi, \theta)$,
 	we have that
-	$\Pr_{(\Phi,\theta)} = \bbr{(\UPDGof{\Phi}, \theta,\theta)}_1^*$
+	$\Pr_{(\Phi,\theta)} = \bbr{(\UPDGof{\Phi}, \theta,\theta)}_1^*$.
 \end{coro}
 
 Conversely, as long as the ratio of $\alpha_a$ to $\beta_a$ is constant, the
 reverse translation also preserves semantics.
+\newmaterial{%
+Recall that $(\mathbb P, \balpha, \bbeta)$ is the PDG obtained by augmenting the unweighted PDG $\mathbb P$ with weights over every arc. 
+}
+
 \begin{linked}{theorem}{pdg-is-wfg}
-For all unweighted PDGs $\dg{N}$ and non-negative vectors $\mat v$
-over $\Ar^{\dg N}$, and all $\gamma > 0$, we have that 
-$\bbr{(\dg N, \mat v, \gamma \mat v)}_{\gamma}
-= \gamma\,\VFE_{(\Phi_{\dg N}, \mat v)} $; consequently,
-$\bbr{(\dg N,  \mat v,  \gamma\mat v)}_{\gamma}^*
-		= \{\Pr_{(\Phi_{\dg N}, \mat v)} \}$. 
+% For all unweighted PDGs $\dg{N}$ and non-negative vectors $\mat v$
+% over $\Ar^{\dg N}$, and all $\gamma > 0$, we have that 
+% $\bbr{(\dg N, \mat v, \gamma \mat v)}_{\gamma}
+% = \gamma\,\VFE_{(\Phi_{\dg N}, \mat v)} $; consequently,
+% $\bbr{(\dg N,  \mat v,  \gamma\mat v)}_{\gamma}^*
+% 		= \{\Pr_{(\Phi_{\dg N}, \mat v)} \}$. 
+For all unweighted PDGs $(\Ar, \mathbb P)$, non-negative vectors $\mat v$
+of shape $\Ar$, and all $\gamma > 0$, we have that 
+$\bbr{(\mathbb P, \mat v, \gamma \mat v)}_{\gamma}
+= \gamma\cdot\VFE_{(\Phi_{\mathbb P}, \mat v)} $; consequently,
+$\bbr{(\mathbb P,  \mat v,  \gamma\mat v)}_{\gamma}^*
+		= \{\Pr_{(\Phi_{\mathbb P}, \mat v)} \}$. 
+\newmaterial{%
+In other words, if $\dg M$ is a PDG with $\bbeta \propto \balpha$,
+and $\gamma$ is the constant of proportionality,
+then $\bbr{ \dg M }^*_\gamma$ is a singleton containing the distribuion of the factor graph $\Phi_{\mathbb P}$ weighted by $\balpha$.  
+}
 \end{linked}
 
 
 
 
-
-
-
+\newmaterial{%
+In particular, when $\balpha = \bbeta$, then $\bbr{\dg M}_1$ is the semantics of the factor graph that regards the cpds $\mathbb P$ as factors with these weights. 
+}%
 The key step in proving \Cref{theorem:wfg-is-pdg,theorem:pdg-is-wfg}
 (and in the proofs of a number of other results) involves 
 rewriting  
-the scoring function $\bbr{\dg M}_\gamma$ in the following way.
+the scoring function 
+% $\bbr{\dg M}_\gamma$ in the following way.
+as follows.
 
 \begin{linked}{prop}{nice-score}%
- Letting $x^{\mat w}$ and $y^{\mat w}$ denote the values of
-  $X$ and $Y$, respectively, in
-  % $\mat w \in \V\!\X$, 
-  the joint setting $\mat w \in \V\!\X$, 
-we have 
+    % \def\xinw{x^{\mat w}}
+    % \def\yinw{y^{\mat w}}
+    % \def\xinw{X(\omega)}
+    % \def\yinw{Y(\omega)}
+    \def\xinw{X}
+    \def\yinw{Y}
+% Letting $\xinw$ and $\yinw$ denote the values of
+% $X$ and $Y$, respectively, in
+% % $\mat w \in \V\!\X$, 
+% a joint setting $\omega \in \V\!\X$, we have 
+For all PDGs $\dg M$, 
+$\bbr{\dg M}_\gamma(\mu) = $
 \begin{equation}\label{eq:semantics-breakdown}
-\begin{split}
-\bbr{\dg M}_\gamma(\mu) =  \Ex_{\mat w \sim \mu}\!
-% \Bigg\{
-\Bigg[
- \sum_{ X \xrightarrow{\!\!a} Y  }
-\bigg[\,
-    \color{gray}
-    \underbrace{\color{black}
-      \!\beta_a \log \frac{1}{\p_a(y^{\mat w} |x^{\mat w})}
-	}_{\color{gray}\smash{\mathclap{\text{log likelihood / cross entropy}}}} +
-    % \onlyfirsttime{ \qquad\\[-0.7em] }
-    {\color{gray}\underbrace{\color{black} 
-({\alpha_a}\gamma - \beta_a ) \log \frac{1}{\mu(y^{\mat w} |x^{\mat w})} 
-	}_{\color{gray}\smash{\mathclap{\text{local regularization (if $\beta_a > 
-	\alpha_a
-	\gamma$)}}}}}\bigg] - \underbrace{\color{black}
-\gamma \log \frac{1}{\mu(\mat w)}
-	}_{\color{gray}\smash{\mathclap{\text{global
-        regularization}}}}\color{black} \Bigg].
-\end{split}
+% \begin{split}
+% \bbr{\dg M}_\gamma(\mu) =  
+    % \Ex_{\omega \sim \mu}\!
+    % \Bigg[
+    %  \sum_{ X \xrightarrow{\!\!a} Y  }
+    % \bigg[\,
+    %     \color{gray}
+    %     \underbrace{\color{black}
+    %       \!\beta_a \log \frac{1}{\p_a(\yinw | \xinw)}
+    % 	}_{\color{gray}\smash{\mathclap{\text{log likelihood / cross entropy}}}} +
+    %     % \onlyfirsttime{ \qquad\\[-0.7em] }
+    %     {\color{gray}\underbrace{\color{black} 
+    % ({\alpha_a}\gamma - \beta_a ) \log \frac{1}{\mu(\yinw |\xinw)} 
+    % 	}_{\color{gray}\smash{\mathclap{\text{local regularization (if $\beta_a > 
+    % 	\alpha_a
+    % 	\gamma$)}}}}}\bigg] - \underbrace{\color{black}
+    % \gamma \log \frac{1}{\mu(\omega)}
+    % 	}_{\color{gray}\smash{\mathclap{\text{global
+    %         regularization}}}}\color{black} \Bigg].
+    \Ex_{\mu}
+    \Bigg[
+     \sum_{ \ed aXY \in \Ar }
+     \!
+    \bigg(
+        {\color{gray}
+        \underbrace{\color{black}
+          \beta_a \log \frac{1}{\p_a(\yinw | \xinw)}
+    	}_{\color{gray}\smash{\mathclap{\text{log likelihood / cross entropy}}}}} \,+\,
+        % \onlyfirsttime{ \qquad\\[-0.7em] }
+        {\color{gray}\underbrace{\color{black} 
+    ({\alpha_a}\gamma - \beta_a ) \log \frac{1}{\mu(\yinw |\xinw)} 
+    	}_{\color{gray}\smash{\mathclap{\text{local regularization (if $\beta_a > 
+    	\alpha_a
+    	\gamma$)}}}}}\,\bigg) - \underbrace{\color{black}
+    \gamma \log \frac{1}{\mu(\X)}
+    	}_{\color{gray}\smash{\mathclap{\text{global
+            regularization}}}}\color{black} \Bigg].
+% \end{split}
 \end{equation}
 \end{linked}
 For a fixed $\gamma$, the first and last terms
@@ -2028,21 +2179,30 @@ PDGs, as the following example shows.
 
 \begin{example}\label{ex:overdet}
 Consider the PDG $\dg M$ containing just one variable
-    $X$, and two arcs
-(Recall that such a PDG can arise if we get different information about the probability of $X$ from two different sources; this is a situation we certainly want to be able to capture!)
+    $X$, and two arcs.
+(Such a PDG can arise if we get different information about the probability of $X$ from two different sources; this is a situation we certainly want to be able to capture!)
 % Consider the simplest situation,
 Suppose further that $p$ and $q$ are both associated with the same distribution on $X$.
 % ; further suppose that the agent is certain about the distribution, so
 % $\beta_p = \beta_q = 1$.
 For definiteness, suppose that
-$\V(X) = \{x_1,x_2\}$, and
+$\V\!X = \{x_1,x_2\}$, and
 that the distribution associated with both arcs is $\mu_{.7}$, which ascribes
 probability $.7$ to $x_1$. Then, as we would hope  $\bbr{\dg M}^*_{0^+} =
 \{\mu_{.7}\}$; after all, both sources agree on the information.
 However, it can be shown that 
 $\Pr_{\WFGof{\dg M}} = \mu_{.85}$, so  $\bbr{\dg M}_1^* = \{\mu_{.85}\}$.
+In this way, factor graphs seem to be \emph{uncalibrated}. 
 
-
+\newmaterial{%%
+The reason for this can be viewed as an instance of the caveat in combining qualitative information, mentioned in \cref{sec:pdg-combine}.
+% By default, we took all weights 
+Our default assumption that $\alpha = 1$ makes sense for each individual arc, but having two independent randomized mechanisms by which $X$ is determined intuitively means $X$ ought to be a constant (a point we will expand on in \cref{sec:qim}).
+Arguably, this is not what was intended in combining the two models.
+By taking the $0^+$ semantics, the problem with the qualitative information disappears. 
+Alternatively, we could have merged the qualitative picture so that there is a total of $\alpha_p + \alpha_q = 1$ between the two arcs.
+In that case, we would have had no conflict between the two types of information, and indeed $\bbr{\dg M'}_\gamma^* = \{ \mu_{.7} \}$ for all values of $\gamma \ge 0$.
+}%
 \end{example}
 
 
@@ -2549,17 +2709,20 @@ In this section, we prove Theorem~\ref{theorem:bns-are-pdgs},
 % Doing so allows us to avoid cumbersome and ultimately irrelevant notation which treats sets of raomd variables differently, and requires lots of unnecessary braces, bold face, and uniqueness issues. 
 % Note the notational convention that the joint variable $X,Y$ may be indicated by a comma.
 %
-starting with the formal details of
-the transformation of a BN into a PDG.
+    starting with the detals of how to transform a BN into a PDG.
+%
+The transformation to a PDG with a directed hypergraph structure is immediate.
+Here, we give the formal details of how to compile it to a strict PDG, with only ordinary directed edges. 
 
-\begin{defn}[BN to PDG]\label{def:bn2PDG}
-Recall that a (quantitative) Bayesian Network $(G, f)$ consists of two
+\begin{defn}[BN to strict PDG]\label{def:bn2PDG}
+Recall that a (quantitative) Bayesian Network $(G, \mat P)$ consists of two
 parts: its qualitative graphical structure $G$, 
 described by a dag,
-and its quantitative data $f$, an assignment of 
-a cpd $p_i(X_i \mid \Pa(X_i))$ to each variable $X_i$.
-If $\cal B$ is a Bayesian network on random variables
-$X_1, \ldots, X_n$, we construct the corresponding PDG
+and quantitative data $\mat P$ which consists of 
+a cpd $P_i(X_i \mid \Pa(X_i))$ for each variable $X_i$.
+Given a Bayesian network $\cal B$ over variables
+$X_1, \ldots, X_n$, we construct the corresponding \emph{strict} unweighted PDG
+%
 $\PDGof{{\mathcal B}}$
 			as follows: we take $\N := \{X_1, \ldots, X_n \} \cup
 			\{ \Pa(X_1), \ldots, \Pa(X_n)\}$.  
@@ -2567,43 +2730,59 @@ That is, the variables of
 	  $\PDGof{{\mathcal B}}$
 consist of all the variables in
 ${\cal B}$ together with a variable corresponding to the parents
-of $X_i$%
-.  (This will be used to deal with the hyperarcs.) 
-			The values $\V(X_i)$ for a random variable
+of $X_i$.
+These additional variables are used to emulate the hyperarcs.  
+The values $\V\!X_i$ for the original variables
 			$X_i$ are unchanged, 
-(i.e., $\V^{\PDGof{{\mathcal B}}}(\{X_i\}) := \V(X_i)$)
-and $\V^{\PDGof{{\mathcal B}}}(\Pa(X_i)) := \prod_{Y \in \Pa(X_i)} \V(Y)$
-(if $\Pa(X_i) = \emptyset$, so that $X_i$ has no parents, then we 
+% (i.e., $\V^{\PDGof{{\mathcal B}}}(\{X_i\}) := \V\! X_i$)
+and we set $\V(\Pa(X_i)) := \prod_{Y \in \Pa(X_i)} \V(Y)$.
+(If $\Pa(X_i) = \varnothing$, so that $X_i$ has no parents, then we 
 then we identify $\Pa(X_i)$ with $\pdgunit$ and
-take $\V(\Pa(X_i)) = \{\star\}$). 
-We take the set of arcs $\Ar^{\PDGof{{\mathcal B}}} := \{ (\Pa(X_i), X_i) : 
-i = 1, \ldots, n \} \cup \{ (\Pa_i, Y) : Y \in
+take $\V(\Pa(X_i)) = \{\star\}$, as discussed in \cref{ssec:basic-vars}.).
+
+We take the set of arcs $\Ar := \{ (\Pa(X_i){\to} X_i) : 
+i = 1, \ldots, n \} \cup \{ (\Pa(X_i){\to}Y) : Y \in
 			\Pa(X_i)\}$ to be the set of arcs to a variable $X_i$
 	  from its parents, together with an arc from
 	  from $\Pa(X_i)$ to each of the elements of $\Pa(X_i)$, for
 	  $i = 1, \ldots, n$.  
-	Finally, we set $\mathbb P^{\PDGof{{\mathcal
-				B}}}_{(\Pa(X_i), X_i)}$ to be the cpd associated
-			with $X_i$ in $\cal B$, and for each node $X_j \in \Pa(X_i)$,
-			we define
-	\[ \mathbb P^{\PDGof{\mathcal B}}_{(\Pa(X_i),
-			  X_j)}(\ldots, x_j, \ldots) = \delta_{x_j};\]
+For the cpds, we set $\p_{(\Pa(X_i){\to}X_i)}$ to be the cpd associated
+			with $X_i$ in $\cal B$.
+Finally, we give the standard projection
+    $X_j \in \Pa(X_i)$ defined in \cref{constr:hyperedge-reducton}
+    to the remaining arcs.
+So, if $X_j \in \Pa(X_i)$, we set
+\[ \p_{(\Pa(X_i){\to}X_j)}(\ldots, x_j, \ldots) = \delta_{x_j};\]
 that is,
-$\mathbb P_{(\Pa(X_i), X_j)}^{\PDGof{\mathcal B, \beta}}$ is the the cpd 
+$\mathbb P_{(\Pa(X_i), X_j)}^{\PDGof{\mathcal B}}$ is the the cpd 
 on $X_j$ that, given a setting $(\ldots, x_j, \ldots)$ of $\Pa(X_i)$, yields the distribution that puts all mass on $x_j$. 
 \end{defn}
 
+\newmaterial{%
+Consider a BN $\mathcal B$  with variables $\X X = \{X_1,\ldots, X_n\}$, and let $\bbeta > 0$ be a positive vector over $\X$.
+% Let $\mathcal X$ be the variables of some BN $\mathcal B$, and
+Let $(\N, \V, \Ar, \mathbb P) := \PDGof{\mathcal B}$ 
+be the corresponding strict (unweighted) PDG.
+$\N$ contains $\X$, but also contains variables of the form $\Pa(X_i)$,
+    so it is a strict superset.
+However, there is a unique way to determine all of these other variables from $\X$, in a way that is compatible with the extra structural cpds in $\PDGof{\cal B}$.
+Specifically, given a joint setting $\omega \in \V\!\X$, the variable $\Pa(X_i)$ must take on the restriction $\omega[\Pa(X_i)]$ of $\omega$ to those variables. Let $f: \V\X \to \V\N$ denote this function.
+Thus, it makes sense to identify distributions
+    $\mu \in \Delta \V\N$ of the form $\mu(\X) \delta\!f(\N \mid \X)$,
+    and their marginals $\mu(\X) \in \Delta \V\X$.
+It is easy to see that any extended distribution $\nu(\N)$ that is not of this form will have infinite score, and so will not be relevant for the scoring function.
+}%
 
-
-Let $\mathcal X$ be the variables of some BN $\mathcal B$, and
-$\mathcal M = (\N, \Ar, \mathbb P, \balpha, \bbeta)$ 
-be the PDG $\PDGof{\mathcal B}$.
-Because the set  $\mathcal N$ of variables in $\PDGof{{\mathcal
-    B},\beta}$ includes  
-variables of the form $\Pa(X_i)$, it is a strict superset of
-$\mathcal X = \{X_1,\ldots, X_n\}$, the set of variables of $\mathcal B$.
-For the purposes of this theorem, we identify a distribution
-$\mu_{\mathcal X}$ over $\mathcal X$ 
+\commentout{%
+Because the set $\N$ of variables in $\PDGof{{\mathcal
+    B},\beta}$ includes 
+    variables of the form $\Pa(X_i)$, it is a strict superset of
+    $\mathcal X = \{X_1,\ldots, X_n\}$, the set of variables of $\mathcal B$.
+% For the purposes of this theorem,
+As usual, 
+there is a unique distribution 
+we identify a distribution
+$\mu \in \Delta \V\!\X$ 
 with the unique distribution $\Pr_{\cal B}$ whose marginal on the
 variables in $\mathcal X$ is $\mu_{\mathcal X}$ such that if $X_j \in
 \Pa(X_i)$, then 
@@ -2611,6 +2790,7 @@ $\mu_{\mathcal N}(X_j = x_j' \mid \Pa(X_i) = (\ldots, x_j,\ldots)) =
 1$ iff $x_j = x_j'$.  In the argument below, we abuse notation,
 dropping the the subscripts $\mathcal X$ and $\mathcal N$ on a
 distribution $\mu$.
+}%
 
 % \restate{theorem:bns-are-pdgs}{
 % If $\cal B$ is a Bayesian network

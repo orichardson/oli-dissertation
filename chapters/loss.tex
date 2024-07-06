@@ -267,7 +267,7 @@ What if we replace $x$ with an empirical distribution over many samples?
 	% ~~~$\mathrm{CrossEntropy}(\datadist\xsamp, p) = $
 	% \vskip-4ex
 	\[
-        \mathrm{CrossEntropy}(\datadist\xsamp, p) :=
+        \XEnt(\datadist\xsamp, p) :=
         \frac{1}{m} \sum_{i=1}^m \I_p[X\!\!=\!x_i]
 		=
         \aar[\Big] {
@@ -294,7 +294,7 @@ What if we replace $x$ with an empirical distribution over many samples?
 
 Essentially the only choices we've made in specifying the PDG of \cref{prop:expected-surprise} are the confidences.
 But
-$\mathrm{CrossEntropy}(\datadist\xsamp,p)$
+$\XEnt(\datadist\xsamp,p)$
 is the expected code length per sample
 from $\datadist\xsamp$, when using codes optimized for the (incorrect) distribution $p$.
 So implicitly, a modeler using cross-entropy has already articulated a belief the data distribution $\datadist\xsamp$ is the ``true one''.
@@ -1586,7 +1586,9 @@ may be of particular interest to the AI alignment community.
 \begin{subappendices}
 
 \section{Notes}
-\subsection{The Fine Print for Probability Densities}
+% \subsection{The Fine Print for Probability Densities}
+% \subsection{The Fine Print for Probability Densities}
+\paragraph{The Fine Print for Probability Densities.}
 \label{appendix:density}
 % \textbf{Densities and Masses.} Many of our results (%
 Several of our results (%
@@ -1617,6 +1619,9 @@ But such constants are irrelevant for optimization, and so, even though such qua
 The bottom line is that all our results hold in a uniform way for every discretization size --- yet in the limit as the discretization becomes smaller, an inconsistency may diverge to infinity.
 However, this divergence stems from an additive constant that depends only on the discretization size, which is irrelevant to its employment as a loss function.
 As a result, using one of these ``unbalanced'' functions involving densities where the units do not work out properly, results in a morally equivalent loss function, except without a diverging constant.
+\newmaterial{%
+This is a direct analogue of our discussion of entropy for continuous variables (\cref{sec:prelim-gen-ent}). 
+}%
 
 \commentout{%
 \textbf{Markov Kernels.} In the more general setting of measurable spaces, one may want to adjust the definition of a cpd that we gave, so that one instead works with \emph{Markov Kernels}.
@@ -1625,7 +1630,8 @@ This too mostly does not bear on the present discussion, because the $\sigma$-al
 This means that the infimum defining the inconsistency of a PDG does not change.
 }%s
 
-\subsection{Maximum A Posteriori (MAP) updating, Priors, and Regularization}
+% \subsection{Maximum A Posteriori (MAP) updating, Priors, and Regularization}
+\paragraph{Maximum A Posteriori (MAP) updating, Priors, and Regularization.}
     \label{appendix:MAP-and-priors}
 
 The usual telling of the correspondence between regularizers and priors is something like the following.

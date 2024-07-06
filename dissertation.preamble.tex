@@ -39,16 +39,16 @@
 \newcommand{\notation}[1]{{\color{red}#1}~~} % enable notation
 \newcommand{\vfull}[1]{{\color{orange}#1}} % previously cut "full-version"; highlight
 \newcommand\fadeout[1]{{\color{gray!50}\small#1}}
-\newcommand\vjoe[1]{{\color{red!80!black}#1}}
-\newcommand\voli[1]{{\color{orange!80!black}#1}}
 \newcommand\commentout[1]{}
 \newcommand\temphide[1]{{\color{gray!80}$\blacksquare$}}
 \newcommand\discard[1]{{\color{orange!80!black}$\blacksquare$}}
 \newcommand{\TODO}[1][INCOMPLETE]{{\centering\Large\color{red}$\langle$~\texttt{#1}~$\rangle$\par}}
 \newcommand\hidewithbox[1]{{\color{red}$\blacksquare$}}
+\newcommand\forjoe[1]{{\color{red}Note for Joe: #1}}
 \newcommand{\newmaterial}[1]{{\color{violet}#1}}
 \let\oldnewmaterial\relax
 \newcommand{\overkill}[1]{{\color{gray!50!white}#1}}
+
 
 %%%%% STANDARD PACKAGES
 \usepackage{mathtools}		%also loads amsmath
@@ -233,7 +233,8 @@
 
 %%%%%  SPECIAL COMMANDS FOR ONE-TRUE-LOSS %%%%%%%
 \newcommand{\datadist}[1]{\Pr\nolimits_{#1}}
-		% \newcommand{\datadist}[1]{p_\text{data}}
+% \newcommand{\datadist}[1]{p_\text{data}}
+\newcommand\XEnt{\mathrm{CrossEntropy}}
 
 
 %%%%%  SPECIAL COMMANDS FOR INFERENCE  %%%%%%%
@@ -514,6 +515,8 @@ innertopmargin=2pt, frametitlebelowskip=3pt, frametitleaboveskip=2pt, frametitle
 	\tikzset{fgnode/.style={dpadded,inner sep=0.6em, circle},
 		factor/.style={light pad, fill=black}}
 
+    \tikzset{bnnode/.style={dpad1,circle,inner sep=3pt}}
+	
 	\tikzset{lirfactor/.style={draw,minimum width=1.5em, minimum height=1.5em,fill=gray!50!black,text=white,font=\mathversion{bold}\bfseries}}
 
 % 
