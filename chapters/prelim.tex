@@ -34,7 +34,7 @@ The chapter also serves a second purpose:
 % especially when it comes to the notion of a \emph{variable}. 
 % The principle such pattern is the notion of a \emph{variable}, 
 \oldnewmaterial{%
-The principle such pattern is the concept of a \emph{variable}, 
+The principle such pattern is the concept of \emph{variable}, 
 which has several closely related meanings.
 One typically takes care to distinguish these different meanings, 
     but we do some extra leg work in this chapter to justify using them interchangeably. 
@@ -295,11 +295,12 @@ It follows that linear spaces are cones, and cones are convex.
 % A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
 % A less standard concept, but one on which this thesis revolves is that of a \emph{variable}.
 % Another standard concept, but one 
-We now turn to the concept of a \emph{variable}.
-Intuitively, a variable represents some feature of the world or some property of some object. 
-Although variables are widely used across computer science---in programming languages, graphical models, causality, and probability theory, to name a few---there are actually several different closely related formalisms. 
+% We now turn to the concept of a \emph{variable}.
+Intuitively, a \emph{variable} represents some feature of the world or some property of some object. 
+Although variables are widely used across computer science---in programming languages, graphical models, causality, and probability theory, to name a few---the term is actually shared by several different formalisms. 
 % We give a (perhaps somewhat opinionated) account here that simultaneously explicates many of approaches in the literature. 
-The account presented here simultaneously explicates many of approaches in the literature. 
+The account presented here simultaneously explicates many of them.
+ % approaches in the literature. 
 
 % Our presentation of it is not standard, but largely because it incorprorates standard 
 Mathematically, our notion of a variable exists on two levels.
@@ -315,13 +316,14 @@ A \emph{constant} is a variable $X$ that can only take on one possible value (i.
 \paragraph{Joint Variables.}
 We can regard sets of variables $\mat X$ as variables themselves, with
 $\V \mat X = \Pi_{X \in \mat X} \V\! X$.
-However, when we do so, we must also be careful to remember $\mat X$ the variable has a special relationship with $\mat X$, the set of variables, a point we will soon return to. 
-Note that, by this definition, the empty set is a variable, and it takes on a single value (i.e., the unique setting of no variables).  
-This might seem strange, but there is precisely one way of selecting a value for each variable in $\varnothing$: simply do nothing. 
-To see this another way, observe that if $\mat X = \{ X_1, \ldots, X_n \}$ is a set of binary variables,
-then $|\V\mat X| = 2^n$, so in the special case of $n=0$, we have $|\V \varnothing | = 2^0 = 1$. 
+However, when we do so, we must also be careful to remember $\mat X$ the variable has a special relationship with $\mat X$ the set of variables. 
+By this definition, the empty set $\varnothing$ is a variable, and it takes on a single value (i.e., the unique setting of no variables).%
+\footnote{%
+    This might seem strange, but there is precisely one way of selecting a value for each variable in $\varnothing$: simply do nothing. To see this another way, observe that if $\mat X = \{ X_1, \ldots, X_n \}$ is a set of binary variables,
+    then $|\V\mat X| = 2^n$, so in the special case of $n=0$, we have $|\V \varnothing | = 2^0 = 1$. 
+    }
 Those with keen attention to typography may have noticed we have used a different symbol ($\varnothing$) for the empty set of variables, than we have for other empty sets $(\emptyset)$. 
-This will be necessary to avoid a minor ambiguity, because the (standard) notation for probability that we adopt has a different meaning applied to a set of variables than it does applied to a set of possible outcomes. 
+This will be necessary to avoid a minor ambiguity, because the (standard) notation for probability has a different meaning applied to a set of variables than it does applied to a set of possible outcomes. 
 
 Similarly, tuples $(X_1, \ldots, X_n)$ of variables and indexed sets $\{X_i\}_{i \in I}$ of variables, are also themselves variables,
 with
@@ -350,22 +352,24 @@ Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $
 Variable notation is designed to be intuitive and easy to read. 
 Yet beneath the surface, it can be confusing, because it is unlike almost any other standard mathematical notation.
 This is especially true of the way variables interact with equality, and the symbol ``$=$''.
-For instance, if $X$ is a variable and $x \in \V(X)$, then the notation $X{=}x$ does not necessarily stand for a false statement (even though $X$ and $x$ refer to different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
+For instance, if $X$ is a variable and $x \in \V\!X$, then we do not interperet $X{=}x$ as falsity (despite the fact that $X$ and $x$ refer to very different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
 % In particular, it is neither true nor false, but rather a different mathematical object. 
 % Worse, even if $X$ and $Y$ are both variables, then $X{=}Y$ intuitively represents the possibility that $X$ happens to equal $Y$, 
-Even if $X$ and $Y$ are both variables, one might expect $X{=}Y$ to be true if and only if $X$ and $Y$ stand for the same variable, but here again it instead typically represents the possibility that $X$ and $Y$ happen to equal the same thing. 
-
-By taking context into account, there is a nice way to rigorously remove this ambiguity, and also have all of our notation work out as we would hope. 
-% If $f(\X)$
-But before we resolve the issue, we must first explain a more general version of it. 
-Whenever $X$ is a variable, and $f : \V\!X \to S$ is a function of the value of $X$, then we can regard $f(X)$ itself as a variable, with $\V(f(X)) = S$. 
+Furthermore, if $X$ and $Y$ are both variables, one might expect $X{=}Y$ to be true iff $X$ and $Y$ stand for the same variable, but here again it instead represents the possibility that $X$ and $Y$ happen to take on the same value. 
+%
+% By taking context into account, there is a nice way to rigorously remove this ambiguity, and also have all of our notation work out in the standard way. 
+% % If $f(\X)$
+% But before we resolve the issue, we must first explain a more general version of it. 
+More generally, 
+if $X$ is a variable and $f : \V\!X \to S$ is a function of the value of $X$, then we can regard $f(X)$ itself as a variable, with $\V(f(X)) = S$. 
 The issue with equality we encountered in the previous paragraph is just the special case when we view ${=} : \V(X,Y) \to \{0,1\}$ as such a function. 
 % However, when we do so, we must keep in mind that $f(X)$ and $X$ are related.
 %
 % The key is to keep in mind
 However, when we do so we must also keep in mind that the variable $f(X)$ and the variable $X$ cannot simply take any values; they are related by the constraint $f$. 
 An analogous constraint appears when we regard an (indexed) set of variables as a variable.
-The solution, requires us to keep track constraints involved in the construction of the relevant variables; 
+
+The solution requires us to keep track constraints involved in the construction of the relevant variables; 
 % for a (set of) variables $\X$, call this set of constraints $\Gamma(\X)$. 
 if $X$ is a variable, let $\Gamma(X)$ denote this set of constraints. 
 % if $X$ is a variable for a (set of) variables $\X$, call this set of constraints $\Gamma(\X)$. 
@@ -445,7 +449,7 @@ From this definition, it is easy to recover the usual definition of conditional 
 $\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
 There is just one caveat: this formula is not meaningful when $\mu(A) = 0$; in this case, we leave the conditional probability undefined.
 % Indeed, if $\mu(A) = 0$, it is arguably appropriate to say $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
-Indeed, if $\mu(A) = 0$, there is a strong argument supporting the notion $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
+Indeed, if $\mu(A) = 0$, there is an equally strong argument supporting the notion that $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$: for all $p \in [0,1]$, there is a sequence $\{ \mu_k \}_{k \in \mathbb N}$ of probability distributions converging to $\mu$ with the property that $\mu_k(U \mid A) = p$ for all $k$.
 
 
 %% adding variables.
@@ -656,7 +660,9 @@ Still, we reiterate that the full account of measure theory needed to define pro
 
 \paragraph{Measures.}
 A \emph{measurable space} $(\Omega, \mathcal F)$ is a set $\Omega$,
-called the \emph{outcome space}, together with a collection $\mathcal F \subseteq 2^\Omega$ of subsets of $\Omega$ that are considered \emph{measurable}, called \emph{events}. 
+called the \emph{outcome space}, together with a collection $\mathcal F \subseteq 2^\Omega$ of subsets of $\Omega$ 
+% that are considered \emph{measurable}, called \emph{events}. 
+called \emph{events}, or \emph{measurable} sets. 
 The elements of $\Omega$, should be thought of \emph{possible outcomes} or \emph{possible worlds} for in the model.
 The set $\mathcal F$ of events must also be a \emph{$\sigma$-algebra}, meaning that it contains $\Omega$, and is closed under complement and countable union---%
 that is, $\Omega \in \mathcal F$, if $U \in \mathcal F$ then $\Omega \setminus U \in \mathcal F$, and if $U_1, U_2, \ldots \in \mathcal F$, then $U_1 \cup U_2 \cup \cdots \in \mathcal F$.  
@@ -890,13 +896,15 @@ Dually, the \emph{children} of $u \in N$ are the nodes $\Ch_G(u)$ that are targe
     \qedhere
 \end{defn}
 
-\oldnewmaterial{%
 We often write $u{-}v \in E$ as a slightly more visual alternative to $\{u,v\} \in E$, and one that can be chained together. 
 A \emph{path} in an graph from $u$ to $v$ is a sequence of edges
 $u = u_1{-}u_2{-}\cdots{-}u_n = v$
 that connect $u$ and $v$. 
 A path in a directed graph has the additional requirement that every arc along the path must point from $u_i$ to $u_{i+1}$.
-}
+%
+A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ of its vertices that are all connected by edges---that is, such that every distinct pair $\{x,y\}$ of vertices $x,y \in C$ is a member of $E$.  
+We write $\mathrm{cliques}(G)$ for the set of all cliques in a graph. 
+
 
 It is common to identify a graph $H = (N,A)$ (or an undirected graph $G = (N,E)$) with its (symmetric) adjacency matrix
 \[
@@ -959,7 +967,7 @@ These choices are essentially locked in if we want to preseve the validity of th
 }%
 
 
-A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ of its vertices that are all connected by edges---that is, such that every distinct pair $\{x,y\}$ of vertices $x,y \in C$ is a member of $E$.  We write $\mathrm{cliques}(G)$ for the set of all cliques in a graph. 
+
 
 \begin{defn}
     A bipartite graph $G = (L, R, E)$ is a graph $(L \sqcup R, E)$ whose
@@ -984,42 +992,64 @@ By transitivity, one might expect bipartite graphs to naturally be an extremely 
 % , which themselves are a strict (particularly easy to draw) special case of hypergraphs.  
 
 \begin{prop} 
-There is a 
+% There is  
+% The following is
 % natural bijection 
-an isomorphism
-between hypergraphs and bipartite graphs:
+% an isomorphism
+% between hypergraphs and bipartite graphs,
+% given by
+The functions
 % \def\bitgr{\mathit{BG}}
-\def\bigr{\mathit{bipart}}
+% \def\bigr{\mathit{bipart}}
+\def\bigr{\mathit{h2b}}
 % \def\bitgr{\mathit{HG}}
-\def\hygr{\mathit{hyper}}
+% \def\hygr{\mathit{hyper}}
+\def\hygr{\mathit{b2h}}
 \begin{align*}
     \bigr(V, \mathcal E) &:=  (V, \mathcal E, \{(v, E) \in V \times \mathcal E : v \in E \} ) \\
     % (L, \{\{x \in L : \} \}) &\maspfrom (L, R, E)
-    \hygr(L, R, E) &:= (L, \{\{v \in L : (v,r) \in E\} : r \in R\}),
-\end{align*}    
-    \[
-        \bigr \circ \hygr = \mathrm{id}_{BG}
-        \quad\text{and}\quad
-        \hygr \circ \bigr = \mathrm{id}_{HG}.
-    \]
+    \bigr^{-1}(L,R,E) = \hygr(L, R, E) &:= (L, \{\{v \in L : (v,r) \in E\} : r \in R\})
+\end{align*}   
+define an isomorphism between hypergraphsa and bipartite graphs.
+    % \[
+    %     \bigr \circ \hygr = \mathrm{id}_{BG}
+    %     \quad\text{and}\quad
+    %     \hygr \circ \bigr = \mathrm{id}_{HG}.
+    % \]
 \end{prop}
 
 % The consequences of this can be unintuitive.
 % This fact can be be unintuitive.
 % Bipartite graphs are of course a strict (particularly nice) special case of ordinary undirected graphs, which themselves are a strict (particularly easy to draw) special case of hypergraphs.  
 % By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet in fact they are naturally isomorphic. 
-\oldnewmaterial{%
 % In fact, there are two isomorphisms. 
 A second isomorphism can be obtained by swapping roles of the left and right parts of the bipartite graph. 
-These two isomorphisms plays an important role in traditional graphical models, as we will see in \cref{sec:prelim-fgs}.
+This is becasue there is an obvious symmetry in the definition of a bipartite graph: 
+% one can swap the left and the right parts to 
+by swapping $L$ and $R$, one
+obtains another bipartite graph that is 
+% isomorphic to the first one. 
+    in many ways no different from the original.
+The corresponding symmetry for hypergraphs, known as duality, is a bit less obvious.
+% is known as duality, and is a bit less obvious.
+%
+The \emph{dual} of the hypergraph $G = (V, \mathcal E)$ is
+the hypergraph
+% \[
+$
+    \check G := (\mathcal E, \{\{e \in \mathcal E : v \in e\} : v \in V\}),
+$
+% \]
+which in some sense, has swapped the roles of the vertices and the hyperedges.
+These two views, and the symmetry between them, 
+plays an important role in traditional graphical models, as we will see in \cref{sec:prelim-fgs}.
 
-
-What about the directed analogue of a hypergraph? 
+For the development of the ideas in this thesis, we are even more interested in the \emph{directed} analogue of a hypergraph.
+% What about the directed analogue of a hypergraph? 
 While these objects have been defined and studied before
     \citep{gallo-dirhypergraphs1993}, they are far less
     common in computer science than (ordinary) directed graphs, or (undirected) hypergraphs.
 These directed hypergraphs will form the basis of the representations at the heart of this thesis (\cref{chap:pdg-repr,chap:QIM}).
-}%
 
 % \begin{defn}
 %     A \emph{directed} hypergraph $(N, \mathcal A)$ is a set $N$ of nodes,
@@ -1063,27 +1093,15 @@ Just as hypergraphs and bipartite graphs are isomorphic,
     (L, R, A) \mapsto (L, \{ \Pa(r){\to}\Ch(r) : r \in R \}).
 \end{align*}
 % The analogue of that for (directed) graphs
-There is an obvious symmetry in the definition of a bipartite graph: one can swap the left and the right parts to obtain another bipartite graph that is isomorphic to the first one. 
-The corresponding symmetry for hypergraphs is known as duality, and is a bit less obvious.
 }%
-
-% \medskip
-% \hrule
-% \medskip
-% 
-% \begin{defn}
-The \emph{dual} of the hypergraph $G = (V, \mathcal E)$ is
-the hypergraph
-% \[
-$
-    \check G := (\mathcal E, \{\{e \in \mathcal E : v \in e\} : v \in V\}),
-$
-% \]
-which in some sense, has swapped the roles of the vertices and the hyperedges.
-Interestingly, the concept applies equally well for directed hypergraphs, and the definition is even more symmetric---yet we are not aware of 
+%
+%
+% Interestingly, the concept of duality applies equally well to directed hypergraphs, and the definition is even more symmetric---although we are not aware of 
+Interestingly, the corresponding concept of duality in directed hypergraphs is clearer than this isomorphism, and even more symmetric than its undirected counterpart.
+Despite this, we are not aware of 
 % any published work on subject.
 % substantial work on the subject.
-any thorough treatment of duality for directed hypergraphs. 
+any thorough treatment of duality in directed hypergraphs. 
 % \oldnewmaterial{%
 % We mention it here because some representations of interest 
 % }%
@@ -1356,29 +1374,26 @@ By interpreting an edge $X{-}Y \in E$ as a possibility of (bi-directional) influ
 % there are three different (but closely related), it also becomes a qualitative graphical model.
 A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it satisfies one of the following properties:
 
-\begin{itemize}[nosep]
-    \item (pairwise) 
+\begin{description}[nosep]
+    \item [(pairwise)] 
         If $X,Y \in \X$ with $X \ne Y$ and $\{X, Y\} \notin E$, then 
         $
         \mu \models
             X \CI Y \mid \X \setminus \{X, Y\}$.  
-    \item (local) 
+    \item [(local)] 
         For each $X \in \X$, let $\partial_E(X) := \{ Y \in \X : \{Y,X\} \in E \}$ be the set of 
         then $
             \mu \models
         X \CI \X \mid \partial_G(X)$.  
-    \item (global)
-        % If $\mat X$
-        \oldnewmaterial{%
+    \item [(global)]
         For all $\mat X, \mat Y, \mat Z \subseteq \X$,
         if every path from some $X \in \mat X$ to some $Y \in \mat Y$ 
             goes through some $Z \in \mat Z$,
         then $
         \mu \models 
         \mat X \CI \mat Y \mid \mat Z
-        $
-        }%
-    \item (factorization) 
+        $.
+    \item [(factorization)] 
         There exists a collection of functions 
         $\{ \phi_{\mat X} : \V(\mat X)\to \mathbb R_{\ge 0} \}_{\mat X \in \mathrm{cliques}(G)}$
         indexed by the cliques of the graph $G$
@@ -1387,7 +1402,7 @@ A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it sa
         \[
             \mu(\X) = \prod_{\mat X \in \mathrm{cliques}(G)} \phi_K(\mat X).
         \]
-\end{itemize}
+\end{description}
 
 In general, the conditions are distinct, with (global) $\implies$ (local) $\implies$ (pairwise). 
 However, if we restrict to \emph{positive} distributions (i.e., $\forall \omega \in \V\!\X.~\mu(\omega) > 0 $), then all four conditions are equivalent.
@@ -1667,8 +1682,10 @@ So, for instance, the entropy of a variable $X$ in the general case is
 \]
 \newmaterial{%
 However, it is important to keep in mind that this quantity can be negative in general (because, outside of the finite case, is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$). 
-
-Intuitively,
+The reader should also be aware that, for real-valued variables, $\H(X) = 0$ does not mean that $X$ is a constant, but rather that $X$ has expected unit density. 
+% Intuitively, the scale has been shifted by $$
+Despite this perhaps undesirable development, this analogue of ordinary entropy acts just like the original, but shifted by an additive constant.  
+Furthermore, it still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization. 
 }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 
@@ -1678,7 +1695,6 @@ Intuitively,
 % When we write $\mu(x)$, we mean the density $\frac{\mathrm d\mu}{d \lambda}$. 
 
 
-\oldnewmaterial{%
 \paragraph{The Principle of Maximum Entropy.}
 %
 % What should one do
@@ -1728,7 +1744,12 @@ But what about directed graphical models? Bayesian Networks, so far, have resist
 One contribution of this thesis is to expand the principle of maximum entropy to account for qualitative information. 
 %
 % It may be worth noting that these two arguments for maximum entropy---the high-level interpretation of the quantity as measuring the right thing, and the sociological argument to unity---directly parallel the two kinds of arguments we give for the semantics of PDGs, in \cref{chap:pdg-repr,chap:one-true-loss}, respectively.
-}%
+
+% Despite its successes, 
+The principle of maximum entropy has also faced significant challenges
+\citep{seidenfeld1986entropy,}
+
+\TODO
 
 
 \paragraph{Entropy as a Structural Information Measure.} 

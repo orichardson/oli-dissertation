@@ -32,10 +32,9 @@ Why does the world need one more?
 Our original motivation for introducing PDGs was to be able capture
 inconsistency. We want to be able to model the process of resolving
 inconsistency; to do so, we have to model the inconsistency itself. But our
-approach to modeling inconsistency has many other advantages. In particular,
-PDGs are significantly more modular than other directed graphical models:
-operations like restriction and union that are easily done with PDGs are
-difficult or impossible to do with other representations.
+approach to modeling inconsistency has many other advantages. 
+In particular, PDGs are significantly more modular than other directed graphical models: operations like restriction and 
+combination (\cref{sec:combine}) that are easily done with PDGs are difficult or impossible to do with other representations.
 The following examples motivate PDGs and illustrate some of
 their advantages.
 
@@ -201,7 +200,11 @@ The key point is that we can incorporate the new information into our original
 representation (the graph in \Cref{fig:gun-floomp-diagram} without the arc from
 $F$ to $G$) simply  by adding the arc from $F$ to $G$ and the associated cpd
 $p$ (the new information is shown in blue).
-Doing so does not change the meaning of the original arcs.   
+% Doing so does not change the meaning of the original arcs.
+Doing so does not change the meaning of the original arcs.
+\unskip\footnote{%
+    While the meaning of the original arcs does not change, one might want something different at a qualitative level, as we will explore in \cref{sec:combine}).
+}
 Unlike a Bayesian update, the operation is even reversible: all we need
 to do recover our original belief state is delete the new arc, 
 making it possible to mull over and then reject an observation.
@@ -335,7 +338,7 @@ substantial expansion of the cpd; in particular, it requires us to make
 assumptions about the interactions between tanning beds and smoking.  
 The corresponding PDG, $\PDGof{{\mathcal B}}$, on the other hand, has no
 trouble: We can simply add the node $T$ with an arc to $C$ that is associated
-with $\mathbb P$.  But note that doing this makes it possible for our knowledge to
+with $p$.  But note that doing this makes it possible for our knowledge to
 be inconsistent. To take a simple example, if the distribution on $C$ given $S$
 and $H$ encoded in the original cpd was always deterministically ``has cancer''
 for every possible value of $S$ and $H$, but the distribution according to the
@@ -388,8 +391,8 @@ of \Cref{fig:grok-combine}.
 Grok is reading about graphical models because she vaguely remembers that the
 variables in \Cref{ex:smoking} match the ones she already knows about. When she
 finishes reading the statistics on smoking and the original study on tanning
-beds (associated to a cpd $\mathbb P$ in \Cref{ex:smoking}), but before she has
-time to reflect, we can represent her (conflicted) knowledge state as the union
+beds (associated to a cpd $p$ in \Cref{ex:smoking}), but before she has
+time to reflect, we can represent her (conflicted) knowledge state as the sum
 of the two graphs, depicted graphically on the right of \Cref{fig:grok-combine}.  
 
 
@@ -548,10 +551,11 @@ The pair $(\N, \V)$ describes a set of nodes $\N$ and a set of values $\V\!X$ fo
     thus $(\N,\V)$ is equivalent to specifying a set $\X$ of variables.
 For this reason, we write 
 % $\V\!\X$
-\[
-    \V\!\X := \prod_{X \in \N} \V(X)
-\]
-for the set of all joint settings of the variables; we refer to $\omega \in \V\!\X$ as ``worlds''.
+% \[ \V\!\X := \prod_{X \in \N} \V(X) \]
+$ \V\!\X := \prod_{X \in \N} \V\!X $
+for the set of all joint settings of the variables
+    (which will be our outcome space $\Omega$);
+    we refer to $\omega \in \V\!\X$ as ``worlds''.
 Rather than specifying $\N$ and $\V$ separately, it is common practice in the graphical models community to instead specify a set $\X$ of variables directly \citep{KF09}.
 We have kept them them separate in \cref{def:model} to emphasize the separation between the qualitative information $(\N, \Ar, \balpha)$ and the quantitative information $(\V, \mathbb P, \bbeta)$ that annotates it. 
 % This separation between qualitative and quantitative information will
@@ -639,7 +643,7 @@ and we write ${\scriptstyle\color{gray}(\infty)}$ for the limit of high confiden
 % function $f : \V\!A \to \V B$. 
 
 
-\subsection{Alternate, Equivalent Definitions of PDGs}
+\subsection{Alternate Equivalent Definitions of PDGs}
     \label{sec:alt-pdgs}
 
 \Cref{def:model} is not the only way to define a PDG. 
@@ -783,6 +787,7 @@ We now give an overview of important alternative variants.
 \end{enumerate}
 
 \subsection{Combining PDGs}
+    \label{sec:pdg-combine}
 
 \newmaterial{%
 	How should we combine independent sources of information? 
@@ -799,20 +804,24 @@ independently: take the union of their variables and the disjoint union of their
 \paragraph{An Important Caveat For Qualitative (Structural) Information.}
 % It is important to keep in mind, however, that this means treating the information in the PDGs 
 For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
-% In some cases, it may also appropriate for the qualitative data ($\balpha$), although not always, and it is important to keep in mind the meaning of this operation in that case.
-% For the qualitative information, however, independent combination might not 
-Independently combining the qualitative information, however, could have unintended effects if the qualitative information has any overlap. 
-% By forming the independent combination of two qualitat/
+Independently combining the qualitative information, however, may not quite be what is intended if there is any overlap. 
 To illustrate, suppose that $\dg M_1$ and $\dg M_2$ both contain a single arc from $X$ to $Y$,
-	both intuitively indicating a single causal mechanism by which $X$ gives rise to $Y$. 
-In the independently combined PDG $\dg M_1 + \dg M_2$, then, contains two distinct mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
+	each specifying a single causal mechanism by which $X$ gives rise to $Y$. 
+The combined PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
 % However, one might well have intended to 
-However, rather than viewing them as two different mechanisms, one might well have wanted something else: two independent accounts that there is a \emph{single} such causal mechanism. 
+Rather than adopting two distinct mechanisms, one might well have intended to merge them, viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
-The latter is not captured by PDG union; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
+Yet PDG union performs no such merge.
+Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which qualitative mechanisms ought to be merged together, after independent combination. 
+We will return to this in \cref{ex:qual-merge}. 
+
+% ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
-We mention that there is an even bigger problem in combining factor graphs, because the parameters $\balpha$ and $\bbeta$ are essentially ``fused together'', as we will see in \cref{sec:factor-graphs},
-and thus this leads to an even bigger problem in combining factor graphs; we will explore this in \cref{ex:overdet}. 
+% We mention that there is an even bigger problem in combining factor graphs, because the parameters 
+The analogue of this problem is even bigger 
+    for factor graphs, because 
+    $\balpha$ and $\bbeta$ are essentially ``fused together'' in these models, as we will see in \cref{sec:factor-graphs}.
+We will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
 It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ do work as one might hope. If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$, there is no problem with taking $\balpha$ to be $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively.  For instance, if $G_1$ and $G_2$ represent the same independencies, then $\balpha$ will encode those shared independencies. 
