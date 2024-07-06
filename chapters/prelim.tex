@@ -425,6 +425,8 @@ This means $\mu$ is a vector of shape
 % $\V\! X$,
 $\Omega$ 
 satisfying $\mu \ge 0$ and $\mu \cdot \mat 1 = 1$. 
+%
+The distribution that places all mass on a single outcome $\omega \in \Omega$ is written $\delta_\omega$. 
 % We write $\Delta \V\!X$ for the set of all distributions over (the values of) $X$,
 % which is also known as the \emph{probability simplex}.
 The \emph{probability simplex} $\Delta \Omega$ is defined as the set of all probability distributions over $\Omega$. 
@@ -494,6 +496,9 @@ p(x) ~=~ p|x ~=~ p(Y | X{=}x) ~=~ p(Y | x) \quad \in \Delta \V Y.
 % Cpds are also called \emph{channels} in information theory. 
 Just like we write $\mu(X)$ for a distribution over the values of $X$, we
 write $p(Y|X)$ for a cpd on $Y$ given $X$. 
+\newmaterial{%
+If $p(Y|x)$ gives probability one to a single value of $Y$ for all $x \in \V\!X$, then $p(Y|X)$ is \emph{deterministic}, and has the same meaning as the function $f : X \to Y$ that maps $x$ to the value $y$ for which $p(Y|x)$ has probability one.  Conversely, given a function $f : X \to Y$, we write $\delta\!f(Y|X)$ for the corresponding deterministic cpd. 
+}
 In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
 We will use alternate notation (such as $\mat P_{Y|X}$) when we want to view $p(Y|X)$ as a matrix.
 
@@ -1682,10 +1687,11 @@ So, for instance, the entropy of a variable $X$ in the general case is
 \]
 \newmaterial{%
 However, it is important to keep in mind that this quantity can be negative in general (because, outside of the finite case, is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$). 
-The reader should also be aware that, for real-valued variables, $\H(X) = 0$ does not mean that $X$ is a constant, but rather that $X$ has expected unit density. 
+The reader should also be aware that, for real-valued variables, $\H(X) = 0$ no longer means that $X$ is a constant, but rather that $X$ has expected unit density (like the uniform distirbution over $[0,1]$). 
 % Intuitively, the scale has been shifted by $$
-Despite this perhaps undesirable development, this analogue of ordinary entropy acts just like the original, but shifted by an additive constant.  
-Furthermore, it still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization. 
+Aside from these unwelcome developments, this analogue of entropy acts otherwise just like the original, but shifted by an additive constant.  
+It still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization.  
+Fortunately, (conditional) mutual information works just as before: it is non-negative and zero iff there is a (conditional) independence. 
 }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 

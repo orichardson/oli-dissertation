@@ -829,34 +829,45 @@ It is worth mentioning that \emph{convex combinations} of qualitative parameters
 Still, there are some cases where independent combination is appropriate even for causal information; we now proceed with the formal details.
 }
 
-\paragraph{Formal Details of PDG Sums.}
-To be more precise, depending on the variant
-of the definition of a PDG, we might need another definition:	
-\begin{defn}
-    % [$\V$-compatibility]
-        \label{defn:v-compat}
-	% Two PDGs 
-	$\dg M_1$ and $\dg M_2$ are $\V$-\emph{compatible}
-	iff the variables they have in common take the same sets of values%
-    ---that is, if the nodes and values of $\dg M_1$ and $\dg M_2$,
-	are $\N_1, \V_1$ and $\N_2, \V_2$, respectively, then
-    $
-	\forall X \in \N_1 \cap \N_2.~~
-		\V_1( X) = \V_2 (X). \qedhere
-	$
-\end{defn}
 
+\paragraph{Formal Details of PDG Sums.}
+To be completely precise, it's helpful to first make a preliminary definition:	
+% \begin{defn}
+%     % [$\V$-compatibility]
+%         \label{defn:v-compat}
+% 	% Two PDGs 
+% 	$\dg M_1$ and $\dg M_2$ are $\V$-\emph{compatible}
+% 	iff the variables they have in common take the same sets of values%
+%     ---that is, if the nodes and values of $\dg M_1$ and $\dg M_2$,
+% 	are $\N_1, \V_1$ and $\N_2, \V_2$, respectively, then
+%     $
+% 	\forall X \in \N_1 \cap \N_2.~~
+% 		\V_1( X) = \V_2 (X). \qedhere
+% 	$
+% \end{defn}
+$\dg M_1$ and $\dg M_2$ are $\V$-\emph{compatible}
+iff the variables they have in common take the same sets of values%
+---that is, if the nodes and values of $\dg M_1$ and $\dg M_2$,
+are $\N_1, \V_1$ and $\N_2, \V_2$, respectively, then
+$
+\forall X \in \N_1 \cap \N_2.~~
+	\V_1( X) = \V_2 (X). $
+%
+%
 \commentout{%
-This definition is the same as the one given by \citet{halpern-combining-causal-models}, in combining causal models (structural equations models, or SEMs, to be precise).
-It is worth noting that SEMs are another formalism in which the variables and their possible values are given separately. 
-But the definition is unnecessary if we take the traditional approach in graphical models and rely on implicit variable equality.}
+	This definition is the same as the one given by \citet{halpern-combining-causal-models}, in combining causal models (structural equations models, or SEMs, to be precise).
+	It is worth noting that SEMs are another formalism in which the variables and their possible values are given separately. 
+	But the definition is unnecessary if we take the traditional approach in graphical models and rely on implicit variable equality.}
 % Indeed, if
-If in place of the pair $(\N, \V)$, a PDG is specified directly using a set $\X$ of variables, then \cref{defn:v-compat} is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
+%
+We can only combine PDGs that are $\V$-compatible---but this is not a meaningful restriction. 
+If in place of the pair $(\N, \V)$, PDGs are specified directly using a set $\X$ of variables, then this definition is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
  % $N \in \N$ in $\dg M_1$ and $\dg M_2$ if their interpretations can be identified as one variable. With that, we can make
 %
-In any case, the point is the following formal definition for how to combine independent information in two different PDGs:
+In any case, the point is the following formal definition for how to combine independent information:
 
 \begin{defn}
+		\label{defn:pdg-sum}
 	The sum of $\V$-compatible PDGs is given by
 		taking the disjoint union of their arcs and associated data.
 	Explicitly, if
@@ -887,6 +898,8 @@ In any case, the point is the following formal definition for how to combine ind
 	\]
 \end{defn}
 
+
+\commentout{
 As mentioned above, combining PDGs is simpler (and circumvents $\V$-compatibility) if PDGs are defined through a set of variables $\X$. 
 Given
 $\dg M_1 = (\X_1, \Ar_1, \mathbb P_1, \balpha_1,\bbeta_1)$ and
@@ -906,6 +919,7 @@ in this case, $\V$-compatibility is handled automatically by
 the meaning of variable equality. 
 While the formalism is simpler, this approach really just sweeps the issue under the rug. 
 For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts.
+}%
 % and nor are they considered equal simply because they happen to have been given the same generic name ($X$) by two people modeling different things.  
 
 

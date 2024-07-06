@@ -1446,7 +1446,9 @@ It seems that our approach, in addition to providing a unified view of standard 
 % \def\truf{{\tt f}}
 
 Given an \emph{arbitrary} loss function, can we find a PDG that gives rise to it?
-The answer appears to be yes---although not without making unsavory modeling choices.
+The answer,
+	\newmaterial{as we discovered in \cref{sec:soft-constraint}, }
+	appears to be yes---although not without making unsavory modeling choices.
 Without affecting its semantics, one may add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the event $\Tru \!\!=\! \trut$, to any PDG.
 Now, given a
 cost function $c: \V(X) \to \mathbb R_{\ge 0}$,
