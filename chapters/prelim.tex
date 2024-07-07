@@ -654,7 +654,7 @@ This way of thinking about conditional probability distributions will at times b
 % 
 % \TODO
 
-\temphide{%
+\commentout{%
 \subsection{Beyond Probability}
     \label{ssec:beyond-prob}
 }%
@@ -1234,13 +1234,14 @@ A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}.
     {Examples of directed hypergraphs (first row) and their duals (second row).}
         \label{fig:dhygraph-duals}
 \end{figure}%
+\commentout{%
 We remark that
 the left and center diagrams on the top can be viewed as (the hypergraphs corresponding to) qualitative Bayesian Networks, by regarding X,Y,Z and A,B,C,D as variables, and imagining that there is a (randomized) causal determination occuring along each arc. 
-% The structures that arise from causal models
 One can also imagine an analogue with cycles---resuling in perhaps a (randomized) causal model of the given shape.  But a causal model has one equation corresponding to each variable, and the corresponding hypergraphs thus has exactly one hyperarc leading to it. 
 In the dual hypergraphs, one should view the nodes as processes and the arcs as wires. Such a hypergrah has precisely one hyperarc leading out of every node. When wires branch, one imagines a copy; when two arcs point to the same process (as in process 4, in the middle center), that process takes both of the wires as inputs.
 In the duals of hypergraphs corresponding to causal models, there are no two-tailed arrows, which might be thought of as a ``merge''. 
 Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
+}
 
 
 \TODO[ TODO: clean up previous paragraph; add network diagram ]
@@ -1747,7 +1748,7 @@ Suppose that, with rigorous emperical investigation, we have determined some sta
 How should we proceed?
 The most faithful representation of our knowledge, of course, is just the information we have---those statistics, and perhaps the set of probability distributions consistent with them. 
 But what should we do if we are obligated to give a probability distribution 
-    (as one often is, e.g., by the axioms of rationality \citep{RAT})?
+    (e.g., to satisfy the axioms of rationality \citep{sep-dutch-book,haplern-RAU})?
 % Here there is an important principle in the literature: 
 % If forced to select a probability distribution, however, there is one principle
 There is a well-established principle stating that among all possible distributions, the one with maximum entropy is most appropriate. 

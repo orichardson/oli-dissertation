@@ -4,7 +4,7 @@ In this chapter, we investigate a more abstract perspective on PDGs, that was pa
 At first Bayesian networks appear to be almost diagrams in the categorical sense---if the BN is a 
 
 % \section{Preliminaries}
-\subsection{A Primer on Category Theory}
+\section{A Primer on Category Theory}
 Category theory is a mathematical interlingua that captures the essential form of many arguments across mathematics. 
 Sometimes (lovingly) called ``abstract nonsense'', category theory is often seen as extremely abstract meta-mathematics.  
 % But it can be much more concrete and easier to understand than the traditional mathematical disciplines that reference it. 
@@ -35,7 +35,10 @@ Category $\mathcal C$  & Objects $\ob \mathcal C$  & Morphisms $\Hom_{\mathcal C
 $\Set$ & sets & functions \\
 $\Rel$ & sets & relations \\
 $\Top$ & topological spaces & continuous maps \\
-$\Diff$ & \parbox{4cm}{smooth manifolds \\ (possibly with boundary or corners)} & smooth maps \\
+$\Diff$ & 
+    % \parbox{4cm}{smooth manifolds \\ (possibly with boundary or corners)} 
+    \makecell{smooth manifolds\\ (with boundary or corners)}
+    & smooth maps \\
 \bottomrule
 \end{tabular}
     \caption{A few of the most recognizable categories}

@@ -1,27 +1,50 @@
+% You try to give a big-picture
+% summary of what you've  done, perhaps suggest some avenues for future
+% work (I would suggest that you do this under the assumption that there
+% will be no extra chapers), and perhaps conclude with what you see as the
+% potential impact of PDGs on the field.
 
-\section{Conclusions}
+\section{Summary}
 
-In \cref{part:univ-model}, we saw how PDGs capture a wide variety of modeling tools, ranging from standard graphical models (\cref{chap:pdg-repr}) to standard 
+We have now seen a far-reaching unified account of probabilistic modeling,
+    and one that is able to step beyond the bounds of consistency 
+    
+In \cref{part:univ-model}, we saw how PDGs capture a wide variety of modeling tools, ranging from standard graphical models (\cref{chap:pdg-repr}) to standard representations of uncertainty (\cref{chap:repr-tools}).
+We saw in \cref{chap:QIM} that the qualitative information in a hypergraph forms a bridge between causality and multivariate information theory, mediated by the theory of PDGs. 
+
+In \cref{part:univ-objective}, we saw how PDGs also capture standard loss functions (\cref{chap:one-true-loss}),
+and moreover, that standard algorithms result (\cref{chap:LIR}).
+Learning, inference, and 
+    many other standard algorithms in AI are all viewed as the same procdure in pursuit of consistency. 
+
+In \cref{part:algo-logic-complexity}, we saw how \cref{part:univ-model,parpart:univ-objective} are two faces of the same approach to probabilistic modeling (\cref{chap:inc-infer-connection}). 
+We gave polynomial algorithm for inference in PDGs of bounded treewidth (\cref{chap:infer}), finally allowing us to 
 
 
 
-
+% \commentout{%
 \subsection{Sewing Things Back Together, with Self-Consistency}
 
 So far we have been working with the degree of inconsistency of a PDG, a number typically in $[0,\infty]$. 
-In \cref{chap:conf}, we saw that the confidence domain 
-% $[0,\infty]$ 
-$[-\infty, 0]$ is isomorphic to $[0,1]$.
-    % and the set of such isomorphisms itself is isomorphic to $(0,\infty)$. 
+In \cref{chap:conf}, we saw that 
+% the confidence domain 
+% % $[0,\infty]$ 
+% $[-\infty, 0]$ 
+additive measures in the range $[0,\infty]$ 
+can be equivalently represented as multiplicative measures
+    in the range $[0,1]$.
+% and the set of such isomorphisms itself is isomorphic to $(0,\infty)$. 
 % For $k > 0$, 
-Define the $k$-\emph{self-consistency} of a PDG to be
+So, for readers who are more comfortable with the latter range, we quickly summarize a few of our results.  
+% in a way that might make the
+In service of this, 
+define the \emph{self-consistency} of a PDG $\dg M$ to be
 \[
-    \Xi(\dg M) := \mathfrak\exp( -  \aar{\dg M}_\gamma). 
+    \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0). 
 \]
 
-
-We can summarize and reframe a number of the properties we have seen in terms of
-    of the self-consistency $\Xi[\dg M]$
+This allows us to reframe some of the properties we have already seen in a way that, for some, may look even more natural. 
+% We can summarize and reframe a number of the properties we have seen in terms of the self-consistency $\Xi[\dg M]$
 % \begin{prop}
 \begin{enumerate}
     \item If $U$ is an event, then $\Xi[U] = {\singlespacing\begin{cases}
@@ -30,18 +53,34 @@ We can summarize and reframe a number of the properties we have seen in terms of
     \end{cases}}$
 
     \item If $U_1$ and $U_2$ are both events regarding the same set of variables, then 
-        $\Xi[U_1 + U_2] = \mathbbm 1[ U_1 \cap U_2 \ne \emptyset]$.  
+        $\Xi[U_1, U_2] = \mathbbm 1[ U_1 \cap U_2 \ne \emptyset]$.  
+        
+    \item More generally, if $R_1(\mat X)$ and $R_2(\mat Y)$ are relations,
+        then $\Xi[R_1, R_2] = \Xi[ R_1 \bowtie R_2]$. 
 
     \item If $\mu$ is a probability distribution, and $U$ is an event, 
-        then $\Xi[\mu + U] = \mu(U)$.
+        then $\Xi[\mu, U] = \mu(U)$.
     
-    \item If $\Plaus$ is a Dempster-Shafer probability measure, and $U$ is an event, then $\Xi[\Plaus + U] = \Plaus(U)$. 
+    \item If $\Plaus$ is a Dempster-Shafer probability measure, and $U$ is an event, then $\Xi[\Plaus, U] = \Plaus(U)$. 
 
     % \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
     \item If $D = \{(x_i, y_i) \}$ is a set of training data and $f : X \to Y$ is a
         deterministic classifier, 
         then 
-        $\Xi[\Pr_D + f ]$ is the accuracy of $f$ on $D$. 
+        $\Xi[\Pr_D, f ]$ is the accuracy of $f$ on $D$. 
+    
+    \item If $p, q \in \Delta \V\!X$ are distributions over a discrete variable $X$, then
+        $\Xi[ p(X) + q(X)] = \Big( \sum_{x \in \V\!X} \sqrt{p(x) q(x)} \Big)^2$.
+        
+    \item 
+        % If $p = \mathcal N(\mu_1, \sigma_1^2), q = \mathcal N(\mu_2, \sigma_2^2)$
+        If $p$ and $q$ are both unit normal distributions over $X$, 
+        with means $m_1$ and $m_2$, respectively, then
+         % are both normal distributions over $X$, then
+        $\Xi[ p(X), q(X) ] = \exp( \frac12 (m_1 - m_2)^2)$
+        is itself the density of a normal distribution.
+        
+    
 
     % If $p(Y|X)$ is instead a probabilistic classifier, then 
     % $\Xi[ \Pr_D !  + p(Y|X)]$
@@ -52,7 +91,10 @@ We can summarize and reframe a number of the properties we have seen in terms of
 % \end{prop}
 
 
+
 \section{Future Work and Open Questions}
+
+\paragraph{Capturing Other Formalisms}
 
 \paragraph{Structural Information Deficiency and QIM-Compatibility.}
 \Cref{sec:qim-info} shows how one way in which QIM compatibility is deeply related to the qualitative information in a PDG.
@@ -67,6 +109,8 @@ In \cref{part:univ-model}, we saw that PDGs and QIM-compatibility,
 \paragraph{Other Approaches to Inference}. 
  Particle-based PDG inference
 
+
+\paragraph{Deeper Exploration of Theoretical Connections to Other Fields.}
 There's no reason to think that this is 
 Object graphs and databases [Spivak].
 
@@ -74,19 +118,22 @@ In \cref{chap:PDG-cat}, we found that PDGs can be viewed as diagrams in a certai
 The categorical picture opens a vast landscape of abstract research directions, ranging from variants of PDGs where probability is replaced by a different concept, to connecting the standard defences of information loss \citep[Theorem ??]{leinster2021entropy}.
 
 
-\section{Implementing and Applying the Theory}
+\section{Impact: Implementing and Applying the Theory}
 
 The material here has been conceptual, mathematical, and often philosophical.
-But is it useful?
-Narrowly construed as ``can it be used for understanding things?'', I believe we have seen the answer is a resounding yes. 
-Equally narrowly construed as, ``can I run it on ny laptop?'', the answer is also yes! 
-% Interested parties 
-A reader who wants to play with PDGs themselves can find a general-purpose Python library implementing the framework, and many of the ideas in this thesis, at:
-\url{https://github.com/orichardson/pdg}.
+But \emph{is it useful}?
+
+Narrowly construed as ``can it be used to help us understand AI systems built with probabilistic tools'', I submit that the answer is a resounding yes. 
+% Pedagogically speaking, we have achieved 
+For pedagogical reasons alone, there is clear value in unifying so many different concepts, approaches in a way that clarifies the relationships between them, and answers important foundational questions (such as, ``how is the loss function related to the modeling process?'').
+
+Equally narrowly construed as, ``can I run it on my laptop?'', the answer is also yes. 
+For the reader interested in playing around with PDGs, I have developed a general-purpose Python library implementing the framework in the discrete case, as well as many of the constructions in this thesis;
+it can be found at \url{https://github.com/orichardson/pdg}.
 %
 Many of these concepts we have seen are difficult to visualize or manipulate, and I have been surprised often.
 % Every paper in this thesis has had, at some point, a fatal mistake.  
-Using and developing this library has helped me understand the math more deeply, and I cannot recommend implementing math highly enough. 
+Using and developing this library has helped me explore and understand the material more deeply; I cannot recommend implementing one's math highly enough. 
 To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
 
 % But much of the work
@@ -100,25 +147,24 @@ To a reader who wonders why one should bother testing something when you could p
 % What these people may not be aware of, is that I have been 
 
 
-% These are the easy questions. 
-% Let's move on to harder questions. 
-% But that's enough narrow construing. 
-% \textellipsis but I'm still avoiding the deeper question.
-But since I'm still avoiding the deeper question, let me ask it more forcefully.
-% But has it been practical? 
-% Has it been useful? 
-Is any of this practical? Can it help solve real problems? Could it be used \emph{to improve people's lives}? 
-These questions haunt me, because the question is important, and because I'm convinced the answer is probably yes---but for years I have failed to investigate it seriously.  
+I am still avoiding the deeper question, so let me ask it more forcefully.
+Is any of this practical? Can it help solve real problems? Could it be used to improve sombody's life? 
+These questions haunt me because they are clearly important, and because I believe the answer to them is probably yes---but I been too invested in theory to investigate them with the energy they demand.  
 Conspicuously absent in this thesis are solutions to important real-world problems. 
-But that is a high bar, and one that few manage to clear in a meaningful way. 
+But solving important problems is difficult and takes time. 
+The theory will have to suffice for now. 
+
+
 
 So perhaps the real applications can come later. 
-% Perhaps it's better to resolve the conceptual 
 Perhaps what's needed at the moment are theoretical and conceptual foundations for AI systems. 
-% There is no shortage of people eager to solve problems
-% 
-Perhaps it's better to position ourselves to tackle the biggest problems that loom on the horizon of AI systems, than it is to possibly find ourselves with a toolkit optimized for fixing smaller ones. 
+Perhaps it is better to position ourselves to tackle the biggest problems that loom on the horizon of AI systems, than it is to possibly find ourselves with a toolkit overfit to small ones. 
 Perhaps, for now, what's important is clear and flexible thinking. 
 
-% For now, what is important is thinking clearly, and flexibly. 
 
+No doubt one of the biggest problems of our time is to get a handle on what we want AI systems to look like in the future.  We are already building powerful artificial agents now 
+
+
+Set the stage for a clearer understanding of AI systems in the future.
+
+% For now, what is important is thinking clearly, and flexibly. 

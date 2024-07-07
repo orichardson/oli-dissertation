@@ -535,7 +535,7 @@ A cpd between discrete variables can be represented by
     a stochastic matrix (i.e., a matrix whose rows sum to one).
 It turns out that it is possible to use the machinery of PDGs
     to, effectively, give only some of the values in that matrix.
-Using PDG notation, we abbreviate a cpd $p(Y|X)$ with some missing values by adding an empty circle at the tail, i.e., drawing 
+In PDG notation, we abbreviate the widget that implements $p(Y|X)$ with some missing values by adding an empty circle at the tail, i.e., drawing 
 \begin{tikzpicture}[center base]
     \node[dpad1] (X) at (0,0) {$X$};
     \node[dpad1] (Y) at (1.5,0) {$Y$};
@@ -1098,14 +1098,18 @@ But some representations better capture a scenario more naturally than others, a
 \newmaterial{%
 facilitate the choice of representations that interact well with entropy. 
 % As discussed in \cref{sec:bn-pdg}, \cref{theorem:bns-are-pdgs} is a powerful example of how 
-In \cref{ex:coin}, the PDG representation lead us to a space which, upon applying the principle of maximum entropy (or better yet, of minimum information deficiency) leads to a more reasonable answer than the naive space given by the set of possible marginals over the coin outcome. 
+This is because, generaly speaking, PDGs force you to make your modeling choices in an explicit, uniform way (a point we will emphasize repeatedly in \cref{chap:one-true-loss}).
+In \cref{ex:coin}, the PDG representation lead us to a space which, upon applying the principle of maximum entropy (or better yet, of minimum information deficiency) gives an answer that appears eminantly more reasonable than the simplest model we found without the PDG. 
 % It is worth noting that the naive space is not even 
-It is difficult to imagine how one could even obtain the naive maximum entropy result with a PDG.
-}
+% It is difficult to imagine how one could even obtain the naive 
+Indeed, it appears impossible to obtain a representation that leads 50/50 maximum entropy presumption when using a PDG.
+On its own \cref{ex:coin} is far from is just one (more) piece of supporting evidence, adding it to a pile that includes \cref{theorem:bns-are-pdgs}. 
 
+The construction in this section is a generic way of leaving out information in a probabilistic model. 
+At a technical level, it amounts to exploiting the fact that a cpd can be viewed as imposing a barycentric coordinate system for a convex set of distributions (as laid out at the end of \cref{ssec:fin-prob}).
+In the next section, we investigate another representation of uncertainty with more structure, which can be captured with PDGs in a rather different way.
+}%
 
-In the next section, we show that a more specific representation of uncertainty
-    can be captured with PDGs in a more targeted way.
 
 \subsection{Belief and Plausibility Functions}
     \label{ssec:belplaus-as-pdg}
@@ -1163,8 +1167,14 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
         are subsets of $\Omega$. 
 \end{defn}
 
+\newmaterial{%
+For those who find the constraint notation difficult to read, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of that subset. 
+}
+% \newmaterial{%
+% For those who find the constraint notation difficult to read, this is just the PDG t
+% }
 
-\begin{theorem}
+\begin{linked}{theorem}{belplaus-pdg}
     If $m$ is the mass function the belief function $\Bel$ and the plausibility
     function $\Plaus$, and $\dg M := \dg M_{\Bel} = \dg M_{\Plaus}$, then:
     % \begin{enumerate}[wide,label={(\alph*)},topsep=0pt]
@@ -1189,7 +1199,10 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
             \draw[arr2,shorten >=0pt,-] (V) to[out=0,in=90] (crash1-pool);
             \draw[arr2,shorten >=0pt,-] (W) to[out=180,in=90] (crash1-pool);
             \draw[arr2,shorten >=0pt,shorten <=0pt,->>] (crash1-pool) to (crash1);
-            \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2);
+            \draw[arr2,<<-,shorten <=0pt] (crash1) to +(0,-0.2)
+                %extend lower margin
+                node[below]{}
+                ;
             \node[above=2ex of crash1] {$\ni$};
             %
             \coordinate (crash2) at (3, 0);
@@ -1199,15 +1212,17 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
         \end{tikzpicture}}
          = - \log \Plaus ( U ).
         $
+        \newmaterial{%
         That is, the inconsistency of simultaneously
         having belief function $\dg M_{\Bel}$ and also that the event $U$ occurs, is the analogue of the information content but for plausibility.
+        }%
     % \item 
     \end{enumerate}
-\end{theorem}
+\end{linked}
 
 % A few remarks before we prove the theorem. 
-This theorem, which we shall prove momentarily, 
-shows that PDGs of this form coincide semantically with Dempster-Shafer belief functions. 
+% This theorem, which we shall prove momentarily, 
+This theorem shows that PDGs of this form coincide semantically with Dempster-Shafer belief functions. 
 Part (a) states that the set-of-distribution semantics is precisely the set-of-distribution semantics for $\Bel$.
 Indeed, if we follow the conventions of \citet[Theorem 2.6.1]{halpern-RAU} and define $\mathcal P_\Bel := \{ \mu \in \Delta \Omega : \Bel(U) \le \mu(U) \le \Plaus(U)$ for all $U \subseteq \Omega \}$, 
 \unskip\footnote{For observant readers who followed the reference: it is not hard to see that the upper and lower bounds are equivalent; \citet{halpern-RAU} uses only the lower bound, but we give both for symmetry.}
@@ -1222,9 +1237,13 @@ How inconsistent is it to have belief function $\Bel$ and also believe $U$ occur
 It's the analogue of the information content $\I_\mu[U] = - \log \mu(U)$, but with plausbility instead of probability. 
 Indeed, if $\Plaus(U) = 1$, then there is no inconsistency to also believing $U$ occurs, and if $\Plaus(U) = 0$, then it's so implausible so as to be infinitely inconsistent. 
 
+% Now for the proof of the theorem.
 Now for the proof of the theorem.
+% The proof of \cref{theorem:belplaus-pdg} involves some interesting
+%     combinatorics, so we present it here. 
 
 \begin{lproof}
+        \label{proof:belplaus-pdg}
     \textbf{(a)}~
     The forwards direction is easy. 
     Fix some $\bar\mu \in \SD{\dg M}$, let $\mu \in \Delta \Omega$ be its marginal on $W$. 
@@ -1353,11 +1372,14 @@ Now for the proof of the theorem.
     \end{tikzpicture}}
     &= \inf_{\bar \mu \in \mathcal P} \kldiv{ \mu(V) }{ m }\\
     &= \inf_{\nu \in \Delta\{ A \subseteq \Omega : A \cap U \ne \emptyset\}}
-            \Ex_{A \sim \nu} \Big[ \log \frac{\nu(A)}{m(A)} \Big]
+            \Ex_{A \sim \nu} \Big[ \log \frac{\nu(A)}{m(A)} \Big],
     % \intertext{(since the objective on first line does not depend on the marginal on $W$, except through the constraint)}
     \end{align*}
     since the objective on first line does not depend on the marginal on $W$, except through the constraint.
-    In turn, this is equal to
+    \newmaterial{%
+    For those who are not yet used to the notation, recall that the PDG in question is just $\dg M_m$ together with a constraint that the value of the variable $W$ lies in the given set $U$.   
+    }%
+    In turn, this inconsistency is equal to
     \begin{align*}
     % &=
      \inf_{\nu \in \Delta \mathcal A_U}
@@ -1371,7 +1393,8 @@ Now for the proof of the theorem.
     with equality if and only if there is some constant $k$ so that
         $\nu(A) = k m(A)$ for all $A \in \mathcal A_U$. 
     By definition, $\Supp \nu \subseteq \mathcal A_U$, and thus
-    $\sum_{A \in \mathcal A_U} \nu(A) = 1$. Therefore, the inconsistency we have been calculating is equal to
+    $\sum_{A \in \mathcal A_U} \nu(A) = 1$. Therefore the inconsistency 
+    we have been calculating is equal to
     \[
         - \log \sum_{A \in \mathcal A_U} m(A) = - \log \Plaus(U).
         \qedhere
