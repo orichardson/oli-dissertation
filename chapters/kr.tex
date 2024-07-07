@@ -2,7 +2,7 @@
     \label{chap:repr-tools}
 
 PDGs are extremely expressive.
-We saw in \cref{sec:bn-convert,sec:factor-graphs,sec:expfam} that PDGs
+We saw in \cref{sec:bn-pdg,sec:factor-graphs,sec:expfam} that PDGs
 can capture graphical models such as Bayesian Networks and Factor graphs---but this is only the beginning. 
 %
 % This chapter, based on a collection of unpublished notes, 
@@ -93,7 +93,7 @@ but now that PDG semantics are on solid ground, we may freely regard a joint dis
 What makes PDGs special is their capability to do this while simultaneously representing other things. 
 
 \temphide{
-\paragraph{Updating with Combination.}
+\paragraph{Updating by combining PDGs.}
 \TODO
 }
 
@@ -114,35 +114,47 @@ There are no problems in supplying a probability over $Y$ when $X{=}1$,
 but unfortunately we also seem to be on the hook to provide
     a distribution over $Y$ when $X{=}0$. 
 To take another example, what if we do not want to supply the full probabilistic information, but only whether or not it is possible that $Y{=}y$ given $X{=}x$? 
-Or perhaps we 
+% Or perhaps we only know the marginals of a dist
 % For instance, one might want to specify that $Z$ must be even when $X{=}0$, 
+Farther afield, what if we want to model soft constraints, or distances, or couplings between marginal distributions?
 
 % None of this information fits the syntax of a PDG---at least, so not at in any obvious way. 
-It appears that modeling any of these concepts should require a different generalization of a PDG. 
-Yet it turns out that each of these concepts can be concepts can be compiled to a small PDG that exactly captures it, which we call a \emph{widget}. 
+At first glance, it appears that modeling any of these concepts might require introducing generalizations of the PDG formalism. 
+Yet it turns out that each of these concepts can be compiled to a small PDG that exactly captures it, which we call a \emph{widget}. 
 % When adding an arc $X \to Y$, we 
 % As expressive as they are, 
 
 
 \subsection{Relations and Constraints}
     \label{sec:relation-widget}
+    \label{sec:constraint-widget}
 
+A \emph{constraint} on a set $\Omega$ of possible worlds is a subset $C \subseteq \Omega$
+of satisfying values, or equivalently, 
+a function $C : \Omega \to \{\mathtt{true}, \mathtt{false}\}$ assigning to each $\omega \in \Omega$ a Boolean indicating whether or not it is allowed. 
+%
 % Although PDGs may seem as though they can only describe 
 A probability distribution $\mu \in \Delta \Omega$ over 
     a finite set $\Omega$ encodes in particular a constraint
     on the possible values of $\Omega$ that can be observed---namely, that
-they must be among $\Supp \mu = \{ \omega \in \Omega : \mu(\omega) > 0 \}$. 
-\unskip\footnote{An analogous statement may be made when $\Omega$ is infinite, 
-    but we defer this discussion until \cref{sec:continuous-pdgs}.}
-
-
+they must be among $\Supp \mu = \{ \omega \in \Omega : \mu(\omega) > 0 \} \subseteq \Omega$. 
+% \unskip\footnote{An analogous statement may be made when $\Omega$ is infinite, 
+%     but we defer this discussion until \cref{sec:continuous-pdgs}.}
+%
+\newmaterial{%
+But is it possible to encode a constraint (in a PDG) without adding any additional probabilistic information probabilistic?
+%
 % A relation $R(X_1, \ldots, )$
-A constraint on a set $\Omega$ of possible worlds is a subset $C \subseteq \Omega$
-of values that satisfy the constraint, or equivalently, 
-a function $\Omega \to \{\mathtt{true}, \mathtt{false}\}$ assigning to each $\omega \in \Omega$ a Boolean that indicates whether or not it is allowed by the constraint. 
+%
+In a factor graph, the answer is yes: simply multiply by a factor that encodes the constraint $C$---a factor happens to be equivalent to the uniform distribution over $C$. 
+% But this approach only works in a factor graph because factors lose their probabilistic interpretations in context. 
+Unfortunately, this construction only works because factors lose their probabilistic interpretations in context.
+The same approach does not have the effect we are looking for in a PDG, because beyond articulating the constraint, it also involves specifying a belief that all elements of $C$ were equally likely---information we do not have and would like to avoid assuming. 
+In this section, we will develop a widget that will enable PDGs to represent precisely this information and nothing more. 
+}%
+
     
-In a PDG, the sample space $\Omega$ consists of joint settings of
-variables;
+Recall that, in a PDG, the sample space $\Omega$ consists of joint settings of variables;
 % variables $\V\!\X$,
 a constraint on joint settings of variables is known more familiarly as a
 \emph{relation} (see \cref{primer:relations}).
@@ -218,12 +230,13 @@ that leaves $\Tru$ implicit, so that the binary relation $R(\var X,\var Y)$ and 
 \end{center}
 respectively, in PDG notation.
 \newmaterial{%
-    Visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$, leaving only a pair of double-headed arcs joined head-to-head.
-    Just as we have left $\Tru$ implicit in the graphical notation,
+Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well surpress it. 
+So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$; the result is a pair of double-headed arcs joined head-to-head.
+Just as we have left $\Tru$ implicit in the graphical notation,
 }%
 % Correspondingly, 
-we will typically identify a distribution $\mu(\X)$ with 
-the ``extended'' distribution $\mu(\X) \delta(\Tru{=}\trut)$, except
+we will want to identify a distribution $\mu(\X)$ with 
+the ``extended'' distribution $\mu(\X) \delta(\Tru{=}\trut)$---except
 in the following theorem statement, where we treat it carefully.
 % Observe that, as far as finite PDGs are concerned, 
 % relations, events, and constraints are essentially the same.
@@ -231,7 +244,7 @@ in the following theorem statement, where we treat it carefully.
 
 While it is not surprising that this construction encodes a relation
     as far as PDG semantics are concerned, it is still worth verifying.
-\begin{prop}
+\begin{linked}{prop}{constraints-work}
     If $R = R(\var A_1, \ldots, \var A_n) = R(\mat X)$ is a relational constraint
     on the variables $\mat X = \{\var A_1, \ldots, \var A_n\}$, then,
     writing $R$ for both the PDG $\dg M_R$ and the event $R \subseteq \V\mat X$, we have:
@@ -268,111 +281,34 @@ While it is not surprising that this construction encodes a relation
         
         \end{enumerate}
     \end{enumerate}
-\end{prop}
-\begin{proof}
-    1.
-    If $\mu \in \SD{R\,}$, then $\mu(\Tru{=}\trut) = 1$, so if $\mu(\mat X{=}\mat x) > 0$, then $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = 1$ for all joint settings $\mat x \in \V(\mat X)$. But $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = R(\mat x)$, and thus $R(\mat x) = 1$.
-    Conversely, if $\mu(\mat X, \Tru) = \mu(\mat X)\delta(\Tru{=}\trut)$ and $\mu(R) = 1$, then 
-    \[
-        \mu(\Tru \mid \mat X)
-        = (\mu(\mat X) \delta(\Tru {=} \trut)) / \mu(\mat X)
-        = \delta R(\Tru \mid \mat X).
-    \]
-    Thus $\mu$ is consistent with all conditional probabilities in the widget $\PDGof R$,
-    and so $\mu \in \SD{\dg M_R} = \SD{R\,}$.
-    
-    2. 
-    (a)
-    If $\mu \in \SD{\dg M + R}$, then by definition $\mu(\Tru{=}\trut) = 1$. By the same reasoning as in part 1, we also find that $\mu(R) = 1$. We also know that $\mu$ satisfies the cpds of $\dg M$, so $\mu(\X) \in \SD{\dg M}$. 
-    Conversely, if $\mu(\X) \in \SD{\dg M}$, and $\mu(\Tru{=}\trut) = \mu(R) = 1$, 
-    then, again by the logic in part 1, $\mu(\Tru \mid \mat X) = \delta R$.
-    Therefore $\mu$ satisfies all cpds of $\dg M$, and all cpds of the widget $\PDGof{R}$, and thus $\mu \in \SD{\dg M + R}$.
-    
-    (b) 
-    % In search of a contradiction, suppose that there is some 
-    For all 
-    $\mu \in \bbr{\dg M}^*_\gamma$, we have
-     % with $\mu(R) < 1$. 
-    % Then there is some setting $\mat x$
-    % If $\mu(\Tru{=}\trut) < 1$, then $$
-    \begin{align*}
-        \aar{\dg M}_\gamma 
-        &= \bbr{\dg M}_\gamma^*(\mu) 
-        \\&\ge \Ex_{\mu} \Big[
-            \log \frac{\mu(\Tru)}{\mathbbm1[\Tru=\trut]}
-            + \log \frac{\mu(\Tru \mid \mat X)}{\delta R(\Tru \mid \mat x)}
-        \Big]
-        \\&= \infty \cdot \mathbbm1[\mu(\Tru{=}\trut)=1] + 
-            \infty \cdot \Ex_{\mat x \sim \mu}\big[ \mat x \notin R \Rightarrow \mu(\Tru{=}\trut\mid\mat x)=0 \big]
-        .
-    \end{align*} 
-    Now, suppose that $\mu(R) < 1$, meaning there is some mass on joint settings $\mat x \notin R$.
-    If $\mu(\Tru{=}\trut \mid \mat x) \ne 0$, then the score is infinite, by the second term. 
-    Yet if $\mu(\Tru{=}\trut \mid \mat x) = 0$ and there is some mass on $\mat x$, then 
-    $\mu(\Tru{=}\trut) < 1$, and so again the score is infinite, by the first term.
-    Thus, if the score is finite, then $\mu(R) = 1$. 
-    
-    (c) The inequality is monotonicity (\cref{lemma!}). 
-    % For the remainder of this proof, identify distrib
-    Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(R) = 1$.
-    % Define 
-    % If $\Tru \notin \X$, then d
-    Define $\bar\mu(\X, \Tru) := \mu(\X)\delta(\Tru{=}\trut)$.
-    By the same logic as in the proof of part 1 of the proposition, 
-    $\mu$ satisfies all of the cpds of the widget $\PDGof R$; and thus 
-    $\bbr{\dg M + R}(\bar\mu) = \bbr{\dg M}_\gamma(\mu)$.
-    Chaining together some inequalities, we find:
-    \[
-     \aar{\dg M + R}_\gamma \le 
-     \bbr{\dg M + R}(\bar\mu) 
-     = \bbr{\dg M}_\gamma(\mu)
-     = \aar{\dg M}_\gamma
-     \le \aar{\dg M + R}_\gamma, 
-     \]
-    and thus all of these quantities are equal.
-    % The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
-    % Finally, if $\Tru \in \X$ and $\mu(\Tru{=}\trut) < 1$, then 
-    % \[
-    %     \aar{\dg M}_\gamma^* = \bbr{\dg M}^*_\gamma(\mu)
-    % \]
-    
-    Conversely, suppose
-    that $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$.
-    % \[
-    %     \bbr{\dg M + R}_\gamma \subseteq = \bbr{\dg M}^*_\gamma
-    % \]
-    If $\bbr{\dg M} = \infty$, then $\bbr{\dg M}_\gamma^*$ consists of 
-        all distributions, and so the statement is vacuous. 
-    On the other hand, 
-    select some $\bar\mu \in \bbr{\dg M + R}_\gamma^*$.
-    By applying part (b), we find that $\bar\mu(R) = 1$. 
-    And, because $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$
-    and $\bar\mu$ is an optimal distribution for $\dg M + R$, 
-    we find that its marginal $\mu(\X) := \bar\mu(\X)$
-    is optimal for $\dg M$:
-    \[
-        \bbr{\dg M}_\gamma(\mu(\X))
-        % = \Ex_{\omega \sim \mu}[ \sum_{a \in \Ar} ]
-        = \aar{\dg M + R}_\gamma 
-        = \aar{\dg M}_\gamma
-        \le \bbr{\dg M}_\gamma(\mu(\X))
-    \]
-    Thus, we have constructed $\mu \in \bbr{\dg M}^*_\gamma$ satisfying $\mu(R) =1$. 
-\end{proof}
+\end{linked}
 
 % Now that we can describe relational constraints, one might
 % naturally wonder about databases.
 
 
-\subsection{Costs and ``Soft'' Constraints}
-    \label{sec:soft-constraint}
+\subsection{``Soft'' Constraints and Barriers}
+    \label{sec:soft-constraint-widget}
 
 We have seen how ``hard constraints''  $\V\!X \to \{0, 1\}$ can be added to a PDG.
 But what about ``soft'' constraints, i.e., the gray area between zero and one? 
-There is already an obvious candidate for how to do this: simply do precisely what we did for a hard constraint, except use a cpd $c(\Tru \mid X)$ that is not deterministic
-    in place of $\delta R(\Tru\mid X)$. 
+%
+This is very different from specifying a probability over $X$; we could assign every $X$ a value of $0.99$, or $0.01$; there is no reason that the assignments should sum to $1$.
+%
+In light of the construction in the previous section, we now have an obvious candidate for how to do this: simply do precisely what we did for a hard constraint, except use a cpd $c(\Tru \mid X)$ that is not deterministic in place of $\delta R(\Tru\mid X)$. 
 
-As before add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the event $\Tru \!\!=\! \trut$, to any PDG.
+
+Given a set $\mat X$ of variables, and a function
+$s : \V\mat X \to [0,1]$, let $\dg M_s$ denote the PDG with variables 
+    $\mat X \cup \{ \Tru\}$ 
+        % (with $\V\Tru = \{\trut, \truf\}$ as before),
+    and two cpds:
+    the event $\Tru{=}\trut$ (as before),
+    and the cpd 
+    $s(\Tru \mid X)$ with $s(\Tru{=}\trut|X{=}x) = s(x)$.
+Semantically, the PDG $\dg M_s$ has almost all of the properties we have seen in the case of hard constraints; the following is a strengthening of \cref{prop:constraints-work}. 
+% As before, $\Tru$  takes values ,
+%      and the event $\Tru \!\!=\! \trut$.
 % Now, given a
 % cost function $c: \V\!X) \to \mathbb R_{\ge 0}$,
 % define the cpd $\hat c(\Tru |X)$ by
@@ -383,20 +319,83 @@ As before add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the 
 % Now, given such a cpd $p(\Tru \mid X)$, 
 % for any PDG we have 
 
-\begin{linked}{prop}{log-barier}
-    Given a PDG $\dg M$ and a function $s : \V\!X \to [0,1]$. 
+\begin{linked}{prop}{soft-constr}
+    % Given a PDG $\dg M$ and a 
+    Given a 
+    function $s : \V\!X \to [0,1]$. 
     %
     we can regard $s$ as a cpd $s(\Tru \mid X)$ with $s(\Tru{=}\trut|X{=}x) = s(x)$. 
+    We then have the following analogues of the results for hard constraints:
+    %
+    % Just as with a hard constraint, we have
+    % (a)  $\mu \in \SD{ \dg M + s }$ iff $\mu(\X) \in \SD{\dg M}$ and $\mu(s(X)=1) = 1$
+    % (b) provided
+    % (c)  For all $\gamma \ge 0$,
+    %     $\aar{\dg M + s}_\gamma \ge \aar{\dg M}_\gamma$
+    %     with equality iff $\exits \mu \in \bbr{\dg M}^*_\gamma$ such that $\mu(s(X) = 1)$. 
+    %
+    % However, the analogue of (b) is much nicer. 
+    \begin{enumerate}[topsep=0pt]
+        \item $\SD{ \dg M_s } 
+        % (= \SD{\dg M_R})
+            % = \{ \mu(X, \Tru) : \Supp \mu \subseteq R \times \{\trut\} \}
+            % \cong \{ \mu(X) : \Supp \mu \subseteq \{ x \in \V\!X : s(X) = 1\} \}
+            = \{ \mu(\mat X, \Tru) : \mu(s(X) = 1) = 1 = \mu(\Tru{=}\trut) \}
+            $.
+        \item  
+        Moreover, for all PDGs $\dg M$ 
+            % with variables $\X$,
+            % containing the variables $\mat X$:
+            with variables $\X \supseteq \{ X \}$, 
+        \begin{enumerate}
+            \item 
+            % $\SD{\dg M + R} 
+            % \cong
+            %     % =
+            %     % \SD{\dg M} \cap \{ \mu(\X) : \Supp \mu \subseteq R\}
+            %     % \SD{\dg M} \cap \{ \mu(\X) : \mu(R) = 1\}
+            %     \big\{ \mu \in \SD{\dg M} ~\big|~ \mu(R) = 1 \big\}
+            %     $
+            $\mu \in \SD{\dg M + s(X)}$ 
+            iff $\mu(\X) \in \SD{\dg M}$ and $\mu(s(X)) = 1$ 
+                {\color{gray}~(and $\mu(\Tru{=}\trut)=1$)}.
+            % where $\cong$ identifies 
+            
+            
+            \item provided $\aar{\dg M}_\gamma < \infty$, 
+                the set $\bbr{\dg M + \dg M_s}^*_\gamma$ consists entirely of $\mu$ satisfying $\mu(s(X) > 0) = 1$. 
+            
+            \item for all $\gamma \ge 0$, $\aar{\dg M + \dg M_s}_\gamma \ge \aar{\dg M}_\gamma$ with equality if and only if
+            there exists some $\mu \in \bbr{\dg M}^*_\gamma$ for which $\mu(s(X) = 1) = 1$. 
+        
+        \end{enumerate}
+    \end{enumerate}
+\end{linked}
 
-    Just as with a hard constraint, we have
-    (a)  $\mu \in \SD{ \dg M + s }$ iff $\mu(\X) \in \SD{\dg M}$ and $\mu(s(X)=1) = 1$
-    (c)  For all $\gamma \ge 0$,
-        $\aar{\dg M + s}_\gamma \ge \aar{\dg M}_\gamma$ 
-
-    \TODO
-
-    log barrier function.
-    
+% \begin{linked}{prop}{log-barrier}
+% Moreover, 
+Despite the similarity so far, there is a big difference between hard and soft constraints:
+    values of $x$ that have intermediate satisfaction scores $s(x) \in (0,1)$,
+    while not fully consistent, are still possible.
+Indeed, they even be likely in the optimal distribution, when the context is inconsistent enough. 
+% To understand more deeply, 
+To get a deeper understanding, it is helpful to look at the scoring function of 
+$\dg M_s$ in the context of another (arbitrary) PDG:
+\[
+    \bbr{\dg M_s + \dg M}_\gamma(\mu) 
+        = \bbr{\dg M}_\gamma(\mu) - \Ex_\mu [ \log s(X) ].
+\]
+The key is the final term;
+    % it is not just any cost,
+    adding $\dg M_s$ to $\dg M$ has had the effect of
+    augmenting the scoring function $\bbr{\dg M}_\gamma$ with 
+    something called a \emph{log barrier function}.
+% A barrier function is a smooth approximation to a hard constraint
+%     added to an minimization objective, 
+%     with the property that values outside the satisfying area (i.e., with $s(x) = 0$ )
+% Logarithms are popular because they grow relatively slowly and seem to stabilize gradients. 
+%
+Log barrier functions play an important role in solving constrained optimization problems with interior point methods. In fact, a similar function will ultimately be the key to inference in PDGs themselves, in \cref{chap:infer}.
 
     % $ \displaystyle
     %     \aar*{\!\begin{tikzpicture}[center base]
@@ -419,23 +418,20 @@ As before add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the 
     %         = \!
     %     \Ex_{x\sim p}\!    [\,c(x)\,].
     % $
-\end{linked}
-Setting confidence $\beta_p := \infty$ may not be realistic since
-we're still training the model $p$,
-but doing so is necessary to recover $\Ex_p c$.%
+% \end{linked}
 
 
-    \TODO 
+% Setting confidence $\beta_p := \infty$ may not be realistic since
+% we're still training the model $p$,
+% but doing so is necessary to recover $\Ex_p c$.%
 
-TODO: Comparisons between factors and costs. 
-TODO: move in and split material from loss chapter.
 
-\subsection{Couplings}
+\subsection{Couplings and Wasserstein Metrics}
     \label{sec:coupling-widget}
 % The set of couplings $\
-Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
-A \emph{coupling} between $p$ and $q$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
-Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \citep{optimal-transport}, 
+% Suppose that $p(X)$ and $q(Y)$ are probability distribuitons.
+A \emph{coupling} between distributions $p(X)$ and $q(Y)$ is a joint distribution over $X$ and $Y$ whose marginal on $X$ is $p$ and whose marginal on $Y$ is $q$. 
+Couplings are an important tool for probabilistic reasoning, and are the basis of optimal transport theory \citep{santambrogio2015optimal}, 
 a wide range of programming logics \citep{Kaminski_Katoen_Matheja_2020}.
 %
 % Let $\Pi(p,q)$ be the set of couplings of $p$ and $q$, i.e.,
@@ -471,7 +467,7 @@ Suppose we have a distance metric $d$ on a space $X$.
 % \[  
 %     W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
 % \]
-The Wasserstein distance between $p,q \in \Delta X$, given by
+The \emph{Wasserstein distance} (also called earth-mover's distance or Kantorovich metric) between $p,q \in \Delta X$, given by
 \[  
     W_1(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big],
 \]
@@ -488,7 +484,7 @@ the $d$ in probabilistic terms.
 % % to convert it  to a Gibbs distribution. 
 % To place more probability in $\truf$ as $d(X,Y)$ increases.
 %
-A distance is not a probability, but we can convert it to a soft constraint and write it in probabilistic terms, as in \cref{sec:soft-constraint}.
+A distance is not a probability, but we can convert it to a soft constraint and write it in probabilistic terms, as in \cref{sec:soft-constraint-widget}.
 Accordingly, 
 % Let $\Tru$ be a variable that in principle can be
 % either $\trut$ or $\truf$, but happens to always be $\trut$.
@@ -499,7 +495,13 @@ Accordingly,
 % \]
 we have:
 \begin{prop}
+    Suppose that $p(X)$ and $q(Y)$ are probability distribuitons. 
+    Given a distance measure $d : \V(X,Y) \to [0,\infty]$, 
+    let $\hat d(x,y) := \exp(- d(x,y))$
+    be a similarity measure.
+    Interpreting $\hat d$ as a soft constraint, we have:
     \[
+        \aar{\dg M_{\hat d} + p! + q!} =
         \aar**{\begin{tikzpicture}[center base]
             \node[dpad0] (X) at (-1,0) {$X$};
             \node[dpad0] (Y) at (1,0) {$Y$};
@@ -519,9 +521,10 @@ we have:
         \end{tikzpicture}}
         = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
     \]
+    where the exclamation points indicate high confidence $(\beta = \infty)$. 
 \end{prop}
 \begin{proof}
-    The high confidence specification of $p$ and $q$ constrains the optimal distributions to $\Pi(p,q)$, and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint}. 
+    The high confidence specification of $p$ and $q$ constrains the optimal distributions to $\Pi(p,q)$, and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint-widget}. 
 \end{proof}
 
 % \subsection{Graph-Hypergraph Equivalence}
@@ -741,7 +744,9 @@ which shows our construction behaves appropriately for all PDGs.
 \end{prop}
 \begin{lproof}
     The inequality is immediate; it is an instance of monotonicity of inconsistency
-    \cite[Lemma 1]{one-true-loss}, which we will discuss in depth in \cref{sec:monotone}. Intuitively: believing more cannot make you any less
+    % \cite[Lemma 1]{one-true-loss},
+    \cref{lemma!},
+    which we will discuss in depth in \cref{sec:monotone}. Intuitively: believing more cannot make you any less
     inconsistent.  We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
 
     $(\impliedby)$. Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y|X{=}x) = p$.
@@ -1092,7 +1097,7 @@ But some representations better capture a scenario more naturally than others, a
 % make it easy to select representations that interact appropriately with entropy. 
 \newmaterial{%
 facilitate the choice of representations that interact well with entropy. 
-% As discussed in \cref{sec:bns}, \cref{theorem:bns-are-pdgs} is a powerful example of how 
+% As discussed in \cref{sec:bn-pdg}, \cref{theorem:bns-are-pdgs} is a powerful example of how 
 In \cref{ex:coin}, the PDG representation lead us to a space which, upon applying the principle of maximum entropy (or better yet, of minimum information deficiency) leads to a more reasonable answer than the naive space given by the set of possible marginals over the coin outcome. 
 % It is worth noting that the naive space is not even 
 It is difficult to imagine how one could even obtain the naive maximum entropy result with a PDG.
@@ -1429,3 +1434,104 @@ Visually, it is uncommon to use the notation of graphical models to describe the
 In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.
 
 \TODO[TODO: diagram here would be nice touch!]
+
+
+
+
+\begin{subappendices}
+\section{Proofs}
+
+\recall{prop:constraints-work}
+\begin{lproof} \label{proof:constraints-work}
+    1.
+    If $\mu \in \SD{R\,}$, then $\mu(\Tru{=}\trut) = 1$, so if $\mu(\mat X{=}\mat x) > 0$, then $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = 1$ for all joint settings $\mat x \in \V(\mat X)$. But $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = R(\mat x)$, and thus $R(\mat x) = 1$.
+    Conversely, if $\mu(\mat X, \Tru) = \mu(\mat X)\delta(\Tru{=}\trut)$ and $\mu(R) = 1$, then 
+    \[
+        \mu(\Tru \mid \mat X)
+        = (\mu(\mat X) \delta(\Tru {=} \trut)) / \mu(\mat X)
+        = \delta R(\Tru \mid \mat X).
+    \]
+    Thus $\mu$ is consistent with all conditional probabilities in the widget $\PDGof R$,
+    and so $\mu \in \SD{\dg M_R} = \SD{R\,}$.
+    
+    2. 
+    (a)
+    If $\mu \in \SD{\dg M + R}$, then by definition $\mu(\Tru{=}\trut) = 1$. By the same reasoning as in part 1, we also find that $\mu(R) = 1$. We also know that $\mu$ satisfies the cpds of $\dg M$, so $\mu(\X) \in \SD{\dg M}$. 
+    Conversely, if $\mu(\X) \in \SD{\dg M}$, and $\mu(\Tru{=}\trut) = \mu(R) = 1$, 
+    then, again by the logic in part 1, $\mu(\Tru \mid \mat X) = \delta R$.
+    Therefore $\mu$ satisfies all cpds of $\dg M$, and all cpds of the widget $\PDGof{R}$, and thus $\mu \in \SD{\dg M + R}$.
+    
+    (b) 
+    % In search of a contradiction, suppose that there is some 
+    For all 
+    $\mu \in \bbr{\dg M}^*_\gamma$, we have
+     % with $\mu(R) < 1$. 
+    % Then there is some setting $\mat x$
+    % If $\mu(\Tru{=}\trut) < 1$, then $$
+    \begin{align*}
+        \aar{\dg M}_\gamma 
+        &= \bbr{\dg M}_\gamma^*(\mu) 
+        \\&\ge \Ex_{\mu} \Big[
+            \log \frac{\mu(\Tru)}{\mathbbm1[\Tru=\trut]}
+            + \log \frac{\mu(\Tru \mid \mat X)}{\delta R(\Tru \mid \mat x)}
+        \Big]
+        \\&= \infty \cdot \mathbbm1[\mu(\Tru{=}\trut)=1] + 
+            \infty \cdot \Ex_{\mat x \sim \mu}\big[ \mat x \notin R \Rightarrow \mu(\Tru{=}\trut\mid\mat x)=0 \big]
+        .
+    \end{align*} 
+    Now, suppose that $\mu(R) < 1$, meaning there is some mass on joint settings $\mat x \notin R$.
+    If $\mu(\Tru{=}\trut \mid \mat x) \ne 0$, then the score is infinite, by the second term. 
+    Yet if $\mu(\Tru{=}\trut \mid \mat x) = 0$ and there is some mass on $\mat x$, then 
+    $\mu(\Tru{=}\trut) < 1$, and so again the score is infinite, by the first term.
+    Thus, if the score is finite, then $\mu(R) = 1$. 
+    
+    (c) The inequality is monotonicity (\cref{lemma!}). 
+    % For the remainder of this proof, identify distrib
+    Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(R) = 1$.
+    % Define 
+    % If $\Tru \notin \X$, then d
+    Define $\bar\mu(\X, \Tru) := \mu(\X)\delta(\Tru{=}\trut)$.
+    By the same logic as in the proof of part 1 of the proposition, 
+    $\mu$ satisfies all of the cpds of the widget $\PDGof R$; and thus 
+    $\bbr{\dg M + R}(\bar\mu) = \bbr{\dg M}_\gamma(\mu)$.
+    Chaining together some inequalities, we find:
+    \[
+     \aar{\dg M + R}_\gamma \le 
+     \bbr{\dg M + R}(\bar\mu) 
+     = \bbr{\dg M}_\gamma(\mu)
+     = \aar{\dg M}_\gamma
+     \le \aar{\dg M + R}_\gamma, 
+     \]
+    and thus all of these quantities are equal.
+    % The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
+    % Finally, if $\Tru \in \X$ and $\mu(\Tru{=}\trut) < 1$, then 
+    % \[
+    %     \aar{\dg M}_\gamma^* = \bbr{\dg M}^*_\gamma(\mu)
+    % \]
+    
+    Conversely, suppose
+    that $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$.
+    % \[
+    %     \bbr{\dg M + R}_\gamma \subseteq = \bbr{\dg M}^*_\gamma
+    % \]
+    If $\bbr{\dg M} = \infty$, then $\bbr{\dg M}_\gamma^*$ consists of 
+        all distributions, and so the statement is vacuous. 
+    On the other hand, 
+    select some $\bar\mu \in \bbr{\dg M + R}_\gamma^*$.
+    By applying part (b), we find that $\bar\mu(R) = 1$. 
+    And, because $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$
+    and $\bar\mu$ is an optimal distribution for $\dg M + R$, 
+    we find that its marginal $\mu(\X) := \bar\mu(\X)$
+    is optimal for $\dg M$:
+    \[
+        \bbr{\dg M}_\gamma(\mu(\X))
+        % = \Ex_{\omega \sim \mu}[ \sum_{a \in \Ar} ]
+        = \aar{\dg M + R}_\gamma 
+        = \aar{\dg M}_\gamma
+        \le \bbr{\dg M}_\gamma(\mu(\X))
+    \]
+    Thus, we have constructed $\mu \in \bbr{\dg M}^*_\gamma$ satisfying $\mu(R) =1$. 
+\end{lproof}
+
+
+\end{subappendices}

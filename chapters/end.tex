@@ -1,6 +1,7 @@
 
 \section{Conclusions}
 
+In \cref{part:univ-model}, we saw how PDGs capture a wide variety of modeling tools, ranging from standard graphical models (\cref{chap:pdg-repr}) to standard 
 
 
 
@@ -51,14 +52,20 @@ We can summarize and reframe a number of the properties we have seen in terms of
 % \end{prop}
 
 
-\section{Open Questions}
+\section{Future Work and Open Questions}
 
 \paragraph{Structural Information Deficiency and QIM-Compatibility.}
-\Cref{sec:qim-info} 
+\Cref{sec:qim-info} shows how one way in which QIM compatibility is deeply related to the qualitative information in a PDG.
+But 
 
 \paragraph{Cpaturing Other Representations.}
 In \cref{part:univ-model}, we saw that PDGs and QIM-compatibility,
 
+
+\paragraph{Tighter Characterization of PDG complexity}
+
+\paragraph{Other Approaches to Inference}. 
+ Particle-based PDG inference
 
 There's no reason to think that this is 
 Object graphs and databases [Spivak].
@@ -67,8 +74,51 @@ In \cref{chap:PDG-cat}, we found that PDGs can be viewed as diagrams in a certai
 The categorical picture opens a vast landscape of abstract research directions, ranging from variants of PDGs where probability is replaced by a different concept, to connecting the standard defences of information loss \citep[Theorem ??]{leinster2021entropy}.
 
 
-\section{Applying the Theory}
+\section{Implementing and Applying the Theory}
 
-
-Conspicuously absent are real-world problems 
+The material here has been conceptual, mathematical, and often philosophical.
+But is it useful?
+Narrowly construed as ``can it be used for understanding things?'', I believe we have seen the answer is a resounding yes. 
+Equally narrowly construed as, ``can I run it on ny laptop?'', the answer is also yes! 
+% Interested parties 
+A reader who wants to play with PDGs themselves can find a general-purpose Python library implementing the framework, and many of the ideas in this thesis, at:
 \url{https://github.com/orichardson/pdg}.
+%
+Many of these concepts we have seen are difficult to visualize or manipulate, and I have been surprised often.
+% Every paper in this thesis has had, at some point, a fatal mistake.  
+Using and developing this library has helped me understand the math more deeply, and I cannot recommend implementing math highly enough. 
+To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
+
+% But much of the work
+% While some of the ideas 
+% Many of these ideas, while technical, are also very abstract. 
+% Indeed, while seeing this project through I have even been accused by my peers of not being a computer scientist! 
+% As an avid coder, and a person who has long understood things by implementing them, this 
+%
+% Fortunately, I have something that might 
+% To these people, I present the PDG python library, 
+% What these people may not be aware of, is that I have been 
+
+
+% These are the easy questions. 
+% Let's move on to harder questions. 
+% But that's enough narrow construing. 
+% \textellipsis but I'm still avoiding the deeper question.
+But since I'm still avoiding the deeper question, let me ask it more forcefully.
+% But has it been practical? 
+% Has it been useful? 
+Is any of this practical? Can it help solve real problems? Could it be used \emph{to improve people's lives}? 
+These questions haunt me, because the question is important, and because I'm convinced the answer is probably yes---but for years I have failed to investigate it seriously.  
+Conspicuously absent in this thesis are solutions to important real-world problems. 
+But that is a high bar, and one that few manage to clear in a meaningful way. 
+
+So perhaps the real applications can come later. 
+% Perhaps it's better to resolve the conceptual 
+Perhaps what's needed at the moment are theoretical and conceptual foundations for AI systems. 
+% There is no shortage of people eager to solve problems
+% 
+Perhaps it's better to position ourselves to tackle the biggest problems that loom on the horizon of AI systems, than it is to possibly find ourselves with a toolkit optimized for fixing smaller ones. 
+Perhaps, for now, what's important is clear and flexible thinking. 
+
+% For now, what is important is thinking clearly, and flexibly. 
+

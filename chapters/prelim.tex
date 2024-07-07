@@ -640,6 +640,9 @@ The components of a distribution $\mu \in \Delta \mathrm{Ext}(A)$ are called \em
     A cpd $p(Y|X)$ can be viewed as providing a barycentric coordinate system for 
     $\Delta \V Y$ whose vertices correspond to $\V\!X$. 
 }
+\newmaterial{%
+This way of thinking about conditional probability distributions will at times be quite useful (e.g., in \cref{ssec:cvx-prob-sets}).
+}
 
 % For instance, $\mathrm{Ext}(\Delta \Omega) = \{ \delta_{\omega} : \omega \in \Omega \}$. 
 % If $A$ is a convex set with $|\mathrm{Ext}(A)| \in \mathbb N$,
@@ -843,16 +846,14 @@ is a function $\kappa : \Omega \times \mathcal G \to \mathbb R$, such that
     $\{\omega \in \Omega : \kappa(\omega,U) \in S\} \in \mathcal F$. 
 \end{enumerate}
 
-\oldnewmaterial{%
 The second condition is the new one, and it is necessary to ensure that we can compose them and treat them as models of randomized functions, just as in the finite case.
-The analogue of the random variable $p(Y|X)$ in the finite case 
-    is the 
-    measurable function 
+The analogue of viewing a cpd $p(Y|X)$ in the finite case 
+    as a random variable, is to implicitly convert
+    the Markov Kernel $\kappa(Y|X)$ to the measurable function 
 \[
     (x,y) \mapsto \frac{\mathrm d\kappa(x,-)}{\mathrm d \lambda_Y} (y) 
         \quad : \V(X,Y) \to [0,\infty].
 \]
-}
 
 
 \section{The Basic Theory of Graphs and Hypergraphs}
@@ -1242,6 +1243,8 @@ In the duals of hypergraphs corresponding to causal models, there are no two-tai
 Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
 
 
+\TODO[ TODO: clean up previous paragraph; add network diagram ]
+
 % \TODO[((What can be done with these objects? \\TODO: tie into the thesis elswehere or remove.))]
 % \TODO[
 %     Possible to have other identity morphisms? Require that, for each $X \in \N$, the identity morphism $\dg M(\ed {\mathrm{id}}XX)$ preserves the base measure $\lambda_X$, in addition to pre/post committing 
@@ -1266,7 +1269,7 @@ The quantitative form then annotates those concepts with data.
 A \emph{probabilistic graphical model},
 or simply  ``graphical model'', is a
 graphical model structure together with  \emph{quantitative} or probabilistic information about these local influences.
-
+%
 The purpose of a graphical model, at least historically, is to be a compact representation of a probability distribution (by exploiding independencies). 
 Thus, a graphical model $\cal M$
 typically represents a joint probability distribution $\Pr_{\!\cal M}
@@ -1390,12 +1393,13 @@ A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it sa
         If $X,Y \in \X$ with $X \ne Y$ and $\{X, Y\} \notin E$, then 
         $
         \mu \models
-            X \CI Y \mid \X \setminus \{X, Y\}$.  
+            X \CI Y \mid \X \setminus \{X, Y\}$;
     \item [(local)] 
-        For each $X \in \X$, let $\partial_E(X) := \{ Y \in \X : \{Y,X\} \in E \}$ be the set of 
-        then $
+        For each $X \in \X$, we have $
             \mu \models
-        X \CI \X \mid \partial_G(X)$.  
+        X \CI \X - \{ X \} \mid \partial_G(X)$,
+        where
+        $\partial_G(X) := \{ Y \in \X : \{Y,X\} \in E \}$ is the set of variables neighboring $X$;
     \item [(global)]
         For all $\mat X, \mat Y, \mat Z \subseteq \X$,
         if every path from some $X \in \mat X$ to some $Y \in \mat Y$ 
@@ -1403,16 +1407,17 @@ A distribution $\mu$ is said to be a \emph{Markov Random Field} for $G$ if it sa
         then $
         \mu \models 
         \mat X \CI \mat Y \mid \mat Z
-        $.
+        $;
     \item [(factorization)] 
         There exists a collection of functions 
-        $\{ \phi_{\mat X} : \V(\mat X)\to \mathbb R_{\ge 0} \}_{\mat X \in \mathrm{cliques}(G)}$
-        indexed by the cliques of the graph $G$
-        whose product is the distribution $\mu$,
-        i.e.,
-        \[
+        $\{ \phi_{\mat X} : \V \mat X \to \mathbb R_{\ge 0} \}_{\mat X \in \mathrm{cliques}(G)}$
+        indexed by the cliques of the graph $G$,
+        whose product is the distribution $\mu$.
+        That is,
+        $
+            \displaystyle
             \mu(\X) = \prod_{\mat X \in \mathrm{cliques}(G)} \phi_K(\mat X).
-        \]
+        $
 \end{description}
 
 In general, the conditions are distinct, with (global) $\implies$ (local) $\implies$ (pairwise). 
@@ -1421,10 +1426,17 @@ However, if we restrict to \emph{positive} distributions (i.e., $\forall \omega 
 This result is
 known as the \emph{Clifford-Hammersly Theorem}, or the \emph{fundemental theorem of graphical models}. 
 
-If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \! \mat X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ (for some arbitrary index set $J$, and each $\mat X_j \subseteq \X$), and then renormalize. 
+If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \mat X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ indexed by some arbitrary set $J$, and then renormalize;
+    the subset $\mat X_j \subseteq \X$ is called the \emph{scope} of factor $j$. 
 %
+\newmaterial{%
+Although the data we have described is an annotation of a hypergraph, it is easier to draw as a bipartite graph.}
+
 The bipartite graph that corresponds naturally to this hypergraph is called a \emph{factor graph}. 
-More precisely, a factor graph has two kinds of nodes factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
+More precisely, a factor graph has two kinds of nodes: factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
+\newmaterial{%
+Some authors reserve the term ``factor graph'' just for the bipartite graph representation, but we will also refer to the hypergraph and collection of factors this way, as they are essentially the same object. 
+}%
 We will see more details in \cref{sec:factor-graphs}.
 
 
@@ -1690,11 +1702,13 @@ as depicted in \cref{fig:info-diag-prelim}.
     \label{sec:prelim-gen-ent}
 So far, everything we have said relies on intuitions that the variables are discrete.
 % It is not hard to see that trying to take a limit 
+\newmaterial{%
 If we continous variables by discretizing them, it is not hard
     to see that the entropy as defined goes to $\infty$ as the discritization becomes fine.
 Indeed, this is appropriate, because there is a sense in which a real number sampled from $[0,1]$ contains infinite information.
 However, it is difficult to work with divergent limits in this way;
     instead, we define a much more useful quantity.
+}%
 
 % so that $\mu(X{=}x)$ = $\mu(x)$. 
 In the general case, we need only replace instances of $\mu(X)$ used as a random variable with its derivative $\frac{\mathrm d\mu}{\mathrm d \lambda}$ with respect to $X$'s base measure $\lambda_X$.
@@ -1714,7 +1728,8 @@ The reader should also be aware that, for real-valued variables, $\H(X) = 0$ no 
 % Intuitively, the scale has been shifted by $$
 Aside from these unwelcome developments, this analogue of entropy acts otherwise just like the original, but shifted by an additive constant to keep it in a more useful range.
 It still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization.  
-Fortunately, (conditional) mutual information works just as before: it is non-negative and zero iff there is a (conditional) independence. 
+
+(conditional) mutual information works just as before: it is non-negative and zero iff there is a (conditional) independence. 
 }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 
@@ -1752,19 +1767,24 @@ At a high level, this is because
 Imagine, for example, that our friend is undergoing a secret but important evaluation, 
 and we know nothing about her score except that it will be a number between 1 and 5.
 It would be inappropriate to assume that she will scored a 5 (or a 1) simply because it's consistent with what we know, because that does not adequately represent our ignorance. 
-The principle of maximum entropy states that we should assume a uniform distribution over scores until we learn more.  
+The principle of maximum entropy implies that we should assume a uniform distribution over scores until we learn more.  
 % If we discover that the average score is a 4, then the maximum entropy distribution 
 
 \newmaterial{%
 % There are many other theoretical arguments in favor of the principle as well \citep{wallis}.
 % Despite its successes, 
 The principle of maximum entropy has also faced significant criticism, from a number of different angles \citep{seidenfeld1986entropy,critique-maxent,friedman1971jaynes}.
-An recurring theme in the attacks is the dependence on representation---
+An recurring theme in these works is the dependence on representation.
+For example, had we said only ``either our friend will score a 5, or she won't'', then maximum entropy would have suggested that we should presume probability $\frac12$ that she scores a 5, which is incompatible with the probability $\frac15$ that we were supposed to presume before. 
+%
+Without wading too far into this debate, we just mention that we view it as problematic to compare our intuition, which has been primed with the context of all five possible scores, with a picture that has willfully ignored that extra context. 
+Whether or not it is appropriate as a general rule, the principle of maximum entropy certainly not well-behaved locallly; if we expect it to work at all, we must give it the entirety of the relevant representation. 
+% If maximum entropy is to work at all, then it 
 }
 
 
 % Many years later, another strong argument can be made 
-Many decades later, we are now also in a position to make an empirical argument for the principle of maximum entropy: it validates many standard and intuitively natural choices made in the literature.
+After several decades, there is also a rather strong empirical case in favor of the principle of maximum entropy: it validates many standard and intuitively natural choices made in the literature.
 % The uniform distribution over a finite set of outcomes is the distribution with maximum entropy.
 The uniform distribution over an interval $[a,b]$ is the maximum entropy distribution with that support. 
 A gaussian with mean $m$ and variance $\sigma^2$ is the maximum entropy distribution with that mean and variance. 
@@ -1777,25 +1797,27 @@ Logitstic regression
 More generally, \emph{exponential families}, important classes of models that subsume the examples above as well as undirected graphical models, also maximize entropy subject to an expectation matching constraint. 
 
 But what about directed graphical models? Bayesian Networks, so far, have resisted such a clean characterization in terms of maximum entropy; maximum entropy approaches seem to require some sort of deference to a causal structure \citep{williamson2001foundations}. 
-One contribution of this thesis is to expand the principle of maximum entropy to account for qualitative information (\cref{sec:bn-maxent}). 
+\newmaterial{%
+A related concern with maximum entropy in the face of conditional information is addressed in \citep{Grove1997ProbabilityUC}.
+}%
+One contribution of this thesis is to expand the principle of maximum entropy to account for causal information and conditional constraints (\cref{sec:bn-maxent}). 
 %
 % It may be worth noting that these two arguments for maximum entropy---the high-level interpretation of the quantity as measuring the right thing, and the sociological argument to unity---directly parallel the two kinds of arguments we give for the semantics of PDGs, in \cref{chap:pdg-repr,chap:one-true-loss}, respectively.
 
-
-A related concern with maximum entropy in the face of conditional information is addressed in \citep{Grove1997ProbabilityUC}.
 
 \newmaterial{%
 \paragraph{Entropy as a Structural Information Measure.} 
 Throughout this thesis, we will argue that entropy and its ilk are purely ``qulitative'' or ``structural'' aspects of a probability distribution (although perhaps the latter term is clearer in this context, because we are still talking about real numbers, i.e., ``quantities''). 
 % One reason for this is that we don't need to know any of the quantitative information to be able to talk about and use entropy intelligently. 
-One reason is that we do not need to know anything about $\V\!X$ in order make full use of these quantities.
+Here is one important reason why: 
+    we do not need to know anything about $\V\!X$ in order make full use of these quantities.
 Just like the qualitative notion of independence $X \CI Y$, the mutual information $\I(X;Y)$ is fully defined and makes complete sense without knowing what values the variables can take on.
 Even the notation reflects this. 
 Recall that, at least in the discrete case, $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ can all be viewed as random variables, taking as input values of $X$ and $Y$. 
 % Unlike their counterparts, 
 $\H_\mu(X)$, $\H_\mu(X,Y)$, and $\H_\mu(Y|X)$, however, 
     are not functions of the values of $X$ and $Y$, but rather functions of (the identities of) the variables themselves. 
-% Indeed, it makes no sense to feed $(x,y) \in \V(X,Y)$ as an argument to any of these concepts, even if we wanted to.
+Indeed, it makes no sense to feed values $(x,y) \in \V(X,Y)$ to these concepts.
 In other words, the operate on the qualitative aspect of a variable, not its quantitative aspect. 
 
 A second reason to view entropy as structural appears in its general definition \eqref{eq:gen-entropy}.

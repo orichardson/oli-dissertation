@@ -798,21 +798,22 @@ The combined PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by 
 Rather than adopting two distinct mechanisms, one might well have intended to merge them, viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 Yet PDG union performs no such merge.
-Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which qualitative mechanisms ought to be merged together, after independent combination. 
-We will return to this in \cref{ex:overdet}.
-The
+Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
+We will return to this point in \cref{ex:overdet}.
 % ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 % We mention that there is an even bigger problem in combining factor graphs, because the parameters 
-analogue of this problem is even bigger 
+In that context, we will also see that the
+	analogue of this problem is even bigger 
     for factor graphs, because 
-    $\balpha$ and $\bbeta$ are essentially ``fused together'' in these models, as we will see in \cref{sec:factor-graphs}.
+    $\balpha$ and $\bbeta$ are essentially ``fused together'' in these models.
+	% , as we will see in \cref{sec:factor-graphs}.
 % We will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
-It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ do work as one might hope. If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$, there is no problem with taking $\balpha$ to be $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively.  For instance, if $G_1$ and $G_2$ represent the same independencies, then $\balpha$ will encode those shared independencies. 
+It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$, there is no problem with taking $\balpha$ to be $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively.  For instance, if $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, then $\balpha$ will encode those shared independencies. 
 
-Still, there are some cases where independent combination is appropriate even for causal information; we now proceed with the formal details.
+Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. We now proceed with the formal details.
 
 
 \paragraph{Formal Details of PDG Sums.}
@@ -1476,7 +1477,7 @@ Furthermore, when $\bbeta = \gamma \balpha$,
 %     the stability of a system is quantified by its \emph{Gibbs Free Energy} $G = H - TS$, where $H$ represents the 
 % In the case of no qualitative information (i.e., $\balpa = \mat 0$),
 % the scoring equation \cref{} 
-Alternatively, $\gamma$ can be thought of as one final degree of confidence, relative to the $\beta$'s, in the qualitative information overall.
+Alternatively, $\gamma$ can be thought of as one final degree of confidence, in the same scale as the values of $\beta$, in the qualitative information overall.
 
 For these reasons, and also to simplify the math, we have chosen to use the asymmetric variant in \eqref{eqn:scoring-fn} that uses the parameter $\gamma \in [0,\infty]$ to control the strength of $\SDef$, rather than the symmetric trade-off parameter $\zogamma \in [0,1]$.
 
@@ -1614,7 +1615,7 @@ in which the observational and structural information are weighted equally.
 Now for the details.
 
 \subsection{Bayesian Networks} 
-    \label{sec:bn-convert}
+    \label{sec:bn-pdg}
 
 \Cref{constr:hyperedge-reducton} can be generalized to convert arbitrary Bayesian Networks into PDGs.
 Given a BN $\mathcal B$ and a positive confidence $\beta_X$ for
@@ -1645,7 +1646,8 @@ We know that the BN's distribution $\Pr_{\cal B}$ is the unique distribution wit
 % making it our only result that does not have a natural analog for general $\alpha$.
 
 \newmaterial{%
-\paragraph{BNs and Maximum Entropy?}
+\paragraph{BNs and Maximum Entropy.}
+	\label{sec:bn-maxent}
 One welcome side effect of this result is to shine light on an old question about the role of maximum entropy in directed graphical models.
 % As mentioned in \cref{sec:prelim-maxent}, 
 In \cref{sec:prelim-maxent}, we mentioned that BNs 

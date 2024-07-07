@@ -675,7 +675,7 @@ minimizing
 
 
 \subsection{%
-    Minimizing Incompatibilty
+    Minimizing Incompatibility
     (\texorpdfstring{$\boldsymbol\gamma\boldsymbol=\mat0$}{gamma=0})%
 } \label{sec:minimize-inc}
 
@@ -2732,7 +2732,7 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
             \STATE Find the solution $\daff z$ to (\ref{eqns:sys1}a-c),
                 and the solution $\dcen z$ to (\ref{eqns:sys2}a-c);
             \STATE $z_+ \gets z + \alpha (\daff z + \gamma \dcen z)$;
-            \STATE Compute the saling matrix $W_+$;
+            \STATE Compute the scaling matrix $W_+$;
             \STATE Find the solution $\Delta z^{\text{cor}}_+$ to (\ref{eqns:sys3}a-c);
             \STATE $z \gets z_+ + \Delta z_+^{\text{cor}}$;
         \ENDWHILE
@@ -2753,7 +2753,7 @@ The next lemma packages the results of \textcite{dahl2022primal,nesterov1996infe
     for a total cost of
     $O(n (m+n)^3 \log (1/\epsilon) )$ time with Gaussian elimination, or
     $O(n (m+n)^{2.332} \log (1/\epsilon) )$ time using the linear solver with best
-         known asymptotatic complexity as of 2022 \cite{duan2022faster}.
+         known asymptotic complexity as of 2022 \cite{duan2022faster}.
 
     % \medskip
     % \hrule
@@ -3172,7 +3172,7 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     and
     $m =  |\V \C| + |\V \mathcal T| + |\V\!\Ar| + |\C|$ constraints.
     Once again the components of $A$ and $b$ are all at most one, and now the components of the cost function $c = \mat 1$ are identically one.
-    Furthermore, our objective is 1-strongly convex, so no additional multaplicative terms are required to convert an $\epsilon$-close solution in the sense of suboptimality, to an $\epsilon$-close solution in the sense of proximity to the true solution.
+    Furthermore, our objective is 1-strongly convex, so no additional multiplicative terms are required to convert an $\epsilon$-close solution in the sense of suboptimality, to an $\epsilon$-close solution in the sense of proximity to the true solution.
 
     Therefore \eqref{prob:cluster+idef} can be solved in
     \begin{align*}
@@ -3455,7 +3455,7 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     Concretely, suppose that we are
     looking to find $\mu^*(X{=}x)$, where $\mu^* \in \bbr{\dg M}_\gamma$. 
     Once we have a \cactree\ $\bmu$ that represents $\mu^*$, 
-    calcluating a marginal $\mu^*(X{=}x)$ (exactly) from $\bmu$ 
+    calculating a marginal $\mu^*(X{=}x)$ (exactly) from $\bmu$ 
     can be done with standard methods \parencite[][\S 10.3.3]{KF09}.
     In the worst case, it requires taking a marginal of every cluster,
     which can be done in $O(|\V\C|) \subseteq O(N V^{T+1})$ arithmetic operations. 
@@ -3700,7 +3700,7 @@ on joint distributions, which contrasts the convex optimization approaches of \c
         \item $N^S_a \in \{0, 1, 2, 3\}$ sources, and
         \item $N^T_a \in \{1,2\}$ targets.
     \end{itemize}
-    \item For each arc $a \in \Ar$, $N^S_a$ of the $N$ variables are choosen without replacement to be sources $S_a \subseteq N$, and $N^T_a$ of remaining variables are chosen to be targets. Finally, to each value of $S_a$ and $T_a$, a number $p_{a,s,t} \in [0,1]$ is chosen uniformly at random, and the cpd
+    \item For each arc $a \in \Ar$, $N^S_a$ of the $N$ variables are chosen without replacement to be sources $S_a \subseteq N$, and $N^T_a$ of remaining variables are chosen to be targets. Finally, to each value of $S_a$ and $T_a$, a number $p_{a,s,t} \in [0,1]$ is chosen uniformly at random, and the cpd
     \[
      \p_a(\Tgt a {=} t \mid \Src a {=} s) =
         \frac{p_{a,s,t}}{\displaystyle\sum_{t' \in \V(T)} p_{a,s,t'}}

@@ -97,12 +97,12 @@ it also lets us use graphs as a visual language for
  % also because it makes graphical models a compact, intuitive
  %    language for describing independence.
     %     language for describing independence.
-    % in part to enable a compact description of probabiltiy distributions
+    % in part to enable a compact description of probability distributions
     % that use those independencies.
 % Yet independence is not the only qualitative aspect of
 %     a probability measure, nor is it
 %     unique in enabling a compact representation.
-% Yet these kinds of independences are not the only important
+% Yet these kinds of independencies are not the only important
 %     qualitative aspects of a probability measure, nor are they
 %     unique in enabling a compact representation.
 % 
@@ -116,9 +116,9 @@ Yet these kinds of independencies are not the only important
 %oli21*: As I've said many times before, I strongly object to putting PDGs in the first paragraph. It's not something we can expect the audience to recognize, and it's really not the focus of our paper. Hypergraphs also do not need to come up yet, and the first time we say "hypergraph" it needs to be directed. 
 %joe17*: but it *is* historically accurate.  And we need to make the connection      
 %oli22: historical accuracy is far less important than telling a story. Besides, we'll make the connection soon enough.
-%joe18: I agree in general abot the story
+%joe18: I agree in general about the story
 %oli21: Trying for a replacement. 
-% In this paper, we focus on the qualitative aspects of probabilistic dependency graphs (PDGs) \citep{} or, more precxisely, the hypergraphs that describe their struture, and show how they can be used to describe far more than just conditional independencies.
+% In this paper, we focus on the qualitative aspects of probabilistic dependency graphs (PDGs) \citep{} or, more precisely, the hypergraphs that describe their structure, and show how they can be used to describe far more than just conditional independencies.
 In this paper, we study a natural generalization of standard graphical model structures that can describe far more than conditional independence. 
 
 %oli16:
@@ -227,7 +227,7 @@ Functional dependence and independence
 % What's written proves that all functional dependencies can be written
 % in terms of conditional independencies. Conversely, our work
 % shows that conditional independence can be written in terms of 
-% indepdenence (of mechanism noise variables) plus functional dependence.
+% independence (of mechanism noise variables) plus functional dependence.
 %
 are deeply related and interacting notions.
 % interact.
@@ -267,14 +267,14 @@ Moreover, dependence can be written in terms of independence:
 % i.e.,
 %joe2: I accept that both usages are acceptable in most contexts, but 
 %*all* copyeditors I've dealt with (both in journals and at MIT
-%Press for my books) follow this convinention.  Journals/publishers
+%Press for my books) follow this convention.  Journals/publishers
 %will insist that you follow their style, so I've just taken to doing
 %it  everywhere. 
 %oli20: in single column format, it is far too expensive to put this equation in display mode. 
-%joe16: I find it incredibly arrogant an inapporopriate that, when I
+%joe16: I find it incredibly arrogant an inappropriate that, when I
 %say "based on my 40 years of experience, this is how it's done" and
 %you (based on you zero years of experience) say "I don't believe you".
-%oli21*: First, your reprimandment is misplaced; it makes no sense here and I have no idea what you're talking about. Second, having 40 years of experience does not entitle you to be believed; who you are is irrelevant if you're trying to convince me of something.  Surely it has been the case that people with more years of experience than you say things you do not believe, a fact that has nothing to do with whether or not you are arrogant.  Finally, I find these comments incredibly toxic and counterproductive. I am trying very hard to see things from your persepective and engage with you earnestly, and the attacks on my character are not helping anyone. 
+%oli21*: First, your reprimandment is misplaced; it makes no sense here and I have no idea what you're talking about. Second, having 40 years of experience does not entitle you to be believed; who you are is irrelevant if you're trying to convince me of something.  Surely it has been the case that people with more years of experience than you say things you do not believe, a fact that has nothing to do with whether or not you are arrogant.  Finally, I find these comments incredibly toxic and counterproductive. I am trying very hard to see things from your perspective and engage with you earnestly, and the attacks on my character are not helping anyone. 
 %joe17: this is not the place to get into the discussion, but I was
 %accurately reporting how I felt (and still feel).  (That said, I
 %agree  with much of what you said.)
@@ -498,7 +498,7 @@ Consequently, there are two equally valid interpretations of the present work: e
 %joe6*: As I said, I really, really don't like what you wrote above.
 %I think it makes for an awful story
 %oli7: please explain. I like the story. But more than the story, I particularly like how clearly it describes both your view of the paper, and mine. I think it does a good job relating relationship betwen our definition and PDGs, at a high level, without spinning it to be an argument for our present paper. 
-%oli8: I've asked you to explain repeatedly why you don't like this, and you've said only that it's unacceptalbe. I've explained myself repeatedly why I don't like what you're proposing, and you haven't responded to that that. 
+%oli8: I've asked you to explain repeatedly why you don't like this, and you've said only that it's unacceptable. I've explained myself repeatedly why I don't like what you're proposing, and you haven't responded to that that. 
 Under either interpretation, 
 our focus is
 a novel definition for what it means for a joint probability 
@@ -1278,7 +1278,7 @@ To state the general result (\cref{theorem:bns}),
 % \section{Bayesian Networks, Markov Random Fields, and Independent Mechanisms}
 % \subsection*{Capturing Bayesian Networks}
 % \subsection{Capturing Bayesian Networks.}
-    \label{sec:bns}
+    \label{sec:qim-bns}
 %    
 Suppose that
 $G = (V,E)$ is a graph, whose edges may be directed or undirected.
@@ -2409,8 +2409,8 @@ A PSEM $\mathcal M = (M, P)$ assigns probabilities to causal formulas according 
 %To make this precise, we need some more notation.
 % If $\mat X$ is a set of variables and $\mat x \in \V(\mat X)$, we write $\mat x[\mat Z \gets \mat z]$ for the joint setting of $\mat X$ obtained by starting with $\mat x$, and setting the values of $\mat Z \subseteq \mat X$ to $\mat z$. 
 % For $\mat Y \subseteq \enV$, write $U_{\mat Y}$ for the set of variables $\{ U_Y : Y \in \mat Y\}$.
-% Let $\mathrm{do}(\mat Y{\gets}\mat y) := \cap_{Y \in \mat Y} (\hat U_Y = \lambda z.~\mat y[Y])$ denote the event in which each variable $\hat U_Y$ takes on the constant function that ouputs $\mat y[Y]$ for all inputs. 
-% Let $\mathrm{do}(\mat Y{\gets}\mat y) := \cap_{Y \in \mat Y} ( \forall z.~f_Y(U_Y, z) = \lambda z.~\mat y[Y])$ denote the event in which each variable $\hat U_Y$ takes on the constant function that ouputs $\mat y[Y]$ for all inputs. 
+% Let $\mathrm{do}(\mat Y{\gets}\mat y) := \cap_{Y \in \mat Y} (\hat U_Y = \lambda z.~\mat y[Y])$ denote the event in which each variable $\hat U_Y$ takes on the constant function that outputs $\mat y[Y]$ for all inputs. 
+% Let $\mathrm{do}(\mat Y{\gets}\mat y) := \cap_{Y \in \mat Y} ( \forall z.~f_Y(U_Y, z) = \lambda z.~\mat y[Y])$ denote the event in which each variable $\hat U_Y$ takes on the constant function that outputs $\mat y[Y]$ for all inputs. 
 % \[
 % % \Pr_\nu \Big(
 % %     [\mat Y \gets \mat y]\varphi
@@ -2527,12 +2527,12 @@ $
 $
 %oli3:
 % that represents all of the (in)dependencies of $M$. 
-%oli6: these are just dependencies, so this might clairfy somhow
+%oli6: these are just dependencies, so this might clarify somehow
 % representing all of the (in)dependencies of $M$. 
 representing precisely the structural information in $M$.  
 %joe7*: You might think that what you wrote is intuitive.   Maybe it
-%is to you.  But let me assure you that yuo're not typical, and it
-%won't be intuitive to many readeres (who will also find your notation
+%is to you.  But let me assure you that you're not typical, and it
+%won't be intuitive to many readers (who will also find your notation
     %extremely hard to parse.  The next sentence should be much more
     %accessible to readers
 What this notation is saying is that for each node $X$ in the causal
@@ -2610,7 +2610,7 @@ which can be viewed as a randomized mechanism
 Perhaps surprisingly, \Scibility\ with $\Ar_M$ and $\Ar_{\cal M}$
     pick out the same set of distributions
     (i.e., $\mu \models \Ar_M$ iff $\mu \models \Ar_{\mathcal M}$).
-But that does not make the two structures interchangable,
+But that does not make the two structures interchangeable,
     as we will see in \cref{sec:equivalence}.
 }    
 
@@ -2638,7 +2638,7 @@ But that does not make the two structures interchangable,
 }
 %oli9: end cut
 
-%joe3: I would cut the next paragraph.  I don't really undersatnd it.
+%joe3: I would cut the next paragraph.  I don't really understand it.
 %oli3: I can't cut it because this is a critical point that we have to flag to prevent misunderstanding. I'm trying to explain that the way we capture the structural aspects of causal models above does not line up exactly  with the more interesting "witnesses as causal models" direction that we are going to focus on next.  
 %oli3: the paragraph has two other benefits. First, it gives us an opportunity to mention another talking point (being able to directly capture what one might call "randomized" causal models, in which there is a special independent noise variable for each equation). Second, it makes for a smooth transition to the next section.
 %oli3: I'll see what I can do to make it more understandable.
@@ -2672,7 +2672,7 @@ $U_X$
 (often written $\epsilon_X$ in the literature)
 % }%
 on which only the equation $f_X$ can depend;
-%joe8: cut; it's a bad idea to talk about "wisfhul" simplifying assumptions"
+%joe8: cut; it's a bad idea to talk about "wishful" simplifying assumptions"
 % \unskip \footnote{Seldom in reality are distinct measurable quantities functions of one another; $U_X$ is intended to account for all factors beyond the model that could influence $X$. The requirement that $U_X$ and $U_Y$ be independent is a wishful simplifying assumption that is often effective.}
 %oli7:
 % We shall call a SEM \emph{randomized} if it contains 
@@ -2680,12 +2680,12 @@ we call a PSEM $(M, P)$
 %joe8*: I really don't like the terminology "randomized".  It doesn't
 %have anything to do with the notion of interest.  Maybe you can say
 %that a PSEM has independent noise if it's what you're now calling
-%ranodoized, If you really need "fully reandomized" (and I hope you
-%don't) perhaps that can be a PSEM "has only indepdent noise". 
+%randomized, If you really need "fully randomized" (and I hope you
+%don't) perhaps that can be a PSEM "has only independent noise". 
 %
-%oli19*: I'm really unhappy about "has (only) independent noise" as a replacement for "randomized", although I'm willing to entertain other alternatives. For example, with this terminology, SEMS "with independent noise" would includes a special case where the independent noise is constant, i.e., "SEMs without independent noise".  I want to point out that there is a is a direct connection to randomized algorithms here.
+%oli19*: I'm really unhappy about "has (only) independent noise" as a replacement for "randomized", although I'm willing to entertain other alternatives. For example, with this terminology, PSEMS "with independent noise" would includes a special case where the independent noise is constant, i.e., "SEMs without independent noise".  I want to point out that there is a is a direct connection to randomized algorithms here.
 %joe14: Which is what?
-%oli20: Perhaps this discussion is superceded by Spencer's latest email, but just for completeness: just as a randomized algorithm is an ordinary algorithm that takes additional independent bits of randomness as input, a randomized PSEM is an ordinary PSEM in which each equation takes as input additional independent randomness. 
+%oli20: Perhaps this discussion is superseded by Spencer's latest email, but just for completeness: just as a randomized algorithm is an ordinary algorithm that takes additional independent bits of randomness as input, a randomized PSEM is an ordinary PSEM in which each equation takes as input additional independent randomness. 
 %joe16: But the resulting object is still a PSEM!
 %oli19*: Furthermore, it suggests how ordinary PSEMs can be embedded within randomized PSEMs: the same way in which deterministic algorithms can be viewed as randomized algorithms .
 %joe16*: I still really don't like using "randomized" in this context.  
@@ -2720,7 +2720,7 @@ lose expressive power if we use randomized PSEMs.
 %joe14*: I'm *strongly* opposed to calling a special case of a PSEM a
 %generalization of a PSEM.  I hope that you can understand why.  You
 %can point out what you want to point out without calling it a
-%gneeralization (which will no doubt confuse soe readers).
+%generalization (which will no doubt confuse soe readers).
 %oli20*: Those readers who will be confused by this are precisely those readers who need to hear it. I hope Spencer's email helped convince you of this.  I will try to rewrite this material so it goes over better.
 %
 %joe16: I think I've left in the essentials.  Unfortunately, what you
@@ -2730,7 +2730,7 @@ Randomized PSEMs are a special class of PSEMs%
 ---yet, at the same time, may also be viewed as a generalization of a PSEM in which each equation is not deterministic but a randomized algorithm, taking as input an independent random seed. 
 }%
 %oli20: replacement:
-%joe16*: I see no Enlgish reading where allowing an equation to depend
+%joe16*: I see no English reading where allowing an equation to depend
 %on independent random noise (which it always could) 
 %oli21: (I don't see how it always could; in a PSEM, you can depend on variables. Other equations can also depend on those variables. To make it depend on independent random noise, you have to not only add a new variable, but also have a guarantee that none of the other equations can use it.)
 %joe16*: ... gives you a generalization.  I don't see what you gain
@@ -2739,12 +2739,12 @@ Randomized PSEMs are a special class of PSEMs%
 %oli21: There's a lot to be gained from this intuition: it says that PSEMs and randomized PSEMs are equivalent, neither truly a special case of the other. 
 %
 Randomized PSEMs are clearly a special class of PSEMs
-%oli21*: I'm not sure how exactly, but I suspect there's some misunderstanding between us. Let me try to be really precise.  Fix a PESM M. In that PSEM, each equation is a (deterministic) function of the variables. It is indeed a generalization to allow those not to be deterministic functions, but randomized ones, that can flip coins.  This is because we've swapped the notion of a function out for the notion of a stochastic map, which is more general. Yet, becasue stochastic maps are equivalent to deterministic functions that take an additional argument of additional random bits, this "generalization" of a PSEM does not buy any expressive power. 
+%oli21*: I'm not sure how exactly, but I suspect there's some misunderstanding between us. Let me try to be really precise.  Fix a PSEM M. In that PSEM, each equation is a (deterministic) function of the variables. It is indeed a generalization to allow those not to be deterministic functions, but randomized ones, that can flip coins.  This is because we've swapped the notion of a function out for the notion of a stochastic map, which is more general. Yet, because stochastic maps are equivalent to deterministic functions that take an additional argument of additional random bits, this "generalization" of a PSEM does not buy any expressive power. 
 %oli21: trying for a more explicit compromise. 
 %\unskip. But it is clear that any PSEM
 %joe17: (a) it shaves a line not to have it; (b) by removing it,
 %you'll make people like me less confused; and (c) I think you're
-%already aking the point by saying they have ore expressive power in
+%already asking the point by saying they have ore expressive power in
 %the qualitative case (which I'm happy to leave in).  I'm cutting it
 %in the probably vain) hope that this will convince you.
 % \commentout{
@@ -2777,7 +2777,7 @@ take only a single value.
 %
 %oli19*: commenting out and replacing
 % So, one should view a randomized PSEM as capturing strictly more qualitative information---namely,  independencies between exogenous variables. Furthermore, randomized PSEMs have a particularly close relationship with \scibility.
-%joe14: the fact that randomized PSESMs capture the infornation
+%joe14: the fact that randomized PSEMs capture the information
 %qualitatively is worth explaining to the reader.
 %oli20: I've moved the %joe14 comment above to right here, where I believe I've addressed the concern.
 %
@@ -2842,7 +2842,7 @@ networks, except possibly cyclic), which we show
 % coincide exactly with
 correspond to
 fully randomized causal models (\cref{prop:sc-graph-arise}).  
-%joe8*: I actually don't see why this is an expanion.  In any case,
+%joe8*: I actually don't see why this is an expansion.  In any case,
 %it's close enough to the first case not to merit a proposition
 %oli19*: I actually agree with your second statement, but for reasons that are probably very different from yours. Proposition 3 corresponds to fully randomized causal models, Proposition 4 corresponds to randomized causal models. As I see it, the two are equivalent, and the former is cleaner because we can get the hypergraphs from graphs. 
 \commentout{ We then expand the set of hypergraphs we consider by allowing variables not to be the target of any mechanism (i.e., with additional exogenous variables); these are the dependency structures of PSEMs (\cref{prop:sc-psem-corresp}).}
@@ -3399,10 +3399,10 @@ The converse is more interesting: how can we turn a witness into a causal model?
         %oli1: I haven't seen it formalized carefully, but reading through Pearl's book
         % strongly gave me the impression some version of this fact is is common knowledge. 
         %joe2: It certainly isn't common knowledge! I don't know it.
-        %oli3: first part is now no longer necesary because it's in the right place
+        %oli3: first part is now no longer necessary because it's in the right place
         % In \cref{sec:causal}, we will see how  a witness of compatibility $\mu(\X, \U)$ can be seen  as a (partially specified) causal model.
         %oli3: modifications from your comments:
-        % From this perspective, \cref{theorem:bns} is a form of an equivalence  well-known in the causlity community:
+        % From this perspective, \cref{theorem:bns} is a form of an equivalence  well-known in the causality community:
         From this perspective, \cref{theorem:bns} can be viewed as result 
             that implicitly undergirds much of the work on causality:
         every acyclic causal model with independent per-variable noise induces a distribution with the independencies of the appropriate Bayesian Network---%
@@ -3415,7 +3415,7 @@ The converse is more interesting: how can we turn a witness into a causal model?
         $\mu \models \Ar$ 
 %joe3*: Now you talk about a witness containing a causal model rather
 %than being a causal model.  I'm even more lost.
-%oli3*: the reader isn't supposed to understand why yet; that will come leter. 
+%oli3*: the reader isn't supposed to understand why yet; that will come later. 
 % but to answer your question: as you point out, a witness isn't literally a causal model, but an extended distribution.  In the case of an acyclic model, the information in that witness (distribution) is essentially precisely what is needed to get a causal model.  Now, in the the cyclic case, the extended distribution not only gives the functional model, but also a choice of a distribution over its fixed points. 
         contains a (possibly cyclic) causal model 
         with respect to which $\mu$ is a possible 
@@ -3427,7 +3427,7 @@ The converse is more interesting: how can we turn a witness into a causal model?
 %joe3*: I have no idea why this should be true, and neither will the
 %reader.  You can't just bring it in out of the blue.    This needs
 %much more discussion.  You need to slow down significantly and
-%rewrite this material signficantly.  
+%rewrite this material significantly.  
 %oli3*: yes, and that slowing down will come in section 3.4. Here, 
 \end{itemize}
 }
@@ -3469,16 +3469,16 @@ randomized SEM
 with endogenous variables $\enV := \cup_{a \in \Ar} \Tgt a$ and exogenous variables $\U := \U_{\Ar} \cup (\X{-}\enV)$
 \unskip, as follows.
 %joe4*: Oliver, I have no idea what "converted to" means.  There are
-%lots of causl models with endogenous variables \X and exogenous
+%lots of causal models with endogenous variables \X and exogenous
 %variables \U.  What's special about the model you're constructing?
 %
 %joe3*: You need more of a story at the beginning of this section,
 %saying that you're going to consider sim-compatibility witnesses  as
 %causal models for each of the three types of PDGs that you discussed
 %in the previous section.  This is a story that you should repeat for
-%other notions of interest (like the semantics for qualitiative models_)
+%other notions of interest (like the semantics for qualitative models_)
 %You haven't said anything about the case of dags.   I would start
-%with that.  You're issing the chance to tell a nice story here.  I
+%with that.  You're missing the chance to tell a nice story here.  I
 %would be happy if all you said about the third case (which I would
 %simply call non-paritional -- I still don't find the split into
 %subpartitional and superpartitional at all interesting) is that
@@ -3499,7 +3499,7 @@ with endogenous variables $\enV := \cup_{a \in \Ar} \Tgt a$ and exogenous variab
 %oli7*: please suggest! I have been trying to formulate the properties, in Proposition 4, but I'm not sure that what's there fully captures the essence of why this construction is appropriate. 
 %oli7: changing the wording, so that at least this doesn't look as glaring
 % The marginal $\nu(\U)$ is the obvious choice for the distribution $P$ over exogenous variables.
-For the distriubution $P(\U)$ over the exogenous variables, 
+For the distribution $P(\U)$ over the exogenous variables, 
     select the marginal $\bar\mu(\U)$. 
 %oli2: adding
 % The equations, for the most part, fall out of condition (c) of \cref{defn:qim}. 
@@ -3546,7 +3546,7 @@ for each $u \in \V (U_{\!a_{\!X}})$ and $\mat s \in \V (\Src {a_{\!X}})$
 % ,
 for which $\bar\mu(U_{\!a_{\!X}} {=}\, u, \Src {a_{\!X}} {=}\, \mat s) > 0$,
 % we know in particular that $\Src{a_X}$ and $U_{a_X}$ together determine $X $(in $\mu$).
-%oli3: reclaimin some extra words here
+%oli3: reclaiming some extra words here
 % we know there is a unique value
 there is a unique
  $t \in \V (\Tgt {a_{\!X}})$ such that $\bar\mu(u,\mat s, t) > 0$.
@@ -3806,21 +3806,21 @@ Equivalently, this means that $\PSEMsA(\bar\mu)$, the possible outputs of \cref{
 % that have
 %joe8
 % a
-%oli19: this "a" changes the meaning; I meant that the randomized PSEMs (which have dpenedency structure A) can give rise to \bar \mu, not that their dependency structure can. 
+%oli19: this "a" changes the meaning; I meant that the randomized PSEMs (which have dependency structure A) can give rise to \bar \mu, not that their dependency structure can. 
 %oli19: rewording--- "of" works much better here actually. 
 of dependency structure $\Ar$ that can give rise to $\bar\mu$. 
 This is already substantial evidence that causal models $\mathcal M \in \PSEMsA(\bar\mu)$ are closely related to the \scibility\ witness 
 %joe8
 % $\bar\mu$---but everything we have seen so far only describes the
 $\bar\mu$. But everything we have seen so far describes only the
- correspondence in the absence of intervention, a setting in whch many causal models are indistinguishable.  
+ correspondence in the absence of intervention, a setting in which many causal models are indistinguishable.  
 We now show that the correspondence goes deeper, by extending it to interventions. 
 %oli16: cutting this; replacement material above and below
 % We now further develop the relationship between a \scibility\ witness $\bar\mu$ and the causal models $\mathcal M \in \PSEMsA(\bar\mu)$ derived from it: intervention in $\mathcal M$ amounts to ordinary conditioning in $\bar\mu$.
 In any randomized PSEM $M$, we can define an event 
 % over contexts $\V(\U)$
 \begin{equation}
-    % oli14: perhaps worth pointing out notationally that this depends on
+    % oli14: perhaps worth pointing out  that this depends on
     % the equations, and hence on M
     % \mathrm{do}(\mat X{=}\mat x) := 
     \mathrm{do}_{M}(\mat X{=}\mat x) := 
@@ -3830,7 +3830,7 @@ In any randomized PSEM $M$, we can define an event
         % \Big\{ \mat u \in \V(\U) ~\Big|~ \forall X \in \mat X,\mat s \in \V(\Pa\nolimits_M(X)).~f_X(\mat u[U_X], \mat s) = \mat x[X]         \Big\}
 %joe8 What does x[X| mean.  Can't we just get rid of the X?  This
 %would make things clearer for the reader.  
-%oli19: We can get rid of the X if we only intervene on one  variable at a time, but that weakens the theorem for no real reason. This means the value of the variable X in the joint setting \mat x = (x_1, x_2, x_3, ... ).  One of those components corresonds to the variable $X$. This notation needs to be defined, but it needs to be defined earlier, because it's also used in the construction. 
+%oli19: We can get rid of the X if we only intervene on one  variable at a time, but that weakens the theorem for no real reason. This means the value of the variable X in the joint setting \mat x = (x_1, x_2, x_3, ... ).  One of those components corresponds to the variable $X$. This notation needs to be defined, but it needs to be defined earlier, because it's also used in the construction. 
 %joe14*: you saved me the bother of stressing that the notation has to
 %be defined.  It's usage also to be explained.
 %oli20: now done. 
@@ -3849,7 +3849,7 @@ In any randomized PSEM $M$, we can define an event
 %oli19: That said, in search of compromise, I will reluctantly cut the footnote for the NeurIPS submission.
 %joe14: I'm a big fan of intuition.  We definitely don't want the
 %footnote, either for NeurIPS or the full paper.  It's a distraction
-%anbd absolutely does not give intuition.
+%and absolutely does not give intuition.
 This is intuitively the event in which the randomness is such that $\mat X = \mat x$ regardless of the values of the parent variables.
 % \vfull{%
 \unskip\footnote{{This is essentially the event in which, for each $X \in \mat X$, the \emph{response variable} 
@@ -3869,7 +3869,7 @@ As we now show,
 conditioning on 
 $\mathrm{do}_{M}(\mat X{=}\mat x)$ has the effect of intervention.
 %joe8: cut.  Yet another distraction.  Hardly any of the readers will
-%know what nonstadard probabilities are.  It feels like you're doing a
+%know what nonstandard probabilities are.  It feels like you're doing a
 %core dump of interesting observations you've made.  While they may
 %interest some people (among the few who will know what you're talking
 %about), they don't belong in the paper.
@@ -3887,7 +3887,7 @@ $\mathrm{do}_{M}(\mat X{=}\mat x)$ has the effect of intervention.
 %oli7: not the right story
 % Intervening in $\hat{\mathcal M}$ corresponds to ordinary conditioning in the distribution $\nu$. 
 %oli18: removing; more clutter than help
-% For the sake of simplicity and concordence with the causality literature, take $\PSEMsA(\bar\mu)$ to consist only of ordinary (i.e., not generalized) PSEMs, effectively restricting scope of the theorem statement to \subpartl\ \hgraph s $\Ar$.
+% For the sake of simplicity and concordance with the causality literature, take $\PSEMsA(\bar\mu)$ to consist only of ordinary (i.e., not generalized) PSEMs, effectively restricting scope of the theorem statement to \subpartl\ \hgraph s $\Ar$.
 
 % The resulting model, called a \emph{functional causal model} is the
 % minimal one that allows all interventions.
@@ -3903,7 +3903,7 @@ $\mathrm{do}_{M}(\mat X{=}\mat x)$ has the effect of intervention.
 %oli2: While I see your point that this may not quite be the right thing to state here, I want to point out that you can't naturally convert the hypergraph to a causal model; the hypergraph contains only qualitative information, while the causal model contains lots of quantitative information. Rather, you can convert a *proof* of structural compatibility with a hypergraph, to a causal model. This result is that conditioning the witness is like intervening in the corresponding causal model.
 %joe3: It's not the proof that you're converting to a causal model, but the instations of \nu.  
 
-%oli3: I'm not sure if you're being deliberately pedantic or not, but I stand by my point above.  The instantiation of \nu and a certificate that it satisifies properties (a-c) is necessary and sufficient for a (constructive) proof of structural compatibility.  My broader point --- that your previous comment was confusing the qualitative/structural/proposition/type level (e.g., hyper-graphs, independencies, structural compatibility) with the quantitative/observational/proof/value level (e.g, a causal model, or a witness of structural compatibility \nu, which is arguably a proof).
+%oli3: I'm not sure if you're being deliberately pedantic or not, but I stand by my point above.  The instantiation of \nu and a certificate that it satisfies properties (a-c) is necessary and sufficient for a (constructive) proof of structural compatibility.  My broader point --- that your previous comment was confusing the qualitative/structural/proposition/type level (e.g., hyper-graphs, independencies, structural compatibility) with the quantitative/observational/proof/value level (e.g, a causal model, or a witness of structural compatibility \nu, which is arguably a proof).
 %joe5: the notion of constructive proof is coming out of the blue.
 %The reader won't have any idea of what you're talking about.  I think
 %you're missing my point: your presentation will confuse the reader.
@@ -3916,7 +3916,7 @@ $\mathrm{do}_{M}(\mat X{=}\mat x)$ has the effect of intervention.
 %    in which $\hat U_{X_a}$ equals constant function that returns $x$.
 %    It then holds that
 %oli2: expanding. Your "if" construction was better for what I had,
-% except I actually need a few more premises to be perfetly precise. 
+% except I actually need a few more premises to be perfectly precise. 
 % If $\nu \in \Wits(\mu,\Ar)$ and
 %joe4*: I can't make sense of this theorem, and I don't see how it
 %fits into the story.  In the introduction, you say that
@@ -3953,9 +3953,9 @@ If $\bar\mu(\mathrm{do}_{\cal M}(\mat X{=}\mat x)) > 0$, then:
 % shouldn't have any trouble.
 %joe3: I've seen lambda notation since (quite literally, I suspect)
 %before you were born.  I've never seen the underscore.  
-%Please get rid of it.  You may find it clean; I found it onfusing. I
+%Please get rid of it.  You may find it clean; I found it confusing. I
 %suspect that I'm far more typical of readers.
-%oli3: This is not so important to me, so I'll give you this one.  However, I still want to say that I generally disagree with your approach to making stylistic judgements such as this one.  I think "traditional" notation does not trump "better", especially if the notation is accompanied by words. And, if I'm right and the underscore has become relatively popular in recent years, I feel that  "traditional" has no benefit on its own, unless it's also "better". 
+%oli3: This is not so important to me, so I'll give you this one.  However, I still want to say that I generally disagree with your approach to making stylistic judgments such as this one.  I think "traditional" notation does not trump "better", especially if the notation is accompanied by words. And, if I'm right and the underscore has become relatively popular in recent years, I feel that  "traditional" has no benefit on its own, unless it's also "better". 
 %joe5: It'm not arguing for "traditional" vs. "modern".  I'm arguing
 %for what the reader is comfortable with.  In this case, it's your
 %only use of lambda notation in the paper, and the typical UAI reader
@@ -3967,7 +3967,7 @@ If $\bar\mu(\mathrm{do}_{\cal M}(\mat X{=}\mat x)) > 0$, then:
 %notation, and arguing about what flavor of lambda notation to use,
 %you next to explain and motivate what's going on here much better
 %than you've done so far.  This is the main point I've been trying to
-%make all along.  (Notice all my "I have no clue what you'rje doing"
+%make all along.  (Notice all my "I have no clue what you're doing"
 %comments.)  
 %oli6: I still don't understand why you're confused; $s$ is the argument to the function, in \lambda notation, and I've written in words "the event in which U_a_X equals the constant function that returns x". 
  %oli3: alternatively, if you're ok with underscore as a "blank" but not in lambda notation, we can say "...,  ( _ \mapsto x ) is the constant function that always returns x, then ...". 
@@ -4024,9 +4024,9 @@ If $\bar\mu(\mathrm{do}_{\cal M}(\mat X{=}\mat x)) > 0$, then:
 To those familiar with the causality literature, it may be surprising that $\mathrm{do}_M(\mat X{=}\mat x)$ is actually an event \citep{sep-causal-models,halpern-2000}, and even moreso that 
 ordinary conditioning on this event has the effect of intervention, since conditioning and intervention 
 %oli18:
-% are typically (and for good reason!) regarded as fundementally different. 
-are usually thought of as fundmentally different. 
-(Indeed, intervening on $\mat X{=}\mat x$ remains fundementally different from conditioning on $\mat X{=}\mat x$.)
+% are typically (and for good reason!) regarded as fundamentally different. 
+are usually thought of as fundamentally different. 
+(Indeed, intervening on $\mat X{=}\mat x$ remains fundamentally different from conditioning on $\mat X{=}\mat x$.)
 Nevertheless, 
     % both facts are true, 
 intervention on $\mat X{=}\mat x$ can be viewed as conditioning on $\mathrm{do}_M(\mat X{=}\mat x)$, a state of affairs that has allowed us to demonstrate that the relationship between causality and witnesses extends to interventions.
@@ -4069,7 +4069,7 @@ probability 0, \cref{theorem:condition-intervention-alignment} can be
 extended to events ``close'' to 
 $\mathrm{do}_M(X{=}x)$ that have positive probability; conditioning on
 them has an effect close to that of intervention.  We defer formal
-datails to the full paper.)
+details to the full paper.)
 }%
 %
 Even when $\mathrm{do}_M(\mat X{=}\mat x)$ has probability zero, 
@@ -4117,16 +4117,16 @@ it may seem surprising that
 % conditioning on $\mat X{=}\mat x$ has the effect of intervention.
 conditioning can have the effect of intervention
     (and also that the Pearl's $\mathrm{do}(\,\cdot\,)$ notation actually corresponds to an event \citep{sep-causal-models}). 
-% (Indeed, intervening on $\mat X{=}\mat x$ remains fundementally different from conditioning on $\mat X{=}\mat x$.)
+% (Indeed, intervening on $\mat X{=}\mat x$ remains fundamentally different from conditioning on $\mat X{=}\mat x$.)
 % Nevertheless, 
 %     intervention on $\mat X{=}\mat x$ can be encoded as conditioning on $\mathrm{do}_M(\mat X{=}\mat x)$,
 % While true, 
 We emphasize that the conditioning (on $\mathrm{do}_M(\mat X{=}\mat x)$) is on the randomness $U_X$ and not $X$ itself; 
 %joe8
-%intervening on $\mat X{=}\mat x$ is indeed fundmenetally different
+%intervening on $\mat X{=}\mat x$ is indeed fundamentally different
 intervening on $\mat X{=}\mat x$ is indeed fundamentally different
 from conditioning on $\mat X{=}\mat x$.
-% but we have shown how to encode the capcacity for interventions latent in a causal model directly into a distribution (a witness). 
+% but we have shown how to encode the capacity for interventions latent in a causal model directly into a distribution (a witness). 
 %joe8
 %Yet, as we have shown, even the former can be encoded as a
 %probabilistic conditioning on an extended distribution (a witness).  
@@ -4137,7 +4137,7 @@ from conditioning on $\mat X{=}\mat x$.
     shows, even the former can be encoded as 
     probabilistic conditioning in an extended distribution (a witness), 
     %oli19: aren't we trying to tell a story here? The story is about how this has allowed us to connect witnesses and causal models. 
-    %This fact has allowed us to deepen the connection between cauality
+    %This fact has allowed us to deepen the connection between causality
     %and \scibility\ by making sense of interventions on \scibility\ witnesses.
     %oli19: a shorter version that still brings us back to the main story
     deepening the connection between witnesses and causal models.
@@ -4214,10 +4214,10 @@ When $\Ar = \Ar_G$ for some is a directed acyclic graph $G$ (i.e., a qualitative
 essentially an acyclic causal model
 %joe3*: A witness is a distribution.  At a minimum, you have to
 % explain how you're viewing the distribution as a causal model, and
-% why it should be acylic in this case.  I'm lost here.
+% why it should be acrylic in this case.  I'm lost here.
 %oli3*: this is meant as a preview; I'd like to prime the readers for
-% the technical dedatils they'll see in the next section. I'll add some
-% extra verbage to make the intended purpose of this section clear.
+% the technical details they'll see in the next section. I'll add some
+% extra verbiage to make the intended purpose of this section clear.
 %
 %
 in which the equation for $X$ depends on $\Pa_G(X)$ and
@@ -5072,10 +5072,10 @@ We will demonstrate a different aspect of that connection in each of the coming 
 %oli15: moved from intro
 What constraints does \scibility\ with $\Ar$ place on a distribution $\mu$?
 %oli14: minor fixes. Tried to shorten, but wasn't able to do it well, so mostly reverted. 
-% In \cref{sec:bns} we saw how, for \hgraph s that come from directed graphs, this means $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s can impose functional dependencies---but these results apply only to special classes of \hgraph s. 
-% We saw in \cref{sec:bns} that $\mu \models \Ar$ implies dependencies for \hgraph s of  
+% In \cref{sec:qim-bns} we saw how, for \hgraph s that come from directed graphs, this means $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s can impose functional dependencies---but these results apply only to special classes of \hgraph s. 
+% We saw in \cref{sec:qim-bns} that $\mu \models \Ar$ implies dependencies for \hgraph s of  
 %oli15: compressing, sharpening
-% In \cref{sec:bns} we saw how, for \hgraph s that come from directed graphs, $\mu\models \Ar$ implies $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s impose functional dependencies---yet these results apply only to very special classes of \hgraph s. 
+% In \cref{sec:qim-bns} we saw how, for \hgraph s that come from directed graphs, $\mu\models \Ar$ implies $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s impose functional dependencies---yet these results apply only to very special classes of \hgraph s. 
 When $G$ is a dag, we have seen that if $\mu \models \Diamond \Ar_G$, then $\mu$ must satisfy the independencies of the corresponding Bayesian network (\cref{theorem:bns}); we have also seen that additional \arc s impose functional dependencies (\cref{theorem:func}). But these
 %joe16
 %results only apply when $\Ar$ is of a very special form.
@@ -5802,7 +5802,7 @@ is just
 % conjoined with
 % tensored with
 %oli20:
-% plus a seemingly irrelelvant bit $X_1$ written in the sky.
+% plus a seemingly irrelevant bit $X_1$ written in the sky.
 together with a seemingly irrelevant random bit $X_1$.
     %oli6:
     % $P$  \emph{is} \scible\ with the 3-cycle. 
@@ -5813,7 +5813,7 @@ By the results of \cref{sec:causal},
 % By \cref{prop:sc-graph-arise} 
 this means there is a causal model without joint dependence giving rise to $Q$---%
     %joe5*: I have no idea why this should be counterintuitive, and in any
-%case, it depends on your intutuition.  In general, it's a bad idea to
+%case, it depends on your intuition.  In general, it's a bad idea to
 %tell th reader they should find something counterintuitive.  At best
 %you can say "this may seem counterintuitive".
 %oli6: this sentence might be overkill anyway.
@@ -5825,13 +5825,13 @@ this means there is a causal model without joint dependence giving rise to $Q$--
     % , and hence precisely what is 
     % necessary for us to even consider it possible to be \scible\ with the 
     % 3-cycle in light of \cref{theorem:sdef-le0}.
-    % This also shows that the distribution $P$ does not so fundementally require a 3-way interaction between the three variables, even if it seems that way because of how it is constructed.
-%joe5*: I'm totally lost.  In what way P fundamentally rqwuire
-%anything.  More imoprtantly, this is far reomved  from anything even
-%remotely related to what I see as the story of the paepr.
+    % This also shows that the distribution $P$ does not so fundamentally require a 3-way interaction between the three variables, even if it seems that way because of how it is constructed.
+%joe5*: I'm totally lost.  In what way P fundamentally require
+%anything.  More importantly, this is far removed  from anything even
+%remotely related to what I see as the story of the paper.
 %oli6*: I disagree; in some sense, this is the punchline: it's the most interesting thing we prove here, and it's a direct application of SIM-compatibility, that clears up a real misconception that (judging by citations), hundreds of people have. I hope that I have now motivated it better, and described it more clearly.
 %oli6: compressing; most of this has been said.
-    % This shows that, despite appearances, $P$ does not fundementally require a 3-way interaction, unlike the distribution $\muxor$ on which $P$ is based.
+    % This shows that, despite appearances, $P$ does not fundamentally require a 3-way interaction, unlike the distribution $\muxor$ on which $P$ is based.
     %oli15:
     % We conclude that (despite appearances)
     %oli20: adding for flow
@@ -5849,7 +5849,7 @@ this means there is a causal model without joint dependence giving rise to $Q$--
     % and so there is no 
     suggesting that they don't have a structural difference after all. 
     % suggesting that their difference may not be structural after all.
-%oli21: accomodating wrapfig: part 2
+%oli21: accommodating wrapfig: part 2
 % \end{example}
 \hfill$\triangle$
 
@@ -5877,7 +5877,7 @@ This will allow us to generalize \cref{theorem:sdef-le0} to distributions that a
 \subsection{A Scoring Function for \SCibility}
     \label{sec:qim-scoring-funs}
 %oli3:
-% For each $a \in \Ar$, fix a positive real number $\lambda_a > 0$. Also, fix $\lambda_0 > 0$. With these, we can define a new scoring function paramaterized by
+% For each $a \in \Ar$, fix a positive real number $\lambda_a > 0$. Also, fix $\lambda_0 > 0$. With these, we can define a new scoring function parameterized by
 %oli3:  changing labels
 % the weights $\boldsymbol\lambda = (\lambda_0, \lambda_1, \{\lambda_a\}_{a \in \Ar})$:
 %oli20:
@@ -5951,7 +5951,7 @@ overall is non-negative, and zero iff all three conditions are satisfied.
 % This is a natural scoring function... 
 %oli14:
 %oli20: redoing this
-% It may look complicated, but the terms on the first line are a measure discrepancy between $\nu$ and condition (b) for being a \scibility witness (\cref{defn:qim}), those on the second line measure discrepancy with condition (c), and the constraint under the infemum ensures we only search over distributions satisfying (a). 
+% It may look complicated, but the terms on the first line are a measure discrepancy between $\nu$ and condition (b) for being a \scibility witness (\cref{defn:qim}), those on the second line measure discrepancy with condition (c), and the constraint under the infimum ensures we only search over distributions satisfying (a). 
 $\SIMInc$ is a direct translation of \cref{defn:qim} (a-c); 
 % the language of entropy. 
     % entropy.
@@ -5961,7 +5961,7 @@ The infimum restricts the search to $\nu$ satisfying (a), the first two terms me
 Therefore:
 % So, unsurprisingly:
 
-% The first is a measurement of dicrepancy between $\mu$ and the marginal $\nu(\X)$, and the third is the non-zero iff 
+% The first is a measurement of discrepancy between $\mu$ and the marginal $\nu(\X)$, and the third is the non-zero iff 
 % but the first line is a generic (entropy-based) measure of how far $\nu$ is from satisfying property (a), the second is a generic (entropy-based) measure of discrepancy with property (b), and the third is a generic (entropy-based) measure of how far $\nu$ is from satisfying (c).
 % The scalars $\lambda$ can be thought of as lagrange multipliers
 
@@ -5982,10 +5982,10 @@ Therefore:
 
 %oli11: mentioning drawbacks.
 %oli14:
-% However $\SIMInc$ is not exactly a linear function of its argument's information profile; because of the infemum, it encodes an optimization problem over such functions.
+% However $\SIMInc$ is not exactly a linear function of its argument's information profile; because of the infimum, it encodes an optimization problem over such functions.
 %oli20: cutting, as agreed
 \commentout{
-Although it is built from a sum of entropies, $\SIMInc_{\Ar}$ is not a linear function of its argument's information profile; rather, because of the infemum, it is an optimization problem over the information profiles of extended distributions.
+Although it is built from a sum of entropies, $\SIMInc_{\Ar}$ is not a linear function of its argument's information profile; rather, because of the infimum, it is an optimization problem over the information profiles of extended distributions.
 This makes it difficult to compute, and obfuscates the connection to information-theoretic primitives. 
 }%
 %oli20: replacement
@@ -6005,12 +6005,12 @@ Although they seem to be very different, $\SIMInc$ and $\SDef$ turn out to be cl
     here.%
     \footnote{In \citet{pdg-aaai}, a qualitative PDG also includes a
     weight function $\alpha$ that associates with each \hyperarc\ $a$ a
-    weight that intuitively represents the  modeler's degreee of
+    weight that intuitively represents the  modeler's degree of
     confidence in the dependence represented by $a$.
-    For simplicitly, we
+    For simplicity, we
     ignore the weights here (implicitly taking them all to be 1).
     %oli2: you say that it's for simplicity, but it's not; it's for 
-    % expediency and to accomodate a story you're very fond of but is
+    % expediency and to accommodate a story you're very fond of but is
     % slightly wrong. 
     }
 }%
@@ -6025,7 +6025,7 @@ Although they seem to be very different, $\SIMInc$ and $\SDef$ turn out to be cl
 In fact, modulo the infimum, $\SIMInc_{\Ar}$ is a special case of
 %oli14: cutting
 % the original scoring function
-$\SDef$---not for the \hgraph\ $\Ar$, but rather for a transformed one $\Ar^\dagger$ that models the noise variables explcitly. 
+$\SDef$---not for the \hgraph\ $\Ar$, but rather for a transformed one $\Ar^\dagger$ that models the noise variables explicitly. 
 % Moreover, this augmentation makes a lot of intuitive sense.
 % Starting with a PDG $\dg M$ with \arc s $\Ar$,
 %     replace each structural \arc 
@@ -6083,7 +6083,7 @@ replace each \hyperarc\
     and two \hyperarc s
     %oli6: compress
     % for each \arc\ $a \in \Ar$:
-    % one that ouputs $U_a$ without taking inputs, and another
+    % one that outputs $U_a$ without taking inputs, and another
     one generating $U_a$ without input, and another
     %oli3:
     % that has source $\Src a \times U_a$ and target $\Tgt a$.
