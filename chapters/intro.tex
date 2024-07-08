@@ -4,6 +4,7 @@
 % -  communities are not self consistent.
 
 \section{In Defense of Inconsistency}
+    \label{sec:defend-inconsist}
 % \section{In Defense of Our Villain}
 
 \begin{center}
@@ -101,10 +102,29 @@ it is the possibility of disagrement that makes agreement valuable.
 
 
 Overlapping and redundant representations are incredibly useful in practice for guarding against catastrophic failure. 
-For this reason, even modern AI systems have recently been slipping away from the probabilistic consistency that they aspire to.
+\newmaterial{%
+The issue is particularly pronouncd in logic, as a single contradiction can leave a theory entirely trivial and detached from truth---an unforunate fact
+that has lead some \citep{priest1996paraconsistent} to develop logics that can tolerate inconsistency. 
+% But these \emph{paraconsistent} logics are far less 
+% But ultimately, these logics are hard to use, 
+But these approaches have never been popular in Artificial Intelligence (AI).
+In AI, the brittleness was solved in another way: by accounting for uncertainty, meaning probability. 
+This is extremely attractive, as this kind of epistemic modesty allows us to present a clear and consistent picture.
+% You don't need to believe $P$ and $\lnot P$,
+% In the Artificial Intelligence (AI), we addressed the brittleness   with something else: probability. 
+% Uncertainty helps, but it does not fix the problem. 
+
+\TODO
+
+Yet recently, modern AI systems have recently been slipping further from even the probabilistic consistency to which they aspire.
+}%
+% For this reason, even modern AI systems have recently been slipping away from the probabilistic consistency that they aspire to.
 For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
 The priors are typically inconsistent with the data (which is arguably the point), although neither is ever modified. 
-Still, the result is a far more robust learning process, both theoretically \citep{ftrl} and practically \citep{girosi1995regularization}.
+Still, the result is a far more robust learning process, both theoretically 
+% \citep{ftrl}
+\citep{ftrl-lecturenotes1,ftrl-lecturenotes2}
+ and practically \citep{girosi1995regularization}.
 %
 % (maybe more?)
 % Perhaps clearer examples arise when people use multiple networks together, such as  
@@ -255,10 +275,8 @@ We describe this in \cref{chap:PDG-cat}.
     % The departure between Bayesian Networks originally inspired the representation.
 %
 
-Finally, we conclude and discuss important open questions in 
-    % \cref{part:}
-    \cref{part:conclusions}
-    (\cref{chap:end}). 
+% Finally, we conclude and discuss important open questions in \cref{part:conclusions} (\cref{chap:end}). 
+Finally, we conclude with discussion and open questions in \cref{chap:end}. 
 
 
 
@@ -286,7 +304,7 @@ By recognizing these patterns, it may be easier to digest the material that succ
 The hallmark of a good formalism is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
 %
 Correspondingly, our representations representations (and tools for manipulating them)
-    strive for two fundamental virtues:
+    strive for two oposing virtues:
 \begin{enumerate}[nosep]
     \item things that are different look different, and
     \item things that are the same look the same. 
@@ -312,19 +330,21 @@ The idea can be described more precisely as etiquette for \emph{implicit convers
 % %
 % To avoid confusion, it is not strictly necessary to avoid implicit conversions---just to ensure that all ways implicitly converting $A$ to $C$ are equivalent. 
 %
-To avoid confusion, it is not strictly necessary to avoid implicit conversions---but it is necessary to ensure that all ways implicitly converting an of type $A$ to an object of type $B$ are equivalent. 
+To avoid confusion, it is not strictly necessary to avoid implicit conversions---but it may require ensuring that all ways of implicitly converting an object of type $A$ to one of type $B$ are equivalent. 
 %
-Doing so can be challenging, but it is often the best way to get representations that simultaneously attain both properties 1 and 2 above. 
+Doing so can be challenging, but it is often the best way to get representations that simultaneously attain both virtues 1 and 2. 
 %
-
-Avoiding the challenge altogether----ensuring objects of different types of different types are given different symbols---is 
+%
+Avoiding the challenge altogether---that is, ensuring objects of different types are given different symbols---is 
+% To avoid the challenge altogether---i.e., to ensure objects of different types are given different symbols---is 
 % a direct analogue of forcing yourself to be consistent by construction. 
-\oldnewmaterial{%
-    one way of ensuring consistency by construction.
-This practice is precise and grants a certain peace of mind, but makes it difficult to think. 
-}%
+    % one way of ensuring consistency by construction.
+    % a way of eliminating contradictions by construction. 
+    a way of ensuring consistency by construction. 
+    % a way to ensure consistency by construction. 
+This practice is precise and grants a certain peace of mind, but also makes it difficult to think. 
 %
-In keeping with the theme of this dissertation, I have not shied away from defining the same symbol in more than one way---but I have tried to do so in a way that the definitions never disagree in any context. 
+In keeping with the argument made in \cref{sec:defend-inconsist}, I have not shied away from defining the same symbol in more than one way---but I have tried to do so in a way that the definitions never disagree in any context. 
 %
 % After all, that is the role of a theorem: to give two different 
 % symbol to have more than one formal meaning. 
@@ -352,7 +372,8 @@ Making that something else precise is one objective of this thesis.
 
 
 % \subsection{A Division between Quantitative and Qualitative}
-\subsection{Qualitative and Quantitative}
+% \subsection{Qualitative and Quantitative}
+\subsection{Two Important Divisions}
 
 % \TODO[ TODO: fix this subsection; it is still very rough ]
 % on two levels: a high-level structure
@@ -378,8 +399,11 @@ A few examples of the distinction we're getting at are given below.
 \end{center}
 
 \newmaterial{%
-Some readers might immediately recognize this division; others may find it confusing or react against it. 
-By the end of the thesis, hopefully we will have a better appreciation for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
+Some readers might immediately recognize this division; others may find it confusing or find it to be a false equivalence. 
+By the end of the thesis, hopefully we will gain some appreciation
+% for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
+% for this distinction and its role in probabilistic modeling. 
+for this analogy and its role of this concept in probabilistic modeling. 
 }%    
 Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
 % (although both can be numerical)
@@ -404,6 +428,10 @@ The interplay between them will be a recurring theme.
 For expressive enough languages, the lines become blurred. Dependent types require one to think about values, leading to can get runtime errors at compile time. 
 PDGs, too, blur this line.  We will see, for example, that it is possible to define variables that correspond to specific values of a variable (\cref{prop:individual-prob-1}).
 }
+
+
+\paragraph{Nouns and Verbs.}
+\TODO
 
 
 \commentout{%%%%%%

@@ -400,14 +400,22 @@ The constraint-tracking resolution resolution to these issues gives just a taste
 % Yet it turns out that all of this can be made precise with probabilistic dependency graphs, the mathematical representation of uncertainty that lies at the heart of this dissertation.  
 The missing part, as one might expect, is the probability. 
 
-\section{Probability, and Other Representations of Uncertainty}
+% \section{Probability, and Other Representations of Uncertainty}
+\section{Probability}
 
 % The material and notation in this chapter is all standard, but 
 % The one we have chosen 
-There are many different notations for probability in different community.
+% There are several different notations for probability in different communities.
+\newmaterial{%
+Probability is a foundational concept broadly across computer science, and especially for us. 
+% There are several different notation for probability
+Unfortunately, its notation is almost as diverse as the the people who use it. 
+}%
+% }%
 % In this section, we present a carefully 
 Our approach simultaneously enables some of the most common notations
-    and the most recognizable foundations. 
+    and uses the standard foundations. 
+    % and the most recognizable foundations. 
 Thus, although all of the pieces are likely to be familiar, the precise formal way it fits together may not be. 
 %
 We start by giving the simpler picture of probability in the finite case (\cref{ssec:fin-prob}), which, for our purposes, is largely representative of how one should think of probability in the general case (which we return to \cref{ssec:gen-prob}).
@@ -545,7 +553,8 @@ Why?  When $\mu(X{=}x) = 0$, then $\mu(Y{=}y|X{=}x)$ is undefined, meaning
     \label{sec:var-randomvar}
 In the context of a probability distribution $\mu \in \Delta \Omega$,
 % a \emph{random variable} is a function $X : \Omega \to S$, where $S$ is a set called the domain of $X$. In service of unified notation, let $\V\!X := S$ denote the domain of the random variable $X$. 
-a \emph{random variable} is a function $X : \Omega \to \V X$, where $\V\! X$ is some set called the \emph{domain} of $X$.
+a \emph{random variable} is a function $X : \Omega \to \V\!X$, where $\V\! X$ is just some set (unfortunately) called the \emph{domain} of $X$
+    (even though $\Omega$ is the domain of the function).
 % Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore.
 Despite the superficial similarity induced by our choice of notation, random variables and variables are different formal objects;
     hence the mantra, 
@@ -1134,7 +1143,20 @@ any thorough treatment of duality in directed hypergraphs.
     $
 \end{defn}
 
-% \begin{prop}
+% It is instructive to check that
+It is easy to verify that 
+% $\check{\check{\Ar}} = \Ar$.
+$\check{\check{\mathcal H}} = \mathcal H$.%
+    \footnote{
+    $\check{\check{\Src a}}
+    = \{ n \in N : a \in \check{\Tgt n} \} 
+    = \{ n \in N : a \in \{ a' \in \Ar :  n \in \Src {a'} \} \} 
+    = \{ n \in N : n \in \Src a\} 
+    = \Src a$, and
+    a symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
+    }
+
+\commentout{
 We now verify that $\check{\check{\mathcal H}} = \mathcal H$.
 Observe that 
 \begin{align*}
@@ -1146,12 +1168,11 @@ Observe that
 \end{align*}
 % \end{prop}
 A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$. 
+}
 % What does this look like?
 % To visualize . 
 % One might wonder why $\check\Src n$ is definde in terms of $\Tgt a$ instead of $\Src a$.
 
-% See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs and their duals.
-A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 \begin{figure}%
     \centering
     \renewcommand\arraystretch{1.6}
@@ -1235,17 +1256,42 @@ A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}.
         \label{fig:dhygraph-duals}
 \end{figure}%
 \commentout{%
-We remark that
-the left and center diagrams on the top can be viewed as (the hypergraphs corresponding to) qualitative Bayesian Networks, by regarding X,Y,Z and A,B,C,D as variables, and imagining that there is a (randomized) causal determination occuring along each arc. 
+% See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs and their duals.
+A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
+We remark that the left and center diagrams on the top can be viewed as (the hypergraphs corresponding to) qualitative Bayesian Networks, by regarding X,Y,Z and A,B,C,D as variables, and imagining that there is a (randomized) causal determination occuring along each arc. 
 One can also imagine an analogue with cycles---resuling in perhaps a (randomized) causal model of the given shape.  But a causal model has one equation corresponding to each variable, and the corresponding hypergraphs thus has exactly one hyperarc leading to it. 
 In the dual hypergraphs, one should view the nodes as processes and the arcs as wires. Such a hypergrah has precisely one hyperarc leading out of every node. When wires branch, one imagines a copy; when two arcs point to the same process (as in process 4, in the middle center), that process takes both of the wires as inputs.
 In the duals of hypergraphs corresponding to causal models, there are no two-tailed arrows, which might be thought of as a ``merge''. 
 Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
-}
+}%
+\newmaterial{%
+A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
+% If we view the hypergraphs on the top as representing processes, 
+These two views of a hypergraph correspond directly to two (dual) ways of notating a process: as a \emph{flowchart} or as a \emph{circuit} \citep{kasangian1990duality}.
+In a flowchart, nodes represent state and  arcs represent transformations between them.
+In a circuit, nodes represent operations, and arcs, thought of as ``wires'' that connect them, carry state. 
+So, if capital letters represent variables and carry state, while numbers represent (randomized) transitions between variables (i.e., cpds), 
+then 
+% the bottom row of 
+the top row of \cref{fig:dhygraph-duals} is the flowchart representation and the bottom row is the circuit representation. 
+In either representation, the two hypergraphs on the left represent real
 
+\TODO
 
-\TODO[ TODO: clean up previous paragraph; add network diagram ]
+Both representations are commonly used in AI. 
+% The neural network ``architecture diagrams'', are the most common way to visually communicate the architecture of
+In machine learning, the circuit representation has become the standard way to communicate the operations in a neural network, and it is called a ``architecture diagram''.
+The duals of these diagrams---the flowchart variants---have been studied at greater length, and are the subject of the next section. 
+}%
 
+% As we will see th  
+% If we view $X$,$Y$, and $Z$ as variables, 
+
+% If the top row of hypergraphs represents 
+% Imagine top row represents processes by having
+
+% \TODO[ TODO: clean up previous paragraph; add network diagram ]
+%
 % \TODO[((What can be done with these objects? \\TODO: tie into the thesis elswehere or remove.))]
 % \TODO[
 %     Possible to have other identity morphisms? Require that, for each $X \in \N$, the identity morphism $\dg M(\ed {\mathrm{id}}XX)$ preserves the base measure $\lambda_X$, in addition to pre/post committing 
