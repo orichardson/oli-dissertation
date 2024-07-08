@@ -216,8 +216,9 @@ is the de-facto standard training objective for training
 generative models
 \parencite{deepgennotes,myung2003tutorial}.%
 
-\footnotetext{This construction requires the event $X\!\!=\!x$ to be measurable.
-  	One can get similar, but subtler, results for densities, where this is not the case; see \cref{appendix:density}.}
+\footnotetext{This construction requires the event $X\!\!=\!x$ to be measurable,
+and is only useful if it has nonzero probability.
+One can get similar, but subtler, results for probability densities; see \cref{appendix:density}.}
 
 \begin{linked}{prop}{pdg-Ix}
 	Consider a distribution $p(X)$.
@@ -286,8 +287,8 @@ What if we replace $x$ with an empirical distribution over many samples?
 	\]
 \end{linked}
 \begin{remark}
-	The term $H(\datadist\xsamp)$
-	is a constant depending only on the data, so is irrelevant for optimizing $p$.
+	As usual, $H(\datadist\xsamp)$
+	is a constant depending only on the data, so is irrelevant for the purposes of optimizing $p$.
 \end{remark}
 }
 
@@ -411,6 +412,7 @@ See figure \cref{fig:entropy-cube} for an illustration.
 \begin{figure}
 	\includegraphics[width=\linewidth]{figs/entropy-cube.png}
 	\caption{Variants of log-probability based losses, across three  orthogonal dimensions: conditional vs unconditional, multi-sample vs single-sample, and latent-variable vs full-information}
+	\label{fig:entropy-cube}
 \end{figure}
 
 \subsection{Accuracy and Square Loss}
@@ -994,7 +996,8 @@ And in general, PDG inconsistency can be viewed as a vast generalization of dive
 	It is then equivalent to split $f$ and the variable $X$ into $X_1$ and $X_2$ with edges enforcing $X_1 = X_2$.
 	But removing such edges can only decrease inconsistency.
 	Finally, compose the remaining cpds to give the result.
-	See the appendix for a full justification.
+	% See the appendix for a full justification.
+	See the \cref{appendix:dpi-details} for a full justification.
 	}
 	\label{fig:dpi-vis-proof}
 \end{figure*}
@@ -1310,7 +1313,8 @@ of the two previous losses,
 $\mathcal L_1 := \lambda_{\ssymb}\mathcal L_{\simsymb} + \lambda_{\dsymb}\mathcal L_{\datsymb}$
 for some $\lambda_\ssymb, \lambda_\dsymb > 0$ with $\lambda_\ssymb + \lambda_\dsymb = 1$.
 This amounts to training $h$ with cross entropy with respect to the mixture
-$\lambda_\ssymb s + \lambda_\dsymb d$.
+$\lambda_\ssymb s + \lambda_\dsymb d$
+	(\ref{claim:6.7.1} in the appendix).
 Doing so treats $d$ and $s$ as completely unrelated, and so redundancy is not used to correct errors---a fact on display when we present the modeling choices in PDG form,
 such as
 % \vspace{-1ex}
@@ -1353,7 +1357,8 @@ $\lambda(Z\!=\!\simsymb) = \lambda_\ssymb$.
 
 Our practitioner now tries a different approach: draw data samples $(x,y) \sim d$ but discount $h$'s surprisal when the simulator finds the point unlikely, via loss $\mathcal L_2 := \Ex_{d} [s(\mkern-2muX\!,\!Y\mkern-2mu) \log \nf1{h(Y|X)}]$.
 This is the cross entropy with respect to the (unnormalized) product density $ds$, which in many ways is appropriate.
-However, by this metric, the optimal predictor $h^*(Y|x) \propto d(Y|x) s(Y|x)$ is
+However, by this metric, the optimal predictor is $h^*(Y|x) \propto d(Y|x) s(Y|x)$,
+which is
 \emph{uncalibrated} \parencite{dawid1982well}.
 If the data and simulator agree ($d \!=\! s$), then we would want $h(Y|x) \!=\! s(Y|x)$ for all $x$, but instead we get $h^*(Y|x) \propto s(Y|x)^2$.
 So $h^*$ is overconfident.
@@ -1398,11 +1403,12 @@ C
 \end{tikzpicture}}\Bigg._{\!\!\!\gamma}
  + \mathit{const},
 \]
-where $C$ is the constant required to normalize the joint density $sd$, and $\mathit{const}$ does not depend on $h$.
+where $C$ is the constant required to normalize the joint density $sd$, and $\mathit{const}$ does not depend on $h$ (\ref{claim:6.7.2}).
 However, the values of $\balpha$ in
 this PDG indicate an over-determination of $XY$
 (it is determined in two different ways),
   and so $h^*$ is more deterministic than intended.
+  	\label{ex:overdet2}
 By contrast,
 % \vspace{-2ex}
 \[
@@ -1434,7 +1440,7 @@ By contrast,
 \]
 does not have this issue: the optimal predictor $h^*$
  according to $\mathcal L_3$
- is proportional to the $\lambda$-weighted geometric mean of $s$ and $d$.
+ is proportional to the $\lambda$-weighted geometric mean of $s$ and $d$ (\ref{claim:6.7.3}).
 It seems that our approach, in addition to providing a unified view of standard loss functions, can also suggest more appropriate loss functions in practical situations.
 
 \section{Reverse-Engineering a Loss Function?}
@@ -1483,7 +1489,7 @@ By threatening to generate the falsehood {\truf} with probability dependent on t
 Setting confidence $\beta_p := \infty$ may not be realistic since
 we're still training the model $p$,
 but doing so is necessary to recover $\Ex_p c$.%
-\footnote{If $\beta_p$ were instead equal to $1$, we would have obtained $-\log \Ex_p \exp(-c(\!X\!))$, with optimal distribution $\mu(\!X\!) \!\ne\! p(\!X\!)$.\label{fn:logEexp}}
+\footnote{If $\beta_p$ were instead equal to $1$, we would have obtained $-\log \Ex_p \exp(-c(\!X\!))$, with optimal distribution $\mu(\!X\!) \!\ne\! p(\!X\!)$ (\hyperref[claim:6.8.1]{Claim 6.8.1} in the appendix).\label{fn:logEexp}}
 Any mechanism that generates inconsistency based on the value of $X$ (such as this one) also works in reverse:
 the PDG ``squirms'', contorting the probability of $X$ to disperse the inconsistency.
 One cannot cannot simply ``emit loss''
@@ -1548,7 +1554,8 @@ which means that it is calibrated, unlike $\ell$.
 If, in addition, we set $\alpha_p, \alpha_{\datadist\xysamp} := 1$ and
 strictly enforce the qualitative picture,
 finally no more squirming is possible, as we arrive at
-$\displaystyle\lim_{\gamma\to\infty}\aar{\mypdg}_\gamma = \mathcal L$.
+$\displaystyle\lim_{\gamma\to\infty}\aar{\mypdg}_\gamma = \mathcal L$
+(\hyperref[claim:6.8.2]{Claim 6.8.2}).
 % \vskip-0.5ex
 
 In the process, we have given up our ability to tolerate inconsistency by setting all probabilistic modeling choices in stone.
@@ -1970,7 +1977,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 {\renewcommand\footnote[1]{}\recall{lemma:!}}
 \begin{lproof}
 	\label{proof:!}
-	For every $\mu$, adding more edges only adds non-negative terms to \eqref{eq:inc}, while	increasing $\beta$ results in larger coefficients on the existing (non-negative) terms of \eqref{eq:inc}. So for every fixed distribution $\mu$, we have
+	For every $\mu$, adding more edges only adds non-negative terms to \eqref{eq:oinc1}, while	increasing $\beta$ results in larger coefficients on the existing (non-negative) terms of \eqref{eq:oinc1}. So for every fixed distribution $\mu$, we have
 	$\bbr{\dg M}_\gamma(\mu) \le \bbr{\dg M'}_\gamma(\mu)$. So it must also be the case that the infimum over $\mu$, so we find that
 	$\aar{\dg M} \le \aar{\dg M'}$.
 \end{lproof}
@@ -2825,9 +2832,13 @@ Now, we formally state and prove the more general result for $\beta$-VAEs.
 	\end{align*}
 \end{lproof}
 
-\subsection{Additional Proofs for Unnumbered Claims}
- 
+\subsection{Additional Proofs for Inline Claims}
+% \forjoe{%
+% 	I added links to the appendix for this material. 
+% }
+% 
 \subsubsection{Details on the Data Processing Inequality Proof}
+	\label{appendix:dpi-details}
 \tikzset{ci2/.style={inner sep=2pt, align=center}}%
 \colorlet{pcolor}{Plum}%
 \colorlet{qcolor}{MidnightBlue}%
@@ -2839,7 +2850,8 @@ Now, we formally state and prove the more general result for $\beta$-VAEs.
 \def\plabel{{$\lgs\color{pcolor!40}({\beta})$}}
 \def\qlabel{{$\lgs\color{qcolor!40}({\zeta})$}}
 
-We now provide more details on the proof of the Data Processing Equality that appeared in \Cref{fig:dpi-vis-proof} of the main text. We repeat it now for convenience, with labeled PDGs ($\dg M_1, \ldots, \dg M_5$) and numbered (in)equalities.
+We now provide more details on the proof of the Data Processing Equality that appeared in \Cref{fig:dpi-vis-proof} of the main text. We repeat 
+that visual proof here for convenience, augmented with labels for the PDGs ($\dg M_1, \ldots, \dg M_5$) and numbered (in)equalities.
 \begin{center}
 \scalebox{0.89}{{
 \setlength\tabcolsep{0pt} %
@@ -3133,6 +3145,8 @@ are the constants required to normalize the distributions. Both relative entropi
 
 \subsubsection{Details for Claims made in \texorpdfstring{\Cref{sec:datsim}}{Section 6.7} }
 
+\begin{enumerate}[wide,label={\textbf{(Claim 6.7.\arabic*)}},ref={Claim 6.7.\arabic*}]
+\item \label{claim:6.7.1}
 First, the fact that
 \[
 \mathcal L_1 = \lambda_\dsymb\mathcal L_\datsymb + \lambda_\ssymb \mathcal L_\simsymb = \aar**{
@@ -3173,7 +3187,8 @@ The two cpds with infinite confidence ensure that the only joint distribution wi
 	\quad\text{as promised.}
 \end{align*}
 
-The second correspondence is the least straightforward. Let  $C = \int sd$ be the normalization constant required to normalize the joint density $sd$. We claim that, for large fixed $\gamma$, we have
+\item \label{claim:6.7.2}
+The second correspondence is the least straightforward. Let  $C : \int_{\V(X,Y)} \mathrm d\, s \cdot d$ be the normalization constant required to normalize the joint density $s\cdot d$. We claim that, for large fixed $\gamma$, we have
 \[
 \mathcal L_2 \approx
 C
@@ -3254,7 +3269,7 @@ where $\mathit{const}$ does not depend on $h$. To see this, let $\dg M_2$ be the
 \end{align*}
 $\thickD$ is $(\gamma m)$-strongly convex in a region around its minimizer for some $m>0$ that depends only on $s$ and $d$.
 Together with our assumption that $h$ is positive, we find that when $\gamma$ becomes large,
-the first term dominates, and the optimizing $\mu$ quickly approaches the normalized density $\nu := \frac1Csd$.
+the first term dominates, and the optimizing $\mu$ quickly approaches the normalized density $\nu := \frac1C s \cdot d$.
 Plugging in $\nu$, we find that the value of the infimum approaches
 \begin{align*}
 	\aar{\dg M_2} &\approx \Ex_{\nu} \bigg[ \log \frac1{h(Y|X)} \bigg] - H_{\nu}(Y|X) - \gamma \log C \\
@@ -3266,7 +3281,7 @@ Plugging in $\nu$, we find that the value of the infimum approaches
 	\\ &= C \aar{\dg M_2} + \mathit{const}.
 \end{align*}
 
-
+\item \label{claim:6.7.3}
 Finally, we turn to
 \[
 \mathcal L_3 := \aar**{
@@ -3305,15 +3320,15 @@ Now (\Cref{lemma!}), including $h$ cannot make the PDG any less inconsistent. In
 \]
 to be already compatible with this joint distribution, the inconsistency does not change, while choosing a different $h$ would cause the inconsistency to increase. Thus, the optimal classifier $h^*$ by this metric is indeed as we claim.  Finally, it is easy to see that this loss is calibrated: if $s = d$, then the optimal joint distribution is equal to $s$ and to $d$, and the optimal classifier is $h(Y|X) = s(Y|X) = d(Y|X)$. So $\mathcal L_3$ is calibrated.
 
-
-
+\end{enumerate}
 
 
 
 
 \subsubsection{Details for Claims made in \texorpdfstring{\Cref{sec:reverse-engineer}}{Section 6.8} }
 % \subsection{Details for Claims made in \texorpdfstring{\Cref{sec:reverse-engineer}}{Section 9} }
-\textbf{Distortion Due to Inconsistency.}
+\textbf{Distortion Due to Inconsistency (Claim 6.8.1).}
+	\label{claim:6.8.1}
 In the footnote on \Cpageref{fn:logEexp}, we claimed that if the model confidence $\beta_p$ were 1 rather than $\infty$, we would have obtained an inconsistency of
 $ - \log \Ex_{x\sim p} \exp(- c(x)) $,
 and that the optimal distribution would not have been $p(X)$.
@@ -3350,8 +3365,10 @@ Note also that in the proof, we showed that the optimal distribution is proporti
 
 \medskip
 
-\textbf{Enforcing the Qualitative Picture.}
-We also claimed without careful proof in \Cref{sec:reverse-engineer} that, if $\alpha_h = \alpha_{\datadist\xysamp} = 1$, then
+\phantomsection
+\textbf{Enforcing the Qualitative Picture (Claim 6.8.2).}
+	\label{claim:6.8.2}
+We also claimed in \Cref{sec:reverse-engineer} that, if $\alpha_h = \alpha_{\datadist\xysamp} = 1$, then
 \begin{equation*}
 	\lim_{\gamma\to\infty}
 	\left.

@@ -1638,7 +1638,7 @@ Concretely, let $\mathcal U$ be a ``universe of all possible variables''.
 Then every PDG $\dg M$ with variables $\X \subseteq \mathcal U$ satisfies $\dg M \models \mathcal U$. 
 
 
-\section{``Propositional'' PDG Logic}
+\subsection{``Propositional'' PDG Logic}
 Starting with the entailment operation and introducing connectives, we 
 can obtain a propositional logic whose atomic formulas are PDGs. 
 We  adopt the usual convention of writing 
@@ -1665,7 +1665,7 @@ $(\infty) \dg M_1 \models (\infty) \dg M_2$.
 Similarly, if 
 
 
-\subsection{Defining Connectives}
+\subsubsection{Defining Connectives}
 
 % \textbf{Approach 1.}
 As usual, we can introduce conjunction by
@@ -1746,30 +1746,8 @@ Thus, the logic inside a connective $\entimp$ collapses to ordinary construction
     \end{enumerate}
     \end{lproof}
     
-    
-    
-Some questions.
-\begin{enumerate}
-    \item 
-    Question: which of the following are equivalent?
-    \[
-        \dg M \models \dg M'
-            \quad\qquad 
-        0\models \dg M \Rightarrow \dg M'
-            \quad\qquad
-        0\models \lnot \dg M \lor \dg M'
-            \quad\qquad
-        0\models \dg M' - \dg M
-            \quad\qquad        
-        \dg M - \dg M' \models 0
-    \]
-
-\end{enumerate}
-
-\subsection{}
-\section{PDGs and Epistemic Logic}
-        
-        
+\subsection{Epistemic Logic}
+            
     Given a PPDG $\dg M(\Theta)$, 
     and a set $I$ of agents, each of which has an attention mask
         $\mathit{Attn}_i(\theta) : 2\Ar \to \mathbb R$, 

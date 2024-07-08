@@ -37,7 +37,7 @@ Probability, despite its dominance, does have shortcomings, and is not the only 
 % Perhaps surprisingly, many of these objects can be represented with PDGs as well.
 In \cref{sec:other-uncertainty-repr}, we will use the tools developed in \cref{sec:widgets} to show that PDGs capture some of these other well-established representations of uncertainty, most notably sets of probability measures, known as credal sets \citep{Walley1991-SRIP} (\cref{ssec:cvx-prob-sets}) and Dempster-Shafer Belief functions \citep{shafer1976mathematical} (\cref{ssec:belplaus-as-pdg}).
 % In the remainder of the section, we 
-We also quickly overview other representations captured by PDGs that will play larger roles later on: cluster (pseudo)marginals, causal models, and neural networks (\cref{ssec:capture-causal-models,ssec:implicit-neural-repr,ssec:pseudomarginal-cluster-graph}). 
+We also give a quick overview of other representations captured by PDGs that will play larger roles later on: cluster (pseudo)marginals, causal models, and neural networks (\cref{ssec:capture-causal-models,ssec:implicit-neural-repr,ssec:pseudomarginal-cluster-graph}). 
 % The key . We will explore this in 
 
 \section{Probabilities and Random Variables}
@@ -92,10 +92,40 @@ but now that PDG semantics are on solid ground, we may freely regard a joint dis
 % What makes PDGs special is their ability to do other things at the same time, simultaneously keeping many balls in the air, so to speak. 
 What makes PDGs special is their capability to do this while simultaneously representing other things. 
 
-\temphide{
-\paragraph{Updating by combining PDGs.}
-\TODO
-}
+% \temphide{
+% \paragraph{Updating by combining PDGs.}
+% \TODO
+% }
+
+\newmaterial{%
+\paragraph{Updating with PDGs combination.}
+We can regard a probabiilty distribution $\mu \in \Delta\Omega$ as a PDG 
+\begin{tikzpicture}[baseline=-3pt]
+    \node[dpad0] (W) {$W$};
+    \draw[arr2, <-] (W) to node[above,pos=0.65]{$\mu$} +(-1.1,0);
+\end{tikzpicture} with $\V W = \Omega$.
+At the same time, we can view
+an observed event $U : \Omega \to \{0,1\}$ as a PDG
+\begin{tikzpicture}[baseline=-3pt]
+    \node[dpad0] (W) at (0,0) {$W$};
+    \node[dpad0] (U) at (1.5,0) {$U?$};
+    \draw[arr2] (W) to node[above]{$U$} (U);
+    \draw[arr2, <<-] (U) to node[above,pos=0.65]{$\delta_1$} +(1.2,0);
+\end{tikzpicture} with $\V(U?) = \{ 0,1\}$.
+% , we can combine them.  
+What happens when we combine them, to form a new PDG $\dg M := \mu + U$? 
+Because the conditional distribution $\mu | U$ is the distribution that minimizes relative entropy from $\mu$, it follows that
+\begin{itemize}[nosep]
+    \item The unique element of $\bbr{\dg M}^*_0$ is $\mu | U$
+    \item The observational inconsistency $\aar{\dg M}_0 = \I_\mu[U] = - \log \mu(U)$
+        is the log probability of $\mu$ (\cref{prop:pdg-Ix})
+\end{itemize}
+
+More generally, if our observation had been not an event (i.e., a deterministic distribution over a binary variable), but some other high-confidence distribution over a variable $p(X)$, we would have found that the resulting optimal distribution was the result of applying Jeffrey's rule \citep{	  Jeffrey68} to update $\mu$ with $p$. 
+This an immediate restatement of a standard result
+    \citep[pg. 109]{halpern-RAU}.
+}%
+
 
 \section{Widgets}
     \label{sec:widgets}
@@ -824,7 +854,7 @@ This can be a useful thing to model. For instance, it exactly describes
 A second, more abstract use for this primitive is to enrich PDGs with another notion of confidence. 
 By adding a guard variable $G_a$ for each $a \in \Ar$, and asserting that each $G_a = 1$ occurs with probability $1 - \epsilon_a$ (for some $\epsilon_a \in [0,1]$), it becomes possible to articulate a different and more standard kind of probability-based confidence in the reliability of each cpd.
 (Observe that the special case in which each $\epsilon_a= 0$ is the definition of a PDG we already have.)
-We discuss the difference between approaches like this and the meaning of our primitive $\beta$ at length in \cref{chap:relent-soup}. 
+We discuss the difference between approaches like this and the meaning of our primitive $\beta$ in \cref{chap:conf,chap:relent-soup}. 
 
 Technically speaking, the specification of $p(B|A)$ under the condition that $G = 1$ is really no different from a cpd $p(B|A, G{=}1)$.
 Gven that we have already proved that PDGs an represent arbitrary conditional probabilities, it is entirely expected that PDGs can represent this too. 
@@ -1168,7 +1198,7 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
 \end{defn}
 
 \newmaterial{%
-For those who find the constraint notation difficult to read, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of that subset. 
+For those who are not yet fluent with the constraint notation, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of whatever subset is chosen by $m$. 
 }
 % \newmaterial{%
 % For those who find the constraint notation difficult to read, this is just the PDG t

@@ -381,7 +381,8 @@ finishes reading the statistics on smoking and the original study on tanning
 beds (associated to a cpd $p$ in \Cref{ex:smoking}), but before she has
 time to reflect, we can represent her (conflicted) knowledge state as the sum
 of the two graphs, depicted graphically on the right of \Cref{fig:grok-combine}.
-\forjoe{ I still believe the text above is accurate. It  }
+%
+\forjoe{I believe the text above is still accurate (although the conflicted knowledge state may be conflicted not just about the cpds, but also about the causal mechanisms.) We haven't said anything about qualitative information or mechanisms at this point, and I don't think it would be a good idea to do so here.}
 
 
 \begin{figure}
@@ -799,7 +800,8 @@ Rather than adopting two distinct mechanisms, one might well have intended to me
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 Yet PDG union performs no such merge.
 Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
-We will return to this point in \cref{ex:overdet}.
+We will return to this point in \cref{ex:overdet},
+    and again in \cref{ex:overdet2}.
 % ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 % We mention that there is an even bigger problem in combining factor graphs, because the parameters 
@@ -1028,7 +1030,7 @@ is given by the weighted sum of relative entropies:
             {\mu(\Tgt a,\Src a)}
             {\p_a(\Tgt a | \Src a)\, \mu(\Src a)}.
         % \qedhere
-        \mathrlap{\qquad\qquad\popQED}
+        \mathrlap{\qquad~~\popQED}
         % \popQED
             \label{eq:oinc1}
 \end{equation}
@@ -1456,7 +1458,9 @@ Because of the inherent asymmetry,
     % it is not particularly desirable 
     % to use the symmetrical trade-off parameter $\zogamma$.
     there is no inherent reason to prefer
-    a symmetrical formalism (like the one with $\zogamma$). 
+    a symmetrical formalism
+    % (e.g., with $\zogamma$).
+    % (like the one in terms of $\zogamma$). 
 
 In addition, there are benefits to using $\gamma$ and the scoring function as we have defined it. 
 % For instance, $\gamma$ may be seen as analogous to a \emph{temperature}.
@@ -1661,7 +1665,8 @@ if the BN happens to have the structure of a Markov chain, or more generally be 
 Here's a broader but more subtle class of BNs for which maximum entropy produces the right answer: 
 if for every node $X$ with multiple parents, the entropy of conditional probabiliy $\mathbb P_X(X \mid \Pa(X){=}\mat z) \in \Delta \V \! X$ does not depend on $\mat z$. 
 To see why this would help, it is helpful to see
-    an example of a BN whose distribution does not encode maximum entropy. 
+    an example of a BN whose distribution does not maximize entropy
+        subject to the observational constraints. 
     % a case where it isn't true. 
 
 \begin{example}\label{ex:counterexample}
@@ -1679,7 +1684,7 @@ To see why this would help, it is helpful to see
     \end{tikzpicture}
     \end{center}
 	where $A$ and $B$ are binary, and $C$ can take $2^k$ values, including $c_0$. 
-    As for the probability tables, suppose that both $A$ and $B$ get uniform unconditional probabilities ($\nf12$ apiece), and set $C$'s cpt to be
+    For the probability tables, suppose that both $A$ and $B$ get uniform unconditional probabilities ($\nf12$ apiece), and set $C$'s cpt to be
 	\[
         \p_C(C \mid A,B) = 
 		\begin{idxmat}{{$a$, $b$},{$\lnot a$, $b$},{$a$, $\lnot b$},{$\lnot a$, $\lnot b$}}{$\Delta C$}
@@ -1689,7 +1694,9 @@ To see why this would help, it is helpful to see
 	where $\delta_{c_0}$ places all probability on $c_0$.
     It has zero entropy, while the uniform distribution on $C$ has $k$ bits of entropy, and $A$ and $B$ both have one bit of entropy. 
 	The semantics of a BN require that $A$ and $B$ are independent.
-    Thus, the BN's distribution has entropy $H(\mu_{\text{BN}}) = 2 + k/2$ (one for each of the independent bits, and an expected k/2 bits from getting the uniform distribution on $C$ half the time).
+    Thus, the BN's distribution has  
+    $
+    2 + \nf k2$ bits of entropy (one bit for each of $A$ and $B$ since they are independent, plus an expected $\nf k2$ bits from getting the uniform distribution on $C$ with probability $\nf12$).
     However, a distribution in which $A$ and $B$ are correlated so as to always be equal has $1 + k$ bits (one bit from $A$ and $B$, and $k$ bits from $C | A,B$). 
     % The maximum entropy distribution becomes closer and c
     For $k > 2$, the latter distribution has larger entropy.
@@ -1705,7 +1712,8 @@ Adjusting the principle of maximum entropy so as not to account for the entropy 
 %
 We argue that the princple of \emph{minimizing structural deficiency} ($\SDef$) subject to observational constraints (i.e., the $0^+$ semantics of a PDG) is the appropriate generalization of the principle of maximum entropy, when there is conditional (and especially causal) information involved. 
 %
-\Cref{theorem:bns-are-pdgs} is our first illustration of this. 
+\Cref{theorem:bns-are-pdgs} is a strong argument in favor of this;
+    we will see others examples later on.
 }
 
 

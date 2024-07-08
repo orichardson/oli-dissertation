@@ -6,18 +6,10 @@ Although the high-level ideas in this thesis are often intuitive and philosophic
 % but in their most precise forms, they are often quite mathematical.
 the most precise forms of those ideas are quite mathematical.
 In this chapter, we build up a library of standard mathematical concepts and notation needed to fully understand them. 
-% While 
-% One effect of this chapter is to develop standard notation for standard concepts, 
-% the way we get there is perhaps unusual. 
-\oldnewmaterial{%
 A reader with a firm grasp of probability, graph theory, probabilistic graphical models, convex geometry, and information theory, should already be equipped to understand the later chapters;
 these readers should feel free to skip to \cref{part:univ-model}.
-%
-% Still, the way it all fits together may not be as familiar. 
 Still, even for such readers,
 the way these concepts fit together formally may be less familiar.
-}%
-% The notation is carefully selected to be extremely precise,
 The notation is carefully selected to be precise,
     yet serve multiple purposes,
     and look indistinguishable 
@@ -93,6 +85,15 @@ $
     A \sqcup B := \{ (A, a) : a \in A \} \cup \{ (B, b) : b \in B \}. 
 $
 % \]
+% If the two sets share a symbol, then we instead write
+\newmaterial{%
+The elements are intended to be distinct even if the two sets are identical and share a symbol; 
+    in this case, we instead tag elements based on whether they come
+    from the left or the right argument:
+$
+    A \sqcup A = \{ \mathrm{inl}(a) : a \in A\} \cup \{ \mathrm{inr}(a) : a \in A\}.
+$
+}%
 
 We write $|A|$ or $\# A$ for the \emph{cardinality} of a set $A$;
     when we write $\#A$, that means $A$ is \emph{finite}, 
@@ -595,7 +596,7 @@ The variable ${X}$ is \emph{conditionally independent of ${Y}$ given ${Z}$}
 (according to $\mu$),  denoted 
  % ${X} \CI_\mu {Z} \mid {Y}$, 
 $\mu \models {X} \CI {Y} \mid {Z}$, 
-only if $\mu(X | Z) \mu(Y | Z) = \mu(X,Y \mid Z)$,
+only if $\mu(X | Z) \mu(Y | Z) = \mu(X,Y| Z)$,
 or equivalently, if
 $\mu(X,Z) \mu(Y,Z) = \mu(X,Y,Z) \mu(Z)$. 
 % By multiplying both sides by $\mu(Z)^2$,
@@ -1305,7 +1306,7 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 The operation is worth visualizing. 
 A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 % If we view the hypergraphs on the top as representing processes, 
-A hypergraph and its dual correspond to two different ways of notating a composite process: as a \emph{flowchart} or as a \emph{circuit} (see \citet{kasangian1990duality} for a discussion of this duality in a closely related context).
+A hypergraph and its dual correspond to two different ways of notating a composite process: as a \emph{flowchart} or as a \emph{circuit} (see \citet{kasangian1990duality} for a discussion of this duality in a related context).
 In a flowchart, nodes represent state and  arcs represent transformations between them.
 In a circuit, nodes represent operations, and arcs, thought of as ``wires'' that connect them, carry state. 
 So, if capital letters represent variables and carry state, while numbers represent (randomized) transitions between variables (i.e., cpds), 
@@ -1329,10 +1330,12 @@ Previous approaches to modeling processes rule out situations like these, but in
 % \TODO
 
 % Both kinds of diagram are used in AI. 
-For representing processes like the three on the left,
+For representing processes like the ones on the left,
 both circuit-style and flowchart-style diagrams are common in in computer science. 
 % The neural network ``architecture diagrams'', are the most common way to visually communicate the architecture of
-Focusing specifically on machine learning, ``architecture diagrams'' are circuit representations that have become the standard way to communicate the architecture of a neural network.
+Focusing specifically on machine learning, architecture diagrams%
+    \footnote{as produced by this library, for example \url{https://github.com/HarisIqbal88/PlotNeuralNet}} 
+are circuit representations that have become the standard way to communicate the architecture of a neural network.
 % In that context, the  PDG represents 
 %
 % The duals of these diagrams---the flowchart variants---have been studied at greater length, and are the subject of the next section. 
@@ -1460,7 +1463,10 @@ The three qualitative BNs on the left all encode the same independence informati
 $X$ and $Z$ are conditionally independent given $Y$.
 The last one, however, is different: it states that $X$ and $Y$ are independent (but $Z$ can depend arbitrarily on both $X$ and $Y$).
 \newmaterial{%
-    Note also that, while the left three qualitative BNs all 
+    Note also that, while the left three qualitative BNs all are 
+    (almost) flowchart representations, the one on the right is not;
+        the two arrows do not represent two different processes, but 
+        rather a single joint dependence. 
 }%
 This intuition can be further clarified once we add probabilities.
 
@@ -1837,8 +1843,9 @@ The reader should also be aware that, for real-valued variables, $\H(X) = 0$ no 
 % Intuitively, the scale has been shifted by $$
 Aside from these unwelcome developments, this analogue of entropy acts otherwise just like the original, but shifted by an additive constant to keep it in a more useful range.
 It still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization.  
-
-(conditional) mutual information works just as before: it is non-negative and zero iff there is a (conditional) independence. 
+Fortunately, we do not have to lower our standards for 
+    (conditional) mutual information, which works just as before:
+    it is non-negative and zero iff there is a (conditional) independence. 
 }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 
@@ -1884,16 +1891,19 @@ The principle of maximum entropy implies that we should assume a uniform distrib
 % Despite its successes, 
 The principle of maximum entropy has also faced significant criticism, from a number of different angles \citep{seidenfeld1986entropy,critique-maxent,friedman1971jaynes}.
 An recurring theme in these works is the dependence on representation.
-For example, had we said only ``either our friend will score a 5, or she won't'', then maximum entropy would have suggested that we should presume probability $\frac12$ that she scores a 5, which is incompatible with the probability $\frac15$ that we were supposed to presume before. 
+For example, had we said only 
+``our friend either will or will not score a 5'', 
+then maximum entropy would have suggested that we should presume probability $\frac12$ that she scores a 5, which is incompatible with the probability $\frac15$ that we were supposed to presume before. 
 %
-Without wading too far into this debate, we just mention that we view it as problematic to compare our intuition, which has been primed with the context of all five possible scores, with a picture that has willfully ignored that extra context. 
-Whether or not it is appropriate as a general rule, the principle of maximum entropy certainly not well-behaved locallly; if we expect it to work at all, we must give it the entirety of the relevant representation. 
+Without wading too far into this debate, we point out that it may be problematic to compare our intuition, which has been primed with the context of all five possible scores, with a picture that has willfully ignored that extra context. 
+Whether or not it is appropriate as a general rule, the principle of maximum entropy does not apply locally; if we expect it to work at all, we must represent the entirety of the relevant information. 
 % If maximum entropy is to work at all, then it 
+% Still, 
 }
 
 
 % Many years later, another strong argument can be made 
-After several decades, there is also a rather strong empirical case in favor of the principle of maximum entropy: it validates many standard and intuitively natural choices made in the literature.
+Many decades later, there is an empirical case in favor of the principle of maximum entropy: it validates many standard and intuitively natural choices made in the literature.
 % The uniform distribution over a finite set of outcomes is the distribution with maximum entropy.
 The uniform distribution over an interval $[a,b]$ is the maximum entropy distribution with that support. 
 A gaussian with mean $m$ and variance $\sigma^2$ is the maximum entropy distribution with that mean and variance. 
@@ -1996,7 +2006,7 @@ There are a number of other results showing that relative entropy is the unique 
     There are many nice axiomatizations of relative entropy;
     some important ones include Renyi's \citep{renyi1961measures}, Fadeev's \citep{fadeev1957begriff}, Leinster's result showing
     that it is the only function satisfying three trivial regularity
-    properties and the chain rule \citep{leinster2017shortcharacterizationrelativeentropy}, and a characterization as the unique functor from statistical maps to the additive monoid $[0,\infty]$ \citep{baez2014bayesiancharacterizationrelativeentropy}.
+    properties and the chain rule \citep{leinster2017shortcharacterizationrelativeentropy}, and a characterization as the unique functor from statistical maps to the additive monoid $([0,\infty],+)$ \citep{baez2014bayesiancharacterizationrelativeentropy}.
     It is the only statistical divergence that is both a Bregman divergence and an f-divergence. 
     The Hessian of relative entropy is the Fisher metric, which is the unique metric tensor that is invariant under sufficient statistics. 
     In that geometry, we will see (\cref{chap:relent-soup}) that the gradient flow of relative entropy with respect to its first (``belief'') argument amounts to multiplicative interpolation of probability measures, while gradient flow of relative entropy with respect to its second (``reality'') argument amounts to additive interpolation. 

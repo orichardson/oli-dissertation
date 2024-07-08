@@ -5618,7 +5618,7 @@ supports the very notion it was meant to challenge, suggesting in an unexpected 
 \refstepcounter{example} \label{example:ditrichotomy}
 \textbf{Example {\theexample}.~}         
     % Now, consider the following distributions
-    Let $A, B$, and $C$ be variables
+    Let $A$, $B$, and $C$ be variables
     %oli15:
     % with $\V(A) = \V(B) = \V(C) = \{ (0,0), (0,1), (1,0), (1,1) \}$. 
     % each of which can take on a pair of bits. 
@@ -7975,13 +7975,12 @@ That is, there are \partl\ graphs $\Ar$ such that $\mu \emodels \Ar$ but $\mu \n
     since, for all joint settings of $\U$, there are two possible values of $(X,Y)$, corresponding to the two values of $A$, and both happen with probability $\frac12$. 
     \end{enumerate}
     
-    Thus, we have constructed a distribution that witnessing the fact that $\mu(X,Y) \emodels \Ar$.  
-    
-    Yet, observe that $X$ alone does not determine $Y$ in this distribution, because $X$ alone is not enough to determine $A$ (without also knowing some $U_i$). 
+    Thus, we have constructed a distribution that witnessing the fact that $\mu(X,Y) \emodels \Ar$.      
+    But observe that $X$ alone does not determine $Y$ in this distribution, because $X$ alone is not enough to determine $A$ (without also knowing some $U_i$). 
     %
         
-    For those who are interested, 
-    observe that the bound of \cref{theorem:sdef-le0} tells that
+    % For those who are interested, 
+    For completeness, note that the bound of \cref{theorem:sdef-le0} tells that
     we must satisfy 
     \begin{align*}
     0 \ge

@@ -504,11 +504,14 @@ that quantify discrepancy between
 each type of information and a distribution
 $\mu \in \Delta \V \!\X$ over its variables.
 (See \cref{sec:scoring-semantics} for details.)
-Given a value of $\gamma > 0$, a trade-off parameter that controls the strength of the structural information, the overall scoring function is given by
+Given a value of $\gamma > 0$, a trade-off parameter that controls the strength of the structural information, 
+recall that the overall scoring function is given by
 \begin{align*}
     \bbr{\dg M}_\gamma&(\mu) 
         := \OInc_{\dg M}(\mu) + \gamma \, \SDef_{\dg M}(\mu)
-            \numberthis\label{eqn:scoring-fn} \\[-0.2ex]
+            % \numberthis\label{eqn:scoring-fn}
+            \tag{\ref{eqn:scoring-fn}}
+            \\[-0.2ex]
         &= \Ex\nolimits_{\mu}\bigg[
             \,
             \sum_{\ed aST \mathrlap{\, \in \Ar}} \subafalse
