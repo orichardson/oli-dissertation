@@ -82,8 +82,10 @@ There are a number of important ways to combine two sets $A$ and $B$ to produce 
 % \begin{enumerate}
 %     \item 
 % \end{enumerate}
-Their \emph{union}, denoted $A \cup B$, is the set of all elements contained in either $A$ or $B$ (or both),
-while their \emph{intersection} $A \cap B := \{x \in A : x \in B\}$ is the set of elements they have in common.
+Their \emph{union} $A \cup B$ is the set of all elements contained in either $A$ or $B$ (or both),
+while their \emph{intersection} 
+% $A \cap B := \{x \in A : x \in B\}$ is the set of elements they have in common.
+$A \cap B$ is the set of elements they have in common.
 The \emph{product} of $A$ and $B$ is the set $A \times B := \{ (a,b) : a \in A \land b \in B\}$. 
 The \emph{disjoint union} of $A$ and $B$ is a variant of a union in which all elements are forced to be distinct, by ``tagging'' them with the set they come from, i.e., 
 % \[
@@ -162,7 +164,7 @@ Finally, $|A^B| = |A|^{|B|}$.
 
 % \paragraph{Indexed sets, Tuples, and Sequeces.}
 If $I$ is a set, then an \emph{indexed set}
-    $\mat a = \{ a_i \}_{i \in I}$ consists of a collection of objects, one for each $a_i$. 
+    $\mat a = \{ a_i \}_{i \in I}$ consists of a collection of objects, one for each $i \in I$. 
 If $\forall i.~a_i \in A$, then $\mat a$ is just a function $\mat a : I \to A$. 
 % The set of indexed 
 % Therefore, if each $a_i \in A_i$, then  $\mat a : \sqcup_{i \in I} A_i  
@@ -420,7 +422,7 @@ Thus, although all of the pieces are likely to be familiar, the precise formal w
 %
 We start by giving the simpler picture of probability in the finite case (\cref{ssec:fin-prob}), which, for our purposes, is largely representative of how one should think of probability in the general case (which we return to \cref{ssec:gen-prob}).
 
-\subsection{Probability, in the Finite Case}
+\subsection{Probability in the Finite Case}
     \label{ssec:fin-prob}
 % We first give the simple picture of probability in which representations are finite. 
 % in the finite case; for now, assume the variables $X$ and $Y$ can take on only finitely many possible
@@ -673,7 +675,7 @@ This way of thinking about conditional probability distributions will at times b
 % Probability is 
 
 % \subsection{Probability, More Generally}
-\subsection{Probability, In General}
+\subsection{Probability, in General}
     \label{ssec:gen-prob}
 
 The time has come for us to bite the bullet and describe how probability actually works, when a finite representation is insufficient. 
@@ -712,19 +714,21 @@ A \emph{probability distribution} (or probability measure) is a measure $\mu$ wi
 %         U \cap V = \emptyset \implies \Pr(U \cup V) = \Pr(U) + \Pr(V).
 % \end{align*}
 %
-Intuitively, these three properties are quite intuitive: $\emptyset$ is an event that cannot occur and hence has probability zero,
+These three properties are quite intuitive: $\emptyset$ is an event that cannot occur and hence has probability zero,
 $\Omega$ is an event that always occurs and hence has probability 1, 
 and if events cannot co-occur, then the probability that one of them occurs is the sum of their probabilities. 
 % \end{enumerate}
 % We need a few more definitions about measures. 
 
-%%TODO: marginal measures, integration, expectation.
+%%TODO: marginal measures, integration, expectation, in the general case.
 
+%%%
+\commentout{%%% MOVED BELOW!
 We will need a few additional concepts about measures.
 First, if $\mu$ and $\nu$ are measures over a space $(X, \mathcal F)$, 
 and $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
 $\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\nu \ll \mu$.
-Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is  \emph{strictly positive} (with respect to $\cal T$).
+Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is  \emph{strictly positive} (with respect to $\cal T$).}
 
 
 \paragraph{Statistics and (Random) Variables.} 
@@ -763,8 +767,12 @@ To make this precise, we need:
 }
 
 \paragraph{The Radon-Nikodym Derivative.}
-Suppose $\mu$ and $\nu$ are both measures over a measurable space $(\Omega,\mathcal F)$, and $\mu \ll \nu$. 
-The Radon-Nikodym theorem states that there then exists a unique 
+Suppose $\mu$ and $\nu$ are both measures over a measurable space $(\Omega,\mathcal F)$.
+%  and $\mu \ll \nu$. 
+If $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
+$\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\mu \ll \nu$.
+When $\mu \ll \nu$, the Radon-Nikodym theorem \citep{nikodym1930generalisation} 
+states that there exists a unique 
 % $\mathcal F$-measurable function $f$
     measurable function $f : \Omega \to \mathbb R$
 such that, for all $A \in \mathcal F$,
@@ -899,7 +907,8 @@ that are sources of arcs leading to $u$.
 Dually, the \emph{children} of $u \in N$ are the nodes $\Ch_G(u)$ that are targets of some arc whose source is $u$. 
     % we write $$
 There is no distinction between the two notions if the edges do not have direction.
-}
+}%
+
 
 \begin{defn}
     % [Undirected (Multi) Graph]
@@ -918,22 +927,28 @@ There is no distinction between the two notions if the edges do not have directi
     \qedhere
 \end{defn}
 
+
+A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ of its vertices that are all connected by edges---that is, such that every distinct pair $\{x,y\}$ of vertices $x,y \in C$ is a member of $E$.  
+We write $\mathrm{cliques}(G)$ for the set of all cliques in a graph. 
+%
 We often write $u{-}v \in E$ as a slightly more visual alternative to $\{u,v\} \in E$, and one that can be chained together. 
-A \emph{path} in an graph from $u$ to $v$ is a sequence of edges
+In an undirected graph, 
+a \emph{path} from $u$ to $v$ is a sequence of edges
 $u = u_1{-}u_2{-}\cdots{-}u_n = v$
 that connect $u$ and $v$. 
 A path in a directed graph has the additional requirement that every arc along the path must point from $u_i$ to $u_{i+1}$.
 %
-A \emph{clique} of an undirected graph $G = (N,E)$ is a subset $C \subseteq N$ of its vertices that are all connected by edges---that is, such that every distinct pair $\{x,y\}$ of vertices $x,y \in C$ is a member of $E$.  
-We write $\mathrm{cliques}(G)$ for the set of all cliques in a graph. 
+A \emph{cycle} is a path that starts and ends at the same node.
+% (and passes through at least one other node).
+A \emph{directed acyclic graph}, or simply \emph{dag} for short, is a directed graph without any cycles. 
 
 
 It is common to identify a graph $H = (N,A)$ (or an undirected graph $G = (N,E)$) with its (symmetric) adjacency matrix
 \[
     \mathbb A_H = \Big[ \#\Big\{ a \in A : {\singlespacing \begin{array}{c}\Src a = u,\\ \Tgt a = v \end{array}} \Big\} \Big]_{(u,v) \in N \times N}
-    \qquad
+    \quad
     \mathbb A_G = \Big[
-    \#\{ e \in E : \iota(e) = \{u,v\}         \Big]_{(u,v) \in N\times N}~~,
+    \#\{ e \in E : \iota(e) = \{u,v\}  \Big]_{(u,v) \in N\times N},
 \]
 in part because there is a natural bijection between
 (undirected) multigraphs and (symmetric) square matrices
@@ -988,19 +1003,27 @@ not the identity on (directed) graphs.
 These choices are essentially locked in if we want to preseve the validity of the representation in terms of square binary matrices. 
 }%
 
-
-
+\newmaterial{%
+There is an important special class of (undirected) graphs that commonly arises in modeling the relationships between two distinct kinds of objects. 
+% in which nodes can be partitioned into two separte parts, and every edge crosses that partition. 
+}%
 
 \begin{defn}
-    A bipartite graph $G = (L, R, E)$ is a graph $(L \sqcup R, E)$ whose
-    vertices are partiioned into two components $V = L \sqcup R$, 
-    and whose edges $E \subset L \times R$ are only between $L$ and $R$. 
+    A bipartite graph $G = (L, R, E)$ is an undirected graph $(L \sqcup R, E)$ whose
+    vertices are partitioned into two components $V = L \sqcup R$ (the \emph{left part} and \emph{right part}) 
+    % and whose edges $E \subset L \times R$ are only between $L$ and $R$. 
+    with the property that every edge crosses the partition: $\forall e \in E. |\iota(e) \cap L| = |\iota(e) \cap R| = 1$. 
 \end{defn}
 
 % \fadeout{ \begin{defn}
 %     A directed bipartite graph $G = (L, R, E)$ is a bipartite graph $(L, R, E)$ whose edges $E \subset (L \times R) \cup (R \times L)$ are directed. 
 %     \end{defn} }
 
+\newmaterial{%
+% There is also an a
+It seems that the notion of a graph only captures pairwise relationships between vertices. 
+If we also want to model relationships between triples of vertices, it seems that we need a more general object.
+}
 
 \begin{defn}
     A \emph{hypergraph} $G = (V, \mathcal E)$ is a set $V$ of vertices,
@@ -1010,7 +1033,7 @@ These choices are essentially locked in if we want to preseve the validity of th
 
 An ordinary undirected graph is the special case in which every hyperedge contains two vertices.
 In turn, a bipartite graph is a (very) special case of an ordinary undirected graph.
-By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet, perhaps counter-intuitively, they are in fact they are naturally isomorphic. 
+By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet, perhaps counter-intuitively, they are in fact naturally isomorphic. 
 % , which themselves are a strict (particularly easy to draw) special case of hypergraphs.  
 
 \begin{prop} 
@@ -1102,9 +1125,8 @@ If necessary, we can often add an ``identity'' arc
 For these reasons, we often leave $\N$ implicit,
 referring to the directed hypergraph simply as $\Ar$.
 
-A directed hypergraph $(N, \mathcal A)$ can be (equivalently) defined
+A directed hypergraph $(N, \mathcal A)$ can be equivalently defined
 as an (ordinary) directed graph $(2^N, \Ar)$ whose set of nodes is the powerset of some set $N$. 
-\oldnewmaterial{%
 Just as hypergraphs and bipartite graphs are isomorphic,
     so too are directed hypergraphs and directed bipartite graphs:
 \begin{align*}
@@ -1115,7 +1137,6 @@ Just as hypergraphs and bipartite graphs are isomorphic,
     (L, R, A) \mapsto (L, \{ \Pa(r){\to}\Ch(r) : r \in R \}).
 \end{align*}
 % The analogue of that for (directed) graphs
-}%
 %
 %
 % Interestingly, the concept of duality applies equally well to directed hypergraphs, and the definition is even more symmetric---although we are not aware of 
@@ -1144,19 +1165,19 @@ any thorough treatment of duality in directed hypergraphs.
 \end{defn}
 
 % It is instructive to check that
-It is easy to verify that 
+It is easy to verify that, as with undirected hypergraphs, the dual of the dual of a directed hypergraph is the original.%
 % $\check{\check{\Ar}} = \Ar$.
-$\check{\check{\mathcal H}} = \mathcal H$.%
-    \footnote{
+% $\check{\check{\mathcal H}} = \mathcal H$.%
+\footnote{
     $\check{\check{\Src a}}
     = \{ n \in N : a \in \check{\Tgt n} \} 
     = \{ n \in N : a \in \{ a' \in \Ar :  n \in \Src {a'} \} \} 
     = \{ n \in N : n \in \Src a\} 
     = \Src a$, and
     a symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
-    }
-
-\commentout{
+}
+%
+\commentout{%
 We now verify that $\check{\check{\mathcal H}} = \mathcal H$.
 Observe that 
 \begin{align*}
@@ -1168,26 +1189,26 @@ Observe that
 \end{align*}
 % \end{prop}
 A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$. 
-}
+}%
 % What does this look like?
 % To visualize . 
 % One might wonder why $\check\Src n$ is definde in terms of $\Tgt a$ instead of $\Src a$.
-
+%
 \begin{figure}%
     \centering
     \renewcommand\arraystretch{1.6}
-    \setlength\tabcolsep{10pt}
-    \begin{tabular}{ccc}
+    \setlength\tabcolsep{7pt}
+    \begin{tabular}{cccc}
 % \begin{tabular}{c}
     \begin{tikzpicture}[xscale=1.2,center base]
     \begin{scope}[every node/.style={draw,rounded corners=5pt,outer sep=2pt}]
-        \node[] (X) at (0,1) {X};
-        \node[] (Y) at (1,1) {Y};
-        \node[] (Z) at (2,1) {Z};
+        \node[] (A) at (0,1) {A};
+        \node[] (B) at (1,1) {B};
+        \node[] (C) at (2,1) {C};
     \end{scope}
-        \draw[arr1,<-] (X) to node[above]{\small 1} +(-0.9,0);
-        \draw[arr1] (X) to node[above,pos=0.35]{\small 2} (Y);
-        \draw[arr1] (Y) to node[above,pos=0.35]{\small 3} (Z);
+        \draw[arr1,<-] (A) to node[above]{\small 1} +(-0.9,0);
+        \draw[arr1] (A) to node[above,pos=0.35]{\small 2} (B);
+        \draw[arr1] (B) to node[above,pos=0.35]{\small 3} (C);
     \end{tikzpicture}
     &
     \begin{tikzpicture}[xscale=1.2,center base]
@@ -1205,14 +1226,23 @@ A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
     \end{tikzpicture}
     %
     &
+    \begin{tikzpicture}[xscale=1.2,center base]
+    \begin{scope}[every node/.style={draw,rounded corners=5pt,outer sep=2pt}]
+        \node (A) at (0,0) {A};
+        \node (B) at (1.3,0) {B};
+    \end{scope}
+        \draw[arr1] (A) to[bend left] node[above]{\small 1} (B);
+        \draw[arr1] (B) to[bend left] node[below]{\small 2} (A);
+    \end{tikzpicture}
+    &
     %
     \begin{tikzpicture}[xscale=1.2,center base]
     \begin{scope}[every node/.style={draw,rounded corners=5pt,outer sep=2pt}]
-        \node[draw,outer sep=2pt] (X) at (0,0) {$X$};
-        \node[draw,outer sep=2pt] (Y) at (1,0) {$Y$};
+        \node[draw,outer sep=2pt] (A) at (0,0) {A};
+        \node[draw,outer sep=2pt] (B) at (1,0) {B};
     \end{scope}
-        \draw[arr1] (X) to node[above,pos=0.35]{\small 1} (Y);
-        \draw[arr1,<-] (Y) to node[above]{\small 2} +(0.9,0);
+        \draw[arr1] (A) to node[above,pos=0.35]{\small 1} (B);
+        \draw[arr1,<-] (B) to node[above]{\small 2} +(0.9,0);
         %
     \end{tikzpicture}
     \\[2ex]\\
@@ -1220,9 +1250,9 @@ A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
         \node[draw,outer sep=2pt] (1) at (-0.5,0) {1};
         \node[draw,outer sep=2pt] (2) at (0.5,0) {2};
         \node[draw,outer sep=2pt] (3) at (1.5,0) {3};
-        \draw[->,arr1] (1) to node[below,pos=0.35]{\small X} (2);
-        \draw[->,arr1] (2) to node[below,pos=0.35]{\small Y} (3);
-        \draw[arr1,] (3) to node[below,pos=0.35]{\small Z} +(0.9,0);
+        \draw[->,arr1] (1) to node[below,pos=0.35]{\small A} (2);
+        \draw[->,arr1] (2) to node[below,pos=0.35]{\small B} (3);
+        \draw[arr1,] (3) to node[below,pos=0.35]{\small C} +(0.75,0);
     \end{tikzpicture}
     &
     \begin{tikzpicture}[xscale=1.2,center base]
@@ -1240,19 +1270,26 @@ A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
     \end{tikzpicture}
     &
     \begin{tikzpicture}[xscale=1.2,center base]
+        \node[draw,outer sep=2pt] (1) at (0.75, .65) {1};
+        \node[draw,outer sep=2pt] (2) at (0.75,-.65) {2};
+        \draw[arr1] (1) to[bend left] node[right]{\small B} (2);
+        \draw[arr1] (2) to[bend left] node[left]{\small A} (1);
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}[xscale=1.2,center base]
     % \begin{scope}[shift={(0.5,-1.5)}]
         \node[draw,outer sep=2pt] (1) at (0,0) {1};
         \node[draw,outer sep=2pt] (2) at (1,0) {2};
-        \draw[arr1,<-] (1) to node[above]{\small $X$} +(-0.9,0);
+        \draw[arr1,<-] (1) to node[above]{\small A} +(-0.75,0);
         % \draw[arr1] ()
         \coordinate (a) at (0.5,-0.5);
         \mergearr[arr1] 12a
-        \node at (0.5,0.2) {\small $Y$};
+        \node at (0.5,0.2) {\small B};
     % \end{scope}
     \end{tikzpicture}
     \end{tabular}
     \caption[Examples of directed hypergraphs and their duals]
-    {Examples of directed hypergraphs (first row) and their duals (second row).}
+    {Examples of directed hypergraphs (one row) and their duals (the other row).}
         \label{fig:dhygraph-duals}
 \end{figure}%
 \commentout{%
@@ -1265,23 +1302,42 @@ In the duals of hypergraphs corresponding to causal models, there are no two-tai
 Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
 }%
 \newmaterial{%
+The operation is worth visualizing. 
 A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 % If we view the hypergraphs on the top as representing processes, 
-These two views of a hypergraph correspond directly to two (dual) ways of notating a process: as a \emph{flowchart} or as a \emph{circuit} \citep{kasangian1990duality}.
+A hypergraph and its dual correspond to two different ways of notating a composite process: as a \emph{flowchart} or as a \emph{circuit} (see \citet{kasangian1990duality} for a discussion of this duality in a closely related context).
 In a flowchart, nodes represent state and  arcs represent transformations between them.
 In a circuit, nodes represent operations, and arcs, thought of as ``wires'' that connect them, carry state. 
 So, if capital letters represent variables and carry state, while numbers represent (randomized) transitions between variables (i.e., cpds), 
 then 
 % the bottom row of 
 the top row of \cref{fig:dhygraph-duals} is the flowchart representation and the bottom row is the circuit representation. 
-In either representation, the two hypergraphs on the left represent real
 
-\TODO
+In either representation, the two hypergraphs on the left of \cref{fig:dhygraph-duals} represent unambiguous composite processes.
+The far left one is a chain: operation 1 (op 1) produes X, which is fed to op 2 which produces Y, and finally fed to op 3 to produce Z.
+The second hypergraph from the left involves a split and a merge: op 1 produces A, which is copied and sent to ops 1 and 2, which use it to produce B and C, repectively. Then, op 4 uses the values of B and C to produce D.
+% The right one, on the other hand, is 
+% Is the right one meaningful?  We 
+The middle right hypergraph represents a cyclic process, in which op 1 produces B from A and op 2 produces A from B. 
+% The right one, on the other hand, is less clear. 
+In each of these three cases, every variable is produced by a single operation (on the top, one hyperarc goes into every node; on the bottom, one hyperarc comes out of every node). 
+But what does the hypergraph on the far right represent? 
+Op 1 produces B from A, but op 2 somehow also produces B. 
+Is this meaningful?
+% As we will see in \cref{chap:pdg-repr}
+Previous approaches to modeling processes rule out situations like these, but in \cref{chap:pdg-repr}, we will use them to capture (possibly) conflicted beliefs.  
+% \TODO
 
-Both representations are commonly used in AI. 
+% Both kinds of diagram are used in AI. 
+For representing processes like the three on the left,
+both circuit-style and flowchart-style diagrams are common in in computer science. 
 % The neural network ``architecture diagrams'', are the most common way to visually communicate the architecture of
-In machine learning, the circuit representation has become the standard way to communicate the operations in a neural network, and it is called a ``architecture diagram''.
-The duals of these diagrams---the flowchart variants---have been studied at greater length, and are the subject of the next section. 
+Focusing specifically on machine learning, ``architecture diagrams'' are circuit representations that have become the standard way to communicate the architecture of a neural network.
+% In that context, the  PDG represents 
+%
+% The duals of these diagrams---the flowchart variants---have been studied at greater length, and are the subject of the next section. 
+% Meanwhile, (some of) the flowchart variants are closely related to a standard representation called a Bayesian Network, which is one of two focuses of the next section. 
+Meanwhile, the duals of these hypergrahs (i.e., flowchart variants) are closely related to a standard representation called a \emph{Bayesian Network}, which is a primary focus of the next section. 
 }%
 
 % As we will see th  
@@ -1305,13 +1361,13 @@ The duals of these diagrams---the flowchart variants---have been studied at grea
 
 
 % \section{A Review of Graphical Models}
-\section{(Probabilistic) Graphical Models}
+\section{Probabilistic Graphical Models}
     \label{sec:prelim-pgms}
 
 % Broadly speaking, probabilistic graphical levels 
-Like variables themselves, graphical models exist on two levels: a qualitative or structural one, and a quantitative observational one.
+Like variables themselves, graphical models exist on two levels: a qualitative or structural level, and a quantitative or observational one.
 %
-a \emph{graphical model structure}, or a \emph{qualitative graphical model} is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges somehow indicate local influences between variables.
+A \emph{graphical model structure}, or a \emph{qualitative graphical model} is a (directed) (hyper)graph whose vertices $\X$ are variables, and whose (hyper)edges somehow indicate local influences between variables.
 The quantitative form then annotates those concepts with data.
 A \emph{probabilistic graphical model},
 or simply  ``graphical model'', is a
@@ -1335,7 +1391,7 @@ typically represents a joint probability distribution $\Pr_{\!\cal M}
 
 We now review the basics of the most important classes of graphical models used in practice:
 Bayesian Networks, which are based on directed (acyclic) graphs, and
-what we will call factor graphs, which are based on undirected graphs. 
+what we will call factor graphs, which are based on undirected (hyper)graphs. 
 What follows is really a barebones sketch of the graphical models context for the ideas we present in this dissertation; for a proper treatment, we refer readers to 
     \citet{KF09}.
 % These two models 
@@ -1346,8 +1402,11 @@ What follows is really a barebones sketch of the graphical models context for th
 A \emph{qualitative Bayesian Network} (qualitative BN) is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
 An arc $X {\to} Y \in A$ intuitiely reflects a possibility that $X$ can influence $Y$. 
 % The absence of an arc, then, reflects a kind of (conditional) independence. 
-The absence of an arc, then, in context, reflects a kind of 
-    independence. 
+\newmaterial{%
+    Intuitively, each variable should be thought of as being associated with a process
+    that produces it in a way that depends jointly on all of its parents. 
+}
+The absence of an arc, then, in context, reflects a kind of independence. 
 % One standard way to say this is that
 % Here is one standard description of these independencies: 
 % Here is n of these independencies: 
@@ -1399,7 +1458,10 @@ It is helpful to look at some examples.
 % The first, second, and third, all give the same independencies:
 The three qualitative BNs on the left all encode the same independence information:
 $X$ and $Z$ are conditionally independent given $Y$.
-The last one, however, is different: it states that $X$ and $Y$ are independent (but $Z$ can have an arbitrary relation with both).
+The last one, however, is different: it states that $X$ and $Y$ are independent (but $Z$ can depend arbitrarily on both $X$ and $Y$).
+\newmaterial{%
+    Note also that, while the left three qualitative BNs all 
+}%
 This intuition can be further clarified once we add probabilities.
 
 % A quantitative BN, or simply a BN, 

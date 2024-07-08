@@ -102,6 +102,7 @@ it is the possibility of disagrement that makes agreement valuable.
 
 
 Overlapping and redundant representations are incredibly useful in practice for guarding against catastrophic failure. 
+\commentout{%
 \newmaterial{%
 The issue is particularly pronouncd in logic, as a single contradiction can leave a theory entirely trivial and detached from truth---an unforunate fact
 that has lead some \citep{priest1996paraconsistent} to develop logics that can tolerate inconsistency. 
@@ -117,8 +118,9 @@ This is extremely attractive, as this kind of epistemic modesty allows us to pre
 \TODO
 
 Yet recently, modern AI systems have recently been slipping further from even the probabilistic consistency to which they aspire.
-}%
-% For this reason, even modern AI systems have recently been slipping away from the probabilistic consistency that they aspire to.
+}}%
+For this reason, even modern AI systems have recently been slipping away from the probabilistic consistency to which they aspire.
+%
 For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
 The priors are typically inconsistent with the data (which is arguably the point), although neither is ever modified. 
 Still, the result is a far more robust learning process, both theoretically 
