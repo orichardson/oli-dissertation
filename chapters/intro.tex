@@ -221,7 +221,8 @@ To summarize, \cref{part:univ-model} establishes PDGs as a sweeping generalizati
 
 
 \textbf{\newmaterial{A Universal Objective.}}
-As we will see in \cref{part:univ-objective}, 
+% As we will see in \cref{part:univ-objective}, 
+In \cref{part:univ-objective}, we will see that
 PDGs also turn out to capture more modern learned representations, 
     and even learning algorithms and objectives behind them. 
 % While we have seen the benefits of being able to tolerate inconsistency, we have not yet 
@@ -231,12 +232,15 @@ In \cref{chap:one-true-loss},
 based on
 % a paper titled
 \textit{Loss as the Inconsistency of a Probabilistic Dependency Graph: Choose Your Model, not Your Loss Function} \citep{one-true-loss}, 
-we will see that PDGs not only capture the part of a modern machine learning system typically thought of as the representation (i.e., the networks and their architectures), but also the loss function used to train that system.  
+we will see that PDGs capture not only the part of a modern machine learning (ML) system typically thought of as the representation (i.e., the networks and their architectures), but also the loss function used to train that system.  
 % Previously, these two concepts were considered separate design considerations, 
-In a more standard telling, these two concepts completely separate design considerations, and a loss function is about pragmatics, rather than truth. 
-In \cref{chap:one-true-loss}, we argue that this is not the case, and there is a ``universal'' way of getting at the ``correct'' loss function simply by laying out your (possibly inconsistent) beliefs. 
-We will see that a wide variety of losses can be viewed as measuring the inconsistency of a PDG that models the situation appropriately. 
-This framing also gives a principled way of selecting a loss function in new learning settings. 
+% In a more standard telling, these two concepts completely separate design considerations, and a loss function is about pragmatics, rather than truth. 
+Previously the two aspects of an ML system were considered separate design choices, and the loss was a matter of pragmatics, not truth. 
+But our findings suggest that 
+% In \cref{chap:one-true-loss}, we argue that this is not the case, and 
+there may be a ``universal'' way of getting at the ``correct'' loss function simply by laying out your (possibly inconsistent) beliefs. 
+Indeed, a wide variety of standard losses can be viewed as measuring the inconsistency of a PDG that models the situation appropriately. 
+% This framing also gives a principled way of selecting a loss function in new learning settings. 
 %
 From these results, it follows that much of machine learning can be viewed as resolving inconsistencies. 
 %
@@ -245,7 +249,7 @@ In \cref{chap:LIR}, we operationalize this process, by giving a generic recipe f
 % The recipe calls for a
 focus your attention to some (small) view of the picture, and then make (small) changes to reduce the inconsistency of that picture. 
 %
-This process turns out to be a generalization of {belief propagation}, but one which applies to arbitrary PDGs, thereby also capturing techniques such as adversarial training and variational inference. 
+This idea turns out to be a generalization of {belief propagation} that applies to arbitrary PDGs, and that captures techniques such as adversarial training and variational inference in the process. 
 % Perhaps surprisingly, training, inference, and the production of adversarial examples, are all instances of this simple recipe. 
 
 
@@ -403,11 +407,13 @@ A few examples of the distinction we're getting at are given below.
 \end{center}
 
 \newmaterial{%
-Some readers might immediately recognize this division; others may find it confusing or find it to be a false equivalence. 
-By the end of the thesis, hopefully we will gain some appreciation
+Some readers might immediately recognize this division; 
+% others may find it confusing or find it to be a false equivalence. 
+    others may find the analogy between these concepts resonates less.
+By the end of the thesis, hopefully we will gain some 
 % for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
 % for this distinction and its role in probabilistic modeling. 
-for this analogy and its role of this concept in probabilistic modeling. 
+appreciation for this concept and its role in probabilistic modeling. 
 }%    
 Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
 % (although both can be numerical)

@@ -85,13 +85,18 @@
 % It is often the case that 
 % It is common to have to deal with conflicting information
 What should you do with conflicting information?
-To be \emph{rational}, you immediately resolve the inconsistency, so as to maintain a consistent (probabilistic) picture of the world.
+To be \emph{rational}, you must immediately resolve the inconsistency,
+    so as to maintain a consistent (probabilistic) picture of the world.
 %
-But is that always necessary?
+But how?
+% And what if there is no time to process?
+% And is it really critical always have fully consistent beliefs?
+And is it really critical to do so immediately?
+% But is that always necessary?
 % Epistemic conflict is an important aspect of human thought.
 % ---and, as we shall see, it is already bein
 % Yet we build artificial agents using probabilistic models that, by construction, cannot represent conflicted beliefs.
-Inconsistency is clearly undesirable, but we stand to gain a lot by being able to represent it.
+Inconsistency is clearly undesirable, but we stand to gain a lot by representing it.
 %
 % You must find a way to consult 
 % But is that how you aspire to think? 
@@ -99,13 +104,16 @@ Inconsistency is clearly undesirable, but we stand to gain a lot by being able t
 % What is so special about the borders of an agent? 
 % What about conglomerates made up of smaller actors? Why are 
 
-This thesis develops a broad theory of how to approach probabilistic modeling with possibly-inconsistent information.  
-The key ingredient is a novel kind of graphical model, called a \emph{Probabilistic Dependency Graph (PDG)}. 
-PDGs allow a modeler to specify arbitrary (even conflicting) pieces of probabilistic information with arbitrary degrees of confidence. 
+This thesis develops a broad theory of how to approach probabilistic modeling with possibly-inconsistent information, unifying and reframing much of the literature in the process.  
+The key ingredient is a novel kind of graphical model, called a \emph{Probabilistic Dependency Graph (PDG)},
+which allows for arbitrary (even conflicting) pieces of probabilistic information. 
 In \cref{part:univ-model}, we establish PDGs as a sweeping generalization of other models of mental state, including traditional graphical models such as Bayesian Networks and Factor Graphs, as well as causal models, and even generalizations of probability distributions, such as Dempster-Shafer Belief functions. 
 % We also investigate a general analogue of a BN's conditional independencies for arbitrary directed hypergraphs---i.e., the underlying structure of a PDG. 
-In \cref{part:univ-objective}, we show that PDGs also capture modern neural representations. Indeed, it turns out that most loss functions in the literature can be viewed as the inconsistency of a PDG that models the situation appropriately. Furthermore, many of the most important algorithms in AI can be viewed as instances of a simple heuristic approach to resolving inconsistencies. 
-In \cref{part:algo-logic-complexity}, we formalize and provide algorithms for inference in PDGs, and investigate the deep algorithmic connection between inference in a PDG, and calculating a PDG's numerical degree of inconsistency. We also develop general principles for reasoning with (and about) PDGs. 
+In \cref{part:univ-objective}, we show that PDGs also capture modern neural representations.
+Surprisingly, standard loss functions can be viewed as the inconsistency of a PDG that models the situation appropriately. 
+Furthermore, many important algorithms in AI are instances of a simple approach to resolving inconsistencies. 
+In \cref{part:algo-logic-complexity}, we provide algorithms for PDG inference, and uncover a deep algorithmic equivalence between the problems of inference and calculating a PDG's numerical degree of inconsistency. 
+We also develop powerful yet inutuitive principles for reasoning with (and about) PDGs. 
 \end{abstract}
 
 \begin{biosketch}
@@ -190,24 +198,24 @@ TODO
     \input{chapters/infer-inconsist-connect}
 
 \chapter{Reasoning with PDGs}
-    \label{sec:monotone}\label{chap:reason}
-    % \input{chapters/rwpdg}
+    % \label{sec:monotone}\label{chap:reason}
+    \input{chapters/rwpdg}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Foundations} \label{part:foundations}
 
 \chapter{Learner's Confidence}
-    \label{chap:conf}
-    % \input{chapters/conf}
+    % \label{chap:conf}
+    \input{chapters/conf}
 
 \chapter{Relative Entropy Soup}
-    \label{chap:relent-soup}
-    % \input{chapters/relent-soup}
+    % \label{chap:relent-soup}
+    \input{chapters/relent-soup}
 
 \chapter{The Category Theory of PDGs}
-    \label{chap:PDG-cat}
-    % \input{chapters/cat}
+    % \label{chap:PDG-cat}
+    \input{chapters/cat}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{}  \label{part:conclusions}

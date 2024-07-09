@@ -1,9 +1,68 @@
     \label{chap:reason}
 
-\section{Quantitative Monotonicity and Equivalence}
+% How should you 
+We have just seen how we can use PDGs to do 
 
 
-\section{Qualitative Monotonicity and Equivalence}
+
+\vfull{
+One classical representation of knowledge is a list of formulas
+    $[ \phi_1, \phi_2, \ldots, \phi_n]$
+    that one knows to be true.
+This representation has a nice property:
+    learning an additional formula $\phi_{n+1}$
+    can only narrow the set of worlds one considers possible.
+    % after including an additional formula $\phi_{n+1}$
+    % % has the effect of strengthening knowledge:
+    % one can still prove anything that one could prove before.  
+    % (as do many standard representations of knowledge \citep{rak}).
+%oli1: although I like this flourish, I believe I agreed
+% to remove it in order to prevent the story from seeming to undercut
+% itself if one doesn't read carefully.
+%
+% Qualitative Bayesian Networks (and MRFs) are monotonic,
+% 	but in the opposite direction.
+% 	One might be tempted to think that an edge $A{\to}B$
+% 	in a BN represents knowledge (that $A$ influences $B$).
+% 	But in fact it is the \emph{lack} of an edge that caries knowledge:
+% 	$A{\not\to}B$ means that $A$ does not influence $B$ directly.
+%joe1: I don't see why this is exactly right, but in any case, it's a
+%distractin.  I cut it.
+% 	Thus, a BN is more like a list of formulas that one considers possible,
+% 	than a list of formulas one knows.
+%oli1: to help you see why the above is true: an edge in a BN indicates the possibility of dependence, not the necessity of dependence; if all variables are independent, it is consistent with every BN structure. 
+%   \Scibility, however, is monotonic in the direction
+%   we expect of a representation of knowledge.
+%
+%oli1: replacing it with the following, condensed version:
+The same is true of \scibility. 
+%joe2*: this does not seem consistent with your English.  It does
+%*not* say that anything you can prove from A' can also be proved from
+%A.  It says that if all the formulas in A are true according a
+%probability distribution \mu, then so are the formulas in a subset.
+%This is quite a different statement.  
+%oli2: Good point. The English I had and the proposition are (classically)
+% equivalent, but not directly so; they're logical duals. I'll rewrite the
+% English to try to make it more direct.  
+% 
+% In this analogy, \Ar' corresponds to [\phi_1, ... \phi_n], not 
+% to the extension to \phi_{n+1}.  Also, one should not think of \Ar
+% as a collection of formulas, because mechanisms interact. Just
+% because \mu \models { a } for all a \in \Ar (which is always true),
+% does not allow us to conclude that  \mu \models \Ar.
+%
+}%
+
+
+\section{Observational (Quantitative) Monotonicity and Equivalence}
+    \label{sec:quant-monotone}
+
+Monotonicity of PDG inconsistency \citep{one-true-loss}
+%joe16: all these inequalities need a reference
+is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
+
+
+\section{Structural (Qualitative) Monotonicity and Equivalence}
 %oli22*: moved full section to the appendix
 % \subsection{Monotonicity of Structural Compatibility}
 %oli3: rebranding section
@@ -14,7 +73,7 @@
 %oli22: rebranding, for appendix
 % \section{Monotonic Reasoning about \SCibility}
 \subsection{Qualitative Monotonicity}
-    \label{sec:monotone}
+    \label{sec:qual-monotone}
 
 
 %oli4: should I add eeven more motivation? I feel it distracts from the current story, but it still might help to motivate. Maybe the below should go elsewhere...
@@ -54,9 +113,9 @@
 %
 %oli21*: cutting this down, for neurips submission
 \vfull{%
-Monotonicity of PDG inconsistency \citep{one-true-loss}
-%joe16: all these inequalities need a reference
-is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
+% Monotonicity of PDG inconsistency \citep{one-true-loss}
+% %joe16: all these inequalities need a reference
+% is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
 In this section, we develop and apply an anlogous principle for \scibility.
 But first, we start with something simple.
 }
@@ -150,53 +209,7 @@ In this section, we develop a related principle for \scibility.
 %
 %
 %oli7: breaks the flow; a good place to cut 
-\vfull{
-One classical representation of knowledge is a list of formulas
-$[ \phi_1, \phi_2, \ldots, \phi_n]$
-that one knows to be true.
-This representation has a nice property:
-learning an additional formula $\phi_{n+1}$
-can only narrow the set of worlds one considers possible.
-    % after including an additional formula $\phi_{n+1}$
-    % % has the effect of strengthening knowledge:
-    % one can still prove anything that one could prove before.  
-    % (as do many standard representations of knowledge \citep{rak}).
-%oli1: although I like this flourish, I believe I agreed
-% to remove it in order to prevent the story from seeming to undercut
-% itself if one doesn't read carefully.
-%
-% Qualitative Bayesian Networks (and MRFs) are monotonic,
-% 	but in the opposite direction.
-% 	One might be tempted to think that an edge $A{\to}B$
-% 	in a BN represents knowledge (that $A$ influences $B$).
-% 	But in fact it is the \emph{lack} of an edge that caries knowledge:
-% 	$A{\not\to}B$ means that $A$ does not influence $B$ directly.
-%joe1: I don't see why this is exactly right, but in any case, it's a
-%distractin.  I cut it.
-% 	Thus, a BN is more like a list of formulas that one considers possible,
-% 	than a list of formulas one knows.
-%oli1: to help you see why the above is true: an edge in a BN indicates the possibility of dependence, not the necessity of dependence; if all variables are independent, it is consistent with every BN structure. 
-%   \Scibility, however, is monotonic in the direction
-%   we expect of a representation of knowledge.
-%
-%oli1: replacing it with the following, condensed version:
-The same is true of \scibility. 
-%joe2*: this does not seem consistent with your English.  It does
-%*not* say that anything you can prove from A' can also be proved from
-%A.  It says that if all the formulas in A are true according a
-%probability distribution \mu, then so are the formulas in a subset.
-%This is quite a different statement.  
-%oli2: Good point. The English I had and the proposition are (classically)
-% equivalent, but not directly so; they're logical duals. I'll rewrite the
-% English to try to make it more direct.  
-% 
-% In this analogy, \Ar' corresponds to [\phi_1, ... \phi_n], not 
-% to the extension to \phi_{n+1}.  Also, one should not think of \Ar
-% as a collection of formulas, because mechanisms interact. Just
-% because \mu \models { a } for all a \in \Ar (which is always true),
-% does not allow us to conclude that  \mu \models \Ar.
-%
-}%
+
 %oli21: cutting proposition from condensed version
 % \vfull{%
 \begin{prop}
@@ -528,13 +541,13 @@ which are really about monotonicity.
 
 % \newlength{\cycleboxlen}
 \settowidth{\cycleboxlen}{\usebox{\cyclebox}}
-\begin{wrapfigure}[5]{o}{0.8\cycleboxlen}
-    \vspace{-0.8em}
+\begin{wrapfigure}[4]{o}{1.2\cycleboxlen}
+    % \vspace{-0.8em}
     % \usebox\cyclebox
-    \begin{tikzpicture}[center base, scale=0.8]
-        \node[dpad0] (X) at (0:.8) {$X$};
-        \node[dpad0] (Y) at (120:.8) {$Y$};
-        \node[dpad0] (Z) at (-120:.8) {$Z$};
+    \begin{tikzpicture}[center base, scale=1.2]
+        \node[dpad1] (X) at (0:.8) {$X$};
+        \node[dpad1] (Y) at (120:.8) {$Y$};
+        \node[dpad1] (Z) at (-120:.8) {$Z$};
         \draw[arr2] (X) to 
             % node[above right]{\small 1}
             (Y);
@@ -622,15 +635,16 @@ which are really about monotonicity.
 % \end{example}
 \hfill$\triangle$
 
-\begin{wrapfigure}[5]{i}
+\begin{wrapfigure}[4]{i}
         % {1.7cm}
-        {1.5cm}
-    \vspace{-1em}
+        % {1.9cm}
+        {2.2cm}
+    % \vspace{-1em}
     \centering
-    \begin{tikzpicture}[center base]
-        \node[dpad0] (A) at (-0.6,0) {$A$};
-        \node[dpad0] (B) at (0,1) {$B$};
-        \node[dpad0] (C) at (0.6,0) {$C$};
+    \begin{tikzpicture}[center base,scale=1.3]
+        \node[dpad1] (A) at (-0.6,0) {$A$};
+        \node[dpad1] (B) at (0,1) {$B$};
+        \node[dpad1] (C) at (0.6,0) {$C$};
 
         \draw[arr2,<-] (A) -- (B);
         \draw[arr2,<-] (C) -- (B);
@@ -832,8 +846,8 @@ $B = A \oplus C$ is their parity.
 % Then, we have:
 We then have:
 %oli20: saving a line:
-% \[
-\\$
+\[
+% \\$
 \muxor
 \models
 \begin{tikzpicture}[center base,scale=1]
@@ -857,9 +871,9 @@ We then have:
 \end{tikzpicture}
 ~=~ \Ar_{A{-}B{-}C}.
 %oli20:
-% \]
-$
-~~
+\]
+% $
+% ~~
 But
 $\muxor \not\models A \CI C \mid B$.
 % \qedhere
@@ -930,9 +944,37 @@ We emphasize that \cref{theorem:mrf-bn-monotone-impossible} has implications for
 %oli22: bridging; this is now appendix B.
 % It may be especially surprising to experts in lesser-known models.
 % such as dependency networks \cite{heckerman2000dependency}.
-For a full discussion, see \cref{appendix:undirected PGMs}.
+% For a full discussion, see \cref{appendix:undirected PGMs}.
 % It may be especially surprising to experts 
 %
+% Some classes of graphical models appear to defy the theorem, and so it is worth looking into this carefully.
+% We now address some conceptual implications of \cref{theorem:mrf-bn-monotone-impossible} 
+% We reconcile \cref{theorem:mrf-bn-monotone-impossible} for two classes of graphical models: PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
+We reconcile \cref{theorem:mrf-bn-monotone-impossible} with PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
+
+\paragraph{Probabilistic Dependency Graphs}
+PDGs capture BNs and MRFs
+% \citep[Theorems 4.4 \& 4.5]{pdg-aaai} 
+\cref{theorem:bns-are-pdgs,theorem:fg-is-pdg},
+with a monotonic scoring function.
+But keep in mind that, while the independencies and observational information can be easily separated for a BN, the same is not true of a factor graph.
+% Perhaps PDGs do not capture MRFs on a purely qualitative level? 
+Capturing a quantiative MRF is not the same as capturing its independencies.
+The independence property exploited by the PDG inference procedure \cref{theorem:markov-property} is the same as that of a MRF with the same structure. 
+The subtlety here is that the independencies exploited for PDG inference only need to be sound, not complete. 
+That is, a PDG's underlying \hgraph\ $\Ar$ may well imply more independencies than the inference procedure exploits. 
+    
+
+\paragraph{Dependency Networks}
+To readers familiar with \emph{dependency networks (DNs)} \citep{heckerman2000dependency},
+\cref{theorem:mrf-bn-monotone-impossible} may raise some conceptual issues. 
+When $G$ is an undirected graph, $\Ar_G$ is the structure of a consistent DN.
+The semantics of such a DN,
+which intuitively describe an independent mechanism on each \arc,
+coincide with the MRFs for $G$ (at least for positive distributions). 
+In more detail, DN semantics are given by the fixed point of a markov chain that repeatedly generates independent samples along the \arc s of $\Ar_G$ for some (typically cyclic) directed graph $G$. The precise definition requires an order in which to do sampling. Although this choice doesn't matter for the ``consistent DNs'' that represent MRFs, it does in general. With a fixed sampling order, the DN is monotonic and captures MRFs, but can represent only BNs for which that order is a topological sort.
+
+
 
 %joe7*: You're doing a core dump.  You have made no attempt to connect
 %this material to the rest of the paper.  Either cut this, or 
@@ -940,6 +982,10 @@ For a full discussion, see \cref{appendix:undirected PGMs}.
 \subsection{QIM Equivalence}
 % \subsection{SIM-Equivalence}
     \label{sec:equivalence}
+    
+A key 
+    
+    
 %oli3: moved this material inside subsection    
 % Another point that's important to keep in mind is the following:
 %joe1: I don't know how you quantify "Often"
@@ -1362,9 +1408,27 @@ It becomes even more useful in tandem
 
 \section{A Logic Based on PDGs}
 
+% We have 
+So far in this chapter, 
+    we have treated the two aspects of PDGs separately, and developed
+    separate reasoning principles for each aspect. 
+We saw in \cref{sec:quant-monotone} an exploration of 
+    \emph{observational}
+    the proof language based on monotonicity that powered 
+    % seen that there is a natural notion of monotonicity
+    % in the observation
+Then, in  \cref{sec:qual-monotone} we saw a different monotonicty principle that applies to directed structural information. 
+ % analogue of monotonicity for structural information in a hypergraph, 
+In this section, we put the two together. 
+The result is an inconsistency-tolerant logic. 
+
+
 % \subsection{PDG Entailment: A Natural Preorder on PDGs}
 \subsection{A Natural Preorder on PDGs}
 
+
+\begin{defn}
+    \label{defn:entail}
     We say that $\dg M_1$ \emph{entails} $\dg M_2$
     and write $\dg M_1 \models \dg M_2$
     % $\dg M_1$,
@@ -1375,7 +1439,9 @@ It becomes even more useful in tandem
         \forall \gamma \ge 0.~
         \forall \dg M'.\quad \aar{\dg M_1 + \dg M'}_{\gamma}
             \ge \aar{\dg M_2 + \dg M'}_{\gamma}.
+        \qedhere
     \]
+\end{defn}
 
     % Treating both PDGs as black boxes, so that we can add extra stuff to them, but all we can measure is how inconsistent they are, 
     Let's imagine that we can interact with a PDG only by altering it, and by measuring its degree of inconsistency.
@@ -1533,7 +1599,8 @@ $
 $
 for all $\dg M$ and $\dg M'$?
 % This is certaintly true if $\dg M$ has $\balpha,\bbeta \ge 0$.  
-This is very close to a special case of the monotonicity property of \cref{one-true-loss}. 
+This is very close to a special case of the monotonicity  of 
+    \cref{lemma!}. 
 
 In general, the answer is no.
 Nevertheless, it does hold for PDGs $\dg M$ that have $\bbeta \ge 0$ and are in a sense ``qualitatively complete'' 
@@ -1666,7 +1733,7 @@ $(\infty) \dg M_1 \models (\infty) \dg M_2$.
 Similarly, if 
 
 
-\subsubsection{Defining Connectives}
+\subsubsection{Defining Classical Connectives}
 
 % \textbf{Approach 1.}
 As usual, we can introduce conjunction by
@@ -1946,73 +2013,74 @@ Now some other examples.
             % \qedhere
         \]
         
-        \paragraph{Domination.} If $\dg M_1$ and $\dg M_2$ share
-            variables but $\dg M_1$ has more edges or higher weights, the
-            we immediately satisfy the condition of \cref{lem:commonvar-dominance}, and so $\dg M_1 \models \dg M_2$. 
+    \textbf{Domination.} If $\dg M_1$ and $\dg M_2$ share
+    variables but $\dg M_1$ has more edges or higher weights,
+    the condition of \cref{lem:commonvar-dominance} is satisfied, and so $\dg M_1 \models \dg M_2$. 
     \end{lproof}
 
     \recall{prop:sem-equiv-properties}
-    \begin{lproof}\label{proof:sem-equiv-properties}
-        \textbf{Equivalence of conditional/marginal and Joint.}
-        Both of the following are well-known:
-
-        \begin{minipage}{0.5\linewidth}
+\begin{lproof}\label{proof:sem-equiv-properties}
+    \textbf{Equivalence of conditional/marginal and Joint.}
+    % Both of the following are well-known:
+    % Clearly
+    \begin{minipage}{0.5\linewidth}
+    \begin{align*}
+        &\OInc_{[p(X) + p(Y|X)]}(\mu) \\
+        &= \Ex_{\mu} \Big[\log \frac{\mu(X)}{p(X)} + \log \frac{\mu(Y|X)}{p(Y|X)}\Big] 
+                    \\
+         &= \Ex_{\mu} \Big[\log \frac{\mu(X)\mu(Y|X)}{p(X)p(Y|X)}\Big] 
+                    &  \\
+         &= \OInc_{p(X,Y)}(\mu);
+    \end{align*}
+    \end{minipage}
+    \begin{minipage}{0.5\linewidth}
         \begin{align*}
-            \OInc_{[p(X) + p(Y|X)]}(\mu) 
-            &= \Ex_{\mu} \Big[\log \frac{\mu(X)}{p(X)} + \log \frac{\mu(Y|X)}{p(Y|X)}\Big] 
-                        \\
-             &= \Ex_{\mu} \Big[\log \frac{\mu(X)\mu(Y|X)}{p(X)p(Y|X)}\Big] 
-                        &  \\
-             &= \OInc_{p(X,Y)}(\mu);
+            &\SDef_{\to X \to Y}(\mu)\\
+            &= \H_\mu(X) + \H_\mu(Y|X) - \H(\mu)\\
+            &= \H_\mu(X,Y) - \H(\mu) \\
+            &= \SDef_{\to XY}(\mu).
         \end{align*}
-        \end{minipage}
-        \begin{minipage}{0.5\linewidth}
-            \begin{align*}
-                \SDef_{\to X \to Y}(\mu) &= \H_\mu(X) + \H_\mu(Y|X) - \H(\mu)\\
-                &= \H_\mu(X,Y) - \H(\mu) \\
-                &= \SDef_{\to XY}(\mu).
-            \end{align*}
-        \end{minipage}
-        Thus, by applying \cref{lem:commonvar-dominance} once in each direction, or by appeal to \cref{theorem:sem-equiv}, 
-        $p(X) + p(Y|X) \equiv p(X,Y)$. 
-        
-        
-        
-        \paragraph{Mixtures.}
-        Let $\H_\mu(\dg M) := \sum_{a \in \Ar^{\dg M}} \alpha_a^{\dg M} \H_\mu(\Tgt a | \Src a)$,
-        so that $\SDef_{\dg M}(\mu) = \H_\mu(\dg M) - \H_\mu(\X)$. 
-        Suppose $\dg M_1 \equiv \dg M_2$. 
-        Then, the theorem above tells us
-        \begin{align*}
-            \bbr{\dg M_1}_\gamma(\mu) &= \bbr{\dg M_2}_\gamma(\mu)
-            \\\iff\quad%%%
-            \OInc_{\dg M_1}(\mu) + \gamma \SDef_{\dg M_1}(\mu)   
-                &= \OInc_{\dg M_2}(\mu) + \gamma \SDef_{\dg M_2}(\mu)
-            \\\iff\quad%%%
-            \OInc_{\dg M_1}(\mu) + \gamma \H(\dg M_1) - \gamma \H(\mu)
-                &= \OInc_{\dg M_2}(\mu) + \gamma \H(\dg M_2) - \gamma \H(\mu)
-            \\\iff\quad%%%
-            \OInc_{\dg M_1}(\mu) + \gamma \H(\dg M_1)
-                &= \OInc_{\dg M_2}(\mu) + \gamma \H(\dg M_2)
-        \end{align*}
-        But $\dg M \mapsto \OInc_{\dg M}(\mu)$ and $\dg M \mapsto \H_\mu(\dg M)$
-        are both linear in $(\balpha,\bbeta)$. 
-        Thus, for $\alpha \in [0,1]$, letting $\dg M_{\alpha} := (1-\alpha) \dg M_1 + (\alpha) \dg M_2$, we have:
-        \begin{align*}
-            % &\bbr{(1-\alpha) \dg M_1 + (\alpha) \dg M_2}_\gamma(\mu) + \gamma \H(\mu) \\
-            % &\bbr{\dg M_\alpha}_\gamma(\mu) + \gamma \H(\mu) \\
-                % &= 
-            \OInc_{\dg M_\alpha} (\mu)   + \gamma \H_\mu({\dg M_\alpha}) 
-                &= (1-\alpha) \OInc_{\dg M_1} + \alpha \OInc_{\dg M_2} +
-                    \gamma (1-\alpha) \H_\mu({\dg M_1}) + \gamma\alpha \H_\mu({\dg M_2})\\
-                &= (1-\alpha) \Big( \OInc_{\dg M_1} + \gamma \H_\mu({\dg M_1}) \Big)
-                    + \alpha \Big( \OInc_{\dg M_2} + \gamma \H_\mu({\dg M_2}) \Big)\\
-                &= \OInc_{\dg M_1} + \gamma \H_\mu({\dg M_1}).
-        \end{align*}
-        The last line follows from the equality of the two parenthesized expressions
-            (as shown in the previous block of algebra). Thus following the first argument
-            in reverse, we learn that $\bbr{\dg M_\alpha} = \bbr{\dg M_1} = \bbr{\dg M_2}$, 
-            and so by the previous Theorem, $\dg M_\alpha \equiv \dg M_1 \equiv \dg M_2$.
+    \end{minipage}
+    Thus, by applying \cref{lem:commonvar-dominance} once in each direction, or by appeal to \cref{theorem:sem-equiv}, 
+    $p(X) + p(Y|X) \equiv p(X,Y)$. 
+    
+    
+    
+    \paragraph{Mixtures.}
+    Let $\H_\mu(\dg M) := \sum_{a \in \Ar^{\dg M}} \alpha_a^{\dg M} \H_\mu(\Tgt a | \Src a)$,
+    so that $\SDef_{\dg M}(\mu) = \H_\mu(\dg M) - \H_\mu(\X)$. 
+    Suppose $\dg M_1 \equiv \dg M_2$. 
+    Then, the theorem above tells us
+    \begin{align*}
+        \bbr{\dg M_1}_\gamma(\mu) &= \bbr{\dg M_2}_\gamma(\mu)
+        \\\iff\quad%%%
+        \OInc_{\dg M_1}(\mu) + \gamma \SDef_{\dg M_1}(\mu)   
+            &= \OInc_{\dg M_2}(\mu) + \gamma \SDef_{\dg M_2}(\mu)
+        \\\iff\quad%%%
+        \OInc_{\dg M_1}(\mu) + \gamma \H(\dg M_1) - \gamma \H(\mu)
+            &= \OInc_{\dg M_2}(\mu) + \gamma \H(\dg M_2) - \gamma \H(\mu)
+        \\\iff\quad%%%
+        \OInc_{\dg M_1}(\mu) + \gamma \H(\dg M_1)
+            &= \OInc_{\dg M_2}(\mu) + \gamma \H(\dg M_2)
+    \end{align*}
+    But $\dg M \mapsto \OInc_{\dg M}(\mu)$ and $\dg M \mapsto \H_\mu(\dg M)$
+    are both linear in $(\balpha,\bbeta)$. 
+    Thus, for $\alpha \in [0,1]$, letting $\dg M_{\alpha} := (1-\alpha) \dg M_1 + (\alpha) \dg M_2$, we have:
+    \begin{align*}
+        % &\bbr{(1-\alpha) \dg M_1 + (\alpha) \dg M_2}_\gamma(\mu) + \gamma \H(\mu) \\
+        % &\bbr{\dg M_\alpha}_\gamma(\mu) + \gamma \H(\mu) \\
+            % &= 
+    & \OInc_{\dg M_\alpha} (\mu)   + \gamma \H_\mu({\dg M_\alpha}) \\
+        &= (1-\alpha) \OInc_{\dg M_1} + \alpha \OInc_{\dg M_2} +
+            \gamma (1-\alpha) \H_\mu({\dg M_1}) + \gamma\alpha \H_\mu({\dg M_2})\\
+        &= (1-\alpha) \Big( \OInc_{\dg M_1} + \gamma \H_\mu({\dg M_1}) \Big)
+            + \alpha \Big( \OInc_{\dg M_2} + \gamma \H_\mu({\dg M_2}) \Big)\\
+        &= \OInc_{\dg M_1} + \gamma \H_\mu({\dg M_1}).
+    \end{align*}
+    The last line follows from the equality of the two parenthesized expressions
+        (as shown in the previous block of algebra). Thus following the first argument
+        in reverse, we learn that $\bbr{\dg M_\alpha} = \bbr{\dg M_1} = \bbr{\dg M_2}$, 
+        and so by the previous Theorem, $\dg M_\alpha \equiv \dg M_1 \equiv \dg M_2$.
     \end{lproof}
 
 
@@ -2098,30 +2166,5 @@ Now some other examples.
     inequality is strict for ``most'' choices of $\dg M'$.
     So either way $\aar{{\to}X + \dg M'} \ge \aar{0 + \dg M'}$, so ${\to X} \models 0$.
 
-
-\section{Notes}
-\subsection{Reconcilliation of \cref*{theorem:mrf-bn-monotone-impossible} with other Graphical Models}
-\label{appendix:undirected PGMs}
-We now address some conceptual implications of \cref{theorem:mrf-bn-monotone-impossible} for two classes of graphical models: PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
-
-\paragraph{Dependency Networks}
-To readers familiar with \emph{dependency networks (DNs)} \citep{heckerman2000dependency},
-\cref{theorem:mrf-bn-monotone-impossible} may raise some conceptual issues. 
-When $G$ is an undirected graph, $\Ar_G$ is the structure of a consistent DN.
-The semantics of such a DN,
-which intuitively describe an independent mechanism on each \arc,
-coincide with the MRFs for $G$ (at least for positive distributions). 
-In more detail, DN semantics are given by the fixed point of a markov chain that repeatedly generates independent samples along the \arc s of $\Ar_G$ for some (typically cyclic) directed graph $G$. The precise definition requires an order in which to do sampling. Although this choice doesn't matter for the ``consistent DNs'' that represent MRFs, it does in general. With a fixed sampling order, the DN is monotonic and captures MRFs, but can represent only BNs for which that order is a topological sort.
-
-\paragraph{Probabilistic Dependency Graphs}
-PDGs capture BNs and MRFs quantiatively
-\citep[Theorems 4.4 \& 4.5]{pdg-aaai} with a monotonic scoring function,
-and the independence property exploited by the PDG inference procedure \citep[Theorem 6]{pdg-infer} is the same as that of 
-a MRF with the same structure. 
-Yet capturing a MRF quantitatively is not the same as capturing its structure,
-and 
-a PDG's underlying \hgraph\ $\Ar$
-may well imply more independencies than the inference procedure exploits. 
-    
 
 \end{subappendices}

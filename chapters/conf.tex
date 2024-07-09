@@ -30,7 +30,7 @@ But before we get ahead of ourselves, we must first develop this general theory 
 		and chief among them is probability.
 	While ``confidence'' can be coherently read in probabilistic terms,
 		such usage may shadow another important concept.
-	This paper details a different conception that arises when updating beliefs.
+	This chapter details a different conception that arises when updating beliefs.
 	As we shall see, this notion of confidence
 	complements traditional representations of uncertainty (such as probability),
 	and moreover unifies several different concepts across AI.
@@ -40,7 +40,7 @@ But before we get ahead of ourselves, we must first develop this general theory 
 % It is often taken to mean that we think $\phi$ is likely.
 What does it mean to have a high degree of confidence in a statement $\phi$? 
 It is often taken to mean that $\phi$ is likely.
-% This paper details a different conception that arises when updating beliefs.
+% This chapter details a different conception that arises when updating beliefs.
 % As we shall see, this notion of confidence
 % complements traditional representations of uncertainty (such as probability),
 We argue that there is a related conception of confidence that arises when learning---one that complements likelihood and, moreover, unifies several different concepts in the literature.
@@ -383,8 +383,8 @@ it prescribes a belief state (belief functions) that can represent ignorance, an
 % The theory is effective on both counts, but we much more interested in the second:
 % Unfortunately, Shafer's solution to the second problem has not been adopted precisely because he solves the first problem, and alienates the many people who would prefer to use something other than a 
 Ironically, in solving the first problem, his solution to the second becomes inaccessable to those who do not work with belief functions. 
-% The present paper, and the general notion of confidence we formalize in \cref{sec:updateformalism}
-% The notion of confidence we present in this paper
+% The present chapter, and the general notion of confidence we formalize in \cref{sec:updateformalism}
+% The notion of confidence we present in this chapter
 % can be thought of a vast
 % generalization of how Shafer handles issue (2).
 %
@@ -580,7 +580,7 @@ In richer settings, a more nuanced degree of confidence
     such as agreement between annotators 
     \parencite{kappa},
     or
-%TODO: get better citation; that paper focuses on something more
+%TODO: get better citation; that chapter focuses on something more
 % technical and specific, but has some citations that might be better.
 confidence scores in self-training \parencite{zou2019confidence}.
 
@@ -596,7 +596,7 @@ In this case, we should have low confidence in training data based on our previo
 
 %%%%% PARAGRAPH ON MANY DIFFERENT VIEWPOINTS
 % Linear interpolation, however, is just the tip of
-% At the heart of our paper is a hierarchy
+% At the heart of our chapter is a hierarchy
 %
 % Let's return to the idea of incremental updating.
 % If we start at an initial belief $\theta_0$,
@@ -904,7 +904,7 @@ We may not always know the variances of our sensors, and that such a quantity is
 % But we have yet to say anything profound about it.
 % We also find there to be a worthwhile underlying mathematical theory of confidence,
 % which we develop in the coming sections.
-% The rest of this paper is develops the theory of confidence,
+% The rest of this chapter is develops the theory of confidence,
 %     by characterizing it axiomatically, and exploring what can be said of it in general.
 % We develop
  % explores what can be said of it in general.
@@ -918,7 +918,7 @@ What's more, it also has a clean mathematical theory.
 % But we have yet to say anything profound about it.
 % We also find there to be a worthwhile underlying mathematical theory of confidence,
 % which we develop in the coming sections.
-The rest of this paper develops the general theory of learner's confidence,
+The rest of this chapter develops the general theory of learner's confidence,
     characterizing it axiomatically (\cref{sec:updateformalism}), 
 	
 	% and exploring what can be said of it in general.
@@ -930,7 +930,7 @@ The rest of this paper develops the general theory of learner's confidence,
 
 \paragraph{Contributions.}
 We have already motivated the notion of confidence and illustrated many of its most important properties by example.
-In the remainder of the paper, we study confidence more formally. 
+In the remainder of the chapter, we study confidence more formally. 
 We develop a formal framework for talking about confidence.
 % We describe cannonical representations of confidence.
 We show that confidence can be measured in several equivalent ways, and classify the ways that 
@@ -988,8 +988,8 @@ The final representations we consider (vector fields and loss functions) also en
 	\textbf{Shafer's Weight of Evidence.}
 	Shafer's ``weight of evidence'' is precisely the same concept we have in mind.
 	Our analysis precsely reduces to his, in the setting where belief states are Belief functions (which generalize probabilities, but not, say, neural network weights), and observations are events.
-	% This paper can be a generalization of Shafer's ``weight of evidence'' to a broader class of settings, where one might have very different belief states and observations.
-	Thus, this paper can be viewed as generalizing this concept to a broader class of settings, without requiring that one adopt Shafer's conception of a belief state or an observation.
+	% This chapter can be a generalization of Shafer's ``weight of evidence'' to a broader class of settings, where one might have very different belief states and observations.
+	Thus, this chapter can be viewed as generalizing this concept to a broader class of settings, without requiring that one adopt Shafer's conception of a belief state or an observation.
 
 
 	\textbf{Variance and Entropy.}
@@ -3098,7 +3098,7 @@ Let $\Theta = \mathbb R^{n}$
     % % which describes how to update beliefs about $X$, with the new information, at a certain level of trust.
     % which describes how to (fully) update beliefs $\Theta$ with new information $\Phi$.
     % and for $F$ to be an update rule, we require that , meaning that updating any belief with $\phi$ twice in a row is equivalent to single update.
-    % Having said that, one reading of this paper is a relaxation of this requirement.
+    % Having said that, one reading of this chapter is a relaxation of this requirement.
     % Here are some examples.
     Once $\Theta$, $\Phi$, and any implicit structure in them is specified, there is often a natural choice of full-confidence update rule.
     To illustrate, we now consider three different rules for different choices of $\Phi$.
@@ -3627,7 +3627,7 @@ Let $\Theta = \mathbb R^{n}$
     % prescription for how to choose a numerical degree of confidence,
     % without essentially making the same independence assumptions. 
 
-    For the remainder of the paper, we take this incremental view 
+    For the remainder of the chapter, we take this incremental view 
     for convenience, with the understanding that everything we say also 
     admits a conservative reading by restricting \cref{ax:funcform} 
     only to apply when $\theta$ and $(\phi,\chi)$ are independent.
@@ -3924,7 +3924,7 @@ Let $\Theta = \mathbb R^{n}$
     that jurors might press the $\mathsf N$ button. For example, if $\phi$, which was intended
     as evidence of guilt, has the effect of getting jurors to press $\mathsf N$, there is a sense
     in which they have \emph{negative} confidence in $\phi$, since the belief update happened in the opposite direction of what $\phi$ represents; rather than \emph{no} trust, this is represents \emph{distrust}. 
-    Small negative updates are always possible except at the boundary of belief space, but in this paper, we focus almost entirely on positive confidence updates.
+    Small negative updates are always possible except at the boundary of belief space, but in this chapter, we focus almost entirely on positive confidence updates.
 
     The introduction of the second button also uncovers a significant source of complexity:
     unlike \cref{ex:prob-simple,ex:classifier,ex:shafer}, 

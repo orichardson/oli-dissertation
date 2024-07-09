@@ -593,7 +593,7 @@ For one thing, it can encode arbitrary
 for another, it gives meaningful semantics to cyclic models.
 %
 \commentout{%
-    \Scibility\ satisfies a \emph{monotonicity} property (\cref{sec:monotone}) that helps us begin to understand these cyclic models.}%
+    \Scibility\ satisfies a \emph{monotonicity} property (\cref{sec:qual-monotone}) that helps us begin to understand these cyclic models.}%
 %
 Indeed, compatibility lets us go well beyond capturing dependence
 and independence. The fact that \citet{pearl:2k} also views
@@ -651,8 +651,8 @@ Applied to cyclic models, it yields a causally inspired notion of pairwise inter
 %     consistent with a set of independent mechanisms
 %     if one removes mechanisms, or allows them to depend on 
 %     additional variables 
-%     % stronger predicate on distributions (see \cref{sec:monotone}). 
-%     (see \cref{sec:monotone}).
+%     % stronger predicate on distributions (see \cref{sec:qual-monotone}). 
+%     (see \cref{sec:qual-monotone}).
 %joe4*: Yet again, I think you should cut this.  It doesn't belong in
 %this paper.  I'll write out my reasons (yet again) in more detail.
 %oli5: I didn't see your reasons, but I'm eager to hear them!
@@ -1499,7 +1499,7 @@ Among \partl\ \hgraph s, cyclic models \citep{Baier_2022} are
 of particular interest. Our definition of \scibility\ 
 gives rise to an interesting generalization of BN independencies 
 for such \hgraph s, but we will need the tools developed in 
-\cref{sec:monotone,sec:qim-info} to better understand what \scibility\ means in these cases.
+\cref{sec:qual-monotone,sec:qim-info} to better understand what \scibility\ means in these cases.
 Non-partitional \hgraph s are also of interest since they allow us to express determinism, as the following example shows.
 }
 
@@ -1677,7 +1677,7 @@ iff
     (formally, when $\Ar \rightsquigarrow \begin{tikzpicture}[center base]
         \node[dpadinline] (X) {$X$};
         \draw[arr1,<-] (X) to[] +(0.6,0);
-    \end{tikzpicture}$, a condition we will define in \cref{sec:monotone}),
+    \end{tikzpicture}$, a condition we will define in \cref{sec:qual-monotone}),
     % the in (a) are equivalent to
     $\mu \models X {\tto} Y \land \Diamond \Ar$
     if and only if
@@ -1708,7 +1708,7 @@ Finally, as alluded to above, \scibility\ gives meaning to cyclic structures,
     a topic that we will revisit often in \cref{sec:causal,sec:qim-info}. 
 We start with some simple examples. 
 % We'll return to this in \cref{sec:qim-info}, but for now we content ourselves with two simple examples. 
-% As we discuss in \cref{sec:monotone}, 
+% As we discuss in \cref{sec:qual-monotone}, 
 \begin{example}
         \label{example:xy-cycle}
     Every $\mu(X,Y)$ is \cible\ with
@@ -1743,7 +1743,7 @@ We start with some simple examples.
     % $\to X \to Y$.
 \end{example}
 The logic above is an instance of an important reasoning principle,
-    which we develop in \cref{sec:monotone}. 
+    which we develop in \cref{sec:qual-monotone}. 
 Although the 2-cycle in \cref{example:xy-cycle} is straightforward, generalizing it even slightly to a 3-cycle raises a not-so-straightforward question.
 % whose answer will turn out to have surprisingly broad implications.
     % and has which we will return to later on. 
@@ -1817,12 +1817,12 @@ This may appear to be a flaw in \cref{defn:qim},
 % (\scibility),
 % but it is unavoidable.
 %oli22
-but it is unavoidable (see \cref{sec:monotone}) if we wish to also capture causality, as we do in the next section. 
-% We explore the implications further in \cref{sec:monotone}. 
+but it is unavoidable (see \cref{sec:qual-monotone}) if we wish to also capture causality, as we do in the next section. 
+% We explore the implications further in \cref{sec:qual-monotone}. 
 
 
 %oli19: I had thought you would like this because of the storytelling and the roadmap, but I'm OK with cutting it.
-\commentout{In this section, we have seen how \scibility\ with a single graph can represent many (in)dependencies of interest. But we have only scratched the surface here; in the remaining sections, we will come to understand how \scibility\ works in general: its connection to causality (\cref{sec:causal}), to information theory (\cref{sec:qim-info}), and a simple principle for reasoning about it (\cref{sec:monotone}). 
+\commentout{In this section, we have seen how \scibility\ with a single graph can represent many (in)dependencies of interest. But we have only scratched the surface here; in the remaining sections, we will come to understand how \scibility\ works in general: its connection to causality (\cref{sec:causal}), to information theory (\cref{sec:qim-info}), and a simple principle for reasoning about it (\cref{sec:qual-monotone}). 
 }
 
 
@@ -4787,7 +4787,7 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
 % \end{wrapfigure}
 \end{figure}
 %oli20: replacement
-We now review the critical information-theoretic concepts and their relationships to
+We now review a few critical information-theoretic concepts and their relationships to
     (in)dependence
     (see \cref{sec:qual-info-theory-primer} for a full primer).
 % oli13: shortening:
@@ -4829,10 +4829,13 @@ Linear combinations of these quantities
 % can be viewed as the inner product between a vector $\mat v$ of integers
 can be viewed as the inner product between a coefficient vector $\mat v$
 and a $2^{|\X|}-1$ dimensional vector $\mat I_\mu$ that we will call the \emph{information profile} of $\mu$. 
-For three variables, the components of this vector are illustrated in 
-%oli21:
-% \cref{fig:info-diag}(a).
-\cref{fig:info-diag-a}.
+\newmaterial{%
+% For three variables, the components of this vector are illustrated in \cref{fig:info-diag-a}.
+For three variables, the components of this vector were illustrated in \cref{fig:info-diag-prelim}; 
+for convenience, we give another illustration of it in \cref{fig:info-diag-a}.
+\forjoe{
+    looking at this diagram is important at this point in the text. Also, this one has a slightly different annotation.  The previous one had more diversity of different concepts; this one gives an intuitive visual proof of a property we need in the next two pages.}
+}%
 %
 %oli15: moved above:
 % This is illustrated for three variables in \cref{fig:info-diag}(a).
@@ -5085,7 +5088,7 @@ results apply only when $\Ar$ is of a very special form.
 %oli13: monotonicity allows us to weaken one statement of SIM compatibility to another statement of SIM compatibility. So,  consequences of \mu \models \Ar inluclude \mu \models \Ar', for every \Ar' obtained by weakening.  
 %oli13: in any case, it's not the most important strand of the story, and we have to make it significantly shorter. So, cutting:
 \commentout{%
-    In \cref{sec:monotone} we saw how we can weaken \scibility\ relationships, but information is lost in the process, and the resulting \scibility\ statement often no easier to interperet.
+    In \cref{sec:qual-monotone} we saw how we can weaken \scibility\ relationships, but information is lost in the process, and the resulting \scibility\ statement often no easier to interperet.
 }%
 % (\cref{example:xyz-cycle-1}).
 % In \cref{sec:sc-infobound}, we describe a 
@@ -7291,7 +7294,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 
 %oli21*: new proofs added
 %oli22: removing from here
-% \subsection{Monotoncity Results of \cref*{sec:monotone}}
+% \subsection{Monotoncity Results of \cref*{sec:qual-monotone}}
 % \recall{theorem:mrf-bn-monotone-impossible}
 
 

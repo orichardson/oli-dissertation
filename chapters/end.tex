@@ -123,18 +123,18 @@ For instance, PDGs can capture relations (\cref{sec:constraint-widget}), so it m
 Preliminary investigations suggest that this is the case,
     although fully capturing the relationship will require also developing an analogue of a databases's query language.  
 Another reason to believe this is that data dependencies \citep{fagin1986theory} seem to closely match the qualitative semantics of a PDG's underlying hypergraph. 
-Since databases do not describe any probabilities other than 0 or 1, 
+Since databases do not describe probabilities (apart from 0 and 1), 
     encoding them with PDGs should involve only deterministic cpds.
     % a natural question becomes: what happens if we relax the 
 This raises another question: what can we encode by allowing probabilistic relationships?
-Our initial investigations suggest that the result may be quite different from the standard notion of a probabilistic database \citep{suciu2011probabilistic}, and perhaps has elements of modern information retrieval systems \citep{info-retrieval}.
-
+Our initial investigations suggest that the result may be quite different from the standard notion of a probabilistic database \citep{suciu2011probabilistic}, and perhaps has elements of modern information retrieval systems \citep{mitra-neural-info-retrieval}.
+%
 % All of this is just starting from encoding relational databases.  
-The research direction in the previous paragraph aimed to capture relational databases---but there is also a second important class of \emph{graph-based} databases.
+So far we have talked only about relational databases---but there is also a second important class of \emph{graph-based} databases.
 % But there is a second important class of databases: graph based databases, and the object graphs of object-oriented programming languages.
 In many ways, this seems an even closer fit to a PDG, and understanding whether and how they bear relationship to PDG semantics remains a promising open problem. 
 
-In Machine Learning, there has been a recent deluge of work introducing new representations and training objectives. At the moment, the two dominant architectures are \emph{diffusion models} \citep{DDPMs} and \emph{transformers} \citep{transformers}. 
+In Machine Learning, there has been a recent deluge of work introducing new representations and training objectives. At the moment, the two dominant architectures are \emph{diffusion models} \citep{pmlr-v37-sohl-dickstein15,ho2020denoising} and \emph{transformers} \citep{vaswani-attn}. 
 Because of their roots in VAEs (which PDGs capture well (\cref{sec:variational})), it is not hard to show that diffusion models can also be regarded as PDGs. %---%
     Does this view yield any practical or conceptual benefits, beyond what we have already seen? 
     We do not know.
@@ -145,7 +145,7 @@ So far, even less said for a relationship between PDGs and transformers.
 Still, it is a question worth taking seriously, if one believes in the promise of PDGs as a foundation for modern probabilistic AI systems.      
 
 \paragraph{Further Investigation into Qualitative PDGs.}
-\Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence developed in \cref{chap:QIM}.
+\Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence (\cref{defn:qim}).
 Yet we suspect there is more to the story. 
 First, an analogue of the principle of maximum entropy 
     leads us to a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries.
@@ -157,8 +157,8 @@ A second avenue of future research into qualitative PDGs involves the relationsh
 % can be shown that very large values of $\alpha$ can be used to 
 Specifically, it seems that existential quantifiers $(\exists)$ can be implemented with qualitative arcs that have $\alpha = +\infty$, while universal quantifiers ($\forall$) can be implemented with $\alpha = -\infty$. 
 This observation may be useful in developing a query language for PDG-based databases (discussed above).
-It raises some interesting questions. 
-How should we square this with our understanding of independent mechanisms?
+It also raises some deeper questions;
+can we square this with our understanding of $\alpha$ as representing independent mechanisms (\cref{chap:QIM})?
  % This observation raises more questions than it answers, 
 
 
@@ -171,7 +171,7 @@ Solving the problem in the case where qualitative information plays a larger rol
 % Yet PDGs are 
 
 There are many different approaches to inference in traditional graphical models;
-the entirety of Part II (Ch9-14) of \citet{KF09} is a survey of these different methods.
+see Chapters 9-14 of \citet{KF09} for a survey of them.
 Our approach to inference in PDG is a cousin of the the techniques developed in Ch11. But what of analogues of the other approaches? 
 Particle-based and MCMC methods in in particular (the analogue of Ch12 [ibid])
     for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
@@ -182,7 +182,7 @@ A related question is that of a deeper understanding of the local inconsistency 
 Under what conditions does this procedure converge?
 And if it converges, when does it produce correct answers?
 These questions are closely related to similar questions about belief propagation, which have been partially resolved across decades of research
-\citep{}.
+\citep{yedida-genpb,wiegerinck-fracbp,minka2005divergence}.
 
 
 While treewidth dominates the complexity of (exact) inference in traditional graphical models, it is not obvious that the same must be true for PDGs. 
@@ -263,12 +263,13 @@ For one, it could provide students and researchers with a principled approach to
 For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
 Indeed, the entire theory is based only on truth and trust---analogues of ``utility'' appear only ephemeral intermediates in this process. 
 There is also a case to be made that universal constructions promote diversity and fairness.
-
+%
 % Perhaps for now, what's important is clear and flexible thinking. 
-Perhaps in this moment, even more important than 
-    solving a real-world problem better than anyone else
+Perhaps in this moment, 
+% even more important than solving a real-world problem better than anyone else
+what's most important
 is to develop a clearer and more mature understanding
-    of cognition both for ourselves,
+    of cognition---both for ourselves,
     and for the generations of powerful AI systems to come.
  % developing clear and flexible thinking. 
 % rather setting the stage for clearer 

@@ -5,13 +5,13 @@
 \hspace{-3cm}
 \begin{tikzpicture}
 \begin{scope}[every node/.style={align=left,rounded corners=3,draw,thick,inner sep=5pt,anchor=center}]
-	\node at (-5, 0) (fc) {%
+	\node at (-3, 0) (fc) {%
 		% Full-Confidence Update\\
 		Full Update Rule \\
 		% Update Rule \\
 		$(\,\cdot\mid \cdot\,) : \Theta \times \Phi \to \Theta$\\
 			\small\hfill\color{gray}(idempotent)\hfill};
-	\node at (0, -1.4)(flow) {%
+	\node at (0, -3.4)(flow) {%
 		% Complete Positive Flows\\
 		% Commitment Flow\\
 		% Flow Commitment Fn\\
@@ -22,7 +22,7 @@
 		\Lrn
 		: [0,\infty] \times \Phi \times \Theta \to \Theta$\\
 			\small\hfill\color{gray}(diffble, additive, limiting)\hfill};
-	\node at (0, 1.4)(path) {
+	\node at (0, 3.4)(path) {
 		% Smoooth Paths\\
 		% Commitment Path\\
 		% Path Commitment Fn\\
@@ -30,7 +30,7 @@
 		Update Path \\
 		$\gamma: [0,1] \times \Phi \times \Theta \to \Theta$\\
 		\small\hfill\color{gray}(diffble, end-halting)\hfill};
-	\node at (4.5, 0)(vfield) {%
+	\node at (3.5, 0)(vfield) {%
 		% Vector Fields \\
 		Update Field \\
 		$F : \Phi \to \mathfrak X(\Theta)$\\
@@ -53,11 +53,14 @@
 	%% commitment functions to update fields
 	\draw[arr] (path) to[out=7,in=85]
 		node[right=5pt,pos=0.7]{$\frac{\partial}{\partial s}$} (vfield);
-	\draw[arr] (flow) to[out=-7,in=-85]
-		node[right=3pt,pos=0.7]{$\frac{\partial}{\partial t}$} (vfield);
+	% \draw[arr] (flow) to[out=-7,in=-85]
+	% 	node[right=3pt,pos=0.7]{$\frac{\partial}{\partial t}$} (vfield);
+	\draw[arr] (flow) to[out=2,in=-90]
+		node[left=3pt,pos=0.7]{$\frac{\partial}{\partial t}$} (vfield);
 
 	%% update fields to commitment functions
-	\draw[arr] (vfield) to[out=-95,in=-2] node[above=0pt,pos=0.70]
+	% \draw[arr] (vfield) to[out=-95,in=-2] node[above=0pt,pos=0.70]
+	\draw[arr] (vfield) to[out=-85,in=5] node[right=1pt,pos=0.70]
 		% {$\int \mathrm dt$}
 		% {$\int dt$}
 		% {$\int$}
@@ -69,14 +72,14 @@
 	% \draw (vfield) to[out=90,in=0] node[above]{$\int \mathrm dt$} (flow);
 	
 	%% full-confidence udpate rules from commitment functions
-	\draw[arr] (path) to node[above, sloped]{$\scriptstyle s=1$} (fc);
-	\draw[arr] (flow) to node[below,sloped]{$\scriptstyle t=\infty$}(fc);
+	\draw[arr] (path) to node[above, sloped]{$s=1$} (fc);
+	\draw[arr] (flow) to node[below,sloped]{$t=\infty$}(fc);
 
 	%% extra: dashed correspondence between commitment fns
 	\draw[arr,-left to,dotted,gray] (path) edge[transform canvas={xshift=4pt}]
-		node[right]{$\scriptstyle-\log(1-s)$} (flow);
+		node[right,pos=0.8,rotate=90]{$\scriptstyle-\log(1-s)$} (flow);
 	\draw[arr,-left to,dotted,gray] (flow) edge
-	 	node[left]{$\scriptstyle1-e^{-t}$}(path);
+	 	node[left,pos=0.8,rotate=90]{$\scriptstyle1-e^{-t}$}(path);
 	% \draw[arr,-left to] (path.south)++(0.1,0) to (flow.north)+(0.1,0);
 	% \draw[arr,-left to] (flow.north) to (path.south);
 	

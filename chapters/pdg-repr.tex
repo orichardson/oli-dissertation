@@ -688,7 +688,7 @@ We now give an overview of important alternative variants.
 				\node[dpadded] (C) at (-1.0, -0.6) {$C$};
 				\node[dpadded] (T) at (-1.0, 0.6) {$T$};
 				%
-				\cmergearr{C}{T}{SL}{0.2,0}
+				\cmergearr{C}{T}{SL}{0.0,0}
 				%
 				\draw[arr] (T) to [bend right=90, looseness=2] (C);
 			\end{tikzpicture}
@@ -1903,7 +1903,7 @@ The process is illustrated in \cref{fig:fg2PDG}.
 		\draw[blue!50, arr] (1) to[bend right = 10] (tc);
 	\end{tikzpicture}
 	\fi
-	\caption[Illustration of how a factor graph is converted to a PDG]{
+	\caption[Converting a PDG to a \emph{strict} PDG]{
 The conversion from a factor graph to 
 to a \emph{strict} PDG, as done in the original paper \citep{pdg-aaai}
 In this case, for each factor $\phi_J$ we introduce a new variable

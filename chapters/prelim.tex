@@ -196,7 +196,7 @@ Vectors of the same shape
 can be added ($+$) or multiplied ($\odot$) pointwise as usual,
 and we say that $\mat u \le \mat v$ iff $\mat u(i) \le \mat v(i)$ for all $i \in I$.
 \newmaterial{%
-We write $\mat u \propto \mat v$ iff there exists some a scalare $\alpha \in \mathbb R$ such that $\mat u = \alpha \mat v$.
+We write $\mat u \propto \mat v$ iff there exists some a scalar $\alpha \in \mathbb R$ such that $\mat u = \alpha \mat v$.
 }%
 % $\mat 1$ denotes an all-ones vector, of a shape implied by context.
 $\mat 1$ and $\mat 0$ denote all-ones and all-zeros vectors, of a shape implied by context.
@@ -276,7 +276,8 @@ A \emph{strictly convex} function, on the other hand, is one where it never does
 % The two notions are closely related: a c 
 Convex functions and convex sets are closely related. The set of points that lie above a function $f$
  % (its so-called \emph{epigraph} $\{ (\mat u, f(\mat u)) : \mat u \in \Rext^I$) 
-is a convex set if and only if $f$ is convex. The level sets of a function $f$ (i.e., $\{ \mat u \in \Rext^I : f(\mat u) \le k \}$ for some $k \in \Rext$) are convex if $f$ is convex. And $\mat u \mapsto \infty \mathbbm 1[\mat u \in A]$ is a convex function iff $A$ is a convex set. 
+is a convex set if and only if $f$ is convex. The level sets of a function $f$ (i.e., $\{ \mat u \in \Rext^I : f(\mat u) \le k \}$ for some $k \in \Rext$) are convex if $f$ is convex. 
+And $\mat u \mapsto \infty \cdot \mathbbm 1[\mat u \in A]$ is a convex function iff $A$ is a convex set. 
 
 % A \emph{conic combination} is a linear combination 
 A \emph{cone} is something between a linear space and a convex set: a linear space is one closed under linear combination with arbitrary coefficients, while a cone is one closed under linear combination with non-negative coefficients, and a convex space is closed under linear combination with non-negative coefficients that sum to one.
@@ -356,9 +357,15 @@ Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $
 % Equality of variables 
 \paragraph{Variable Equality, Truth, and Functions of Variables.}
 Variable notation is designed to be intuitive and easy to read. 
-Yet beneath the surface, it can be confusing, because it is unlike almost any other standard mathematical notation.
-This is especially true of the way variables interact with equality, and the symbol ``$=$''.
-For instance, if $X$ is a variable and $x \in \V\!X$, then we do not interpret $X{=}x$ as falsity (despite the fact that $X$ and $x$ refer to very different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
+Yet beneath the surface,
+% it can be very confusing, because it is quite unlike almost any other standard mathematical notation.
+\newmaterial{%
+it is unlike almost any other standard mathematical notation,
+    which can lead to confusion if closely scrutinized.
+For instance,
+}%
+% This is especially true of the way variables interact with equality, and the symbol ``$=$''.
+if $X$ is a variable and $x \in \V\!X$, then we might expect $X{=}x$ to be a false statement, since $X$ and $x$ refer to very different objects; instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
 % In particular, it is neither true nor false, but rather a different mathematical object. 
 % Worse, even if $X$ and $Y$ are both variables, then $X{=}Y$ intuitively represents the possibility that $X$ happens to equal $Y$, 
 Furthermore, if $X$ and $Y$ are both variables, one might expect $X{=}Y$ to be true iff $X$ and $Y$ stand for the same variable, but here again it instead represents the possibility that $X$ and $Y$ happen to take on the same value. 
@@ -368,40 +375,45 @@ Furthermore, if $X$ and $Y$ are both variables, one might expect $X{=}Y$ to be t
 % But before we resolve the issue, we must first explain a more general version of it. 
 More generally, 
 if $X$ is a variable and $f : \V\!X \to S$ is a function of the value of $X$, then we can regard $f(X)$ itself as a variable, with $\V(f(X)) = S$. 
-The issue with equality we encountered in the previous paragraph is just the special case when we view ${=} : \V(X,Y) \to \{0,1\}$ as such a function. 
+(The behavior of equality 
+% we encountered in the previous paragraph 
+is just the special case when we view ${=} : \V(X,Y) \to \{0,1\}$ as such a function.)
 % However, when we do so, we must keep in mind that $f(X)$ and $X$ are related.
 %
 % The key is to keep in mind
-However, when we do so we must also keep in mind that the variable $f(X)$ and the variable $X$ cannot simply take any values; they are related by the constraint $f$. 
-An analogous constraint appears when we regard an (indexed) set of variables as a variable.
+However, as when forming joint variables, we must also keep in mind when we do so that the variable $f(X)$ and the variable $X$ have a constrained relationship.
+% An analogous constraint appears when we regard an (indexed) set of variables as a variable.
 
-The solution requires us to keep track constraints involved in the construction of the relevant variables; 
+The solution requires us to keep track of these constraints. 
 % for a (set of) variables $\X$, call this set of constraints $\Gamma(\X)$. 
-if $X$ is a variable, let $\Gamma(X)$ denote this set of constraints. 
+% if $X$ is a variable, let $\Gamma(X)$ denote this set of constraints. 
+Let $\Gamma(X)$ denote the set of constraints involved in forming the variable $X$. 
 % if $X$ is a variable for a (set of) variables $\X$, call this set of constraints $\Gamma(\X)$. 
 %
-Now, when we write $X = Y$ we primarily mean the possibility that $X$ and $Y$ take the same value, which is a rich mathematical object (e.g., an event, or itself a variable). 
-But at the same time, we can also implicitly convert that object to a truth value, in contexts where a truth value is appropriate.
-Specifically, 
-if the construction of $X$ involves constraints on the set of variables $\mat X$, and the construction of $Y$ involves constraints on the variables $\mat Y$, 
+Now, when we write $X = Y$ we primarily mean the possibility that $X$ and $Y$ take the same value, which is a rich mathematical object (e.g., an event). 
+At the same time, we can also implicitly convert that object to a truth value, if a truth value is required.
+Specifically, if the construction of $X$ involves constraints on the set of variables $\mat X$, and the construction of $Y$ involves constraints on the variables $\mat Y$, 
 then we say $X{=}Y$ is \emph{true} iff $w[X] = w[Y]$ for all $w \in \V(\mat X \cup \mat Y)$ that satisfy the constraints of $\Gamma(X)$ and $\Gamma(Y)$.
-A variable $X$ \emph{primitive} if $\Gamma(X)$ is empty, and we typically use the symbol $\X$ to denote the set of all primitive variables relevant to the current context.
+A variable $X$ \emph{primitive} if $\Gamma(X)$ is empty, and we typically write $\X$ for the set of all primitive variables in the current context.
 
-The approach described above gives us what we want in essentially every context. 
-It is always true that $X = X$, but not in general true that $X = X'$ unless $X$ and $X'$ must be equal by construction, or if $X$ and $X'$ are constants representing the same value. 
-It is true that $f(X) = g(X)$ if and only if $f = g$.
+% The approach described above gives us what we want in essentially every context. 
+This approach gives us what we want in most cases.
+It is always true that $X = X$, but not in general true that $X = X'$ (unless $X$ and $X'$ must be equal by construction, or represent the same constant). 
+It is true that $f(X) = g(X)$ iff $f = g$.
 If $X$ and $Y$ are real variables, then (it is true that) $X + Y = Y + X$.
-At the same time, these expressions remain unambiguously meaningful for describing events (as we will soon see). And when expressions are \emph{true}, they are events that must necessarily occur.
+Yet these expressions also remain unambiguously meaningful for describing events (as we will soon see). 
+Indeed expressions that are \emph{true}, correspond to events that must necessarily occur.
 
 
 % Clearly the full implications of this setup of variables can get rather tangled up
-Most formalisms that involve variables avoid these issues by adopting only fragments of this picture, or sweeping ambiguities under the rug.
-But it isn't necessary to do so; all of these standard concepts can coexist in one perfectly formal context.
-The constraint-tracking resolution resolution to these issues gives just a taste of a broader approach to modeling, which lies at the heart of the theory of probabilistic dependency graphs. 
+% Most formalisms that involve variables avoid these issues by
+Typically one deals with these problems by adopting only fragments of this picture, or by sweeping ambiguities under the rug.
+But it isn't necessary to do so; all of these standard concepts can coexist in one unambiguous formal context.
+The constraint-tracking resolution given here is just a taste of the general modeling approach at the heart of our theory. 
 % gives a taste of the approach at the heart of the PDG formalism,   
 % and how we can have our cake and eat it too. 
 % Yet it turns out that all of this can be made precise with probabilistic dependency graphs, the mathematical representation of uncertainty that lies at the heart of this dissertation.  
-The missing part, as one might expect, is the probability. 
+The biggest missing part, as one might guess, is probability. 
 
 % \section{Probability, and Other Representations of Uncertainty}
 \section{Probability}
@@ -410,9 +422,9 @@ The missing part, as one might expect, is the probability.
 % The one we have chosen 
 % There are several different notations for probability in different communities.
 \newmaterial{%
-Probability is a foundational concept broadly across computer science, and especially for us. 
+Probability is a foundational concept across many disciplines, and especially for us. 
 % There are several different notation for probability
-Unfortunately, its notation is almost as diverse as the the people who use it. 
+Unfortunately, its notation is almost as diverse as the people who use it. 
 }%
 % }%
 % In this section, we present a carefully 
@@ -468,7 +480,11 @@ From this definition, it is easy to recover the usual definition of conditional 
 $\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
 There is just one caveat: this formula is not meaningful when $\mu(A) = 0$; in this case, we leave the conditional probability undefined.
 % Indeed, if $\mu(A) = 0$, it is arguably appropriate to say $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
-Indeed, if $\mu(A) = 0$, there is an equally strong argument supporting the notion that $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$: for all $p \in [0,1]$, there is a sequence $\{ \mu_k \}_{k \in \mathbb N}$ of probability distributions converging to $\mu$ with the property that $\mu_k(U \mid A) = p$ for all $k$.
+\newmaterial{%
+But it is not undefined because there is no value that makes sense---but rather because there is an equally strong argument suggesting that \emph{every} value makes sense:
+% Indeed, if $\mu(A) = 0$, there is an equally strong argument supporting the notion that $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$: 
+if $\mu(A)= 0$, then for all $p\in [0,1]$ there is a sequence $\{ \mu_k \}_{k \in \mathbb N}$ of probability distributions converging to $\mu$ with the property that $\forall k.~\mu_k(U \mid A) = p$.
+}%
 
 
 %% adding variables.
@@ -1022,8 +1038,9 @@ There is an important special class of (undirected) graphs that commonly arises 
 
 \newmaterial{%
 % There is also an a
-It seems that the notion of a graph only captures pairwise relationships between vertices. 
-If we also want to model relationships between triples of vertices, it seems that we need a more general object.
+The notion of a graph only captures pairwise relationships between vertices. 
+If we also want to model relationships between triples of vertices, 
+    it would appear that we need something more general than a graph.
 }
 
 \begin{defn}
@@ -1032,7 +1049,7 @@ If we also want to model relationships between triples of vertices, it seems tha
     subsets of $V$. 
 \end{defn}
 
-An ordinary undirected graph is the special case in which every hyperedge contains two vertices.
+An undirected graph is the special case of a hypergraph in which every hyperedge contains two vertices.
 In turn, a bipartite graph is a (very) special case of an ordinary undirected graph.
 By transitivity, one might expect bipartite graphs to naturally be an extremely strict special case of hypergraphs---yet, perhaps counter-intuitively, they are in fact naturally isomorphic. 
 % , which themselves are a strict (particularly easy to draw) special case of hypergraphs.  
@@ -1076,7 +1093,7 @@ by swapping $L$ and $R$, one
 obtains another bipartite graph that is 
 % isomorphic to the first one. 
     in many ways no different from the original.
-The corresponding symmetry for hypergraphs, known as duality, is a bit less obvious.
+The corresponding symmetry for hypergraphs, known as duality, is less obvious.
 % is known as duality, and is a bit less obvious.
 %
 The \emph{dual} of the hypergraph $G = (V, \mathcal E)$ is
@@ -1316,14 +1333,15 @@ the top row of \cref{fig:dhygraph-duals} is the flowchart representation and the
 
 In either representation, the two hypergraphs on the left of \cref{fig:dhygraph-duals} represent unambiguous composite processes.
 The far left one is a chain: operation 1 (op$_1$) produes X, which is fed to op$_2$ which produces Y, and finally fed to op$_3$ to produce Z.
-The second hypergraph from the left involves a split and a merge: op$_1$ produces A, which is copied and sent to op$_2$ and op_$_3$, which use it to produce B and C, repectively. Then, op$_4$ uses the values of B and C to produce D.
+The second hypergraph from the left involves a split and a merge: op$_1$ produces A, which is copied and sent to op$_2$ and op$_3$, which use it to produce B and C, repectively. Then, op$_4$ uses the values of B and C to produce D.
 % The right one, on the other hand, is 
 % Is the right one meaningful?  We 
 The middle right hypergraph represents a cyclic process, in which op$_1$ produces B from A and op$_2$ produces A from B. 
 % The right one, on the other hand, is less clear. 
-In each of these three cases, every variable is produced by a single operation (on the top, one hyperarc goes into every node; on the bottom, one hyperarc comes out of every node). 
+In each of these three cases, every variable is produced by a single operation.
+(On the top, this means one hyperarc goes into every node; on the bottom, it means one hyperarc comes out of every node). 
 But what does the hypergraph on the far right represent? 
-Op 1 produces B from A, but op$_2$ somehow also produces B. 
+Op$_1$ produces B from A, but op$_2$ somehow also produces B. 
 Is this meaningful?
 % As we will see in \cref{chap:pdg-repr}
 Previous approaches to modeling processes rule out situations like these, but in \cref{chap:pdg-repr}, we will use them to capture (possibly) conflicted beliefs.  
@@ -1416,7 +1434,7 @@ The absence of an arc, then, in context, reflects a kind of independence.
 More precisely, a qualitative BN states that
 \textit{every variable is conditionally independent of its non-descendents given its parents}.
 Another famous (and more algorithmic) characterization of the same conditional independences is the \emph{d-separation} criterion  \citep{geiger-pearl-d-separation}. 
-It is helpful to look at some examples.
+It may be helpful to see some examples:
 
 \begin{center}
     % \tikzset{bnnode/.style={draw,circle}}
@@ -1545,8 +1563,8 @@ If we care only about such distributions, this suggests another approach to the 
     the subset $\mat X_j \subseteq \X$ is called the \emph{scope} of factor $j$. 
 %
 \newmaterial{%
-Although the data we have described is an annotation of a hypergraph, it is easier to draw as a bipartite graph.}
-
+Although we have described an annotation of a hypergraph, it is more standard and easier to draw in another form.}
+%
 The bipartite graph that corresponds naturally to this hypergraph is called a \emph{factor graph}. 
 More precisely, a factor graph has two kinds of nodes: factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
 \newmaterial{%
