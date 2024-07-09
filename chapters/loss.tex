@@ -246,7 +246,7 @@ One can get similar, but subtler, results for probability densities; see \cref{a
 \end{linked}
 
 In some ways, this result is entirely unsurprising, given that
-\eqref{eq:inc} is a flexible formula built out of information-theoretic primitives.
+\eqref{eq:oinc1} is a flexible formula built out of information-theoretic primitives.
 Even so, note that
 the inconsistency of believing both a distribution and an event
 happens to be the standard measure of discrepancy between the two%
@@ -2566,7 +2566,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 
 \recall{prop:MSE}
 \begin{lproof}\label{proof:MSE}
-	An immediate corolary of \Cref{prop:inc-two-gaussians}; simply set $s(x) = t(x) = \beta_1 = \beta_2 = 1$
+	An immediate corollary of \Cref{prop:inc-two-gaussians}; simply set $s(x) = t(x) = \beta_1 = \beta_2 = 1$
 \end{lproof}
 
 \recall{lemma:pdgdiv}
@@ -2586,7 +2586,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 	&= \inf_\mu \Ex_\mu \log \frac{\mu(x)^{r+s}}{p(x)^r q(x)^s}\\
 	&= (r+s) \inf_\mu \Ex_\mu  \left[ \log \frac{\mu(x)}{(p(x)^r q(x)^s)^{\frac1{r+s}}} \cdot \frac{Z}{Z} \right] \\
 	&= \inf_\mu (r+s) \kldiv*{\mu}{\frac1Z p^{\frac r{r+s}} q^{\frac s{r+s}}} - (r+s) \log Z\\
-	\intertext{where $Z := (\sum_x p(x)^r q(x)^s)^{\frac1{r+s}}$ is the constant required to normalize the denominator as a distribution. The first term is now a relative entropy, and the only usage of $\mu$. $\kldiv\mu{\cdots}$ achives its minimum of zero when $\mu$ is the second distribution, so our formula becomes}
+	\intertext{where $Z := (\sum_x p(x)^r q(x)^s)^{\frac1{r+s}}$ is the constant required to normalize the denominator as a distribution. The first term is now a relative entropy, and the only usage of $\mu$. $\kldiv\mu{\cdots}$ achieves its minimum of zero when $\mu$ is the second distribution, so our formula becomes}
 	&= - (r+s) \log Z \\
 	&= - (r+s) \log  \sum_x \left(p(x)^{r}\vphantom{\Big|} q(x)^{s}\right)^{\frac{1}{r+s}}
 	\qquad\text{as promised.}\qedhere
@@ -2750,7 +2750,7 @@ Now, we formally state and prove the more general result for $\beta$-VAEs.
 	\def\theelt{\mathop{\mathit{the}}}
 	Let $\theelt$ be a function that extracts the unique element singleton set, 
         so that $\theelt(\{x\}) = x$.
-	It was shown by \textcite{pdg-aaai} (Corolary 4.4.1) that
+	It was shown by \textcite{pdg-aaai} (Corollary 4.4.1) that
 	\[ \theelt \bbr{\dg M_\Psi}^*_1 = \Pr\nolimits_{\Phi, \theta}(\mat x)
 		= \frac{1}{Z_\Psi} \prod_{J} \phi_J(\mat x_J)^{\theta_J}. \]
 	Recall the statement of Prop 4.6 from \textcite{pdg-aaai}:
@@ -3091,7 +3091,7 @@ Observe that, inside the expectation over $\mu(Y)$, the cpds $\mu(X|Y)$ and $\mu
 Because there is no interaction between the choice of cpd $\mu(X|y)$ and $\mu(X|y')$, it is not necessary to jointly optimize over entire cpds $\mu(X|Y)$ all at once.
 Rather, it is equivalent to to take the infimum over $\nu(X)$, separately for each $y$.
 Symmetrically, we may as well take the infimum over $\lambda(Z)$ separately for each $y$, rather than jointly finding the optimal $\mu(Z|Y)$ all at once.
-Operationally, this means we can pull the infema inside the expectation over $Y$. And since the first term doesn't depend on $Z$ and the second doesn't depend on $X$, we get:
+Operationally, this means we can pull the infima inside the expectation over $Y$. And since the first term doesn't depend on $Z$ and the second doesn't depend on $X$, we get:
 %
 \begin{equation*}
 	\aar{\dg M_4}

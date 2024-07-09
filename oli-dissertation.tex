@@ -83,8 +83,29 @@
 % (was not trying to self-aggrandize above; the ``Ph.D.'' is part of the template!)
 
 % It is often the case that 
-It is quite common to have to deal with conflicting information 
-But, to be \emph{rational}, one has to do so without having conflicting beliefs. 
+% It is common to have to deal with conflicting information
+What should you do with conflicting information?
+To be \emph{rational}, you immediately resolve the inconsistency, so as to maintain a consistent (probabilistic) picture of the world.
+%
+But is that always necessary?
+% Epistemic conflict is an important aspect of human thought.
+% ---and, as we shall see, it is already bein
+% Yet we build artificial agents using probabilistic models that, by construction, cannot represent conflicted beliefs.
+Inconsistency is clearly undesirable, but we stand to gain a lot by being able to represent it.
+%
+% You must find a way to consult 
+% But is that how you aspire to think? 
+% But what makes information so much more dangerous when it's outside of you than inside?
+% What is so special about the borders of an agent? 
+% What about conglomerates made up of smaller actors? Why are 
+
+This thesis develops a broad theory of how to approach probabilistic modeling with possibly-inconsistent information.  
+The key ingredient is a novel kind of graphical model, called a \emph{Probabilistic Dependency Graph (PDG)}. 
+PDGs allow a modeler to specify arbitrary (even conflicting) pieces of probabilistic information with arbitrary degrees of confidence. 
+In \cref{part:univ-model}, we establish PDGs as a sweeping generalization of other models of mental state, including traditional graphical models such as Bayesian Networks and Factor Graphs, as well as causal models, and even generalizations of probability distributions, such as Dempster-Shafer Belief functions. 
+% We also investigate a general analogue of a BN's conditional independencies for arbitrary directed hypergraphs---i.e., the underlying structure of a PDG. 
+In \cref{part:univ-objective}, we show that PDGs also capture modern neural representations. Indeed, it turns out that most loss functions in the literature can be viewed as the inconsistency of a PDG that models the situation appropriately. Furthermore, many of the most important algorithms in AI can be viewed as instances of a simple heuristic approach to resolving inconsistencies. 
+In \cref{part:algo-logic-complexity}, we formalize and provide algorithms for inference in PDGs, and investigate the deep algorithmic connection between inference in a PDG, and calculating a PDG's numerical degree of inconsistency. We also develop general principles for reasoning with (and about) PDGs. 
 \end{abstract}
 
 \begin{biosketch}
@@ -169,8 +190,8 @@ TODO
     \input{chapters/infer-inconsist-connect}
 
 \chapter{Reasoning with PDGs}
-    % \label{sec:monotone}\label{chap:reason}
-    \input{chapters/rwpdg}
+    \label{sec:monotone}\label{chap:reason}
+    % \input{chapters/rwpdg}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -189,8 +210,8 @@ TODO
     % \input{chapters/cat}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\part{Conclusions}  \label{part:conclusions}
-\chapter{}
+\part{}  \label{part:conclusions}
+\chapter{Conclusions}
     \label{chap:end}
     \input{chapters/end}
 

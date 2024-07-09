@@ -38,14 +38,14 @@ In this chapter, we will get a chance to work with these ideas in a familiar con
 
 
 % \section{Background, Notation, and Critical Preliminaries}
-\section{Basic Concepts and Foundational Notation}
+\section{Basic Concepts and Notation}
 
 % Only \cref{sec:}
 Let's start with the basics.
 There are two kinds of equalities: definitions, and assertions. 
 We distinguish between the two.
-Namely, we write ``$A := B$'' when we want to (re)defines the symbol $A$ so stand for $B$,
-but write ``$A = B$'' to assert that the (already defined) expressions $A$ and $B$ stand for the same object.
+Namely, we write ``$A := B$'' to (re)define the symbol $A$ so as to stand for $B$,
+but write ``$A = B$'' to assert that the (already defined) expressions $A$ and $B$ are equal.
 %
 
 
@@ -87,9 +87,9 @@ $
 % \]
 % If the two sets share a symbol, then we instead write
 \newmaterial{%
-The elements are intended to be distinct even if the two sets are identical and share a symbol; 
+The elements must be distinct even if the two sets share a symbol; 
     in this case, we instead tag elements based on whether they come
-    from the left or the right argument:
+    from the left or the right:
 $
     A \sqcup A = \{ \mathrm{inl}(a) : a \in A\} \cup \{ \mathrm{inr}(a) : a \in A\}.
 $
@@ -124,8 +124,8 @@ $\{ x \in X ~|~ \varphi(x) \}$
 We write $\lnot\varphi$ for the negation of an expression $\varphi$. 
 If $\varphi$ and $\psi$ are both logical expressions, we write $\varphi \land \psi$ for their conjunction (which is true only if $\varphi$ and $\psi$ are both true), and $\varphi \lor \psi$ for their disjunction (which is true if and only if either $\varphi$ or $\psi$ are true).
 In some contexts, it is standard (and may feel more natural) to use a comma instead of ``$\land$'' to conjoin logical expressions. 
-The notation $\varphi \implies \psi$ means that $\psi$ holds whenever $\phi$ does, and can be viewed as an abbreviation for $\lnot \varphi \lor \psi$, 
-and $\varphi \iff \psi$ to indicate that the two are logically equivalent (which can be viewed as an abbreviation for $(\varphi \implies \psi) \land (\psi \implies \varphi)$).
+The notation $\varphi \implies \psi$ means that $\psi$ holds whenever $\phi$ does, and can be viewed as an abbreviation for $\lnot \varphi \lor \psi$; 
+the notation $\varphi \iff \psi$ means that $\varphi$ and $\psi$ are logically equivalent (which can be viewed as an abbreviation for $(\varphi \implies \psi) \land (\psi \implies \varphi)$).
 Speaking of logical equivalence, we often abbreviate ``if and only if'' by writing just ``iff''. 
 
 % Given two sets $A$ and $B$, there are a number of ways t 
@@ -291,7 +291,7 @@ It follows that linear spaces are cones, and cones are convex.
 % - products
 % - sums
 % - unit interval
-% - "space" = set + topology or geoemtry
+% - "space" = set + topology or geometry
 
 
 
@@ -308,7 +308,7 @@ Although variables are widely used across computer science---in programming lang
 The account presented here simultaneously explicates many of them.
  % approaches in the literature. 
 
-% Our presentation of it is not standard, but largely because it incorprorates standard 
+% Our presentation of it is not standard, but largely because it incorporates standard 
 Mathematically, our notion of a variable exists on two levels.
 \emph{Qualitatively}, a variable is just some unique identifier (the variable name), such as ``Height'', or $X$. 
 We typically use capital roman letters for variables.
@@ -358,7 +358,7 @@ Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $
 Variable notation is designed to be intuitive and easy to read. 
 Yet beneath the surface, it can be confusing, because it is unlike almost any other standard mathematical notation.
 This is especially true of the way variables interact with equality, and the symbol ``$=$''.
-For instance, if $X$ is a variable and $x \in \V\!X$, then we do not interperet $X{=}x$ as falsity (despite the fact that $X$ and $x$ refer to very different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
+For instance, if $X$ is a variable and $x \in \V\!X$, then we do not interpret $X{=}x$ as falsity (despite the fact that $X$ and $x$ refer to very different mathematical objects); instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
 % In particular, it is neither true nor false, but rather a different mathematical object. 
 % Worse, even if $X$ and $Y$ are both variables, then $X{=}Y$ intuitively represents the possibility that $X$ happens to equal $Y$, 
 Furthermore, if $X$ and $Y$ are both variables, one might expect $X{=}Y$ to be true iff $X$ and $Y$ stand for the same variable, but here again it instead represents the possibility that $X$ and $Y$ happen to take on the same value. 
@@ -1315,15 +1315,15 @@ then
 the top row of \cref{fig:dhygraph-duals} is the flowchart representation and the bottom row is the circuit representation. 
 
 In either representation, the two hypergraphs on the left of \cref{fig:dhygraph-duals} represent unambiguous composite processes.
-The far left one is a chain: operation 1 (op 1) produes X, which is fed to op 2 which produces Y, and finally fed to op 3 to produce Z.
-The second hypergraph from the left involves a split and a merge: op 1 produces A, which is copied and sent to ops 1 and 2, which use it to produce B and C, repectively. Then, op 4 uses the values of B and C to produce D.
+The far left one is a chain: operation 1 (op$_1$) produes X, which is fed to op$_2$ which produces Y, and finally fed to op$_3$ to produce Z.
+The second hypergraph from the left involves a split and a merge: op$_1$ produces A, which is copied and sent to op$_2$ and op_$_3$, which use it to produce B and C, repectively. Then, op$_4$ uses the values of B and C to produce D.
 % The right one, on the other hand, is 
 % Is the right one meaningful?  We 
-The middle right hypergraph represents a cyclic process, in which op 1 produces B from A and op 2 produces A from B. 
+The middle right hypergraph represents a cyclic process, in which op$_1$ produces B from A and op$_2$ produces A from B. 
 % The right one, on the other hand, is less clear. 
 In each of these three cases, every variable is produced by a single operation (on the top, one hyperarc goes into every node; on the bottom, one hyperarc comes out of every node). 
 But what does the hypergraph on the far right represent? 
-Op 1 produces B from A, but op 2 somehow also produces B. 
+Op 1 produces B from A, but op$_2$ somehow also produces B. 
 Is this meaningful?
 % As we will see in \cref{chap:pdg-repr}
 Previous approaches to modeling processes rule out situations like these, but in \cref{chap:pdg-repr}, we will use them to capture (possibly) conflicted beliefs.  
@@ -1863,7 +1863,7 @@ Suppose that, with rigorous emperical investigation, we have determined some sta
 How should we proceed?
 The most faithful representation of our knowledge, of course, is just the information we have---those statistics, and perhaps the set of probability distributions consistent with them. 
 But what should we do if we are obligated to give a probability distribution 
-    (e.g., to satisfy the axioms of rationality \citep{sep-dutch-book,haplern-RAU})?
+    (e.g., to satisfy the axioms of rationality \citep{sep-dutch-book,halpern-RAU})?
 % Here there is an important principle in the literature: 
 % If forced to select a probability distribution, however, there is one principle
 There is a well-established principle stating that among all possible distributions, the one with maximum entropy is most appropriate. 

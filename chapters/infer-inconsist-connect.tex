@@ -20,7 +20,7 @@ This leads to a philosophically profound result: precisely quantifying one's deg
 
 To get there, we first need to formally describe the two computational problems of interest (\cref{sec:approximate-inference}) as approximate inference problems,
 which allows us to also
-formally finish the upper bounds developped in \cref{chap:infer}.
+formally finish the upper bounds developed in \cref{chap:infer}.
 
  
 % \section{A Semantic Connection}
@@ -81,7 +81,7 @@ it will turn out that even PDG inference can be done in linear
     time with an inconsistency oracle \cref{sec:deeper-connection-overview}.
 All of this suggests at a theoretical level something we
     illustrated at length in \cref{chap:one-true-loss}:
-    that calculating the degree of inconsistency is a fundemental problem, that can be used to solve other problems. 
+    that calculating the degree of inconsistency is a fundamental problem, that can be used to solve other problems. 
 
     
 % Conceptually, this result is not so different from the relation between a factor graph and its partition function 
@@ -110,7 +110,7 @@ This assumption has several enormous advantages.
 \item 
 It simplifies things a great deal, and puts the focus where it should be: on the important aspects of the algorithm, rather than the details of numerical representations.
 \item 
-It is essentially the right model of computational complexity in practice, given the we typically cache out numerical computations with floating point represntations in hardware, which approximately have this complexity.
+It is essentially the right model of computational complexity in practice, given the we typically cache out numerical computations with floating point representations in hardware, which approximately have this complexity.
 \item 
 Finally, the assumption typically does not impact theoretical results, because (with a great deal of difficult and uninteresting work) one can often assume that all parameters are rational numbers, and then show that the the calculations can be done just as before with a small overhead.
 \end{enumerate}
@@ -645,7 +645,7 @@ semantically, in the case we're interested in.
     % inconsistent.
     We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
 
-    $(\impliedby)$. Suppose that there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y) = p$.
+    \textbf{($\impliedby$).}~~ Suppose that there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y) = p$.
     Because $\mu \in \bbr{\dg M}^*_\gamma$, we know that
     $\bbr{\dg M}_\gamma(\mu) = \aar{\dg M}$.
     Let $\hat \mu$ be the extension of $\mu$ to the new variable $``\Yyshort$'',
@@ -669,11 +669,10 @@ semantically, in the case we're interested in.
     that we already knew the inequality held in the opposite direction
     (by monotonicity), so the two terms are equal.
 
-    $(\implies)$.  Suppose that the two inconsistencies are equal, i.e.,
+    \textbf{($\implies$).}~  Suppose that the two inconsistencies are equal, i.e.,
     $
     \aar[\Big]{\dg M + ~\Pr(Y{=}y) = p}_\gamma = \aar{\dg M}_\gamma.
     $
-
     This time, choose $\hat\mu \in \bbr{\dg M+ ~\Pr(Y{=}y) = p}^*_\gamma$,
         and define $\mu$ to be its marginal on the variables of $\dg M$
         (which contains the same information as $\hat \mu$ itself).
@@ -700,7 +699,7 @@ semantically, in the case we're interested in.
 \end{lproof}
 
 We next show that the overall inconsistency is strictly convex in the parameter $p \in [0,1]$.
-It is (notationally) simpler to state (and equally easy to prove) this result in the general case.
+The result is simpler to state (and equally easy to prove) this result in the general case.
 
 \begin{linked}{lemma}{inc-strictly-cvx}
     Fix $Y \subseteq \X$,
@@ -926,7 +925,7 @@ $}}
         ,
     \end{align*}
     where, as before, $\kldiv m p = m \log \frac{m}{p} + (1-m) \log \frac {1-m}{1-p}$ is
-    the relative entropy between Bernouli distributions with respective parameters $m$ and $p$.
+    the relative entropy between Bernoulli distributions with respective parameters $m$ and $p$.
 
     For each $\lambda \in [0,1]$, define
     \begin{align*}
@@ -1037,7 +1036,7 @@ But first, we need two intermediate technical results.
     and $m_2 = \mu_2^*(Y{=}y)$ is defined symmetrically.
 \end{lemma}
 \begin{lproof}
-    For $p, q \in [0,1]$, $\kldiv pq := p \log \frac{p}{q} + (1-p) \log \frac{1-p}{1-q}$ is the relative entropy between the Bernouli distributions described by their parameters.
+    For $p, q \in [0,1]$, $\kldiv pq := p \log \frac{p}{q} + (1-p) \log \frac{1-p}{1-q}$ is the relative entropy between the Bernoulli distributions described by their parameters.
     First, we calculate
     \begin{align*}
         \frac{\mathrm d}{\mathrm d p} \kldiv{p}{q}
@@ -1208,7 +1207,7 @@ Thus,
 
 
 All that remains is $\squa0$. To put things in a convenient form,
-we apply Pinkser's inequality.  The total variation distance between two Bernouli distributions  (i.e., binary distributions) with respective positive probabilities $p$ and $q$ is just $|p-q|$.
+we apply Pinsker's inequality.  The total variation distance between two Bernoulli distributions  (i.e., binary distributions) with respective positive probabilities $p$ and $q$ is just $|p-q|$.
 Pinsker's inequality \parencite{pinsker-inequality} in this case says: $\frac12 \kldiv{p}{q} \ge (p-q)^2$.
 Thus, $\squa0 > \kldiv zb \ge 2 (z-b)^2$,
 and so we have

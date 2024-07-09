@@ -1,7 +1,7 @@
 % You try to give a big-picture
 % summary of what you've  done, perhaps suggest some avenues for future
 % work (I would suggest that you do this under the assumption that there
-% will be no extra chapers), and perhaps conclude with what you see as the
+% will be no extra chapters), and perhaps conclude with what you see as the
 % potential impact of PDGs on the field.
 
 \section{Summary}
@@ -74,7 +74,7 @@ The following facts are either immediate or follow immediately from a result in 
     \item If $\mu$ is a probability distribution, and $U$ is an event, 
         then $\Xi[\mu, U] = \mu(U)$.
     
-    \item If $\Bel$ is a Dempster-Shafer Belief function and $\Plaus$ is the corresonding plausibility function, and $U$ is an event, then $\Xi[\Plaus, U] = \Xi[\Bel, U] = \Plaus(U)$. 
+    \item If $\Bel$ is a Dempster-Shafer Belief function and $\Plaus$ is the corresponding plausibility function, and $U$ is an event, then $\Xi[\Plaus, U] = \Xi[\Bel, U] = \Plaus(U)$. 
 
     \item If $\mathcal P$ is a convex set of probability distributions and $U$ is an event, then $\Xi[ \dg M_{\mathcal P}] = \sup_{P \in \mathcal P} P(U)$. 
 
@@ -134,7 +134,7 @@ The research direction in the previous paragraph aimed to capture relational dat
 % But there is a second important class of databases: graph based databases, and the object graphs of object-oriented programming languages.
 In many ways, this seems an even closer fit to a PDG, and understanding whether and how they bear relationship to PDG semantics remains a promising open problem. 
 
-In Machine Learning, there has been a recent deluge of work introducing new representations and training objectives. At the moment, the two dominant architectures are \emph{diffusion models} \citep{DDPMs} and \emph{transformers} \citep{transformers...}. 
+In Machine Learning, there has been a recent deluge of work introducing new representations and training objectives. At the moment, the two dominant architectures are \emph{diffusion models} \citep{DDPMs} and \emph{transformers} \citep{transformers}. 
 Because of their roots in VAEs (which PDGs capture well (\cref{sec:variational})), it is not hard to show that diffusion models can also be regarded as PDGs. %---%
     Does this view yield any practical or conceptual benefits, beyond what we have already seen? 
     We do not know.
@@ -148,14 +148,14 @@ Still, it is a question worth taking seriously, if one believes in the promise o
 \Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence developed in \cref{chap:QIM}.
 Yet we suspect there is more to the story. 
 First, an analogue of the principle of maximum entropy 
-    leads us to a special subcase of QIM-compatibility in which the witness does not break any unnecessary symmetries.
+    leads us to a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries.
 This special variant appears to have an even closer relationship with $\SDef$.
 % There is a special 
 Furthermore, preliminary experiments suggest that minimizing structural deficiency may suffice to ensure QIM compatibility. 
 
-A seond avenue of future research into qualitative PDGs involves the relationship between quantifiers and extreme values of the parameter $\alpha$. 
+A second avenue of future research into qualitative PDGs involves the relationship between quantifiers and extreme values of the parameter $\alpha$. 
 % can be shown that very large values of $\alpha$ can be used to 
-Specifically, it seems that existential quatifiers $(\exists)$ can be implemented with qualitative arcs that have $\alpha = +\infty$, while universal quantifiers ($\forall$) can be implemented with $\alpha = -\infty$. 
+Specifically, it seems that existential quantifiers $(\exists)$ can be implemented with qualitative arcs that have $\alpha = +\infty$, while universal quantifiers ($\forall$) can be implemented with $\alpha = -\infty$. 
 This observation may be useful in developing a query language for PDG-based databases (discussed above).
 It raises some interesting questions. 
 How should we square this with our understanding of independent mechanisms?
@@ -172,9 +172,9 @@ Solving the problem in the case where qualitative information plays a larger rol
 
 There are many different approaches to inference in traditional graphical models;
 the entirety of Part II (Ch9-14) of \citet{KF09} is a survey of these different methods.
-Our approach to inferene in PDG is a cousin of the the techniques developed in Ch11. But what of analogues of the other approaches? 
+Our approach to inference in PDG is a cousin of the the techniques developed in Ch11. But what of analogues of the other approaches? 
 Particle-based and MCMC methods in in particular (the analogue of Ch12 [ibid])
-    for PDGS remain almost completely unexpored; can these techniques be adapted for use in PDGs?
+    for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
     
     % These questions are related to questions about when an
 A related question is that of a deeper understanding of the local inconsistency resolution (LIR) algorithm (the subject of \cref{chap:LIR}). 
@@ -253,13 +253,13 @@ To a reader who wonders why one should bother testing something when you could p
 % But solving important problems is difficult and takes time. 
 % The theory will have to suffice for now. 
 
-But the deeper question---of whether or not this theory will ultimately help humanity adress important real-world problems---remains the most important open question of all.
+But the deeper question---of whether or not this theory will ultimately help humanity address important real-world problems---remains the most important open question of all.
 We are already building powerful artificial agents that are quickly reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
 
 
 This unified theory of probabilistic modeling and epistemic conflict has the potential to be a key element of that future.
 % Universal 
-For one, it could provide students and researchers with a principled approach to understanding and designing these systems---even the powerful modern ones which are seldome fully consistent. 
+For one, it could provide students and researchers with a principled approach to understanding and designing these systems---even the powerful modern ones which are seldom fully consistent. 
 For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
 Indeed, the entire theory is based only on truth and trust---analogues of ``utility'' appear only ephemeral intermediates in this process. 
 There is also a case to be made that universal constructions promote diversity and fairness.

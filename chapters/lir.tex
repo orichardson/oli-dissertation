@@ -245,13 +245,16 @@ $p(Y|X) : \V \!X \to \Delta\mskip-1mu \V \mskip-1mu Y$.
 }%
 
 \section{Parametric PDGs}
-The main tool of this chapter is a parametric version of a PDG. 
+The main tool of this chapter is an alternate parametric version of a PDG.
+% Just as a neural network is a 
+Just as a neural network can be thought of as a flexible functions (or even cpds) that can be adjusted with internal parameters, so too would we like to model PDGs whose cpds are parametric.
 For this reason, we
 % \paragraph{Geometry.}
 % \textbf{Preliminaries: Geometry.}
 % We will need various parameter spaces $\Theta$; to simplify the presentation, assume that parameter spaces are a convex subsets of $\mathbb R^n$ (not necessarily of the same dimension).
-will need various parameter spaces $\Theta$.
-To simplify the presentation, assume that each $\Theta$ is a convex subset of $\mathbb R^n$ (not necessarily of the same dimension).
+will require a parameter space $\Theta_a$ for each (hyper)arc $a \in \Ar$.
+% To simplify the presentation,
+For simplicity, assume that each $\Theta_a$ is a convex subset of $\mathbb R^n$ (not necessarily of the same dimension).
 %
 \commentout{
 Given a manifold $\Theta$ and a differentiable map $P : \Theta \to \Delta \V\! X$,
@@ -267,15 +270,14 @@ probability distributions is enough to make it a Riemannian manifold.
 % by $\mat u, \mat v \mapsto \mat u^{\sf T} \mathcal I(\theta) \mat v$.
 Moreover, $\mathcal I(\theta)$ is particularly natural in a probabilistic context;
     up to a multiplicative constant, it is the \emph{only} such metric on $\Theta$ that is invariant under sufficient statistics, \citep{chentsov}. \citep{amari2016information}
-}
-
+}%
+%
 % \subsection{PDGs}
 % \paragraph{Probabilistic Dependency Graphs.}
 % \textbf{Parametric Probabilistic Dependency Graphs.}
 % PDG is a directed graph whose arcs carry probabilistic and causal information, weighted by confidence.
 % We now introduce an equally expressive variant, whose explicit parametric nature will prove useful for our purposes.
-We now formally introduce an equally expressive \emph{parametric} variant of a PDG,
-    that was first mentioned in \cref{sec:alt-pdgs}.
+This allows us to formally define a \emph{parametric} variant of a PDG, as promised in \cref{sec:alt-pdgs}.
 % whose explicit parametric nature will prove useful.
 % ---%
     % yet it too is essentially equivalent to the others.
@@ -460,10 +462,11 @@ It follows that, at an abstract level,
     much of machine learning can be viewed as inconsistency resolution.
 %
 % We take this idea one step further, operationalizing the resolution process.
-We take this idea a few steps further, by operationalizing the
-    resolution process,
+We take this idea a few steps further, by 
+    (1) operationalizing the resolution process with parametric PDGs,
     % and making it even more expressive with an approximate, local variant
-    and allowing it to be done locally.
+    and 
+    (2) allowing for a heuristic approach that only resolves inconsistencies \emph{locally}.
 % The latter dramatically expands what computations can be expressed.
     % significantly  expanding what can be expressed.
 %

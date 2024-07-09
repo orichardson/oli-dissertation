@@ -12,7 +12,7 @@
 % \begin{quotation}
     \it
     ``A man with one watch always knows the time;\\
-    a man with two watches is never sure.''
+    a man with two watches is never sure.'' \\
     \citep{segal-law}
 % \end{quotation}
 \end{center}
@@ -69,7 +69,8 @@ Half-baked ideas are a nonstarter.
 This regimented consistency-first lifestyle works well if you are only mistaken in the margins, and need only to occasionally update a few parameters.
 But what if you're wrong in a deeper way?
 Can you imagine how hard it would be to learn to see things completely differently, without ever venturing into a confused state?
-Imagine having to implement a substantial refactor of a large codebase, with an interface that only allows you to see code that compiles.
+% Imagine having to implement a substantial refactor of a large codebase, with an interface that only allows you to see code that compiles.
+Picture having to substantially refactor a large codebase with an interface that only allows you to see code that compiles.
 So if (through no fault of your own) you do happen to be wrong about how the world works---that is, really, fundamentally wrong---then taking on inconsistency may be worthwhile.
 
 % By way of analogy, we all agree debt is bad, but would you willingly give up your freedom to take on debt?
@@ -135,7 +136,7 @@ Even clearer examples of inconsistency arise in variational inference
     and more generally when combining multiple networks in nontrivial ways.
     In some cases, there is even a term representing ``consistency'' in the training objective \citep{CycleGAN2017}, or the name of the approach \citep{learning-loc-glob-consistency,temp-cycle-consist-2019CVPR}. 
 In each case, the goal is to be (mostly) consistent, but seldom is it possible to actually get there,
-and tolerating inconsistency is critical for the learning process.
+and tolerating inconsistency is critical to the learning process.
 %
 These techniques are billed
 % to our Bayesian overlords 
@@ -164,8 +165,8 @@ Make no mistake: inconsistency is still bad.
 Indeed, our measure of it is the only conception of ``bad'' needed to do much of machine learning (\cref{chap:one-true-loss,chap:LIR}).
 There is no question that chronically exhibiting a high degree of inconsistency is problematic.
 %
-Yet, as with all internal conflict, it is better to engage with it and recognize it as a catalyst for positive change
-than to avoid it entirely. 
+Yet, as with all internal conflict, it is more productive to engage with it and recognize it as a catalyst for positive change
+than it is to avoid it entirely. 
 
 % People, institutions, cultures, institutions of all shapes and sizes, 
 %
@@ -206,7 +207,7 @@ It is based on our AAAI paper of the same name \citep{pdg-aaai}, but augmented w
 In that chapter, we motivate by example the need for a representation with the kind of flexibility and modularity offered by PDGs, develop their formal syntax and semantics, and relate them to traditional graphical models---which are special cases. 
 %
 \cref{chap:repr-tools} takes the PDG representation further, showing how PDGs not only capture graphical models, but also other notions of uncertainty, such as credal sets \citep{Walley1991-SRIP} and Dempster-Shafer belief functions \citep{shafer1976mathematical}.  
-In the process, we will develop a number of smaller tools, which we call \emph{widgets}, which capture small fragments of epistemic states as PDGs---enabling us to seamlessly convert things like on the values of variables, or on their probability ranges, to PDGs.
+In the process, we will develop a number of smaller tools, which we call \emph{widgets}, which capture small fragments of epistemic states as PDGs---enabling us to seamlessly convert things like constraints on the values of variables, or on their probability ranges, to PDGs.
 % Both \cref{chap:pdg-repr,chap:repr-tools} primarily use quantitative PDGs; we then turn to qualitative ones.
 \Cref{chap:QIM},
     also based on 
@@ -221,8 +222,8 @@ To summarize, \cref{part:univ-model} establishes PDGs as a sweeping generalizati
 
 \textbf{\newmaterial{A Universal Objective.}}
 As we will see in \cref{part:univ-objective}, 
-PDGs also turn out to capture not only more modern learned representations, 
-    but also learning algorithms and objectives behind them. 
+PDGs also turn out to capture more modern learned representations, 
+    and even learning algorithms and objectives behind them. 
 % While we have seen the benefits of being able to tolerate inconsistency, we have not yet 
 Up until this point, we will have seen a few benefits of being able to tolerate inconsistency, but here we will begin to see the benefits of of measuring inconsistency precisely the way we have. 
 In \cref{chap:one-true-loss}, 
@@ -306,7 +307,7 @@ By recognizing these patterns, it may be easier to digest the material that succ
 The hallmark of a good formalism is that it supports a user in manipulate the concepts quickly and intuitively, yet at the same time is precise enough to withstand critical scrutiny.
 %
 Correspondingly, our representations representations (and tools for manipulating them)
-    strive for two oposing virtues:
+    strive for two opposing virtues:
 \begin{enumerate}[nosep]
     \item things that are different look different, and
     \item things that are the same look the same. 
@@ -374,9 +375,9 @@ Making that something else precise is one objective of this thesis.
 
 
 % \subsection{A Division between Quantitative and Qualitative}
-% \subsection{Qualitative and Quantitative}
 % \subsection{Two Important Divisions}
-\subsection{Two Important Dichotomies}
+% \subsection{Two Important Dichotomies}
+\subsection{Qualitative and Quantitative Information}
 
 % \TODO[ TODO: fix this subsection; it is still very rough ]
 % on two levels: a high-level structure
@@ -433,12 +434,14 @@ PDGs, too, blur this line.  We will see, for example, that it is possible to def
 }
 
 
+\commentout{
 \paragraph{Nouns and Verbs.}
 The other important dichotomy we will see is the distinction between 
 nouns and verbs. 
 
 
 \TODO
+}
 
 
 \commentout{%%%%%%

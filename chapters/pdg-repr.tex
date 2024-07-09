@@ -463,7 +463,7 @@ In the coming sections, we formalize PDGs and relate them to other approaches.
 We now provide our first formal definition of a PDG.
 
 
-% Although it is possible to formalize PDGS with hyperarcs directly, we opt for a different approach here, in which PDGs have only regular arcs, and hyperarcs are captured using a simple construction that involves adding an extra node.
+% Although it is possible to formalize PDGs with hyperarcs directly, we opt for a different approach here, in which PDGs have only regular arcs, and hyperarcs are captured using a simple construction that involves adding an extra node.
 %
 % \vfull{\unskip\footnote{
 %     In a large part of the graphical models community,
@@ -1144,7 +1144,7 @@ So far, we have said nothing about the semantics of the qualitative information 
 For traditional graphical models---that is, Bayesian Networks (BNs) and Markov Random Fields (MRFs)---the qualitative information is a conjunction of independencies implied by the graphical structure. 
 % But for PDGs, it's not 
 But what are the independencies implied by a directed hypergraph? Or even an ordinary directed graph with cycles?
-% But it's not clear what the independenc implied even for cyclic directed graphs---let alone directed hypergraphs. 
+% But it's not clear what the independence implied even for cyclic directed graphs---let alone directed hypergraphs. 
 Despite decades of interest in this simple question, no clear consensus has emerged.
 % In \cref{chap:QIM}, will develop a convincing answer to these questions, that suggest 
 % We will see in \cref{chap:QIM} that there is reason for this:
@@ -1365,7 +1365,7 @@ In the unconditional case,
 
 \item 
 Some hypergraphs (see \Cref{subfig:justX-1,subfig:1XY}) are \emph{indiscriminate}, in the sense that every distribution gets the same score.
-% (so that score must be zero, beause this is the score a degenerate distribution gets).
+% (so that score must be zero, because this is the score a degenerate distribution gets).
 Specifically, a score of zero, because a point mass $\delta$ always has $\SDef_{\!\Ar}(\delta) = 0$:
 % For such a distribution, no randomness is required to generate anything at all.
 for such a distribution, no randomness is required to generate a joint sample over all variables, and nor is any randomness required to generate samples along $\Ar$.

@@ -12,7 +12,7 @@ In this chapter, we will see how a wide variety of other kinds of epistemic info
 Probability is the dominant way that computer computer scientists and
 micro\-economists think about epistemic state.
 This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
-must act as if it had probabilistic beliefs \citep{..,savage}.
+must act as if it had probabilistic beliefs \citep{sep-dutch-book,savage}.
 This leads us to make a simple but conceptually important observation: a joint probability distribution is itself a special case of a PDG (\cref{sec:prob-as-pdg}). 
 % Nevertheless, not everything is probabilistic---at least, not 
 % Many logics are based on binary truth/falsehood
@@ -99,7 +99,7 @@ What makes PDGs special is their capability to do this while simultaneously repr
 
 \newmaterial{%
 \paragraph{Updating with PDGs combination.}
-We can regard a probabiilty distribution $\mu \in \Delta\Omega$ as a PDG 
+We can regard a probability distribution $\mu \in \Delta\Omega$ as a PDG 
 \begin{tikzpicture}[baseline=-3pt]
     \node[dpad0] (W) {$W$};
     \draw[arr2, <-] (W) to node[above,pos=0.65]{$\mu$} +(-1.1,0);

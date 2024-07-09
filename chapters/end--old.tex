@@ -1,0 +1,217 @@
+% You try to give a big-picture
+% summary of what you've  done, perhaps suggest some avenues for future
+% work (I would suggest that you do this under the assumption that there
+% will be no extra chapers), and perhaps conclude with what you see as the
+% potential impact of PDGs on the field.
+
+\section{Summary}
+
+We have now seen a far-reaching unified account of probabilistic modeling,
+% and one that is able to step outside the bounds of consistency 
+    with implications far beyond the usual limits of probabilistically consistent reasoning. 
+%
+This theory is based on probabilistic dependency graphs (PDGs), an extremely expressive probabilistic modeling language.
+As we saw in \cref{part:univ-model}, PDGs can capture essentially every standard fragment of epistemic information, ranging from traditional probabilistic graphical models such as Bayesian Networks and factor graphs (\cref{chap:pdg-repr}) to standard representations of uncertainty (\cref{chap:repr-tools}).
+% The qualitative information in a PDG spun off another 
+Understanding the meaning of just the structural information of a PDG's underlying structure has been fruitful, leading to a generalized notion of independence that seems to be the beginning of a bridge between cyclic causal models and multivariate information theory (\cref{chap:QIM}). 
+%
+% And, as we saw in
+As evidenced by many of the results in \cref{part:univ-objective}, the observational information is perhaps even more useful. 
+With it, PDGs can capture systems composed of neural networks; moreover, 
+    the degree of observational inconsistency of the resulting PDG always seems to be the standard loss function used to train the model in question (\cref{chap:one-true-loss}),
+Furthermore, a wide variety of standard algorithms can be viewed as instances of a simple approach to resolving inconsistencies (\cref{chap:LIR}).
+Indeed, learning, inference, and 
+    much else can be viewed as different aspects of a single objective: the pursuit of consistency. 
+
+In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a universal probabilistic model, and as a universal truth-based objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
+We also gave polynomial algorithm for inference in PDGs that have bounded treewidth (\cref{chap:infer}), finally solving both problems. 
+We also develop useful principles for manipulating PDGs, 
+    allowing them to function as a visual proof language \cref{chap:reason}.
+
+
+% \commentout{%
+\paragraph{Sewing Things Back Together, with Self-Consistency}
+A PDG's degree observational inconsistency, is a number in $[0,\infty]$. 
+It is also additive, in the sense that, if $\dg M_1, \dg M_2$ are PDGs over disjoint sets of variables,
+then $\aar{\dg M_1 + \dg M_2} = \aar{\dg M_1} + \aar{\dg M_2}$. 
+In \cref{chap:conf}, we saw that 
+additive measures in the range $[0,\infty]$ 
+can be equivalently represented as multiplicative measures
+    in the range $[0,1]$.
+% and the set of such isomorphisms itself is isomorphic to $(0,\infty)$. 
+% For $k > 0$, 
+So, for readers who are more comfortable with the latter range, we quickly summarize a few of our results.  
+% in a way that might make the
+In service of this, 
+define the \emph{observational self-consistency} of a PDG $\dg M$ to be
+\[
+    \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0) ~~\in[0,1]. 
+\]
+
+This allows us to reframe some of the properties we have already seen in a way that, to some, may look even more natural in this form.
+Each of these results is either immediate or follows immediately from a result in \cref{chap:repr-tools,chap:one-true-loss}.
+% We can summarize and reframe a number of the properties we have seen in terms of the self-consistency $\Xi[\dg M]$
+% \begin{prop}
+\begin{itemize}
+    \item 
+    A flat out logical contradiction has $\Xi[\False] = 0$ because it is completely inconsistent, while a collection of fully consistent probabilistic information $\dg M$ has $\Xi[\dg M] = 1$. 
+
+    \item If $U$ is an event, then $\Xi[U] = {\singlespacing\begin{cases}
+        0 & \text{ if } U = \emptyset \\
+        1 & \text{ if } U \ne \emptyset
+    \end{cases}}$
+
+    \item If $U_1$ and $U_2$ are both events over the same sample space, then 
+        $\Xi[U_1, U_2] = 
+            % \mathbbm 1[ U_1 \cap U_2 \ne \emptyset]
+            \Xi[U_1 \cap U_2]
+            $.  
+        
+    \item More generally, if $R_1(\mat X)$ and $R_2(\mat Y)$ are relations,
+        then $\Xi[R_1, R_2] = \Xi[ R_1 \bowtie R_2]$, where $R_1 \bowtie R_2$ is the natural joint of $R_1$ and $R_2$ (\cref{prelim:relations}).
+
+    \item If $\mu$ is a probability distribution, and $U$ is an event, 
+        then $\Xi[\mu, U] = \mu(U)$.
+    
+    \item If $\Bel$ is a Dempster-Shafer Belief function and $\Plaus$ is the corresonding plausibility function, and $U$ is an event, then $\Xi[\Plaus, U] = \Xi[\Bel, U] = \Plaus(U)$. 
+
+    \item If $\mathcal P$ is a convex set of probability distributions and $U$ is an event, then $\Xi{ \dg M_{\mathcal P}} } = \sup_{P \in \mathcal P} P(U)$. 
+
+    % \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
+    \item If $D = \{(x_i, y_i) \}$ is a set of training data and $f : X \to Y$ is a
+        deterministic classifier, 
+        then 
+        $\Xi[\Pr_D, f ]$ is the accuracy of $f$ on $D$. 
+    
+    \item If $p, q \in \Delta \V\!X$ are distributions over a discrete variable $X$, then
+        $\Xi[ p(X), q(X)] = \Big( \sum_{x \in \V\!X} \sqrt{p(x) q(x)} \Big)^2$ is the square of the Bhattacharya coefficient. 
+        If $p$ and $q$ are each given confidence $\frac12$, then $1-\Xi[p,q]$ is the square of the Hellinger distance between $p$ and $q$. 
+
+    \item 
+        % If $p = \mathcal N(\mu_1, \sigma_1^2), q = \mathcal N(\mu_2, \sigma_2^2)$
+        If $p$ and $q$ are both unit normal distributions over $X$, 
+        with means $m_1$ and $m_2$, respectively, then
+         % are both normal distributions over $X$, then
+        $\Xi[ p(X), q(X) ] = \exp( - \frac12 (m_1 - m_2)^2)$
+        itself resembles the density of a unit normal distribution.
+        
+    % If $p(Y|X)$ is instead a probabilistic classifier, then 
+    % $\Xi[ \Pr_D !  + p(Y|X)]$
+    % is the cross entropy 
+    % $\Ex_{D}[ \log \frac1{p(Y|X)} ]$.
+\end{itemize}
+% \end{prop}
+
+
+\section{Future Work and Open Questions}
+
+% What we have seen is just the beginning. 
+The theory presented in this thesis is a significant reframing of the probabilistic modeling process with far-reaching implications.
+This thesis has presented quite a few of them. 
+% Even accounting for 
+But the theory is still in its infancy, 
+    % and it has a long way to go before its limits and applications.
+    % and we are still very far away from .
+    and we are still a far away from having fully developing its limits and applications. 
+We conclude with just a few of these avenues for future work.
+
+\paragraph{Capturing Even More Modeling Formalisms.}
+We have seen that PDGs can capture relations (\cref{sec:constraint-widget}), and so it makes sense to wonder whether they can capture relational databases as well. 
+Preliminary investigations suggest that this may be the case,
+    although fully capturing the relationship will require developing an analogue of a databases's query language.  
+Another reason to believe this is that data dependencies \citep{fagin-vardi} seem to closely match the qualitative semantics of a PDG's underlying hypergraph. 
+Since databases do not describe any probabilities other than 0 or 1, 
+    encoding them with PDGs should involve only deterministic cpds.
+    % a natural question becomes: what happens if we relax the 
+This raises another question: what can we encode by allowing probabilistic relationships?
+Our initial investigations suggest that the result may be quite different from the standard notion of a probabilistic database \citep{suciu}, and perhaps has elements of modern information retrieval systems \citep{info-retrieval}.
+
+% All of this is just starting from encoding relational databases.  
+The research direction in the previous paragraph aimed to capture relational databases---but there is also a second important class of \emph{graph-based} databases.
+% But there is a second important class of databases: graph based databases, and the object graphs of object-oriented programming languages.
+In many ways, this seems an even closer fit to a PDG, and understanding whether and how they bear relationship to PDG semantics remains a promising open problem. 
+
+In Machine Learning, there has been a recent deluge of work introducing new representations and training objectives. At the moment, the two dominant architectures are \emph{diffusion models} \citep{DDPMs} and \emph{transformers} \cite{transformers...}. 
+Because of their roots in VAEs (which PDGs capture well (\cref{sec:variational})), it is not hard to show that diffusion models can also be regarded as PDGs. %---%
+    Does this view yield any practical or conceptual benefits, beyond what we have already seen? 
+    We do not know.
+    % Perhaps 
+%
+So far, even less said for a relationship between PDGs and transformers.
+% Owing to their capabilities and dominance,
+Still, it is a question worth taking seriously, if one believes in the promise of PDGs as a foundation for modern probabilistic AI systems.      
+
+\paragraph{Structural Information Deficiency and QIM-Compatibility.}
+\Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence developed in \cref{chap:QIM}.
+Yet we suspect there is more to the story. 
+% First, there is a special 
+There is a special 
+Preliminary experiments suggest that minimizing structural deficiency may suffice to ensure QIM compatibility. 
+
+\paragraph{Tighter Characterizations of Inference Complexity, and Special Cases.}
+As mentioned in the conclusions to \cref{chap:infer}, we have given an $\tilde O(N^{2.9})$ approach to inference in the case of bounded treewidth, but the best lower bound is $\tilde \Omega( N^1)$. 
+This is still a significant gap, that leaves PDGs trailing far behind BNs.
+
+\paragraph{Other Approaches to (Approximate) Inference.}
+Particle-based PDG inference
+
+
+\paragraph{Deeper Exploration of Theoretical Connections to Other Fields.}
+Because
+In \cref{chap:PDG-cat}, we found that PDGs can be viewed as diagrams in a certain category. We saw that categorical limits of PDGs are important. But what about colimits, and natural transformations between them? 
+The categorical picture opens a vast landscape of abstract research directions, ranging from variants of PDGs where probability is replaced by a different concept, to connecting the standard defense of information loss \citep[Theorem ??]{leinster2021entropy}.
+
+In my view, however, the far more important future directions lie down.
+
+\section{Impact: Implementing and Applying the Theory}
+
+The material here has been conceptual, mathematical, and often philosophical.
+But \emph{is it useful}?
+
+Narrowly construed as ``can it be used to help us understand AI systems built with probabilistic tools'', I submit that the answer is a resounding yes. 
+% Pedagogically speaking, we have achieved 
+For pedagogical reasons alone, there is clear value in unifying so many different concepts, approaches in a way that clarifies the relationships between them.
+Especially so because it also answers important foundational questions, such as how loss functions are related to probabilistic models. 
+
+Equally narrowly construed as, ``can I run it on my laptop?'', the answer is also yes. 
+For the reader interested in playing around with PDGs, I have developed a general-purpose Python library implementing the framework in the discrete case, as well as many of the constructions in this thesis;
+it can be found at \url{https://github.com/orichardson/pdg}.
+%
+Many of these concepts we have seen are difficult to visualize or manipulate, and I have been surprised often.
+% Every paper in this thesis has had, at some point, a fatal mistake.  
+Using and developing this library has helped me explore and understand the material more deeply; I cannot recommend implementing one's math highly enough. 
+To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
+
+% But much of the work
+% While some of the ideas 
+% Many of these ideas, while technical, are also very abstract. 
+% Indeed, while seeing this project through I have even been accused by my peers of not being a computer scientist! 
+% As an avid coder, and a person who has long understood things by implementing them, this 
+%
+% Fortunately, I have something that might 
+% To these people, I present the PDG python library, 
+% What these people may not be aware of, is that I have been 
+
+
+% I am still avoiding the deeper question, so let me ask it again.
+% Is any of this practical? Can it help solve real problems? Could it be used to improve somebody's life? 
+% These questions haunt me because they
+These questions are clearly important, and I believe the answer to them is probably yes---but I been too invested in theory to investigate them with the energy they demand.  
+% Conspicuously absent in this thesis are solutions to important real-world problems. 
+% But solving important problems is difficult and takes time. 
+% The theory will have to suffice for now. 
+
+
+
+So perhaps the real applications can come later. 
+Perhaps what's needed at the moment are theoretical and conceptual foundations for AI systems. 
+Perhaps it is better to position ourselves to tackle the biggest problems that loom on the horizon of AI systems, than it is to possibly find ourselves with a toolkit overfit to small ones. 
+Perhaps, for now, what's important is clear and flexible thinking. 
+
+
+No doubt one of the biggest problems of our time is to get a handle on what we want AI systems to look like in the future.  We are already building powerful artificial agents now 
+
+
+Set the stage for a clearer understanding of AI systems in the future.
+
+% For now, what is important is thinking clearly, and flexibly. 
