@@ -1,17 +1,16 @@
     \label{chap:reason}
 
 % How should you 
-We have just seen how we can use PDGs to do 
+We have just seen how we can reason about PDGs from the outside, but a lot of probabilistic reasoning can be done \emph{internally} within PDGs.  In \cref{chap:one-true-loss} we saw how many important inequalities in the literature are instances of what we called \emph{monotonicity of inconsistency}: believing more things can only make you more inconsistent, not less.
 
-
-
-\vfull{
+Related monotonicity properties hold of many natural epistemic representations.
 One classical representation of knowledge is a list of formulas
     $[ \phi_1, \phi_2, \ldots, \phi_n]$
     that one knows to be true.
-This representation has a nice property:
+This representation has an analogous property:
     learning an additional formula $\phi_{n+1}$
     can only narrow the set of worlds one considers possible.
+    %
     % after including an additional formula $\phi_{n+1}$
     % % has the effect of strengthening knowledge:
     % one can still prove anything that one could prove before.  
@@ -35,7 +34,7 @@ This representation has a nice property:
 %   we expect of a representation of knowledge.
 %
 %oli1: replacing it with the following, condensed version:
-The same is true of \scibility. 
+The same is true of both kinds of information in a PDG, and also of \scibility. 
 %joe2*: this does not seem consistent with your English.  It does
 %*not* say that anything you can prove from A' can also be proved from
 %A.  It says that if all the formulas in A are true according a
@@ -51,15 +50,14 @@ The same is true of \scibility.
 % because \mu \models { a } for all a \in \Ar (which is always true),
 % does not allow us to conclude that  \mu \models \Ar.
 %
-}%
 
 
 \section{Observational (Quantitative) Monotonicity and Equivalence}
     \label{sec:quant-monotone}
 
-Monotonicity of PDG inconsistency \citep{one-true-loss}
-%joe16: all these inequalities need a reference
-is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
+% Monotonicity of PDG inconsistency \citep{one-true-loss}
+% %joe16: all these inequalities need a reference
+% is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
 
 
 \section{Structural (Qualitative) Monotonicity and Equivalence}
@@ -84,10 +82,6 @@ is a powerful reasoning principle. Many important inequalities (e.g., the data p
 %cyclic models.  In any case, this definitely does not count as good
 %motivation 
 \commentout{
- The next two sections build up some theory that is necessary to understand the implications of our definition of \scibility\ for cyclic models---which turn out to be rather complicated. 
- }
-%
-\commentout{
     There are simple rules for manipulating
     %oli6: "quantiative" is not what I want to emphasize here
      % quantiative
@@ -111,20 +105,11 @@ is a powerful reasoning principle. Many important inequalities (e.g., the data p
 %oli6: That's why I'm describing what it is.  And then I give a reference. You definitely aren't expected to know what "monotonicity of inconsistency" is here. To clarify, I am moving the reference to the beginning of the sentence, from the end.
 % Monotonicity of inconsistency is a more powerful reasoning principle: many important statistical relationships (e.g., the data processing inequality and the evidence lower bound) can be proved directly, using only the fact that more beliefs cannot decrease inconsistency, and equivalences like the one above \citep{one-true-loss}.
 %
-%oli21*: cutting this down, for neurips submission
-\vfull{%
-% Monotonicity of PDG inconsistency \citep{one-true-loss}
-% %joe16: all these inequalities need a reference
-% is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
-In this section, we develop and apply an anlogous principle for \scibility.
-But first, we start with something simple.
-}
 %oli21: instead:
 %joe17
 %Monotonicity of (quantitative) PDG inconsistency
-The fact that (quantitative) PDG inconsistency  is monotonic
-    % \citep{one-true-loss}
-is a powerful reasoning principle that can be used to prove many important inequalities \citep{one-true-loss}. 
+% The fact that (quantitative) PDG inconsistency  is monotonic
+% is a powerful reasoning principle that can be used to prove many important inequalities \citep{one-true-loss}. 
 In this section, we develop a related principle for \scibility.
 %joe4*: I have no idea what's going on in this section.  At one point I
 %sent you an email explaining why I thought nonpartitional models
@@ -210,6 +195,10 @@ In this section, we develop a related principle for \scibility.
 %
 %oli7: breaks the flow; a good place to cut 
 
+Here is a direct analogue, that does not turn out to be terribly useful: 
+% if $\Ar \subseteq \Ar'$ and $\mu \models \Diamond\Ar'$, conclude $\mu \models \Diamond\Ar$. 
+
+
 %oli21: cutting proposition from condensed version
 % \vfull{%
 \begin{prop}
@@ -226,7 +215,6 @@ In this section, we develop a related principle for \scibility.
 \end{prop}
 % }%
 %oli21: instead, a short inline discussion. 
-Here is a direct but not very useful analague: if $\Ar \subseteq \Ar'$ and $\mu \models \Diamond\Ar'$, conclude $\mu \models \Diamond\Ar$. 
 %
 % This is an important requirement for any definition of mechanism independence.  If
 % $\mu$ is consistent with a causal picture consisting of some set of independent mechanisms, then surely it must be consistent with a picture in which only a subset of those mechanisms are independent.  
@@ -982,174 +970,22 @@ In more detail, DN semantics are given by the fixed point of a markov chain that
 \subsection{QIM Equivalence}
 % \subsection{SIM-Equivalence}
     \label{sec:equivalence}
-    
-A key 
-    
-    
-%oli3: moved this material inside subsection    
-% Another point that's important to keep in mind is the following:
-%joe1: I don't know how you quantify "Often"
-%  Often, two \hgraph s $\Ar$ and $\Ar'$ with intuitively very 
-%  different meanings are \scible\ with the
-%  same set of distributions.
-%joe1*:More importantly, why the rest of this section here?  You've
-%already shown that this semantics lets us capture dependence.  What
-%do I get out of the rest?  I could imagine a story (which is a
-%separate subsection) along the lines "we would expect a good
-%semantics to distinguish PDGs that, intuitively, are different.
-%Structural comptibility does not seem to do that [Give examples.] But
-%it actually can do a better job by taking context into account.  You
-%can then explain "context".  That wouldn't be such a bad story, but
-%then you undercut it "there are still some \hgraph s that the
-%definition of \scibility\ does not distinguish".  So the
-%storty ends in this awkward state, where I have no real sense of the
-%distinctions made by the semantics.  If you could prove a theorem
-%that gave an interesting characterization of equivalence, you would
-%have an intersting story.  But as it is, I believe we should cut it
-%(which is what I've done), although I put in a few further comments
-%below.  You can reinstate it only if you can motivate it and give a
-%good story for it. The goal is not to do a core dump of everything you know.
-%
-%oli1: I see your point. At a high level, this part of the section
-% serves two purposes: to introduce Propostion 3, which is useful
-% because it together with monotonicity forms a useful proof system,
-% and to prime readers for how to think about combining qualitaitve
-% PDGs, and especially what hypergraph union means. 
-%
-%oli1*: The plan for a new story:
-%   >> Highlight how the correspondence of Theorem 2 does not depend on context (i.e., what else is in the PDG).
-%   >> Ask: is this realy necessary? Yes: observe example 3, which behaves the same way, but says more:    
-%
-%oli1*: rewriting lots of the following without careful marking
-%joe5: I don't believe you've defined "context"
-%oli6: good point, and I also just switched the primes. 
-% Applying \cref{theorem:func} with empty context $\Ar = \emptyset$
-{\color{red} [now that we know this version of Theorem 2 is false, much of this discussion doesn't make sense.]
-Applying \cref{theorem:func} with $\Ar' = \emptyset$
-yeilds a quintessential special case: $\mu \models
-\begin{tikzpicture}[center base]
-    \node[dpad0] (X) {$X$};
-    \node[dpad0,right=.5 of X] (Y) {$Y$};
-    \draw[arr1,yshift=2px] (X) to[bend left=16] (Y);
-    \draw[arr1] (X) to[bend right=16] (Y);
-\end{tikzpicture}$ 
-iff $Y$ is a function of $X$ according to $\mu$.
-% At first glance, this does not seem 
-At first glance, this already seems to
-    capture the essence of \cref{theorem:func};
-    is it really meaningfully weaker? 
-%joe2*: in what sense is it rare?
-% In fact it is: the context-independence of 
-%     this two-arc construction with respect to structural
-%     incompatibility is actually rare.
-%oli2: it is rare in the sense that it is very easy to find examples of hypergraphs that are consistent with the same % set of distributions, yet the only cases I've found to be "context independent" are those characterized by Theorem 2 or what is now Proposition 8. 
-% In fact it is. 
-In fact it is; 
-%joe1
-%Our next example is a graph that behaves the same way.
-%oli1:
-% Our next example is another graph that behaves the same way.
-to illustrate, our next example is another graph that behaves the same way---but not in all contexts.
 
-\begin{linked}{example}{det-fn}
-     % Consider $\Ar = \{ \ed 1{}{X},~ \ed2{Y}{X} \}$.
-     % A distribution $\mu$ is s-compatible with $\Ar$ iff
-     % $X$ is a function of $Y$ in $\mu$.
-     % \[
-     %     X \underset\mu\CI X \mid Y \quad\iff\quad \text{$X$ is a function of $Y$}
-     %     \quad\iff\quad \H_\mu(X|Y) = 0
-     %     \qedhere
-     % \]
-     %oli3: adding, because it's not obvious, and we'll prove it in the appendix
-     In the appendix, we prove
-     $\mu \models \begin{tikzpicture}[center base]
-         \node[dpad0] (X) {$X$};
-         \node[dpad0,right of=X] (Y) {$Y$};
-         \draw[arr1] (X) to[] (Y);
-         \draw[arr1,<-] (Y) to[] +(0.7,0);
-    \end{tikzpicture}$
-    iff
-     $Y$ is a function of $X$
-    %  $X \tto Y$
-    %  in $\mu$.
-    (according to $\mu$).
-    But, in general, this graph says something
-        distinct from 
-        % from $X \tto Y$ 
-        (and stronger than, as we will see in \cref{sec:monotone})
-        %oli2
-    %oli3: We're not referring to the one with the previous number, so I prefer:
-    % the previous example. 
-    %joe5: what example are you referring to here?
-    %oli6: the "quintessential special case" PDG containing two arcs X->Y, defined just above this example, but outside of an example environment. 
-    the example above. 
-        % (a stronger statement 
-        % (as we will see in \cref{sec:monotone}) .
-    % In context $\Ar = 
-    % \{\ed {}{}X\}$, for example,
-    After an adding the \arc\ $\ed{}{\emptyset}{\{X\}}$ to both graphs, for example, they behave differently:
-    every distribution $\mu$ satisfying $X \tto Y$
-    also satisfies
-    $\mu \models \begin{tikzpicture}[center base]
-        \node[dpad0] (X) {$X$};
-        \node[dpad0,right of=X] (Y) {$Y$};
-        \draw[arr1] (X) to[bend left=15] (Y);
-        \draw[arr1] (X) to[bend right=15] (Y);
-        \draw[arr1,<-] (X) to[] +(-0.8,0);
-    \end{tikzpicture}$,
-    but only when $Y$ is a constant
-    can it be the case that
-    % but the only $\mu$ for which
-    $\mu \models \begin{tikzpicture}[center base]
-        \node[dpad0] (X) {$X$};
-        \node[dpad0,right of=X] (Y) {$Y$};
-        \draw[arr1] (X) to[] (Y);
-        \draw[arr1,<-] (Y) to[] +(0.7,0);
-        \draw[arr1,<-] (X) to[] +(-0.7,0);
-   \end{tikzpicture}$.
-%    are those in which $Y$ is also deterministic. 
-\end{linked} 
-}
-
-%oli1: excised the following
-\commentout{
-        % The empty hypergraph is consistent with every distribution,
-        % as is every hypergraph containing one arc.
-    For a more general illustration, one can easily show that
-    every \hgraph\ consisting of just one \arc\ is consistent with all probability measures $\mu \in \Delta \V\!\X$,
-        % even though each \arc\ intutively means something different.
-        even though different \arc s intuitively mean different things.
-    %
-    % However, they something different in context. 
-    %oli1: deleting now
-    % This may seem problematic at first, 
-    %     but our definition
-    %     does treat them differently when we add more context. 
-    % Yet they are quite different; 
-        % in particular, every hypergraph
-    Moreover, every \hgraph\ is a union of one-arc \hgraph s,
-        and we have already seen that not all \hgraph s are equivalent.
-    % and it follows that
-    %     the set $\bbra{\Ar} := \{ \mu : \mu \models \Ar\}$
-    %joe1*: this comes out of the blue and is somewhat of a non
-    %sequitur.  If this were to be resintated, you sould need to define a
-    %notion of equivalence that takes context into account, motivate it,
-    %and show that it does good things.
-    % It follows that 
-    %     the set $\bbra{\Ar} := \{ \mu : \mu \models \Ar\}$
-    %     cannot be defined inductively over \hgraph\ union ($+$).
-    %oli1: ok, I'll move this sentence elsewhere.
-    % It follows that notion of \scibility\ cannot be
-    %     defined inductively over unions of independent mechanisms. 
-    We explore role of union as a way of combining   
-        qualitative PDGs further in \cref{sec:union}.
-}
-
-%joe1*: Show how you can account for context! 
-%oli1: replacing with different story.
-%   Once we account for context properly, there are still
-%     some \hgraph s that the definition of \scibility\ 
-%     does not distinguish, but far fewer of them.
+We now begin to explore what it means for two hypergraphs to be \emph{equivalent},
+    at least as far as QIM-compatibility (\cref{defn:qim}) is concerned.
+An obvious candidate definition would be to call two hypergraphs $\Ar_1$ and $\Ar_2$ are QIM-equivalent if they are compatible with same distributions ($\mu \models \Diamond\Ar_1$ iff $\mu \models \Diamond \Ar_2$),
+    but this isn't quite right. 
+We have to deal with context. 
+It is easy to see that
+    every \hgraph\ consisting of just one \arc\ is QIM-compatible with all probability measures $\mu \in \Delta \V\!\X$,
+    % even though each \arc\ intutively means something different.
+    even though different \arc s intuitively mean different things.
+Moreover, every \hgraph\ is a sum of one-arc \hgraph s,
+    and we have already seen that not all \hgraph s are equivalent.
+% It follows that notion of \scibility\ cannot be
+%     defined inductively over unions of independent mechanisms,
+%     and also that equivalence must mean something stronger. 
+%
 %oli2:
 % In order to capture the meanings of \hgraph s more precisely, it seems
 % we need a stronger notion of equivalence. 
@@ -1173,9 +1009,9 @@ we can form the combined \hgraph\ $\Ar_1 + \Ar_2$
 %%that has disjoint union of the two sets of arcs,
 that consists of the disjoint union of the two sets of \hyperarc s,
     and the union of their nodes.
-%joe1*: You need to define (and discuss) hyptergraph union, and the
+%joe1*: You need to define (and discuss) hypergraph union, and the
     %notation.  (What you did above and I commented out was not enough.)
-We say that $\Ar$ and $\Ar'$ are \emph{(structurally) equivalent}
+We say that $\Ar$ and $\Ar'$ are \emph{(QIM-)equivalent}
 %joe1:
 %I wouldn't call a hypergraph \Ar'' a context; just call it a hypergraph
 %oli1: I don't understand the objection;
@@ -1185,7 +1021,7 @@ We say that $\Ar$ and $\Ar'$ are \emph{(structurally) equivalent}
 % to real numbers as "reals" but also use words like "offset", "position",
 % "confidence", etc., to describe their role. Here, "context" is appropriate.
 ($\Ar \cong \Ar'$) if for every context $\Ar''$ and distribution $\mu$,  we have that
-    $\mu \models \Ar + \Ar''$ iff $\mu \models \Ar' + \Ar''$.
+$\mu \models \Ar + \Ar''$ iff $\mu \models \Ar' + \Ar''$.
 %joe1*: why does "+" mean "disjoint union".  As I said, you need to
 %discuss + much more carefully.
 %oli1:
@@ -1569,18 +1405,20 @@ We can also add entailments togther.
     \]
 \end{lproof}
 
-One way of defining subtraction is to add the negated second argument.
-The biggest unintuitive aspect of this is that $\dg M - \dg M$ is not equivalent to the empty PDG; the variables are still there. 
-(But they are congruent modulo variables.)
-One might also consider a variant that deleted variables, but it seems
-impossible to do this continuously and invertably.
-Do we want $\dg M - \X$ to be the trivial PDG?
+\temphide{%
+    One way of defining subtraction is to add the negated second argument.
+    The biggest unintuitive aspect of this is that $\dg M - \dg M$ is not equivalent to the empty PDG; the variables are still there. 
+    (But they are congruent modulo variables.)
+    One might also consider a variant that deleted variables, but it seems
+    impossible to do this continuously and invertably.
+    Do we want $\dg M - \X$ to be the trivial PDG?
 
-\begin{coro}
-    If $\dg M_1 \models \dg M_2$, then $\dg M_1 - \dg M_2 \models \X_2$.
-\end{coro}
-% To further specialize, chosing $\dg M_1 = \dg M_2$, the premise is always true,
-% and so we find that $\X \models 0$. 
+    \begin{coro}
+        If $\dg M_1 \models \dg M_2$, then $\dg M_1 - \dg M_2 \models \X_2$.
+    \end{coro}
+    % To further specialize, choosing $\dg M_1 = \dg M_2$, the premise is always true,
+    % and so we find that $\X \models
+}%
 
 \begin{coro}
     If $\dg M_1 \models 0$ and $\dg M_2 \models 0$, then $\dg M_1 + \dg M_2 \models 0$. 
@@ -1687,7 +1525,6 @@ It follows, for example, that the empty PDG entails any PDG that only contains v
 % $\X_1 - \X_2$ is 
 
 
-
 The bottom (or initial) element(s) of the entailment order are easily identified;
 like in propositional logic, they are the (most extreme) contradictions contradictions.
 Every such PDG is equivalent to
@@ -1717,9 +1554,9 @@ We  adopt the usual convention of writing
 % \end{align*}
 
 \textbf{Exploring the Set-of-Distribution Semantics.}
-In a sense, PDGs themselves already encode a set of probabilistic models: the 
-collection $\SD{\dg M}$ of distributions consistent with them. In many
-ways, this seems like the intension of a formula formula.  
+% In a sense, PDGs themselves already encode a set of probabilistic models: the 
+% collection $\SD{\dg M}$ of distributions consistent with them. In many
+% ways, this seems like the intension of a formula formula.  
 Because $\SD{-}$ is a feature of just the observational/quantitative
 half of a PDG, let's ignore $\SDef$ for now, and assume $\gamma = 0$. 
 
@@ -1802,6 +1639,8 @@ Thus, the logic inside a connective $\entimp$ collapses to ordinary construction
             $\models (\dg M_1 \land \dg M_2) \Rightarrow ((1-\alpha)\dg M_1 + (\alpha)\dg M_2)$. 
     \end{enumerate}
     \end{linked}
+
+    \temphide{%
     \begin{lproof}[Exploration]\label{proof:pdg-connective-interactions}
     \begin{enumerate}[parsep=0pt]
         \item 
@@ -1813,6 +1652,9 @@ Thus, the logic inside a connective $\entimp$ collapses to ordinary construction
         % \[ \dg M \equiv \dg M + \dg M \models \dg M_1 + \dg M_2 \]
     \end{enumerate}
     \end{lproof}
+    }%
+
+\TODO
     
 \subsection{Epistemic Logic}
             
@@ -1828,18 +1670,17 @@ Thus, the logic inside a connective $\entimp$ collapses to ordinary construction
     Because $\equiv$ is an equivalence relation, the resulting logic satisfies S5. 
     We can also take primitive propositions $\Phi$ to be the set of PDGs, using the entailment relation.
 
-To be extra clear about the types, we distinguish the PPDG $\dg M(\Theta)$ also written $\dg M$,
-    from $\dg M\& \Theta$, its translation to a PDG by include each $\Theta$ as a variable.
-    
-{\color{gray}Equivalently, rather than thinking in terms of PPDGs, 
-we can think in terms of a set $\mathbf W$ of ``world variables'',
-by converting $\dg M(\Theta)$ to a PDG with the inclusion of variables $\{\Theta_a \}_{a \in \Ar} =: \mathbf W$.
-}
+% In the service of clarity about the types, we distinguish the PPDG $\dg M(\Theta)$ from $\dg M\& \Theta$, its translation to a PDG by include each $\Theta$ as a variable.    
+% {\color{gray}Equivalently, rather than thinking in terms of PPDGs, 
+% we can think in terms of a set $\mathbf W$ of ``world variables'',
+% by converting $\dg M(\Theta)$ to a PDG with the inclusion of variables $\{\Theta_a \}_{a \in \Ar} =: \mathbf W$.
+% }
+% Either way, we can then build an epistemic logic. 
+% If $\dg M(\Theta)$,
+% which we sometimes abbreviate
+% \TODO
 
-Either way, we can then build an epistemic logic.  If $\dg M(\Theta)$,
-which we sometimes abbreviate
-
-Some basic properties of it:
+Some basic properties of this logic:
 \begin{prop}
     \begin{enumerate}[parsep=0pt]
     \item $ (\dg M, \theta, I) \models \dg M(\theta)$.
@@ -2020,7 +1861,7 @@ Now some other examples.
 
     \recall{prop:sem-equiv-properties}
 \begin{lproof}\label{proof:sem-equiv-properties}
-    \textbf{Equivalence of conditional/marginal and Joint.}
+    \textbf{Equivalence of conditional/marginal and Joint.}\\
     % Both of the following are well-known:
     % Clearly
     \begin{minipage}{0.5\linewidth}

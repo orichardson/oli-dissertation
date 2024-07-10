@@ -47,8 +47,10 @@
 \newcommand\discard[1]{{\color{orange!80!black}$\blacksquare$}}
 \newcommand{\TODO}[1][INCOMPLETE]{{\centering\Large\color{red}$\langle$~\texttt{#1}~$\rangle$\par}}
 \newcommand\hidewithbox[1]{{\color{red}$\blacksquare$}}
-\newcommand\forjoe[1]{{\color{red}Note for Joe: #1}}
-\newcommand{\newmaterial}[1]{{\color{violet}#1}}
+% \newcommand\forjoe[1]{{\color{red}Note for Joe: #1}}
+\newcommand\forjoe[1]{}
+% \newcommand{\newmaterial}[1]{{\color{violet}#1}}
+\let\newmaterial\relax
 \let\oldnewmaterial\relax
 \newcommand{\overkill}[1]{{\color{gray!50!white}#1}}
 

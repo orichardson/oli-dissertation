@@ -1038,7 +1038,7 @@ There is an important special class of (undirected) graphs that commonly arises 
 
 \newmaterial{%
 % There is also an a
-The notion of a graph only captures pairwise relationships between vertices. 
+The notion of a graph captures only pairwise relationships between vertices. 
 If we also want to model relationships between triples of vertices, 
     it would appear that we need something more general than a graph.
 }
@@ -1644,7 +1644,7 @@ theory (e.g., \citet[Chapter 1]{mackay2003information} or \citet{CoverThomas}).
 
 Let $\mu$ be a probability distribution, and be $X,Y,Z$
     be (sets of) discrete (random) variables.
-The \emph{information content} or \emph{surprisal} $\I_{\mu}[ X{=}x ] := \log \frac1{\mu(X{=}x)}$ of an event $X{=}x$ quantifies one's surprise to learn that $X{=}x$, knowing that $X \sim \mu(X)$.
+The \emph{information content} or \emph{surprisal} $\I_{\mu}[ X{=}x ] := \log \frac1{\mu(X{=}x)}$ of an event $X{=}x$ quantifies one's surprise at learning $X{=}x$, knowing that $X \sim \mu(X)$.
     
 The \emph{entropy} of $X$ is the uncertainty in $X$, when it is distributed according to $\mu$, as measured by the number of bits of information needed (in expectation) needed to determine it, if the distribution $\mu$ is known.  It is given by 
 \[
@@ -1955,7 +1955,7 @@ Recall that, at least in the discrete case, $\mu(X), \mu(X,Y)$ and $\mu(Y|X)$ ca
 $\H_\mu(X)$, $\H_\mu(X,Y)$, and $\H_\mu(Y|X)$, however, 
     are not functions of the values of $X$ and $Y$, but rather functions of (the identities of) the variables themselves. 
 Indeed, it makes no sense to feed values $(x,y) \in \V(X,Y)$ to these concepts.
-In other words, the operate on the qualitative aspect of a variable, not its quantitative aspect. 
+In other words, they operate on the qualitative aspect of a variable, not its quantitative aspect. 
 
 A second reason to view entropy as structural appears in its general definition \eqref{eq:gen-entropy}.
 There, the derivative is taken with respect to structural information about the variable: the base measure, which describes only agreed-upon coordinates, not observational data about what is likely. 

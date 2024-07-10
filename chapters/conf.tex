@@ -3339,11 +3339,16 @@ Let $\Theta = \mathbb R^{n}$
     \subsection{Discussion on Incremental Confidence and Independence Assumptions 1}
     	\label{ssec:indep-shafer}
 
+	The very idea of our framework is predicated on an implicit assumption:
+
+	\begin{LrnAxioms}
+		\item[L0] There exists a function $\Lrn: \Phi \times \confdom \times \Theta \to \Theta$ that captures the updating process.
+		\label{ax:funcform}
+	\end{LrnAxioms}
+
     Historically, \cref{ax:funcform} has not proved as anodyne as it looks.
     Some might object that it's not possible to write such a function that is appropriate in all circumstances.
     For example, Shafer argues for Dempster's rule of combination as a way of incorporating information, but is very careful to emphasize that it ought to be used only on \emph{independent} information, for reasons illustrated below.
-
-
 
     \begin{example}
         % \label{ex:dupl}
@@ -3646,107 +3651,6 @@ Let $\Theta = \mathbb R^{n}$
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Other Confidence Domains}
-
-    % \begin{phaseout}
-    To describe a degree of partial incorporation, we will need a domain of possible confidence values.
-    Mostly, we will stick to using real numbers, but it will clarify things to stay more general for now, so that we can see the properties we actually need.
-    % Formally, we represent the possible degrees of confidence by a group
-    Formally, a \emph{confidence domain} is a tuple $(\confdom, \oplus, \bot, \top)$,
-    where $(\confdom, \oplus, \bot)$ is a monoid with operation $\oplus$ and neutral element $\bot$, and $\top \in \confdom$ is an absorbing element---i.e., $\top \oplus c = \top$ for all $c \in \confdom$.
-    In terms of confidence, we interpret the components as follows:
-
-    \begin{itemize}%[]
-    	\item
-    	The elements of $\confdom$ are the possible degrees of confidence.
-
-    	\item
-    	The monoid operation $\oplus : \confdom \times \confdom \to \confdom$ describes how to combine two (independent) confidences in some statement, to obtain a new confidence in that statement.
-
-    	\item The neutral element $\bot \in \confdom$ indicates ``no confidence'' in an observation.
-    		%
-    		% The fact that we want to ignore information we have no confidence in
-    		% gives corresponds to the group identity laws: that
-    	The monoid identity laws, which assert that
-    		$\bot \oplus c = c = c \oplus \bot$ for all $c \in \confdom$,
-    	reflect the intuition that we should ignore untrusted information in combining confidences.
-    		% in which case we should ignore the information at hand,
-    	\item The absorbing element $\top$ indicates ``full confidence''.
-    	The absorbtion property corresponds to the intuition that, definitive information that $\phi$ is true, when combined with other (perhaps less reliable) information that $\phi$ is true, is still definitive.
-    \end{itemize}
-    % \end{phaseout}
-
-    % In this more general setting, the analogue of additivity (\cref{ax:additivity}) becomes:
-    % \begin{LrnAxioms}
-    % 	\item For all $c_1, c_2 \in \confdom$,~
-    % 		% $F^{c_1}_\phi \circ F^{c_2}_\phi = F^{c_1 \oplus c_2}_\phi$
-    % 		$F^{c_1}_\phi \circ F^{c_2}_\phi = F^{c_1 \oplus c_2}_\phi$
-    % 		% \hfill \textbf{(additivity)} \label{ax:additivity}
-    % 		\hfill \textbf{(combination)} \label{ax:gen-combine}
-    % \end{LrnAxioms}
-    % \Cref{ax:gen-combine}
-    %  % looks like it could be problematic, but it
-    %  simply states that commitment functions respect the combination operation.
-    % If we fix an assertion $\phi$, then an update with confidence $c_1$ followed by an update with confidence $c_2$ is equivalent to an update with confidence $c_1 \oplus c_2$, which is, by definition, the result of comining confidences $c_1$ and $c_2$.
-    On its own, so long as we have the freedom to choose $\confdom$, \Cref{ax:gen-combine} has no teeth.
-
-
-    \begin{prop} \label{prop:free-additivity}
-    	If $F: \confdom \to (\Phi \to (\Theta \to \Theta))$ satisfies \cref{ax:zero,ax:idemp}, then we can construct a new update
-    	% function for $\Theta$ on $\Phi$, that behaves in exactly the same way, but \emph{is} additive, but with the altered confidence domain
-    	function for $\Theta$ on $\Phi$, that behaves in exactly the same way, but accepts confidences in a different confidence domain $\confdom'$, and satisfies \cref{ax:gen-combine}.
-    \end{prop}
-    \begin{lproof}
-    Consider the new confidence domain
-    $$
-    	\confdom' := \Big\{ \text{ finite lists } [c_1, \ldots c_n]
-    		\text{ with each } c_i \in \confdom,
-    		% \text{ such that } c_i \in \confdom \text{ for all } i = 1, \ldots, n
-    		\quad
-    		% \text{list concatenation}~::,
-    		::,
-    		\quad
-    		[\,],
-    		\quad
-    		[\top]
-    		\,
-    	\Big\},
-    $$
-    whose group operation ``$::$'' is list concatenation, except that it collapses instances of $\top$, i.e.,
-    \[
-    	[c_1, \ldots c_n] :: [d_1, \ldots, d_m]
-    	 := \begin{cases} \relax
-    		 % [\top] & \text{ if } c_i = \top \text{ for some $i$ or $d_j=\top$ for some $j$}\\
-    		 [\top] & \text{ if } \top \in \{c_1, \ldots, c_n,d_1, \ldots,d_m \} \\
-    		 [c_1, \ldots, c_{n}, d_1, \ldots, d_m] & \text{otherwise.}
-     \end{cases}
-    \]
-    Concatenating the empty list $[\,]$ on either side has no effect,
-    by construction, for all $L \in \confdom'$, we have $[\top] :: L = [\top] = L :: [\top]$,
-    and $::$ is clearly associative, so $\confdom'$ is also a confidence domain.
-
-    The new update rule for this confidence is given by:
-    	\[
-    		AF^{[c_1, \ldots, c_n]}_\phi (\theta)  :=
-    				(F^{c_n}_\phi \circ \cdots \circ F^{c_1}_\phi) (\theta).
-    	\]
-    $AF$ has the same behavior as $F$ on the elements that correspond to the original confidence domain, since
-    $
-    	AF^{[c]}_\phi(\theta) = F^c_\phi(\theta),
-    $
-    and it is additive by construction, since
-    \begin{align*}
-    AF^{[c_1, \ldots, c_n]}_\phi ( AF^{[d_1, \ldots, d_m]}_\phi (\theta) )
-    		&:=
-    			F^{d_m}_\phi \circ \cdots \circ F^{d_1}_\phi (
-    			F^{c_n}_\phi \circ \cdots \circ F^{c_1}_\phi (\theta))\\
-    		&= (F^{d_m}_\phi \circ \cdots \circ F^{d_1}_\phi \circ
-    		F^{c_n}_\phi \circ \cdots \circ F^{c_1}_\phi) (\theta) \\
-    		&= AF^{[c_1, \ldots, c_n, d_1, \ldots, d_m]}_\phi (\theta) \\
-    		&= AF^{[c_1, \ldots, c_n] :: [d_1, \ldots, d_m]}_\phi (\theta).
-    \end{align*}
-    \end{lproof}% We are primarily interested in the case where confidence can be measured as a real number,
-
 
     \section{More Examples}
 
@@ -4219,7 +4123,7 @@ Let $\Theta = \mathbb R^{n}$
     % but when one has access an objective measure of (un)reliability such as \ref{item:measnoise},
     % it ought to play a major role.
 
-
+\commentout{
     % \section{Exploring Axiom Violations}
     \section{Axiom Ablation}
     	\label{sec:axiom-ablation}
@@ -4290,14 +4194,11 @@ Let $\Theta = \mathbb R^{n}$
     $
     \end{example}
 
-    \subsection{}
-
-
-
+}
 
     \section{Extra Properties of Update Rules}
 
-    \subsection{Invertable Update Rules}
+    \paragraph{Invertable Update Rules}
 
     \begin{LrnAxioms}
     	\item For all $\phi\in\Phi$, and $\beta \in \mathbb R$, the update
@@ -4306,7 +4207,7 @@ Let $\Theta = \mathbb R^{n}$
     \end{LrnAxioms}
 
 
-    This effectively partitions $\Theta$ into two
+    % This effectively partitions $\Theta$ into two
 
 
     \begin{prop}
@@ -4331,145 +4232,12 @@ Let $\Theta = \mathbb R^{n}$
     %         $F^\beta_\phi$ is a diffemorphism of $\mathrm{Int}(\Delta\X)$.
     %     % \]
     % \end{prop}
+    % As a consequence,
 
-
-    As a consequence,
-    \begin{coro}
+	\begin{coro}
     	If for any $\beta < \infty$ there exist $\mu, \phi, A$ such that
     	$\mu(A) > 0$  but $F^{\beta}_\phi(\mu)(A) = 0$, then $F$ is not invertable.
     \end{coro}
-
-
-    \subsection{Truth}
-    % We have seen how idempotence seems to be a feature of full-confidence updates. 
-    Implicit in a full-confidence update rule is a notion of truth:
-    given a full-confidence update rule $F^\top$, we define
-    a binary relation ${\models_{F^\top}} \subseteq \Phi \times \Theta$ 
-    between belief states and propositions, by 
-    $\theta \models_{F^\top} \phi$
-    (read: $\phi$ is true in $\theta$)
-    iff $F^\top_\phi(\theta) = \theta$.
-    %
-    It is easy to verify that in our previous examples,
-    this gives the appropriate notion of truth.
-
-    \begin{itemize}
-    	\item \textbf{Conditioning.}
-    	$\mu \models_{(|)} \phi \iff \mu(\phi) = 1$.
-    	% {\color{red}%
-    	% or $\mu(\phi) = 0$. 
-    	% }
-    	\item \textbf{Imaging.}
-    	For $w \in W$, $w \models_f \phi$ iff $\phi$ is true in $w$. 
-    	Meanwhile, $\mu \models \phi \iff \mu(\phi) = 1$.
-    	\item \textbf{Jeffrey's Rule.}
-    	$\mu \models_J \pi(X) \iff \mu_X = \pi$.
-    	That is, if the marginal of $\mu$ on the variable $X$ equals $\pi$. 
-    \end{itemize}
-
-
-    \subsection{Enriching Belief Space to Track Confidence}
-
-    \begin{example}\label{ex:dupl-enriched}
-    Suppose $F$ is an additve update rule. Then, we can explicitly construct a resolution to the problem posed in \cref{ex:dupl} by defining enriched spaces
-    \begin{align*}
-    	\Phi' &:= \Phi \times \Big\{ \text{ identities }~ \mathit{id}~ \Big\}\\
-    	\Theta' &:= \Theta \times
-    		\Big\{ \text{histories } L = [(\phi_1, \mathit{id}_1, c_1), \ldots (\phi_n, \mathit{id}_n, c_n)] \Big\} \\
-    \end{align*}
-    and new commitment function\ $G$ by
-    \begin{align*}
-    	 G^{\beta}_{(\phi,\mathit{id})}(\theta, L) & :=
-    		\begin{cases}
-    		\Big( F^{\beta- \sum_{i}\beta_i \mathbbm1[(\phi_i,\mathrm{id}_i) = (\phi, \mathrm{id})]}_{\phi}(\theta),~
-    			 L :: (\phi,\mathit{id}, \beta)
-    		 \Big)
-    			 &\text{ if } \beta \ne \bot \\
-    		(\theta, L) &
-    			   \text{ if } \beta = \bot
-    	\end{cases}
-    \end{align*}
-    \end{example}
-
-
-    \subsection{More on Path Update Rules}
-    Since each $\phi$ corresponds to a path
-
-    \begin{defn}[Homotopic update rules]
-    	$\phi \sim_F \psi$  iff 
-    	they behave the same way for full confidence (that is, 
-    	$F^1_{\phi}(\theta) = F^1_{\psi}(\theta)$ for all $\theta \in \Theta$)
-    	and  there exists a continuous function
-    	$H : \Theta \times [0,1] \times [0,1]$ such that,
-    	for all $\theta \in \Theta$ and $\chi \in [0,1]$,
-    	\begin{enumerate}[nosep]
-    		\item $H(\theta, \chi, 0)= F(\theta, \chi, \phi)$,
-    		\item $H(\theta, \chi, 1)= F(\theta, \chi, \psi)$
-    	\end{enumerate}
-    	and for all $s \in [0,1]$,
-    	\begin{enumerate}[nosep,resume]
-    		\item $H(\theta, 0, s) = \theta$;
-    		\item $H(\theta, 1, s) = F^1_{\phi}(\theta) = F^1_{\psi}(\theta)$,
-    		the last two of	which are the same by assumption. \qedhere
-    	\end{enumerate}
-    \end{defn}
-
-    As usual, homotopy is an equivalence relation.
-
-    For example, the Dempster-Shafer update rule \eqref{eq:ds-prob} is homotopic 
-    to the linear update rule from \cref{ex:prob-simple}. 
-
-    \subsection{Linear Update Rules}
-
-    % In some sense, ALL update rules are linear in $\bar\Phi$ by definition.
-
-    There are many definitions of linear update rules:
-    \begin{defn}\label{ax:linear}
-    Let $F$ be a differentiable update rule on $\Theta$. We say that $F$ is \textellipsis
-    \begin{itemize}
-    \item \emph{linear} if $\Theta$ is a vector space over $\mathbb R$, and the
-    vector field $F'_\phi$ is a linear operator, i.e., for all $a, b \in \mathbb R$, we have that
-    \[ F'_\phi(a \theta_1 + b \theta_2) = a F'_\phi(\theta_1) + b F'_\phi(\theta_2). \]
-
-    \item \emph{cvx-linear} if $\Theta \subset \mathbb R^n$ is a convex set, and, for all $a \in [0,1]$, we have that
-    \[ F'_\phi(a \theta_1 + (1-a) \theta_2) = a F'_\phi(\theta_1) + (1-a) F'_\phi(\theta_2). \]
-
-    \item \emph{$\mathcal L$-cvx-linear} if $\Theta \subset \mathbb R^n$ and $F$ is an optimizing update rule with a loss representation $\mathcal L$ linear in its first argument, i.e.,
-    \[
-        \mathcal L(a \theta_1 + (1-a) \theta_2, \varphi) = a \mathcal L(\theta_1, \varphi) + (1-a) \mathcal L(\theta_2, \theta).
-    \]
-    \end{itemize}
-    % $F'_\phi(\theta) = \mathrm{V}_\phi \theta$ for some linear operator $V_\phi \in \mathbb R^{n \times n}$.
-    % $F'_\phi(\theta) = \mathrm{V}_\phi \theta$ for some linear operator $V_\phi$.
-    \end{defn}
-
-    \begin{prop}
-    If $F$ is a $\mathcal L$-cvx-linear, then it is also cvx-linear.
-    \end{prop}
-
-    In fact, the first condition is much stronger;
-    \begin{prop}
-    if $F$ is a nontrivial $\mathcal L$-cvx-linear optimizing UR, then $\Theta$ equals cone generated by  the rays $\{ F'_\varphi\theta : \theta \in \Theta, \varphi \in \Phi \}$. In particular, if there is some $\theta$ such that $0$ is in the interior of the convex hull $\mathrm{conv}(\{F'_\phi\theta\}_{\phi \in \Phi})$, then $\Theta = \mathbb R^n$.
-    \end{prop}
-
-    % Implicit in this definition is the supposition that the integral curves generated by the differential equations, started at any point $\theta \in \Theta$, are
-
-    \begin{prop}
-    % If $F$ is a  differ
-    Every linear update rule is of the form
-    $
-        F^{\beta}_\phi(\theta) =  \theta^{T} \exp(\beta V)
-    $,
-    where $\exp(\beta V)$ is the matrix exponential.%
-        \footnote{Concretely, if $V = U^T \mathrm{Diag}(\lambda_1, \ldots \lambda_n) U$ is an eigendecomposition of $V$, then $\exp(V) = U^T \mathrm{Diag}(e^{\beta\lambda_1}, \ldots e^{\beta\lambda_n}) U$.}
-    \end{prop}
-
-    \begin{prop}
-    A linear update rule $F$ is commutative iff, for every pair of statements  $\phi, \phi' \in \Phi$, the
-    matrices $V_\phi$ and $V_{\phi'}$ commute.
-    \end{prop}
-
-
 
 
     \clearpage
@@ -4541,4 +4309,64 @@ Let $\Theta = \mathbb R^{n}$
     	 \]
     	 so indeed it lies within the tangent space.
     \end{lproof}
+	
+
+
+    On its own, so long as we have the freedom to choose $\confdom$, \Cref{ax:combinativity} has no teeth.
+
+    \begin{prop} \label{prop:free-additivity}
+    	If $F: \confdom \to (\Phi \to (\Theta \to \Theta))$ satisfies \cref{ax:zero,ax:idemp}, then we can construct a new update
+    	% function for $\Theta$ on $\Phi$, that behaves in exactly the same way, but \emph{is} additive, but with the altered confidence domain
+    	function for $\Theta$ on $\Phi$, that behaves in exactly the same way, but accepts confidences in a different confidence domain $\confdom'$, and satisfies \cref{ax:gen-combine}.
+    \end{prop}
+    \begin{lproof}
+    Consider the new confidence domain
+    $$
+    	\confdom' := \Big\{ \text{ finite lists } [c_1, \ldots c_n]
+    		\text{ with each } c_i \in \confdom,
+    		% \text{ such that } c_i \in \confdom \text{ for all } i = 1, \ldots, n
+    		\quad
+    		% \text{list concatenation}~::,
+    		::,
+    		\quad
+    		[\,],
+    		\quad
+    		[\top]
+    		\,
+    	\Big\},
+    $$
+    whose group operation ``$::$'' is list concatenation, except that it collapses instances of $\top$, i.e.,
+    \[
+    	[c_1, \ldots c_n] :: [d_1, \ldots, d_m]
+    	 := \begin{cases} \relax
+    		 % [\top] & \text{ if } c_i = \top \text{ for some $i$ or $d_j=\top$ for some $j$}\\
+    		 [\top] & \text{ if } \top \in \{c_1, \ldots, c_n,d_1, \ldots,d_m \} \\
+    		 [c_1, \ldots, c_{n}, d_1, \ldots, d_m] & \text{otherwise.}
+     \end{cases}
+    \]
+    Concatenating the empty list $[\,]$ on either side has no effect,
+    by construction, for all $L \in \confdom'$, we have $[\top] :: L = [\top] = L :: [\top]$,
+    and $::$ is clearly associative, so $\confdom'$ is also a confidence domain.
+
+    The new update rule for this confidence is given by:
+    	\[
+    		AF^{[c_1, \ldots, c_n]}_\phi (\theta)  :=
+    				(F^{c_n}_\phi \circ \cdots \circ F^{c_1}_\phi) (\theta).
+    	\]
+    $AF$ has the same behavior as $F$ on the elements that correspond to the original confidence domain, since
+    $
+    	AF^{[c]}_\phi(\theta) = F^c_\phi(\theta),
+    $
+    and it is additive by construction, since
+    \begin{align*}
+    AF^{[c_1, \ldots, c_n]}_\phi ( AF^{[d_1, \ldots, d_m]}_\phi (\theta) )
+    		&:=
+    			F^{d_m}_\phi \circ \cdots \circ F^{d_1}_\phi (
+    			F^{c_n}_\phi \circ \cdots \circ F^{c_1}_\phi (\theta))\\
+    		&= (F^{d_m}_\phi \circ \cdots \circ F^{d_1}_\phi \circ
+    		F^{c_n}_\phi \circ \cdots \circ F^{c_1}_\phi) (\theta) \\
+    		&= AF^{[c_1, \ldots, c_n, d_1, \ldots, d_m]}_\phi (\theta) \\
+    		&= AF^{[c_1, \ldots, c_n] :: [d_1, \ldots, d_m]}_\phi (\theta).
+    \end{align*}
+    \end{lproof}% We are primarily interested in the case where confidence can be measured as a real number,
 \end{subappendices}
