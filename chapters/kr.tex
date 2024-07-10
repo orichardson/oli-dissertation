@@ -9,8 +9,10 @@ can capture graphical models such as Bayesian Networks and Factor graphs---but t
 In this chapter, we will see how a wide variety of other kinds of epistemic information can be captured with PDGs.
 
 
-Probability is the dominant way that computer computer scientists and
-micro\-economists think about epistemic state.
+Probability is the dominant way that computer computer scientists,
+statisticians, and economists
+% micro\-economists
+think about epistemic state.
 This is due to standard betting arguments suggesting that any sufficiently rational agent (e.g., one resistant to dutch books)
 must act as if it had probabilistic beliefs \citep{sep-dutch-book,savage}.
 This leads us to make a simple but conceptually important observation: a joint probability distribution is itself a special case of a PDG (\cref{sec:prob-as-pdg}). 
@@ -51,7 +53,7 @@ Let $\X$ be a set of variables, and recall that $\V\!\X$ is the set of all joint
 A joint distribution $\mu \in \Delta \V\!\X$ can be implicitly regarded as a PDG that has a single hyperarc $\emptyset \to \X$.
 We attach $\mu$ as the (c)pd, and give it weights $\alpha=0$
 %
-(at least, if the distribution is intended to represent purely observational information), and 
+(at least, if the distribution is intended to represent only purely observational information) and 
 $\beta = 1$ (default confidence). 
 % We will see more about these parameters later on. 
 
@@ -97,7 +99,6 @@ What makes PDGs special is their capability to do this while simultaneously repr
 % \TODO
 % }
 
-\newmaterial{%
 \paragraph{Updating with PDGs combination.}
 We can regard a probability distribution $\mu \in \Delta\Omega$ as a PDG 
 \begin{tikzpicture}[baseline=-3pt]
@@ -124,7 +125,7 @@ Because the conditional distribution $\mu | U$ is the distribution that minimize
 More generally, if our observation had been not an event (i.e., a deterministic distribution over a binary variable), but some other high-confidence distribution over a variable $p(X)$, we would have found that the resulting optimal distribution was the result of applying Jeffrey's rule \citep{	  Jeffrey68} to update $\mu$ with $p$. 
 This an immediate restatement of a standard result
     \citep[pg. 109]{halpern-RAU}.
-}%
+
 
 
 \section{Widgets}
@@ -171,7 +172,6 @@ they must be among $\Supp \mu = \{ \omega \in \Omega : \mu(\omega) > 0 \} \subse
 % \unskip\footnote{An analogous statement may be made when $\Omega$ is infinite, 
 %     but we defer this discussion until \cref{sec:continuous-pdgs}.}
 %
-\newmaterial{%
 But is it possible to encode a constraint (in a PDG) without adding any additional probabilistic information?
 %
 % A relation $R(X_1, \ldots, )$
@@ -181,7 +181,6 @@ In a factor graph, the answer is yes: simply multiply by a factor that encodes t
 Unfortunately, this construction only works because factors lose their probabilistic interpretations in context.
 The same approach does not have the effect we are looking for in a PDG, because beyond articulating the constraint, it also involves specifying a belief that all elements of $C$ were equally likely---information we do not have and would like to avoid assuming. 
 In this section, we will develop a widget that will enable PDGs to represent precisely this information and nothing more. 
-}%
 
     
 Recall that, in a PDG, the sample space $\Omega$ consists of joint settings of variables;
@@ -260,10 +259,15 @@ that leaves $\Tru$ implicit, so that the binary relation $R(\var X,\var Y)$ and 
 \end{center}
 respectively, in PDG notation.
 \newmaterial{%
-Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well surpress it. 
-So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$; the result is a pair of double-headed arcs joined head-to-head.
-Just as we have left $\Tru$ implicit in the graphical notation,
+Where does this notation come from?
 }%
+Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well surpress it. 
+So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$.
+\newmaterial{%
+What remains are a pair of double-headed arcs joined head-to-head,
+}
+    
+Just as we have left $\Tru$ implicit in the graphical notation,
 % Correspondingly, 
 we will want to identify a distribution $\mu(\X)$ with 
 the ``extended'' distribution $\mu(\X) \delta(\Tru{=}\trut)$---except
@@ -301,6 +305,10 @@ While it is not surprising that this construction encodes a relation
             $\mu \in \SD{\dg M + R}$ 
             iff $\mu(\X) \in \SD{\dg M}$ and $\mu(R) = 1$ 
                 ~(and also $\mu(\Tru{=}\trut)=1$).
+                \onlyfirsttime{\footnote{\forjoe{%
+                    This extra condition is unimportant because 
+                    we are interested only in distributions that place full support on $\Tru{=}\trut$; above the theorem, we identify $\mu(\X)$ with $\mu(\X) \delta(\Tru=\trut)$
+                }}}
             % where $\cong$ identifies 
             
             
@@ -407,14 +415,17 @@ Semantically, the PDG $\dg M_s$ has almost all of the properties we have seen in
 Despite the similarity so far, there is a big difference between hard and soft constraints:
     values of $x$ that have intermediate satisfaction scores $s(x) \in (0,1)$,
     while not fully consistent, are still possible.
-Indeed, they even be likely in the optimal distribution, when the context is inconsistent enough. 
+Indeed, such values of $x$ may even be probable in the optimal distribution, 
+    % when the context is inconsistent enough. 
+    if that happens to be the best way to resolve an inconsistency.
 % To understand more deeply, 
 To get a deeper understanding, it is helpful to look at the scoring function of 
 $\dg M_s$ in the context of another (arbitrary) PDG:
-\[
+\begin{equation}
     \bbr{\dg M_s + \dg M}_\gamma(\mu) 
         = \bbr{\dg M}_\gamma(\mu) - \Ex_\mu [ \log s(X) ].
-\]
+        \label{eq:soft-constr-score}
+\end{equation}
 The key is the final term;
     % it is not just any cost,
     adding $\dg M_s$ to $\dg M$ has had the effect of
@@ -527,11 +538,18 @@ we have:
 \begin{prop}
     Suppose that $p(X)$ and $q(Y)$ are probability distribuitons. 
     Given a distance measure $d : \V(X,Y) \to [0,\infty]$, 
-    let $\hat d(x,y) := \exp(- d(x,y))$
-    be a similarity measure.
-    Interpreting $\hat d$ as a soft constraint, we have:
+    \newmaterial{%
+    define a soft constraint according to 
+    $(x,y)\mapsto e^{-d(x,y)}$, 
+    which results in a cpd
+    $\hat d(\Tru{=}\trut\mid x,y) := \exp(- d(x,y))$.
+    The (observational) inconsistency of these of these pieces of information is
+    the Wasserstein distance $W_1(p,q)$. That is,
+    % be a similarity measure.
+    }%
+    % Interpreting $\hat d$ as a soft constraint, we have:
     \[
-        \aar[\Big]{\dg M_{\hat d} + p! + q!} =
+        \aar[\Big]{\dg M_{\hat d} + p! + q!}_0 =
         \aar**{\begin{tikzpicture}[center base]
             \node[dpad0] (X) at (-1,0) {$X$};
             \node[dpad0] (Y) at (1,0) {$Y$};
@@ -547,14 +565,25 @@ we have:
 
             \mergearr XYT
             \node[above=0pt of center-XYT] {$\hat d$};
-
-        \end{tikzpicture}}
+        \end{tikzpicture}}\vphantom{\Bigg|}_{\!\!0}
         = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
     \]
     where the exclamation points indicate high confidence $(\beta = \infty)$. 
 \end{prop}
 \begin{proof}
-    The high confidence specification of $p$ and $q$ constrains the optimal distributions to $\Pi(p,q)$, and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint-widget}. 
+    The high confidence specification of $p$ and $q$ constrains the optimal distributions to $\Pi(p,q)$.
+    \newmaterial{%
+    Whatever the optimal distribution $\mu^*$,
+    the score of that distribution, by \eqref{eq:soft-constr-score},
+    is 
+    \[
+    \Ex\nolimits_{\mu^*}[ - \log \hat d(\Tru{=}\truf\mid X,Y) ]
+    = \Ex\nolimits_{\mu^*}[ - \log \exp( - d(X,Y))] 
+    = \Ex\nolimits_{\mu^*}[d(X,Y)].
+    \qedhere
+    \]
+    % and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint-widget}. 
+    }
 \end{proof}
 
 % \subsection{Graph-Hypergraph Equivalence}
@@ -574,7 +603,7 @@ In PDG notation, we abbreviate the widget that implements $p(Y|X)$ with some mis
 
 We now present an important extreme case of that construction:
 how, for any $p \in [0,1]$, we can construct a PDG
-that represents the belief that $\Pr(Y{=}y|X={x}) = p$, but say nothing about
+that represents the belief that $\Pr(Y{=}y|X={x}) = p$, but says nothing about
 how the probability splits between other values of $y$, and also says nothing
 about the probability of $Y$ if $X \ne x$.
 
@@ -741,7 +770,8 @@ We now explore two ways of making this precise with the semanics of PDGs.
     when $X{=}x$ is $p$. But $s_2$ ensures that $Y{=}y$ precisely when $\Yyshort{=}y$. 
     Thus,
     $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$.
-    Thus the first row of $\hat p$
+    So $\bar \mu$ satisfies the constraint given by the first row of $\hat p$
+        in \cref{fig:pyx-widget}.
     When $\XxYyshort \ne x$, on the other hand, then $s_1$ and $s_2$ ensure
     that $\XxYyshort = \Yyshort = Y$, thereby satisfying the other rows 
     of the cpd $\hat p$. 
@@ -751,7 +781,7 @@ We now explore two ways of making this precise with the semanics of PDGs.
     Choose some $\bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}$,
     and let $\mu$ be its marginal on the variables of $\dg M$. 
     By the logic above, $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x)$.
-    Since $\bar\mu$ satisfies the cpd $\hat p$, we know that $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$ as desired.
+    Since $\bar\mu$ satisfies the cpd $\hat p$, it follows that $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$ as desired.
     Since $\bar\mu$ also satisfies all the cpds of $\dg M$, we also have $\mu \in \SD{\dg M}$.
 \end{proof}
 
@@ -1049,7 +1079,7 @@ in economics and computer science, but it is far from the only one \citep{halper
 Probability---at least, in the form of a joint distribution $\mu$---has some shortcomings. 
 One of the biggest is its inability to represent ignorance well
     (a point we will return to in \cref{chap:conf}).
-This has lead many to develop generalizations of probability that are \citep{shafer1990probability,Walley1991-SRIP}.
+This has lead many to develop generalizations of probability that represent ignorance better \citep{shafer1990probability,Walley1991-SRIP}.
 It turns out that several of the most celebrated generalizations of probabilities can be viewed as special cases of PDGs. 
 
 
@@ -1125,7 +1155,6 @@ then the distribution with minimal structural deficiency (the analogue of maximu
 It is well-known that different representations can change the result of maximizing entropy. 
 But some representations better capture a scenario more naturally than others, and PDGs 
 % make it easy to select representations that interact appropriately with entropy. 
-\newmaterial{%
 facilitate the choice of representations that interact well with entropy. 
 % As discussed in \cref{sec:bn-pdg}, \cref{theorem:bns-are-pdgs} is a powerful example of how 
 This is because, generaly speaking, PDGs force you to make your modeling choices in an explicit, uniform way (a point we will emphasize repeatedly in \cref{chap:one-true-loss}).
@@ -1133,18 +1162,24 @@ In \cref{ex:coin}, the PDG representation lead us to a space which, upon applyin
 % It is worth noting that the naive space is not even 
 % It is difficult to imagine how one could even obtain the naive 
 Indeed, it appears impossible to obtain a representation that leads 50/50 maximum entropy presumption when using a PDG.
-On its own \cref{ex:coin} is far from is just one (more) piece of supporting evidence, adding it to a pile that includes \cref{theorem:bns-are-pdgs}. 
+\newmaterial{%
+% \Cref{ex:coin} is far from a proof that using PDGs leads to representations that are more appropriate in which to apply the principle of maximum entropy, 
+%     but it is a
+% is just one (more) piece of supporting evidence, adding it to a pile that includes \cref{theorem:bns-are-pdgs}. 
+}%
 
-The construction in this section is a generic way of leaving out information in a probabilistic model. 
+The construction in this section gives a generic way of 
+    % leaving out information in a probabilistic model. 
+    % leaving out information in a probabilistic model. 
+    encoding ignorance in a probabilistic model. 
 At a technical level, it amounts to exploiting the fact that a cpd can be viewed as imposing a barycentric coordinate system for a convex set of distributions (as laid out at the end of \cref{ssec:fin-prob}).
 In the next section, we investigate another representation of uncertainty with more structure, which can be captured with PDGs in a rather different way.
-}%
 
 
 \subsection{Belief and Plausibility Functions}
     \label{ssec:belplaus-as-pdg}
     
-We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \citep{shafer1990probability}. 
+We now move on to another representation of uncertainty, which generalizes the notion of a probability distribution over a (for simplicity, finite) set $\Omega$, called a \emph{belief function} \citep{shafer1976mathematical}. 
 Like a probability measure,
 a belief function $\Bel$ assigns a degree of belief in $[0,1]$ to subsets $U \subseteq \Omega$.  
 Belief functions must satisfy certain axioms ensuring that $\Bel(U) + \Bel(\bar U) \le 1$, and thus $\Plaus(U) := 1 - \Bel(\bar U) \ge \Bel(U)$. 
@@ -1197,12 +1232,7 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
         are subsets of $\Omega$. 
 \end{defn}
 
-\newmaterial{%
 For those who are not yet fluent with the constraint notation, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of whatever subset is chosen by $m$. 
-}
-% \newmaterial{%
-% For those who find the constraint notation difficult to read, this is just the PDG t
-% }
 
 \begin{linked}{theorem}{belplaus-pdg}
     If $m$ is the mass function the belief function $\Bel$ and the plausibility
@@ -1242,10 +1272,8 @@ For those who are not yet fluent with the constraint notation, $\dg M_m$ is just
         \end{tikzpicture}}
          = - \log \Plaus ( U ).
         $
-        \newmaterial{%
         That is, the inconsistency of simultaneously
         having belief function $\dg M_{\Bel}$ and also that the event $U$ occurs, is the analogue of the information content but for plausibility.
-        }%
     % \item 
     \end{enumerate}
 \end{linked}
@@ -1406,9 +1434,7 @@ Now for the proof of the theorem.
     % \intertext{(since the objective on first line does not depend on the marginal on $W$, except through the constraint)}
     \end{align*}
     since the objective on first line does not depend on the marginal on $W$, except through the constraint.
-    \newmaterial{%
     For those who are not yet used to the notation, recall that the PDG in question is just $\dg M_m$ together with a constraint that the value of the variable $W$ lies in the given set $U$.   
-    }%
     In turn, this inconsistency is equal to
     \begin{align*}
     % &=
@@ -1458,9 +1484,9 @@ When the cluster graph has a special property that makes it a \emph{tree decompo
     (see \cref{sec:tw} or ```clique tree'' in \citep{KF09}),
 then local consistency is equivalent to global consistency \citep{wainwright2008graphical},
 and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
-We will cover these concepts in detail when we
-    use them to an inference algorithm for PDGs in \cref{chap:infer};
-Here, we aim only to make an orthogonal point: that these structures themselves are PDGs. 
+We will cover these concepts in detail in \cref{chap:infer} when we
+    use them to develop an inference algorithm for PDGs.
+Here, our point is merely that these structures themselves are PDGs. 
 
 \subsection{Causal Models}
     \label{ssec:capture-causal-models}
@@ -1538,7 +1564,7 @@ In many cases, the duals of these diagrams, appropriately annotated with the net
     $\mu(\Tru{=}\trut) < 1$, and so again the score is infinite, by the first term.
     Thus, if the score is finite, then $\mu(R) = 1$. 
     
-    (c) The inequality is monotonicity (\cref{lemma!}). 
+    (c) The inequality is an instance of monotonicity (which we see in \cref{lemma!} and is the focus of \cref{chap:reason}). 
     % For the remainder of this proof, identify distrib
     Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(R) = 1$.
     % Define 

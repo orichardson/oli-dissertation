@@ -1462,7 +1462,7 @@ Because of the inherent asymmetry,
     % (e.g., with $\zogamma$).
     % (like the one in terms of $\zogamma$). 
 
-In addition, there are benefits to using $\gamma$ and the scoring function as we have defined it. 
+In addition, there are benefits to using $\gamma$ and the scoring function as we have defined them. 
 % For instance, $\gamma$ may be seen as analogous to a \emph{temperature}.
 The first is to draw an analogy with thermodynamics, that is 
     common in some sub-communities that study graphical models.
@@ -1663,7 +1663,7 @@ This makes some sense, but why should it be necessary?
 First, we note that maximum entropy does not always miss the mark:
 if the BN happens to have the structure of a Markov chain, or more generally be absent of joint dependence, then it is not hard to show that the maximum entropy distribution is in fact the correct one. 
 Here's a broader but more subtle class of BNs for which maximum entropy produces the right answer: 
-if for every node $X$ with multiple parents, the entropy of conditional probabiliy $\mathbb P_X(X \mid \Pa(X){=}\mat z) \in \Delta \V \! X$ does not depend on $\mat z$. 
+if for every node $X$ with multiple parents, the entropy of the probability $\mathbb P_X(X \mid \Pa(X){=}\mat z) \in \Delta \V \! X$ does not depend on $\mat z$. 
 To see why this would help, it is helpful to see
     an example of a BN whose distribution does not maximize entropy
         subject to the observational constraints. 
@@ -2534,7 +2534,7 @@ The remainder of the argument analyzes the convexity of
 The first term, 
 \( \Ex_{x,y \sim \mu_{\!_{XY}}} \left[-\log {\p_a(y\mid x)}\right] \) 
 is linear in $\mu$ (since $\p_a(y\mid x)$ does not depend on $\mu$), and hence convex. %
-As for the second term, it is well-known that KL divergence is convex, in the sense that 
+As for the second term, it is well-known that relative entropy is convex, in the sense that 
 \begin{align*}
     &\kldiv{\lambda q_1 + (1-\lambda) q_2 }{ \lambda p_1 + (1-\lambda) p_2}
     \\&\qquad\qquad \leq \lambda \kldiv {q_1}{ p_1} +
