@@ -363,7 +363,7 @@ subset of the information in the whole PDG.
 
 The ability to form restrict to arbitrary subsets of information is useful,
 and closely related to an even more compelling reason to use PDGs:
-they make it equally easy to aggregate arbitrary probabilistic information. 
+they make it easy to aggregate probabilistic information. 
 	
 \begin{example}\label{ex:grok-union}
 Grok dreams of becoming Supreme Leader ($\it SL$), and has come up with a plan.
@@ -379,8 +379,10 @@ Grok is reading about graphical models because she vaguely remembers that the
 variables in \Cref{ex:smoking} match the ones she already knows about. When she
 finishes reading the statistics on smoking and the original study on tanning
 beds (associated to a cpd $p$ in \Cref{ex:smoking}), but before she has
-time to reflect, we can represent her (conflicted) knowledge state as the sum
-of the two graphs, depicted graphically on the right of \Cref{fig:grok-combine}.
+time to reflect, we can represent her (conflicted) knowledge state 
+% as the sum of the two graphs,
+with the 
+depicted graphically on the right of \Cref{fig:grok-combine}.
 %
 \forjoe{I believe the text above is still accurate (although the conflicted knowledge state may be conflicted not just about the cpds, but also about the causal mechanisms.) We haven't said anything about qualitative information or mechanisms at this point, and I don't think it would be a good idea to do so here.}
 
@@ -582,7 +584,7 @@ For instance, we draw
 		\mergearr[arr2] XZY
 		\node[above right=-1pt and -3pt of center-XZY] {$p$};
 	\end{tikzpicture}\,,
-   \text{ and } q(A,B) \text{~as~~}
+   ~~\text{ and }~~ q(A,B) \text{~as~~}
 	\begin{tikzpicture}[center base,scale=1.2]
 		\begin{scope}[inner sep=3pt]
 		\node[dpad0] (A) at (0,0) {$A$};
@@ -646,7 +648,7 @@ We now give an overview of important alternative variants.
 
 \begin{enumerate}[wide, label={\textbf{PDG Variant \arabic{*}:}}]
 	\item
-	\textbf{Segregated PDGs.}
+	\textbf{Separated PDGs.}
 	% A PDG can also taken to contain arcs of two different kinds
 	% In \cref{def:model}, each  % the
 	According to \cref{def:model}, each
@@ -657,7 +659,12 @@ We now give an overview of important alternative variants.
 	Conceptually, however, these two aspects of an arc are rather separate. 
 	Indeed, a PDG can be equivalently defined with two distinct kinds of arcs, each of which only play one role. An arc that plays both roles can be separated into two separate arcs, one for each kind of information. Conversely, an arc with only one kind of information can be specified by spacing $\alpha = 0$ or $\beta = 0$ to nullify the other kind of information, as appropriate. 
 	%
-	We have opted for combined edges because certain semantic and inference properties of PDGs are easier to describe in this presentation (e.g., \cref{theorem:limit-uniq,theorem:wfg-is-pdg,theorem:approx-infer}). 
+	We have opted for combined edges because certain semantic and inference properties of PDGs are easier to describe in this presentation (e.g., \cref{theorem:limit-uniq,theorem:wfg-is-pdg,theorem:approx-infer}).
+    \newmaterial{%
+    However,
+        in some cases it may be wise to separate PDGs before combining them, 
+        as discussed in \cref{sec:pdg-combine}. 
+    }%
 
 
     \item 
@@ -798,7 +805,8 @@ The combined PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by 
 % However, one might well have intended to 
 Rather than adopting two distinct mechanisms, one might well have intended to merge them, viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
-Yet PDG union performs no such merge.
+% Yet PDG union performs no such merge.
+Yet the sum of PDGs performs no such merge.
 Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
 We will return to this point in \cref{ex:overdet},
     and again in \cref{ex:overdet2}.
@@ -813,9 +821,28 @@ In that context, we will also see that the
 % We will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
-It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$, there is no problem with taking $\balpha$ to be $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively.  For instance, if $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, then $\balpha$ will encode those shared independencies. 
+It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. 
+If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$,  
+% there is no problem with taking  $\balpha$ to be
+\newmaterial{%
+it is appropriate to form a new PDG with $\balpha :=$
+}%
+$.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively. 
+For instance, if $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, then $\balpha$ will encode those shared independencies. 
 
-Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. We now proceed with the formal details.
+% Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
+% We now proceed with the formal details of PDG sums. 
+\newmaterial{%
+There are also cases where PDG sums are appropriate even for causal information. 
+% Specifically, this is the case when both the mechanisms 
+To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
+This is often appropriate if the mechanisms are describing completely different things (e.g., if the targets of the two hypergraphs are entirely distinct).
+% It can also be appropriate in settings where 
+
+\TODO
+
+    in \cref{chap:QIM}. 
+}%
 
 
 \paragraph{Formal Details of PDG Sums.}
@@ -1642,14 +1669,11 @@ and thus $\bbr{\PDGof{\mathcal B, \beta}}^* = \Pr_{\cal B}$.
 weight vector $\beta$ and all $\gamma > 0$.
 However, it does lean heavily on our assumption that $\alpha = \mathbf 1$, intuitively because that is what encodes the BN's independencies. 
 
-\newmaterial{%
 An intuitive proof sketch explains why: a distribution $\mu$ minimizes $\OInc_{\cal B}$ iff it has the right cpds (no matter the value of $\bbeta$), and (as we show in the appendix) it minimizes $\SDef_{\cal B}$ iff it has the appropriate independencies. 
 We know that the BN's distribution $\Pr_{\cal B}$ is the unique distribution with both of these properties. So, no matter how the two quantities are weighted (i.e., for all $\gamma > 0$), it is the unique optimal distribution.
-}%
 
 % making it our only result that does not have a natural analog for general $\alpha$.
 
-\newmaterial{%
 \paragraph{BNs and Maximum Entropy.}
 	\label{sec:bn-maxent}
 One welcome side effect of this result is to shine light on an old question about the role of maximum entropy in directed graphical models.
@@ -1714,7 +1738,6 @@ We argue that the princple of \emph{minimizing structural deficiency} ($\SDef$) 
 %
 \Cref{theorem:bns-are-pdgs} is a strong argument in favor of this;
     we will see others examples later on.
-}
 
 
 \subsection{Factor Graphs} 
@@ -1917,11 +1940,9 @@ to which we associate the unconditional distribution given by normalizing $\phi_
 
 PDGs are directed graphs, while factors graphs are undirected. The
 map from PDGs to factor graphs thus loses this structure, 
-\newmaterial{%
 as shown in \cref{fig:fg2PDG}.
 The resulting PDG is also typically inconsistent.
 The structural changes are even more significant if we convert it to a \emph{strict} PDG that does not have hyperedges, as done in the original paper \citep{pdg-aaai} and illustrated in \cref{fig:fg2PDG-strict}. 
-}%
 Nevertheless, when $\gamma = 1$, so that the quantitative and qualitative terms are weighted equally, the semantics coincide. 
 
 
@@ -2075,9 +2096,7 @@ $\alpha$ and $\beta$ of the resulting PDG,
 
 Conversely, as long as the ratio of $\alpha_a$ to $\beta_a$ is constant, the
 reverse translation also preserves semantics.
-\newmaterial{%
 Recall that $(\mathbb P, \balpha, \bbeta)$ is the PDG obtained by augmenting the unweighted PDG $\mathbb P$ with weights over every arc. 
-}
 
 \begin{linked}{theorem}{pdg-is-wfg}
 % For all unweighted PDGs $\dg{N}$ and non-negative vectors $\mat v$
@@ -2092,19 +2111,15 @@ $\bbr{(\mathbb P, \mat v, \gamma \mat v)}_{\gamma}
 = \gamma\cdot\VFE_{(\Phi_{\mathbb P}, \mat v)} $; consequently,
 $\bbr{(\mathbb P,  \mat v,  \gamma\mat v)}_{\gamma}^*
 		= \{\Pr_{(\Phi_{\mathbb P}, \mat v)} \}$. 
-\newmaterial{%
 In other words, if $\dg M$ is a PDG with $\bbeta \propto \balpha$,
 and $\gamma$ is the constant of proportionality,
 then $\bbr{ \dg M }^*_\gamma$ is a singleton containing the distribuion of the factor graph $\Phi_{\mathbb P}$ weighted by $\balpha$.  
-}
 \end{linked}
 
 
 
 
-\newmaterial{%
 In particular, when $\balpha = \bbeta$, then $\bbr{\dg M}_1$ is the semantics of the factor graph that regards the cpds $\mathbb P$ as factors with these weights. 
-}%
 The key step in proving \Cref{theorem:wfg-is-pdg,theorem:pdg-is-wfg}
 (and in the proofs of a number of other results) involves 
 rewriting  
@@ -2204,7 +2219,6 @@ However, it can be shown that
 $\Pr_{\WFGof{\dg M}} = \mu_{.85}$, so  $\bbr{\dg M}_1^* = \{\mu_{.85}\}$.
 In this way, factor graphs seem to be \emph{uncalibrated}. 
 
-\newmaterial{%%
 The reason for this can be viewed as an instance of the caveat in combining qualitative information, mentioned in \cref{sec:pdg-combine}.
 % By default, we took all weights 
 Our default assumption that $\alpha = 1$ makes sense for each individual arc, but having two independent randomized mechanisms by which $X$ is determined intuitively means $X$ ought to be a constant (a point we will expand on in \cref{sec:qim}).
@@ -2212,7 +2226,6 @@ Arguably, this is not what was intended in combining the two models.
 By taking the $0^+$ semantics, the problem with the qualitative information disappears. 
 Alternatively, we could have merged the qualitative picture so that there is a total of $\alpha_p + \alpha_q = 1$ between the two arcs.
 In that case, we would have had no conflict between the two types of information, and indeed $\bbr{\dg M'}_\gamma^* = \{ \mu_{.7} \}$ for all values of $\gamma \ge 0$.
-}%
 \end{example}
 
 
@@ -2768,7 +2781,6 @@ $\mathbb P_{(\Pa(X_i), X_j)}^{\PDGof{\mathcal B}}$ is the the cpd
 on $X_j$ that, given a setting $(\ldots, x_j, \ldots)$ of $\Pa(X_i)$, yields the distribution that puts all mass on $x_j$. 
 \end{defn}
 
-\newmaterial{%
 Consider a BN $\mathcal B$  with variables $\X X = \{X_1,\ldots, X_n\}$, and let $\bbeta > 0$ be a positive vector over $\X$.
 % Let $\mathcal X$ be the variables of some BN $\mathcal B$, and
 Let $(\N, \V, \Ar, \mathbb P) := \PDGof{\mathcal B}$ 
@@ -2781,7 +2793,6 @@ Thus, it makes sense to identify distributions
     $\mu \in \Delta \V\N$ of the form $\mu(\X) \delta\!f(\N \mid \X)$,
     and their marginals $\mu(\X) \in \Delta \V\X$.
 It is easy to see that any extended distribution $\nu(\N)$ that is not of this form will have infinite score, and so will not be relevant for the scoring function.
-}%
 
 \commentout{%
 Because the set $\N$ of variables in $\PDGof{{\mathcal
