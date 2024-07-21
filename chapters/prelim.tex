@@ -25,7 +25,6 @@ The chapter also serves a second purpose:
 % and to reconcile those representations and reasoning patterns with the 
 % especially when it comes to the notion of a \emph{variable}. 
 % The principle such pattern is the notion of a \emph{variable}, 
-\oldnewmaterial{%
 The principle such pattern is the concept of \emph{variable}, 
 which has several closely related meanings.
 One typically takes care to distinguish these different meanings, 
@@ -34,7 +33,6 @@ One typically takes care to distinguish these different meanings,
 % These patterns directly undergird the notion of a PDG.
 In this chapter, we will get a chance to work with these ideas in a familiar context.
 % We return to this in \cref{ssec:basic-vars}.
-}%
 
 
 % \section{Background, Notation, and Critical Preliminaries}
@@ -86,7 +84,7 @@ $
 $
 % \]
 % If the two sets share a symbol, then we instead write
-\newmaterial{%
+\oldnewmaterial{%
 The elements must be distinct even if the two sets share a symbol; 
     in this case, we instead tag elements based on whether they come
     from the left or the right:
@@ -195,9 +193,7 @@ Vectors of the same shape
 % Suppose that $\mat u, \mat v \in \Rext^S$ are two vectors of 
 can be added ($+$) or multiplied ($\odot$) pointwise as usual,
 and we say that $\mat u \le \mat v$ iff $\mat u(i) \le \mat v(i)$ for all $i \in I$.
-\newmaterial{%
 We write $\mat u \propto \mat v$ iff there exists some a scalar $\alpha \in \mathbb R$ such that $\mat u = \alpha \mat v$.
-}%
 % $\mat 1$ denotes an all-ones vector, of a shape implied by context.
 $\mat 1$ and $\mat 0$ denote all-ones and all-zeros vectors, of a shape implied by context.
 If $\mat u$ and $\mat v$ are both of shape $I$, their \emph{inner product}, denoted either $\mat u \cdot \mat v$ or $\mat u ^{\sf T} \mat v$,
@@ -226,14 +222,12 @@ Observe that a vector $\mu \in \mathbb R^I$ can be viewed as
     a matrix $\mat u \in \mathbb R^{I \times 1}$ for the purposes of composition; in this form, it is called a \emph{column vector}.
 This establishes that linear maps can be viewed as vectors, 
     and vectors can be viewed as linear maps.
-\oldnewmaterial{%
-    The \emph{transpose} of a matrix $A \in \mathbb R^{I \times J}$ is 
-    the matrix $A^{\sf T} \in \mathbb R^{J \times I}$ that results 
-        from swapping the rows and columns of $A$. 
-    In particular, the transpose $\mat u^{\sf T}$ of a column vector $\mat u \in \mathbb R^{I}$ 
-        is a \emph{row vector} or \emph{dual vector}, 
-        and represents a linear function $\mat v \mapsto \mat u^{\sf T} \mat v ~:~ \mathbb R^{I} \to \mathbb R$.
-}%
+The \emph{transpose} of a matrix $A \in \mathbb R^{I \times J}$ is 
+the matrix $A^{\sf T} \in \mathbb R^{J \times I}$ that results 
+    from swapping the rows and columns of $A$. 
+In particular, the transpose $\mat u^{\sf T}$ of a column vector $\mat u \in \mathbb R^{I}$ 
+    is a \emph{row vector} or \emph{dual vector}, 
+    and represents a linear function $\mat v \mapsto \mat u^{\sf T} \mat v ~:~ \mathbb R^{I} \to \mathbb R$.
 % This is yet another instance
 % The result is another 
 % This illustrates a general guiding principle in this thesis: 
@@ -359,11 +353,9 @@ Given a joint setting $\mat x \in \V(\mat X)$, we write either $\mat x[X]$ or  $
 Variable notation is designed to be intuitive and easy to read. 
 Yet beneath the surface,
 % it can be very confusing, because it is quite unlike almost any other standard mathematical notation.
-\newmaterial{%
 it is unlike almost any other standard mathematical notation,
     which can lead to confusion if closely scrutinized.
 For instance,
-}%
 % This is especially true of the way variables interact with equality, and the symbol ``$=$''.
 if $X$ is a variable and $x \in \V\!X$, then we might expect $X{=}x$ to be a false statement, since $X$ and $x$ refer to very different objects; instead, it represents the possibility that $X$ happens take on the value $x$, which we will soon see is called an \emph{event} in the context of probability. 
 % In particular, it is neither true nor false, but rather a different mathematical object. 
@@ -421,11 +413,9 @@ The biggest missing part, as one might guess, is probability.
 % The material and notation in this chapter is all standard, but 
 % The one we have chosen 
 % There are several different notations for probability in different communities.
-\newmaterial{%
 Probability is a foundational concept across many disciplines, and especially for us. 
 % There are several different notation for probability
 Unfortunately, its notation is almost as diverse as the people who use it. 
-}%
 % }%
 % In this section, we present a carefully 
 Our approach simultaneously enables some of the most common notations
@@ -465,9 +455,7 @@ For $U \subseteq \Omega$, called \emph{events},
 % The prototypical event is of the form $X{=}x$. 
 While we just defined $\mu$ on events $U$ of $\Omega$ in terms of $\mu(\omega)$ for elements $\omega \in \Omega$, we remark that, in general (i.e., beyond the finite case), it has to be the other way around: 
 a probability distribution is an object that assigns probability to events in a way that is compatible with intuitions from the finite case we have just described.
-\newmaterial{%
 We return to this in \cref{ssec:gen-prob}.
-}%
 
 
 The standard way of updating a probability distribution based on new evidence is conditioning.
@@ -480,7 +468,7 @@ From this definition, it is easy to recover the usual definition of conditional 
 $\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
 There is just one caveat: this formula is not meaningful when $\mu(A) = 0$; in this case, we leave the conditional probability undefined.
 % Indeed, if $\mu(A) = 0$, it is arguably appropriate to say $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
-\newmaterial{%
+\oldnewmaterial{%
 But it is not undefined because there is no value that makes sense---but rather because there is an equally strong argument suggesting that \emph{every} value makes sense:
 % Indeed, if $\mu(A) = 0$, there is an equally strong argument supporting the notion that $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$: 
 if $\mu(A)= 0$, then for all $p\in [0,1]$ there is a sequence $\{ \mu_k \}_{k \in \mathbb N}$ of probability distributions converging to $\mu$ with the property that $\forall k.~\mu_k(U \mid A) = p$.
@@ -529,11 +517,12 @@ p(x) ~=~ p|x ~=~ p(Y | X{=}x) ~=~ p(Y | x) \quad \in \Delta \V Y.
 % Cpds are also called \emph{channels} in information theory. 
 Just like we write $\mu(X)$ for a distribution over the values of $X$, we
 write $p(Y|X)$ for a cpd on $Y$ given $X$. 
-\newmaterial{%
-If $p(Y|x)$ gives probability one to a single value of $Y$ for all $x \in \V\!X$, then $p(Y|X)$ is \emph{deterministic}, and has the same meaning as the function $f : X \to Y$ that maps $x$ to the value $y$ for which $p(Y|x)$ has probability one.  Conversely, given a function $f : X \to Y$, we write $\delta\!f(Y|X)$ for the corresponding deterministic cpd. 
+\oldnewmaterial{%
+If $p(Y|x)$ gives probability one to a single value of $Y$ for all $x \in \V\!X$, then $p(Y|X)$ is \emph{deterministic}, and has the same meaning as the function $f : \V\!X \to \V\mskip-2muY$ that maps $x$ to the value $y$ for which $p(Y|x)$ has probability one.  Conversely, given a function $f : X \to Y$, we write $\delta\!f(Y|X)$ for the corresponding deterministic cpd. 
 }
 In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
-We will use alternate notation (such as $\mat P_{Y|X}$) when we want to view $p(Y|X)$ as a matrix.
+% We will sometimes define cpds via 
+% We will use alternate notation (such as $\mat P_{Y|X}$) when we want to view $p(Y|X)$ as a matrix.
 
 We typically write $\X$ for the set of all variables relevant to a given context. If $X,Y \in \X$, then we write $\mu(Y|X)$ for the cpd given by first conditioning $\mu(\X)$ on $X$, and then marginalizing each conditional distribution to $Y$. 
 % Now, $\mu(Y|X)$ too is a variable 
@@ -663,12 +652,11 @@ or more formally,
 Thus, if $A$ is convex, to specify $a \in A$, it suffices to specify a probability distribution over $\mathrm{Ext}(A)$.  
 % Such distributions are called \emph{barycentric coordinates} for $A$.
 The components of a distribution $\mu \in \Delta \mathrm{Ext}(A)$ are called \emph{barycentric coordinates} for the element $a = \Ex_{v \sim \mu}[v] \in A$.
-%
+
+
+A cpd $p(Y|X)$ can be viewed as providing a barycentric coordinate system for 
+$\Delta \V Y$ whose vertices correspond to $\V\!X$. 
 \oldnewmaterial{%
-    A cpd $p(Y|X)$ can be viewed as providing a barycentric coordinate system for 
-    $\Delta \V Y$ whose vertices correspond to $\V\!X$. 
-}
-\newmaterial{%
 This way of thinking about conditional probability distributions will at times be quite useful (e.g., in \cref{ssec:cvx-prob-sets}).
 }
 
@@ -739,14 +727,6 @@ and if events cannot co-occur, then the probability that one of them occurs is t
 
 %%TODO: marginal measures, integration, expectation, in the general case.
 
-%%%
-\commentout{%%% MOVED BELOW!
-We will need a few additional concepts about measures.
-First, if $\mu$ and $\nu$ are measures over a space $(X, \mathcal F)$, 
-and $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
-$\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\nu \ll \mu$.
-Second, if $\Omega$ comes with a topology $\mathcal T$ (see \cref{prelim:topo} for definitions) and $\mu(U) > 0$ for every non-empty open set $U \in \mathcal F \cap \mathcal T$, then $\mu$ is  \emph{strictly positive} (with respect to $\cal T$).}
-
 
 \paragraph{Statistics and (Random) Variables.} 
 If $(\Omega, \mathcal F)$ and $(Y, \mathcal G)$ are two measurable spaces, then
@@ -754,40 +734,26 @@ a function $f : \Omega \to Y$ is \emph{measurable} if $f^{-1}(U) \in \mathcal F$
 In a context where one is interested in probabilities over $\Omega$, 
 a measurable function $X : \Omega \to \V\!X$ is also called a \emph{random variable} or a \emph{statistic}.
 % Although the formalism may appear quite different, it is fundamentally very similar to our notion of a variable, a connection we explore in the next two paragraphs.
-\oldnewmaterial{%
 For our purposes, measurable functions have two key properties:
 (1) they are closed under composition (so $f \circ g$ is measurable if both $f$ and $g$ are), and
 (2) if $f : (\Omega, \mathcal F) \to \Rext^n$ is a measureable function, $\mu$ is a measure on $(\Omega, \mathcal F)$, and $A \in \mathcal F$, then we can form the (Lebesgue) integral
     $\int_{A} f \mathrm d \mu$ to obtain an element of $\Rext^n$.%
 \footnote{To be certain that nothing goes wrong, 
-    it is typically also necessary to assert that either $f \ge 0$ or $\int_A |f_i| < \infty$ for all $i \in [n]$. 
-    % but the integral may still be perfectly meaningful 
-}
-% One key property of measurable functions is that they are closed under composition. 
-% Another key property of a measurable function whose 
-% % The key property of measurable functions is that we can take their integral with respect to a measure.
-% Formally, if $\mu$ is a measure over the measurable space $(\Omega, \mathcal F)$, $A \in \mathcal F$, and 
-}%
+    it is typically also necessary to assert that either $f \ge 0$ or $\int_A |f_i| < \infty$ for all $i \in [n]$.}
 
 
 
-% One way of 
-\oldnewmaterial{%
-% The last property of measures
-% is a  of simplifying the theory for general measures,
 We now present an important way of handling concerns about measurability, and bringing the formalism closer to the finite case.
 The idea is to endow each measurable space with a fixed ``base measure'', and describe all measures on a space relative to that measure. 
 Indeed, this is what we will need to develop the analogues of information theoretic quantities that extend beyond the finite case.
 To make this precise, we need:
-% which we will need to make use of information theory. 
-% A common way of simplifying the theory for general measures,
-}
 
 \paragraph{The Radon-Nikodym Derivative.}
 Suppose $\mu$ and $\nu$ are both measures over a measurable space $(\Omega,\mathcal F)$.
 %  and $\mu \ll \nu$. 
 If $\nu(U) = 0$ implies $\mu(U) = 0$ for all $U \in \mathcal F$, then
-$\mu$ is \emph{absolutely continuous} with respect to $\nu$, also written $\mu \ll \nu$.
+$\mu$ is \emph{absolutely continuous} with respect to $\nu$,
+    notated symbolically as $\mu \ll \nu$.
 When $\mu \ll \nu$, the Radon-Nikodym theorem \citep{nikodym1930generalisation} 
 states that there exists a unique 
 % $\mathcal F$-measurable function $f$
@@ -797,45 +763,54 @@ $
     \mu(A) = \int_{A} f \,\mathrm d \nu.
 $
 This function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
-
+\unskip\footnote{%
+    \newmaterial{%
+        If it's not the case that $\mu \ll \nu$, then 
+        we can still define $\frac{\mathrm d\mu}{\mathrm d\nu}$ as a function
+        to the extended reals. 
+        Let $U_0$ be the union of all measurable sets $U$ for which $\nu(U) = 0$ but $\mu(U) > 0$,
+        and let $\nu|_{\Omega \setminus U_0}:= U \mapsto \nu(U \setminus U_0)$ be the restriction of $\nu$ to the maximal subset of $\Omega$ for which $\mu$ is absolutely continuous with respect to $\nu$. 
+        In this case, we define:
+        \[
+            \frac{\mathrm d\mu}{\mathrm d\nu} :=
+                \begin{cases}
+                    \infty & \text{ if } \omega \in U_0 \\
+                    \frac{\mathrm d\nu|_{\Omega\setminus U_0}}{\mathrm d\mu|_{\Omega\setminus U_0}}&
+                        \text{ otherwise.}
+                \end{cases}
+        \]
+    }
+}
 
 In this more general setting, we no longer require $\V\!X$ to be a finite set, but in exchange, we require some structure: $\V\!X$ has to be a measurable space (i.e., come equipped with a $\sigma$-algebra).
 %
-\oldnewmaterial{%
 % From here on out, we will assume that for each variable $X$, the possible values $\V\!X$ not only comes with a $\sigma$-algebra $\mathcal F_X$ (making it a measurable space),
 Furthermore, we will also assume that $\V\!X$ comes equipped with a measure $\lambda_X$ that we call the \emph{base measure}. 
 In the case of a discrete variable $X$ that takes on finitely or countably many values, we take $\lambda_X$ to be the counting measure: for $U \subseteq \V\!X$ $\lambda_X(U) = |U|$ is the number of elements in $U$. 
 When $\V\!X$ is a subset of real space $\mathbb R^n$, we use the \emph{Lebesgue measure}, which agrees with the standard notions of length, area, and volume.
-}%
 
 
 % At a technical level,
 All of this new structure is compatible with our discussion of variables in \cref{ssec:basic-vars}.
-This is because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces
-\oldnewmaterial{(with a base measure)}.
+This is because all of our ways of constructing variables---through (indexed) sets of variables, and by applying functions---work equally well over measurable spaces (with a base measure).
 \begin{enumerate}
 \item
 Recall that a tuple $\mat X = (X_1, \ldots, X_n)$ of variables can itself be viewed as itself a variable, with
     $\V\!\mat X = \prod_{i=1}^n \V \! X_i$.
 $\V\!\mat X$ is a measurable space, because if each $\V(X_i)$ comes with a $\sigma$-algebra $\mathcal F_i$,
 then $\V\!\mat X$ naturally inherits the product algebra $\mathcal F_{1:n}$ generated by complements and countable unions of events of the form $U = U_1 \times \cdots \times U_n$ with each $U_i \in \mathcal F_i$. 
-\oldnewmaterial{%
 Similarly, it inherits the unique product measure $\lambda_{\mat X}$
 whose action on such primitive measurable sets is given by
 $\lambda_{\mat X}(U_1 \times \cdots\times U_n) := \lambda_{X_1}(U_1)
         \lambda_{X_2}(U_2) \cdots \lambda_{X_n}(U_n)$.
-}%
 
 \item Similarly, recall that when $X$ is a variable and $f : \V X \to S$ is a function, we regard $f(X)$ as a variable. In this setting, we require that $S$ 
-\oldnewmaterial{%
     come equipped with a $\sigma$-algebra $\mathcal G$ with respect to which $f$ is a measurable function.  
     The base measure $\lambda_{f(X)}$ is then the \emph{pushforward} of $\lambda_X$ through $f$, given by 
     $\lambda_{f(X)}(U) := \lambda_X( f^{-1}(U))$, for $U \in \mathcal G$.
-}
 \end{enumerate}
 
  
-\oldnewmaterial{%
 % Technically speaking $\mu(X)$ is not a random variable 
 %
 Why do we need all of this? 
@@ -852,7 +827,6 @@ for continuous variables,
     it coincides with the \emph{probability density function (pdf)} of the distribution.
 % So in particular, when we define 
 Having such an analogue of a random variable corresponding to a measure $\mu$ will be particularly important for generalizing information-theoretic quantities to continuous variables (\cref{sec:prelim-infotheory}).
-}%%%%%%%%%%
  
 % Whereas the traditional foundations of probability starts with a sample space $\Omega$ and defines random variables from it,  probabilistic modeling is done the other way around in practice: one starts with variables $\X$ of interest, and defines $\Omega := \V\!\X$ to be the joint settings of those variables. 
 % With that definition, a variable $X$ can be viewed as a random variable $X : \V\!\X \to \V\!X$ that selects the value of $X$ from the joint setting.  
@@ -904,14 +878,11 @@ Graphs come in two flavors: directed and undirected.
     and a collection $A$ of \emph{directed edges} (or \emph{arcs}), such that each $a \in A$ has a source node $\Src a \in N$ and a target node $\Tgt a \in N$.
     So, formally, the definition is
     $G = (N, A, \Src{}, \Tgt{})$, with $\Src{},\Tgt{}: A \to N$ often left implicit.
-    \oldnewmaterial{%
     We write $\ed auv \in A$ to indicate that there is some $a \in A$
     with source $\Src a = u$ and target $\Tgt a = v$,
     and we call $a$ an arc ``from $u$ to $v$''. 
-    }%
 \end{defn}
 
-\oldnewmaterial{%
 % A graph that has at most one arc from $u$ to $v$
 % Given a graph $G = (N,A)$ and a node $u \in N$,
 In a graph $G = (N,A)$, the \emph{parents} of a node $u \in N$ 
@@ -924,7 +895,6 @@ that are sources of arcs leading to $u$.
 Dually, the \emph{children} of $u \in N$ are the nodes $\Ch_G(u)$ that are targets of some arc whose source is $u$. 
     % we write $$
 There is no distinction between the two notions if the edges do not have direction.
-}%
 
 
 \begin{defn}
@@ -997,8 +967,14 @@ For example:
         \draw[-] (a) to[bend right] (c);
         
         \path[every loop/.style={}] (c) edge[loop above] (c);
-    \end{tikzpicture}
+    \end{tikzpicture}~.
 \]
+\newmaterial{
+% For this reason, 
+In many contexts, this observation leads to a natural generalization in which the numbers in this matrix need not be integers, but are \emph{weights} of a different kind.  The only key feature is that a weight of zero should be indistinguishable from the absence of an edge. 
+% This weighted analogue of a graph is a direct analogue of 
+This is precisely how \emph{confidence} works in the definition and semantics of PDGs (\cref{sec:pdgs,sec:semantics}).
+}
 
 
 \commentout{%
@@ -1020,10 +996,8 @@ not the identity on (directed) graphs.
 These choices are essentially locked in if we want to preseve the validity of the representation in terms of square binary matrices. 
 }%
 
-\newmaterial{%
 There is an important special class of (undirected) graphs that commonly arises in modeling the relationships between two distinct kinds of objects. 
 % in which nodes can be partitioned into two separte parts, and every edge crosses that partition. 
-}%
 
 \begin{defn}
     A bipartite graph $G = (L, R, E)$ is an undirected graph $(L \sqcup R, E)$ whose
@@ -1036,12 +1010,10 @@ There is an important special class of (undirected) graphs that commonly arises 
 %     A directed bipartite graph $G = (L, R, E)$ is a bipartite graph $(L, R, E)$ whose edges $E \subset (L \times R) \cup (R \times L)$ are directed. 
 %     \end{defn} }
 
-\newmaterial{%
 % There is also an a
 The notion of a graph captures only pairwise relationships between vertices. 
 If we also want to model relationships between triples of vertices, 
     it would appear that we need something more general than a graph.
-}
 
 \begin{defn}
     A \emph{hypergraph} $G = (V, \mathcal E)$ is a set $V$ of vertices,
@@ -1319,7 +1291,7 @@ In the dual hypergraphs, one should view the nodes as processes and the arcs as 
 In the duals of hypergraphs corresponding to causal models, there are no two-tailed arrows, which might be thought of as a ``merge''. 
 Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
 }%
-\newmaterial{%
+\oldnewmaterial{%
 The operation is worth visualizing. 
 A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 % If we view the hypergraphs on the top as representing processes, 
@@ -1339,7 +1311,7 @@ The second hypergraph from the left involves a split and a merge: op$_1$ produce
 The middle right hypergraph represents a cyclic process, in which op$_1$ produces B from A and op$_2$ produces A from B. 
 % The right one, on the other hand, is less clear. 
 In each of these three cases, every variable is produced by a single operation.
-(On the top, this means one hyperarc goes into every node; on the bottom, it means one hyperarc comes out of every node). 
+(On the top, this means one hyperarc goes into every node; on the bottom, it means one hyperarc comes out of every node.) 
 But what does the hypergraph on the far right represent? 
 Op$_1$ produces B from A, but op$_2$ somehow also produces B. 
 Is this meaningful?
@@ -1423,7 +1395,7 @@ What follows is really a barebones sketch of the graphical models context for th
 A \emph{qualitative Bayesian Network} (qualitative BN) is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
 An arc $X {\to} Y \in A$ intuitiely reflects a possibility that $X$ can influence $Y$. 
 % The absence of an arc, then, reflects a kind of (conditional) independence. 
-\newmaterial{%
+\oldnewmaterial{%
     Intuitively, each variable should be thought of as being associated with a process
     that produces it in a way that depends jointly on all of its parents. 
 }
@@ -1480,7 +1452,7 @@ It may be helpful to see some examples:
 The three qualitative BNs on the left all encode the same independence information:
 $X$ and $Z$ are conditionally independent given $Y$.
 The last one, however, is different: it states that $X$ and $Y$ are independent (but $Z$ can depend arbitrarily on both $X$ and $Y$).
-\newmaterial{%
+\oldnewmaterial{%
     Note also that, while the left three qualitative BNs all are 
     (almost) flowchart representations, the one on the right is not;
         the two arrows do not represent two different processes, but 
@@ -1562,14 +1534,14 @@ known as the \emph{Clifford-Hammersly Theorem}, or the \emph{fundemental theorem
 If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \mat X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ indexed by some arbitrary set $J$, and then renormalize;
     the subset $\mat X_j \subseteq \X$ is called the \emph{scope} of factor $j$. 
 %
-\newmaterial{%
+\oldnewmaterial{%
 Although we have described an annotation of a hypergraph, it is more standard and easier to draw in another form.}
 %
 The bipartite graph that corresponds naturally to this hypergraph is called a \emph{factor graph}. 
 More precisely, a factor graph has two kinds of nodes: factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
-\newmaterial{%
-Some authors reserve the term ``factor graph'' just for the bipartite graph representation, but we will also refer to the hypergraph and collection of factors this way, as they are essentially the same object. 
-}%
+Some authors reserve the term ``factor graph'' just for the bipartite graph representation, but we will also refer to the hypergraph and collection of factors this way, as 
+    % they are essentially the same object. 
+    they represent the same object. 
 We will see more details in \cref{sec:factor-graphs}.
 
 
@@ -1580,9 +1552,8 @@ Many other graphical models have been proposed as well, although
 the vast majority are variants on the two we have already described. 
 We now give a quick overview of some of these representations, although this list is far from complete. 
 \newmaterial{%
-These models make only minor appearances in the text, but knowing about them may nontheless be helpful for situating PDGs
-    % (the subject of \cref{chap:pdg-repr})
-    in the literature. 
+% These models make only minor appearances in the text, but knowing about them may nontheless be helpful for situating PDGs in the literature. 
+While these models play only a minor role in this dissertation, it may be useful to know about them so as to situate PDGs in the literature.
 }%
 % There are other ways of describing 
 
@@ -1595,11 +1566,10 @@ Writing $\U$ for the observed variables and $\V$ for the unobserved ones, a CBN 
 Graphs with both directed and undirected edges have also been used as the basis for probabilistic models.
 The most widely known graphical model of this kind is called a \emph{chain graph}, in part because it can be seen as a way of connecting conneted components (themselves factor graphs) along a directed acylcic chain.
 People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks \citep{dean1989model}\citep[\S6.2]{KF09}, and a related cut-parameterized approaches to looking at fixed points \citep{Baier_2022}.
-\oldnewmaterial{%
-    \emph{Directed factor graphs} \citep{frey2012extending}
-    combine the unify the qualitative expressiveness of directed graphical models with the (undirected) factor graph formalism,
-    but are quantitatively no different from ordinary factor graphs.
-}
+\emph{Directed factor graphs} \citep{frey2012extending}
+combine the unify the qualitative expressiveness of directed graphical models with the (undirected) factor graph formalism,
+but are quantitatively no different from ordinary factor graphs.
+
 
 % A related notion is that
 A \emph{Dependency Network (DN)} is another
@@ -1836,10 +1806,10 @@ as depicted in \cref{fig:info-diag-prelim}.
 So far, everything we have said relies on intuitions that the variables are discrete.
 % It is not hard to see that trying to take a limit 
 \newmaterial{%
-If we continous variables by discretizing them, it is not hard
-    to see that the entropy as defined goes to $\infty$ as the discritization becomes fine.
-Indeed, this is appropriate, because there is a sense in which a real number sampled from $[0,1]$ contains infinite information.
-However, it is difficult to work with divergent limits in this way;
+If we approximate continous variables by discretizing them, it is not hard
+    to see that the entropy (as defined) goes to $\infty$ as the discritization becomes arbitrarily fine.
+Indeed, there is a sense in which a real number sampled from $[0,1]$ contains an unbounded amount of information.
+However, it is difficult to work with such divergent limits;
     instead, we define a much more useful quantity.
 }%
 
@@ -1854,16 +1824,19 @@ So, for instance, the entropy of a variable $X$ in the general case is
     .
     \label{eq:gen-entropy}
 \end{equation}
-\newmaterial{%
 In the finite case, this is just what we had before. 
 However, it is important to keep in mind that this quantity can be negative in general (because, outside of the finite case, is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$). 
-The reader should also be aware that, for real-valued variables, $\H(X) = 0$ no longer means that $X$ is a constant, but rather that $X$ has expected unit density (like the uniform distirbution over $[0,1]$). 
+Consequently, for real-valued variables $\H(X) = 0$ does not mean that $X$ is a constant, but rather that $X$ has expected unit density (like the uniform distirbution over $[0,1]$). 
 % Intuitively, the scale has been shifted by $$
-Aside from these unwelcome developments, this analogue of entropy acts otherwise just like the original, but shifted by an additive constant to keep it in a more useful range.
+Aside from this unwelcome development, our new generalized notion of entropy acts otherwise just like the original, but shifted by an (infinite) additive constant to keep it in a more useful range.
 It still satisfies all of the other properties (such as the chain rule), has the same minima and gradients as the limit of the discrete entropy at infinitely fine discretization.  
-Fortunately, we do not have to lower our standards for 
+Moreover, we do not have to lower our standards for 
     (conditional) mutual information, which works just as before:
     it is non-negative and zero iff there is a (conditional) independence. 
+
+\newmaterial{
+    \TODO
+    % mention it's because the constants cancel
 }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 
@@ -1934,15 +1907,12 @@ Logitstic regression
 More generally, \emph{exponential families}, important classes of models that subsume the examples above as well as undirected graphical models, also maximize entropy subject to an expectation matching constraint. 
 
 But what about directed graphical models? Bayesian Networks, so far, have resisted such a clean characterization in terms of maximum entropy; maximum entropy approaches seem to require some sort of deference to a causal structure \citep{williamson2001foundations}. 
-\newmaterial{%
 A related concern with maximum entropy in the face of conditional information is addressed in \citep{Grove1997ProbabilityUC}.
-}%
 One contribution of this thesis is to expand the principle of maximum entropy to account for causal information and conditional constraints (\cref{sec:bn-maxent}). 
 %
 % It may be worth noting that these two arguments for maximum entropy---the high-level interpretation of the quantity as measuring the right thing, and the sociological argument to unity---directly parallel the two kinds of arguments we give for the semantics of PDGs, in \cref{chap:pdg-repr,chap:one-true-loss}, respectively.
 
 
-\newmaterial{%
 \paragraph{Entropy as a Structural Information Measure.} 
 Throughout this thesis, we will argue that entropy and its ilk are purely ``qulitative'' or ``structural'' aspects of a probability distribution (although perhaps the latter term is clearer in this context, because we are still talking about real numbers, i.e., ``quantities''). 
 % One reason for this is that we don't need to know any of the quantitative information to be able to talk about and use entropy intelligently. 
@@ -1960,7 +1930,6 @@ In other words, they operate on the qualitative aspect of a variable, not its qu
 A second reason to view entropy as structural appears in its general definition \eqref{eq:gen-entropy}.
 There, the derivative is taken with respect to structural information about the variable: the base measure, which describes only agreed-upon coordinates, not observational data about what is likely. 
 But if we replace that base measure with a \emph{probability measure} of our choosing, we get a closely related (but quite different) kind of entropy that is appropriate for working with observational information. 
-}
 
 
 \subsection{Relative Entropy}
@@ -2051,20 +2020,22 @@ Observe the similarity:
 % $
 %     \H_\mu(X) = \log |\V\!X| - \kldiv{\mu(X)}{ \Unif(X) }
 % $
-\newmaterial{%
 \paragraph{Cross Entropy.}
 Finally, to head off confusion, we mention that the \emph{cross entropy}
-\[
+\begin{equation}
     \XEnt(p,q) := \Ex_{p} \left[\log\frac{1}{q}\right]
          = \Ex_{\omega \sim p}\left[\log\frac{\mathrm d\lambda_{\Omega}}{\mathrm d q} \right]
          \qquad = \kldiv pq + \H(p),
-\]
-the standard function used to train a statistical model $q$ using data $p$, is not the same as relative entropy $\kldiv pq$.
-However, as can be seen on the right-hand side of the equation above, minimizing it is equivalent to minimizing $\kldiv pq$, because the entropy $\H(p)$ of the data is a constant and does not affect the optimization process. 
-We view use cross entropy as a small shortcut that simplifies computing with relative entropy in some contexts; we will only use it when comparing with standard learning objectives (in \cref{chap:one-true-loss,chap:LIR}).
-}%
+         \label{eqn:xent}
+\end{equation}
+the standard function used to train a statistical model $q$ using data $p$, is not the quite the same as relative entropy $\kldiv pq$.
+The two quantities, however, are equivalent as optimization targets when trying to adjust a model $q$ to match a data distribution $p$.
+As can be seen on the right-hand side of \eqref{eq:xent}, the difference between them is the entropy $\H(p)$ of the data, which has no impact when optimizing the model $q$. 
+Thus, we view cross entropy as a small shortcut that can speed up calculations with relative entropy in some contexts; we will use it only when comparing with standard learning objectives (in \cref{chap:one-true-loss,chap:LIR}).
 
-\temphide{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\commentout{
 \begin{subappendices}    
 \section{Primer on Advanded and Auxiliary Concepts}
 The main body of this chapter has focused on material that is directly in the critical path to understanding every important result in this dissertation. 
