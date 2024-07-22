@@ -560,12 +560,13 @@ We have kept them them separate in \cref{def:model} to emphasize the separation 
 We now present some shorthand to clarify the presentation.
 We typically conflate a cpd's symbol with its edge label,
 thus drawing
-the PDG with a single edge attached to $f(Y|X)$ as
+the PDG with a single edge attached to $p(Y|X)$ as
+\raisebox{-.2ex}{%
 \begin{tikzpicture}[center base]
 	\node[dpadinline] (X) at (0,0) {$X$};
-	\node[dpadinline] (Y) at (1.2,0){\small$Y$};
- 	\draw[arr1,->] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
-\end{tikzpicture}\,.
+	\node[dpadinline] (Y) at (1.2,0){$Y$};
+ 	\draw[arr1,->] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=0pt]{$p$} (Y);
+\end{tikzpicture}}\,.
 % \Cref{defn:pdg} is equivalent to one in which edge sources and targets are both \emph{sets} of variables.
 Regardless of the underlying definition of a PDG, we will use hypergraph notation, which is typically more compact and clearer. 
 Thus, we will indicate joint dependence with multi-tailed arcs, joint distributions with multi-headed arcs,
@@ -596,12 +597,12 @@ For instance, we draw
         \node[above left=0pt and 0pt of center,inner sep=2pt]{$q$};
 	\end{tikzpicture}\,.
 \]
-To emphasize that a cpd $f(Y|X)$ is deterministic
-(i.e., a function $f:X\to Y$),
+% To emphasize that a cpd $f(Y|X)$ is deterministic (i.e., a function $f:X\to Y$),
+To emphasize that a cpd is deterministic (i.e., $\delta\!f(Y|X)$ for a function $f: \V\!X\to \V\mskip-2muY$),
 we will draw its arc with two heads, as in:
 \begin{tikzpicture}[center base,scale=1.2]
-	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (X) at (0,0) {\small$X$};
-	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (Y) at (1.2,0){\small$Y$};
+	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (X) at (0,0) {$X$};
+	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt] (Y) at (1.2,0){$Y$};
  	\draw[arr1,->>] (X) -- node[fill=white, fill opacity=1, pos=0.35, inner sep=-1pt]{$f$} (Y);
 \end{tikzpicture}\,.
 We identify an event $X\!\!=\!x$ with
@@ -616,7 +617,7 @@ To specify a confidence $\beta \ne 1$,
 we place the value near the edge, lightly colored and parenthesized, as in:
 \!\!\!\!
 \begin{tikzpicture}[center base,scale=1.2]
-	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt](X){\small $X$};
+	\node[dpad0, inner sep=2.5pt, rounded corners=2.5pt](X){$X$};
     \draw[arr, <-]  (X) --
         node[above,pos=0.62, inner sep=1pt, outer sep=0pt, fill=white]{$p\!$}
         node[below,pos=0.55, inner sep=0, outer sep=1.5pt]{${\scriptscriptstyle\color{gray}(\beta)}$}
@@ -765,7 +766,8 @@ We now give an overview of important alternative variants.
     where the vertical arcs enforce equality. 
 
     \item 
-    \textbf{Lax PDGs.}
+    % \textbf{Lax PDGs.}
+    \textbf{Adaptive and Semi-PDGs.}
     The confidence $\beta_a$ in the arc $\ed aXY$ may be replaced with a separate confidence $\beta_{a,x}$ for each possible input $x \in \V(X)$. 
 	%
     More generally, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank. 
@@ -792,58 +794,6 @@ As illustrated by \cref{ex:grok-union}, a significant advantage of PDGs is their
 % we can combine the information in $\dg M_1$ and $\dg M_2$ 
 there is a simple way to combine the information in $\dg M_1$ and $\dg M_2$ 
 independently: take the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
-% Quantitatively, the resulting PDG is 
-% In many cases, this operation does exactly what one would want.
-
-\paragraph{An Important Caveat For Qualitative (Structural) Information.}
-% It is important to keep in mind, however, that this means treating the information in the PDGs 
-For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
-Independently combining the qualitative information, however, may not quite be what is intended if there is any overlap. 
-To illustrate, suppose that $\dg M_1$ and $\dg M_2$ both contain a single arc from $X$ to $Y$,
-	each specifying a single causal mechanism by which $X$ gives rise to $Y$.
-The combined PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
-% However, one might well have intended to 
-Rather than adopting two distinct mechanisms, one might well have intended to merge them, viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
-% This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
-% Yet PDG union performs no such merge.
-Yet the sum of PDGs performs no such merge.
-Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
-We will return to this point in \cref{ex:overdet},
-    and again in \cref{ex:overdet2}.
-% ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
-% This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
-% We mention that there is an even bigger problem in combining factor graphs, because the parameters 
-In that context, we will also see that the
-	analogue of this problem is even bigger 
-    for factor graphs, because 
-    $\balpha$ and $\bbeta$ are essentially ``fused together'' in these models.
-	% , as we will see in \cref{sec:factor-graphs}.
-% We will explore this in \cref{ex:overdet}. 
-
-%TODO: Convex combination of 
-It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. 
-If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$,  
-% there is no problem with taking  $\balpha$ to be
-\newmaterial{%
-it is appropriate to form a new PDG with $\balpha :=$
-}%
-$.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively. 
-For instance, if $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, then $\balpha$ will encode those shared independencies. 
-
-% Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
-% We now proceed with the formal details of PDG sums. 
-\newmaterial{%
-There are also cases where PDG sums are appropriate even for causal information. 
-% Specifically, this is the case when both the mechanisms 
-To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
-This is often appropriate if the mechanisms are describing completely different things (e.g., if the targets of the two hypergraphs are entirely distinct).
-% It can also be appropriate in settings where 
-
-\TODO
-
-    in \cref{chap:QIM}. 
-}%
-
 
 \paragraph{Formal Details of PDG Sums.}
 To be completely precise, it's helpful to first make a preliminary definition:	
@@ -936,6 +886,77 @@ While the formalism is simpler, this approach really just sweeps the issue under
 For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts.
 }%
 % and nor are they considered equal simply because they happen to have been given the same generic name ($X$) by two people modeling different things.  
+
+% Quantitatively, the resulting PDG is 
+% In many cases, this operation does exactly what one would want.
+
+\paragraph{An Important Caveat For Qualitative (Structural) Information.}
+% It is important to keep in mind, however, that this means treating the information in the PDGs 
+For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
+Independently combining the qualitative information, however, may not quite be what is intended if there is any overlap. 
+To illustrate, suppose that $\dg M_1$ and $\dg M_2$ both contain a single arc from $X$ to $Y$,
+	each specifying a single causal mechanism by which $X$ gives rise to $Y$.
+The combined PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
+% However, one might well have intended to 
+Rather than adopting two distinct mechanisms, one might well have intended to merge them, viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
+% This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
+% Yet PDG union performs no such merge.
+Yet the sum of PDGs performs no such merge.
+Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
+We will return to this point in \cref{ex:overdet},
+    and again in \cref{ex:overdet2}.
+% ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
+% This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
+% We mention that there is an even bigger problem in combining factor graphs, because the parameters 
+In that context, we will also see that the
+	analogue of this problem is even bigger 
+    for factor graphs, because 
+    $\balpha$ and $\bbeta$ are essentially ``fused together'' in these models.
+	% , as we will see in \cref{sec:factor-graphs}.
+% We will explore this in \cref{ex:overdet}. 
+
+%TODO: Convex combination of 
+It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. 
+If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$,  
+% there is no problem with taking  $\balpha$ to be
+\newmaterial{%
+it is appropriate to form a new PDG with $\balpha :=$
+}%
+$.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively. 
+For instance, if $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, then $\balpha$ will encode those shared independencies. 
+
+% Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
+% We now proceed with the formal details of PDG sums. 
+\newmaterial{%
+There are also cases where PDG sums are appropriate even for causal information. 
+% Specifically, this is the case when both the mechanisms 
+To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
+This is especially appropriate when the two hypergraphs
+    describe very different things (e.g., 
+\raisebox{-.2ex}{%
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (X) at (0,0) {$X$};
+	\node[dpadinline] (Y) at (1.2,0){$Y$};
+ 	\draw[arr1,->] (X) to (Y);
+\end{tikzpicture}}
+and
+\raisebox{-.2ex}{%
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (Y) at (0,0) {$Y$};
+	\node[dpadinline] (Z) at (1.2,0){$Z$};
+ 	\draw[arr1,->] (Y) to (Z);
+\end{tikzpicture}}).
+% It can also be appropriate in settings where 
+% The sum of qualitative information may also be appropriate 
+% But more generally
+% Yet one may also want to model independent parallel mechanisms---
+%     whose meaning we discuss in \cref{chap:QIM}. 
+% It may also be appropriate to assume that mechanisms 
+One may want to keep two mechanisms distinct even if they are parallel, if they are known to be different and simultaneously present. 
+For instance, if the presence of a compound (whose concentration is the variable $X$) is known to inhibit an enzyme (whose activity is the variable $Y$) in two unrelated ways, then a combined model should include both mechanisms. 
+We discuss the meaning of parallel mechanisms in more detail in \cref{chap:QIM}. 
+}%
+
 
 
 \section{The Semantics of PDGs}

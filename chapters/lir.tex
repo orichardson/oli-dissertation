@@ -792,8 +792,8 @@ some historically important algorithms that are instances of LIR.
 % $ can only decrease in time
 % It is worth noting that LIR does not always converge.
 
-% \section{Warmup: Control in a Classification Setting}
-\section{LIR in the Classification Setting}
+\section{LIR in Machine Learning}
+\subsection{LIR in the Classification Setting}
 Consider a parametric classifier $p_\theta(Y|X)$, perhaps
 arising from a neural network whose final layer is a softmax.
 Suppose $\V Y$ is a finite set of classes.
@@ -1105,7 +1105,7 @@ it can be just as sensible to train an input, as a model \citep{FNNS}.
 
 % \section{The EM Algorithm (and VI) as LIR}
 % \section{The EM Algorithm and Variational Inference as LIR}
-\section{The EM Algorithm as LIR}
+\subsection{The EM Algorithm as LIR}
 Suppose we have a generative model $p(Z,X | \Theta)$
 describing the probability over an observable variable $X$ and a latent one $Z$.
 % Let $x$ be an observation of $X$, as before.
@@ -1200,12 +1200,14 @@ This form of the EM algorithm is closely related to variational inference.
 Indeed, analogous choices applied to the analysis of \citet{one-true-loss}
 % to obtain a concrete training algorithm for variational autoencoders.
 yields the usual training algorithm for variational autoencoders (VAEs).
-\section{Generative Adversarial Training as LIR}
+
+\subsection{Generative Adversarial Training as LIR}
+
 \def\pdata{p_{\mathrm{data}}}
 \def\real{{\mathrm{real}}}
 \def\fake{{\mathrm{fake}}}
 LIR also subsumes more complex training procedures such as the one used to train
-GANs \citep{goodfellow2020generative}.
+\emph{generative adversarial networks} (GANs) \citep{goodfellow2020generative}.
 % The general idea is that
 The goal is to train a network $G$ to generate images that cannot be distinguished
     from real ones.
@@ -1391,8 +1393,8 @@ in the same way as
 % just like
 the original factor graph.
 % After initializing the messages, the algorithm proceeds by repeatedly recomputing:
-After initialization, belief propogation repeatedly recomputes:
-% The bulk of the algorithm involves propogating messages, each of which
+After initialization, belief propagation repeatedly recomputes:
+% The bulk of the algorithm involves propagating messages, each of which
 % is a function of other messages, as follows:
 \begin{align}
     m_{X \!\sto a}(x)
@@ -1421,7 +1423,7 @@ Observe that every calculation is a (marginal of) a product of factors,
         % on a local factor graph of the appropriate context.
         in some ``local'' factor graph.
 % On the factor graph, each node aggregates
-% The process can be visualized as propogation along the edges of the factor graph.
+% The process can be visualized as propagation along the edges of the factor graph.
 % The standard illustration of it is not so different from the PDG $\Msg$
 The traditional depiction of messages
     moving between variables and factors
@@ -1633,7 +1635,7 @@ The traditional depiction of messages
     $\chi_j(a) := \infty \cdot \mathbbm 1[ a \in C_j]$. 
     With these choices
     % \cref{prop:bp} follows easily.
-    in place, it's not hard to show that \cref{algo:LIR} amounts to belief propogation.
+    in place, it's not hard to show that \cref{algo:LIR} amounts to belief propagation.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     
@@ -1765,16 +1767,16 @@ The traditional depiction of messages
         \dg M_\Phi, \Msg
         + \dg B
          )$
-    are precisely those of BP for different message schedules.
+    are precisely those of belief propagation for different message schedules.
     % Further adopting a view with full control in $\beta$
 \end{prop}
 
-There are many established variants of this algorithm.
+There are many established variants of the belief propagation algorithm.
 Some of them are generated different by clustering factors together---%
     in the language of \citet{KF09},
-    that is to say choosing something other than the Bethe cluster graph
-    as the basis for message passing.
-Our analysis immediately applies to these other cluster graphs.
+    this amounts to selecting a cluster graph other than the ``Bethe cluster graph''
+    as the basis for the message passing algorithm.
+Our analysis immediately applies to these other cluster graphs as well. 
 % The variational form of message passing
 % With a slightly different formalism,
 % There is also a well-established variational picture, in which message
@@ -1794,7 +1796,7 @@ these divergences can be viewed as the degree of inconsistency
 of a PDG containing two distributions
     (\cref{sec:statdist}).
     %  \citep{one-true-loss}.
-% generalized belief propogation
+% generalized belief propagation
     % \citep{generalized-bp} as well.
 
 % \paragraph{Message Passing from Divergences}
@@ -1818,6 +1820,64 @@ of a PDG containing two distributions
 % All of this suggests a general process by which
 % Suppose we want to generate some structured data .
 % The general idea
+
+\newmaterial{%
+
+\section{Decision Making with LIR}
+
+In this section, we show how 
+
+\TODO
+
+\subsection{Expected Utility Maximization as LIR}
+
+In \cref{sec:reverse-engineer,sec:soft-constraint-widget} it was established that PDGs can represent expected cost,
+% albeit with some strange 
+albeit by articulating some questionable probabilistic beliefs. 
+In this section, we show that the standard picture of rational decision making---that is, expected utility maximization---can be viewed as the pursuit of consistency in this probabilistic model. 
+
+Suppose we are trying to choose an action (i.e., control a variable $A$). 
+To do so reasonably, we need to model some context. 
+Let $S$ be a variable represnting the current state of the world,
+and $O$ represent the outcome after taking our action. 
+%
+To complete the standard picture, let's further assume that 
+ we have 
+(1) some understanding of how our action $A$ and the state $S$ determine the outcome $O$, 
+(2) a belief $p(S)$ about the current state of the world,
+and (3) a utility function $u : \V O \to \mathbb R$ on possible outcomes. 
+It is easy to model this information with a PDG:
+
+\begin{center}
+    \begin{tikzpicture}
+        \node[dpadded] (S) at (0,0) {$S$};
+        \draw[arr2, <-] (S) -- node[above]{$p$} ++(-1.5, 0); 
+
+        \node[dpadded] (O) at (2,0) {$O$};
+        \node[dpadded] (U) at (4,0) {$U$};
+        \draw[arr2, ->>] (O) -- node[above, pos=0.35]{$u$}  (U);
+        \node[dpadded] (A) at (0.8,1.3) {$A$};
+            \mergearr[->] SAO
+        % \node[dpad1] (T) at (5.5,0) {$\Tru$};
+    \end{tikzpicture}
+\end{center}
+
+
+% All that's missing is a connection 
+% However, this is just a description of what
+What's missing is any sort of encoding of the fact that higher utilities
+are ``better'' than lower ones. 
+For this, we can add a ``soft constraint''
+
+\begin{prop}
+    \begin{enumerate}
+        \item The action $a \in \V A$ that minimizes the inconsistency
+        $\aar{\dg M}$
+    \end{enumerate}
+\end{prop}
+
+
+}%
 
 
 \section{Discussion and Future Work}

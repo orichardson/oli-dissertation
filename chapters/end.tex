@@ -14,7 +14,7 @@ This theory is based on probabilistic dependency graphs (PDGs), an extremely exp
 As we saw in \cref{part:univ-model}, PDGs can capture essentially every standard fragment of epistemic information, ranging from traditional probabilistic graphical models such as Bayesian Networks and factor graphs (\cref{chap:pdg-repr}) to standard representations of uncertainty (\cref{chap:repr-tools}).
 % The qualitative information in a PDG spun off another 
 A PDG has two kinds of information: structural, and observational.
-Understanding the meaning of just the structural information in a PDG has been fruitful, leading to a generalized notion of independence that seems to be the beginning of a bridge between cyclic causal models and multivariate information theory (\cref{chap:QIM}). 
+Understanding the meaning of just the structural information in a PDG has been fruitful, leading to a generalized notion of independence that seems to be the beginning of a bridge between (possibly cyclic) causal models and multivariate information theory (\cref{chap:QIM}). 
 %
 % And, as we saw in
 As evidenced by many of the results in \cref{part:univ-objective}, the observational information is perhaps even more useful. 
@@ -27,7 +27,7 @@ Indeed, learning, inference, and
 In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a universal probabilistic model, and as a universal truth-based objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
 We also gave polynomial algorithm for inference in PDGs that have bounded treewidth (\cref{chap:infer}), finally solving both problems. 
 We also develop useful principles for manipulating PDGs, 
-    allowing them to function as a visual proof language \cref{chap:reason}.
+    allowing them to function as a visual proof language (\cref{chap:reason}).
 
 
 % \commentout{%
@@ -44,8 +44,11 @@ So, for readers who are more comfortable with the latter range, we quickly summa
 % in a way that might make the
 
 % In service of this, 
-Let the \emph{(observational) self-consistency} of a PDG $\dg M$ be
-quantity
+% Let the \emph{(observational) self-consistency} of a PDG $\dg M$ be
+% quantity
+\newmaterial{%
+
+}%
 \[
     \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0) ~~\in[0,1]. 
 \]
@@ -69,7 +72,7 @@ The following facts are either immediate or follow immediately from a result in 
             $.  
         
     \item More generally, if $R_1(\mat X)$ and $R_2(\mat Y)$ are relations,
-        then $\Xi[R_1, R_2] = \Xi[ R_1 \bowtie R_2]$, where $R_1 \bowtie R_2$ is the natural joint of $R_1$ and $R_2$ (\cref{prelim:relations}).
+        then $\Xi[R_1, R_2] = \Xi[ R_1 \bowtie R_2]$, where $R_1 \bowtie R_2$ is the natural join of $R_1$ and $R_2$ (\cref{prelim:relations}).
 
     \item If $\mu$ is a probability distribution, and $U$ is an event, 
         then $\Xi[\mu, U] = \mu(U)$.
@@ -130,9 +133,11 @@ This raises another question: what can we encode by allowing probabilistic relat
 Our initial investigations suggest that the result may be quite different from the standard notion of a probabilistic database \citep{suciu2011probabilistic}, and perhaps has elements of modern information retrieval systems \citep{mitra-neural-info-retrieval,karpukhin2020dense}.
 %
 % All of this is just starting from encoding relational databases.  
-So far we have talked only about relational databases---but there is also a second important class of \emph{graph-based} databases.
+\commentout{%
+So far we have talked only about relational databases---but there is also a second important class of \emph{graph-based} databases \citep{graphdb-comparison,}.
 % But there is a second important class of databases: graph based databases, and the object graphs of object-oriented programming languages.
 In many ways, this seems an even closer fit to a PDG, and understanding whether and how they bear relationship to PDG semantics remains a promising open problem. 
+}%
 
 In Machine Learning, there has been a recent deluge of work introducing new representations and training objectives. At the moment, the two dominant architectures are \emph{diffusion models} \citep{pmlr-v37-sohl-dickstein15,ho2020denoising} and \emph{transformers} \citep{vaswani-attn}. 
 Because of their roots in VAEs (which PDGs capture well (\cref{sec:variational})), it is not hard to show that diffusion models can also be regarded as PDGs. %---%
@@ -146,12 +151,12 @@ Still, it is a question worth taking seriously, if one believes in the promise o
 
 \paragraph{Further Investigation into Qualitative PDGs.}
 \Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence (\cref{defn:qim}).
-Yet we suspect there is more to the story. 
-First, an analogue of the principle of maximum entropy 
-    leads us to a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries.
-This special variant appears to have an even closer relationship with $\SDef$.
-% There is a special 
-Furthermore, preliminary experiments suggest that minimizing structural deficiency may suffice to ensure QIM compatibility. 
+We suspect there may be more to the story. 
+% First, an analogue of the principle of maximum entropy leads us to
+First, the principle of maximum entropy suggests
+    a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries.
+This variant appears to have an even closer relationship with $\SDef$.
+Furthermore, preliminary experiments suggest that minimizing $\SDef$ may suffice to ensure QIM compatibility. 
 
 A second avenue of future research into qualitative PDGs involves the relationship between quantifiers and extreme values of the parameter $\alpha$. 
 % can be shown that very large values of $\alpha$ can be used to 
@@ -162,19 +167,28 @@ can we square this with our understanding of $\alpha$ as representing independen
  % This observation raises more questions than it answers, 
 
 
-\paragraph{Further Investigation into PDG inferece}
-As mentioned in the conclusions to \cref{chap:infer}, we have given an $\tilde O(N^{2.9})$ approach to inference in the case of bounded treewidth, but the best lower bound is $\tilde \Omega( N^1)$. 
-This is still a significant gap, that leaves PDGs trailing far behind other graphical models with analogous inference approaches.
-Furthermore, our algorithm only provably works for inference in cases where $\bbeta \ge \gamma\balpha$ is small.
-Solving the problem in the case where qualitative information plays a larger role seems to be a significantly more difficult problem in general, and one that remains open. 
-
-% Yet PDGs are 
+\paragraph{Further Investigation into PDG Inferece.}
+As mentioned in the conclusion to \cref{chap:infer}, we now have an $\tilde O(N^{2.9})$ approach to inference in the case of bounded treewidth,
+% This is still a significant gap, that leaves PDGs trailing far behind other graphical models with analogous inference approaches
+\newmaterial{%
+which is still significantly worse than the $\tilde O(N^1)$ algorithms for other graphical models with analogous inference approaches.
+ % but the best known lower bound is $\tilde \Omega( N^1)$. 
+As they are more expressive, PDG inherits an $\tilde \Omega(N^1)$ lower bound.
+This leaves a significant gap;
+we do not yet know whether it is possible to perform PDG inference more efficiently, or if we need to strengthen the lower bound. 
+}%
+Moreover, our algorithm only provably works for inference in cases where 
+    % $\bbeta \ge \gamma\balpha$).
+    % $\gamma$ (the relative importance of structural information) is sufficiently small. 
+    the importance $\gamma$ of structural information is sufficiently small
+        (i.e., $\bbeta \ge \gamma\balpha$). 
+The inference problem remains open in cases where structural information plays a leading role, and appears to be a significantly more difficult in general. 
 
 There are many different approaches to inference in traditional graphical models;
 see Chapters 9-14 of \citet{KF09} for a survey of them.
-Our approach to inference in PDG is a cousin of the the techniques developed in Ch11. But what of analogues of the other approaches? 
-Particle-based and MCMC methods in in particular (the analogue of Ch12 [ibid])
-    for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
+Our approach to inference in PDG is a close relative of the techniques developed in Chapter 11. But what of analogues of the other approaches? 
+Particle-based and MCMC methods in particular (the analogue of Chaapter 12 [ibid])
+for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
     
     % These questions are related to questions about when an
 A related question is that of a deeper understanding of the local inconsistency resolution (LIR) algorithm (the subject of \cref{chap:LIR}). 
@@ -189,11 +203,15 @@ While treewidth dominates the complexity of (exact) inference in traditional gra
 PDGs can express many things that other graphical models cannot. 
 Therefore, there may be nontrivial subclasses of PDGs that are completely unrelated to treewidth, which still admit tractable inference. 
 %
-Some inconsistencies, for example, are easier to quantify than others---a fact to which variational inference owes its existence. 
+% Some inconsistencies, for example, are easier to quantify than others---a fact to which variational inference owes its existence.
+% \newmaterial{% 
+Some inconsistencies are easier to quantify than others, for example,
+    which is arguably the basis of variational inference.
+% }%
 % Without even looking at the probabilities
 In some cases, one can easily verify that a PDG has zero inconsistency through its hypergraph alone, without even looking at the probabilities.
 (That is why it is possible to ensure representations are consistent by construction in the first place.)
-Neither of these subclasses has anything to do with bounded treewidth. 
+These subclasses of PDGs have nothing to do with bounded treewidth. 
 Are there general principles that tell us how difficult it could be to calculate a PDG's degree of inconsistency from $(\balpha,\bbeta,\Ar)$?
 Might it be possible to automate the 
     search for PDGs that upper and lower bound a PDG's inconsistency,
@@ -209,7 +227,7 @@ In \cref{chap:PDG-cat}, we found that PDGs can be viewed as diagrams in a certai
 We saw that categorical limits of PDGs are important. But what about colimits, and natural transformations between them? 
 The categorical picture opens a vast landscape of abstract research directions.
 One natural question is whether probability can replaced by something else---in categorical terms, what is needed to make probability work for a different monad.
-
+%
 Other connections that seem promising connecting to categorical characterizations of relative entropy \citep{baez2014bayesiancharacterizationrelativeentropy} 
 and of information loss \citep[Theorem 12.4.9]{leinster2021entropy}.
 Doing this properly may also require developing a categorical account of confidence (the subject of \cref{chap:conf}). 
@@ -257,11 +275,12 @@ But the deeper question---of whether or not this theory will ultimately help hum
 We are already building powerful artificial agents that are quickly reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
 
 
+\commentout{
 This unified theory of probabilistic modeling and epistemic conflict has the potential to be a key element of that future.
 % Universal 
 For one, it could provide students and researchers with a principled approach to understanding and designing these systems---even the powerful modern ones which are seldom fully consistent. 
 For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
-Indeed, the entire theory is based only on truth and trust---analogues of ``utility'' appear only ephemeral intermediates in this process. 
+Indeed, the entire theory is based only on truth and confidence---analogues of ``utility'' appear only ephemeral intermediates in this process. 
 There is also a case to be made that universal constructions promote diversity and fairness.
 %
 % Perhaps for now, what's important is clear and flexible thinking. 
@@ -275,7 +294,23 @@ is to develop a clearer and more mature understanding
 % rather setting the stage for clearer 
 % clear and flexible thinking 
 % Set the stage for a clearer understanding of AI systems in the future.
-% Set the stage for a clearer understanding of AI systems in the future.
+}%
+
+This unified theory of probabilistic modeling and epistemic conflict has the potential to be a key element of that future.
+For one, it could provide students and researchers with a principled approach to understanding and designing these systems---even the powerful modern ones which are seldom fully consistent. 
+For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
+Indeed, the entire theory is based only on truth and confidence.
+While analogues of preferences and utilities are not exempt from criticism, but rather (often questionable) probabilistic modeling choices. 
+ % ``utility'' appear only ephemeral intermediates in this process. 
+There is also a case to be made that universal constructions promote diversity and fairness.
+%joe3: "I have no clue what you have in mind here"
+% Arguably, discriminating  is the very definition of fairness.
+Perhaps in this moment, 
+    the most important application of all is to figure out how to build AI s
+%joe3: What does this last sentence have to do with what came before? Last paragraph must be completely rewritten. 
+
+
+
 
 
 % So perhaps the real applications can come later. 

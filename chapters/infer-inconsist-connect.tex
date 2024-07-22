@@ -2,10 +2,15 @@
 \colorlet{proofmatt}{white}
 
 
-On one hand, PDGs are powerful modeling tools, and representations of uncertainty.
-On the other, PDGs are universal loss functions. 
-This chapter describes a deep connection between two roles of PDGs. 
-We start with a suggestive observation: that the semantics by which PDGs specify a distribution is equivalent to the semantics that simply evaluates a PDG's degree of inconsistency (\cref{sec:semantic-connection}). 
+On one hand, PDGs are powerful modeling tools, and representations of uncertainty (\cref{part:univ-model}).
+% On the other, PDGs are universal loss functions. 
+\newmaterial{%
+On the other hand, PDGs can be viewed as a natural way of specifying
+    an objective function (\cref{part:univ-objective}).
+}%
+This chapter describes a deep connection between the two roles. 
+We start with a suggestive observation:
+the semantics by which PDGs specify a distribution is equivalent to the semantics that simply evaluates a PDG's degree of inconsistency (\cref{sec:semantic-connection}). 
 We then build on this semantic connection by describing a surprisingly strong algorithmic one: an inconsistency oracle can be used to perform inference (\cref{sec:deeper-connection-overview}) in almost-linear time. 
 % To do this precisely, we must also formally describe the problems of approximate inference and inconsistency (\cref{sec:approximate-inference}).
 % We prove  (rather substantial) proof to \cref{proofs:the-reductions}.
