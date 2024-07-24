@@ -252,8 +252,9 @@ the inconsistency of believing both a distribution and an event
 happens to be the standard measure of discrepancy between the two%
 ---and is even named after
 ``surprise'', a particular expression of epistemic conflict.
-\forjoe{This text was here in the original paper. I strongly stand by surprise being a kind of epistemic conflict. I polled several people around me and several language models (``is surprise a kind of epistemic conflict, or not?''), and uniformly got positive answers. 
-Here's what claude has to say:
+\forjoe{This text was here in the original paper. I stand by surprise being a kind of epistemic conflict. I polled a few friends and language models (``is surprise a kind of epistemic conflict, or not?''), and uniformly got positive answers. 
+I've given several talks where I use this line, and have seen a lot of nods.
+Here's what Claude has to say:
 \begin{quotation}\it
 Surprise can indeed be viewed as a form of epistemic conflict. To understand this, let's break down the concepts:
 
@@ -325,6 +326,10 @@ $\XEnt(\datadist\xsamp,p)$
 is the expected code length per sample
 from $\datadist\xsamp$, when using codes optimized for the (incorrect) distribution $p$.
 So implicitly, a modeler using cross-entropy has already articulated a belief the data distribution $\datadist\xsamp$ is the ``true one''.
+\forjoe{%
+	cross entropy and relative entropy are different quantities, but related, and equivalent for optimization.  
+	I think this is well known.  In any case, we have a whole bolded paragraph discussing this in the preliminaries, and it also becomes clear if you compare this result with Prop 6.9.
+}%
 To get the same effect from a PDG, the modeler must make this belief explicit by
 placing infinite confidence in the data distribution $\datadist\xsamp$.
 
@@ -1269,6 +1274,8 @@ but with confidence $\beta$ in $p(Z)$.%
 
 \section{Free Energy as Factor Graph Inconsistency}
     \label{sec:free-energy-fg-inc}
+
+\forjoe{There's no dash in ``factor graph'', as standardly written.}
 A weighted factor graph $\Psi = (\phi_J, \theta_J)_{J \in \cal J}$, where each $\theta_J$ is a real-valued weight, $J$ is associated with a subset of variables $\mathbf X_J$, and  $\phi_J : \V(\mathbf X_J) \to \mathbb R$, determines a distribution by
 % \vskip-1.4em
 \vspace{-2ex}

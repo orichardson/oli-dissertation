@@ -591,7 +591,7 @@ The \emph{exponential cone} is the convex set
         \qquad \subset \mathbb \Rext^3.
     \end{aligned}
 \end{align*}
-It is also sometimes called the ``relative entropy cone', for reasons we will see in \cref{sec:minimize-inc}.
+It is also sometimes called the ``relative entropy cone'', for reasons we will see in \cref{sec:minimize-inc}.
 % \discard{\voli{It is also sometimes called the ``relative entropy'' cone, because if $\mat m, \mat p \in \Delta^{n-1} \subset \mathbb R^n$ are points on a probability simplex, then $(-\mat u, \mat m, \mat p) \in K_{\exp}^n$ if and only if $\mat u$ is an upper bound on $\mat m \log (\nicefrac{\mat m}{\mat p})$, the pointwise contribution to relative entropy at each outcome.}}
 Suppose $K  =  K_{\exp}^p  \times [0, \infty]^q 
 \subset \smash\Rext^n$ is a product of $p$ exponential cones and $q = n - 3k$ non-negative orthants.
@@ -1878,13 +1878,15 @@ Our results fall broadly into three categories:
     and also that, by construction, $(\mu, \mat u')$ also satisfies the constraints of \eqref{prob:joint-inc}.
     In more detail: at the index $(a', s', t')$,
     $\mat u'$ does not violate the associated exponential cone constraint
-    $$
-        \left( \text{because}~ 
+    because
+    \[
+        % \left( \text{because}~ 
         u'_{a',s',t'} = \frac12 u_{a',s',t'} + \frac12 \log \mu(s',t')\log \frac{\mu(s',t')}{\p_{a'}(t'|s')\mu(s')}
         >
         \mu(s',t') \log \frac{\mu(s',t')}{\p_{a'}(t'|s')\mu(s')}
-        \right),
-    $$
+        % \right)
+        ,
+    \]
     and $\mat u'$ equals $\mat u$ at other indices, and therefore satisfies the constraint everywhere else as well.
     But now, because $u'_{a', s', t'} < u_{a',s',t'}$, and $\beta_{a'} >0$, we also have
     \[

@@ -33,7 +33,8 @@ If there is one thing on which we can all agree, it is a contempt for inconsiste
 The foundational principles of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
 For without one, we risk being swindled \citep{sep-dutch-book} or misled 
 % \citep{explosion},
-\citep{priest1996paraconsistent}, 
+% \citep{priest1996paraconsistent}, 
+(ex falso quodlibet)
 if not humiliated \citep{finocchiaro1981fallacies,russell1902letter}.
 % For middle reference, looking into Reinhardt cardinals and Kuen's theorem,
 % or Frege
@@ -46,21 +47,41 @@ if not humiliated \citep{finocchiaro1981fallacies,russell1902letter}.
 % Why? Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
 
 % Computer scientists who build cognition from scratch, have capitalized on an opportunity to not only avoid contradictions, but  build frameworks where they're impossible by design. 
-Computer scientists like us, who build cognition from scratch, have capitalized on an opportunity to eliminate contradictions in artificial agents altogether, by using epistemic representations that are consistent by design.
-Theorists are careful to prove things about clearly defined models,
-while applied computer scientists have long built artificial agents
+% Computer scientists like us, who build cognition from scratch, have capitalized on an opportunity to eliminate contradictions in artificial agents altogether, by using epistemic representations that are consistent by design.
 \newmaterial{%
-using representations that, by construction, cannot even encode inconsistency. 
-}%
+Economists, seeking to characterize rational thought, have established  probability the gold standard for epistemic representations; by using it, one can express uncertainty, but not hold conflicting beliefs. 
+Computer scientists, making use of such representations, have capitalized on an oportunity to eliminate inconsistency in artifical agents altogether. 
+Today, theorists are careful to prove things about clearly defined (probabilistic) models, 
+while practitioners endeavor to build systems
+    % that represent a single coherent probability distribution.
+    whose state represents a single coherent (probabilistic) 
+        view of the world. 
+% Inconsistency should impossible by design.
+Even most programmers agree: 
+    when possible, we should make inconsistency should be eliminated by design. 
+%
+% Theorists are careful to prove things about clearly defined models,
+% while applied computer scientists have long built artificial agents
+% using representations that, by construction, cannot even encode inconsistency. 
 % using representations that make inconsistency impossible by design.
 %
-We would rather have one definition of $X$ and one technique for computing $X$ than several different approaches and implementations
-    \newmaterial{that could, in principle, disagree}. 
+% We would rather have one definition of $X$ and one technique for computing $X$ than several different approaches and implementations that could, in principle, disagree. 
+}%
+We would rather have one definition of $X$ and one technique for computing $X$ than several different approaches and implementations that could, in principle, disagree. 
 We would rather use one library for telling time than two.
 And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
-Why? Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
+Why?
+% Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
+Because 
+\newmaterial{%
+by computing things in just one way, 
+it is impossible to obtain conflicting answers,
+% granting
+and so we become immune to inconsistency.
+}%
+% invulnerability to our one common enemy: inconsistency.
 
-Yet this invulnerability comes with shackles.
+Yet this immunity comes with shackles.
 Would \emph{you} trade \emph{your} freedom to see things from two angles at once---to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
 %
 In order to always present a consistent front, it is necessary to fully process new information before moving on. Mulling is prohibited, as
@@ -84,21 +105,17 @@ But, in a sense, redundancy and inconsistency are opposite sides of the same coi
 % % Apparently unfazed by the prospect of representing inconsistency, the cryptographers distributed systems people 
 % But consistent-by-construction representations are also redundancy-free, by construction. 
 % For if we have two different representations that could conceivably agree, producing redundancy, then those two representations could conceivably be inconsistent with one another. 
-\newmaterial{%
 If we use only representations that avoid inconsistency 
     % by  making disagreement impossible,
-    by preempting the possibility of two meaningfully distinct answers to a question 
-        (using only one watch, so to speak),
+by preempting the possibility of two meaningfully distinct answers to a question 
+    (using only one watch, so to speak),
     % then there are no two meaningfully distinct,
     % and so there can be no redundancy, either. 
     then we also cannot have meaningful agreement, 
         and hence no redundancy. 
-}
 % are also redundancy-free, by construction. 
 Without opportunity for internal conflict, there can be no opportunity for internal agreement; 
-    \newmaterial{%
 it is the possibility of disagrement that makes agreement valuable. 
-    }%
 % The only way to eliminate the possibility  opportunity for internal conflict, then there is also no opportunity for internal agreement. 
 
 
@@ -297,13 +314,12 @@ Finally, we conclude with discussion and open questions in \cref{chap:end}.
 % we first prime the reader to notice a few recurring themes.
 % }% 
 
-\newmaterial{
 % Our last order of business before starting in earnest is to prime ourselves to notice some important recurring themes. 
 Before embarking in earnest, we first prime ourselves to notice some important recurring themes. 
 Some of these patterns have been important guiding principles;
     others surprised us by their recurrance. 
 By recognizing these patterns, it may be easier to digest the material that succeeds them. 
-}
+
 
 \subsection{Mathematical Precision for Informal Reasoning}
 
@@ -396,14 +412,16 @@ The division between the two kinds of objects
 A few examples of the distinction we're getting at are given below.
 
 \begin{center}
+    \singlespacingplus
     \begin{tabular}{c|c}
-        Qualitative & Quantitative \\ 
         Structural & Observational \\
             \hline
+        Qualitative & Quantitative \\ 
         Types & Values \\ 
         Theorems & Proofs \\
         Definitions & Examples \\
-        Schemas & Instances 
+        Schemas & Instances \\
+        Classes & Objects
     \end{tabular}
 \end{center}
 
@@ -492,24 +510,38 @@ So, chaining these observations together, one might reasonably conclude that bip
 }%
 We will see this happen almost immediately even in the preliminary material: with hypergraphs and bipartite graphs (\cref{sec:prelim-graphs}), with variables, sets of variables, and random variables, (\cref{ssec:basic-vars,sec:var-randomvar}), and with causal models and randomized causal models (\cref{sec:causal}),
     % to say nothing of the novel math developed in this thesis.
-before we even get into our own contributions. 
+% before we even get into our own contributions. 
+to say nothing of the novel material. 
 % This pattern will be a recurring theme in this dissertation. 
 %
-But even against this backdrop,
+Even against this backdrop,
 % Another example is that (fully) randomized PSEMs are equivalent to ordinary PSEMs (\cref{sec:causal}).
-Probabilistic Dependency Graphs (PDGs), the central mathematical object whose theory that we develop in this dissertation, are particularly special in this regard. 
+Probabilistic Dependency Graphs (PDGs), the central mathematical object whose theory we develop, are particularly special in this regard. 
 Not only can PDGs capture a great many things 
 % (\cref{chap:pdg-repr,chap:repr-tools})
 \unskip, but they also encompass many natural ``obvious generalizations'' of themselves (\cref{sec:alt-pdgs}). 
 If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many natural variants of TMs that seem on the surface to make them more expressive.  
-Yet ``generalized'' TMs with multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary Turing Machines. 
+Yet ``generalized'' TMs with multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary TMs. 
+% \oldnewmaterial{%
+%     % Being equivalent to 
+% This property---invariance under obvious ``geneneralizations''---makes objects such as TMs and PDGs particularly special. 
+% }
+%
+PDGs push the idea even further:
+% PDGs push this idea even further.
+% Not only is it the case that there are many different ways of specifying a PDG that are all equivalent, 
+% but also there are also several different semantics, 
+% \oldnewmaterial{%
+% seemingly carrying different amounts of information,
+% }%
+% that also turn out to all be equivalent.     
+PDGs also have several different semantics, which seemingly carry different amounts of information, that turn out to be equivalent as well (\cref{chap:inc-infer-connection}). 
 
-    % For PDGs, this is true not only 
-    % PDGs push this idea even further.
-PDGs push this idea even further.
-% PDGs exhibit this kind of equivalence in an in.
-Not only is it the case that there are many different ways of specifying a PDG that are all equivalent, 
-but also there are also several different semantics (with seemingly different expressiveness), that also turn out to all be equivalent.     
+% But first, we should review some math. 
+But before we get into the details, we should review some math. 
+
+
+
 % Because of this property, together 
 \commentout{%
     This property, together with their ability to capture seemingly every other epistemic representation has led us to call PDGs, informally, \emph{a universal modeling language}.
@@ -517,11 +549,9 @@ but also there are also several different semantics (with seemingly different ex
     \Cref{part:univ-objective} explores a different aspect
         in which PDGs are universal: minimizing inconsistency appears to be a \emph{universal objective}. 
     }%
-\newmaterial{%
-    \Cref{part:univ-model} aims to justify this rather bold terminology.
-    \Cref{part:univ-objective} explores a different aspect
-        in which PDGs are universal: minimizing inconsistency appears to be a \emph{universal objective}. 
-    The two aspects of PDGs are deeply related, as we will see in \cref{part:algo-logic-complexity}.  
-}
-
-But first, we should review some math. 
+    % \oldnewmaterial{%
+    % This also suggests that the PDG representation might be special.
+    % Indeed, as we will discover in \cref{part:univ-model},
+    %     PDGs naturally capture an incredibly 
+    %     wide array of standard epistemic representations.
+    % }%

@@ -190,7 +190,7 @@ $p$ (the new information is shown in blue).
 % Doing so does not change the meaning of the original arcs.
 Doing so does not change the meaning of the original arcs.
 \unskip\footnote{%
-    While the meaning of the original arcs does not change, one might want something different at a qualitative level, as we will explore in \cref{sec:pdg-combine}).
+    While the meaning of the original arcs does not change, one might want something different at a qualitative level, as we will explore in \cref{sec:pdg-combine}.
 }
 Unlike a Bayesian update, the operation is even reversible: all we need
 to do recover our original belief state is delete the new arc, 
@@ -384,7 +384,7 @@ time to reflect, we can represent her (conflicted) knowledge state
 with the 
 depicted graphically on the right of \Cref{fig:grok-combine}.
 %
-\forjoe{I believe the text above is still accurate (although the conflicted knowledge state may be conflicted not just about the cpds, but also about the causal mechanisms.) We haven't said anything about qualitative information or mechanisms at this point, and I don't think it would be a good idea to do so here.}
+% \forjoe{I believe the text above is still accurate (although the conflicted knowledge state may be conflicted not just about the cpds, but also about the causal mechanisms.) We haven't said anything about qualitative information or mechanisms at this point, and I don't think it would be a good idea to do so here.}
 
 
 \begin{figure}
@@ -462,7 +462,8 @@ In the coming sections, we formalize PDGs and relate them to other approaches.
 	
 \section{Syntax}\label{sec:formal+syntax}
 % We now provide formal definitions for PDGs.        
-We now provide our first formal definition of a PDG.
+% We now provide our first formal definition of a PDG.
+We can now provide the formal definition of a PDG. 
 
 
 % Although it is possible to formalize PDGs with hyperarcs directly, we opt for a different approach here, in which PDGs have only regular arcs, and hyperarcs are captured using a simple construction that involves adding an extra node.
@@ -491,7 +492,7 @@ is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \balpha, \bbeta)$, where
 	\item[$\Ar$] 
 		% \notation{$\subseteq \N \times \N \times \mathit{Label}$}%
 		% \notation{$: \sum_A 2^\N \times 2^\N$}%
-		is a collection of (hyper)arcs each $a\in \Ar$ of which has source(s) $S$ and target(s) $T$ in $\N$;
+		is a collection of (hyper)arcs each $a\in \Ar$ of which has source(s) $\Src a$ and target(s) $\Tgt a$ in $\N$;
 	\item[$\V$]
 		% \notation{$: \N \to \Set$}%
 		associates each node $N \in \N$ with a set $\V(N)$ of possible values, allowing us to view it as a variable;
@@ -751,10 +752,10 @@ We now give an overview of important alternative variants.
         \end{tikzpicture}
         \qquad\rightsquigarrow\qquad
         \begin{tikzpicture}[center base]
-            \node[dpadded](X1) at (0,0) {$X_1$};
-            \node[dpadded](Y1) at (3,0) {$Y_1$};
-            \node[dpadded](X2) at (0,2) {$X_2$};
-            \node[dpadded](Y2) at (3,2) {$Y_2$};
+            \node[dpadded](X1) at (0,0) {$X$};
+            \node[dpadded](Y1) at (3,0) {$Y$};
+            \node[dpadded](X2) at (0,2) {$X'$};
+            \node[dpadded](Y2) at (3,2) {$Y'$};
             \draw[arr2] (X1) to (Y1);
             \draw[arr2] (X2) to (Y2);
             \draw[arr2,->>] (X1) to[bend left] (X2);
@@ -767,12 +768,13 @@ We now give an overview of important alternative variants.
 
     \item 
     % \textbf{Lax PDGs.}
-    \textbf{Adaptive and Semi-PDGs.}
+    % \textbf{Adaptive and Semi-PDGs.}
+    \textbf{PDGs with adaptive confidences, missing values, and probability ranges.}
     The confidence $\beta_a$ in the arc $\ed aXY$ may be replaced with a separate confidence $\beta_{a,x}$ for each possible input $x \in \V(X)$. 
 	%
-    More generally, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank. 
+    More generally, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank---or, instead of a single conditional probability, one might want to specify a range of possible values. 
 	%  Relatedly, one could imagine a 
-    We show in \cref{sec:prob-widget} that these two seeming generalizations of a PDG are equivalent to the definition we already have. 
+    We will see in \cref{sec:prob-widget} that these seeming generalizations of a PDG are equivalent to the definition we have already given. 
 
     \item 
     \textbf{Parametric PDGs.}
@@ -794,8 +796,14 @@ As illustrated by \cref{ex:grok-union}, a significant advantage of PDGs is their
 % we can combine the information in $\dg M_1$ and $\dg M_2$ 
 there is a simple way to combine the information in $\dg M_1$ and $\dg M_2$ 
 independently: take the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
+\newmaterial{%
+We call this the \emph{sum} or \emph{join} of $\dg M_1$ and $\dg M_2$. 
+% We first give the formal details of this operation, 
+%     and then caution a modeler to think carefully about whether or not
+%     this is 
+}%
 
-\paragraph{Formal Details of PDG Sums.}
+% \paragraph{Formal Details of PDG Sums.}
 To be completely precise, it's helpful to first make a preliminary definition:	
 % \begin{defn}
 %     % [$\V$-compatibility]
@@ -825,20 +833,22 @@ $
 	But the definition is unnecessary if we take the traditional approach in graphical models and rely on implicit variable equality.}
 % Indeed, if
 %
-We can only combine PDGs that are $\V$-compatible---but this is not a meaningful restriction. 
-If in place of the pair $(\N, \V)$, PDGs are specified directly using a set $\X$ of variables, then this definition is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
+We can only combine PDGs that are $\V$-compatible. 
+But this is not a very significant restriction;
+% If in place of the pair $(\N, \V)$, PDGs are specified directly using a set $\X$ of variables, then this definition is unnecessary, as its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
+its sole purpose is to ensure that we do not accidentally identify variables in different PDGs that do not take on the same values. 
  % $N \in \N$ in $\dg M_1$ and $\dg M_2$ if their interpretations can be identified as one variable. With that, we can make
 %
-In any case, the point is the following formal definition for how to combine independent information:
+% In any case, the point is the following formal definition for how to combine independent information:
 
 \begin{defn}
 		\label{defn:pdg-sum}
-	The sum of $\V$-compatible PDGs is given by
+	The \emph{sum} or \emph{join} of two $\V$-compatible PDGs is given by
 		taking the disjoint union of their arcs and associated data.
 	Explicitly, if
 	$\dg M_1 = (\N_1, \V_1, \Ar_1, \mathbb P_1, \balpha_1,\bbeta_1)$ and
 	$\dg M_2 = (\N_2, \V_2, \Ar_2, \mathbb P_2, \balpha_2,\bbeta_2)$
-	are $\V$-compatible PDGs, then
+	are $\V$-compatible, then
 	\[
 		\dg M_1 + \dg M_2 :=
 			\Big(
@@ -850,12 +860,25 @@ In any case, the point is the following formal definition for how to combine ind
 				\bbeta_2 \sqcup \bbeta_2,
 			\Big),
 	\]
-	where, for $f,g : X \to Y$, the function $f \sqcup g : X \sqcup X \to Y$
+	% where, for $f,g : X \to Y$, the function $f \sqcup g : X \sqcup X \to Y$
+	% is given by
+	% \[
+	% 	f \sqcup g := \left\{\singlespacing\begin{array}{c}
+	% 		\mathrm{inl}(x) \mapsto f(x) \\
+	% 		\mathrm{inr}(x) \mapsto g(x)
+	% 	\end{array} \right.
+	% 	.
+	% 	% f \sqcup g ( \mathrm{inr}(x)) := g(x).
+	% 	\qedhere
+	% \]
+    % \newmaterial{%
+	where, for $f : A \to X$ and $g : B \to X$, the function 
+        $f \sqcup g : A \sqcup B \to X$
 	is given by
 	\[
 		f \sqcup g := \left\{\singlespacing\begin{array}{c}
-			\mathrm{inl}(x) \mapsto f(x) \\
-			\mathrm{inr}(x) \mapsto g(x)
+			(A,a) \mapsto f(a) \\
+			(B,b) \mapsto g(b)
 		\end{array} \right.
 		.
 		% f \sqcup g ( \mathrm{inr}(x)) := g(x).
@@ -893,16 +916,65 @@ For instance, one needs to take care that two variables are not implicitly consi
 \paragraph{An Important Caveat For Qualitative (Structural) Information.}
 % It is important to keep in mind, however, that this means treating the information in the PDGs 
 For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
-Independently combining the qualitative information, however, may not quite be what is intended if there is any overlap. 
+% Independently combining
+\newmaterial{%
+Merely joining
+}%
+the qualitative information, however, may not always 
+    have the intended effect.
+ % if there is any overlap. 
 To illustrate, suppose that $\dg M_1$ and $\dg M_2$ both contain a single arc from $X$ to $Y$,
 	each specifying a single causal mechanism by which $X$ gives rise to $Y$.
-The combined PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
+The 
+% combined
+PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
+\newmaterial{%
+% To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
+% This is especially appropriate when the two hypergraphs
+This is appropriate if the  underlying mechanisms are in fact independent---
+for instance, if the presence of a compound (whose concentration is the variable $X$) is known to inhibit an enzyme (whose activity is the variable $Y$) in two unrelated ways.
+Mechanism independence (again, see \cref{chap:QIM})
+    is also typically a reasonable assumption if the two models
+    have sufficiently different structures (e.g., if
+\raisebox{-.2ex}{%
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (X) at (0,0) {$X$};
+	\node[dpadinline] (Y) at (1.0,0){$Y$};
+ 	\draw[arr1,->] (X) to (Y);
+\end{tikzpicture}}
+and
+\raisebox{-.2ex}{%
+\begin{tikzpicture}[center base]
+	\node[dpadinline] (Y) at (0,0) {$Y$};
+	\node[dpadinline] (Z) at (1.0,0){$Z$};
+ 	\draw[arr1,->] (Y) to (Z);
+\end{tikzpicture}}).
+% It can also be appropriate in settings where 
+% The sum of qualitative information may also be appropriate 
+% But more generally
+% Yet one may also want to model independent parallel mechanisms---
+%     whose meaning we discuss in \cref{chap:QIM}. 
+% It may also be appropriate to assume that mechanisms 
+}%
+
+
 % However, one might well have intended to 
-Rather than adopting two distinct mechanisms, one might well have intended to merge them, viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
+% Rather than adopting two distinct mechanisms,    one might well have intended to merge them, 
+\newmaterial{%
+However, 
+if one views the qualitative information in two different PDGs not as two distinct mechanisms, but as as independent accounts of the \emph{same} mechanism, 
+then the sum of the PDGs alone is not appropriate---in
+this case, it would be better to also merge the two mechanisms into a single one.
+% one might well have intended to merge the two mechanisms,
+}%
+% viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 % Yet PDG union performs no such merge.
-Yet the sum of PDGs performs no such merge.
-Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
+The sum of PDGs performs no such merge.
+%
+%
+% Indeed, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
+Unfortunately, the ``appropriate thing'' to do seems to depend on context, and so we urge the modeler to think about which (if any) qualitative mechanisms ought to be merged together, after this operation. 
 We will return to this point in \cref{ex:overdet},
     and again in \cref{ex:overdet2}.
 % ; indeed, we have not found an algorithm we endorse to implement that intuition, and so we urge the modeler to think carefully about the appropriate causal picture in the combined PDG.
@@ -923,39 +995,38 @@ If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 
 it is appropriate to form a new PDG with $\balpha :=$
 }%
 $.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively. 
-For instance, if $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, then $\balpha$ will encode those shared independencies. 
+If $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, for instance, then $\balpha$ will still encode those shared independencies. 
 
 % Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
 % We now proceed with the formal details of PDG sums. 
-\newmaterial{%
-There are also cases where PDG sums are appropriate even for causal information. 
-% Specifically, this is the case when both the mechanisms 
-To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
-This is especially appropriate when the two hypergraphs
-    describe very different things (e.g., 
-\raisebox{-.2ex}{%
-\begin{tikzpicture}[center base]
-	\node[dpadinline] (X) at (0,0) {$X$};
-	\node[dpadinline] (Y) at (1.2,0){$Y$};
- 	\draw[arr1,->] (X) to (Y);
-\end{tikzpicture}}
-and
-\raisebox{-.2ex}{%
-\begin{tikzpicture}[center base]
-	\node[dpadinline] (Y) at (0,0) {$Y$};
-	\node[dpadinline] (Z) at (1.2,0){$Z$};
- 	\draw[arr1,->] (Y) to (Z);
-\end{tikzpicture}}).
-% It can also be appropriate in settings where 
-% The sum of qualitative information may also be appropriate 
-% But more generally
-% Yet one may also want to model independent parallel mechanisms---
-%     whose meaning we discuss in \cref{chap:QIM}. 
-% It may also be appropriate to assume that mechanisms 
-One may want to keep two mechanisms distinct even if they are parallel, if they are known to be different and simultaneously present. 
-For instance, if the presence of a compound (whose concentration is the variable $X$) is known to inhibit an enzyme (whose activity is the variable $Y$) in two unrelated ways, then a combined model should include both mechanisms. 
-We discuss the meaning of parallel mechanisms in more detail in \cref{chap:QIM}. 
-}%
+% \newmaterial{%
+% There are also cases where PDG sums are appropriate even for causal information. 
+% To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
+% This is especially appropriate when the two hypergraphs
+%     describe very different things (e.g., 
+% \raisebox{-.2ex}{%
+% \begin{tikzpicture}[center base]
+% 	\node[dpadinline] (X) at (0,0) {$X$};
+% 	\node[dpadinline] (Y) at (1.0,0){$Y$};
+%  	\draw[arr1,->] (X) to (Y);
+% \end{tikzpicture}}
+% and
+% \raisebox{-.2ex}{%
+% \begin{tikzpicture}[center base]
+% 	\node[dpadinline] (Y) at (0,0) {$Y$};
+% 	\node[dpadinline] (Z) at (1.0,0){$Z$};
+%  	\draw[arr1,->] (Y) to (Z);
+% \end{tikzpicture}}).
+% % It can also be appropriate in settings where 
+% % The sum of qualitative information may also be appropriate 
+% % But more generally
+% % Yet one may also want to model independent parallel mechanisms---
+% %     whose meaning we discuss in \cref{chap:QIM}. 
+% % It may also be appropriate to assume that mechanisms 
+% One may want to keep two mechanisms distinct even if they are parallel, if they are known to be different and simultaneously present. 
+% For instance, if the presence of a compound (whose concentration is the variable $X$) is known to inhibit an enzyme (whose activity is the variable $Y$) in two unrelated ways, then a combined model should include both mechanisms. 
+% We discuss the meaning of parallel mechanisms in more detail in \cref{chap:QIM}. 
+% }%
 
 
 

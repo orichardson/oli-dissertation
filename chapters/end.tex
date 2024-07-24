@@ -17,7 +17,8 @@ A PDG has two kinds of information: structural, and observational.
 Understanding the meaning of just the structural information in a PDG has been fruitful, leading to a generalized notion of independence that seems to be the beginning of a bridge between (possibly cyclic) causal models and multivariate information theory (\cref{chap:QIM}). 
 %
 % And, as we saw in
-As evidenced by many of the results in \cref{part:univ-objective}, the observational information is perhaps even more useful. 
+% As evidenced by many of the results in \cref{part:univ-objective}, the observational information is perhaps even more useful. 
+The observational information in a PDG is even more useful. 
 With it, PDGs can capture systems composed of neural networks; moreover, 
     the degree of observational inconsistency of the resulting PDG always seems to be the standard loss function used to train the model in question (\cref{chap:one-true-loss}),
 Furthermore, a wide variety of standard algorithms can be viewed as instances of a simple approach to resolving inconsistencies (\cref{chap:LIR}).
@@ -47,20 +48,28 @@ So, for readers who are more comfortable with the latter range, we quickly summa
 % Let the \emph{(observational) self-consistency} of a PDG $\dg M$ be
 % quantity
 \newmaterial{%
-
-}%
+Define \emph{(observational) self-consistency}
+of a collection of mathematical objects $\{ M_1, M_2, \ldots\}$
+to be the quantity
+% to be
 \[
-    \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0) ~~\in[0,1]. 
+    % \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0) ~~\in[0,1]. 
+    \Xi\{ M_1, M_2, \ldots \} := \mathfrak\exp\Big( -  \aar[\big]{\dg M_{M_1} + \dg M_{M_2} + \cdots}_0\Big) ~~\in[0,1]
 \]
+% be the \emph{(observational) self-consistency}
+that results from implicitly converting each object to a PDG, 
+    joining them together with a sum, measuring the inconsistency,
+    and then reporting a consistency score in the range $[0,1]$. 
+}%
 % This allows us to reframe some of the properties we have already seen in a way that, to some, may look even more natural in this form.
 The following facts are either immediate or follow immediately from a result in \cref{chap:repr-tools} or \ref{chap:one-true-loss}.
 % We can summarize and reframe a number of the properties we have seen in terms of the self-consistency $\Xi[\dg M]$
 % \begin{prop}
 \begin{itemize}
     \item 
-    A flat out logical contradiction has $\Xi[\False] = 0$ because it is completely inconsistent, while a collection of fully consistent probabilistic information $\dg M$ has $\Xi[\dg M] = 1$. 
+    A flat out logical contradiction has $\Xi\{\False\} = 0$ because it is completely inconsistent, while a collection of fully consistent probabilistic information $\dg M$ (such as a Bayesian Network or probability distribution) has $\Xi\{ \dg M \} = 1$. 
 
-    \item If $U$ is an event, then $\Xi[U] = {\singlespacing\begin{cases}
+    \item If $U$ is an event, then $\Xi\{U\} = {\singlespacing\begin{cases}
         0 & \text{ if } U = \emptyset \\
         1 & \text{ if } U \ne \emptyset
     \end{cases}}$
@@ -72,23 +81,31 @@ The following facts are either immediate or follow immediately from a result in 
             $.  
         
     \item More generally, if $R_1(\mat X)$ and $R_2(\mat Y)$ are relations,
-        then $\Xi[R_1, R_2] = \Xi[ R_1 \bowtie R_2]$, where $R_1 \bowtie R_2$ is the natural join of $R_1$ and $R_2$ (\cref{prelim:relations}).
+        then $\Xi\{ R_1, R_2\} = \Xi\{ R_1 \bowtie R_2\}$, where $R_1 \bowtie R_2$ is the natural join of $R_1$ and $R_2$.
+         % (\cref{prelim:relations}).
 
     \item If $\mu$ is a probability distribution, and $U$ is an event, 
-        then $\Xi[\mu, U] = \mu(U)$.
+        then $\Xi\{\mu, U\} = \mu(U)$.
     
-    \item If $\Bel$ is a Dempster-Shafer Belief function and $\Plaus$ is the corresponding plausibility function, and $U$ is an event, then $\Xi[\Plaus, U] = \Xi[\Bel, U] = \Plaus(U)$. 
+    \item If $\Bel$ is a Dempster-Shafer Belief function and $\Plaus$ is the corresponding plausibility function, and $U$ is an event, then 
+    \[
+    % $
+    \Xi\{\Plaus, U\} = \Xi\{\Bel, U\} = \Plaus(U)
+    .
+    % $
+    \] 
 
-    \item If $\mathcal P$ is a convex set of probability distributions and $U$ is an event, then $\Xi[ \dg M_{\mathcal P}] = \sup_{P \in \mathcal P} P(U)$. 
+    \item If $\mathcal P$ is a convex set of probability distributions and $U$ is an event, then $\Xi\{ \dg M_{\mathcal P} \} = \sup_{P \in \mathcal P} P(U)$. 
 
     % \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
     \item If $D = \{(x_i, y_i) \}$ is a set of training data and $f : X \to Y$ is a
         deterministic classifier, 
         then 
-        $\Xi[\Pr_D, f ]$ is the accuracy of $f$ on $D$. 
+        $\Xi\{ \Pr_D, f \}$ is the accuracy of $f$ on $D$. 
     
     \item If $p, q \in \Delta \V\!X$ are distributions over a discrete variable $X$, then
-        $\Xi[ p(X), q(X)] = \Big( \sum_{x \in \V\!X} \sqrt{p(x) q(x)} \Big)^2$ is the square of the Bhattacharya coefficient. 
+        $\Xi\{ p(X), q(X)\} = \Big( \sum_{x \in \V\!X} \sqrt{p(x) q(x)} \Big)^2$ is the square of the Bhattacharya coefficient, a well-established measure of similarity between distributions. 
+        
         If $p$ and $q$ are each given confidence $\frac12$, then $1-\Xi[p,q]$ is the squared Hellinger distance between $p$ and $q$. 
 
     \item 
@@ -96,7 +113,7 @@ The following facts are either immediate or follow immediately from a result in 
         If $p$ and $q$ are both unit normal distributions over $X$, 
         with means $m_1$ and $m_2$, respectively, then
          % are both normal distributions over $X$, then
-        $\Xi[ p(X), q(X) ] = \exp( - \frac12 (m_1 - m_2)^2)$
+        $\Xi\{ p(X), q(X) \} = \exp( - \frac12 (m_1 - m_2)^2)$
         itself resembles the density of a unit normal distribution.        
     % If $p(Y|X)$ is instead a probabilistic classifier, then 
     % $\Xi[ \Pr_D !  + p(Y|X)]$
@@ -153,9 +170,12 @@ Still, it is a question worth taking seriously, if one believes in the promise o
 \Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence (\cref{defn:qim}).
 We suspect there may be more to the story. 
 % First, an analogue of the principle of maximum entropy leads us to
-First, the principle of maximum entropy suggests
-    a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries.
-This variant appears to have an even closer relationship with $\SDef$.
+\newmaterial{%
+% First, 
+For instance, the principle of maximum entropy suggests
+    a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries---and
+    this variant appears to have an even closer relationship with $\SDef$.
+}%
 Furthermore, preliminary experiments suggest that minimizing $\SDef$ may suffice to ensure QIM compatibility. 
 
 A second avenue of future research into qualitative PDGs involves the relationship between quantifiers and extreme values of the parameter $\alpha$. 
@@ -189,14 +209,14 @@ see Chapters 9-14 of \citet{KF09} for a survey of them.
 Our approach to inference in PDG is a close relative of the techniques developed in Chapter 11. But what of analogues of the other approaches? 
 Particle-based and MCMC methods in particular (the analogue of Chaapter 12 [ibid])
 for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
-    
-    % These questions are related to questions about when an
+%    
+%
 A related question is that of a deeper understanding of the local inconsistency resolution (LIR) algorithm (the subject of \cref{chap:LIR}). 
-% We know that locally resolving 
 Under what conditions does this procedure converge?
-And if it converges, when does it produce correct answers?
-These questions are closely related to similar questions about belief propagation, which have been partially resolved across decades of research
-\citep{yedida-genpb,wiegerinck-fracbp,minka2005divergence}.
+If it converges, when does it produce ``correct'' answers?
+\newmaterial{%
+It has taken decades of research to address similar questions about belief propagation \citep{yedida-genpb,wiegerinck-fracbp,minka2005divergence}, which is a special case.
+}%
 
 
 While treewidth dominates the complexity of (exact) inference in traditional graphical models, it is not obvious that the same must be true for PDGs. 
@@ -236,22 +256,34 @@ Yet the most important future work lies in application rather than theory.
 
 \section{Impact: Implementing and Applying the Theory}
 
-The material here has been conceptual, mathematically technical, and sometimes philosophical.
+% The material here has been conceptual, mathematically technical, and sometimes philosophical.
+This material has been conceptual, mathematical, and somtimes philosophical.
+% $\qquad$ 
+\\~\hfil
 But \emph{is it useful}?
+\hfil\par
 
 Narrowly construed as ``can it be used to help us understand AI systems built with probabilistic tools'', I submit that the answer is a resounding yes. 
-% Pedagogically speaking, we have achieved 
-For pedagogical reasons alone, there is clear value in unifying so many different concepts in a way that clarifies the relationships between them.
-Especially so because it also answers important foundational questions, such as how loss functions are related to one another, and to probability.
-
-Equally narrowly construed as, ``can I run it on my laptop?'', the answer is also yes. 
-For the reader interested in playing around with PDGs, I have developed a general-purpose Python library implementing the framework in the discrete case, as well as many of the constructions in this thesis;
-it can be found at \url{https://github.com/orichardson/pdg}.
-%
-Many of the concepts we have seen have proven difficult to manipulate in my head, and the truth has surprised me often.
-% Every paper in this thesis has had, at some point, a fatal mistake.  
-Using and developing this library has helped me explore and understand the material more deeply; I cannot recommend implementing one's math highly enough. 
-To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
+% For pedagogical reasons alone, there is clear value in unifying so many different concepts and clarifying the relationships between them.
+% Especially so because it also answers important foundational questions, such as how loss functions are related to one another, and to probability.
+For pedagogical reasons alone, there is clear value in unifying so many different concepts 
+\newmaterial{%
+in a simple language---especially 
+    because it answers foundational questions about these concepts (such as where loss functions come from) and explains relationships between them.
+    % in a simple  that answers foundational questions about where 
+Equally narrowly construed as, ``can I run it on my laptop?'', the answer is also yes:
+\commentout{%
+% For the reader interested in playing around with PDGs, I have developed a general-purpose Python library implementing the framework in the discrete case, as well as many of the constructions in this thesis;
+% it can be found at \url{https://github.com/orichardson/pdg}.
+% Many of the concepts we have seen have proven difficult to manipulate in my head, and the truth has surprised me often.
+% % Every paper in this thesis has had, at some point, a fatal mistake.  
+% Using and developing this library has helped me explore and understand the material more deeply; I cannot recommend implementing one's math highly enough. 
+% To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
+}%
+another artifact of this research progrm has been general-purpose Python library implementing the framework in the discrete case
+(\url{https://github.com/orichardson/pdg}).
+}%
+I cannot highly enough recommend implementing one's math; to a reader who wonders why bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
 
 % But much of the work
 % While some of the ideas 
@@ -271,8 +303,65 @@ To a reader who wonders why one should bother testing something when you could p
 % But solving important problems is difficult and takes time. 
 % The theory will have to suffice for now. 
 
-But the deeper question---of whether or not this theory will ultimately help humanity address important real-world problems---remains the most important open question of all.
+% But the deeper question---of whether or not this theory could ultimately help humanity---remains the most important open question of all.
+\newmaterial{%
+The deeper question---of whether or not this theory will ultimately help humanity---remains open.
+But it has promise.}
 We are already building powerful artificial agents that are quickly reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
+\newmaterial{%
+The theory described in this thesis has the potential to be a key element of that future.
+
+% First, this theory contributes to interpretability. 
+% One of the biggest complaints about neural networks is that they are 
+Useful as they are, modern neural-network based systems have significant drawbacks:
+their behavior can be difficult to understand, 
+and theid revelopment requires lots tedious fiddling seemingly ad-hoc choices.
+To a critical eye, this makes them very difficult to trust.
+% difficult to understand and motivate, and that using them requires ad-hoc choices. 
+The present theory helps to explain why these systems work, at an intuitive level.
+It can help practitioners make or defend these choices in a principled manner, and it provides an intuitive visual calculus for describing AI systems and reasoning about their relationships. 
+% The potential impact may be even larger.
+The impact of this may be even larger, considering the current context. 
+
+% The principle question 
+% A fundemental question about the future of 
+At the moment, the most critical problem in
+    AI is arguably the \emph{alignment problem}
+\citep{wiener-alignment1960,alignment-zhuang-2020-NeurIPS,bostrom-superintelligence,christian2020alignment}:
+what values should we give to AI systems? 
+A key feature of a machine learning system is an explicit optimization objective that the system seeks to minimize. 
+But as AI becomes increasingly capable, choosing an optimization objective feels increasingly like using a monkey paw:
+% do we really want some simple metric of profit or engagement or hapiness to be maximized by a ``psychopathic god''? 
+can we really trust an inhumanly clever psychopath to maximize some metric of profit or productivity or hapiness? 
+% The concern stems from 
+% Are there natural, universal values?
+% According to the standard microeconomic theory, the answer is no: an agent is entitled to its own preference, morals, goals, and values. 
+According to the standard microeconomic theory, an agent is entitled to its own preference, morals, goals, and values.
+Unfortunately, with deft implementation and taken to an extreme, most values would be catastrophic for humans. 
+% Unfortunately most values, implemented deftly and taken to an extreme, would be catastrophic for humans.
+It would seem our only hope is to align the AI to values of its users;
+    % current practice is therefore to fine-tune trained models to imbue them
+    hence the effort to imbue models with 
+    ``human preferences'' \citep{christiano2017deep}.
+% But this begs a question: why are the original trained models not so bad?
+% According to the standard microeconomic theory, the answer is no: an agent is entitled to its own preference, morals, goals, and values. 
+% But is it really a good idea
+%
+% But what if there's something wrong about 
+% But do we really 
+% what if there's something wrong about the way we think about value?
+% But what if our very understanding of value was flawed.
+But is this fair? Will it privilege high-minded ideals such as truth? Do we want to give this enormous responsibility to users who give the most feedback?
+The outlook appears bleak.
+Yet, in light of what we have seen in this thesis, there may be another way. 
+Maybe our AIs do not need to take a mathematically undefended stand in the space of values at all. 
+Perhaps we can lean mostly on a single \emph{universal} value: 
+% \begin{center}
+% \\\hfill
+the pursuit of self-consistency.
+% \end{center}
+% As we have seen, this way of thinking provides deep insights into 
+}%
 
 
 \commentout{
@@ -282,32 +371,27 @@ For one, it could provide students and researchers with a principled approach to
 For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
 Indeed, the entire theory is based only on truth and confidence---analogues of ``utility'' appear only ephemeral intermediates in this process. 
 There is also a case to be made that universal constructions promote diversity and fairness.
-%
-% Perhaps for now, what's important is clear and flexible thinking. 
+%joe3: "I have no clue what you have in mind here"
 Perhaps in this moment, 
 % even more important than solving a real-world problem better than anyone else
 what's most important
 is to develop a clearer and more mature understanding
     of cognition---both for ourselves,
     and for the generations of powerful AI systems to come.
- % developing clear and flexible thinking. 
-% rather setting the stage for clearer 
-% clear and flexible thinking 
-% Set the stage for a clearer understanding of AI systems in the future.
-}%
-
-This unified theory of probabilistic modeling and epistemic conflict has the potential to be a key element of that future.
-For one, it could provide students and researchers with a principled approach to understanding and designing these systems---even the powerful modern ones which are seldom fully consistent. 
-For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
-Indeed, the entire theory is based only on truth and confidence.
-While analogues of preferences and utilities are not exempt from criticism, but rather (often questionable) probabilistic modeling choices. 
- % ``utility'' appear only ephemeral intermediates in this process. 
-There is also a case to be made that universal constructions promote diversity and fairness.
-%joe3: "I have no clue what you have in mind here"
-% Arguably, discriminating  is the very definition of fairness.
-Perhaps in this moment, 
-    the most important application of all is to figure out how to build AI s
 %joe3: What does this last sentence have to do with what came before? Last paragraph must be completely rewritten. 
+}%
+% For one, it 
+
+
+% For one, it could provide students and researchers with a principled approach to understanding and designing these systems---even the powerful modern ones which are seldom fully consistent. 
+% For another, it may help to resolve questions of alignment, as it provides a principled way of pursuing a universal value: self-consistency. 
+% Indeed, the entire theory is based only on truth and confidence.
+% While analogues of preferences and utilities are not exempt from criticism, but rather (often questionable) probabilistic modeling choices. 
+%  % ``utility'' appear only ephemeral intermediates in this process. 
+% There is also a case to be made that universal constructions promote diversity and fairness.
+% % Arguably, discriminating  is the very definition of fairness.
+% Perhaps in this moment, 
+%     the most important application of all is to figure out how to build AI s
 
 
 

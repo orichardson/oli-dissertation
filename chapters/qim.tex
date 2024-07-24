@@ -378,7 +378,6 @@ a \emph{directed hypergraph}---which, as we have already seen,
 is the structure of
 a PDG.
 
-\newmaterial{%
 Although some qualitative aspects of PDGs were characterized  
 using a scoring function (\cref{ssec:qual-scoring}), that scoring function 
 does not obviously correspond to an analogue of our set-of-distributions semantics $\SD{-}$ for quantitative information (\cref{sec:set-of-distribution-semantics}).
@@ -390,7 +389,6 @@ arbitrary directed hypergraph.
 % In this work, we develop a semantics that does so from first principles.
 % In this chapter, we develop from first principles an alternate qualitative semantics for directed hypergraphs.
 In this chapter, we develop precisely such a notion.
-}%
 %oli20: now, drawing from \vjoe. Below %oli20 modifications are relative to Joe's initial version.
 More precisely, we define what it means for a distribution to be 
 %oli20: cut
@@ -854,9 +852,7 @@ so that each $X \in \N$ will ultimately be associated with a
 % (for simplicity, finite)
 set $\V\!X$ of possible values.
 However, one should not think of $\V$ as part of the information carried by the hypergraph. 
-\newmaterial{%
 (Indeed, $\V$ and $(\N,\Ar)$ are separate components of a PDG.)
-}%
 %oli21: cutting for space
 %joe17: Why are you cutting this; I actually found it helpful.  There
 %are other things I'd rather cut.  Reinstated for now.
@@ -4775,11 +4771,9 @@ show that our information-theoretic constraints degrade gracefully on ``near-com
     \caption[An illustration of the interaction information identity]{%
         % The components of the information profile $\mat I_\mu$
         % for three variables $\X = \{X,Y,Z\}$,
-        \newmaterial{%
         A graphical illustration that 
         $\I(X;Y;Z) = \H(X,Y,Z) -  {\color{purple!60!black}\H(X|Y)} + {\color{violet!65!black}\H(Y|Z)} + {\color{blue!50!black}\H(Z|X)}$,
         on an information diagram.
-        }%
     % and their relationships.
      % for $\X {=} \{X,Y,Z\}$.
      }
@@ -4829,13 +4823,16 @@ Linear combinations of these quantities
 % can be viewed as the inner product between a vector $\mat v$ of integers
 can be viewed as the inner product between a coefficient vector $\mat v$
 and a $2^{|\X|}-1$ dimensional vector $\mat I_\mu$ that we will call the \emph{information profile} of $\mu$. 
-\newmaterial{%
 % For three variables, the components of this vector are illustrated in \cref{fig:info-diag-a}.
 For three variables, the components of this vector were illustrated in \cref{fig:info-diag-prelim}; 
-for convenience, we give another illustration of it in \cref{fig:info-diag-a}.
+for the convenience, 
+    % we give another illustration of it in \cref{fig:info-diag-a}.
+    we give another illustration of it here \cref{fig:info-diag-a},
+\newmaterial{%
+    colored to illustrate an identity which will be important momentarily.
+}%
 \forjoe{
     looking at this diagram is important at this point in the text. Also, this one has a slightly different annotation.  The previous one had more diversity of different concepts; this one gives an intuitive visual proof of a property we need in the next two pages.}
-}%
 %
 %oli15: moved above:
 % This is illustrated for three variables in \cref{fig:info-diag}(a).
@@ -8054,9 +8051,7 @@ Here is another counter-example, of a very different kind.
 We now return to the ``easy'' direction of the correspondence between \scibility\ witnesses and causal models, mentioned at the beginning of \cref{sec:witness-to-causal-model}.
 Given a (generalized) randomized PSEM $\cal M$, we now show that distributions $\nu \in \SD{\cal M}$ 
 % are \scibility\ witnesses showing that the marginals of $\nu$ are \scible\ with the hypergraph $\Ar_{\cal M}$. 
-\newmaterial{%
 are witnesses to the \scibility\ of the marginals of $\nu$ with the hypergraph $\Ar_{\cal M}$. 
-}%
 More formally:
 
 %oli22: killing this material; was a dumping ground

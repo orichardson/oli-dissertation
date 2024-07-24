@@ -85,7 +85,9 @@ in which $W$ is a variable with possible values $\V W := \Omega$:
 It is easy to see that these PDGs are consistent, and represent precisely the distribution $\mu$ and the set of random variables, no matter what $\bbeta > 0$ we select.
 
 Of course, the semantics of PDGs developed in \cref{sec:semantics}
-make heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and so it would be circular to implicitly convert joint distributions to PDGs before developing the results of the previous chapter---%
+make
+(\forjoe{I feel more comfortable using ``semantics'' as plural. Is that ok?})
+heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and so it would be circular to implicitly convert joint distributions to PDGs before developing the results of the previous chapter---%
 but now that PDG semantics are on solid ground, we may freely regard a joint distribution as a PDG. 
 % This will be useful to keep in mind later, 
 %     but it is neither surprising,
@@ -265,8 +267,9 @@ Intuitively, the variable $\Tru$ is uninteresting because it always takes the va
 So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$.
 \newmaterial{%
 What remains are a pair of double-headed arcs joined head-to-head,
-}
-    
+visually encoding the potential for epistemic
+    conflict if the constraint is violated.
+}%    
 Just as we have left $\Tru$ implicit in the graphical notation,
 % Correspondingly, 
 we will want to identify a distribution $\mu(\X)$ with 
@@ -276,8 +279,9 @@ in the following theorem statement, where we treat it carefully.
 % relations, events, and constraints are essentially the same.
 
 
-While it is not surprising that this construction encodes a relation
-    as far as PDG semantics are concerned, it is still worth verifying.
+% While it is not surprising that this construction encodes a relation
+%     as far as PDG semantics are concerned, it is still worth verifying.
+    
 \begin{linked}{prop}{constraints-work}
     If $R = R(\var A_1, \ldots, \var A_n) = R(\mat X)$ is a relational constraint
     on the variables $\mat X = \{\var A_1, \ldots, \var A_n\}$, then,
@@ -329,11 +333,17 @@ While it is not surprising that this construction encodes a relation
     \label{sec:soft-constraint-widget}
 
 We have seen how ``hard constraints''  $\V\!X \to \{0, 1\}$ can be added to a PDG.
-But what about ``soft'' constraints, i.e., the gray area between zero and one? 
+But what about ``soft'' constraints, 
+    for which violations can lie in the gray area between zero and one? 
 %
-This is very different from specifying a probability over $X$; we could assign every $X$ a value of $0.99$, or $0.01$; there is no reason that the assignments should sum to $1$.
-%
-In light of the construction in the previous section, we now have an obvious candidate for how to do this: simply do precisely what we did for a hard constraint, except use a cpd $c(\Tru \mid X)$ that is not deterministic in place of $\delta R(\Tru\mid X)$. 
+\newmaterial{%
+Although it is a vector of shape $\V \!X$, 
+this is very different from specifying a probability over $X$
+because there is no reason the assignments should sum to $1$;
+we could assign every $x$ a violation of $0.99$ or $0.01$, for instance.
+Still, 
+}%
+in light of the construction in the previous section, there is an obvious way to approach this: simply do same as before, except use a cpd $c(\Tru \mid X)$ that may not be deterministic in place of $\delta R(\Tru\mid X)$. 
 
 
 Given a set $\mat X$ of variables, and a function
@@ -357,7 +367,7 @@ Semantically, the PDG $\dg M_s$ has almost all of the properties we have seen in
 % Now, given such a cpd $p(\Tru \mid X)$, 
 % for any PDG we have 
 
-\begin{linked}{prop}{soft-constr}
+\begin{linked}{prop}{soft-constr-work}
     % Given a PDG $\dg M$ and a 
     Given a 
     function $s : \V\!X \to [0,1]$. 
@@ -415,7 +425,10 @@ Semantically, the PDG $\dg M_s$ has almost all of the properties we have seen in
 Despite the similarity so far, there is a big difference between hard and soft constraints:
     values of $x$ that have intermediate satisfaction scores $s(x) \in (0,1)$,
     while not fully consistent, are still possible.
-Indeed, such values of $x$ may even be probable in the optimal distribution, 
+\newmaterial{%
+Indeed, such values of $x$ may even be probable 
+}%
+in the optimal distribution, 
     % when the context is inconsistent enough. 
     if that happens to be the best way to resolve an inconsistency.
 % To understand more deeply, 
@@ -423,7 +436,7 @@ To get a deeper understanding, it is helpful to look at the scoring function of
 $\dg M_s$ in the context of another (arbitrary) PDG:
 \begin{equation}
     \bbr{\dg M_s + \dg M}_\gamma(\mu) 
-        = \bbr{\dg M}_\gamma(\mu) - \Ex_\mu [ \log s(X) ].
+        = \bbr{\dg M}_\gamma(\mu) - \Ex\nolimits_\mu \big[\, \log s(X) \,\big].
         \label{eq:soft-constr-score}
 \end{equation}
 The key is the final term;
@@ -508,7 +521,7 @@ Suppose we have a distance metric $d$ on a space $X$.
 % \[  
 %     W_k(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)^k\Big]^{\frac1k}.
 % \]
-The \emph{Wasserstein distance} (also called earth-mover's distance or Kantorovich metric) between $p,q \in \Delta X$, given by
+The \emph{Wasserstein distance} (also called earth-mover's distance or the Kantorovich metric) between $p,q \in \Delta X$, given by
 \[  
     W_1(p,q) := \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big],
 \]
@@ -565,7 +578,10 @@ we have:
 
             \mergearr XYT
             \node[above=0pt of center-XYT] {$\hat d$};
-        \end{tikzpicture}}\vphantom{\Bigg|}_{\!\!0}
+        \end{tikzpicture}}
+            % \vphantom{\Bigg|}
+            \Bigg.
+            _{\!\!0}
         = \inf_{\mu \in \Pi(p,q)} \Ex_{\mu} \Big[d(X,Y)\Big] = W_1(p,q),
     \]
     where the exclamation points indicate high confidence $(\beta = \infty)$. 
@@ -583,8 +599,13 @@ we have:
     \qedhere
     \]
     % and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint-widget}. 
-    }
+    }%
 \end{proof}
+%
+\newmaterial{%
+It follows that objectives based on optimal transport, which are thought of as 
+geometrically sensitive alternatives to relative entropy, can in fact be represented directly with PDGs (whose semantics are given in terms of entropy), provided the transport cost is articulated in terms of a soft constraint. 
+}%
 
 % \subsection{Graph-Hypergraph Equivalence}
 \subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
@@ -594,13 +615,13 @@ A cpd between discrete variables can be represented by
     a stochastic matrix (i.e., a matrix whose rows sum to one).
 It turns out that it is possible to use the machinery of PDGs
     to, effectively, give only some of the values in that matrix.
-In PDG notation, we abbreviate the widget that implements $p(Y|X)$ with some missing values by adding an empty circle at the tail, i.e., drawing 
+In PDG notation, we may abbreviate the widget that implements $p(Y|X)$ with some missing values by adding an empty circle at the tail, i.e., drawing 
 \begin{tikzpicture}[center base]
     \node[dpad1] (X) at (0,0) {$X$};
     \node[dpad1] (Y) at (1.5,0) {$Y$};
     \draw[arr2,o->] (X) to (Y);
 \end{tikzpicture}.    
-
+%
 We now present an important extreme case of that construction:
 how, for any $p \in [0,1]$, we can construct a PDG
 that represents the belief that $\Pr(Y{=}y|X={x}) = p$, but says nothing about
@@ -724,7 +745,7 @@ In addition to $\hat p$ and the new variables, this PDG
 So, when we add $\Pr(Y=y|X=x) = p$ to a PDG $\dg M$, what we really mean is:
 first convert construct a widget as above, and add that structure (i.e., the new variables
 $X_xY_y$ and $Y_y$, their definitions $s_1$ and $s_2$, and the cpd $\hat p$) to $\dg M$.
-
+%
 In what sense does this ``work''?
 The first order of business
 is to prove that it behaves as we should expect,
@@ -734,8 +755,8 @@ This means showing that the widget contains precisely the information
 We now explore two ways of making this precise with the semanics of PDGs.
 % , in the case we're interested in.
 
-\begin{prop}
-        \label{prop:individual-prob-1}
+\begin{linked}{prop}{individual-prob-1}
+        % \label{prop:individual-prob-1}
     If $\dg M$ is a PDG, then 
     % \[
     $
@@ -760,37 +781,14 @@ We now explore two ways of making this precise with the semanics of PDGs.
     \bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}.
     % \]
     $
-\end{prop}
-\begin{proof}
-    ($\implies$.)
-    Suppose $\mu \in \SD{\dg M}$ has $\mu(y|x) = p$, and let $\bar\mu$ be its extenson via the functions $s_1$ and $s_2$ to the variables $\XxYyshort$ and $\Yyshort$. 
-    % Since $\mu(y|x) = p$, 
-    $s_1$ ensures that $\XxYyshort = x$ precisely when $X = x$. 
-    By assumption, the probability (according to $\mu$) that $Y{=}y$
-    when $X{=}x$ is $p$. But $s_2$ ensures that $Y{=}y$ precisely when $\Yyshort{=}y$. 
-    Thus,
-    $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$.
-    So $\bar \mu$ satisfies the constraint given by the first row of $\hat p$
-        in \cref{fig:pyx-widget}.
-    When $\XxYyshort \ne x$, on the other hand, then $s_1$ and $s_2$ ensure
-    that $\XxYyshort = \Yyshort = Y$, thereby satisfying the other rows 
-    of the cpd $\hat p$. 
-    Thus, $\bar \mu$ satisfies all cpds of $\dg M$, in addition to $s_1, s_2$, and $\hat p$, and therefore $\bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}$.
-    
-    ($\impliedby$.)
-    Choose some $\bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}$,
-    and let $\mu$ be its marginal on the variables of $\dg M$. 
-    By the logic above, $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x)$.
-    Since $\bar\mu$ satisfies the cpd $\hat p$, it follows that $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$ as desired.
-    Since $\bar\mu$ also satisfies all the cpds of $\dg M$, we also have $\mu \in \SD{\dg M}$.
-\end{proof}
+\end{linked}
 
 We have shown that the effect of our widget on a PDG's set-of-distributions semantics is precisely to restrict to distributions $\mu$ in which $\mu(y|x) = p$. 
 But this result is vacuous for inconsistent PDGs, whose set-of-distributions semantics is empty. 
 We now give a result of similar character for the inconsistency semantics of a PDG, 
 which shows our construction behaves appropriately for all PDGs. 
 
-\begin{prop}%\label{lem:inc-inc-eq}
+\begin{linked}{prop}{indiv-prob-inc-conditional}%\label{lem:inc-inc-eq}
     % For all PDGs $\dg M$ with $\bbeta \ge \mat 0$ and all $\gamma > 0$, we have that
     Suppose $\dg M$ is a PDG with variables $\X$ and $\bbeta \ge \mat 0$.
     Then, for all $X,Y \subseteq \X$, $x \in \V X$, $y \in \V Y$, $p \in [0,1]$ and $\gamma \ge 0$,
@@ -801,79 +799,7 @@ which shows our construction behaves appropriately for all PDGs.
     with equality if and only if there exists $\mu \in \bbr{\dg M}^*_\gamma$
     such that $\mu(Y{=}y|X{=}x) = p$.
     (Note that this condition is trivially satisfied when $\mu(X{=}x) =0$.)
-\end{prop}
-\begin{lproof}
-    The inequality is immediate; it is an instance of monotonicity of inconsistency
-    % \cite[Lemma 1]{one-true-loss},
-    \cref{lemma!},
-    which we will discuss in depth in \cref{sec:monotone}. Intuitively: believing more cannot make you any less
-    inconsistent.  We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
-
-    $(\impliedby)$. Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y|X{=}x) = p$.
-    Because $\mu \in \bbr{\dg M}^*_\gamma$, we know that
-    $\bbr{\dg M}_\gamma(\mu) = \aar{\dg M}$.
-    Let $\hat \mu$ be the extension of $\mu$ to the new variables ``$\XxYy$'' and $``\Yy$'',
-        whose values are functions of $X$ and $Y$ according to $s_1$ and $s_2$. Then,
-    {\allowdisplaybreaks
-    \begin{align*}
-        &\aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma}
-            \\&\le \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) 
-            \\&= \bbr{\dg M}_\gamma(\mu) + \Ex_{\mu}\left[
-                \log \frac{\hat\mu(\Yyshort | \XxYyshort)}{ \hat p(\Yyshort | \XxYyshort)} \right]
-            \\&= \bbr{\dg M}_\gamma(\mu) +
-                \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} \\
-                &\hphantom{=\bbr{\dg M}_\gamma(\mu)}
-                + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} 
-            \\&= \bbr{\dg M}_\gamma(\mu) +
-                \mu(X{=}x,Y{=}y) \log(1)
-                + \mu(X{=}x,Y{\ne} y) \log(1) 
-            \\&= \bbr{\dg M}_\gamma(\mu)
-            % \\&
-            = \aar{\dg M}_\gamma.
-    \end{align*}}
-    The equality between the third and fourth lines
-    is perhaps the trickiest to see, but follows
-    because for joint settings in which $X{\ne}x$,
-    one can easily see that $\hat\mu(\Yyshort|\XxYyshort)$
-    equals 1 with probability 1, as does $\hat p(\Yyshort|\XxYyshort)$.
-    So, after dividing one by the other and taking a logarithm,
-        these cases contribute nothing to the expectation.
-    What remains are the two possibilities where $X{=}x$, which are shown in the second line.
-    %
-    To complete this direction of the proof, it suffices to observe
-    that we already knew the inequality held in the opposite direction
-    (by monotonicity), so the two terms are equal.
-
-    $(\implies)$.  Suppose the two inconsistencies are equal, i.e.,
-    \[
-    \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma = \aar{\dg M}_\gamma.
-    \]
-    This time, choose $\hat\mu \in \bbr{\dg M+ ~\Pr(Y{=}y|X{=}x) = p}^*_\gamma$,
-        and define $\mu$ to be its marginal on the variables of $\dg M$
-        (which contains the same information as $\hat \mu$ itself).
-    %
-    Let $q := \mu(Y{=}y|X{=}x)$. Then,
-    {\allowdisplaybreaks
-    \begin{align*}
-        \aar{\dg M}_\gamma &= \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma} \\
-         &= \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) \\
-         &= \bbr{\dg M}_\gamma(\mu) +
-             \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} 
-             \\&\hphantom{\bbr{\dg M}_\gamma(\mu)}
-             + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} \\
-        &= \bbr{\dg M}_\gamma(\mu) +
-            \mu(X {=} x) \left[ q \log \frac qp + (1-q) \log \frac{1-q}{1-p} \right] \\
-        &= \bbr{\dg M}_\gamma(\mu) + \mu(X{=}x) \kldiv qp \\
-        &\ge \aar{\dg M}_\gamma + \mu(X{=}x) \kldiv qp
-    \end{align*}}
-    Therefore $0 \ge \mu(X{=}x) \kldiv qp$. But relative entropy is non-negative,
-    by Gibbs inequality. This shows $\mu(X{=}x) \kldiv qp = 0$.
-    So either $\mu(X{=}x)$, or $p = \mu(Y{=}y|X{=}x)$, and the first case is just
-    a special case of the second one.
-    In addition, the algebra above shows that $\mu \in \bbr{\dg M}^*_\gamma$, as its
-        score is $\aar{\dg M}_\gamma$.
-    Thus, we have found $\mu \in \bbr{\dg M}^*_\gamma$ such that $\mu(Y{=}y|X{=}x) = p$, completing the proof.
-\end{lproof}
+\end{linked}
 
 \paragraph{``Conditional Conditional'' Probabilities.}
 We now turn to another, closely related modeling task. 
@@ -1206,7 +1132,7 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
 
 \begin{defn}
     If $m$ is the mass function representing the belief function $\Bel$ and the plausibility function $\Plaus$, then we associate 
-    all of these objects with the same PDG,
+    all of these objects with the same PDG
     \[
     \dg M_{m}, \dg M_{\Bel}, \dg M_{\Plaus} := \quad
     \begin{tikzpicture}[center base]
@@ -1228,11 +1154,16 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
     \end{tikzpicture}~,
     \]
     where $W$ is a variable taking values in $\V W := \Omega$,
-    and $V$ is a variable whose possible values $\V(V) := 2^\Omega$
-        are subsets of $\Omega$. 
+    $V$ is a variable whose possible values $\V(V) := 2^\Omega$
+        are subsets of $\Omega$.
+    \newmaterial{%
+    In other words, $\dg M_m$ is the PDG consisting of the mass function $m$ 
+    regarded as a distribution over $V$, and the constraint $\ni$ that 
+    the actual world $W$ is a member of the subset $V$. 
+    }% 
 \end{defn}
 
-For those who are not yet fluent with the constraint notation, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of whatever subset is chosen by $m$. 
+% For those who are not yet fluent with the constraint notation, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of whatever subset is chosen by $m$. 
 
 \begin{linked}{theorem}{belplaus-pdg}
     If $m$ is the mass function the belief function $\Bel$ and the plausibility
@@ -1296,10 +1227,276 @@ It's the analogue of the information content $\I_\mu[U] = - \log \mu(U)$, but wi
 Indeed, if $\Plaus(U) = 1$, then there is no inconsistency to also believing $U$ occurs, and if $\Plaus(U) = 0$, then it's so implausible so as to be infinitely inconsistent. 
 
 % Now for the proof of the theorem.
-Now for the proof of the theorem.
+% Now for the proof of the theorem.
 % The proof of \cref{theorem:belplaus-pdg} involves some interesting
 %     combinatorics, so we present it here. 
+\newmaterial{%
+    The \hyperref[proof:belplaus-pdg]{proof of the theorem}, given in
+    the appendix, involves some especially interesting combinatorics; it is based on Hall's Mariage Theorem \citep{Hall1935}.
+}%
 
+
+
+
+\subsection{Pseudomarginals on Cluster Graphs}
+    \label{ssec:pseudomarginal-cluster-graph}
+
+Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \citep{wainwright2003tree,wainwright2008graphical,KF09},
+sometimes called a \emph{pseudomarginal} \citep{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \citep{KF09}; we will call them \emph{cluster marginals}.
+
+Concretely, given a set of variables $\X$, a cluster graph is 
+graph, whose node set is a collection $\C$ of clusters, each $C \in \C$ of which is a subset of $\X$. 
+% When adjacent clusters agree on the marginal distr
+A cluster marginal $\bmu = \{ \mu_C(C) \}_{C \in \C}$ consists of a distribution $\mu_C \in \Delta \V C$ over the variables in each cluster $C \in \C$.
+Because $\bmu$ is just a collection of joint distributions, 
+it is exactly what is needed to supply observational data for a hypergraph
+$
+    \Ar = \{ \varnothing \to C \}_{C \in \C}.
+$
+Let $\dg M_{\bmu}$ denote this PDG.
+ 
+A cluster marginal is said to be \emph{calibrated} if, for every edge $C{-}D$ in the cluster graph, the distributions $\mu_C$ and $\mu_D$ agree the marginals of their common variables, which is a necessary condition for $\dg M_{\bmu}$ to be consistent.
+Belief propogation is a way of calibrating these objects, and effectively is a way of reducing local inconsistencies between pairs of clusters. We will return to this in \cref{chap:LIR}. 
+
+When the cluster graph has a special property that makes it a \emph{tree decomposition} 
+    (see \cref{sec:tw} or ```clique tree'' in \citep{KF09}),
+then local consistency is equivalent to global consistency \citep{wainwright2008graphical},
+and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
+We will cover these concepts in detail in \cref{chap:infer} when we
+    use them to develop an inference algorithm for PDGs.
+Here, we merely point out that these data structures are themselves PDGs. 
+
+\subsection{Causal Models}
+    \label{ssec:capture-causal-models}
+    
+A \emph{structural equations model} (SEM) \citep{pearl2009causality} is a collection of equations that explain how each ``endogenous variable'' gets its value, using a mechanism that can depend on other variables in the model.
+In other words, a SEM is a collection of (deterministic) functions, each taking as input joint settings of variables, and outputting a single value.
+Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG, and moreover, the confidence weights do not impact the semantics when the cpd is deterministic.  
+Furthermore, the usual way of adding probability to a causal model is no different from adding a probability distribution to the corresponding PDG. 
+The semantics of the resulting PDG exactly capture the behavior of causal model in the absence of intervention.
+
+We have not yet given an analogue of intervention for a general PDG, although it's straightforward to encode interventions by altering the functions in the usual way (i.e., replacing the causal equations with constants).
+We will make all of this precise in \cref{sec:causal}.
+More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibility} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
+
+\subsection{Implicit Neural Representations}
+    \label{ssec:implicit-neural-repr}
+
+A more modern way to represent knowledge is implicitly, by means of the parameters of a neural network. 
+But neural networks are often viewed as conditional probability distributions, and hence can be directly included as the quantitative data for an arc of a PDG.
+So too can the other components of machine learning systems such as data, priors, and observations. 
+Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism has a great deal to say about modern neural representations as well.
+
+Visually, it is uncommon to use the notation of graphical models to describe the architecture of neural networks; instead, the standard is to represent operations and layers of a neural network as nodes, and their connections as edges---like a circuit diagram.
+In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.
+
+\TODO[TODO: diagram here would be nice touch!]
+
+
+
+
+\begin{subappendices}
+\section{Proofs}
+
+\recall{prop:constraints-work}
+\begin{lproof}
+        \label{proof:constraints-work}
+        \label{proof:soft-constr-work}
+    1.
+    If $\mu \in \SD{R\,}$, then $\mu(\Tru{=}\trut) = 1$, so if $\mu(\mat X{=}\mat x) > 0$, then $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = 1$ for all joint settings $\mat x \in \V(\mat X)$. But $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = R(\mat x)$, and thus $R(\mat x) = 1$.
+    Conversely, if $\mu(\mat X, \Tru) = \mu(\mat X)\delta(\Tru{=}\trut)$ and $\mu(R) = 1$, then 
+    \[
+        \mu(\Tru \mid \mat X)
+        = (\mu(\mat X) \delta(\Tru {=} \trut)) / \mu(\mat X)
+        = \delta R(\Tru \mid \mat X).
+    \]
+    Thus $\mu$ is consistent with all conditional probabilities in the widget $\PDGof R$,
+    and so $\mu \in \SD{\dg M_R} = \SD{R\,}$.
+    
+    2. 
+    (a)
+    If $\mu \in \SD{\dg M + R}$, then by definition $\mu(\Tru{=}\trut) = 1$. By the same reasoning as in part 1, we also find that $\mu(R) = 1$. We also know that $\mu$ satisfies the cpds of $\dg M$, so $\mu(\X) \in \SD{\dg M}$. 
+    Conversely, if $\mu(\X) \in \SD{\dg M}$, and $\mu(\Tru{=}\trut) = \mu(R) = 1$, 
+    then, again by the logic in part 1, $\mu(\Tru \mid \mat X) = \delta R$.
+    Therefore $\mu$ satisfies all cpds of $\dg M$, and all cpds of the widget $\PDGof{R}$, and thus $\mu \in \SD{\dg M + R}$.
+    
+    (b) 
+    % In search of a contradiction, suppose that there is some 
+    For all 
+    $\mu \in \bbr{\dg M}^*_\gamma$, we have
+     % with $\mu(R) < 1$. 
+    % Then there is some setting $\mat x$
+    % If $\mu(\Tru{=}\trut) < 1$, then $$
+    \begin{align*}
+        \aar{\dg M}_\gamma 
+        &= \bbr{\dg M}_\gamma^*(\mu) 
+        \\&\ge \Ex_{\mu} \Big[
+            \log \frac{\mu(\Tru)}{\mathbbm1[\Tru=\trut]}
+            + \log \frac{\mu(\Tru \mid \mat X)}{\delta R(\Tru \mid \mat x)}
+        \Big]
+        \\&= \infty \cdot \mathbbm1[\mu(\Tru{=}\trut)=1] + 
+            \infty \cdot \Ex_{\mat x \sim \mu}\big[ \mat x \notin R \Rightarrow \mu(\Tru{=}\trut\mid\mat x)=0 \big]
+        .
+    \end{align*} 
+    Now, suppose that $\mu(R) < 1$, meaning there is some mass on joint settings $\mat x \notin R$.
+    If $\mu(\Tru{=}\trut \mid \mat x) \ne 0$, then the score is infinite, by the second term. 
+    Yet if $\mu(\Tru{=}\trut \mid \mat x) = 0$ and there is some mass on $\mat x$, then 
+    $\mu(\Tru{=}\trut) < 1$, and so again the score is infinite, by the first term.
+    Thus, if the score is finite, then $\mu(R) = 1$. 
+    
+    (c) The inequality is an instance of monotonicity (which we see in \cref{lemma!} and is the focus of \cref{chap:reason}). 
+    % For the remainder of this proof, identify distrib
+    Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(R) = 1$.
+    % Define 
+    % If $\Tru \notin \X$, then d
+    Define $\bar\mu(\X, \Tru) := \mu(\X)\delta(\Tru{=}\trut)$.
+    By the same logic as in the proof of part 1 of the proposition, 
+    $\mu$ satisfies all of the cpds of the widget $\PDGof R$; and thus 
+    $\bbr{\dg M + R}(\bar\mu) = \bbr{\dg M}_\gamma(\mu)$.
+    Chaining together some inequalities, we find:
+    \[
+     \aar{\dg M + R}_\gamma \le 
+     \bbr{\dg M + R}(\bar\mu) 
+     = \bbr{\dg M}_\gamma(\mu)
+     = \aar{\dg M}_\gamma
+     \le \aar{\dg M + R}_\gamma, 
+     \]
+    and thus all of these quantities are equal.
+    % The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
+    % Finally, if $\Tru \in \X$ and $\mu(\Tru{=}\trut) < 1$, then 
+    % \[
+    %     \aar{\dg M}_\gamma^* = \bbr{\dg M}^*_\gamma(\mu)
+    % \]
+    
+    Conversely, suppose
+    that $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$.
+    % \[
+    %     \bbr{\dg M + R}_\gamma \subseteq = \bbr{\dg M}^*_\gamma
+    % \]
+    If $\bbr{\dg M} = \infty$, then $\bbr{\dg M}_\gamma^*$ consists of 
+        all distributions, and so the statement is vacuous. 
+    On the other hand, 
+    select some $\bar\mu \in \bbr{\dg M + R}_\gamma^*$.
+    By applying part (b), we find that $\bar\mu(R) = 1$. 
+    And, because $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$
+    and $\bar\mu$ is an optimal distribution for $\dg M + R$, 
+    we find that its marginal $\mu(\X) := \bar\mu(\X)$
+    is optimal for $\dg M$:
+    \[
+        \bbr{\dg M}_\gamma(\mu(\X))
+        % = \Ex_{\omega \sim \mu}[ \sum_{a \in \Ar} ]
+        = \aar{\dg M + R}_\gamma 
+        = \aar{\dg M}_\gamma
+        \le \bbr{\dg M}_\gamma(\mu(\X))
+    \]
+    Thus, we have constructed $\mu \in \bbr{\dg M}^*_\gamma$ satisfying $\mu(R) =1$. 
+\end{lproof}
+
+
+
+\recall{prop:individual-prob-1}
+\begin{lproof}\label{proof:individual-prob-1}
+    ($\implies$.)
+    Suppose $\mu \in \SD{\dg M}$ has $\mu(y|x) = p$, and let $\bar\mu$ be its extenson via the functions $s_1$ and $s_2$ to the variables $\XxYyshort$ and $\Yyshort$. 
+    % Since $\mu(y|x) = p$, 
+    $s_1$ ensures that $\XxYyshort = x$ precisely when $X = x$. 
+    By assumption, the probability (according to $\mu$) that $Y{=}y$
+    when $X{=}x$ is $p$. But $s_2$ ensures that $Y{=}y$ precisely when $\Yyshort{=}y$. 
+    Thus,
+    $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$.
+    So $\bar \mu$ satisfies the constraint given by the first row of $\hat p$
+        in \cref{fig:pyx-widget}.
+    When $\XxYyshort \ne x$, on the other hand, then $s_1$ and $s_2$ ensure
+    that $\XxYyshort = \Yyshort = Y$, thereby satisfying the other rows 
+    of the cpd $\hat p$. 
+    Thus, $\bar \mu$ satisfies all cpds of $\dg M$, in addition to $s_1, s_2$, and $\hat p$, and therefore $\bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}$.
+    
+    ($\impliedby$.)
+    Choose some $\bar\mu \in \SD[\big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}$,
+    and let $\mu$ be its marginal on the variables of $\dg M$. 
+    By the logic above, $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x)$.
+    Since $\bar\mu$ satisfies the cpd $\hat p$, it follows that $\bar\mu(\Yyshort {=} y \mid \XxYyshort {=} x) = \mu(Y{=}y \mid X{=}x) = p$ as desired.
+    Since $\bar\mu$ also satisfies all the cpds of $\dg M$, we also have $\mu \in \SD{\dg M}$.
+\end{lproof}
+
+\recall{prop:indiv-prob-inc-conditional}
+\begin{lproof}  
+        \label{proof:indiv-prob-inc-conditional}
+    The inequality is immediate; it is an instance of monotonicity of inconsistency
+    % \cite[Lemma 1]{one-true-loss},
+    \cref{lemma!},
+    which we will discuss in depth in \cref{sec:monotone}. Intuitively: believing more cannot make you any less
+    inconsistent.  We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
+
+    $(\impliedby)$. Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y|X{=}x) = p$.
+    Because $\mu \in \bbr{\dg M}^*_\gamma$, we know that
+    $\bbr{\dg M}_\gamma(\mu) = \aar{\dg M}$.
+    Let $\hat \mu$ be the extension of $\mu$ to the new variables ``$\XxYy$'' and $``\Yy$'',
+        whose values are functions of $X$ and $Y$ according to $s_1$ and $s_2$. Then,
+    {\allowdisplaybreaks
+    \begin{align*}
+        &\aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma}
+            \\&\le \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) 
+            \\&= \bbr{\dg M}_\gamma(\mu) + \Ex_{\mu}\left[
+                \log \frac{\hat\mu(\Yyshort | \XxYyshort)}{ \hat p(\Yyshort | \XxYyshort)} \right]
+            \\&= \bbr{\dg M}_\gamma(\mu) +
+                \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} \\
+                &\hphantom{=\bbr{\dg M}_\gamma(\mu)}
+                + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} 
+            \\&= \bbr{\dg M}_\gamma(\mu) +
+                \mu(X{=}x,Y{=}y) \log(1)
+                + \mu(X{=}x,Y{\ne} y) \log(1) 
+            \\&= \bbr{\dg M}_\gamma(\mu)
+            % \\&
+            = \aar{\dg M}_\gamma.
+    \end{align*}}
+    The equality between the third and fourth lines
+    is perhaps the trickiest to see, but follows
+    because for joint settings in which $X{\ne}x$,
+    one can easily see that $\hat\mu(\Yyshort|\XxYyshort)$
+    equals 1 with probability 1, as does $\hat p(\Yyshort|\XxYyshort)$.
+    So, after dividing one by the other and taking a logarithm,
+        these cases contribute nothing to the expectation.
+    What remains are the two possibilities where $X{=}x$, which are shown in the second line.
+    %
+    To complete this direction of the proof, it suffices to observe
+    that we already knew the inequality held in the opposite direction
+    (by monotonicity), so the two terms are equal.
+
+    $(\implies)$.  Suppose the two inconsistencies are equal, i.e.,
+    \[
+    \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma = \aar{\dg M}_\gamma.
+    \]
+    This time, choose $\hat\mu \in \bbr{\dg M+ ~\Pr(Y{=}y|X{=}x) = p}^*_\gamma$,
+        and define $\mu$ to be its marginal on the variables of $\dg M$
+        (which contains the same information as $\hat \mu$ itself).
+    %
+    Let $q := \mu(Y{=}y|X{=}x)$. Then,
+    {\allowdisplaybreaks
+    \begin{align*}
+        \aar{\dg M}_\gamma &= \aar[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_{\!\gamma} \\
+         &= \bbr[\Big]{\dg M + ~\Pr(Y{=}y|X{=}x) = p}_\gamma(\hat \mu) \\
+         &= \bbr{\dg M}_\gamma(\mu) +
+             \mu(X{=}x,Y{=}y) \log \frac{\mu(Y{=}y|X{=}x)}{p} 
+             \\&\hphantom{\bbr{\dg M}_\gamma(\mu)}
+             + \mu(X{=}x,Y{\ne} y) \log \frac{\mu(Y{\ne} y|X{=}x)}{1-p} \\
+        &= \bbr{\dg M}_\gamma(\mu) +
+            \mu(X {=} x) \left[ q \log \frac qp + (1-q) \log \frac{1-q}{1-p} \right] \\
+        &= \bbr{\dg M}_\gamma(\mu) + \mu(X{=}x) \kldiv qp \\
+        &\ge \aar{\dg M}_\gamma + \mu(X{=}x) \kldiv qp
+    \end{align*}}
+    Therefore $0 \ge \mu(X{=}x) \kldiv qp$. But relative entropy is non-negative,
+    by Gibbs inequality. This shows $\mu(X{=}x) \kldiv qp = 0$.
+    So either $\mu(X{=}x)$, or $p = \mu(Y{=}y|X{=}x)$, and the first case is just
+    a special case of the second one.
+    In addition, the algebra above shows that $\mu \in \bbr{\dg M}^*_\gamma$, as its
+        score is $\aar{\dg M}_\gamma$.
+    Thus, we have found $\mu \in \bbr{\dg M}^*_\gamma$ such that $\mu(Y{=}y|X{=}x) = p$, completing the proof.
+\end{lproof}
+
+
+
+\recall{theorem:belplaus-pdg}
 \begin{lproof}
         \label{proof:belplaus-pdg}
     \textbf{(a)}~
@@ -1456,161 +1653,5 @@ Now for the proof of the theorem.
         \qedhere
     \]
 \end{lproof}
-
-
-
-
-\subsection{Pseudomarginals on Cluster Graphs}
-    \label{ssec:pseudomarginal-cluster-graph}
-
-Many inference algorithms for graphical models make use of a data-structure that tracks various marginal distributions, which may not be consistent \citep{wainwright2003tree,wainwright2008graphical,KF09},
-sometimes called a \emph{pseudomarginal} \citep{wainwright2008graphical} or a \emph{cluster graph (with associated data)} \citep{KF09}; we will call them \emph{cluster marginals}.
-
-Concretely, given a set of variables $\X$, a cluster graph is 
-graph, whose node set is a collection $\C$ of clusters, each $C \in \C$ of which is a subset of $\X$. 
-% When adjacent clusters agree on the marginal distr
-A cluster marginal $\bmu = \{ \mu_C(C) \}_{C \in \C}$ consists of a distribution $\mu_C \in \Delta \V C$ over the variables in each cluster $C \in \C$.
-Because $\bmu$ is just a collection of joint distributions, 
-it is exactly what is needed to supply observational data for a hypergraph
-$
-    \Ar = \{ \varnothing \to C \}_{C \in \C}.
-$
-Let $\dg M_{\bmu}$ denote this PDG.
- 
-A cluster marginal is said to be \emph{calibrated} if, for every edge $C{-}D$ in the cluster graph, the distributions $\mu_C$ and $\mu_D$ agree the marginals of their common variables, which is a necessary condition for $\dg M_{\bmu}$ to be consistent.
-Belief propogation is a way of calibrating these objects, and effectively is a way of reducing local inconsistencies between pairs of clusters. We will return to this in \cref{chap:LIR}. 
-
-When the cluster graph has a special property that makes it a \emph{tree decomposition} 
-    (see \cref{sec:tw} or ```clique tree'' in \citep{KF09}),
-then local consistency is equivalent to global consistency \citep{wainwright2008graphical},
-and so a cluster marginal $\bmu$ of this kind is calibrated if and only if $\SD{\dg M_{\bmu}} \ne \emptyset$.
-We will cover these concepts in detail in \cref{chap:infer} when we
-    use them to develop an inference algorithm for PDGs.
-Here, we merely point out that these data structures are themselves PDGs. 
-
-\subsection{Causal Models}
-    \label{ssec:capture-causal-models}
-    
-A \emph{structural equations model} (SEM) \citep{pearl2009causality} is a collection of equations that explain how each ``endogenous variable'' gets its value, using a mechanism that can depend on other variables in the model.
-In other words, a SEM is a collection of (deterministic) functions, each taking as input joint settings of variables, and outputting a single value.
-Since deterministic functions are special cases of cpds, there is a natural way to regard a causal model as a PDG, and moreover, the confidence weights do not impact the semantics when the cpd is deterministic.  
-Furthermore, the usual way of adding probability to a causal model is no different from adding a probability distribution to the corresponding PDG. 
-The semantics of the resulting PDG exactly capture the behavior of causal model in the absence of intervention.
-
-We have not yet given an analogue of intervention for a general PDG, although it's straightforward to encode interventions by altering the functions in the usual way (i.e., replacing the causal equations with constants).
-We will make all of this precise in \cref{sec:causal}.
-More broadly, \cref{chap:QIM} develops a framework that allows us to something much deeper about the relationship between causal models and a concept called \emph{QIM-compatibility} (the subject of \cref{chap:QIM}), a notion closely related to (and captured by) the qualitative information in a PDG. 
-
-\subsection{Implicit Neural Representations}
-    \label{ssec:implicit-neural-repr}
-
-A more modern way to represent knowledge is implicitly, by means of the parameters of a neural network. 
-But neural networks are often viewed as conditional probability distributions, and hence can be directly included as the quantitative data for an arc of a PDG.
-So too can the other components of machine learning systems such as data, priors, and observations. 
-Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism has a great deal to say about modern neural representations as well.
-
-Visually, it is uncommon to use the notation of graphical models to describe the architecture of neural networks; instead, the standard is to represent operations and layers of a neural network as nodes, and their connections as edges---like a circuit diagram.
-In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.
-
-\TODO[TODO: diagram here would be nice touch!]
-
-
-
-
-\begin{subappendices}
-\section{Proofs}
-
-\recall{prop:constraints-work}
-\begin{lproof} \label{proof:constraints-work}
-    1.
-    If $\mu \in \SD{R\,}$, then $\mu(\Tru{=}\trut) = 1$, so if $\mu(\mat X{=}\mat x) > 0$, then $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = 1$ for all joint settings $\mat x \in \V(\mat X)$. But $\mu(\Tru{=}\trut \mid \mat X{=}\mat x) = R(\mat x)$, and thus $R(\mat x) = 1$.
-    Conversely, if $\mu(\mat X, \Tru) = \mu(\mat X)\delta(\Tru{=}\trut)$ and $\mu(R) = 1$, then 
-    \[
-        \mu(\Tru \mid \mat X)
-        = (\mu(\mat X) \delta(\Tru {=} \trut)) / \mu(\mat X)
-        = \delta R(\Tru \mid \mat X).
-    \]
-    Thus $\mu$ is consistent with all conditional probabilities in the widget $\PDGof R$,
-    and so $\mu \in \SD{\dg M_R} = \SD{R\,}$.
-    
-    2. 
-    (a)
-    If $\mu \in \SD{\dg M + R}$, then by definition $\mu(\Tru{=}\trut) = 1$. By the same reasoning as in part 1, we also find that $\mu(R) = 1$. We also know that $\mu$ satisfies the cpds of $\dg M$, so $\mu(\X) \in \SD{\dg M}$. 
-    Conversely, if $\mu(\X) \in \SD{\dg M}$, and $\mu(\Tru{=}\trut) = \mu(R) = 1$, 
-    then, again by the logic in part 1, $\mu(\Tru \mid \mat X) = \delta R$.
-    Therefore $\mu$ satisfies all cpds of $\dg M$, and all cpds of the widget $\PDGof{R}$, and thus $\mu \in \SD{\dg M + R}$.
-    
-    (b) 
-    % In search of a contradiction, suppose that there is some 
-    For all 
-    $\mu \in \bbr{\dg M}^*_\gamma$, we have
-     % with $\mu(R) < 1$. 
-    % Then there is some setting $\mat x$
-    % If $\mu(\Tru{=}\trut) < 1$, then $$
-    \begin{align*}
-        \aar{\dg M}_\gamma 
-        &= \bbr{\dg M}_\gamma^*(\mu) 
-        \\&\ge \Ex_{\mu} \Big[
-            \log \frac{\mu(\Tru)}{\mathbbm1[\Tru=\trut]}
-            + \log \frac{\mu(\Tru \mid \mat X)}{\delta R(\Tru \mid \mat x)}
-        \Big]
-        \\&= \infty \cdot \mathbbm1[\mu(\Tru{=}\trut)=1] + 
-            \infty \cdot \Ex_{\mat x \sim \mu}\big[ \mat x \notin R \Rightarrow \mu(\Tru{=}\trut\mid\mat x)=0 \big]
-        .
-    \end{align*} 
-    Now, suppose that $\mu(R) < 1$, meaning there is some mass on joint settings $\mat x \notin R$.
-    If $\mu(\Tru{=}\trut \mid \mat x) \ne 0$, then the score is infinite, by the second term. 
-    Yet if $\mu(\Tru{=}\trut \mid \mat x) = 0$ and there is some mass on $\mat x$, then 
-    $\mu(\Tru{=}\trut) < 1$, and so again the score is infinite, by the first term.
-    Thus, if the score is finite, then $\mu(R) = 1$. 
-    
-    (c) The inequality is an instance of monotonicity (which we see in \cref{lemma!} and is the focus of \cref{chap:reason}). 
-    % For the remainder of this proof, identify distrib
-    Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(R) = 1$.
-    % Define 
-    % If $\Tru \notin \X$, then d
-    Define $\bar\mu(\X, \Tru) := \mu(\X)\delta(\Tru{=}\trut)$.
-    By the same logic as in the proof of part 1 of the proposition, 
-    $\mu$ satisfies all of the cpds of the widget $\PDGof R$; and thus 
-    $\bbr{\dg M + R}(\bar\mu) = \bbr{\dg M}_\gamma(\mu)$.
-    Chaining together some inequalities, we find:
-    \[
-     \aar{\dg M + R}_\gamma \le 
-     \bbr{\dg M + R}(\bar\mu) 
-     = \bbr{\dg M}_\gamma(\mu)
-     = \aar{\dg M}_\gamma
-     \le \aar{\dg M + R}_\gamma, 
-     \]
-    and thus all of these quantities are equal.
-    % The same logic works by taking $\bar\mu = \mu$, if $\Tru \in \X$ and $\mu(\Tru{=}\trut)=1$. 
-    % Finally, if $\Tru \in \X$ and $\mu(\Tru{=}\trut) < 1$, then 
-    % \[
-    %     \aar{\dg M}_\gamma^* = \bbr{\dg M}^*_\gamma(\mu)
-    % \]
-    
-    Conversely, suppose
-    that $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$.
-    % \[
-    %     \bbr{\dg M + R}_\gamma \subseteq = \bbr{\dg M}^*_\gamma
-    % \]
-    If $\bbr{\dg M} = \infty$, then $\bbr{\dg M}_\gamma^*$ consists of 
-        all distributions, and so the statement is vacuous. 
-    On the other hand, 
-    select some $\bar\mu \in \bbr{\dg M + R}_\gamma^*$.
-    By applying part (b), we find that $\bar\mu(R) = 1$. 
-    And, because $\aar{\dg M + R}_\gamma = \aar{\dg M}_\gamma$
-    and $\bar\mu$ is an optimal distribution for $\dg M + R$, 
-    we find that its marginal $\mu(\X) := \bar\mu(\X)$
-    is optimal for $\dg M$:
-    \[
-        \bbr{\dg M}_\gamma(\mu(\X))
-        % = \Ex_{\omega \sim \mu}[ \sum_{a \in \Ar} ]
-        = \aar{\dg M + R}_\gamma 
-        = \aar{\dg M}_\gamma
-        \le \bbr{\dg M}_\gamma(\mu(\X))
-    \]
-    Thus, we have constructed $\mu \in \bbr{\dg M}^*_\gamma$ satisfying $\mu(R) =1$. 
-\end{lproof}
-
 
 \end{subappendices}

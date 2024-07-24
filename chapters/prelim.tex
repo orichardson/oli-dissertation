@@ -84,7 +84,7 @@ $
 $
 % \]
 % If the two sets share a symbol, then we instead write
-\oldnewmaterial{%
+\commentout{%
 The elements must be distinct even if the two sets share a symbol; 
     in this case, we instead tag elements based on whether they come
     from the left or the right:
@@ -787,7 +787,9 @@ In this more general setting, we no longer require $\V\!X$ to be a finite set, b
 % From here on out, we will assume that for each variable $X$, the possible values $\V\!X$ not only comes with a $\sigma$-algebra $\mathcal F_X$ (making it a measurable space),
 Furthermore, we will also assume that $\V\!X$ comes equipped with a measure $\lambda_X$ that we call the \emph{base measure}. 
 In the case of a discrete variable $X$ that takes on finitely or countably many values, we take $\lambda_X$ to be the counting measure: for $U \subseteq \V\!X$ $\lambda_X(U) = |U|$ is the number of elements in $U$. 
-When $\V\!X$ is a subset of real space $\mathbb R^n$, we use the \emph{Lebesgue measure}, which agrees with the standard notions of length, area, and volume.
+When $\V\!X$ is a subset of real space $\mathbb R^n$, we use the
+\forjoe{(``the Lebesgue measure'' is standard. See \url{https://e.math.cornell.edu/people/belk/measuretheory/LebesgueMeasure.pdf} or \url{https://en.wikipedia.org/wiki/Lebesgue_measure})}
+\emph{Lebesgue measure}, which agrees with the standard notions of length, area, and volume.
 
 
 % At a technical level,
@@ -1014,6 +1016,7 @@ There is an important special class of (undirected) graphs that commonly arises 
 The notion of a graph captures only pairwise relationships between vertices. 
 If we also want to model relationships between triples of vertices, 
     it would appear that we need something more general than a graph.
+\forjoe{The ``it would appear'' is intentional, because we'll see a in moment that hypergraphs and bipartite graphs are naturally isomorphic.}
 
 \begin{defn}
     A \emph{hypergraph} $G = (V, \mathcal E)$ is a set $V$ of vertices,
@@ -1295,9 +1298,11 @@ Yet it is not clear how to merge the values of two variables, when they are not 
 The operation is worth visualizing. 
 A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 % If we view the hypergraphs on the top as representing processes, 
-A hypergraph and its dual correspond to two different ways of notating a composite process: as a \emph{flowchart} or as a \emph{circuit} (see \citet{kasangian1990duality} for a discussion of this duality in a related context).
+A hypergraph and its dual correspond to two different ways of notating a composite process: as a \emph{flowchart} or as a \emph{circuit}
+% (see \citet{kasangian1990duality} for a discussion of this duality in a related context).
+\citep{kasangian1990duality}.
 In a flowchart, nodes represent state and  arcs represent transformations between them.
-In a circuit, nodes represent operations, and arcs, thought of as ``wires'' that connect them, carry state. 
+In a circuit, nodes represent operations, and arcs, thought of as ``wires''  connecting the operations, carry state. 
 So, if capital letters represent variables and carry state, while numbers represent (randomized) transitions between variables (i.e., cpds), 
 then 
 % the bottom row of 
@@ -1833,10 +1838,10 @@ Moreover, we do not have to lower our standards for
     (conditional) mutual information, which works just as before:
     it is non-negative and zero iff there is a (conditional) independence. 
 
-\newmaterial{
-    \TODO
-    % mention it's because the constants cancel
-}
+% \newmaterial{
+%     \TODO
+%     % mention it's because the constants cancel
+% }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 
 

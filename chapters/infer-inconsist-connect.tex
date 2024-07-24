@@ -17,11 +17,9 @@ We then build on this semantic connection by describing a surprisingly strong al
 % In this sense, precisely quantifying one's inconsistencies is no easier than optimally resolving them.  
 Thus, the two views of PDGs are essentially equivalent---not only semantically, but algorithmically as well.
 %
-\newmaterial{%
     % This 
 % The result is a deep and rather philosophical conclusion:
 This leads to a philosophically profound result: precisely quantifying one's degree of inconsistency is no easier than optimally resolving those inconsistencies. 
-}%
 
 To get there, we first need to formally describe the two computational problems of interest (\cref{sec:approximate-inference}) as approximate inference problems,
 which allows us to also
@@ -245,15 +243,15 @@ Thus, the time it requires is exponential with respect to the number of requeste
 Because PDGs generalize BNs, approximate inference
 for PDGs is at least as hard as it is for BNs.
 
-\begin{prop}[\parencite{roth-hardness-1996}]
+\begin{prop}[\cite{roth-hardness-1996}]
         \label{bn-sharp-P-hard}
     \ApproxPDGInfer\ is \#P-hard. 
 \end{prop}
 
 Thus, the exponential time of \cref{theorem:approx-infer}
     is the best we could have hoped for, in the general case.  
-The argument is due to \textcite{roth-hardness-1996}, 
-although we have altered it somewhat. 
+% The argument is due to \textcite{roth-hardness-1996}, 
+% although we have altered it somewhat. 
 
 
 \section{A Deeper, Computational Connection}
