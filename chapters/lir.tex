@@ -495,23 +495,30 @@ The \emph{gradient} of a twice differentiable map $f : \Theta \to \mathbb R$,
     % written $\nabla_\theta f(\theta)$,
     which we write $\nabla_\Theta f(\Theta)$, is a vector field.
 Given a vector field  $X$ and an initial point $\theta_0 \in \Theta$, there is a unique trajectory $y(t)$ that solves the ODE
-$\{\frac{\mathrm d }{\mathrm d t}y(t) = X_{y(t)}$,  $y(0) = \theta_0\}$,
-and we adopt the notation $\exp_{\theta_0}( X ) := y(1)$
+\[
+\frac{\mathrm d }{\mathrm d t}y(t) = X_{y(t)}
+% $,  $
+,\qquad
+y(0) = \theta_0.
+\]
+We adopt the notation $\exp_{\theta_0}( X ) := y(1)$,
+    standard in differential geometry,
     % which is standard in differential geometry,
-    for a compact description of it.
-    % this trajectory.
-    % compactly refer to this curve, which is standard in many contexts \citep{lee.smooth-manifolds}.
+    for a compact description of 
+    this trajectory
+    % compactly refer to this curve, which is standard in many contexts
+    \citep{lee.smooth-manifolds}.
 At first glance,
 % Although on the surface
 % Although it may seem
- $\exp$ only gives us access to $y(1)$,
+$\exp$ only gives us access to $y(1)$,
     but
     % it is easy to show
      it is easily verified
      that $\exp_{\theta_0}(t X) = y(t)$.
 % Although it may not be obvious, $\exp$ indeed allows us to describe the entire trajectory, because $\exp_{p_0}(tX) = p(t)$.
-So altogether, the map $t\mapsto \exp_\theta(t \nabla_\Theta f(\Theta))$ is the smooth path beginning at $\theta$ that follows the gradient of $f$. It is known as
-\emph{gradient flow}.
+So altogether, the map $t\mapsto \exp_\theta(t \nabla_\Theta f(\Theta))$ is the smooth path beginning at $\theta$ that follows the gradient of $f$. It is commonly known as \emph{gradient flow}.
+Our algorithm will be a version of gradiant flow to reduce inconsistency, but modulated by two kinds of locality: attention, and control. 
 
 % Two knobs to control the model. The first one controls what you're looking at and what you get to change.
 % We now describe the local inconsistency reduction algorithm.
@@ -725,21 +732,26 @@ which we call \emph{foci}.
 The ODE on the last line of \cref{algo:LIR}, which is
     an instance of gradient flow, may be approximated with an
     inner loop running an iterative gradient-based optimization algorithm.
-Alternatively, if \textsc{Refocus} produces small $\chi$,
-    then it is well-approximated by a single gradient descent step of size $\chi$.
-At the other extreme: if $\chi$ is infinite in every component,
-    then,  the final line
+But it also does something interesting at the two extremes.
+At on extreme, if \textsc{Refocus} produces small $\chi$
+    then it is well-approximated by a single gradient descent step of size $\chi$;
+    thus, when control values are small, LIR performs local gradient-based search.
+At the oppposite extreme, if $\chi$ is infinite in every component,
+    then, the final line
 % then $\chi=\infty$ finds
     % a parameter setting that globally minimizes inconsistency
- reduces to
-    \[
-        \theta^{(t+1)} \gets \arg\min_{\theta}
-            \aar[\big]{ \varphi\odot( \Ctx + \dg M(\theta)) }_{\!\gamma}\,,
-            % ~~~\text{because of}
-    \]
-at least in the typical case in which
-the parameterizations $\mathbb P$ unconditional and log-concave.
-This is because of the following result.
+ reduces to solving an optimization problem
+\[
+    \theta^{(t+1)} \gets \arg\min_{\theta}
+        \aar[\big]{ \varphi\odot( \Ctx + \dg M(\theta)) }_{\!\gamma}\,
+        ,
+        % ~~~\text{because of}
+\]
+at least in 
+% the (common) case in which the parameterizations $\mathbb P$ are unconditional and log-concave.
+% % (The assignment is non-deterministic if )
+% This is because of the following result.
+a many cases of interest, because of the following result:
 
  % so long as the parameterizations $\mathbb P$ are log-concave, because of
 % This is because of
@@ -792,7 +804,17 @@ some historically important algorithms that are instances of LIR.
 % $ can only decrease in time
 % It is worth noting that LIR does not always converge.
 
-\section{LIR in Machine Learning}
+% \section{Local Inconsistency Resolution in Machine Learning}
+\section{Learning, Inference, and the Pursuit of Consistency}
+
+In \cref{chap:one-true-loss}, we found that standard loss fuctions can be viewed as the inconsistency of a PDG.
+This observation is suggestive, but doesn't say anything about what should be do once you calculate the degree of inconsistency. 
+% The primary use of a loss function is to train statistical models using data. 
+The primary motivation for the LIR algorithm has been to operationalize
+    learning algorithms---which are the typical use case for loss functions in machine learning.
+Unsurprisingly, LIR does indeed operationalize standard learning algorithms. 
+What may be more surprising is that other tasks in AI and machine learning---such as inference and forming adversarial examples---are also captured by local inconsistency resolution. 
+
 \subsection{LIR in the Classification Setting}
 Consider a parametric classifier $p_\theta(Y|X)$, perhaps
 arising from a neural network whose final layer is a softmax.
@@ -1192,16 +1214,18 @@ who view it as an intuitive explanation of why the EM
 algorithm works.  Indeed, it is obvious in this form that
 every adjustment reduces the overall inconsistency.
 The result can also be readily adapted to an entire dataset by replacing $x$ with a high confidence empirical distribution, or batched with the same technique in \cref{sec:SGD}.
-It also captures fractional EM when $\chi < \infty$.
+It also captures \emph{fractional EM} when $\chi < \infty$.
  % (\citeyear{neal1998view})
 % By monotonicity, it is also clear that
 
 This form of the EM algorithm is closely related to variational inference.
-Indeed, analogous choices applied to the analysis of \citet{one-true-loss}
+Indeed, analogous choices applied to the
+    % analysis of \citet{one-true-loss}
+    other PDGs analyzed in \cref{sec:variational}
 % to obtain a concrete training algorithm for variational autoencoders.
 yields the usual training algorithm for variational autoencoders (VAEs).
 
-\subsection{Generative Adversarial Training as LIR}
+\subsection{Generative Adversarial (Actor-Critic) Training as LIR}
 
 \def\pdata{p_{\mathrm{data}}}
 \def\real{{\mathrm{real}}}
@@ -1293,15 +1317,27 @@ This state of affairs is summarized as the PPDG below, in which $\Theta$ consist
         \draw[arr1, <-] (C) to node[above,pos=0.6]{\small$50/50!$} +(1.5,0);
 \end{tikzpicture}
 \]
-The GAN objective is typically written as a 2-player minimax game:
+
+The GAN training objective is typically written as a 2-player minimax game:
 $
     \min_{G} \min_{D}  \mathcal L^{\text{GAN}}(G,D)
 $, where
 \[
-\mathcal L^{\text{GAN}}(G,D) = \Ex_{\vphantom{|}x \mathrlap{\sim \pdata}}
-    [\, \log D(x) \, ] + \Ex_{x' \sim G} [\,\log (1- D(x')) \,],
+\mathcal L^{\text{GAN}}(G,D) := \Ex_{\vphantom{|}x \mathrlap{\sim \pdata}}
+    \;[\, \log D(x) \, ] + \Ex_{\vphantom{|} x' \sim G} \, [\,\log (1- D(x')) \,],
 \]
 and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X={x})$. 
+The standard theoretical justification of this loss function 
+is based on the following observations:
+\begin{enumerate}[nosep]
+    \item For fixed $G$, the optimal discriminator predicts $D^*(x) = \frac{G(X)}{G(x) + \pdata(x)}$;
+    \item For the optimal generator, $\mathcal L^{\text{GAN}}$ becomes equivalent to the Jesnen-Shanon divergence between $\pdata$ and $G$.
+    \item There is a unique global Nash Equilibrium, in which $G(X) = \pdata(X)$ and $D(C | X) = e(C|X)$. 
+\end{enumerate}
+% Note that this equilibrium coincides with 
+Note that this equilibrium is the one place where the PDG above has zero inconsistency. 
+We now turn to describe the modeling process in terms of LIR, which involves alternating between two focuses: one for the generator (shown above in blue, plus the black context), and one for the discriminator (shown above in green, plus the black context). 
+
 % Now consider the two perspectives: the generator's perspective $G$, with
 % \textbf{The Discriminator's View.}
 % % According to the discriminator,
@@ -1309,40 +1345,56 @@ and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X={x})$.
 % The generator controls t
 
 \textbf{The Discriminator's Focus.}
-The discriminator has full control over $D$, and attends to
-everything but $e$.
+While the focus is on discrimination, 
+    we have control over $D$, and attend to
+    everything but $e$.
 That inconsistency of this PDG is what might be called
-the discriminator's objective:
-the expected KL divergence from $D$ to the optimal discriminator.
+    the discriminator's objective:
+    the expected KL divergence from $D$ to the optimal discriminator.
+Unfortunately, this may not be easy to calculate directly. 
 If $D$ also disbelieves that any image is equally likely to be fake as real
-(by choosing $\varphi(e) = -1$),
+    (by choosing $\varphi(e) = -1$),
 % (i.e., $\begin{matrix}\varphi(e) = -1\\ \varphi(D) =+1\end{matrix}$),
-then the inconsistency becomes $-\mathcal L^{\text{GAN}}$.
+then the inconsistency becomes $-\mathcal L^{\text{GAN}}$, which is easier to calculate.
 % $D(C|X)$ to the
 % true probability of $C$ given $X$.
 % while the generator has control over $G$.
 
 \textbf{The Generator's Focus.}
-The generator has control over $G$.
-If it ignores $D$ attends only to $e$, the inconsistency
-is the Jensen-Shannon Divergence between $G$ and $\pdata$.
+When the focusis on generation, we have control over $G$.
+If we ignore $D$ attends only to $e$, then inconsistency
+    is the Jensen-Shannon Divergence between $G$ and $\pdata$,
+    coinciding with a standard argument for GANs. 
+However, this is difficult to calculate directly.
 If the generator also disbelieves the discriminator $D$
-(i.e., $ \varphi(D) =-1$),
-then the inconsistency becomes $+\mathcal L^{\text{GAN}}$.
+    (i.e., $ \varphi(D) =-1$),
+    then the inconsistency becomes $+\mathcal L^{\text{GAN}}$,
+    which, again, is easier to calculate.
 
 Standard practice is to use small $\chi(G)$ and large $\chi(D)$,
-so that the discriminator is well-adapted to the generator.
+so that the discriminator is well-adapted to the generator,
+a strategy which is provably more stable
+    \citep{two-scale-GAN-Heusel2017}.
+Intuitively, we should the discriminator should be more maneuverable than the generator; the training signal for $G$ comes entirely from $D$, so it is not helpful for $G$ to updates faster than $D$.
+In our language, this means selecting a focus in which the discriminator's focus entails a higher degree of control over $D$ than the generator's focus has over $G$.
+% It is common to select small $\chi(D)$ and large $\chi(G)$
+% Intuitively, because learning to generate is harder than learning to discriminate, 
 
 \section{Message Passing Algorithms as LIR}
 
-Nearly every standard graphical model can be viewed
-    as a factor graph, and correspondingly admits an
-    (approximate) inference procedure known
+% Traditional graphical models,
+At a quantitative level, traditional graphical models (i.e., the subject of \citet{KF09}) can all be represented as factor graphs.
+% Nearly every standard graphical model can be viewed
+    % as a factor graph, 
+Moreover, they all admit the same
+    (approximate) inference procedure, known
     variously as (loopy) belief propagation \citep{KF09},
     the generalized distributive law \citep{aji2000gendistriblaw},
     and the sum-product algorithm \citep{kschischang2001factor}.
-It also turns out to be the special case of LIR specialized to factor graphs.
-    % which correspond to PDGs that have equal weighting in .
+This procedure turns out to be 
+    a special case of LIR in which all PDGs involved represent factor graphs
+    (i.e., have $\balpha = \bbeta, \gamma=1$, as shown in \cref{sec:factor-graphs}).
+% which correspond to PDGs that have equal weighting in .
 
 % \paragraph{Belief Propogation.}
 % % Let $\X$ be a set of variables,
@@ -1356,7 +1408,7 @@ Conversely, for $X \in \X$, let
 $\partial X
  := \{a \in \Ar : X \in \mat X_a\}
 $ be the set of factors with $X$ in scope.
-$\Phi$ specifies a distribution
+As we have seen, $\Phi$ specifies a distribution
 $\Pr_\Phi(\X) \propto \prod_a \phi_a(\mat X_a)$, and
 % $\Pr_\Phi = \frac1Z \prod_a \phi_a(\mat X_a)$, where $Z$ is a normalization constant,and $\log Z$ is  and
 corresponds to a PDG
@@ -1382,15 +1434,20 @@ that specifies the same joint distribution $\Pr_{\Phi}$, when
 % \paragraph{Sum Product Belief Propogation.}
 % The state for standard sum-product belief
 Sum-product belief propagation \citep{kschischang2001factor}
-    aims to approximate marginals of $\Pr_{\Theta}$
+    aims to approximate marginals of $\Pr_{\Phi}$
     with only local computations: messages sent between factors and
         the variables they have in scope.
 % passing messages between adjacent variables and factors.
  % so the state of the algorithm consists of a pair of messages
-Its state consists of pairs of ``messages''
+The state of the algorithm is a collection of ``messages''
 % $m_{X \sto a}$ and $m_{a \sto X}$
-$\{ m_{X \sto a}, m_{a \sto X}\}$, both (unnormalized) distributions over $X$,
-for each pair $(a, X)$ with $a \in \partial X$,
+$
+\{ m_{X \sto a}, m_{a \sto X}\}_{X \in \X, a \in \partial X},
+$, 
+two for each pair $(a, X)$ of factor $a$ and variable $X$ in the scope of $X$.
+Each message is an (unnormalized) distribution over the correspondig variable ($X$).
+% each of which are (unnormalized) distributions over $X$,
+% for each pair $(a, X)$ with $a \in \partial X$,
 % for each pair $(X, a \in \partial X)$.
 % $\nu_X(X)$ for each variable $X$, and a joint distribution $\nu_a(\mat X_a)$ for each
 % factor $a \in \Ar$.
@@ -1400,14 +1457,12 @@ for each pair $(a, X)$ with $a \in \partial X$,
 % Together, we can regard this collection of messages as a PDG, which we call $\Msg$.
 % Just as with the original factor graph,
     % $\Msg$.
-which together form a PDG $\Msg$
+Together, the messages form a PDG which we will denote $\Msg$,
 in the same way as
-% just like
 the original factor graph.
-% After initializing the messages, the algorithm proceeds by repeatedly recomputing:
-After initialization, belief propagation repeatedly recomputes:
-% The bulk of the algorithm involves propagating messages, each of which
-% is a function of other messages, as follows:
+After initializing with uniform messages,
+    belief propagation repeatedly recomputes:
+%
 \begin{align}
     m_{X \!\sto a}(x)
         % &:=
@@ -1495,8 +1550,10 @@ The traditional depiction of messages
         % $(a \in \Ar, X \in \mat X_a)$,
         $(X,a)$ with $X \in \mat X_a$
     along with edges asserting that $X^{a} = X$,
-    we obtain an equivalent PDG that does not look so different: 
-    \begin{center}
+    we obtain an equivalent PDG, shown in \cref{fig:bp-lir},
+        that does not look so different.
+    \begin{figure}
+        \centering
     \begin{tikzpicture}[center base,
             % [xscale=2,center base]
             xscale=2.4,yscale=1.5]
@@ -1567,7 +1624,12 @@ The traditional depiction of messages
     $\subseteq \Msg +
         {\color{blue!50!black}\dg M_\Phi}
     $.
-    \end{center}
+    \caption[a schematic of belief propagation as LIR]
+        {a schematic depiction of belief propogation as LIR. 
+            At the center are a variable $X$, and a variable $\mat X^{a}$ that corresponds to a factor $a$ which depends on $X$. 
+            The blue arcs correspond to a focus that computes the message from $a$ to $X$, while the green arcs correspond a focus that computes the message from $X$ to $a$.}
+        \label{fig:bp-lir}
+\end{figure}
 
     Indeed, it can be shown that (\ref{eq:X->a},\ref{eq:a->X}) minimize inconsistency of
     the dotted components in their appropriate contexts  (shown in green and blue above).
@@ -1596,6 +1658,8 @@ The traditional depiction of messages
     so as to minimize the 1-inconsistency in
     context
     $A_{a \sto X} := \{ \phi_a, m_{a \sto X} \} \cup \{ m_{Y \sto a} \}_{Y \in \mat X_a \setminus X}$.
+    Simply put, this means looking at either the blue or the green sub-PDG of 
+    
     %
     The only wrinkle is that we do not want to attend to
         the structural aspect of a message $e$ that we are updating---%
@@ -1837,10 +1901,9 @@ of a PDG containing two distributions
 
 \section{Decision Making with LIR}
 
-In this section, we show how standard decision rules can be viewed as inconsistency minimization. 
-
-\subsection{Expected Utility Maximization as LIR}
-
+In this section, we show how a few standard decision rules can be viewed as inconsistency minimization. 
+% 
+% \paragraph{Expected Utility Maximization as LIR.}
 In \cref{sec:reverse-engineer,sec:soft-constraint-widget} it was established that PDGs can represent expected cost,
 % albeit with some strange 
 albeit by articulating some questionable probabilistic beliefs. 
@@ -1888,32 +1951,71 @@ At a technical level, recall that this means
 (1) including the variable $\Tru$ that can technically take on values $\V \Tru = \{ \truf, \trut\}$, yet happens to always on the value $\trut$,
 and  
 (2) adding a cpd $b(\Tru \mid U)$ encoding a constraint violation that is more serious the lower the value of $U$. 
-Let $\dg M_{(p, \tau, u, b)}$ represent the PDG above, augmented with such a soft constraint $b$. 
+Let 
+$\dg M_{(p, \tau, u, b)}$
+represent the PDG above, augmented with such a soft constraint $b$. 
 
 Intuitively, imagine that there is a part of you that you cannot control, 
-    corresponding to the sub-PDG made up of $u$, $b$, and $\Tru{=}\trut$,
     which we will call ``Faith''.
-Faith engages in wishful thinking: 
+Faith
+    engages in wishful thinking: 
     she disbelieves outcomes that are undesirable,
     creating epistemic conflict if she sees outcomes of low utility. 
-If you have no control over Faith, but still find her worth paying attention to, selecting actions to minimize inconsistency is the same as selecting actions to maximize expected utility. 
+(Technically, Faith is the name of the sub-PDG consists $u$, $b$, and $\Tru{=}\trut$.)
+If you have no control over Faith, but still have confidence and pay attention to her,
+then it turns out that selecting actions to minimize your combined inconsistency
+is a decision rule that interpolates between
+\begin{enumerate}[nosep,label={(\alph*)}]
+    \item 
+    maximizing expected utility (when $\beta_p \gg \beta_b$), and
+    \item 
+    maximizing maximum utility (when $\beta_p \ll \beta_b$),
+\end{enumerate}
+where  $\beta_p$ is your confidence in your prior probabilistic belief $p(S)$, and $\beta_b$ is the confidence of the soft constraint $b$ (i.e., your ``degree of faith'').
 
-\begin{prop}
-    % \begin{enumerate}
-    %     \item 
-    So long as $b(\Tru{=}\trut \mid U{=}u)$ is strictly increasing in $u$, 
+\begin{linked}{prop}{eu+maxmax}
+    % So long as $b(\Tru{=}\trut \mid U{=}u)$ is strictly increasing in $u$, 
+    Suppose $b(\Tru{=}\trut \mid U{=}u) = k \cdot \exp( u )$ for some constant $k$. 
+    \begin{enumerate}[nosep]
+        \item 
+    If $\beta_p = \infty$ and $\beta_b < \infty$, then 
     the action(s) $a \in \V\! A$ that minimize the inconsistency
-    $\aar{\dg M_{(p,\tau,u,b)} + A{=}a}_\gamma$ are those that maximize expected utility.
-    In other words,
+    are those that maximize expected utility.
+    Formally,
     for all $\gamma \ge 0$, 
     \[
         \argmin_{a \in \V\!A} \aar[\big]{\dg M_{(p,\tau,u,b)} + A{=}a}_\gamma 
-        = \argmax_{a \in \V A} 
-            \Ex_{\substack{s\sim p \\ o \sim \tau|s,a}} \Big[ u(o) \Big].
+        = \argmax_{a \in \V\! A} 
+            \Ex_{\substack{s\sim p \\ o \sim \tau|s,a}} \big[ u(o) \big].
     \]
-    % \end{enumerate}
-\end{prop}
+    \item 
+    If $\beta_p < \infty$ and $\beta_b = \infty$, then 
+    the action(s) $ a \in \V\! A$ that minimize overall inconsistency are
+    those that can lead to the best possible outcome, i.e., 
+    \[
+        \argmin_{a \in \V\!A} \aar[\big]{\dg M_{(p,\tau,u,b)} + A{=}a}_\gamma 
+        = \argmax_{a \in \V\! A} \;
+            \max_{s \in \V S} \;
+            \Ex_{o \sim \tau|s,a} [ u(o) ].
+    \]
+    \end{enumerate}
+\end{linked}
 
+We suspect it will also be possible to implement other decision rules such as minimax or maximin, but like GAN training, these objectives that look like ``two-player games'' require two different focuses of LIR. 
+We leave the details and implications of this to future work.
+
+We conclude our discussion of decision theory with a higher-level obseravation. 
+When there is internal conflict between your preferences, beliefs, and actions, there are three possible resolutions.  You can change your action to maximize your expected utility, which is thought of as the rational thing to do.
+You can also change your preferences to become happy with how things currently are, which is perhaps a more zen perspective. 
+These two resolutions are two halves of the Serenity Prayer \citep{serenity-prayer}:
+
+\begin{quotation}\it
+    Oh, God, give us the courage to change what must be altered, serenity to accept what can not be helped, and insight to know the one from the other.
+\end{quotation}
+
+There is also a third way to resolve the inconsistency, which is arguably significantly worse: you can change your beliefs about what state you are in. 
+Unfortunately, this kind of self delusion only creates more inconsistency with future observations, and is seldom a good idea.  
+This is one more reason that it can be beneficial to carefully select only small local of the picture to control while resolving inconsistencies.
 }%
 
 
@@ -1929,13 +2031,12 @@ The surprising generality of LIR begs some theoretical questions.
 What assumptions are needed to prove that it reduces overall inconsistency,
     as is often the case?
     % Do simple choices ever lead to non-standard algorithms?
-    What are the simplest choices we could make to produce an efficient
-        non-standard algorithm?
-    How expressive is this mode of computation?
+What are the simplest choices we could make to produce an efficient
+    non-standard algorithm?
+How expressive is this kind computation?
 
 % These results also
-It also
-suggests a novel approach to structured generative modeling:
+It also suggests a novel approach to structured generative modeling:
 haphazardly assemble a PDG with many variables, existing models, priors,
     constraints, and data of all shapes and sizes.
 Then, train new models to predict variables from one another,
@@ -2190,7 +2291,8 @@ which is convex in $(\mat A, b, \frac1{\sigma^2})$.  Now, for the proof.
 % the map $\theta \mapsto \aar*{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma$ is convex.}
 \recall{prop:logccave}
 
-\begin{proof}
+\begin{lproof} 
+        \label{proof:logccave}
     By definition,
     \begin{align*}
         \aar[\Big]{\varphi \odot( \Ctx + \dg M(\theta))}_\gamma
@@ -2230,7 +2332,7 @@ which is convex in $(\mat A, b, \frac1{\sigma^2})$.  Now, for the proof.
     Thus, the sum of all three terms in the infemum is jointly convex in $(\theta, \mu)$. 
     Taking an infemum over $\mu$ pointwise, the result is still convex in $\theta$     \citep{boyd2004convex}.
     % Since $\varphi \ge 0$ and $\bbeta  > 0$ this is effectively just the inconsistency of a PDG.
-\end{proof}
+\end{lproof}
 
 \textbf{\cref{prop:bp}.}\textit{
 If \textsc{Refocus} selects a view non-deterministically from
@@ -2261,5 +2363,102 @@ The different orders that the \eqref{eq:X->a}, and \eqref{eq:a->X} can be ordere
 for different adjacent pairs $(a, X)$ correspond to both the message passing schedules, and to the possible view selections of LIR.
 \end{proof}
 
+\recall{prop:eu+maxmax}
+\newmaterial{%
+\begin{lproof}\label{proof:eu+maxmax}
+    Since the choice $a$ is deterministic, the value of $A$ is determined; likewise the value of $\Tru$ is also fixed. 
+    Similarly, as $u$ is a deterministic function, the value of $U$ is determined according to $u$.
+    Thus we need only consider distributions $\mu(S, O)$ in our minimization; the other variables can be found as a function of these.
+    However, we also know that $\mu(O\mid S) = \tau(O|S,A{=}a)$ since it is given with high confidence. 
+    Therefore it suffices to restrict our search to distributions over the variable $S$.
+    
+    To simplify notation, let 
+    $ EU(s,a) := \Ex_{o \sim \tau (O|s,a)} [ u(o) ] + \log k$
+    be the expected utility of an action, shifted by the constant $\log k$.
+    Note that
+    \[
+        \log \frac{1}{b(\Tru{=}\trut\mid U{=}u(o))}
+        = - \log (k \cdot \exp( u(o) ))
+        = - u(o) - \log k,
+    \]
+    which in expectation over $\tau(O|s,a)$, is $ - EU(s,a)$. 
+    % which happens to be equal to 
+    % $\log \frac{1}{b(\Tru{=}\trut\mid U{=}u(o))} =  \log \exp u(o) $
+    % We then calculate that
+    With this in mind, we calculate:
+    \begin{align*}
+        \aar[\big]{\dg M_{p,\tau,u,b}+A{=}a}_{\gamma}
+        &= \inf_{\mu(S)} 
+            \beta_p \Ex_{s \sim \mu} \Big[ \log \frac {\mu(s)}{p(s)} 
+            + \frac{\beta_b}{\beta_p} \Ex_{o\sim \tau|a,s}\Big[\log \frac1{b(\Tru{=}\trut\mid U{=}u(o))}\Big]
+            \\
+        &= \inf_{\mu(S)} 
+            \beta_p \Ex_{s \sim \mu} \Big[ \log \frac {\mu(s)}{p(s)} 
+            + \log \circ \exp \Big(- \frac{\beta_b}{\beta_p} EU(s,a) \Big)
+            \\
+        &= \inf_{\mu(S)} 
+            \beta_p \Ex_{s \sim \mu} \Big[ \log \frac {\mu(s)}{1}\cdot\frac{\exp(-\frac{\beta_b}{\beta_p} EU(s,a))}{p(s)} \cdot \frac ZZ \Big]
+            \\
+        &= \inf_{\mu(S)} 
+            \beta_p \Ex_{s \sim \mu} \Big[ \log \frac {\mu(s)}{1}\cdot\frac{Z}{p(s)\cdot \exp(\frac{\beta_b}{\beta_p} EU(s,a))} \cdot \frac 1Z \Big]
+                \numberthis\label{eq:save-eu-calc}
+    \end{align*}
+    At this point, we can use the same trick used repeatedly in the proving results of \cref{chap:one-true-loss}: take $Z$ to be the normalization constant needed to regard the middle fraction as the inverse of a probability distribution $\nu$. 
+    Once we do so, we are left with an infimum over a KL divergence $\kldiv{\mu}{\nu}$ plus the expectation of a constant:
+    \begin{align*}
+        \aar[\big]{\dg M_{p,\tau,u,b}+A{=}a}_{\gamma}
+            &= \beta_p \log \frac1 Z
+            = - \log \sum_{s} p(s) \exp\Big( + \frac{\beta_b}{\beta_p} EU(s,a)\Big).
+    \end{align*}
+    We now look at the two extreme cases. 
+    
+    When $\beta_p \to \infty$, then
+        the ratio $\frac{\beta_b}{\beta_p}$ becomes small, 
+        and we can use the fact that $\exp( \epsilon) \approx 1+\epsilon$
+        for small $\epsilon$
+    to find that the inconsistency of interest is
+    approximately 
+    \begin{align*}
+        \approx 
+        - \beta_p \log \sum_{s} p(s) \Big[ 1 + \frac{\beta_b}{\beta_p} EU(s,a) \Big]
+        = - \beta_p \log( 1 +  \frac{\beta_b}{\beta_p} EU(s,a) )
+        \approx
+        - \beta_b EU(s,a)
+    \end{align*}
+    Alternatively, more directly, when $\beta_p = \infty$, the optimal distribution must be $\mu = p$, and so the inconsistency is immediately $ - \Ex_{s \sim p} [ \beta_b EU(s,a)]$. 
+    Either way, minimizing this quantity amounts to maximizing espected utility, as the two differ by a negative affine transformation.
+    
+    At the other extreme, when $\beta_b \to \infty$, 
+    we can write our expression in terms of 
+    $\mathrm{LSE} \{ x_1, \ldots, x_n \} := \log \sum_{i=1}^n \exp( x_i)$ (LogSumExp)
+    which is a smooth approximation to a $\max$.  (In a moment, we will negate its arguments and the final output, using it as an approximation to a $\min$, instead.)
+    Picking back up from \eqref{eq:save-eu-calc} and letting $t := \frac{\beta_b}{\beta_p}$, we find
+    \begin{align*}
+        \aar[\big]{\dg M_{p,\tau,u,b}+A{=}a}_{\gamma}
+            &= - \beta_b \cdot \frac{-1}{t} \mathop{\mathrm{LSE}}\limits_{s \in \V S} \Big[-t \cdot \Big( \frac1t \log \frac1{p(s)} -  EU(s,a)\Big) \Big]. 
+    \end{align*}
+    Using the standard fact
+    \unskip\footnote{
+        Letting $m := \min_i x_i$, observe that, for all $t > 0$, we have
+        $\exp(-tm) \le \sum_i \exp(-t x_i) \le n \exp(- tm)$.
+        Apply a logarithm and multiply by $-\frac{1}{t}$ to get the promised result.}
+    that 
+    \[
+        \min_{i \in [n]} x_i - \frac{1}{t} \log n \le 
+            \frac{-1}{t} \mathop{\mathrm{LSE}}\limits_{i \in [n]} ( - t x_i ) < \min_{i \in [n]} x_i,
+    \]
+    we find that, in our case,
+    \[
+    M - \frac{1}{t} \log |\V S|
+    ~~\le~~ \frac{1}{\beta_b} \aar[\big]{\dg M_{p,\tau,u,b}+A{=}a}_{\gamma}
+    ~~\le~~ M
+    \]
+    where $M := \min_{s \in \V S}  ( -  EU(s,a)  + \frac{1}{t} \log \frac 1{p(s)} )$.
+    In particular, when $\beta_b \to \infty$, meaning $t \to \infty$, the gap between the upper and lower bounds shrinks to zero,
+    and the resulting inconsistency becomes
+    $ - \min_{s \in \V S} ( - EU(s,a) ) = \max_{s \in \V S)} EU(s,a)$,
+    proving the result.
+\end{lproof}
+}%
 
 \end{subappendices}

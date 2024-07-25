@@ -58,7 +58,7 @@ while practitioners endeavor to build systems
         view of the world. 
 % Inconsistency should impossible by design.
 Even most programmers agree: 
-    when possible, we should make inconsistency should be eliminated by design. 
+    when possible, it is better to eliminate inconsistency by design. 
 %
 % Theorists are careful to prove things about clearly defined models,
 % while applied computer scientists have long built artificial agents
@@ -75,9 +75,9 @@ Why?
 Because 
 \newmaterial{%
 by computing things in just one way, 
-it is impossible to obtain conflicting answers,
+it becomes impossible to get conflicting answers,
 % granting
-and so we become immune to inconsistency.
+and so our systems become immune to inconsistency.
 }%
 % invulnerability to our one common enemy: inconsistency.
 
@@ -425,29 +425,37 @@ A few examples of the distinction we're getting at are given below.
     \end{tabular}
 \end{center}
 
-\newmaterial{%
-Some readers might immediately recognize this division; 
+Some readers may immediately recognize this concept; 
+we will refer to it principally as the divide between
+     \emph{structural} and \emph{observational} information.
 % others may find it confusing or find it to be a false equivalence. 
-    others may find the analogy between these concepts resonates less.
-By the end of the thesis, hopefully we will gain some 
-% for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
+    % others may find the analogy between these concepts resonates less.
+\newmaterial{%
+The concepts on the right implement the ones on the left, filling them in with the details needed to make them concrete.
+However, a great deal of reasoning---particularly when it comes to composing concepts, can be done solely by working with the more abstract concepts on the left. 
+Knowing that $f : A \to B$ and that $a \in A$ allows us to form the quantity $f(a)$ and understand that it is an element of $B$, even without having specified anything else about the sets $A$ and $B$, or about the function $f$.
+Similarly, it is often possible to chain together theorems without knowing their proofs, or describe operations on databases without access to specific data in the tables. 
+A composite concept is said to \emph{typecheck} if it  
+    makes sense at a qualitative level. 
+By the end of the thesis, we will see how
 % for this distinction and its role in probabilistic modeling. 
-appreciation for this concept and its role in probabilistic modeling. 
-}%    
-Following the nomenclature of the graphical models community, we will refer to it principally as the divide between \emph{qualitative} and \emph{quantitative} information 
-% (although both can be numerical)
-\unskip, or alternatively as the divide between \emph{structural} and \emph{observational} information.
+% for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
+the same conceptual division plays a fundemental role in probabilistic modeling. 
+
+
+In the graphical models community, the two types of information are known as \emph{qualitative} and \emph{quantitative}; the former traditionally refers to the graphical structure of the model and corresponding independencies of the model, while the latter refers to the concrete probabilistic information involved. 
 % (see \cref{sec:pgm-prelim}).
 % The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
 %
-Both kinds of information are important, and they are fundamentally different.
+}%
+Both kinds of information are important, but they are different in character;
 % The former is about the graph structure, and the latter is about its annotation.
 % Put differently,
 % (as we will see in \cref{chap:PDG-cat}), 
 % the former is a conceptual shape, and the latter interprets that shape in the language of probabilities and confidences. 
 % One unusual feature of PDGs is that the qualitative information has a numerical weight. 
 % Different experts may have different relative strengths. For instance, one might want to trust one person to design a study to determine what causes what, and another person to independently design experiments aimed at determining the numerical probabilities. 
-The interplay between them will be a recurring theme.
+the interplay between them will be a recurring theme.
 
 % Understanding the difference between these two 
 % Corresponding 
@@ -535,7 +543,8 @@ PDGs push the idea even further:
 % seemingly carrying different amounts of information,
 % }%
 % that also turn out to all be equivalent.     
-PDGs also have several different semantics, which seemingly carry different amounts of information, that turn out to be equivalent as well (\cref{chap:inc-infer-connection}). 
+they also have several different semantics, seemingly carrying different amounts of information, that turn out to be equivalent as well (\cref{chap:inc-infer-connection}). 
+These equivalences suggest that PDGs are a natural and particularly special representation. 
 
 % But first, we should review some math. 
 But before we get into the details, we should review some math. 

@@ -769,10 +769,11 @@ We now give an overview of important alternative variants.
     \item 
     % \textbf{Lax PDGs.}
     % \textbf{Adaptive and Semi-PDGs.}
-    \textbf{PDGs with adaptive confidences, missing values, and probability ranges.}
+    \textbf{adaptive confidences, missing values, and probability ranges.}
     The confidence $\beta_a$ in the arc $\ed aXY$ may be replaced with a separate confidence $\beta_{a,x}$ for each possible input $x \in \V(X)$. 
 	%
-    More generally, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank---or, instead of a single conditional probability, one might want to specify a range of possible values. 
+    Relatedly, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank.
+    More generally still, instead of a single conditional probability, one might want to specify a range of possible values. 
 	%  Relatedly, one could imagine a 
     We will see in \cref{sec:prob-widget} that these seeming generalizations of a PDG are equivalent to the definition we have already given. 
 
@@ -794,10 +795,11 @@ How should we combine independent sources of information?
 %
 As illustrated by \cref{ex:grok-union}, a significant advantage of PDGs is their modularity:
 % we can combine the information in $\dg M_1$ and $\dg M_2$ 
-there is a simple way to combine the information in $\dg M_1$ and $\dg M_2$ 
-independently: take the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
+there is a simple way to combine the information in $\dg M_1$ and $\dg M_2$: take the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
 \newmaterial{%
-We call this the \emph{sum} or \emph{join} of $\dg M_1$ and $\dg M_2$. 
+We call this the \emph{sum} or \emph{join} of $\dg M_1$ and $\dg M_2$, 
+    and it is appropriate when the information in the two PDGs is independent. 
+% (As we will son see, )
 % We first give the formal details of this operation, 
 %     and then caution a modeler to think carefully about whether or not
 %     this is 
@@ -994,7 +996,7 @@ If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 
 \newmaterial{%
 it is appropriate to form a new PDG with $\balpha :=$
 }%
-$.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ represent the causal graphs $G_1$ and $G_2$, respectively. 
+$.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ are vectors representing the causal graphs $G_1$ and $G_2$, respectively. 
 If $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, for instance, then $\balpha$ will still encode those shared independencies. 
 
 % Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
