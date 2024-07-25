@@ -382,7 +382,9 @@ beds (associated to a cpd $p$ in \Cref{ex:smoking}), but before she has
 time to reflect, we can represent her (conflicted) knowledge state 
 % as the sum of the two graphs,
 with the 
-depicted graphically on the right of \Cref{fig:grok-combine}.
+% depicted graphically 
+PDG depicted
+on the right of \Cref{fig:grok-combine}.
 %
 % \forjoe{I believe the text above is still accurate (although the conflicted knowledge state may be conflicted not just about the cpds, but also about the causal mechanisms.) We haven't said anything about qualitative information or mechanisms at this point, and I don't think it would be a good idea to do so here.}
 
@@ -463,7 +465,13 @@ In the coming sections, we formalize PDGs and relate them to other approaches.
 \section{Syntax}\label{sec:formal+syntax}
 % We now provide formal definitions for PDGs.        
 % We now provide our first formal definition of a PDG.
-We can now provide the formal definition of a PDG. 
+We can now provide the formal definition of a 
+% PDG. 
+% \emph{%
+Probabilistic Dependency Graph
+% (PDG)
+% }%
+\unskip. 
 
 
 % Although it is possible to formalize PDGs with hyperarcs directly, we opt for a different approach here, in which PDGs have only regular arcs, and hyperarcs are captured using a simple construction that involves adding an extra node.
@@ -482,7 +490,8 @@ We can now provide the formal definition of a PDG.
 \begin{defn}
     % \label{\OInc}
     \label{def:model}
-A \emph{Probabilistic Dependency Graph}
+% A \emph{Probabilistic Dependency Graph}
+A \emph{PDG}
 is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \balpha, \bbeta)$, where 
 %
 \begin{description}[topsep=0pt]%
@@ -769,7 +778,7 @@ We now give an overview of important alternative variants.
     \item 
     % \textbf{Lax PDGs.}
     % \textbf{Adaptive and Semi-PDGs.}
-    \textbf{adaptive confidences, missing values, and probability ranges.}
+    \textbf{Adaptive confidences, missing values, and probability ranges.}
     The confidence $\beta_a$ in the arc $\ed aXY$ may be replaced with a separate confidence $\beta_{a,x}$ for each possible input $x \in \V(X)$. 
 	%
     Relatedly, one might imagine a variant in which one needn't specify a complete conditional probability table, but could leave some entries blank.
@@ -930,7 +939,6 @@ To illustrate, suppose that $\dg M_1$ and $\dg M_2$ both contain a single arc fr
 The 
 % combined
 PDG $\dg M_1 + \dg M_2$ contains two \emph{distinct} mechanisms by which $X$ gives rise to $Y$ (see \cref{chap:QIM}).
-\newmaterial{%
 % To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
 % This is especially appropriate when the two hypergraphs
 This is appropriate if the  underlying mechanisms are in fact independent---
@@ -957,18 +965,15 @@ and
 % Yet one may also want to model independent parallel mechanisms---
 %     whose meaning we discuss in \cref{chap:QIM}. 
 % It may also be appropriate to assume that mechanisms 
-}%
 
 
 % However, one might well have intended to 
 % Rather than adopting two distinct mechanisms,    one might well have intended to merge them, 
-\newmaterial{%
 However, 
 if one views the qualitative information in two different PDGs not as two distinct mechanisms, but as as independent accounts of the \emph{same} mechanism, 
 then the sum of the PDGs alone is not appropriate---in
 this case, it would be better to also merge the two mechanisms into a single one.
 % one might well have intended to merge the two mechanisms,
-}%
 % viewing the two arcs as independent accounts that there is a \emph{single} such causal mechanism. 
 % This inability to  with factor graphs, which we discuss in \cref{ex:overdet}. 
 % Yet PDG union performs no such merge.
@@ -990,14 +995,31 @@ In that context, we will also see that the
 % We will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
+% \newmaterial{%
+% Recall that we may identify a graph $G$ with its adjacency matrix, 
+%     i.e., the vector of weights over all possible arcs that places 
+% }%
 It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. 
-If you believe that there's a 50\% chance that the causal graph is $G_1$, and a 50\% chance that the causal graph is $G_2$,  
+If you believe that there's a 60\% chance that the causal graph is $G_1$, and a 40\% chance that the causal graph is $G_2$,  
 % there is no problem with taking  $\balpha$ to be
-\newmaterial{%
 it is appropriate to form a new PDG with $\balpha :=$
-}%
-$.5 \balpha_1 + .5 \balpha_2$, where $\balpha_1$ and $\balpha_2$ are vectors representing the causal graphs $G_1$ and $G_2$, respectively. 
-If $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, for instance, then $\balpha$ will still encode those shared independencies. 
+$.6 \balpha_1 + .4 \balpha_2$, where $\balpha_1$ and $\balpha_2$ are vectors representing the causal graphs $G_1$ and $G_2$, respectively.%
+    \footnote{%
+        % Recall that, 
+        More precisely, since $\balpha_1 : \Ar_1 \to \mathbb R$ and
+        $\balpha_2 : \Ar_2 \to \mathbb R$ have different domains, 
+        by $.6 \balpha_1 + .4 \balpha_2$ we really mean 
+        $.6 (\balpha_1 \sqcup \mat 0) + .4 (\mat 0 \sqcup \balpha_2)$. 
+        % Just like in an adjacency matrix,
+        % $\alpha=1$ indicates the presence of an arc
+        %     (one independent mechanism),
+        % and $\alpha = 0$ indicates no arcs 
+        %     (no independent mechanism).
+        This is no different from taking the convex combination
+        of two weighted graphs, which coincides with the convex combination of their adjacency matrices. 
+    }
+If $G_1$ and $G_2$ are distinct causal graphs that represent the same independencies, for instance, 
+then $\balpha$ will still encode those shared independencies. 
 
 % Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
 % We now proceed with the formal details of PDG sums. 

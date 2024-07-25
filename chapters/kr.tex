@@ -86,7 +86,7 @@ It is easy to see that these PDGs are consistent, and represent precisely the di
 
 Of course, the semantics of PDGs developed in \cref{sec:semantics}
 make
-(\forjoe{I feel more comfortable using ``semantics'' as plural. Is that ok?})
+% (\forjoe{I feel more comfortable using ``semantics'' as plural. Is that ok?})
 heavy use of the usual definition of a joint distribution $\mu \in \Delta \V\!\X$, and so it would be circular to implicitly convert joint distributions to PDGs before developing the results of the previous chapter---%
 but now that PDG semantics are on solid ground, we may freely regard a joint distribution as a PDG. 
 % This will be useful to keep in mind later, 
@@ -256,7 +256,7 @@ that leaves $\Tru$ implicit, so that the binary relation $R(\var X,\var Y)$ and 
         \coordinate (crash2) at (1, 0);
         \draw[arr2,->>,shorten >=0pt] (W) to (crash2);
         \draw[arr2,<<-,shorten <=0pt] (crash2) to +(0.2,0);
-        \node[above=2pt of crash2]{$C$};
+        \node[above=3pt of crash2]{$C$};
     \end{tikzpicture}~,
 \end{center}
 respectively, in PDG notation.
@@ -265,11 +265,13 @@ Where does this notation come from?
 }%
 Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well surpress it. 
 So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$.
-\newmaterial{%
 What remains are a pair of double-headed arcs joined head-to-head,
 visually encoding the potential for epistemic
-    conflict if the constraint is violated.
+    conflict if the constraint is violated
+\newmaterial{%
+(i.e., if positive probability is given to $(x,y) \notin R$ or $\omega \notin C$)
 }%    
+\unskip.
 Just as we have left $\Tru$ implicit in the graphical notation,
 % Correspondingly, 
 we will want to identify a distribution $\mu(\X)$ with 
@@ -309,10 +311,10 @@ in the following theorem statement, where we treat it carefully.
             $\mu \in \SD{\dg M + R}$ 
             iff $\mu(\X) \in \SD{\dg M}$ and $\mu(R) = 1$ 
                 ~(and also $\mu(\Tru{=}\trut)=1$).
-                \onlyfirsttime{\footnote{\forjoe{%
-                    This extra condition is unimportant because 
-                    we are interested only in distributions that place full support on $\Tru{=}\trut$; above the theorem, we identify $\mu(\X)$ with $\mu(\X) \delta(\Tru=\trut)$
-                }}}
+                % \onlyfirsttime{\footnote{\forjoe{%
+                %     This extra condition is unimportant because 
+                %     we are interested only in distributions that place full support on $\Tru{=}\trut$; above the theorem, we identify $\mu(\X)$ with $\mu(\X) \delta(\Tru=\trut)$
+                % }}}
             % where $\cong$ identifies 
             
             
@@ -1078,7 +1080,7 @@ Furthermore, if we select $\alpha = 1$ for this edge,
 then the distribution with minimal structural deficiency (the analogue of maximum-entropy when there is causal information present) prescribes the distribution that says the coin has a 3/4 chance of landing heads, which is in the very middle of our range. 
 \end{example}
 
-It is well-known that different representations can change the result of maximizing entropy \citep{seidenfeld1986entropy,critique-maxent,friedman1971jaynes}. 
+It is well known that different representations can change the result of maximizing entropy \citep{seidenfeld1986entropy,critique-maxent,friedman1971jaynes}. 
 But some representations better capture a scenario more naturally than others, and PDGs 
 % make it easy to select representations that interact appropriately with entropy. 
 facilitate the choice of representations that interact well with entropy. 
@@ -1087,12 +1089,15 @@ This is because, generaly speaking, PDGs force you to make your modeling choices
 In \cref{ex:coin}, the PDG representation lead us to a space which, upon applying the principle of maximum entropy (or better yet, of minimum information deficiency) gives an answer that appears eminantly more reasonable than the simplest model we found without the PDG. 
 % It is worth noting that the naive space is not even 
 % It is difficult to imagine how one could even obtain the naive 
-Indeed, it appears impossible to obtain a representation that leads 50/50 maximum entropy presumption when using a PDG.
 \newmaterial{%
+% Indeed, it appears impossible to obtain a representation 
+% that leads 50/50 maximum entropy presumption when using a PDG.
+Indeed, with a PDG, it appears impossible to get the counter-intuitive
+application of maximum-entropy that assumes the coin to be fair.
+}%
 % \Cref{ex:coin} is far from a proof that using PDGs leads to representations that are more appropriate in which to apply the principle of maximum entropy, 
 %     but it is a
 % is just one (more) piece of supporting evidence, adding it to a pile that includes \cref{theorem:bns-are-pdgs}. 
-}%
 
 The construction in this section gives a generic way of 
     % leaving out information in a probabilistic model. 
@@ -1292,6 +1297,7 @@ In many cases, the duals of these diagrams, appropriately annotated with the net
 
 \TODO[TODO: diagram here would be nice touch!]
 
+\forjoe{This is not my priority; if it gets done that would be great, but there are other more improtant things at the moment. If I don't have time to do this properly, I will delete this at the end; no need to highlight it. }
 
 
 

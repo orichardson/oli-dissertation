@@ -170,11 +170,16 @@ Still, it is a question worth taking seriously, if one believes in the promise o
 \Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence (\cref{defn:qim}).
 We suspect there may be more to the story. 
 % First, an analogue of the principle of maximum entropy leads us to
+% \newmaterial{%
+% % First, 
+% For instance, the principle of maximum entropy suggests
+%     a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries---and
+%     this special
+%     variant appears to have an even closer relationship with $\SDef$.
+% }%
 \newmaterial{%
-% First, 
-For instance, the principle of maximum entropy suggests
-    a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries---and
-    this variant appears to have an even closer relationship with $\SDef$.
+For instance, the connection to causality suggests a more restrictive special case of QIM-compatibility, in which the witness must be uniform over the solutions of the model (which happens to also be the maximum entropy distribution among those that can arise). 
+This special variant appears to have an even closer relationship with $\SDef$.
 }%
 Furthermore, preliminary experiments suggest that minimizing $\SDef$ may suffice to ensure QIM compatibility. 
 
@@ -190,13 +195,11 @@ can we square this with our understanding of $\alpha$ as representing independen
 \paragraph{Further Investigation into PDG Inferece.}
 As mentioned in the conclusion to \cref{chap:infer}, we now have an $\tilde O(N^{2.9})$ approach to inference in the case of bounded treewidth,
 % This is still a significant gap, that leaves PDGs trailing far behind other graphical models with analogous inference approaches
-\newmaterial{%
 which is still significantly worse than the $\tilde O(N^1)$ algorithms for other graphical models with analogous inference approaches.
  % but the best known lower bound is $\tilde \Omega( N^1)$. 
 As they are more expressive, PDG inherits an $\tilde \Omega(N^1)$ lower bound.
 This leaves a significant gap;
 we do not yet know whether it is possible to perform PDG inference more efficiently, or if we need to strengthen the lower bound. 
-}%
 Moreover, our algorithm only provably works for inference in cases where 
     % $\bbeta \ge \gamma\balpha$).
     % $\gamma$ (the relative importance of structural information) is sufficiently small. 
@@ -206,7 +209,7 @@ The inference problem remains open in cases where structural information plays a
 
 There are many different approaches to inference in traditional graphical models;
 see Chapters 9-14 of \citet{KF09} for a survey of them.
-Our approach to inference in PDG is a close relative of the techniques developed in Chapter 11. But what of analogues of the other approaches? 
+Our approach to inference in PDG is closely related to the techniques developed in Chapter 11. But what of analogues of the other approaches? 
 Particle-based and MCMC methods in particular (the analogue of Chaapter 12 [ibid])
 for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
 %    
@@ -214,9 +217,7 @@ for PDGs remain almost completely unexplored; can these techniques be adapted fo
 A related question is that of a deeper understanding of the local inconsistency resolution (LIR) algorithm (the subject of \cref{chap:LIR}). 
 Under what conditions does this procedure converge?
 If it converges, when does it produce ``correct'' answers?
-\newmaterial{%
 It has taken decades of research to address similar questions about belief propagation \citep{yedida-genpb,wiegerinck-fracbp,minka2005divergence}, which is a special case.
-}%
 
 
 While treewidth dominates the complexity of (exact) inference in traditional graphical models, it is not obvious that the same must be true for PDGs. 
@@ -267,7 +268,6 @@ Narrowly construed as ``can it be used to help us understand AI systems built wi
 % For pedagogical reasons alone, there is clear value in unifying so many different concepts and clarifying the relationships between them.
 % Especially so because it also answers important foundational questions, such as how loss functions are related to one another, and to probability.
 For pedagogical reasons alone, there is clear value in unifying so many different concepts 
-\newmaterial{%
 in a simple language---especially 
     because it answers foundational questions about these concepts (such as where loss functions come from) and explains relationships between them.
     % in a simple  that answers foundational questions about where 
@@ -280,11 +280,11 @@ Equally narrowly construed as, ``can I run it on my laptop?'', the answer is als
 % Using and developing this library has helped me explore and understand the material more deeply; I cannot recommend implementing one's math highly enough. 
 % To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
 }%
-another artifact of this research progrm has been general-purpose Python library implementing the framework in the discrete case
+another artifact of this research program has been general-purpose Python library implementing the framework in the discrete case
 (\url{https://github.com/orichardson/pdg}).
-}%
-I cannot highly enough recommend implementing one's math; to a reader who wonders why bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
-
+% I cannot highly enough recommend implementing one's math; to a reader who wonders why bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
+% Implementing the math has been imensely helpful for the development of these ideas---after all, it's better to have two ways of understanding things than it is to have just one. 
+%
 % But much of the work
 % While some of the ideas 
 % Many of these ideas, while technical, are also very abstract. 
@@ -294,21 +294,20 @@ I cannot highly enough recommend implementing one's math; to a reader who wonder
 % Fortunately, I have something that might 
 % To these people, I present the PDG python library, 
 % What these people may not be aware of, is that I have been 
-
-
+%
+%
 % I am still avoiding the deeper question, so let me ask it again.
 % Is any of this practical? Can it help solve real problems? Could it be used to improve somebody's life? 
 % These questions haunt me because they are clearly important, and I believe the answer to them is probably yes---but I been too invested in theory to investigate them with the energy they demand.  
 % Conspicuously absent in this thesis are solutions to important real-world problems. 
 % But solving important problems is difficult and takes time. 
 % The theory will have to suffice for now. 
-
+%
+%
 % But the deeper question---of whether or not this theory could ultimately help humanity---remains the most important open question of all.
-\newmaterial{%
 The deeper question---of whether or not this theory will ultimately help humanity---remains open.
-But it has promise.}
-We are already building powerful artificial agents that are quickly reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
-\newmaterial{%
+% But it has promise. We are 
+But there is promise. Humanity is already building powerful artificial agents that are quickly reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
 The theory described in this thesis has the potential to be a key element of that future.
 
 % First, this theory contributes to interpretability. 
@@ -321,7 +320,7 @@ To a critical eye, this makes them very difficult to trust.
 The present theory helps to explain why these systems work, at an intuitive level.
 It can help practitioners make or defend these choices in a principled manner, and it provides an intuitive visual calculus for describing AI systems and reasoning about their relationships. 
 % The potential impact may be even larger.
-The impact of this may be even larger, considering the current context. 
+Yet the impact may be even larger, considering the current context. 
 
 % The principle question 
 % A fundemental question about the future of 
@@ -330,9 +329,13 @@ At the moment, the most critical problem in
 \citep{wiener-alignment1960,alignment-zhuang-2020-NeurIPS,bostrom-superintelligence,christian2020alignment}:
 what values should we give to AI systems? 
 A key feature of a machine learning system is an explicit optimization objective that the system seeks to minimize. 
-But as AI becomes increasingly capable, choosing an optimization objective feels increasingly like using a monkey paw:
+But as AI becomes increasingly capable, choosing an optimization objective 
+% feels increasingly like using a monkey paw:
+    feels increasingly dangerous:
 % do we really want some simple metric of profit or engagement or hapiness to be maximized by a ``psychopathic god''? 
-can we really trust an inhumanly clever psychopath to maximize some metric of profit, productivity, or happiness? 
+% can we really trust 
+do we really want
+an inhumanly clever psychopath to maximize some metric of profit, productivity, or happiness? 
 % The concern stems from 
 % Are there natural, universal values?
 % According to the standard microeconomic theory, the answer is no: an agent is entitled to its own preference, morals, goals, and values. 
@@ -361,7 +364,6 @@ Perhaps, if we are careful, we may be able to lean mostly on a single \emph{univ
 the pursuit of self-consistency.
 % \end{center}
 % As we have seen, this way of thinking provides deep insights into 
-}%
 
 
 \commentout{

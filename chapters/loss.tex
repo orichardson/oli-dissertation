@@ -326,10 +326,10 @@ $\XEnt(\datadist\xsamp,p)$
 is the expected code length per sample
 from $\datadist\xsamp$, when using codes optimized for the (incorrect) distribution $p$.
 So implicitly, a modeler using cross-entropy has already articulated a belief the data distribution $\datadist\xsamp$ is the ``true one''.
-\forjoe{%
-	cross entropy and relative entropy are different quantities, but related, and equivalent for optimization.  
-	I think this is well known.  In any case, we have a whole bolded paragraph discussing this in the preliminaries, and it also becomes clear if you compare this result with Prop 6.9.
-}%
+% \forjoe{%
+% 	cross entropy and relative entropy are different quantities, but related, and equivalent for optimization.  
+% 	I think this is well known.  In any case, we have a whole bolded paragraph discussing this in the preliminaries, and it also becomes clear if you compare this result with Prop 6.9.
+% }%
 To get the same effect from a PDG, the modeler must make this belief explicit by
 placing infinite confidence in the data distribution $\datadist\xsamp$.
 
@@ -1486,7 +1486,7 @@ It seems that our approach, in addition to providing a unified view of standard 
 
 Given an \emph{arbitrary} loss function, can we find a PDG that gives rise to it?
 The answer,
-	\newmaterial{as we discovered in \cref{sec:soft-constraint-widget}, }
+as we discovered in \cref{sec:soft-constraint-widget},
 	appears to be yes---although not without making unsavory modeling choices.
 Without affecting its semantics, one may add the variable $\Tru$ that takes values $\{\trut, \truf\}$, and the event $\Tru \!\!=\! \trut$, to any PDG.
 Now, given a

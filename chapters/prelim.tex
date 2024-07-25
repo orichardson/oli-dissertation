@@ -278,6 +278,37 @@ A \emph{cone} is something between a linear space and a convex set: a linear spa
 It follows that linear spaces are cones, and cones are convex.
 
 
+\newmaterial{%
+\paragraph{Relations}
+    \label{primer:relations}
+Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables,
+which are traditionally called atributes in this context. 
+A \emph{relation} $R(\mathcal X) = R(X_1, \ldots, X_n) \subseteq 
+\V(X_1) \times \cdots \times \V(X_n)$, or equivalently, $R : \prod_{i=1}^n \V\!X_i \to \{0,1\}$, is a subset of joint values of attributes. 
+The natural number $n$ is called the \emph{arity} of $R$. 
+
+The \emph{natural join} of two relations $R(A,B)$ and $S(B,C)$ combines them in a particularly obvious way: $(a,b,c) \in R \bowtie S$ iff $(a,b) \in R$ and $(b,c) \in S$. 
+More generally, we have: 
+
+% \begin{defn}[natural join]
+%     \[
+\begin{equation}
+    R(\mathcal X) \bowtie S(\mathcal Y)
+        := 
+        \Big\{
+            \boldsymbol\omega \in  \V(\mathcal X \cup \mathcal Y)
+            ~\Big|~
+            \mathcal X(\boldsymbol\omega) \in R \land
+            \mathcal Y(\boldsymbol\omega) \in S
+        \Big\}
+        % \qedhere
+%     \]
+% \end{defn}
+\end{equation}
+
+At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \! \mathcal X$ and $S \subseteq \V\mathcal Y$.
+At the opposite extreme, if $\mathcal X = \mathcal Y$ are the same set of variables, then $R(\mathcal X) \bowtie S(\mathcal X)$ coincides with the intersection of the subsets $R$ and $S$. 
+}%
 
 %%%% TODO %%%%
 % - limits (?)
@@ -788,7 +819,7 @@ In this more general setting, we no longer require $\V\!X$ to be a finite set, b
 Furthermore, we will also assume that $\V\!X$ comes equipped with a measure $\lambda_X$ that we call the \emph{base measure}. 
 In the case of a discrete variable $X$ that takes on finitely or countably many values, we take $\lambda_X$ to be the counting measure: for $U \subseteq \V\!X$ $\lambda_X(U) = |U|$ is the number of elements in $U$. 
 When $\V\!X$ is a subset of real space $\mathbb R^n$, we use the
-\forjoe{(``the Lebesgue measure'' is standard. See \url{https://e.math.cornell.edu/people/belk/measuretheory/LebesgueMeasure.pdf} or \url{https://en.wikipedia.org/wiki/Lebesgue_measure})}
+% \forjoe{(``the Lebesgue measure'' is standard. See \url{https://e.math.cornell.edu/people/belk/measuretheory/LebesgueMeasure.pdf} or \url{https://en.wikipedia.org/wiki/Lebesgue_measure})}
 \emph{Lebesgue measure}, which agrees with the standard notions of length, area, and volume.
 
 
@@ -1966,12 +1997,10 @@ It is not, however, a ``distance measure'' in the standard sense, because it is 
 But this is a good thing, because
  % the concept of probabilistic discernability itself
 % the task of discerning one probability distribution from another
-% is inherrently asymmetric. 
-\newmaterial{
-    the task of discerning one distribution from another---%
-    specifically, discerning the fit of a belief $\nu$ to reality $\mu$---%
-    is inherrently asymmetric.
-}%
+% is inherently asymmetric. 
+the task of distinguishing one distribution from another---%
+specifically, of deciding whether or not a belief $\nu$ matches reality $\mu$---%
+is inherently asymmetric.
 
 \begin{example}
         \label{ex:coin-unknown-bias}
@@ -1982,7 +2011,7 @@ But this is a good thing, because
     You observe the only possible outcome: heads. This is totally within the realm of possibility. It would take many flips to convince yourself the coin was not fair, and even then you could not be completely sure. 
     Now reverse the roles: suppose that in reality, the coin is fair, but you believe it is double-headed. With probability 1/2, you observe a tails and are immediately persuaded (with certainty) that your belief is incorrect. 
 %
-    There is an inherrent asymmetry: it is far easier to ``distinguish the double-headed coin from the fair one'', than it is to ``distinguish the fair coin from the double-headed one''.
+    There is an inherent asymmetry: it is far easier to ``distinguish the double-headed coin from the fair one'', than it is to ``distinguish the fair coin from the double-headed one''.
 \end{example}
 
 Relative entropy is arguably exactly the appropriate measure of discrepancy between belief and reality. 
@@ -2089,8 +2118,9 @@ We encourage a reader to quickly skim this section,
 
 \subsection{Relations}
 
-Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables, traditionally called atributes. 
-A \emph{relation} $R(\mathcal A) = R(X_1, \ldots, X_n) \subseteq 
+Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables,
+which are traditionally called atributes in this context. 
+A \emph{relation} $R(\mathcal X) = R(X_1, \ldots, X_n) \subseteq 
 \V(X_1) \times \cdots \times \V(X_n)$, or equivalently, $R : \prod_{i=1}^n \V\!X_i \to \{0,1\}$, is a subset of joint values of attributes. 
 The natural number $n$ is called the \emph{arity} of $R$. 
 
@@ -2114,7 +2144,7 @@ More generally, we have:
 % \end{defn}
 \end{equation}
 
-At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \mathcal X$ and $S \subseteq \V\mathcal Y$.
+At one extreme, if $\mathcal X$ and $\mathcal Y$ are disjoint sets of attributes, then $R(\mathcal X) \bowtie S(\mathcal Y)$ coincides with the cartesian product of $R \subseteq \V \! \mathcal X$ and $S \subseteq \V\mathcal Y$.
 At the opposite extreme, if $\mathcal X = \mathcal Y$ are the same set of variables, then $R(\mathcal X) \bowtie S(\mathcal X)$ coincides with the intersection of the subsets $R$ and $S$. 
 
 Even when $A_1, \ldots, A_n \subseteq \X$ are not disjoint, we give a convenient extended syntax by defining the quantity $R(a_1, \ldots, a_n)$, where $a_i \in \V(A_i)$. 
