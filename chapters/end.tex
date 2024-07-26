@@ -25,7 +25,7 @@ Furthermore, a wide variety of standard algorithms can be viewed as instances of
 Indeed, learning, inference, and 
     much else can be viewed as different aspects of a single objective: the pursuit of consistency. 
 
-In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a universal probabilistic model, and as a universal truth-based objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
+In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a universal probabilistic model, and as a universal objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
 We also gave polynomial algorithm for inference in PDGs that have bounded treewidth (\cref{chap:infer}), finally solving both problems. 
 We also develop useful principles for manipulating PDGs, 
     allowing them to function as a visual proof language (\cref{chap:reason}).
@@ -48,18 +48,20 @@ So, for readers who are more comfortable with the latter range, we quickly summa
 % Let the \emph{(observational) self-consistency} of a PDG $\dg M$ be
 % quantity
 \newmaterial{%
-Define \emph{(observational) self-consistency}
-of a collection of mathematical objects $\{ M_1, M_2, \ldots\}$
-to be the quantity
+Given objects $M_1, M_2, \ldots$,
+each of which can be implicitly converted to a PDG
+Define \emph{(observational) self-consistency} of $M_1, M_2$
+    to be the quantity
 % to be
 \[
     % \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0) ~~\in[0,1]. 
     \Xi\{ M_1, M_2, \ldots \} := \mathfrak\exp\Big( -  \aar[\big]{\dg M_{M_1} + \dg M_{M_2} + \cdots}_0\Big) ~~\in[0,1]
 \]
 % be the \emph{(observational) self-consistency}
-that results from implicitly converting each object to a PDG, 
-    joining them together with a sum, measuring the inconsistency,
-    and then reporting a consistency score in the range $[0,1]$. 
+that results from converting each object to a PDG, 
+    joining them together, 
+    and then reporting their overall (lack of) inconsistency in the form
+    of a score in the range $[0,1]$. 
 }%
 % This allows us to reframe some of the properties we have already seen in a way that, to some, may look even more natural in this form.
 The following facts are either immediate or follow immediately from a result in \cref{chap:repr-tools} or \ref{chap:one-true-loss}.

@@ -437,21 +437,31 @@ on the right of \Cref{fig:grok-combine}.
 	\label{fig:grok-combine}
 \end{figure}
 
-The union of the two PDGs, even with overlapping 
-nodes, is still a PDG.
-This is not the case in general
-for BNs.
-Note that the PDG that Grok used to
-represent her two different sources of information (the mother's wisdom and the
-study) regarding the distribution of $C$ is a \emph{multigraph}: there are two
-arcs from $T$ to $C$, with inconsistent information.
-Had we not allowed multigraphs, we would have needed to choose between the two arcs, or represent the
-information some other (arguably less natural) way. As we are already allowing
-inconsistency, merely recording both is much more in keeping with the way we
-have handled other types of uncertainty. 
+% The union of the two PDGs, even with overlapping nodes, is still a PDG.
+% This is not the case in general for BNs.
+% 
+\newmaterial{%
+By joining the two PDGs together, we get another PDG---which is not the case in general for BNs.
+% Note that the PDG that Grok used to represent her two different sources of information (the mother's wisdom and the study) regarding the distribution of $C$ is a \emph{multigraph}: there are two
+% arcs from $T$ to $C$, with inconsistent information.
+% Had we not allowed multigraphs, we would have needed to choose between the two arcs, or represent the information some other (arguably less natural) way. 
+% As we are already allowing
+% inconsistency, merely recording both is much more in keeping with the way we
+% have handled other types of uncertainty. 
+Note that the resulting PDG has two distinct two arcs from $T$ to $C$
+ (corresponding to the mother's wisdom $q$ and the study $p$), 
+    that are inconsistent.
+Specifically, there is no distribution $\mu(C,T)$ for which $\mu(T|C)$ equals both $p$ and $q$. 
+Observe once again that this inconsistency is possible because we now have two distinct beliefs about $C$.
+}%
+% Had we not allowed multigraphs, we would have needed to choose between the two arcs, or represent the information some other (arguably less natural) way. 
+% As we are already allowing
+% inconsistency, merely recording both is much more in keeping with the way we
+% have handled other types of uncertainty. 
 \end{example}
 
-Not all inconsistencies are equally egregious. For example, even though the cpds
+Not all inconsistencies are equally egregious.
+For example, even though the cpds
 $p$ and $q$ are different, they are numerically close, so, intuitively, the PDG on the right in
 \Cref{fig:grok-combine} is not very inconsistent.
 Making this precise 

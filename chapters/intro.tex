@@ -48,17 +48,25 @@ if not humiliated \citep{finocchiaro1981fallacies,russell1902letter}.
 
 % Computer scientists who build cognition from scratch, have capitalized on an opportunity to not only avoid contradictions, but  build frameworks where they're impossible by design. 
 % Computer scientists like us, who build cognition from scratch, have capitalized on an opportunity to eliminate contradictions in artificial agents altogether, by using epistemic representations that are consistent by design.
+Economists, seeking to characterize rational thought, have established  probability%
 \newmaterial{%
-Economists, seeking to characterize rational thought, have established  probability as the gold standard for representing belief; by using it, one can express uncertainty in a way that is guaranteed to be self-consistent. 
-Computer scientists, making use of such representations, have capitalized on an oportunity to eliminate inconsistency in artifical agents altogether. 
-Today, theorists are careful to prove things about clearly defined (probabilistic) models, 
+---a representation that allows for uncertainty but cannot encode conflicting information---%
+as the gold standard for representing beliefs.
+% by using it, one can express uncertainty in a way that is guaranteed to be self-consistent. 
+% Computer scientists, making use of such representations, have capitalized on an oportunity to eliminate inconsistency in artifical agents altogether. 
+Computer scientists,
+    by using such representations to build artificial minds,
+    have capitalized on an oportunity to 
+        eliminate inconsistency in artifical agents altogether. 
+}%
+Theorists are careful to prove things about clearly defined (probabilistic) models, 
 while practitioners endeavor to build systems
     % that represent a single coherent probability distribution.
     whose state represents a single coherent (probabilistic) 
         view of the world. 
 % Inconsistency should impossible by design.
 Even most programmers agree: 
-    when possible, it is better to eliminate inconsistency by design. 
+    when possible, it is best to inconsistency by design. 
 %
 % Theorists are careful to prove things about clearly defined models,
 % while applied computer scientists have long built artificial agents
@@ -66,21 +74,40 @@ Even most programmers agree:
 % using representations that make inconsistency impossible by design.
 %
 % We would rather have one definition of $X$ and one technique for computing $X$ than several different approaches and implementations that could, in principle, disagree. 
+% We would rather have 
+\newmaterial{%
+It is better to have
+a single
+% definition of $X$ and one technique for computing
+way of calculating $X$ or thinking about $X$ than
 }%
-We would rather have one definition of $X$ and one technique for computing $X$ than several different approaches and implementations that could, in principle, disagree. 
-We would rather use one library for telling time than two.
-And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
+several different ones that could, in principle, disagree. 
+% We would rather use 
+It is better to use one library for telling time than two.
+% And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
+% \newmaterial{%
+% The goal of a learned statistical model is to distil messy and possibly conflicting data into the parameters of a single coherent probabilistic model. 
+% }%
 Why?
 % Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
 Because 
 \newmaterial{%
-by computing things in just one way, 
-it becomes impossible to get conflicting answers,
+% by cal things in just one way, 
+% with just one one way of viewing any given quantity, 
+%     there can be no conflict, 
+this way there can be no conflict,
+% it becomes impossible to get conflicting 
 % granting
-and so our systems become immune to inconsistency.
+% and so our systems become immune to 
+% granting our systems invulnerability to
+% and so this makes our systems immune to
+making our systems immune to
+% our shared affliction: 
+inconsistency.
 }%
 % invulnerability to our one common enemy: inconsistency.
 
+% Yet this invulnerability comes with shackles.
 Yet this immunity comes with shackles.
 Would \emph{you} trade \emph{your} freedom to see things from two angles at once---to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
 %
@@ -98,7 +125,10 @@ So if (through no fault of your own) you do happen to be wrong about how the wor
 % Many of the most powerful people and institutions in this world would not.
 % Running a budget surplus works well, until you fall ill or need to buy a house.
 
-Engineers and computer scientists generally agree that \emph{redundancy}---by which we mean multiple independent approaches, tests, and safeguards that all point in the same direction---is highly desirable. 
+% Engineers and computer scientists generally agree that \emph{redundancy}---by which we mean multiple independent approaches, tests, and safeguards that all point in the same direction---is highly desirable. 
+Engineers and computer scientists 
+% At the same time, engineers and computer scientists 
+generally agree that \emph{redundancy}---that is, the presence of multiple independent approaches, tests, and safeguards that all agree---is highly desirable. 
 But, in a sense, redundancy and inconsistency are opposite sides of the same coin. 
 % In some sense, the opposite of inconsistency is \emph{redundancy}, which engineers and computer scientists agree is generally positive. 
 % % Another problem consistent by construction is that they also have no redundancy, which makes them fragile.
@@ -107,7 +137,7 @@ But, in a sense, redundancy and inconsistency are opposite sides of the same coi
 % For if we have two different representations that could conceivably agree, producing redundancy, then those two representations could conceivably be inconsistent with one another. 
 If we use only representations that avoid inconsistency 
     % by  making disagreement impossible,
-by preempting the possibility of two meaningfully distinct answers to a question 
+    by preempting the possibility of distinct answers
     (using only one watch, so to speak),
     % then there are no two meaningfully distinct,
     % and so there can be no redundancy, either. 
@@ -115,7 +145,9 @@ by preempting the possibility of two meaningfully distinct answers to a question
         and hence no redundancy. 
 % are also redundancy-free, by construction. 
 Without opportunity for internal conflict, there can be no opportunity for internal agreement; 
-it is the possibility of disagrement that makes agreement valuable. 
+it is the 
+potential for
+disagrement that makes agreement valuable. 
 % The only way to eliminate the possibility  opportunity for internal conflict, then there is also no opportunity for internal agreement. 
 
 
@@ -398,7 +430,9 @@ Making that something else precise is one objective of this thesis.
 % \subsection{A Division between Quantitative and Qualitative}
 % \subsection{Two Important Divisions}
 % \subsection{Two Important Dichotomies}
-\subsection{Qualitative and Quantitative Information}
+% \subsection{Qualitative and Quantitative Information}
+% \subsection{Modeling at Two Levels}
+\subsection{An Important Conceptual Division}
 
 % \TODO[ TODO: fix this subsection; it is still very rough ]
 % on two levels: a high-level structure
@@ -414,39 +448,44 @@ A few examples of the distinction we're getting at are given below.
 \begin{center}
     \singlespacingplus
     \begin{tabular}{c|c}
-        Structural & Observational \\
-            \hline
-        Qualitative & Quantitative \\ 
+        % Structural & Observational \\
+        %     \hline
         Types & Values \\ 
         Theorems & Proofs \\
         Definitions & Examples \\
         Schemas & Instances \\
-        Classes & Objects
+        Classes & Objects \\
+        Qualitative & Quantitative 
     \end{tabular}
 \end{center}
 
-Some readers may immediately recognize this concept; 
-we will refer to it principally as the divide between
-     \emph{structural} and \emph{observational} information.
+% Some readers may immediately recognize this concept;.
 % others may find it confusing or find it to be a false equivalence. 
     % others may find the analogy between these concepts resonates less.
-\newmaterial{%
-The concepts on the right implement the ones on the left, filling them in with the details needed to make them concrete.
+The concepts on the right ``implement'' or ``realize'' the ones on the left, filling them out with the details needed to make them concrete.
+\unskip\footnote{\newmaterial{%
+The identification between propositions and types \citep{MARTINLOF197573} is a particularly well-celebrated aspect of the Curry-Howard correspondence \citep{curry-howard}.
+% The other instances of this distinction are 
+}}
 However, a great deal of reasoning---particularly when it comes to composing concepts, can be done solely by working with the more abstract concepts on the left. 
 Knowing that $f : A \to B$ and that $a \in A$ allows us to form the quantity $f(a)$ and understand that it is an element of $B$, even without having specified anything else about the sets $A$ and $B$, or about the function $f$.
-Similarly, it is often possible to chain together theorems without knowing their proofs, or describe operations on databases without access to specific data in the tables. 
-A composite concept is said to \emph{typecheck} if it  
-    makes sense at a qualitative level. 
-By the end of the thesis, we will see how
+Similarly, it is often possible to chain together theorems without knowing their proofs, to describe operations on databases without access to specific data in the tables. 
+% A composite concept is said to \emph{typecheck} if it  
+%     makes sense at a qualitative level. 
+% By the end of the thesis, we will see how
 % for this distinction and its role in probabilistic modeling. 
 % for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
-the same conceptual division plays a fundemental role in probabilistic modeling. 
 
-
-In the graphical models community, the two types of information are known as \emph{qualitative} and \emph{quantitative}; the former traditionally refers to the graphical structure of the model and corresponding independencies of the model, while the latter refers to the concrete probabilistic information involved. 
+The same conceptual division plays a fundemental role in probabilistic modeling. 
+In the graphical models community, the two types of information are known as \emph{qualitative} and \emph{quantitative}; the former traditionally refers to the graphical structure of the model and corresponding independencies, while the latter refers to 
+% specific values that the variables can take on, 
+    the concrete probabilistic information involved which annotates the model,
+    and specific values that the variables can take.  
 % (see \cref{sec:pgm-prelim}).
 % The name of a variable, and the names of the variables on which it can depend are qualitative information; the set of values it can take, and its marginal distribution are quantitative information. 
 %
+\newmaterial{%
+For our purposes, we will call the analogue of the information on the left ``structural'',  and the analogue of the information on the right ``observational'', as it will typically come from some kind of statistical observation.
 }%
 Both kinds of information are important, but they are different in character;
 % The former is about the graph structure, and the latter is about its annotation.
@@ -456,6 +495,7 @@ Both kinds of information are important, but they are different in character;
 % One unusual feature of PDGs is that the qualitative information has a numerical weight. 
 % Different experts may have different relative strengths. For instance, one might want to trust one person to design a study to determine what causes what, and another person to independently design experiments aimed at determining the numerical probabilities. 
 the interplay between them will be a recurring theme.
+
 
 % Understanding the difference between these two 
 % Corresponding 
@@ -548,6 +588,7 @@ These equivalences suggest that PDGs are a
 % natural and particularly special
 natural and particularly special
 representation. 
+\forjoe{What's wrong with particularly special? I think these properties definitely make PDGs particularly special. It's very unusual for an object to equal so many generalizations of itself, and is certaintly suggestive that there's something deep going on!}
 
 % But first, we should review some math. 
 But before we get into the details, we should review some math. 
