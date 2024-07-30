@@ -499,12 +499,9 @@ From this definition, it is easy to recover the usual definition of conditional 
 $\mu(U \mid A) = \mu(U \cap A) / \mu(A)$. 
 There is just one caveat: this formula is not meaningful when $\mu(A) = 0$; in this case, we leave the conditional probability undefined.
 % Indeed, if $\mu(A) = 0$, it is arguably appropriate to say $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$, because there is a sequence of probability distributions $\{ \mu_k \}_{k \in \mathbb N}$ converging to $\mu$ that all $\mu_k(U \mid A) = p$ for all $k$. 
-\oldnewmaterial{%
 But it is not undefined because there is no value that makes sense---but rather because there is an equally strong argument suggesting that \emph{every} value makes sense:
 % Indeed, if $\mu(A) = 0$, there is an equally strong argument supporting the notion that $\mu(U \mid A) = p$ for \emph{every} $p\in[0,1]$: 
 if $\mu(A)= 0$, then for all $p\in [0,1]$ there is a sequence $\{ \mu_k \}_{k \in \mathbb N}$ of probability distributions converging to $\mu$ with the property that $\forall k.~\mu_k(U \mid A) = p$.
-}%
-
 
 %% adding variables.
 \paragraph{Probability via Variables.}
@@ -1318,14 +1315,13 @@ A symmetric argument etablishes that $\Tgt a = \check{\check{\Tgt a}}$.
 \end{figure}%
 \commentout{%
 % See \cref{fig:dhygraph-duals} for some visual illustrations of a few hypergraphs and their duals.
-A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
-We remark that the left and center diagrams on the top can be viewed as (the hypergraphs corresponding to) qualitative Bayesian Networks, by regarding X,Y,Z and A,B,C,D as variables, and imagining that there is a (randomized) causal determination occuring along each arc. 
-One can also imagine an analogue with cycles---resuling in perhaps a (randomized) causal model of the given shape.  But a causal model has one equation corresponding to each variable, and the corresponding hypergraphs thus has exactly one hyperarc leading to it. 
-In the dual hypergraphs, one should view the nodes as processes and the arcs as wires. Such a hypergrah has precisely one hyperarc leading out of every node. When wires branch, one imagines a copy; when two arcs point to the same process (as in process 4, in the middle center), that process takes both of the wires as inputs.
-In the duals of hypergraphs corresponding to causal models, there are no two-tailed arrows, which might be thought of as a ``merge''. 
-Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
+    A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
+    We remark that the left and center diagrams on the top can be viewed as (the hypergraphs corresponding to) qualitative Bayesian Networks, by regarding X,Y,Z and A,B,C,D as variables, and imagining that there is a (randomized) causal determination occuring along each arc. 
+    One can also imagine an analogue with cycles---resuling in perhaps a (randomized) causal model of the given shape.  But a causal model has one equation corresponding to each variable, and the corresponding hypergraphs thus has exactly one hyperarc leading to it. 
+    In the dual hypergraphs, one should view the nodes as processes and the arcs as wires. Such a hypergrah has precisely one hyperarc leading out of every node. When wires branch, one imagines a copy; when two arcs point to the same process (as in process 4, in the middle center), that process takes both of the wires as inputs.
+    In the duals of hypergraphs corresponding to causal models, there are no two-tailed arrows, which might be thought of as a ``merge''. 
+    Yet it is not clear how to merge the values of two variables, when they are not the same, in general---especially if we expect associativity and commutativity, as we do with \emph{copy}. 
 }%
-\oldnewmaterial{%
 The operation is worth visualizing. 
 A few hypergraphs and their duals are depicted in \cref{fig:dhygraph-duals}. 
 % If we view the hypergraphs on the top as representing processes, 
@@ -1368,7 +1364,6 @@ are circuit representations that have become standard for visualizing neural net
 % The duals of these diagrams---the flowchart variants---have been studied at greater length, and are the subject of the next section. 
 % Meanwhile, (some of) the flowchart variants are closely related to a standard representation called a Bayesian Network, which is one of two focuses of the next section. 
 Meanwhile, the duals of these hypergrahs (i.e., flowchart variants) are closely related to a standard representation called a \emph{Bayesian Network}, which is a primary focus of the next section. 
-}%
 
 % As we will see th  
 % If we view $X$,$Y$, and $Z$ as variables, 
@@ -1571,9 +1566,7 @@ known as the \emph{Clifford-Hammersly Theorem} \citep{clifford1971markov}, or th
 If we care only about such distributions, this suggests another approach to the same idea: throw away the graph $G$, multiply together collection of functions $\{ \phi_{j} : \V \mat X_{j} \to \mathbb R_{\ge 0} \}_{j \in J}$ indexed by some arbitrary set $J$, and then renormalize;
     the subset $\mat X_j \subseteq \X$ is called the \emph{scope} of factor $j$. 
 %
-\oldnewmaterial{%
-Although we have described an annotation of a hypergraph, it is more standard and easier to draw in another form.}
-%
+Although we have described an annotation of a hypergraph, it is more standard and easier to draw in another form.
 The bipartite graph that corresponds naturally to this hypergraph is called a \emph{factor graph}. 
 More precisely, a factor graph has two kinds of nodes: factors (drawn as squares), and variables (circles), with an edge between them if the factor depends on the variable.
 Some authors reserve the term ``factor graph'' just for the bipartite graph representation, but we will also refer to the hypergraph and collection of factors this way, as 
@@ -1602,7 +1595,10 @@ Writing $\U$ for the observed variables and $\V$ for the unobserved ones, a CBN 
 
 Graphs with both directed and undirected edges have also been used as the basis for probabilistic models.
 The most widely known graphical model of this kind is called a \emph{chain graph}, in part because it can be seen as a way of connecting conneted components (themselves factor graphs) along a directed acylcic chain.
-People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks \citep{dean1989model}\citep[\S6.2]{KF09}, and a related cut-parameterized approaches to looking at fixed points \citep{Baier_2022}.
+People have also considered other ways of making precise the notion of a cyclic baysian network (aside from multiply together factors for a cyclic network), including unrolling it and looking at fixed points---such as dyanmic Bayesian Networks 
+% \citep{dean1989model}\citep[\S6.2]{KF09}, 
+\citep[\S6.2]{dean1989model,KF09}, 
+and a related cut-parameterized approaches to looking at fixed points \citep{Baier_2022}.
 \emph{Directed factor graphs} \citep{frey2012extending}
 combine the unify the qualitative expressiveness of directed graphical models with the (undirected) factor graph formalism,
 but are quantitatively no different from ordinary factor graphs.
@@ -1615,7 +1611,11 @@ Syntactically it is like a Bayesian Network, but semantically, it is closer to a
 It is typically cyclic, and defines a probability distribuiton as a fixed point of a Markov Chain. 
 % DNs can also be inconsistent in a sense, 
 ``Consistent'' DNs turn out to be an alternate way of parameterizing undirected graphical models.
-There is also a notion of an \emph{inconsistent} DN, which turns out to be a very special case of a representation developed in this thesis (\cref{chap:relent-soup}).
+\iffoundations
+    There is also a notion of an \emph{inconsistent} DN, which turns out to be a very special case of a representation developed in this thesis (\cref{chap:relent-soup}).
+\else
+    DNs can also be \emph{inconsistent}, an idea that is conceptually similar but far narrower than the notion of inconsistency developed in this dissertation. 
+\fi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1627,9 +1627,7 @@ There is also a notion of an \emph{inconsistent} DN, which turns out to be a ver
 % Information theory is the study of when computational tasks 
 %     (such as communicating in a noisy environment)
 %     are possible, and when they are not.
-\newmaterial{%
 Information theory is the study of how probabilistic and statistical information is communicated and measured.
-}%
 %
 The field is vast and heterogenous, 
     yet much of it is built using a small set of 
@@ -2040,8 +2038,10 @@ There are a number of other results showing that relative entropy is the unique 
     that it is the only function satisfying three trivial regularity
     properties and the chain rule \citep{leinster2017shortcharacterizationrelativeentropy}, and a characterization as the unique functor from statistical maps to the additive monoid $([0,\infty],+)$ \citep{baez2014bayesiancharacterizationrelativeentropy}.
     It is the only statistical divergence that is both a Bregman divergence and an f-divergence. 
-    The Hessian of relative entropy is the Fisher metric, which is the unique metric tensor that is invariant under sufficient statistics. 
-    In that geometry, we will see (\cref{chap:relent-soup}) that the gradient flow of relative entropy with respect to its first (``belief'') argument amounts to multiplicative interpolation of probability measures, while gradient flow of relative entropy with respect to its second (``reality'') argument amounts to additive interpolation. 
+    The Hessian of relative entropy is the Fisher metric, which is the unique metric tensor that is invariant under sufficient statistics.     
+    In that geometry, 
+    \iffoundations we will see (\cref{chap:relent-soup}) that\fi
+    gradient flow of relative entropy with respect to its first (``belief'') argument amounts to multiplicative interpolation of probability measures, while gradient flow of relative entropy with respect to its second (``reality'') argument amounts to additive interpolation. 
 }
 %
 Suffice it to say that relative entropy is an extremely special,

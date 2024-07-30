@@ -88,7 +88,7 @@ Yet despite its imperfections,
 We formalize the process
     in the language of probability and
     convex optimization,
-    and show how that many popular techniques in the literature
+    and show that many popular techniques in the literature
     % can be viewed as local inconsistency resolution.
     arise naturally as instances of it.
     % Finally, we propose a new algorithm
@@ -100,9 +100,9 @@ We formalize the process
 % conflicts between propositions and entrenchment \citep{agm,...}.
 
 
-Our approach leans heavily on the theory of PDGs. 
+Our approach leans heavily on the theory of PDGs
         % \citep{pdg-aaai}.
-        (\cref{chapPDG-repr}).
+        (\cref{chap:PDG-repr}).
 % In addition, PDG semantics
 % As illustrated in \cref{chap:one-true-loss},
 As we have seen, there is a natural way
@@ -566,7 +566,8 @@ The former makes for an underestimate of the inconsistency that is easier to cal
 % restricting control \ref{item:ctrl-restrict}
 the latter
 makes for an easier optimization problem.
-These restrictions are not just cheap approximations, though:
+% These restrictions are not just cheap approximations, though:
+These locality restrictions are not just about making calculations easier, however:
     they are also appropriate modeling assumptions for
     actors that cannot see and control everything at once.
 
@@ -617,7 +618,7 @@ PPDG $\MThetadense$ so as to make it more consistent with its context.
 % The procedure is as follows.
 It proceeds as follows.
 First,
-    recieve context in the form of a PDG $\Ctx$%
+    receive context in the form of a PDG $\Ctx$%
     % recieve context as a PDG $\Ctx$%
     , and
     initialize mutable memory $\MThetadense$%
@@ -645,6 +646,7 @@ Then mitigate this local inconsistency
         % context and memory $\Ctx + \dg M(\theta)$
 The procedure is fully formalized in \cref{algo:LIR}.
 % This is fully formalized in \cref{algo:LIR}.
+\medskip
 
 % To describe the algorithm formally in full generality, we also need to des
 % If $\dg M(\Theta)$ is a parametric PDG family, then we write
@@ -1061,7 +1063,7 @@ in which $\textsc{Refresh}$ selects a fresh $(x,y,x'=x)$ from the dataset
 % refreshes $(x,x',y,y')$
 % amounts to
 is
-adversarial training, a standard defense to adversarial attacks \citep{goodfellow2014explaining}.
+adversarial training, a standard defense against adversarial attacks \citep{goodfellow2014explaining}.
 %
 
 The ML community's focus on adversarial examples
@@ -1191,13 +1193,13 @@ the missing data is called the EM algorithm. It iteratively computes
 			%\scriptstyle q^{\{\beta =\infty\}}
 			% \ar[r,"p"] \& Z \ar[r,"p", bend left] \& X \ar[l,"q", bend left] \& \ar[l, two heads, "x"']
 		\end{tikzpicture}
-    \Bigg)$
+    \Bigg)$,
         % \]
     % in which \textsc{Refocus} fixes $\varphi, \gamma = \mat 1$
     in which \textsc{Refocus} fixes $\varphi = \mat 1$
     and alternates between
     % $\chi = \infty \mathbbm1_{\{\theta\}}$ and $\mathbbm1_{\{q\}}$
-    full control of $p$ and $q$
+    full control of $p$ and $q$,
     implements EM, in that
     $\theta_{\text{EM}}^{(t)} = \theta_{\text{LIR}}^{(2t)}$
     % for all $t \in \mathbb N$
@@ -1233,8 +1235,8 @@ yields the usual training algorithm for variational autoencoders (VAEs).
 LIR also subsumes more complex training procedures such as the one used to train
 \emph{generative adversarial networks} (GANs) \citep{goodfellow2020generative}.
 % The general idea is that
-The goal is to train a network $G$ to generate images that cannot be distinguished
-    from real ones.
+The goal is to train a network $G$ to generate images that cannot be distinguished from real ones.
+    % , by simultaneously training discriminator network $D$ that attempts to do so. 
 %
 % In a GAN, we have a generator $G$ that represents a distribution over fake images,
 % an empirical distribution of real images, and a discriminator that
@@ -1242,7 +1244,7 @@ The goal is to train a network $G$ to generate images that cannot be distinguish
 % The training process involves a second network,
 More precisely, 
 \oldnewmaterial{%
-represent the generator network as a distribution $G(X_\fake)$  over fake images,
+represent the generator network with a distribution $G(X_\fake)$ over fake images,
 and suppose we have training data in the form of an empirical distribution $\pdata(X_\real)$ over real images. 
 }%
 Define $X$ to be either an image $X_{\fake}\sim G$ or from a dataset
@@ -1262,7 +1264,7 @@ Thus, we model it as a conditional distribution $D(C \mid X)$.
 Finally, the generator aims to fool the discriminator, so that it can do no better than chance. Thus, the generator would like to be consistent with a distribution $e(C|X)$ indicating that the coin is equally likely to be heads as tails even knowing the value of the image $X$. 
     %  even given $X$, the coin is equally likely
     % heads as tails (call this $e$).
-This state of affairs is summarized as the PPDG below, in which $\Theta$ consists of joint settings of the parameters of the two networks ($G$ and $D$). 
+This state of affairs is summarized as the PPDG 
 % , where ``!'' means $\beta=\infty$, i.e, full confidence.
 %
 % \vspace{-1ex}
@@ -1314,11 +1316,16 @@ This state of affairs is summarized as the PPDG below, in which $\Theta$ consist
         \draw[arr1,-,shorten >=0pt] (Xreal) to[bend left=5] (ctr);
         \draw[arr1,-,shorten >=0pt] (C) to[in=150,out=180,looseness=1.5](ctr);
         \draw[arr1,->>,shorten <=0pt] (ctr) to[bend right=10](X);
-        \draw[arr1, <-] (C) to node[above,pos=0.6]{\small$50/50!$} +(1.5,0);
+        \draw[arr1, <-] (C) to 
+            node[above,pos=0.7]{$50/50$} 
+            node[below,pos=0.7, inner sep=2pt]
+                {${\color{gray}\scriptscriptstyle(\infty)}$}
+            +(1.5,0);
 \end{tikzpicture}
 \]
+in which ``50/50'' is the label of the cpd describing the fair coin flip, and $\Theta$ consists of joint settings of the parameters of the two networks ($G$ and $D$). 
 
-The GAN training objective is typically written as a 2-player minimax game:
+Traditionally, the GAN training objective is written as a 2-player minimax game
 $
     \min_{G} \min_{D}  \mathcal L^{\text{GAN}}(G,D)
 $, where
@@ -1328,10 +1335,10 @@ $, where
 \]
 and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X={x})$. 
 The standard theoretical justification of this loss function 
-is based on the following observations:
+is based on the following observations \citep{goodfellow2020generative}:
 \begin{enumerate}[nosep]
     \item For fixed $G$, the optimal discriminator predicts $D^*(x) = \frac{G(X)}{G(x) + \pdata(x)}$;
-    \item For the optimal generator, $\mathcal L^{\text{GAN}}$ becomes equivalent to the Jesnen-Shanon divergence between $\pdata$ and $G$.
+    \item For the optimal generator, $\mathcal L^{\text{GAN}}$ becomes equivalent to the Jesnen-Shanon divergence \citep{MENENDEZ1997307} between $\pdata$ and $G$.
     \item There is a unique global Nash Equilibrium, in which $G(X) = \pdata(X)$ and $D(C | X) = e(C|X)$. 
 \end{enumerate}
 % Note that this equilibrium coincides with 
@@ -1407,7 +1414,7 @@ where each $\mathbf X_a \subseteq \mathcal X$ is called the \emph{scope} of $a$.
 Conversely, for $X \in \X$, let
 $\partial X
  := \{a \in \Ar : X \in \mat X_a\}
-$ be the set of factors with $X$ in scope.
+$ be the set of factors whose scopes contain the variable $X$.
 As we have seen, $\Phi$ specifies a distribution
 $\Pr_\Phi(\X) \propto \prod_a \phi_a(\mat X_a)$, and
 % $\Pr_\Phi = \frac1Z \prod_a \phi_a(\mat X_a)$, where $Z$ is a normalization constant,and $\log Z$ is  and
@@ -1493,9 +1500,10 @@ Observe that every calculation is a (marginal of) a product of factors,
 % The process can be visualized as propagation along the edges of the factor graph.
 % The standard illustration of it is not so different from the PDG $\Msg$
 The traditional depiction of messages
-    moving between variables and factors
-    \citep{kschischang2001factor}
-    looks something like this:
+    moving between variables and factors,
+    intended to illustrate equations (\ref{eq:X->a}, \ref{eq:a->X})
+    
+    looks something like this \citep{kschischang2001factor}:
     \begin{center}
         \begin{tikzpicture}
                 % [xscale=1.8]
@@ -1627,11 +1635,12 @@ The traditional depiction of messages
     \caption[a schematic of belief propagation as LIR]
         {a schematic depiction of belief propogation as LIR. 
             At the center are a variable $X$, and a variable $\mat X^{a}$ that corresponds to a factor $a$ which depends on $X$. 
-            The blue arcs correspond to a focus that computes the message from $a$ to $X$, while the green arcs correspond a focus that computes the message from $X$ to $a$.}
+            The blue arcs correspond to a focus that computes the message from $a$ to $X$, while the green arcs correspond a focus that computes the message from $X$ to $a$.
+        The faint gray double lines are deterministic cpds that enforce equality between the variables they connect.}
         \label{fig:bp-lir}
 \end{figure}
 
-    Indeed, it can be shown that (\ref{eq:X->a},\ref{eq:a->X}) minimize inconsistency of
+    Indeed, it can be shown that equations (\ref{eq:X->a}) and (\ref{eq:a->X}) minimize the inconsistency of
     the dotted components in their appropriate contexts  (shown in green and blue above).
 
     % Formally, let's 
@@ -1689,7 +1698,7 @@ The traditional depiction of messages
     % \[
     % (\varphi,\chi) \in \mat F ~~:= \bigcup_{a\in \Ar,X \in \mat X_a}\{a \sto X, X \sto a, X\},
     % \]
-    The attention mask $\varphi_j$ is given by:
+    The attention mask $\varphi_j$ for focus $j$ is given by:
     \[
         \varphi_j(a) :=  {\singlespacing\begin{cases}
             \binom 11 & \text{ if } a \in A_{j} \setminus C_{j} \\
@@ -1847,10 +1856,10 @@ The traditional depiction of messages
     % Further adopting a view with full control in $\beta$
 \end{prop}
 
-There are many established variants of the belief propagation algorithm.
-Some of them are generated different by clustering factors together---%
+There are many variants of the belief propagation algorithm.
+Some of them are generated by clustering factors together---%
     in the language of \citet{KF09},
-    this amounts to selecting a cluster graph other than the ``Bethe cluster graph''
+    this amounts to selecting a cluster graph other than the ``Bethe cluster graph'' (\S11.3.5.2, ibid)
     as the basis for the message passing algorithm.
 Our analysis immediately applies to these other cluster graphs as well. 
 % The variational form of message passing
@@ -1866,7 +1875,7 @@ adjusting some local context to minimize an $\alpha$-divergence.
 % that are generated from the $\alpha$-divergences \citep{minka2005divergence}, because
 % of the close relationship those divergences have with simple PDGs \citep{one-true-loss}.
 % In particuar, he shows minimizing $\alpha$-divergences
-We suspect that LIR generalizes thses procedure as well---not only
+We suspect that LIR generalizes this procedure as well---not only
 because it is similar in spirit, but also because because
 these divergences can be viewed as the degree of inconsistency
 of a PDG containing two distributions
@@ -2031,16 +2040,19 @@ The surprising generality of LIR begs some theoretical questions.
 What assumptions are needed to prove that it reduces overall inconsistency,
     as is often the case?
     % Do simple choices ever lead to non-standard algorithms?
-What are the simplest choices we could make to produce an efficient
-    non-standard algorithm?
-How expressive is this kind computation?
+What are the most natural choices we could make to produce an efficient
+    % non-standard algorithm?
+    algorithm that is not already widely used?
+    Might that algorithm itself prove useful?
+% How expressive is this kind computation?
 
 % These results also
 It also suggests a novel approach to structured generative modeling:
-haphazardly assemble a PDG with many variables, existing models, priors,
+assemble an enormous PDG by merging together
+    many variables, existing models, priors,
     constraints, and data of all shapes and sizes.
-Then, train new models to predict variables from one another,
-    using LIR (with random refocusing, say).
+Then train new models to predict variables from one another,
+    using LIR (with random refocusing on small tractable parts, say).
 Is this effective?  We are excited to find out!
 
 % \clearpage
@@ -2263,11 +2275,11 @@ Is this effective?  We are excited to find out!
     \label{lir-appendix:proofs}
 
 First, some extra details for \cref{prop:logccave}.
-By parameteriations $\mathbb P$ log-concave, we mean that, for every $a \in \Ar$, and $(s,t) \in \V(\Src a,\Tgt a)$, the function
+The parametrizations $\mathbb P$ are log-concave iff for every $a \in \Ar$, and $(s,t) \in \V(\Src a,\Tgt a)$, the function
 $$
     \theta \mapsto -\log \p_a^{\,\theta}(\Tgt a =t\mid\Src a = a) \quad: \Theta_a \to [0,\infty]
 $$
-is convex.
+is convex (meaning that $\log \mathbb P$ without the negation is concave).
 This is true for many families of distributions of interest.
 For example, if $\Src a, \Tgt a$ is discrete, and the cpd is parameterized
 by stochastic matrices $\mat P = [p_{s,t}] \in [0,1]^{\V(\Src a, \Tgt a)}$, then
@@ -2318,7 +2330,7 @@ which is convex in $(\mat A, b, \frac1{\sigma^2})$.  Now, for the proof.
             \underbrace{
                 \Ex_\mu \left[\,\sum_{\ed a ST} \beta_a \log \frac{\lambda(T|S)}{\p_a^\theta(T|S)} \right]
             }_{\text{third term}}
-            \Bigg)
+            \Bigg).
     \end{align*}
     The second term is then entropy (relative to the base distribution), which is
         convex in $\mu$. The first term, $F(\mu)$, is convex in $\mu$ as well, and neither depend on $\theta$. The final term is linear in $\mu$.
@@ -2330,7 +2342,7 @@ which is convex in $(\mat A, b, \frac1{\sigma^2})$.  Now, for the proof.
         they are jointly convex in $(\mu,\theta)$.
     And, as we have seen, the third term is linear in $\mu$ and convex in $\theta$, so it is also jointly convex in $(\mu, \theta)$.
     Thus, the sum of all three terms in the infemum is jointly convex in $(\theta, \mu)$. 
-    Taking an infemum over $\mu$ pointwise, the result is still convex in $\theta$     \citep{boyd2004convex}.
+    Taking an infemum over $\mu$ pointwise, the result is still convex in $\theta$ \citep{boyd2004convex}.
     % Since $\varphi \ge 0$ and $\bbeta  > 0$ this is effectively just the inconsistency of a PDG.
 \end{lproof}
 
@@ -2358,9 +2370,12 @@ are precisely those of BP for different message schedules.}
 \begin{proof}
 When $\gamma=1$, and $\alpha, \beta = 1$ for all of the input factors, then the optimal
 distribution $\mu^*$ that realizes the infemum is just the product of factors. It follows that any distribution that has those marginals will minimize the observational inconsistency.
-
-The different orders that the \eqref{eq:X->a}, and \eqref{eq:a->X} can be ordered
-for different adjacent pairs $(a, X)$ correspond to both the message passing schedules, and to the possible view selections of LIR.
+%
+The message passing equations \eqref{eq:X->a} and \eqref{eq:a->X}, instantiated for various pairs $(a,X)$, 
+% can be executed
+can be executed in different orders. 
+Since each focus corresponds directly to an instance of an equation, it is easy to see that the different message passing schedules correspond directly to the possible nondeterministic choices of focus in LIR. 
+% correspond to both the message passing schedules and to the possible view selections of LIR.
 \end{proof}
 
 \recall{prop:eu+maxmax}

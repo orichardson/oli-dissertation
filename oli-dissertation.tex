@@ -18,6 +18,9 @@
 % \renewcommand\cftpartpresnum{Part~}
 
 %%%%%%%%%%%%%%%% FLAGS %%%%%%%%%%%%%%%%%
+\newif\iffoundations\foundationsfalse
+\newif\ifqqtheme\qqthemefalse
+
 \newif\ifprecompiledfigs
 	\precompiledfigsfalse
 	% \precompiledfigstrue
@@ -185,7 +188,7 @@ TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \part{A Universal Modeling Language} \label{part:univ-model}
-\part{A Natural and Particularly General Modeling Language}
+\part{A Natural and General Modeling Language}
     \label{part:univ-model}
 % \part{Structured Modeling} \label{part:univ-model}
 
@@ -203,6 +206,9 @@ TODO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \part{A Universal Objective} \label{part:univ-objective}
 \part{A Universal Objective} \label{part:univ-objective}
+
+\chapter*{Introduction to Part II}
+    \input{fragments/part2intro}
 
 \chapter{Loss as the Inconsistency of a PDG: 
     Choose your Model, not your Loss}
@@ -230,6 +236,7 @@ TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iffoundations
 \part{Foundations} \label{part:foundations}
 
 \chapter{Learner's Confidence}
@@ -243,6 +250,7 @@ TODO
 \chapter{The Category Theory of PDGs}
     % \label{chap:PDG-cat}
     \input{chapters/cat}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{}  \label{part:conclusions}

@@ -30,7 +30,7 @@ For those of us who prize logic and rationality (including, famously,
 \citet{descartes}),
 perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
-The foundational principles of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
+The foundations of microeconomics entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
 For without one, we risk being swindled \citep{sep-dutch-book} or misled 
 % \citep{explosion},
 % \citep{priest1996paraconsistent}, 
@@ -49,24 +49,22 @@ if not humiliated \citep{finocchiaro1981fallacies,russell1902letter}.
 % Computer scientists who build cognition from scratch, have capitalized on an opportunity to not only avoid contradictions, but  build frameworks where they're impossible by design. 
 % Computer scientists like us, who build cognition from scratch, have capitalized on an opportunity to eliminate contradictions in artificial agents altogether, by using epistemic representations that are consistent by design.
 Economists, seeking to characterize rational thought, have established  probability%
-\newmaterial{%
 ---a representation that allows for uncertainty but cannot encode conflicting information---%
 as the gold standard for representing beliefs.
 % by using it, one can express uncertainty in a way that is guaranteed to be self-consistent. 
 % Computer scientists, making use of such representations, have capitalized on an oportunity to eliminate inconsistency in artifical agents altogether. 
 Computer scientists,
     by using such representations to build artificial minds,
-    have capitalized on an oportunity to 
+    have capitalized on an opportunity to 
         eliminate inconsistency in artifical agents altogether. 
-}%
 Theorists are careful to prove things about clearly defined (probabilistic) models, 
 while practitioners endeavor to build systems
     % that represent a single coherent probability distribution.
     whose state represents a single coherent (probabilistic) 
         view of the world. 
 % Inconsistency should impossible by design.
-Even most programmers agree: 
-    when possible, it is best to inconsistency by design. 
+Even programmers agree: 
+    when possible, it is best to eliminate conflict by design. 
 %
 % Theorists are careful to prove things about clearly defined models,
 % while applied computer scientists have long built artificial agents
@@ -75,13 +73,16 @@ Even most programmers agree:
 %
 % We would rather have one definition of $X$ and one technique for computing $X$ than several different approaches and implementations that could, in principle, disagree. 
 % We would rather have 
-\newmaterial{%
 It is better to have
 a single
 % definition of $X$ and one technique for computing
-way of calculating $X$ or thinking about $X$ than
+way of calculating or thinking about $X$ than
+several different ones that could, in principle, disagree.
+\unskip\footnote{%
+    While it can be helpful to have different procedures for different regimes, it is still best to exclusively use a single procedure in each regime, 
+    or better yet, 
+    combine them into a single procedure with all of the benefits. 
 }%
-several different ones that could, in principle, disagree. 
 % We would rather use 
 It is better to use one library for telling time than two.
 % And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
@@ -91,7 +92,6 @@ It is better to use one library for telling time than two.
 Why?
 % Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
 Because 
-\newmaterial{%
 % by cal things in just one way, 
 % with just one one way of viewing any given quantity, 
 %     there can be no conflict, 
@@ -104,7 +104,6 @@ this way there can be no conflict,
 making our systems immune to
 % our shared affliction: 
 inconsistency.
-}%
 % invulnerability to our one common enemy: inconsistency.
 
 % Yet this invulnerability comes with shackles.
@@ -129,12 +128,13 @@ So if (through no fault of your own) you do happen to be wrong about how the wor
 Engineers and computer scientists 
 % At the same time, engineers and computer scientists 
 generally agree that \emph{redundancy}---that is, the presence of multiple independent approaches, tests, and safeguards that all agree---is highly desirable. 
-But, in a sense, redundancy and inconsistency are opposite sides of the same coin. 
+% But, in a sense, redundancy and inconsistency are opposite sides of the same coin. 
 % In some sense, the opposite of inconsistency is \emph{redundancy}, which engineers and computer scientists agree is generally positive. 
 % % Another problem consistent by construction is that they also have no redundancy, which makes them fragile.
 % % Apparently unfazed by the prospect of representing inconsistency, the cryptographers distributed systems people 
 % But consistent-by-construction representations are also redundancy-free, by construction. 
 % For if we have two different representations that could conceivably agree, producing redundancy, then those two representations could conceivably be inconsistent with one another. 
+But, in a sense, \newmaterial{the potential for} redundancy and \newmaterial{the potential for} inconsistency are opposite sides of the same coin. 
 If we use only representations that avoid inconsistency 
     % by  making disagreement impossible,
     by preempting the possibility of distinct answers
@@ -143,6 +143,14 @@ If we use only representations that avoid inconsistency
     % and so there can be no redundancy, either. 
     then we also cannot have meaningful agreement, 
         and hence no redundancy. 
+\newmaterial{%
+% If we want to allow for the possibility of a nontrivial theorem 
+We would like to have independent experiments confirm the values of fundamental constants---but this means we must brace for the possibility that the experiments could have different outcomes. 
+% If it is non-trivial to prove 
+% If we want there to be non-trivial theorems 
+We would like to have theorems stating that two different approaches give the same answer---but if the theorems require non-trivial proof,
+    then the representation itself could not have guaranteed that the two views are redundant; without the proof, they may well have been inconsistent. 
+}%
 % are also redundancy-free, by construction. 
 Without opportunity for internal conflict, there can be no opportunity for internal agreement; 
 it is the 
@@ -320,6 +328,7 @@ In \cref{chap:reason}, we then flesh out a
 This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
 
 
+\iffoundations
 % \textbf{\newmaterial{Foundations.}}
 \Cref{part:foundations} develops foundational concepts that underlie the theory of PDGs presented in the previous chapters. 
 In \cref{chap:conf}, we develop a generic framework for describing the notion of \emph{(learner's) confidence} that underlies the definition of a PDG---a concept that is fundamentally different from probability, but complements it.
@@ -327,6 +336,7 @@ In \cref{chap:relent-soup}, we describe several ways in which PDGs fit into the 
 PDGs also have a rich foundation in category theory.
 In fact, the PDG representation was inspired by categorical thinking. 
 We describe this in \cref{chap:PDG-cat}.
+\fi
 % This categorical flavor is actually 
 % \Cref{chap:PDG-cat} concludes by investigating the category theory of PDGs.
     % The departure between Bayesian Networks originally inspired the representation.
@@ -427,6 +437,7 @@ Making that something else precise is one objective of this thesis.
 %
 
 
+\ifqqtheme
 % \subsection{A Division between Quantitative and Qualitative}
 % \subsection{Two Important Divisions}
 % \subsection{Two Important Dichotomies}
@@ -534,6 +545,7 @@ Then, in 20
 \text{GOFAI} : \text{ML Systems}
 \]
 }%%%%
+\fi %%% END ifqqtheme
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -584,11 +596,12 @@ PDGs push the idea even further:
 % }%
 % that also turn out to all be equivalent.     
 they also have several different semantics, seemingly carrying different amounts of information, that turn out to be equivalent as well (\cref{chap:inc-infer-connection}). 
-These equivalences suggest that PDGs are a
+These equivalences suggest that PDGs 
+% are a
 % natural and particularly special
-natural and particularly special
-representation. 
-\forjoe{What's wrong with particularly special? I think these properties definitely make PDGs particularly special. It's very unusual for an object to equal so many generalizations of itself, and is certaintly suggestive that there's something deep going on!}
+% natural and particularly special representation
+might be a fundemental representation. 
+% \forjoe{What's wrong with particularly special? I think these properties definitely make PDGs particularly special. It's very unusual for an object to equal so many generalizations of itself, and is certaintly suggestive that there's something deep going on!}
 
 % But first, we should review some math. 
 But before we get into the details, we should review some math. 

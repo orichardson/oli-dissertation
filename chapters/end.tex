@@ -25,14 +25,17 @@ Furthermore, a wide variety of standard algorithms can be viewed as instances of
 Indeed, learning, inference, and 
     much else can be viewed as different aspects of a single objective: the pursuit of consistency. 
 
-In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a universal probabilistic model, and as a universal objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
+In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a very general kind of probabilistic model, and as a universal objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
 We also gave polynomial algorithm for inference in PDGs that have bounded treewidth (\cref{chap:infer}), finally solving both problems. 
+{\color{red}%
 We also develop useful principles for manipulating PDGs, 
     allowing them to function as a visual proof language (\cref{chap:reason}).
+}%
 
 
 % \commentout{%
 \paragraph{Sewing Things Back Together, with Self-Consistency.}
+\def\selfconsist{\xi}
 We conclude our summary by reframing a handful of our simpler results in slightly different form.
 A PDG's degree observational inconsistency is a number in $[0,\infty]$;
 it is also additive, in the sense that $\aar{\dg M_1 + \dg M_2} = \aar{\dg M_1} + \aar{\dg M_2}$ when $\dg M_1, \dg M_2$ are PDGs over disjoint sets of variables. 
@@ -47,43 +50,49 @@ So, for readers who are more comfortable with the latter range, we quickly summa
 % In service of this, 
 % Let the \emph{(observational) self-consistency} of a PDG $\dg M$ be
 % quantity
+% Given objects $M_1, M_2, \ldots$,
+% each of which can be implicitly converted to a PDG
 \newmaterial{%
-Given objects $M_1, M_2, \ldots$,
-each of which can be implicitly converted to a PDG
-Define \emph{(observational) self-consistency} of $M_1, M_2$
-    to be the quantity
+Suppose that $M_1, M_2, \ldots$ are objects that, based on the theory developed in this dissertation, can be viewed as PDGs.
+Writing $\dg M_{1}, \dg M_{2}, \ldots$ denote the corresponding PDGs, 
+define the \emph{(observational) self-consistency} of $M_1, M_2, \ldots$
+to be the quantity
 % to be
 \[
     % \Xi[\dg M] := \mathfrak\exp( -  \aar{\dg M}_0) ~~\in[0,1]. 
-    \Xi\{ M_1, M_2, \ldots \} := \mathfrak\exp\Big( -  \aar[\big]{\dg M_{M_1} + \dg M_{M_2} + \cdots}_0\Big) ~~\in[0,1]
+    \selfconsist\{ M_1, M_2, \ldots \} := \mathfrak\exp\Big( 
+        -  \aar[\big]{
+            % \dg M_{M_1} + \dg M_{M_2} + \cdots
+            \dg M_{1} + \dg M_{2} + \cdots
+        }_0\Big) ~~\in[0,1]
 \]
+}%
 % be the \emph{(observational) self-consistency}
 that results from converting each object to a PDG, 
     joining them together, 
     and then reporting their overall (lack of) inconsistency in the form
     of a score in the range $[0,1]$. 
-}%
 % This allows us to reframe some of the properties we have already seen in a way that, to some, may look even more natural in this form.
 The following facts are either immediate or follow immediately from a result in \cref{chap:repr-tools} or \ref{chap:one-true-loss}.
 % We can summarize and reframe a number of the properties we have seen in terms of the self-consistency $\Xi[\dg M]$
 % \begin{prop}
 \begin{itemize}
     \item 
-    A flat out logical contradiction has $\Xi\{\False\} = 0$ because it is completely inconsistent, while a collection of fully consistent probabilistic information $\dg M$ (such as a Bayesian Network or probability distribution) has $\Xi\{ \dg M \} = 1$. 
+    A flat out logical contradiction has $\selfconsist\{\False\} = 0$ because it is completely inconsistent, while a collection of fully consistent probabilistic information $\dg M$ (such as a Bayesian Network or probability distribution) has $\selfconsist\{ \dg M \} = 1$. 
 
-    \item If $U$ is an event, then $\Xi\{U\} = {\singlespacing\begin{cases}
+    \item If $U$ is an event, then $\selfconsist\{U\} = {\singlespacing\begin{cases}
         0 & \text{ if } U = \emptyset \\
         1 & \text{ if } U \ne \emptyset
     \end{cases}}$
 
     \item If $U_1$ and $U_2$ are both events over the same sample space, then 
-        $\Xi[U_1, U_2] = 
+        $\selfconsist\{ U_1, U_2 \} = 
             % \mathbbm 1[ U_1 \cap U_2 \ne \emptyset]
-            \Xi[U_1 \cap U_2]
+            \selfconsist\{U_1 \cap U_2\}
             $.  
         
     \item More generally, if $R_1(\mat X)$ and $R_2(\mat Y)$ are relations,
-        then $\Xi\{ R_1, R_2\} = \Xi\{ R_1 \bowtie R_2\}$, where $R_1 \bowtie R_2$ is the natural join of $R_1$ and $R_2$.
+        then $\selfconsist\{ R_1, R_2\} = \selfconsist\{ R_1 \bowtie R_2\}$, where $R_1 \bowtie R_2$ is the natural join of $R_1$ and $R_2$.
          % (\cref{prelim:relations}).
 
     \item If $\mu$ is a probability distribution, and $U$ is an event, 
@@ -92,21 +101,21 @@ The following facts are either immediate or follow immediately from a result in 
     \item If $\Bel$ is a Dempster-Shafer Belief function and $\Plaus$ is the corresponding plausibility function, and $U$ is an event, then 
     \[
     % $
-    \Xi\{\Plaus, U\} = \Xi\{\Bel, U\} = \Plaus(U)
+    \selfconsist\{\Plaus, U\} = \selfconsist\{\Bel, U\} = \Plaus(U)
     .
     % $
     \] 
 
-    \item If $\mathcal P$ is a convex set of probability distributions and $U$ is an event, then $\Xi\{ \dg M_{\mathcal P} \} = \sup_{P \in \mathcal P} P(U)$. 
+    \item If $\mathcal P$ is a convex set of probability distributions and $U$ is an event, then $\selfconsist\{ \dg M_{\mathcal P} \} = \sup_{P \in \mathcal P} P(U)$. 
 
     % \item If $\dg M$ represents a deterministic classifier and gold standard labels $\Xi(\dg M)$ is the accuracy of the classifier.
     \item If $D = \{(x_i, y_i) \}$ is a set of training data and $f : X \to Y$ is a
         deterministic classifier, 
         then 
-        $\Xi\{ \Pr_D, f \}$ is the accuracy of $f$ on $D$. 
+        $\selfconsist\{ \Pr_D, f \}$ is the accuracy of $f$ on $D$. 
     
     \item If $p, q \in \Delta \V\!X$ are distributions over a discrete variable $X$, then
-        $\Xi\{ p(X), q(X)\} = \Big( \sum_{x \in \V\!X} \sqrt{p(x) q(x)} \Big)^2$ is the square of the Bhattacharya coefficient, a well-established measure of similarity between distributions. 
+        $\selfconsist\{ p(X), q(X)\} = \Big( \sum_{x \in \V\!X} \sqrt{p(x) q(x)} \Big)^2$ is the square of the Bhattacharya coefficient, a well-established measure of similarity between distributions. 
         
         If $p$ and $q$ are each given confidence $\frac12$, then $1-\Xi[p,q]$ is the squared Hellinger distance between $p$ and $q$. 
 
@@ -115,7 +124,7 @@ The following facts are either immediate or follow immediately from a result in 
         If $p$ and $q$ are both unit normal distributions over $X$, 
         with means $m_1$ and $m_2$, respectively, then
          % are both normal distributions over $X$, then
-        $\Xi\{ p(X), q(X) \} = \exp( - \frac12 (m_1 - m_2)^2)$
+        $\selfconsist\{ p(X), q(X) \} = \exp( - \frac12 (m_1 - m_2)^2)$
         itself resembles the density of a unit normal distribution.        
     % If $p(Y|X)$ is instead a probabilistic classifier, then 
     % $\Xi[ \Pr_D !  + p(Y|X)]$
@@ -179,9 +188,10 @@ We suspect there may be more to the story.
 %     this special
 %     variant appears to have an even closer relationship with $\SDef$.
 % }%
+For instance, the connection to causality suggests a more restrictive special case of QIM-compatibility, in which the witness must be uniform over the solutions
 \newmaterial{%
-For instance, the connection to causality suggests a more restrictive special case of QIM-compatibility, in which the witness must be uniform over the solutions of the model (which happens to also be the maximum entropy distribution among those that can arise). 
-This special variant appears to have an even closer relationship with $\SDef$.
+ of some causal model. (This also happens to also be the maximum entropy distribution among those that can arise from that causal model.) 
+Preliminary investigations suggest that this special variant of QIM-compatibility may have an even closer relationship with $\SDef$ than the (already close) one detailed in \cref{sec:qim-info}.
 }%
 Furthermore, preliminary experiments suggest that minimizing $\SDef$ may suffice to ensure QIM compatibility. 
 
@@ -219,7 +229,7 @@ for PDGs remain almost completely unexplored; can these techniques be adapted fo
 A related question is that of a deeper understanding of the local inconsistency resolution (LIR) algorithm (the subject of \cref{chap:LIR}). 
 Under what conditions does this procedure converge?
 If it converges, when does it produce ``correct'' answers?
-It has taken decades of research to address similar questions about belief propagation \citep{yedida-genpb,wiegerinck-fracbp,minka2005divergence}, which is a special case.
+It has taken decades of research to address similar questions about belief propagation \citep{yedida-genbp,wiegerinck-fracbp,minka2005divergence}, which is a special case.
 
 
 While treewidth dominates the complexity of (exact) inference in traditional graphical models, it is not obvious that the same must be true for PDGs. 
@@ -246,14 +256,18 @@ Might it be possible to automate the
 \paragraph{Deepening Theoretical Roots.}
 % There's no reason to think that this is 
 % 
-In \cref{chap:PDG-cat}, we found that PDGs can be viewed as diagrams in a certain category. 
-We saw that categorical limits of PDGs are important. But what about colimits, and natural transformations between them? 
-The categorical picture opens a vast landscape of abstract research directions.
-One natural question is whether probability can replaced by something else---in categorical terms, what is needed to make probability work for a different monad.
-%
-Other connections that seem promising connecting to categorical characterizations of relative entropy \citep{baez2014bayesiancharacterizationrelativeentropy} 
-and of information loss \citep[Theorem 12.4.9]{leinster2021entropy}.
-Doing this properly may also require developing a categorical account of confidence (the subject of \cref{chap:conf}). 
+\iffoundations
+    In \cref{chap:PDG-cat}, we found that PDGs can be viewed as diagrams in a certain category. 
+    We saw that categorical limits of PDGs are important. But what about colimits, and natural transformations between them? 
+    The categorical picture opens a vast landscape of abstract research directions.
+    One natural question is whether probability can replaced by something else---in categorical terms, what is needed to make probability work for a different monad.
+    %
+    Other connections that seem promising connecting to categorical characterizations of relative entropy \citep{baez2014bayesiancharacterizationrelativeentropy} 
+    and of information loss \citep[Theorem 12.4.9]{leinster2021entropy}.
+    Doing this properly may also require developing a categorical account of confidence (the subject of \cref{chap:conf}). 
+\else
+    \TODO
+\fi
 
 Yet the most important future work lies in application rather than theory.
 
@@ -341,7 +355,7 @@ an inhumanly clever psychopath to maximize some metric of profit, productivity, 
 % The concern stems from 
 % Are there natural, universal values?
 % According to the standard microeconomic theory, the answer is no: an agent is entitled to its own preference, morals, goals, and values. 
-According to the standard microeconomic theory, an agent is entitled to its own preference, morals, goals, and values.
+According to the standard microeconomic theory, an agent is entitled to its own preferences and values.
 Unfortunately, with deft implementation and taken to an extreme, most values would be catastrophic for humans. 
 % Unfortunately most values, implemented deftly and taken to an extreme, would be catastrophic for humans.
 It would seem our only hope is to align the AI to values of its users;
@@ -356,11 +370,31 @@ It would seem our only hope is to align the AI to values of its users;
 % But do we really 
 % what if there's something wrong about the way we think about value?
 % But what if our very understanding of value was flawed.
-But is this fair? Will it privilege high-minded ideals such as truth? Do we want to give this enormous responsibility to users who give the most feedback?
+But is this fair? Will it privilege high-minded ideals such as truth? Do we want to give the enormous responsibility of
+    selecting AI values 
+    to the users who provide the most feedback?
 The outlook appears bleak.
-Yet, in light of what we have seen in this thesis, there may be another way. 
-Maybe our AIs do not need to take a mathematically undefended stand in the space of values at all. 
-Perhaps, if we are careful, we may be able to lean mostly on a single \emph{universal} value: 
+
+Yet, in light of what we have seen in this thesis, there may be another way to approach the problem.
+\newmaterial{%
+% It is easier to argue that there is 
+It is easier to think critically about beliefs than values.
+% In general, it is hard to argue against values at all.
+While beliefs can be inspected and tested by reality, it is difficult in general to take a principled stand in favor of a value.
+But to want to hold consistent beliefs is a uniquely principled kind of value,
+    held by nearly everyone and
+    supported by centuries of argument.
+%
+%
+Moreover, much of the current practice of building AI systems can be done with this value alone. 
+    % representing inconsistent beliefs. 
+% By representing inconsistent beliefs, 
+% But 
+% And consistency (of beliefs) is a value that is both supported by a rich : there is a rich history of arguments against inconsistency bad. 
+% Moreover, it seems li
+}%
+Perhaps our AIs do not need to take a mathematically undefended stand in the space of values at all. 
+Maybe, if we are careful, we may be able to lean mostly on a single \emph{universal} value: 
 % \begin{center}
 % \\\hfill
 the pursuit of self-consistency.
