@@ -69,8 +69,10 @@ while practitioners endeavor to build systems
     whose state represents a single coherent (probabilistic) 
         view of the world. 
 % Inconsistency should impossible by design.
-Even programmers agree: 
-    when possible, it is best to eliminate conflict by design. 
+% Even programmers agree: when possible, it is best to eliminate conflict by design. 
+\newmaterial{%
+Modern ideals of ``good code'' agree: it is better to eliminate the potential for conflict by design, than it is to handle problems when they arise at run-time. 
+}%
 %
 % Theorists are careful to prove things about clearly defined models,
 % while applied computer scientists have long built artificial agents
@@ -140,8 +142,8 @@ generally agree that \emph{redundancy}---that is, the presence of multiple indep
 % % Apparently unfazed by the prospect of representing inconsistency, the cryptographers distributed systems people 
 % But consistent-by-construction representations are also redundancy-free, by construction. 
 % For if we have two different representations that could conceivably agree, producing redundancy, then those two representations could conceivably be inconsistent with one another. 
-But, in a sense, \newmaterial{the potential for} redundancy and \newmaterial{the potential for} inconsistency are opposite sides of the same coin. 
-If we use only representations that avoid inconsistency 
+But, in a sense, \newmaterial{(the potential for)} redundancy and \newmaterial{(the potential for)} inconsistency are opposite sides of the same coin. 
+For if we use only representations that avoid inconsistency 
     % by  making disagreement impossible,
     by preempting the possibility of distinct answers
     (using only one watch, so to speak),
@@ -151,11 +153,12 @@ If we use only representations that avoid inconsistency
         and hence no redundancy. 
 \newmaterial{%
 % If we want to allow for the possibility of a nontrivial theorem 
-We would like to have independent experiments confirm the values of fundamental constants---but this means we must brace for the possibility that the experiments could have different outcomes. 
+We would like independent experiments to confirm the values of fundamental constants---but this means we must brace for the possibility that the experiments could have different outcomes. 
 % If it is non-trivial to prove 
 % If we want there to be non-trivial theorems 
-We would like to have theorems stating that two different approaches give the same answer---but if the theorems require non-trivial proof,
-    then the representation itself could not have guaranteed that the two views are redundant; without the proof, they may well have been inconsistent. 
+We would like to have theorems stating that two different approaches give the same answer---but 
+    if a theorem is non-trivial, then 
+    the representation itself could not have guaranteed that the two views are redundant; without the proof, they may well have been inconsistent instead. 
 }%
 % are also redundancy-free, by construction. 
 Without opportunity for internal conflict, there can be no opportunity for internal agreement; 

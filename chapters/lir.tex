@@ -518,7 +518,7 @@ $\exp$ only gives us access to $y(1)$,
      that $\exp_{\theta_0}(t X) = y(t)$.
 % Although it may not be obvious, $\exp$ indeed allows us to describe the entire trajectory, because $\exp_{p_0}(tX) = p(t)$.
 So altogether, the map $t\mapsto \exp_\theta(t \nabla_\Theta f(\Theta))$ is the smooth path beginning at $\theta$ that follows the gradient of $f$. It is commonly known as \emph{gradient flow}.
-Our algorithm will be a version of gradiant flow to reduce inconsistency, but modulated by two kinds of locality: attention, and control. 
+Our algorithm will be a version of gradient flow to reduce inconsistency, but modulated by two kinds of locality: attention, and control. 
 
 % Two knobs to control the model. The first one controls what you're looking at and what you get to change.
 % We now describe the local inconsistency reduction algorithm.
@@ -578,7 +578,10 @@ A more general approach is to choose
     % an attention mask $\varphi \in \mathbb R^{\Ar}$ and
     % a control mask $\chi \in [0,\infty]^{\Ar}$.
     an \emph{attention mask} $\varphi \in \mathbb R^{\Ar}$ and
-    a \emph{control mask} $\chi \in [0,\infty]^{\Ar}$.
+    a \emph{control mask} $\chi \in [0,\infty]^{\Ar}$;
+% \newmaterial{%
+    % these are continuous  which one attends fully to precisely the subset $A$ while controlling the subset $C$. 
+% }%
 % Large $\varphi(a)$ makes $a$ salient while $\varphi(a) \!=\! 0$ keeps it out of mind;
 Large $\varphi(a)$ makes $a$ salient, while $\varphi(a) = 0$
     keeps it out of the picture.
@@ -739,7 +742,7 @@ At on extreme, if \textsc{Refocus} produces small $\chi$
     then it is well-approximated by a single gradient descent step of size $\chi$;
     thus, when control values are small, LIR performs local gradient-based search.
 At the oppposite extreme, if $\chi$ is infinite in every component,
-    then, the final line
+    then the final line
 % then $\chi=\infty$ finds
     % a parameter setting that globally minimizes inconsistency
  reduces to solving an optimization problem
@@ -1330,7 +1333,9 @@ $
     \min_{G} \min_{D}  \mathcal L^{\text{GAN}}(G,D)
 $, where
 \[
-\mathcal L^{\text{GAN}}(G,D) := \Ex_{\vphantom{|}x \mathrlap{\sim \pdata}}
+\mathcal L^{\text{GAN}}(G,D) := 
+    % \Ex_{\vphantom{|}x \mathrlap{\sim \pdata}}
+    \Ex_{\vphantom{|}x \sim \pdata}
     \;[\, \log D(x) \, ] + \Ex_{\vphantom{|} x' \sim G} \, [\,\log (1- D(x')) \,],
 \]
 and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X={x})$. 
@@ -1501,9 +1506,8 @@ Observe that every calculation is a (marginal of) a product of factors,
 % The standard illustration of it is not so different from the PDG $\Msg$
 The traditional depiction of messages
     moving between variables and factors,
-    intended to illustrate equations (\ref{eq:X->a}, \ref{eq:a->X})
-    
-    looks something like this \citep{kschischang2001factor}:
+    intended to illustrate equations (\ref{eq:X->a}) and (\ref{eq:a->X}),
+    looks something like the following \citep{kschischang2001factor}:
     \begin{center}
         \begin{tikzpicture}
                 % [xscale=1.8]
@@ -1552,8 +1556,14 @@ The traditional depiction of messages
         \end{tikzpicture}~\raisebox{1ex}.
     \end{center}%
     
-    This is only a schematic,
-        but the PDG $\Msg$ can be made to look similar to it.
+    % This is only a schematic,
+    \newmaterial{%
+    In this schematic representation, the dotted message $m_{X \!\sto a}(x)$, for instance, is calculated as a product of incoming messages to $X$ from other factors \eqref{eq:X->a}.
+    While this diagram is only a schematic,
+        the corresponding PDG $\Msg$, which represents
+        the intermediate state of the algorithm,
+    }%
+    can be made to look similar to it.
     Adding a variable $X^{a}$ for every pair
         % $(a \in \Ar, X \in \mat X_a)$,
         $(X,a)$ with $X \in \mat X_a$
@@ -1906,7 +1916,6 @@ of a PDG containing two distributions
 % Suppose we want to generate some structured data .
 % The general idea
 
-\newmaterial{%
 
 \section{Decision Making with LIR}
 
@@ -1916,6 +1925,13 @@ In this section, we show how a few standard decision rules can be viewed as inco
 In \cref{sec:reverse-engineer,sec:soft-constraint-widget} it was established that PDGs can represent expected cost,
 % albeit with some strange 
 albeit by articulating some questionable probabilistic beliefs. 
+% You should care about it because we've already established this construction (sections 4.2.2 and 6.8) as a way of representing something like a utility or a cost.  Yes, it may seem strange, but if you buy into the perspective of the dissertation, this is because agents with preferences are already strange.  Thus, a natural question becomes: what does inconsistency resolution mean in this context? Perhaps surprisingly, it means expected utility maximization, at least if confident in one's beliefs. 
+\newmaterial{%
+For the moment, let us entertain the possibility that these strange probabilistic beliefs are in fact an appropriate way to encode preferences. 
+% (Perhaps it looks strange because preferences themselves are strange.)
+% A natural 
+A natural question then emerges: what does it mean to make decisions to as to minimize inconsistency in this context? 
+}%
 In this section, we show that the standard picture of rational decision making---that is, expected utility maximization---can be viewed as the pursuit of consistency in this probabilistic model. 
 
 Suppose we are trying to choose an action (i.e., control a variable $A$). 
@@ -2014,7 +2030,12 @@ We suspect it will also be possible to implement other decision rules such as mi
 We leave the details and implications of this to future work.
 
 We conclude our discussion of decision theory with a higher-level obseravation. 
-When there is internal conflict between your preferences, beliefs, and actions, there are three possible resolutions.  You can change your action to maximize your expected utility, which is thought of as the rational thing to do.
+When there is conflict between your preferences, beliefs, and actions
+\newmaterial{%
+(in the sense that a PDG that represents all three is inconsistent),
+}%
+there are, in principle, three possible resolutions.
+You can change your action to maximize your expected utility, which is thought of as the rational thing to do.
 You can also change your preferences to become happy with how things currently are, which is perhaps a more zen perspective. 
 These two resolutions are two halves of the Serenity Prayer \citep{serenity-prayer}:
 
@@ -2025,7 +2046,6 @@ These two resolutions are two halves of the Serenity Prayer \citep{serenity-pray
 There is also a third way to resolve the inconsistency, which is arguably significantly worse: you can change your beliefs about what state you are in. 
 Unfortunately, this kind of self delusion only creates more inconsistency with future observations, and is seldom a good idea.  
 This is one more reason that it can be beneficial to carefully select only small local of the picture to control while resolving inconsistencies.
-}%
 
 
 \section{Discussion and Future Work}
@@ -2379,7 +2399,6 @@ Since each focus corresponds directly to an instance of an equation, it is easy 
 \end{proof}
 
 \recall{prop:eu+maxmax}
-\newmaterial{%
 \begin{lproof}\label{proof:eu+maxmax}
     Since the choice $a$ is deterministic, the value of $A$ is determined; likewise the value of $\Tru$ is also fixed. 
     Similarly, as $u$ is a deterministic function, the value of $U$ is determined according to $u$.
@@ -2474,6 +2493,5 @@ Since each focus corresponds directly to an instance of an equation, it is easy 
     $ - \min_{s \in \V S} ( - EU(s,a) ) = \max_{s \in \V S)} EU(s,a)$,
     proving the result.
 \end{lproof}
-}%
 
 \end{subappendices}

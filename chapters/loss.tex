@@ -250,34 +250,34 @@ the inconsistency of believing both a distribution and an event
 happens to be the standard measure of discrepancy between the two%
 ---and is even named after
 ``surprise'', a particular expression of epistemic conflict.
-\forjoe{This text was here in the original paper. I stand by surprise being a kind of epistemic conflict. I polled a few friends and language models (``is surprise a kind of epistemic conflict, or not?''), and uniformly got positive answers. 
-I've given several talks where I use this line, and have seen a lot of nods.
-Here's what Claude has to say:
-\begin{quotation}\it
-Surprise can indeed be viewed as a form of epistemic conflict. To understand this, let's break down the concepts:
-
-Epistemic: Relating to knowledge or the understanding of reality.
-Conflict: A clash or disagreement between different ideas, beliefs, or expectations.
-
-Surprise occurs when there's a mismatch between our expectations or beliefs about the world and the reality we encounter. This mismatch creates a temporary cognitive dissonance, which can be seen as a conflict between our existing knowledge (epistemic state) and new information.
-Key aspects that support viewing surprise as an epistemic conflict:
-
-\begin{itemize}
-	\item
-Expectation violation: Surprise arises when events or information contradict our predictions or assumptions.
-\item
-Belief updating: The experience of surprise often leads to a reassessment and updating of our beliefs or mental models.
-\item
-Information processing: Surprise triggers increased attention and cognitive processing to resolve the discrepancy between expectation and reality.
-\item
-Learning mechanism: Surprise serves as a signal that our understanding of the world needs adjustment, promoting learning and adaptation.
-\item
-Temporary nature: Like other conflicts, the epistemic conflict of surprise is usually resolved once we integrate the new information into our knowledge base.
-\end{itemize}
-
-This perspective aligns with theories in cognitive science and psychology that view surprise as a crucial mechanism for learning and adapting to our environment. By treating surprise as an epistemic conflict, we can better understand its role in shaping our understanding of the world and driving cognitive development. 
-\end{quotation}
-}
+% \forjoe{This text was here in the original paper. I stand by surprise being a kind of epistemic conflict. I polled a few friends and language models (``is surprise a kind of epistemic conflict, or not?''), and uniformly got positive answers. 
+% I've given several talks where I use this line, and have seen a lot of nods.
+% Here's what Claude has to say:
+% \begin{quotation}\it
+% Surprise can indeed be viewed as a form of epistemic conflict. To understand this, let's break down the concepts:
+% 
+% Epistemic: Relating to knowledge or the understanding of reality.
+% Conflict: A clash or disagreement between different ideas, beliefs, or expectations.
+% 
+% Surprise occurs when there's a mismatch between our expectations or beliefs about the world and the reality we encounter. This mismatch creates a temporary cognitive dissonance, which can be seen as a conflict between our existing knowledge (epistemic state) and new information.
+% Key aspects that support viewing surprise as an epistemic conflict:
+% 
+% \begin{itemize}
+% 	\item
+% Expectation violation: Surprise arises when events or information contradict our predictions or assumptions.
+% \item
+% Belief updating: The experience of surprise often leads to a reassessment and updating of our beliefs or mental models.
+% \item
+% Information processing: Surprise triggers increased attention and cognitive processing to resolve the discrepancy between expectation and reality.
+% \item
+% Learning mechanism: Surprise serves as a signal that our understanding of the world needs adjustment, promoting learning and adaptation.
+% \item
+% Temporary nature: Like other conflicts, the epistemic conflict of surprise is usually resolved once we integrate the new information into our knowledge base.
+% \end{itemize}
+% 
+% This perspective aligns with theories in cognitive science and psychology that view surprise as a crucial mechanism for learning and adapting to our environment. By treating surprise as an epistemic conflict, we can better understand its role in shaping our understanding of the world and driving cognitive development. 
+% \end{quotation}
+% }
 
 Still, we have a ways to go before this amounts to any more than a curiosity.
 One concern is that this picture is incomplete; we train probabilistic models with more than one sample.
@@ -1273,7 +1273,9 @@ but with confidence $\beta$ in $p(Z)$.%
 \section{Free Energy as Factor Graph Inconsistency}
     \label{sec:free-energy-fg-inc}
 
-\forjoe{There's no dash in ``factor graph'', as standardly written.}
+% \forjoe{There's no dash in ``factor graph'', as standardly written.}
+\forjoe{You say the dash is important for grouping, but there is no well-accepted right association rule for noun phrases. When you say ``plastic dog food bowl cover'', you do mean a ``plastic (((dog food) bowl) cover)'', not a ``plastic (dog (food (bowl cover)))''. Dashes can be useful for aiding ambiguity, especially with adjectives (i.e., single-family homes instead of single family homes), but cannot fully resolve the ambiguity in general. I do not feel a dash here resolves any ambiguity, and I have never seen ``factor-graph'' written with a dash even when part of a larger noun phrase. 
+ }
 A weighted factor graph $\Psi = (\phi_J, \theta_J)_{J \in \cal J}$, where each $\theta_J$ is a real-valued weight, $J$ is associated with a subset of variables $\mathbf X_J$, and  $\phi_J : \V(\mathbf X_J) \to \mathbb R$, determines a distribution by
 % \vskip-1.4em
 \vspace{-2ex}
@@ -1493,13 +1495,17 @@ define the cpd $\hat c(\Tru |X)$ by
 $
 	\hat c(\trut | x) := e^{-c(x)}.
 $
-By threatening to generate the falsehood {\truf} with probability dependent on the cost of $X$, $\hat c$ ties the value of $X$ to inconsistency.
+% By threatening to generate the 
+\newmaterial{%
+By investing beleif in the
+}%
+falsehood {\truf} with probability dependent on the cost of $X$, $\hat c$ links the value of $X$ to inconsistency. 
 \begin{linked}{prop}{expected-cost}
 	\!
 	\( \displaystyle
 		\aar*{\!\begin{tikzpicture}[center base]
 			\node[dpad0] (X) at (0,0) {$X$};
-			\node[dpad0] (2) at (1.1,0) {$\Tru$};
+			\node[dpad0] (2) at (1.3,0) {$\Tru$};
 
 			\draw[arr2] (X) to
 				node[above, pos=0.4,inner sep=2pt]{$\hat c$}
@@ -1515,12 +1521,12 @@ By threatening to generate the falsehood {\truf} with probability dependent on t
 				+(0.9,0);
 		\end{tikzpicture}\!}
 	 	= \!
-		\Ex_{x\sim p}\!    [\,c(x)\,].
+		\Ex_{x\sim p}\,    [\,c(x)\,].
 	\)
 \end{linked}
 Setting confidence $\beta_p := \infty$ may not be realistic since
 we're still training the model $p$,
-but doing so is necessary to recover $\Ex_p c$.%
+but doing so is necessary to recover an inconsistency equal to $\Ex_p [c]$.%
 \footnote{If $\beta_p$ were instead equal to $1$, we would have obtained $-\log \Ex_p \exp(-c(\!X\!))$, with optimal distribution $\mu(\!X\!) \!\ne\! p(\!X\!)$ (\hyperref[claim:6.8.1]{Claim 6.8.1} in the appendix).\label{fn:logEexp}}
 Any mechanism that generates inconsistency based on the value of $X$ (such as this one) also works in reverse:
 the PDG ``squirms'', contorting the probability of $X$ to disperse the inconsistency.
@@ -1615,6 +1621,9 @@ Viewing loss functions in this way also has beneficial side effects, including a
 This ``universal loss'',
 which provides a principled way of choosing an optimization objective,
 may be of particular interest to the AI alignment community.
+\newmaterial{%
+We return to this point when we conclude in \cref{chap:end}. 
+}%
 
 
 % \newpage
@@ -1657,9 +1666,7 @@ But such constants are irrelevant for optimization, and so, even though such qua
 The bottom line is that all our results hold in a uniform way for every discretization size --- yet in the limit as the discretization becomes smaller, an inconsistency may diverge to infinity.
 However, this divergence stems from an additive constant that depends only on the discretization size, which is irrelevant to its employment as a loss function.
 As a result, using one of these ``unbalanced'' functions involving densities where the units do not work out properly, results in a morally equivalent loss function, except without a diverging constant.
-\newmaterial{%
 This is a direct analogue of our discussion of entropy for continuous variables (\cref{sec:prelim-gen-ent}). 
-}%
 
 \commentout{%
 \textbf{Markov Kernels.} In the more general setting of measurable spaces, one may want to adjust the definition of a cpd that we gave, so that one instead works with \emph{Markov Kernels}.
@@ -2082,7 +2089,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 			~= \inf_{\mu(Z)}\Ex_{z \sim \mu} \log \frac{\mu(z)}{p(x,z)}\frac{p(x)}{p(x)} \\
 			&= \inf_{\mu(Z)}\Ex_{z \sim \mu} \left[ \log \frac{\mu(z)}{p(z \mid x)} + \log \frac{1}{p(x)} \right] \\
 			&= \inf_{\mu(Z)} \Big[\kldiv{\mu(Z)}{p(Z\mid x)}\Big] + \log \frac{1}{p(x)} \\
-			&= \log \frac{1}{p(x)} = \I_p(x) & \text{[Gibbs Inequality]}
+			&= \log \frac{1}{p(x)} = \I_p(x) & \hspace{-2cm}\text{[Gibbs Inequality]}
 	\end{align*}
 \end{lproof}
 
