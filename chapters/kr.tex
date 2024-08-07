@@ -260,17 +260,13 @@ that leaves $\Tru$ implicit, so that the binary relation $R(\var X,\var Y)$ and 
     \end{tikzpicture}~,
 \end{center}
 respectively, in PDG notation.
-\newmaterial{%
 Where does this notation come from?
-}%
 Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well surpress it. 
 So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$.
 What remains are a pair of double-headed arcs joined head-to-head,
 visually encoding the potential for epistemic
     conflict if the constraint is violated
-\newmaterial{%
 (i.e., if positive probability is given to $(x,y) \notin R$ or $\omega \notin C$)
-}%    
 \unskip.
 Just as we have left $\Tru$ implicit in the graphical notation,
 % Correspondingly, 
@@ -338,13 +334,11 @@ We have seen how ``hard constraints''  $\V\!X \to \{0, 1\}$ can be added to a PD
 But what about ``soft'' constraints, 
     for which violations can lie in the gray area between zero and one? 
 %
-\newmaterial{%
 Although it is a vector of shape $\V \!X$, 
 this is very different from specifying a probability over $X$
 because there is no reason the assignments should sum to $1$;
 we could assign every $x$ a violation of $0.99$ or $0.01$, for instance.
 Still, 
-}%
 in light of the construction in the previous section, there is an obvious way to approach this: simply do same as before, except use a cpd $c(\Tru \mid X)$ that may not be deterministic in place of $\delta R(\Tru\mid X)$. 
 
 
@@ -427,9 +421,9 @@ Semantically, the PDG $\dg M_s$ has almost all of the properties we have seen in
 Despite the similarity so far, there is a big difference between hard and soft constraints:
     values of $x$ that have intermediate satisfaction scores $s(x) \in (0,1)$,
     while not fully consistent, are still possible.
-\newmaterial{%
+% \newmaterial{%
 Indeed, such values of $x$ may even be probable 
-}%
+% }%
 in the optimal distribution, 
     % when the context is inconsistent enough. 
     if that happens to be the best way to resolve an inconsistency.
@@ -590,7 +584,6 @@ we have:
 \end{prop}
 \begin{proof}
     The high confidence specification of $p$ and $q$ constrains the optimal distributions to $\Pi(p,q)$.
-    \newmaterial{%
     Whatever the optimal distribution $\mu^*$,
     the score of that distribution, by \eqref{eq:soft-constr-score},
     is 
@@ -601,13 +594,10 @@ we have:
     \qedhere
     \]
     % and any distribution generates its expected distance, as a consequence of the results of \cref{sec:soft-constraint-widget}. 
-    }%
 \end{proof}
 %
-\newmaterial{%
 It follows that objectives based on optimal transport, which are thought of as 
 geometrically sensitive alternatives to relative entropy, can in fact be represented directly with PDGs (whose semantics are given in terms of entropy), provided the transport cost is articulated in terms of a soft constraint. 
-}%
 
 % \subsection{Graph-Hypergraph Equivalence}
 \subsection{Incomplete CPDs and Individual (Conditional) Probabilities}
@@ -1161,11 +1151,9 @@ Intuitively, this PDG describes a situation in which a subset $V \subseteq \Omeg
     where $W$ is a variable taking values in $\V W := \Omega$,
     $V$ is a variable whose possible values $\V(V) := 2^\Omega$
         are subsets of $\Omega$.
-    \newmaterial{%
     In other words, $\dg M_m$ is the PDG consisting of the mass function $m$ 
     regarded as a distribution over $V$, and the constraint $\ni$ that 
     the actual world $W$ is a member of the subset $V$. 
-    }% 
 \end{defn}
 
 % For those who are not yet fluent with the constraint notation, $\dg M_m$ is just the PDG containing the mass function $m$ in the form of a distribution over subsets of $\Omega$, as well as a constraint that the actual world $W$ is a member of whatever subset is chosen by $m$. 
@@ -1235,11 +1223,7 @@ Indeed, if $\Plaus(U) = 1$, then there is no inconsistency to also believing $U$
 % Now for the proof of the theorem.
 % The proof of \cref{theorem:belplaus-pdg} involves some interesting
 %     combinatorics, so we present it here. 
-\newmaterial{%
-    The \hyperref[proof:belplaus-pdg]{proof of the theorem}, given in
-    the appendix, involves some especially interesting combinatorics; it is based on Hall's Mariage Theorem \citep{Hall1935}.
-}%
-
+The \hyperref[proof:belplaus-pdg]{proof of the theorem}, given in the appendix, involves some especially interesting combinatorics; it is based on Hall's Mariage Theorem \citep{Hall1935}.
 
 
 

@@ -1725,8 +1725,9 @@ This semantics has an important property:
 % Thus, all of our quantitatively focused semantics capture
 Thus, $\bbr{\dg M}_{0^+}^*$ is the unique distribution among those consistent with the cpds of a consistent PDG, that has minimal structural deficiency. 
 
-\subsection{Further Semantics: PDGs as Degrees of Inconsistency 
-    \texorpdfstring{\\}{}and as Transformations on Distributions}
+% \subsection{Further Semantics: PDGs as Degrees of Inconsistency 
+%     \texorpdfstring{\\}{}and as Transformations on Distributions}
+\subsection{Inconsistency Semantics: PDGs as Real Numbers}
 
 The three semantics given in the previous section are the ones presented in the original PDG paper \citep{pdg-aaai}.
 However, there are other semantics that will play an important role later on. 
@@ -1746,16 +1747,20 @@ is a PDG's \emph{(degree of) inconsistency}:
 % \]
 the smallest possible incompatibility of $\dg M$ with any distribution.
 More precisely, for each $\gamma$, we can define
-\[
+\begin{equation}
     \aar[\big]{\dg M}_{\gamma} := \inf_{\mu \in \Delta \V\!\X} \bbr{\dg M}_\gamma(\mu) 
     \quad \in \Rext.
-\] 
-Thus, it interprets a PDG as a single number.  This quantity may at first seem less important than the others, but we will see in \cref{chap:one-true-loss} that it is a ``universal loss function'', and then in \cref{chap:inc-infer-connection} that all of the other semantics can be derived from it. 
+        \label{eqn:inconsistency-defn}
+\end{equation}
+Thus, it interprets a PDG as a single number.  This quantity may at first seem less important than the others, but we will see in \cref{chap:one-true-loss} that it is a ``universal loss function''.
+Furthermore, we will show in \cref{chap:inc-infer-connection} that all of the other semantics (including the full scoring function) can be recovered from PDG's inconsistency semantics. 
 
+\iffoundations
 In \cref{chap:relent-soup}, we will see how PDGs also naturally arise from a second perspective, where they have a semantics in terms of belief updates, so that we can interpret a PDG $\dg M$ as a function $\bbr{\dg M}^\top : \Delta \V\!\X \to \Delta \V\!\X$
 that updates distributions.
 %
 Both of these alternate semantics turn out to to be equivalent to the scoring function semantics developped in \cref{sec:scoring-semantics}. 
+\fi
 
 \section{Relationships to Other Graphical Models}
     \label{sec:other-graphical-models} 

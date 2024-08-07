@@ -266,7 +266,21 @@ Might it be possible to automate the
     and of information loss \citep[Theorem 12.4.9]{leinster2021entropy}.
     Doing this properly may also require developing a categorical account of confidence (the subject of \cref{chap:conf}). 
 \else
-    \TODO
+    % \TODO
+    %
+    \newmaterial{%
+    An astute reader with training in pure mathematics may have noticed a similarity between PDGs and (commutative) diagrams.
+    Indeed, technically speaking, there is a simple definition of a PDG as a diagram (i.e., a certain kind of functor) in a category of probabilistic transitions. 
+    This observation raises dozens of interesting questions about the category theory of PDGs, which we are only just beginning to explore.
+    Preliminary investigations suggest that categorical notions such as limits and colimits of PDGs, for example, coincide with important concepts in probabilistic modeling. 
+    
+    % Other connections that seem promising connecting to categorical
+    % The ultimate prize would be a satisfying way to 
+    What is missing is a satisfying connection between this perspective and PDG's entropy-based semantics.
+    We suspect such a connection may exist; after all, there are important categorical characterizations of relative entropy    \citep{baez2014bayesiancharacterizationrelativeentropy} 
+        and of information loss \citep[Theorem 12.4.9]{leinster2021entropy} in these terms. 
+    Making this connection properly may also require developing a more general theory of confidence, which is also the subject of ongoing work. 
+    }%
 \fi
 
 Yet the most important future work lies in application rather than theory.
@@ -280,7 +294,7 @@ This material has been conceptual, mathematical, and somtimes philosophical.
 But \emph{is it useful}?
 \hfil\par
 
-Narrowly construed as ``can it be used to help us understand AI systems built with probabilistic tools'', I submit that the answer is a resounding yes. 
+Narrowly construed as ``can it be used to help us understand AI systems built with probabilistic tools'', we submit that the answer is a resounding yes. 
 % For pedagogical reasons alone, there is clear value in unifying so many different concepts and clarifying the relationships between them.
 % Especially so because it also answers important foundational questions, such as how loss functions are related to one another, and to probability.
 For pedagogical reasons alone, there is clear value in unifying so many different concepts 
@@ -296,8 +310,9 @@ Equally narrowly construed as, ``can I run it on my laptop?'', the answer is als
 % Using and developing this library has helped me explore and understand the material more deeply; I cannot recommend implementing one's math highly enough. 
 % To a reader who wonders why one should bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
 }%
-another artifact of this research program has been general-purpose Python library implementing the framework in the discrete case
-(\url{https://github.com/orichardson/pdg}).
+a secondary artifact of this research program has been a general-purpose Python library implementing these concepts, which can be found at
+    % in the discrete case
+    {\small\url{https://github.com/orichardson/pdg}}.
 % I cannot highly enough recommend implementing one's math; to a reader who wonders why bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
 % Implementing the math has been imensely helpful for the development of these ideas---after all, it's better to have two ways of understanding things than it is to have just one. 
 %
@@ -342,7 +357,7 @@ Yet the impact may be even larger, considering the current context.
 % A fundemental question about the future of 
 At the moment, the most critical problem in
     AI is arguably the \emph{alignment problem}
-\citep{wiener-alignment1960,alignment-zhuang-2020-NeurIPS,bostrom-superintelligence,christian2020alignment}:
+\citep{wiener-alignment1960,alignment-zhuang-2020-NeurIPS,christian2020alignment}:
 what values should we give to AI systems? 
 A key feature of a machine learning system is an explicit optimization objective that the system seeks to minimize. 
 But as AI becomes increasingly capable, choosing an optimization objective 
@@ -356,7 +371,7 @@ an inhumanly clever psychopath to maximize some metric of profit, productivity, 
 % Are there natural, universal values?
 % According to the standard microeconomic theory, the answer is no: an agent is entitled to its own preference, morals, goals, and values. 
 According to the standard microeconomic theory, an agent is entitled to its own preferences and values.
-Unfortunately, with deft implementation and taken to an extreme, most values would be catastrophic for humans. 
+Unfortunately, with deft implementation and taken to an extreme, most values would be catastrophic for humans \citep{bostrom-superintelligence}. 
 % Unfortunately most values, implemented deftly and taken to an extreme, would be catastrophic for humans.
 It would seem our only hope is to align the AI to values of its users;
     % current practice is therefore to fine-tune trained models to imbue them
@@ -370,31 +385,40 @@ It would seem our only hope is to align the AI to values of its users;
 % But do we really 
 % what if there's something wrong about the way we think about value?
 % But what if our very understanding of value was flawed.
-But is this fair? Will it privilege high-minded ideals such as truth? Do we want to give the enormous responsibility of
-    selecting AI values 
-    to the users who provide the most feedback?
-The outlook appears bleak.
+But is this fair?
+Will it privilege high-minded ideals such as truth?
+Do we want to give the enormous responsibility of selecting AI values to the users who provide the most feedback?
+% The outlook appears bleak.
+\newmaterial{%
+Our prospects of finding the ``right values'' appear bleak.
+}%
 
 Yet, in light of what we have seen in this thesis, there may be another way to approach the problem.
-\newmaterial{%
-% It is easier to argue that there is 
 It is easier to think critically about beliefs than values.
-% In general, it is hard to argue against values at all.
-While beliefs can be inspected and tested by reality, it is difficult in general to take a principled stand in favor of a value.
-But to want to hold consistent beliefs is a uniquely principled kind of value,
+While beliefs can be 
+\newmaterial{%
+    tested by reality and supported by argument,
+    % it is difficult 
+    % in general to take a principled stand in favor of a value.
+    the same is not true of values in general. 
+}%
+% it is difficult in general to take a principled stand in favor of a value.
+Yet \emph{the desire to hold
+    consistent beliefs} is a uniquely principled kind of value,
     held by nearly everyone and
     supported by centuries of argument.
 %
 %
-Moreover, much of the current practice of building AI systems can be done with this value alone. 
-    % representing inconsistent beliefs. 
-% By representing inconsistent beliefs, 
-% But 
-% And consistency (of beliefs) is a value that is both supported by a rich : there is a rich history of arguments against inconsistency bad. 
-% Moreover, it seems li
+% Moreover, much of the current practice of building AI systems can be done with this value alone. 
+\newmaterial{%
+Moreover, as shown in \cref{part:univ-objective}, much of the current practice of artificial intelligence can be done by articulating beliefs (which are subject to analysis and revision) and appealing to this one particularly special value.
+% Moreover, this value alone (together with much of the current practice of artificial intelligence can be done by appeal to this value alone.
 }%
-Perhaps our AIs do not need to take a mathematically undefended stand in the space of values at all. 
-Maybe, if we are careful, we may be able to lean mostly on a single \emph{universal} value: 
+% By representing inconsistent beliefs, 
+So perhaps our AIs do not need to take a mathematically undefended stand in the space of values at all. 
+Maybe, if we are careful, we may be able to lean 
+    solely on (possibly inconsistent)
+    beliefs and a single \emph{universal} value: 
 % \begin{center}
 % \\\hfill
 the pursuit of self-consistency.

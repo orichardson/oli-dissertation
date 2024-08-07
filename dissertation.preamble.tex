@@ -297,10 +297,12 @@
     %%% hacky: now I have to do the same thing for green and blue
     \newsavebox{\stosboxgreen}
     \sbox{\stosboxgreen}{\begin{tikzpicture}\draw[->,green!70!black] (0,0) to (0.15,0);\end{tikzpicture}}
-    \newcommand\stogreen{\usebox\stosboxgreen}
+    % \newcommand\stogreen{\usebox\stosboxgreen}
+    \newcommand\stogreen{{\color{green!70!black}\sto}}
     \newsavebox{\stosboxblue}
     \sbox{\stosboxblue}{\begin{tikzpicture}\draw[->,blue] (0,0) to (0.15,0);\end{tikzpicture}}
-    \newcommand\stoblue{\usebox\stosboxblue}
+    % \newcommand\stoblue{\usebox\stosboxblue}
+    \newcommand\stoblue{{\color{blue}\sto}}
 
 %%%%%%% SPECIAL COMMANDS FOR REASONING WITH PDGS %%%%%%
 \newcommand\False{\dg{F\mskip-5mua\!l\mskip-4mus\mskip-1.5mue}}
