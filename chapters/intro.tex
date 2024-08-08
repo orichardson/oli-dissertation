@@ -71,7 +71,7 @@ while practitioners endeavor to build systems
 % Inconsistency should impossible by design.
 % Even programmers agree: when possible, it is best to eliminate conflict by design. 
 \newmaterial{%
-Modern ideals of ``good code'' agree: it is better to eliminate the potential for conflict by design, than it is to handle problems when they arise at run-time. 
+Modern ideals of ``good code'' agree: it is better to eliminate the potential for conflict by design, than it is to handle inconsistency at while the code is running. 
 }%
 %
 % Theorists are careful to prove things about clearly defined models,
@@ -157,8 +157,8 @@ We would like independent experiments to confirm the values of fundamental const
 % If it is non-trivial to prove 
 % If we want there to be non-trivial theorems 
 We would like to have theorems stating that two different approaches give the same answer---but 
-    if a theorem is non-trivial, then 
-    the representation itself could not have guaranteed that the two views are redundant; without the proof, they may well have been inconsistent instead. 
+    % if a theorem is non-trivial, then 
+    the representation itself cannot guarantee that the two views are redundant; without the proof of the theorem, they may well instead have been inconsistent. 
 }%
 % are also redundancy-free, by construction. 
 Without opportunity for internal conflict, there can be no opportunity for internal agreement; 
@@ -186,7 +186,8 @@ This is extremely attractive, as this kind of epistemic modesty allows us to pre
 
 Yet recently, modern AI systems have recently been slipping further from even the probabilistic consistency to which they aspire.
 }}%
-For this reason, even modern AI systems have recently been slipping away from the probabilistic consistency to which they aspire.
+For this reason, even modern AI systems have recently been slipping away from the probabilistic consistency to which they aspire
+    \citep{Bertossi2005}.
 %
 For instance, it is expensive and even undesirable to exactly model your training data; instead we try to do the opposite, by adding priors (also known as regularizers; see \cref{sec:regularizers}) to prevent this.
 The priors are typically inconsistent with the data (which is arguably the point), although neither is ever modified. 
@@ -256,10 +257,12 @@ it also develops a (novel) account of \emph{variables} that unifies standard not
 % We also develop a perhaps unusual account of the notion of a variable, which provides a unified formal foundation for the standard notation and terminology across several different communities.
 Both aspects serve as the building blocks for the theory that follows.
 %
-The rest of the material is based on three previously published conference papers
+The remainder of the dissertation is based on three previously published conference papers
     \citep*{pdg-aaai,one-true-loss,pdg-infer},
-two workshop papers
-    \citep{LIR,mixture-langs},
+% two workshop papers
+%     \citep{LIR,mixture-langs},
+a workshop paper
+    \citep{LIR},
 additional papers in earlier stages of the peer review process
     \citep*{qim},
 and a trove of original unpublished notes. 
