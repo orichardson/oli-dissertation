@@ -1,16 +1,29 @@
     \label{chap:reason}
 
 % How should you 
-We have just seen how we can reason about PDGs from the outside, but a lot of probabilistic reasoning can be done \emph{internally} within PDGs.  In \cref{chap:one-true-loss} we saw how many important inequalities in the literature are instances of what we called \emph{monotonicity of inconsistency}: believing more things can only make you more inconsistent, not less.
+% We have just
+In the previous two chapters, we come to understand a great deal about how to reason \emph{about} PDGs, and the connections between their semantics.
+Yet, through a handful of simple rules for manipulating PDGs, a great deal of probabilistic reasoning can be done \emph{internally} within a PDG.  
+% In this chapter, we will  
+We have already seen some important examples.
+In \cref{chap:one-true-loss} we saw that many important inequalities are instances of what we called \emph{monotonicity of inconsistency}: believing more things can only make you more inconsistent, not less.
+% This kind of reasoning 
+When reasoning this way, the PDG is analogous to a logical expression, and monotonicity is a kind of inference rule. 
 
-Related monotonicity properties hold of many natural epistemic representations.
-One classical representation of knowledge is a list of formulas
-    $[ \phi_1, \phi_2, \ldots, \phi_n]$
-    that one knows to be true.
-This representation has an analogous property:
-    learning an additional formula $\phi_{n+1}$
-    can only narrow the set of worlds one considers possible.
-    %
+In this chapter, we deepen our exploration of this kind of reasoning technique, developing an analogous principle for qualitative information in a directed hypergraph (\cref{sec:qual-monotone}).
+It turns out that both the qualitative scoring function $\SDef$ (\eqref{eqn:sdef}) and QIM-compatibility (the subject of \cref{chap:QIM})) are monotonic in this way. 
+We then develop a notion of qualitative equivalence (\cref{sec:QIM-equivalence}).
+Finally, in \cref{sec:logic}, we combine our qualitative and quantitative reasoning principles to define a natural pre-order on PDGs, which shows promise as the basis of an inconsistency-tolerant logic. 
+
+% Related monotonicity properties hold of many natural epistemic representations.
+% One classical representation of knowledge is a list of formulas
+%     $[ \phi_1, \phi_2, \ldots, \phi_n]$
+%     that one knows to be true.
+% This representation has an analogous property:
+%     learning an additional formula $\phi_{n+1}$
+%     can only narrow the set of worlds one considers possible.
+    
+%
     % after including an additional formula $\phi_{n+1}$
     % % has the effect of strengthening knowledge:
     % one can still prove anything that one could prove before.  
@@ -26,7 +39,7 @@ This representation has an analogous property:
 % 	But in fact it is the \emph{lack} of an edge that caries knowledge:
 % 	$A{\not\to}B$ means that $A$ does not influence $B$ directly.
 %joe1: I don't see why this is exactly right, but in any case, it's a
-%distractin.  I cut it.
+%distracting.  I cut it.
 % 	Thus, a BN is more like a list of formulas that one considers possible,
 % 	than a list of formulas one knows.
 %oli1: to help you see why the above is true: an edge in a BN indicates the possibility of dependence, not the necessity of dependence; if all variables are independent, it is consistent with every BN structure. 
@@ -34,7 +47,7 @@ This representation has an analogous property:
 %   we expect of a representation of knowledge.
 %
 %oli1: replacing it with the following, condensed version:
-The same is true of both kinds of information in a PDG, and also of \scibility. 
+% The same is true of both kinds of information in a PDG, and also of \scibility. 
 %joe2*: this does not seem consistent with your English.  It does
 %*not* say that anything you can prove from A' can also be proved from
 %A.  It says that if all the formulas in A are true according a
@@ -52,15 +65,40 @@ The same is true of both kinds of information in a PDG, and also of \scibility.
 %
 
 
-\section{Observational (Quantitative) Monotonicity and Equivalence}
-    \label{sec:quant-monotone}
+% \section{Observational (Quantitative) Monotonicity and Equivalence}
+%     \label{sec:quant-monotone}
 
 % Monotonicity of PDG inconsistency \citep{one-true-loss}
 % %joe16: all these inequalities need a reference
 % is a powerful reasoning principle. Many important inequalities (e.g., the data processing inequality, relationships between statistical distances, the evidence lower bound, \ldots) can be proved using only a simple inference rule: ``more beliefs can only increase inconsistency''.
 
 
-\section{Structural (Qualitative) Monotonicity and Equivalence}
+\section{Structural/Qualitative Monotonicity and Equivalence}
+
+One classical representation of knowledge is a list of formulas
+    $[ \phi_1, \phi_2, \ldots, \phi_n]$
+    that one knows to be true.
+This representation has an analogous property:
+    learning an additional formula $\phi_{n+1}$
+    can only narrow the set of worlds one considers possible,
+    strengthening knowledge. 
+Qualitative Bayesian Networks (and MRFs) are monotonic,
+	but in the opposite direction:
+        adding edges \emph{weakens} knowledge.
+One might imagine that an edge $A{\to}B$
+	in a BN represents knowledge that $A$ influences $B$, 
+	but in fact it is the \emph{lack} of an edge that caries knowledge.
+	% $A{\not\to}B$ means that $A$ does not influence $B$ directly.
+%joe1: I don't see why this is exactly right, but in any case, it's a
+%distracting.  I cut it.
+	% Thus, the edges of a qualitative BN give the dependencies that one considers possible,
+	% rather than a list of dependencies that one knows for certain are present.
+%oli1: to help you see why the above is true: an edge in a BN indicates the possibility of dependence, not the necessity of dependence; if all variables are independent, it is consistent with every BN structure. 
+
+Hypergraphs, both with semantics in terms of QIM-compatibility (the subject of \cref{chap:QIM}) and in terms of $\SDef$, however, are monotonic in the directions we expect of knowledge.
+In \cref{sec:qual-monotone}, we establish a stronger directed notion of 
+
+
 %oli22*: moved full section to the appendix
 % \subsection{Monotonicity of Structural Compatibility}
 %oli3: rebranding section
@@ -110,7 +148,8 @@ The same is true of both kinds of information in a PDG, and also of \scibility.
 %Monotonicity of (quantitative) PDG inconsistency
 % The fact that (quantitative) PDG inconsistency  is monotonic
 % is a powerful reasoning principle that can be used to prove many important inequalities \citep{one-true-loss}. 
-In this section, we develop a related principle for \scibility.
+Recall from \cref{chap:one-true-loss} that, by simple applications of a rule called \emph{monotonicity of (observational) inconsistency} (\cref{lemma:!}, we were able to derive things such as variational bounds, inequalities between statistical divergences, and properties such as the data processing inequality. 
+In this section, we develop a related principle for qualitative information in a hypergraph, that applies to both \scibility\ and the function $\SDef$.
 %joe4*: I have no idea what's going on in this section.  At one point I
 %sent you an email explaining why I thought nonpartitional models
 %weren't good models of causality.  I'm not convinced by the
@@ -195,7 +234,8 @@ In this section, we develop a related principle for \scibility.
 %
 %oli7: breaks the flow; a good place to cut 
 
-Here is a direct analogue, that does not turn out to be terribly useful: 
+We begin with a direct analogue of \cref{lemma:!}.
+% that does not turn out to be terribly useful: 
 % if $\Ar \subseteq \Ar'$ and $\mu \models \Diamond\Ar'$, conclude $\mu \models \Diamond\Ar$. 
 
 
@@ -209,9 +249,14 @@ Here is a direct analogue, that does not turn out to be terribly useful:
     %oli2: changing the order so that \Ar
     % If $\Ar' \subseteq \Ar$ and $\mu \models \Ar$, then $\mu \models \Ar'$.
     % If $\Ar \subseteq \Ar'$ and $\mu \models \Ar'$, then $\mu \models \Ar$.
-    If $\Ar \subseteq \Ar'$ and 
-    %oli20: adding diamonds
-    $\mu \models \Diamond\Ar'$, then $\mu \models \Diamond\Ar$.
+    If $\Ar' \subseteq \Ar$,
+    then 
+    \begin{itemize}[nosep]
+    \item 
+    $\mu \models \Diamond\Ar$ implies $\mu \models \Diamond\Ar'$.
+    \item 
+    $\SDef_{\Ar}(\mu) \ge \SDef_{\Ar'}(\mu)$.
+    \end{itemize}
 \end{prop}
 % }%
 %oli21: instead, a short inline discussion. 
@@ -262,7 +307,7 @@ There is a sense in which
 %oli2:
 % Since a hypergraph has directed \arc s,
 %oli5: compressing with wrapfigure
-\begin{wrapfigure}[5]{o}{1.6cm}
+\begin{wrapfigure}[4]{o}{1.8cm}
     % \fbox{
     \vspace{-3ex}
     % \hspace{-1.2em}
@@ -272,13 +317,13 @@ There is a sense in which
     \end{tikzcd}
     % }
 \end{wrapfigure}
-%joe5: this is somewhat circilar
+%joe5: this is somewhat circular
 %oli6: not anymore, since I changed \hgraph back to "hypergraph"---but your version is still better, I think.
 % Since our notion of a \hgraph\ has \emph{directed} \arc s,
 Since we use \emph{directed} hypergraphs,
      there is actually a finer notion of monotonicity at play. 
 %oli1: added
-Inputs and ouputs play opposite roles, 
+Inputs and outputs play opposite roles, 
     and they are naturally monotonic in opposite directions. 
 %oli3: out of order; this should come later.
 % Consider a function $f : A \to B$.
@@ -322,7 +367,7 @@ This is depicted to the right.
 %oli5: merging paragraphs
 %
 % These principiles of function variance also apply in our setting.
-The same principile applies in our setting.
+The same principle applies in our setting.
 %oli1:
 % have a natural analogue  in our setting, which we call structural weakening.
 If $\mat X$ and $\mat Z$ are sets of variables and $\mat X \subseteq \mat Z$, then 
@@ -342,8 +387,8 @@ It follows, for example, that
 %    (independent) mechanisms imply the existence of others.
 The general phenomenon is captured by the following
 %oli5: save a line
-    %\unskip definition.
-    \unskip.
+    \unskip formal definition.
+    % \unskip.
 % Here, the relevant notion of subtype is not set inclusion, but
 %     rather variable superset.
 % Thus, the behavior of our definition follows the appropriate variance
@@ -391,8 +436,9 @@ The general phenomenon is captured by the following
 %oli21: this whole thing is unnecessary, and too expensive.
 % \vfull{
 % %joe16: no need
-% %Indeed, 
-% \scibility\ is monotonic with respect to weakening  ($\rightsquigarrow$).}
+%Indeed, 
+Both the function $\SDef$ and the notion of
+\scibility\ are monotonic with respect to weakening of the underlying hypergraph structure ($\rightsquigarrow$).
 % 
 \begin{theorem}
     % [strong monotonicity]
@@ -405,14 +451,11 @@ The general phenomenon is captured by the following
     If
     % $\mu$ is \scible\ with $\Ar$
     % $\mu \models \Ar$ and $\Ar \rightsquigarrow \Ar'$, then
-    $\Ar \rightsquigarrow \Ar'$ 
-    %oli9: strengthening. Not sure if English or notation is better here,
-    % but I chose English because of the parens. If it is unclear to 
-    % present the words in parens like this, then I think we should
-    % go back to the symbolic notation. 
-    and $\mu \models \Diamond \Ar$, then  $\mu \models \Diamond \Ar'$.
-    %oli21: back to notation; adding diamonds. 
-    \commentout{%
+    $\Ar \rightsquigarrow \Ar'$, then
+    \begin{itemize}[nosep]
+    \item 
+     $\mu \models \Diamond \Ar$ implies $\mu \models \Diamond \Ar'$;
+    \commentout{% the text version 
         and $\mu$ is 
         % (E)
         \scible\ with $\Ar$,
@@ -421,6 +464,9 @@ The general phenomenon is captured by the following
         \scible\ with $\Ar'$. 
         % $\mu$ is \scible\ with $\Ar'$
     }%
+    \item 
+    $\SDef_{\Ar}(\mu) \ge \SDef_{\Ar'}(\mu)$. 
+    \end{itemize} 
 \end{theorem}
 
 %oli21: not critical; streamlining. 
@@ -429,7 +475,7 @@ The general phenomenon is captured by the following
 because a \arc\ with no targets is vacuous, so
 removing all targets of a \arc\ is equivalent to deleting it.
 % }%
-
+%
 %oli3: relocating this material here, from above the theorem. 
 %oli21: moving this material above
 % There is a sense in which 
@@ -454,7 +500,7 @@ removing all targets of a \arc\ is equivalent to deleting it.
 % \Cref{defn:weakening} provides an explanation: the effect of adding an edge $X \to Y$ to a directed graph $G$ on $\Ar_G$, is to add $X$ to the sources the \arc\ that determines $Y$.
 %oli21:
 % \Cref{theorem:strong-mono} provides an explanation: adding $X \to Y$ to a graph $G$ means adding $X$ to the \emph{sources} the \arc\ whose target is $Y$, in the \hgraph\ $\Ar_G$.
-\Cref{theorem:strong-mono} explains why BNs and MRFs are arguably \emph{anti}-monotonic: adding $X \to Y$ to a graph $G$ means adding $X$ to the \emph{sources} the \arc\ whose target is $Y$, 
+\Cref{theorem:strong-mono} also explains why BNs and MRFs are in a sense \emph{anti}-monotonic: adding $X \to Y$ to a graph $G$ means adding $X$ to the \emph{sources} the \arc\ whose target is $Y$, 
 %oli21: line shave
 % in the \hgraph\ $\Ar_G$.
 in $\Ar_G$.
@@ -476,10 +522,7 @@ in $\Ar_G$.
 % It 
 %oli21: 
 % \Cref{theorem:strong-mono}
-
-%oli22:
-As mentioned in \cref{sec:}, 
-the far more important consequence of this result is that it
+Yet by far the most important consequence of this result is that it
 %oli16:
 % is also helpful for understanding \scibility\ with cyclic \hgraph s.
 helps us begin to understand what \scibility\ means for cyclic \hgraph s.
@@ -601,11 +644,12 @@ which are really about monotonicity.
     Are there any distributions that are \emph{not} compatible with 
     %oli20:
     % this graph? It is not obvious.
-    this hypergraph? It is not obvious.
-    We return to this
-   %oli21: line shave
-    %  question
-      in \cref{sec:pdgs}. 
+    this hypergraph? 
+    It is not obvious.
+%     We return to this
+%    %oli21: line shave
+%     %  question
+%       in \cref{sec:pdgs}. 
     %
     %
     % By randomly selecting distributions $\Pr(U_1),
@@ -966,10 +1010,10 @@ In more detail, DN semantics are given by the fixed point of a markov chain that
 
 %joe7*: You're doing a core dump.  You have made no attempt to connect
 %this material to the rest of the paper.  Either cut this, or 
-%wirte some paragraphs explaining the connection.  
+%write some paragraphs explaining the connection.  
 \subsection{QIM Equivalence}
 % \subsection{SIM-Equivalence}
-    \label{sec:equivalence}
+    \label{sec:QIM-equivalence}
 
 We now begin to explore what it means for two hypergraphs to be \emph{equivalent},
     at least as far as QIM-compatibility (\cref{defn:qim}) is concerned.
@@ -978,7 +1022,7 @@ An obvious candidate definition would be to call two hypergraphs $\Ar_1$ and $\A
 We have to deal with context. 
 It is easy to see that
     every \hgraph\ consisting of just one \arc\ is QIM-compatible with all probability measures $\mu \in \Delta \V\!\X$,
-    % even though each \arc\ intutively means something different.
+    % even though each \arc\ intuitively means something different.
     even though different \arc s intuitively mean different things.
 Moreover, every \hgraph\ is a sum of one-arc \hgraph s,
     and we have already seen that not all \hgraph s are equivalent.
@@ -996,7 +1040,7 @@ Moreover, every \hgraph\ is a sum of one-arc \hgraph s,
 %meaning in some sense.  How does this relate.
 %oli3: Again it seems to me that your question is confusing the quantitative and qualitative levels.  The witness \nu has causal information, but that information is not present in the hypergraph.  
 % To capture the the causal meanings of \hgraph s more precisely, 
-To distinguish between \hgraph s that are not interchangable,
+To distinguish between \hgraph s that are not interchangeable,
     we clearly need a stronger notion of equivalence.
     
 %joe2*: moved here from above.  However, given that hypergraph union
@@ -1040,7 +1084,7 @@ invariant to additional context:
 %oli1:
 Our next result is a simple, intuitive, and particularly useful equivalence.
 %joe2*: why is it useful?  What's it useful for?
-%oli2: having done many such proofs, I can say with some authority that this result is one of the most convenient tools we have for proving that various distributions are or are not \scible\ with various \hgraph s. It works especially well in tandem with monotoncity to prove looser bounds.  With some effort I can give you examples, but those examples are probably not important enough to merrit space in the main body of the paper.  This proposition itself, though, I think is more than worth the space it takes up, and I suspect that by the time the paper is finished, it will be used many times in various proofs and proof sketches. 
+%oli2: having done many such proofs, I can say with some authority that this result is one of the most convenient tools we have for proving that various distributions are or are not \scible\ with various \hgraph s. It works especially well in tandem with monotonicity to prove looser bounds.  With some effort I can give you examples, but those examples are probably not important enough to merit space in the main body of the paper.  This proposition itself, though, I think is more than worth the space it takes up, and I suspect that by the time the paper is finished, it will be used many times in various proofs and proof sketches. 
 %joe3*: While you may be right, we don't have such proofs in this
 %paper.  To say it's useful, we have to show usefulness, and doing so
 %would take us far beyond what this paper should be about, as far as
@@ -1243,6 +1287,7 @@ It becomes even more useful in tandem
 
 
 \section{A Logic Based on PDGs}
+    \label{sec:pdg-logic}
 
 % We have 
 So far in this chapter, 
@@ -1256,12 +1301,22 @@ We saw in \cref{sec:quant-monotone} an exploration of
 Then, in  \cref{sec:qual-monotone} we saw a different monotonicty principle that applies to directed structural information. 
  % analogue of monotonicity for structural information in a hypergraph, 
 In this section, we put the two together. 
-The result is an inconsistency-tolerant logic. 
+The result forms the beginnings of an inconsistency-tolerant logic. 
 
 
 % \subsection{PDG Entailment: A Natural Preorder on PDGs}
 \subsection{A Natural Preorder on PDGs}
 
+Some logical statements are stronger than others. If $\varphi$ says strictly more about the world than $\psi$, then we say that $\varphi$ implies $\psi$, and write $\varphi \Rightarrow \psi$.  
+% An important aspect of implication is that it is \emph{context-free}: any implication can be turned into 
+We are interested in developing a similar notion of implication for PDGs.
+It might seem that \cref{lemma:!} provides us with one---but simply because $\aar{\dg M_1} \ge \aar{\dg M_2}$ doesn't seem to be strong enough. 
+The reason why is that implication allows for substitution in within context. For instance, if $\varphi \Rightarrow \psi$, then 
+$\varphi \land \varphi' \Rightarrow \psi \land \varphi'$
+and
+$\varphi \lor \varphi' \Rightarrow \psi \lor \varphi'$, no matter what we take $\psi'$ to be.
+But the analogue is not true for PDGs. 
+This motivates the following definition, which corrects for this by explicitly taking into account context. 
 
 \begin{defn}
     \label{defn:entail}
@@ -1303,7 +1358,7 @@ The result is an inconsistency-tolerant logic.
     Some more properties of the entailment relation, for general PDGs.
     
     \begin{linked}{prop}{entail-properties}
-        \begin{enumerate}[parsep=0pt]
+        \begin{enumerate}[parsep=0pt,topsep=0pt]
             \item Reflexivity: $\dg M \models \dg M$.
             \item Transitivity: $\dg M_1 \models \dg M_2$ and $\dg M_2 \models \dg M_3$ imply that $\dg M_1 \models \dg M_3$. 
             \item If 
@@ -1312,13 +1367,13 @@ The result is an inconsistency-tolerant logic.
                  or if $\bbeta_1 \ge \bbeta_2$ but otherwise the two are identical, then $\dg M_1 \models \dg M_2$. 
             \item The same is true if $\dg M_1$ and $\dg M_2$ are identical except for
             $\balpha_1 \ge \balpha_2$.%
-                \footnote{
-                    % {\color{gray}\small (
-                So far, this result only holds for PDGs with discrete variables;
-                It is not true true for the approach I have been using to
-                formalize $\SDef$ for continuous variables.
-                    % )}
-                }
+                % \footnote{
+                %     % {\color{gray}\small (
+                % So far, this result only holds for PDGs with discrete variables;
+                % It is not true true for the approach I have been using to
+                % formalize $\SDef$ for continuous variables.
+                %     % )}
+                % }
                 % The way this works with $\balpha$ depends on which
                 % way formalizations go, but using the default one with entropy, $\balpha_1 \ge \balpha_2$ also implies $\dg M_1 \models \dg M_2$. 
         \end{enumerate}
@@ -1330,15 +1385,25 @@ The result is an inconsistency-tolerant logic.
     Two PDGs are eqivalent if the respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
     Intuitively, $\dg M_1 \equiv \dg M_2$ iff $\dg M_1$ and $\dg M_2$ are equally (in)consistent no matter how one alters them, so long as both are altered in the same way. 
     
-    \begin{linked}{prop}{sem-equiv-properties}
-        \begin{enumerate}[parsep=0pt]
+\begin{linked}{prop}{sem-equiv-properties}
+    \begin{enumerate}[parsep=0pt]
         \item For all distributions $p(X)$, $p(X) + p(Y|X) \equiv p(X,Y)$. 
         \item If $\dg M_1 \equiv \dg M_2$, then their mixtures are also equivalent:
             $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$. 
         \item $\dg M + \dg M \equiv 2 \dg M$. 
             Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $2 \dg M$ has all confidences doubled. 
     \end{enumerate}
-    \end{linked}
+\end{linked}
+
+% Taking only the binary aspect of this logic into account, we might want
+This last property is rather interesting, because it shows that the set-of-distribution semantics $\SD{-}$ of a PDG does not capture important distinctions between PDGs. 
+If $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then one might hope to find that
+$\dg M_1 \models \dg M_2$---but this is not true.%
+    \footnote{For instance, $\SD{\dg M} = \SD{(2) \dg M}$, but $\dg M \not\models (2) \dg M$.}
+% but it is the case that
+% but it is true, in this case, that
+% $(\infty) \dg M_1 \models (\infty) \dg M_2$. 
+    
 
 From its definition, it is clear that $\equiv$ is symmetric.
 Thus transitivity and reflexivity of $\models$ (above), imply that
@@ -1377,7 +1442,7 @@ However, it may also be too strict a requirement.
 
 
 
-We can also add entailments togther.
+We can also add entailments together.
 
 \begin{linked}{prop}{entail-sum}
     If $\dg M_1 \models \dg M_3$ and $\dg M_2 \models \dg M_4$, then
@@ -1405,20 +1470,20 @@ We can also add entailments togther.
     \]
 \end{lproof}
 
-\temphide{%
-    One way of defining subtraction is to add the negated second argument.
-    The biggest unintuitive aspect of this is that $\dg M - \dg M$ is not equivalent to the empty PDG; the variables are still there. 
-    (But they are congruent modulo variables.)
-    One might also consider a variant that deleted variables, but it seems
-    impossible to do this continuously and invertably.
-    Do we want $\dg M - \X$ to be the trivial PDG?
+% \temphide{%
+%     One way of defining subtraction is to add the negated second argument.
+%     The biggest unintuitive aspect of this is that $\dg M - \dg M$ is not equivalent to the empty PDG; the variables are still there. 
+%     (But they are congruent modulo variables.)
+%     One might also consider a variant that deleted variables, but it seems
+%     impossible to do this continuously and invertably.
+%     Do we want $\dg M - \X$ to be the trivial PDG?
 
-    \begin{coro}
-        If $\dg M_1 \models \dg M_2$, then $\dg M_1 - \dg M_2 \models \X_2$.
-    \end{coro}
-    % To further specialize, choosing $\dg M_1 = \dg M_2$, the premise is always true,
-    % and so we find that $\X \models
-}%
+%     \begin{coro}
+%         If $\dg M_1 \models \dg M_2$, then $\dg M_1 - \dg M_2 \models \X_2$.
+%     \end{coro}
+%     % To further specialize, choosing $\dg M_1 = \dg M_2$, the premise is always true,
+%     % and so we find that $\X \models
+% }%
 
 \begin{coro}
     If $\dg M_1 \models 0$ and $\dg M_2 \models 0$, then $\dg M_1 + \dg M_2 \models 0$. 
@@ -1437,10 +1502,8 @@ $
 $
 for all $\dg M$ and $\dg M'$?
 % This is certaintly true if $\dg M$ has $\balpha,\bbeta \ge 0$.  
-This is very close to a special case of the monotonicity  of 
-    \cref{lemma!}. 
-
-In general, the answer is no.
+It might seem that this has to be the case, because it is so closely related to 
+    \cref{lemma!}. Yet,  in general, the answer is no.
 Nevertheless, it does hold for PDGs $\dg M$ that have $\bbeta \ge 0$ and are in a sense ``qualitatively complete'' 
 % (definition \cref{defn:qual-complete} below),
 which includes many PDGs of interest. 
@@ -1456,6 +1519,9 @@ which includes many PDGs of interest.
     the structural deficiency $\SDef_{(\Ar, \balpha)}(\mu) \ge 0$
     of $\mu$ with respect to $(\Ar, \balpha)$ is non-negative. 
 \end{defn}
+
+
+\temphide{%
 
 \begin{linked}{prop}{qual-complete-criterea}
 Let $\dg M$ be a PDG with structure $(\Ar,\balpha)$,
@@ -1507,12 +1573,13 @@ But here are some variants that might be true:
     \end{enumerate}
 \end{conj}
   
+}%
 % Why is this? 
 % Adding arcs or confidences 
 % Part of the reason 
 % Introducing variables has the opposite effect.
-While new beliefs cannot make you any less inconsistent, 
-new variables are additional degrees of freedom, and
+While new beliefs are like constraints and cannot make you any less inconsistent, 
+new \emph{variables} do just the opposite: they give additional degrees of freedom, and
 cannot make you any more inconsistent. 
 \begin{prop}
     If $\X_1 \subseteq \X_2$, then $\X_1 \models \X_2$. 
@@ -1543,16 +1610,21 @@ Concretely, let $\mathcal U$ be a ``universe of all possible variables''.
 Then every PDG $\dg M$ with variables $\X \subseteq \mathcal U$ satisfies $\dg M \models \mathcal U$. 
 
 
-\subsection{``Propositional'' PDG Logic}
-Starting with the entailment operation and introducing connectives, we 
-can obtain a propositional logic whose atomic formulas are PDGs. 
-We  adopt the usual convention of writing 
+
+% \subsection{``Propositional'' PDG Logic}
+
+
+% We now use the preorder defined in the previous section to build up an inconsistency-tolerant analogue of propositional logic. 
+Starting with the entailment operation and introducing usual connectives, we 
+    can obtain a propositional logic whose primitive formulas are PDGs.
+We adopt the usual convention of writing 
 ``$\models \varphi$'' if $\dg M \models \varphi$ for all PDGs $\dg M$. 
 % Observe that something nice happens: 
 % \begin{align*}
 %     0 \models \varphi \iff \models \varphi
 % \end{align*}
 
+\commentout{%
 \textbf{Exploring the Set-of-Distribution Semantics.}
 % In a sense, PDGs themselves already encode a set of probabilistic models: the 
 % collection $\SD{\dg M}$ of distributions consistent with them. In many
@@ -1568,10 +1640,11 @@ $\dg M_1 \models \dg M_2$. This is not true,%
 but it is true, in this case, that
 $(\infty) \dg M_1 \models (\infty) \dg M_2$. 
 Similarly, if 
+}%
 
 
-\subsubsection{Defining Classical Connectives}
-
+% \subsubsection{Defining Classical Connectives}
+\paragraph{Adding Classical Connectives.}
 % \textbf{Approach 1.}
 As usual, we can introduce conjunction by
     defining $\dg M \models \varphi \land \varphi'$ iff
@@ -1595,8 +1668,10 @@ We can also continue with $\lnot$ and then define other connectives
     ($\lor, \Rightarrow, \Leftrightarrow$) in terms of ($\land, \lnot$).    
 But the usual definition of $\dg M \models \lnot \varphi$ iff 
     $\dg M \not\models \varphi$,
-    may not be so well-behaved.
-For instance, ...
+    is not so well-behaved.
+% For instance, ...
+We know for example that $ \dg M \not \models (2) \dg M$ (at least, when $\balpha,\bbeta > \mat 0$), 
+yet it seems bizarre to say that $\dg M \models \lnot (2) \dg M$: the two PDGs say the same thing, just with different strengths! 
 
     
 % \textbf{Approach 2.}
@@ -1620,10 +1695,9 @@ it only makes sense if $\varphi$ and $\varphi'$ are themselves PDGs (or at least
 This would rule out
     ``synthetic'' logical connectives such as $\land$ and $\lnot$
     inside an implication.
-Thus, the logic inside a connective $\entimp$ collapses to ordinary constructions
-    that can be done with PDGs themselves. 
-        
+Thus, the logic inside a connective $\entimp$ collapses to ordinary constructions on PDGs themselves.        
 
+\temphide{%
     
     PDGs also have their own operations, most notably $+$ and $\sqcup$.
     One interesting question is how these interact with the logical connectives we have just defined. 
@@ -1711,6 +1785,22 @@ Now some other examples.
     % Now, suppose the value of $x$ is parameterized, 
 \end{example}
 
+}%
+
+\section{Discussion}
+
+We have seen natural qualitative analogues of monotonicity and equivalence (\cref{sec:qual-monotone,sec:QIM-equivalence}). 
+Our key contributions in this section are a pair of two reasoning principles that can prove phenomena such as BN equivalence (\cref{theorem:bn-completeness}), and help us begin to make sense of cyclic structures from the opposite direction as studied in \cref{sec:qim-info}. 
+We also derive an impossibility result (\cref{theorem:mrf-bn-monotone-impossible}) showing that, while undireted and directed models are both monotonic in a way, there is no way to monotonically capture both at the same time.
+We then developed general notions of PDG entailment and equivalence (\cref{sec:pdg-logic}), and began to use them as the basis of a logic.
+
+
+We still have a great deal of work ahead of us. 
+One particularly exciting direction is that of epistemic logic, which appears to be implementable through parametric PDGs and focus/attention masks as laid out in \cref{chap:LIR}. 
+%
+Another is that of linear logic. Since this logic is sensitive to quantities, and there seem to be multiple kinds of conjunctions, it would make sense if there were a deep relationship there as well.
+While we have only skimmed the surface of what can be done with these reasoning principles, it is clear that PDGs can be a useful visual proof language, and have promise as the basis of an inconsistency-tolerant logic. 
+
 \begin{subappendices}
     
     \section{Proofs}
@@ -1720,19 +1810,16 @@ Now some other examples.
             \bbr{\dg M_1}_\gamma(\X_1) + \bbr{\dg M_2}_\gamma(\X_2) 
                 + \gamma \I_\mu(\X_1; \X_2| \X_1 \cap \X_2).$
     \end{lemma}
-    \begin{proof}
-        See appendix of inference paper. 
-    \end{proof}
+    This was an intermediate result in \hyperref[proof:theorem:markov-property]{the proof of} \cref{theorem:markov-property}.
 
-    \begin{defn}
-        If $\dg M_1 + \dg M_2 \equiv \dg M_1 \sqcup \dg M_2$, then 
-        we say $\dg M_1$ and $\dg M_2$ are independent. 
-    \end{defn}
-
-    \begin{lemma}
-        If $\dg M_1$ and $\dg M_2$ have disjoint variables $\X_1 \cap \X_2 = \emptyset$, 
-        then $\aar{\dg M_1 + \dg M_2} = \aar{\dg M_1} + \aar{\dg M_2}$. 
-    \end{lemma}
+    % \begin{defn}
+    %     If $\dg M_1 + \dg M_2 \equiv \dg M_1 \sqcup \dg M_2$, then 
+    %     we say $\dg M_1$ and $\dg M_2$ are independent. 
+    % \end{defn}
+    % \begin{lemma}
+    %     If $\dg M_1$ and $\dg M_2$ have disjoint variables $\X_1 \cap \X_2 = \emptyset$, 
+    %     then $\aar{\dg M_1 + \dg M_2} = \aar{\dg M_1} + \aar{\dg M_2}$. 
+    % \end{lemma}
 
     \begin{lemma}
             \label{lem:commonvar-dominance}
@@ -1748,19 +1835,19 @@ Now some other examples.
         then $\dg M_1 \models \dg M_2$. 
     \end{lemma}
     \begin{lproof}
-        Suppose $\dg M_1$ and $\dg M_2$ satisfy this property.
-        Then clearly $\bbr{\dg M_1}_\gamma(\mu_1) \ge \bbr{\dg M_2}_\gamma(\mu_2)$,
-        as
+        Suppose that $\dg M_1$ and $\dg M_2$ satisfy the property of the lemma statement.
+        In this case, we find that $\bbr{\dg M_1}_\gamma(\mu_1) \ge \bbr{\dg M_2}_\gamma(\mu_2)$,
+        because
         \begin{align*}
             \bbr{\dg M_1}_\gamma(\mu_1)
-                &= \OInc_{\dg M_1}(\mu_1) + \SDef_{\dg M_1}(\mu_1) 
-                \ge \OInc_{\dg M_2}(\mu_2) + \SDef_{\dg M_2}(\mu_2) = \bbr{\dg M_2}_\gamma(\mu_2).
+                &= \OInc_{\dg M_1}(\mu_1) + \SDef_{\dg M_1}(\mu_1) \\
+                &\ge \OInc_{\dg M_2}(\mu_2) + \SDef_{\dg M_2}(\mu_2) = \bbr{\dg M_2}_\gamma(\mu_2).
         \end{align*}
         % This shows us that
         Let $\dg M'$ be an arbitrary PDG, with variables $\X'$.
         With some calculation, we find that 
         \begin{align*}
-            \aar[\big]{\,\dg M_1 + \dg M'\,}_\gamma
+            &\aar[\big]{\,\dg M_1 + \dg M'\,}_\gamma \\
                 &= \inf_{\mu \in \Delta\V(\X_1 \cup\X')}\, \Big( 
                     \bbr{\dg M}_\gamma(\mu(\X)) + \bbr{\dg M'}_\gamma(\mu(\X'))
                     + \gamma \I_\mu(\X_1 ; \X' | \X_1 \cap \X')

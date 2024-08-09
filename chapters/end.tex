@@ -52,7 +52,6 @@ So, for readers who are more comfortable with the latter range, we quickly summa
 % quantity
 % Given objects $M_1, M_2, \ldots$,
 % each of which can be implicitly converted to a PDG
-\newmaterial{%
 Suppose that $M_1, M_2, \ldots$ are objects that, based on the theory developed in this dissertation, can be viewed as PDGs.
 Writing $\dg M_{1}, \dg M_{2}, \ldots$ denote the corresponding PDGs, 
 define the \emph{(observational) self-consistency} of $M_1, M_2, \ldots$
@@ -66,7 +65,6 @@ to be the quantity
             \dg M_{1} + \dg M_{2} + \cdots
         }_0\Big) ~~\in[0,1]
 \]
-}%
 % be the \emph{(observational) self-consistency}
 that results from converting each object to a PDG, 
     joining them together, 
@@ -127,7 +125,7 @@ The following facts are either immediate or follow immediately from a result in 
         $\selfconsist\{ p(X), q(X) \} = \exp( - \frac12 (m_1 - m_2)^2)$
         itself resembles the density of a unit normal distribution.        
     % If $p(Y|X)$ is instead a probabilistic classifier, then 
-    % $\Xi[ \Pr_D !  + p(Y|X)]$
+% $\Xi[ \Pr_D !  + p(Y|X)]$
     % is the cross entropy 
     % $\Ex_{D}[ \log \frac1{p(Y|X)} ]$.
 \end{itemize}
@@ -181,18 +179,14 @@ Still, it is a question worth taking seriously, if one believes in the promise o
 \Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence (\cref{defn:qim}).
 We suspect there may be more to the story. 
 % First, an analogue of the principle of maximum entropy leads us to
-% \newmaterial{%
 % % First, 
 % For instance, the principle of maximum entropy suggests
 %     a special case of QIM-compatibility in which the witness does not break any unnecessary symmetries---and
 %     this special
 %     variant appears to have an even closer relationship with $\SDef$.
-% }%
 For instance, the connection to causality suggests a more restrictive special case of QIM-compatibility, in which the witness must be uniform over the solutions
-\newmaterial{%
  of some causal model. (This also happens to also be the maximum entropy distribution among those that can arise from that causal model.) 
 Preliminary investigations suggest that this special variant of QIM-compatibility may have an even closer relationship with $\SDef$ than the (already close) one detailed in \cref{sec:qim-info}.
-}%
 Furthermore, preliminary experiments suggest that minimizing $\SDef$ may suffice to ensure QIM compatibility. 
 
 A second avenue of future research into qualitative PDGs involves the relationship between quantifiers and extreme values of the parameter $\alpha$. 
@@ -237,10 +231,8 @@ PDGs can express many things that other graphical models cannot.
 Therefore, there may be nontrivial subclasses of PDGs that are completely unrelated to treewidth, which still admit tractable inference. 
 %
 % Some inconsistencies, for example, are easier to quantify than others---a fact to which variational inference owes its existence.
-% \newmaterial{% 
 Some inconsistencies are easier to quantify than others, for example,
     which is arguably the basis of variational inference.
-% }%
 % Without even looking at the probabilities
 In some cases, one can easily verify that a PDG has zero inconsistency through its hypergraph alone, without even looking at the probabilities.
 (That is why it is possible to ensure representations are consistent by construction in the first place.)
@@ -271,14 +263,14 @@ Might it be possible to automate the
     \newmaterial{%
     An astute reader with training in pure mathematics may have noticed a similarity between PDGs and (commutative) diagrams.
     Indeed, technically speaking, there is a simple definition of a PDG as a diagram (i.e., a certain kind of functor) in a category of probabilistic transitions. 
-    This observation raises dozens of interesting questions about the category theory of PDGs, which we are only just beginning to explore.
+    This observation raises many interesting questions about the category theory of PDGs, which we are only just beginning to explore.
     Preliminary investigations suggest that categorical notions such as limits and colimits of PDGs, for example, coincide with important concepts in probabilistic modeling. 
     
     % Other connections that seem promising connecting to categorical
     % The ultimate prize would be a satisfying way to 
     What is missing is a satisfying connection between this perspective and PDG's entropy-based semantics.
-    We suspect such a connection may exist; after all, there are important categorical characterizations of relative entropy    \citep{baez2014bayesiancharacterizationrelativeentropy} 
-        and of information loss \citep[Theorem 12.4.9]{leinster2021entropy} in these terms. 
+    We suspect such a connection may exist; after all, there are elegant characterizations of relative entropy \citep{baez2014bayesiancharacterizationrelativeentropy} 
+        and of information loss \citep[Theorem 12.4.9]{leinster2021entropy}, which are the building blocks of PDG semantics, in categorical terms. 
     Making this connection properly may also require developing a more general theory of confidence, which is also the subject of ongoing work. 
     }%
 \fi
@@ -288,11 +280,14 @@ Yet the most important future work lies in application rather than theory.
 \section{Impact: Implementing and Applying the Theory}
 
 % The material here has been conceptual, mathematically technical, and sometimes philosophical.
-This material has been conceptual, mathematical, and somtimes philosophical.
+This material has been conceptual, mathematical, and at times philosophical.
 % $\qquad$ 
-\\~\hfil
-But \emph{is it useful}?
-\hfil\par
+% \\~\hfil
+% But is it \emph{useful}?
+% \hfil\par
+{\par~\hfil
+But is it \emph{useful}?
+\hfil\par}
 
 Narrowly construed as ``can it be used to help us understand AI systems built with probabilistic tools'', we submit that the answer is a resounding yes. 
 % For pedagogical reasons alone, there is clear value in unifying so many different concepts and clarifying the relationships between them.
@@ -338,14 +333,14 @@ a secondary artifact of this research program has been a general-purpose Python 
 % But the deeper question---of whether or not this theory could ultimately help humanity---remains the most important open question of all.
 The deeper question---of whether or not this theory will ultimately help humanity---remains open.
 % But it has promise. We are 
-But there is promise. Humanity is already building powerful artificial agents that are quickly reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
+But there is promise. Humanity is already building powerful artificial agents that are reshaping our world; no doubt one of the biggest problems of our time is to get a handle on how we want AI systems to work in the future.  
 The theory described in this thesis has the potential to be a key element of that future.
 
-% First, this theory contributes to interpretability. 
+% First, this theory contributes to interoperability. 
 % One of the biggest complaints about neural networks is that they are 
 Useful as they are, modern neural-network based systems have significant drawbacks:
 their behavior can be difficult to understand, 
-and theid revelopment requires lots tedious fiddling seemingly ad-hoc choices.
+and their development requires lots tedious fiddling seemingly ad-hoc choices.
 To a critical eye, this makes them very difficult to trust.
 % difficult to understand and motivate, and that using them requires ad-hoc choices. 
 The present theory helps to explain why these systems work, at an intuitive level.
@@ -354,16 +349,16 @@ It can help practitioners make or defend these choices in a principled manner, a
 Yet the impact may be even larger, considering the current context. 
 
 % The principle question 
-% A fundemental question about the future of 
-At the moment, the most critical problem in
-    AI is arguably the \emph{alignment problem}
+% A fundamental question about the future of 
+At the moment, the most important unsolved problem in
+    artificial intelligence is arguably the \emph{alignment problem}
 \citep{wiener-alignment1960,alignment-zhuang-2020-NeurIPS,christian2020alignment}:
 what values should we give to AI systems? 
 A key feature of a machine learning system is an explicit optimization objective that the system seeks to minimize. 
 But as AI becomes increasingly capable, choosing an optimization objective 
 % feels increasingly like using a monkey paw:
     feels increasingly dangerous:
-% do we really want some simple metric of profit or engagement or hapiness to be maximized by a ``psychopathic god''? 
+% do we really want some simple metric of profit or engagement or haziness to be maximized by a ``psychopathic god''? 
 % can we really trust 
 do we really want
 an inhumanly clever psychopath to maximize some metric of profit, productivity, or happiness? 
@@ -411,7 +406,9 @@ Yet \emph{the desire to hold
 %
 % Moreover, much of the current practice of building AI systems can be done with this value alone. 
 \newmaterial{%
-Moreover, as shown in \cref{part:univ-objective}, much of the current practice of artificial intelligence can be done by articulating beliefs (which are subject to analysis and revision) and appealing to this one particularly special value.
+Moreover, by appealing only to beliefs (which are subject to analysis and revision) and this one particularly special value, we can still 
+    %  much of the current practice of artificial intelligence can be done .
+    recover the core elements of modern artificial intelligence (as shown in \cref{chap:one-true-loss,chap:LIR}). 
 % Moreover, this value alone (together with much of the current practice of artificial intelligence can be done by appeal to this value alone.
 }%
 % By representing inconsistent beliefs, 

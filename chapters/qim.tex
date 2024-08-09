@@ -1573,7 +1573,7 @@ The qualitative analogue of that expressiveness is precisely what allows us to c
     $\mu \models \Diamond \Ar$ iff $\mu \models \Diamond \Ar_0$ and $\mu \models X \tto Y$. 
         \item 
         $\mu \models \Ar_0$ and $\mu \models X\tto Y$
-        if and only if $\mu \models \Ar_0 \sqcup \{X \to Y\}^n$ for all $n > 0$.
+        if and only if $\mu \models  \Diamond\Ar_0 \sqcup \{X \to Y\}^n$ for all $n > 0$.
     \end{enumerate}
 \end{linked}
 }
@@ -1880,7 +1880,7 @@ but it is unavoidable (see \cref{sec:qual-monotone}) if we wish to also capture 
 % In this section, we spell out the connection between a witness of structural compatibility and causal models.
 %oli18*:
 \commentout{
-In this section, we spell out the fundemental connection between causality and \scibility. In brief: $\mu \models \Ar$ if and only if it is possible for $\mu$ to arise from a causal model with dependency structure $\Ar$ (\cref{ssec:cm-arise}); furthermore, a witness of \scibility\ can be naturally converted to such a causal model. To make this precise, we must review some standard definitions from causality. }
+In this section, we spell out the fundemental connection between causality and \scibility. In brief: $\mu \models \Diamond \Ar$ if and only if it is possible for $\mu$ to arise from a causal model with dependency structure $\Ar$ (\cref{ssec:cm-arise}); furthermore, a witness of \scibility\ can be naturally converted to such a causal model. To make this precise, we must review some standard definitions from causality. }
 
 % \Scibility\ interprets a hypergraph as a set of independent mechanisms. 
 Recall that in the definition of \Scibility, each hyperarc represents an independent mechanism. 
@@ -2540,7 +2540,7 @@ from the parents of $X$ to $X$.
 \begin{linked}{prop}{causal-model-structure-capture}
     %joe4: added next line
     If $M$ is a SEM, then
-    $\mu(\enV,\U) \models \Ar_{M}$ 
+    $\mu(\enV,\U) \models  \Diamond \Ar_{M}$ 
     %oli5: compressing
         % if and only if 
         iff
@@ -2605,7 +2605,7 @@ which can be viewed as a randomized mechanism
 %     are not equivalent, as we will see in \cref{sec:equivalence}.
 Perhaps surprisingly, \Scibility\ with $\Ar_M$ and $\Ar_{\cal M}$
     pick out the same set of distributions
-    (i.e., $\mu \models \Ar_M$ iff $\mu \models \Ar_{\mathcal M}$).
+    (i.e., $\mu \models \Diamond \Ar_M$ iff $\mu \models \Diamond \Ar_{\mathcal M}$).
 But that does not make the two structures interchangeable,
     as we will see in \cref{sec:equivalence}.
 }    
@@ -2808,7 +2808,7 @@ Arising from a Randomized PSEM
 }
     \label{ssec:ssec:cm-arise}
 %oli18: replacing this section header
-\commentout{In this section, we give the top-level contour of the relationship between \scibility\ and causality: $\mu \models \Ar$ iff there is a causal model whose dependency structure is $\Ar$ that gives rise to $\mu$. To do this, we must be more precise about what it means to ``have dependency structure $\Ar$''. We do this by considering increasingly general classes of \hgraph s, which turn out to coincide with special classes of causal models. }
+\commentout{In this section, we give the top-level contour of the relationship between \scibility\ and causality: $\mu \models \Diamond \Ar$ iff there is a causal model whose dependency structure is $\Ar$ that gives rise to $\mu$. To do this, we must be more precise about what it means to ``have dependency structure $\Ar$''. We do this by considering increasingly general classes of \hgraph s, which turn out to coincide with special classes of causal models. }
 
 %oli18: new material
 We are now equipped to formally describe the connection between \scibility\ and causality.
@@ -2848,7 +2848,7 @@ We then give a natural generalization of a causal model that exactly captures \s
 %joe8:
 % In each case,
 In both cases,
-the high-level result is the same: $\mu \models \Ar$ iff there is a 
+the high-level result is the same: $\mu \models \Diamond \Ar$ iff there is a 
 %joe8:
 % causal model ``of dependency structure is $\Ar$''
 causal model that ``has dependency structure $\Ar$''
@@ -2984,7 +2984,7 @@ arises from such a causal model.
 %graphs to randomized graphs (in part, I suspect, because it wasn't
 %pointed out!).  But we won't have space, so let's keep it suppressed
 %in any case.
-\commentout{
+% \commentout{
 What about causal models that are not fully randomized, and \hgraph s that are not induced by graphs?
 
 \begin{prop} \label{prop:sc-psem-corresp}
@@ -2993,14 +2993,14 @@ What about causal models that are not fully randomized, and \hgraph s that are n
  \commentout{%oli18: second version; decided instead to go with the first one, above.
      \begin{prop} \label{prop:sc-psem-corresp}
          % If $(\N, \Ar)$ is a \hgraph\ whose targets are distinct singletons, then
-         If $\Ar = \Ar_{\cal M}$ for some PSEM $\cal M$, then $\mu \models \Ar$ iff $\mu$ can arise from a (possibly different) randomized PSEM of the same dependency structure $\Ar$. 
+         If $\Ar = \Ar_{\cal M}$ for some PSEM $\cal M$, then $\mu \models \Diamond \Ar$ iff $\mu$ can arise from a (possibly different) randomized PSEM of the same dependency structure $\Ar$. 
      \end{prop}
     }%
 
 This is just \cref{prop:sc-graph-arise} 
 for the graph of the PSEM's ``\emph{depends on}'' relation,
 except for a small difference: since the exogenous variables $\U$ have no equations, they are not associated with \arc s.
-}
+% }
 
 %oli19: transition is missing now; adding text
 It is easy to extend this result to the dependency structures of all randomized PSEMs.  But what happens if $\Ar$ contains
@@ -3296,7 +3296,7 @@ The relationship shown in the previous section, culminating in \cref{prop:gen-si
 One unsatisfying aspect has been the focus the behavior of these causal models in the absence of interventions. 
 This is by necessity: 
 in the discussion so far, both the witness of \scibility\ $\bar\mu$
-(implicit in the assertion $\mu \models \Ar$) and the causal model $\mathcal M$ (implicit in the statement that $\mu$ can arise from some causal model) have been obfuscated behind existential quantifiers. 
+(implicit in the assertion $\mu \models \Diamond \Ar$) and the causal model $\mathcal M$ (implicit in the statement that $\mu$ can arise from some causal model) have been obfuscated behind existential quantifiers. 
 % and hence focused on the behavior of causal models in the absence of intervention by necessity).
 Yet $\bar\mu$ and $\mathcal M$, previously left implicit, are themselves closely related. 
 % By understanding, we will see that 
@@ -3365,7 +3365,7 @@ The converse is more interesting: how can we turn a witness into a causal model?
 \commentout{
 \begin{itemize}[wide]
     \item 
-    When $\Ar = \Ar_G$ for some is a directed acyclic graph $G$ (i.e., a qualitative BN), then a witness to $\mu \models \Ar$ is
+    When $\Ar = \Ar_G$ for some is a directed acyclic graph $G$ (i.e., a qualitative BN), then a witness to $\mu \models \Diamond \Ar$ is
     %joe4*: this is not a useful summary, since I have no idea of what it
         %means to be "essentially an acyclic causal model".
     %oli5: what's to know? It means that, in this setting, a witness of compatibility is (in some sense naturally isomorphic to) an acyclic causal model. 
@@ -3408,7 +3408,7 @@ The converse is more interesting: how can we turn a witness into a causal model?
     \item
     More generally, if $\Ar$ is a \partl\ hypergraph,
         then a witness to 
-        $\mu \models \Ar$ 
+        $\mu \models \Diamond \Ar$ 
 %joe3*: Now you talk about a witness containing a causal model rather
 %than being a causal model.  I'm even more lost.
 %oli3*: the reader isn't supposed to understand why yet; that will come later. 
@@ -3785,7 +3785,7 @@ But even when the correspondence is not unique, the causal models ${\cal M} \in 
 
 %oli16: this is a weak restatement of the theorem. Replacing with something more useful:
 \commentout{
-In other words, if you convert a distribution $\bar\mu$ witnessing $\mu \models \Ar$ to a causal model $\mathcal M \in \PSEMs(\nu)$, then 
+In other words, if you convert a distribution $\bar\mu$ witnessing $\mu \models  \Diamond \Ar$ to a causal model $\mathcal M \in \PSEMs(\nu)$, then 
 % (a)
 $\bar\mu$ can arise from $\mathcal M$; moreover,
 % (b)
@@ -3924,10 +3924,10 @@ $\mathrm{do}_{M}(\mat X{=}\mat x)$ has the effect of intervention.
 %oli14:
 % Suppose $\nu(\X,\U) \in \Wits(\mu,\Ar)$
 %oli15: 
-% Suppose $\bar\mu(\X, \U)$ is a \scibility\ witness to $\mu \models \Ar$,
+% Suppose $\bar\mu(\X, \U)$ is a \scibility\ witness to $\mu \models \Diamond \Ar$,
 Suppose that
 %oli21: getting rid of a QIM and otherwise shortening
-% $\bar\mu(\X, \U_{\Ar})$ is a \scibility\ witness to $\mu \models \Ar$,
+% $\bar\mu(\X, \U_{\Ar})$ is a \scibility\ witness to $\mu \models \Diamond \Ar$,
 $\bar\mu$ is a witness to $\mu \models \Diamond \Ar$,
 % \scibility\ witness, 
  $\mathcal M \in \PSEMsA(\bar\mu)$, $\mat X \subseteq \X$ and $\mat x \in \V(\mat X)$.
@@ -4202,7 +4202,7 @@ from conditioning on $\mat X{=}\mat x$.
 %oli16: moving elsewhere:
 \commentout{
 \subsubsection{Acyclic Hypergraphs}
-When $\Ar = \Ar_G$ for some is a directed acyclic graph $G$ (i.e., a qualitative BN), then a witness to $\mu \models \Ar$ is
+When $\Ar = \Ar_G$ for some is a directed acyclic graph $G$ (i.e., a qualitative BN), then a witness to $\mu \models \Diamond \Ar$ is
 %joe4*: this is not a useful summary, since I have no idea of what it
     %means to be "essentially an acyclic causal model".
 %oli5: what's to know? It means that, in this setting, a witness of compatibility is (in some sense naturally isomorphic to) an acyclic causal model. 
@@ -4264,8 +4264,8 @@ that uniquely determines the distribution $\mu(\X)$ in the absence of interventi
     \commentout{
     \begin{prop}
         If $\Ar = \Ar_G$ is acyclic,
-        $\mu \models \Ar_G$, and $G$ is minimal 
-            (i.e.,$\mu \not\models \Ar_{G'}$ for all $G' \subsetneq G$),
+        $\mu \models \Diamond \Ar_G$, and $G$ is minimal 
+            (i.e.,$\mu \not\models  \Diamond \Ar_{G'}$ for all $G' \subsetneq G$),
         then for all $\nu \in \Wits(\mu, \Ar)$ and $\mathcal M \in \PSEMs(\nu)$, $\Ar_{G} = \Ar_{\mathcal M}$.
     \end{prop}
     }
@@ -4828,9 +4828,7 @@ For three variables, the components of this vector were illustrated in \cref{fig
 for the convenience, 
     % we give another illustration of it in \cref{fig:info-diag-a}.
     we give another illustration of it here \cref{fig:info-diag-a},
-\newmaterial{%
     colored to illustrate an identity which will be important momentarily.
-}%
 % \forjoe{
 %     looking at this diagram is important at this point in the text. Also, this one has a slightly different annotation.  The previous one had more diversity of different concepts; this one gives an intuitive visual proof of a property we need in the next two pages.}
 %
@@ -4933,7 +4931,7 @@ between $\SDef$ and \scibility, as we now show.
 % While the connection made by \cref{theorem:sdef-le0} is the most important, $\SDef$ still does not capture \scibility\ exactly out of the box, as mentioned above.
 %oli14: this isn't quite true
 % Still, $\SDef$ does not exactly capture \scibility.
-Still, the quantity $\SDef_{\!\Ar}(\mu)$ does not determine whether or not $\mu \models \Ar$. 
+Still, the quantity $\SDef_{\!\Ar}(\mu)$ does not determine whether or not $\mu \models \Diamond \Ar$. 
 %oli14: minor tweaks to this to make it read better, that I forgot to mark precisely. 
 In \cref{sec:qim-scoring-funs}, we derive an entropy-based scoring function that does, by directly translating conditions (a-c) to  scoring functions on witnesses, and then adding an infemum to take care of the existential quantifier (i.e. the choice of witness) implicit in \cref{defn:qim}.
 %oli13: shortening:
@@ -5073,9 +5071,9 @@ We will demonstrate a different aspect of that connection in each of the coming 
 What constraints does \scibility\ with $\Ar$ place on a distribution $\mu$?
 %oli14: minor fixes. Tried to shorten, but wasn't able to do it well, so mostly reverted. 
 % In \cref{sec:qim-bns} we saw how, for \hgraph s that come from directed graphs, this means $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s can impose functional dependencies---but these results apply only to special classes of \hgraph s. 
-% We saw in \cref{sec:qim-bns} that $\mu \models \Ar$ implies dependencies for \hgraph s of  
+% We saw in \cref{sec:qim-bns} that $\mu \models  \Diamond\Ar$ implies dependencies for \hgraph s of  
 %oli15: compressing, sharpening
-% In \cref{sec:qim-bns} we saw how, for \hgraph s that come from directed graphs, $\mu\models \Ar$ implies $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s impose functional dependencies---yet these results apply only to very special classes of \hgraph s. 
+% In \cref{sec:qim-bns} we saw how, for \hgraph s that come from directed graphs, $\mu\models  \Diamond \Ar$ implies $\mu$ must satisfy the independencies of a Bayesian Network, and that additional \arc s impose functional dependencies---yet these results apply only to very special classes of \hgraph s. 
 When $G$ is a dag, we have seen that if $\mu \models \Diamond \Ar_G$, then $\mu$ must satisfy the independencies of the corresponding Bayesian network (\cref{theorem:bns}); we have also seen that additional \arc s impose functional dependencies (\cref{theorem:func}). But these
 %joe16
 %results only apply when $\Ar$ is of a very special form.
@@ -5253,7 +5251,7 @@ Moreover, it subsumses every
 }
 % Not only does \cref{theorem:sdef-le0} apply to all hypergraphs, but it
 %oli20: replacement:
-\Cref{theorem:sdef-le0} applies to all hypergraphs, and subsumes every general-purpose technique we know of for proving that $\mu \not\models \Ar$. 
+\Cref{theorem:sdef-le0} applies to all hypergraphs, and subsumes every general-purpose technique we know of for proving that $\mu \not\models  \Diamond\Ar$. 
 Indeed, the negative directions of \cref{theorem:bns,theorem:func} are
  immediate consequences of it.
 %oli2:
@@ -5972,12 +5970,12 @@ Therefore:
     $\SIMInc_{(\Ar,\boldsymbol\lambda)}(\mu) \ge 0$, and this holds
     with equality if and only if
     % $\mu$ is s2-compatible with $\Ar$.
-    $\mu \models \Ar$.
+    $\mu \models  \Diamond \Ar$.
 }
     $\SIMInc_{\!\Ar}(\mu) \ge 0$, 
     with equality iff
     % $\mu$ is s2-compatible with $\Ar$.
-    $\mu \models \Ar$.
+    $\mu \models  \Diamond \Ar$.
 \end{linked}
 
 %oli11: mentioning drawbacks.
@@ -6147,7 +6145,7 @@ In total, it has \arc s
 With these definitions in place,
 we can state a theorem that bounds $\SIMInc$ above and below with information deficiencies. 
 %spencer1*: this theorem deserves more fanfare
-% The lower bound generalizes \cref{theorem:sdef-le0} to cases where $\mu \not\models \Ar$,  while the tight upper bound shows that $\SIMInc_{\!\Ar}$ can be defined in terms of $\SDef_{\!\Ar^\dagger}$.
+% The lower bound generalizes \cref{theorem:sdef-le0} to cases where $\mu \not\models  \Diamond \Ar$,  while the tight upper bound shows that $\SIMInc_{\!\Ar}$ can be defined in terms of $\SDef_{\!\Ar^\dagger}$.
 %oli20.1: "Its lower/upper bound" -> "The lower/upper bound"
 The lower bound generalizes \cref{theorem:sdef-le0} by giving an upper limit on $\SDef_{\!\Ar}(\mu)$ even for distributions $\mu$ that are 
 %oli20.1: stronger still: we give the bound for all distributions.
@@ -6297,7 +6295,7 @@ $\U$. The minimum is achieved when $|\V(U_a)| \le |\V(\Tgt a)|^{|\V(\Src a)|}$.
 \commentout{
 The first result gives us bounds on $\SIMInc$ in terms of $\SDef$, making it easier to compute, and the second shows that, in the context of a minimization where it usually is \citep{pdg-aaai}, $\SIMInc$ is a special case of $\SDef$, for a graph that models the noise variables explicitly. 
 
-The first inequality of \cref{theorem:siminc-idef-bounds}(a) is a slight strengthening of \cref{theorem:sdef-le0} that applies even when $\mu \not\models \Ar$. 
+The first inequality of \cref{theorem:siminc-idef-bounds}(a) is a slight strengthening of \cref{theorem:sdef-le0} that applies even when $\mu \not\models  \Diamond \Ar$. 
 But \cref{theorem:sdef-le0} is not based on some choice of scoring function---it describes a direct relationship between the information profile and \scibility.
 }
 
@@ -6307,7 +6305,7 @@ But \cref{theorem:sdef-le0} is not based on some choice of scoring function---it
     % If $\mu$ is \scible\ with $\Ar$
     % and $\mu'$ is \scible\ with $\Ar'$,
     % and $\alpha \in [0,1]$, then $\mu
-    Suppose $\mu \models \Ar$, $\mu' \models \Ar'$, and $\alpha \in [0,1]$.
+    Suppose $\mu \models  \Diamond \Ar$, $\mu' \models  \Diamond \Ar'$, and $\alpha \in [0,1]$.
     Then $\SDef_{\Ar{:}\alpha{:}\Ar'}((1-\alpha) \mu + (\alpha) \mu) \le 0$,
     where $\Ar{:}\alpha{:}\Ar'$ is the QDG that contains the \arc s $\Ar$
     with weight $\alpha$
@@ -6362,7 +6360,7 @@ Many open questions remain.
     % We suspect of the symmetry, and because $\SDef$ is the same for both cycles%
     We suspect of the symmetry, and because $\SDef$ is the same for both cycles%
         ---but we have not been able to resolve the question one way or another (see \cref{sec:equivalence} for a partial answer).
-    Another obvious question is the decision procedure for deciding whether or not $\mu \models \Ar$.
+    Another obvious question is the decision procedure for deciding whether or not $\mu \models \Diamond \Ar$.
 }%
 %joe7*; You should probably say more here, and do so before 11 AM tomorrow.
 %oli9:
@@ -6583,7 +6581,7 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
 \recall{theorem:bns}
 \begin{lproof}
     \label{proof:bns}
-    % Suppose $\mu \models \Ar_G$.
+    % Suppose $\mu \models  \Diamond \Ar_G$.
     % Select a topological sort $\prec$ on the dag $G$. We proceed by induction. Suppose 
     % Let $\X$ be the variables of $\mu$ and the set of nodes in $G$. 
     % Consider a topological ordering $\X = (X_1, \ldots, X_n)$ , such that each variable comes after its parents in $G$.
@@ -6597,7 +6595,7 @@ $\nu \models X \tto Y$, means there exists a function $f : V(A) \to V(B)$ such t
     % Now use \cref{defn:graph-to-hypergraph}, to construct the \hgraph\ $\Ar$ whose arcs are labeled $\Ar = \{1,\ldots, n\}$.
     
     \textbf{($\implies$).}
-    Suppose $\mu \models \Ar_G$. 
+    Suppose $\mu \models  \Diamond \Ar_G$. 
     This means there
     is an extension of $\bar\mu(\X, \U)$ of $\mu(\X)$ to additional
         independent variables $\U = (U_1, \ldots, U_n)$, such that $\bar\mu \models (\Src i, U_i) \tto i$ for all $i \in [n]$. 
@@ -6783,7 +6781,7 @@ Before we move on to proving the other results in the chapter, we first illustra
 \begin{lproof}[Alternate, information-based proof]
     \textbf{($\implies$).}
     Let $G$ be a dag.     
-    If $\mu \models \Ar_{G}$, then by \cref{theorem:sdef-le0}, 
+    If $\mu \models  \Diamond \Ar_{G}$, then by \cref{theorem:sdef-le0}, 
     $\SDef_{\Ar_{G}}(\mu) \le 0$.
     % In the appendix of \citep{pdg-aaai},
     In the proof of \cref{theorem:bns-are-pdgs},
@@ -6800,7 +6798,7 @@ Before we move on to proving the other results in the chapter, we first illustra
 \textbf{(a).} 
 %oli16: updating proof for new statement. Have not marked changes carefully.
 The forward direction is straightforward. 
-Suppose that $\mu \models \Ar$ and $\mu \models X \tto Y$.
+Suppose that $\mu \models  \Diamond \Ar$ and $\mu \models X \tto Y$.
 % The latter condition means that there is a function $f : \V(X) \to \V(Y)$ that occurs with probability 1, and 
 The former condition gives us a witness
 $\nu(\X,\U)$ in which $\U = \{ U_a \}_{a \in \Ar}$ are mutually independent variables indexed by $\Ar$, that determine their respective edges. 
@@ -6812,11 +6810,11 @@ the new requirements of $\nu'$ imposed by \cref{defn:qim}(c) hold.
 (The remainder of the requirements for condition (c), namely that $\nu' \models (\Src a, U_a) \tto \Tgt a$ for $a \in \Ar$, still hold because $\nu'$ is an extension of $\nu$, which we know has this property.)
 Finally, since $\U$ are mutually independent and each $U_i$ is a constant (and hence independent of everything), the variables $\U' := \U \sqcup \{ U_i \}_{i=1}^n$ are also mutually independent. 
 Thus $\nu$ (or, more precisely, an isomorphic ``extension'' of it to additional trivial variables) is a witness of
- % $\mu \models \Ar' \sqcup \{ \ed1XY, \ed2XY\}$. 
+ % $\mu \models \Diamond \Ar' \sqcup \{ \ed1XY, \ed2XY\}$. 
  $\mu \models  \Diamond \ArXY n.$
  
 The reverse direction is difficult to prove directly, yet it is a straightforward application of \cref{theorem:sdef-le0}.
-Suppose that $\mu \models \ArXY n$ for all $n \ge 0$. 
+Suppose that $\mu \models  \Diamond \ArXY n$ for all $n \ge 0$. 
 % Observe that 
 By \cref{theorem:sdef-le0}, we know that
 \[
@@ -6852,7 +6850,7 @@ and thus $\H_\mu(Y|X) = 0$, meaning that $\mu \models X \tto Y$ as promised.  As
 As in part (b), the forward direction is a special case of the forward direction of part (a), and it remains only to prove the reverse direction.  
 Equipped with the additional information that $\Ar \rightsquigarrow \{ \to \{ X \} \}$, 
 suppose that $\mu \models \Diamond \ArXY 2$. 
-By monotonicity, this means $\mu \models \Ar$ and also that $\mu \models\begin{tikzpicture}[center base]
+By monotonicity, this means $\mu \models  \Diamond \Ar$ and also that $\mu \models\begin{tikzpicture}[center base]
     \node[dpad0] (X) {$X$};
     \node[dpad0,right of=X] (Y) {$Y$};
     \draw[arr1] (X) to[bend left=15] (Y);
@@ -6867,7 +6865,7 @@ we have that
          = \H_\mu(Y|X) \ge 0. 
 \]
 It follows that $\H_\mu(Y|X) = 0$, and thus $\mu \models X\tto Y$. 
-As mentioned above, we also know that $\mu \models \Ar$, 
+As mentioned above, we also know that $\mu \models  \Diamond \Ar$, 
 and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 \end{lproof}
 
@@ -6914,7 +6912,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
      $\Pa_M(Y) \subseteq \Pa_G(Y) \cup \{U_Y\}$ for all $Y \in \X$. 
     \end{itemize}
     %
-    Under the assumption that $\mu \models \Ar_G$, we have now shown that there exists a randomized causal model $\cal M$ from which $\mu$ can arise, with the property that 
+    Under the assumption that $\mu \models  \Diamond \Ar_G$, we have now shown that there exists a randomized causal model $\cal M$ from which $\mu$ can arise, with the property that 
     $\Pa_{\cal M}(Y) \subseteq \Pa_G(Y) \cup \{ U_Y \}$ for all $Y \in \X$. 
     %
 % this is a proof that you can produce a causal model with the property that $\Pa_M(Y) \cap \X \subseteq \Pa_G(Y)$ for all $Y \in \X$ --- but here we don't need something that strong. 
@@ -6958,7 +6956,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
     $\Pa_M(Y) \subseteq \Pa_G(Y) \cup \{ U_Y \}$ for all $Y$,
     from which $\mu$ can arise. 
     The last clause means there exists some $\nu \in \SD{\cal M}$ such that $\nu(\X) = \mu$.
-    We claim that this $\nu$ is a witness to $\mu \models \Ar_G$. 
+    We claim that this $\nu$ is a witness to $\mu \models  \Diamond \Ar_G$. 
     We already know that condition (a) of being a \scibility\ witness is satisfied, since $\nu(\X) = \mu$. 
     Condition (b) holds because of the assumption that $\{ U_X \}_{X \in \X}$ are mutually independent in the distribution $P$ for a randomized PSEM (and the fact that $\nu(\U) = P$, since $\nu \in \SD{\mathcal M}$).
     Finally, we must show that (c) for each  $Y \in \X$, 
@@ -6976,7 +6974,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
     % By assumption, $\Pa_M(Y) \cap \X = \Pa_G(Y)$. 
     
     
-    Thus $\nu$ satisfies all conditions (a-c) for a \scibility\ witness, and hence $\mu \models \Ar_G$. 
+    Thus $\nu$ satisfies all conditions (a-c) for a \scibility\ witness, and hence $\mu \models  \Diamond \Ar_G$. 
 \end{lproof}
 
 %oli16:
@@ -6988,7 +6986,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 
 \recall{prop:gen-sim-compat-means-arise}
 \begin{lproof}\label{proof:gen-sim-compat-means-arise}
-    \textbf{($\implies$).~} Suppose $\mu \models \Ar$, meaning there exists a witness
+    \textbf{($\implies$).~} Suppose $\mu \models \Diamond \Ar$, meaning there exists a witness
     $\nu(\X,\U)$ with property \cref{defn:qim}(c), meaning
     that, for all $a \in \Ar$, 
     there is a functional dependence $(\Src a, U_a) \tto \Tgt a$.
@@ -7001,7 +6999,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
     
     \textbf{($\impliedby$).~} Conversely, suppose there is a generalized randomized SEM $\mathcal M$ of shape $\Ar$ from which $\mu(\X)$ can arise. 
     Thus, there is some $\nu \in \SD{\mathcal M}$ whose marginal on $\X$ is $\mu$. 
-    We claim that this $\nu$ is also a witness that $\mu \models \Ar$.
+    We claim that this $\nu$ is also a witness that $\mu \models \Diamond \Ar$.
     The marginal constraint from \cref{defn:qim}(a) is clearly satisfied. 
     Condition (b) is immediate as well, because $\nu(\U) = \prod_{a} P_a(U_a)$. 
     Finally, condition (c) is satisfied, because the equations of $\mathcal M$ hold with probability 1, ensuring the appropriate functional dependencies. 
@@ -7056,7 +7054,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
         ~\Big/~ 
         \nu(\doXx) 
     \]
-    is defined. By assumption, $\mathcal M \in \PSEMs(\nu)$ and $\nu$ is a witness to $\mu \models \Ar$. Thus, by \cref{prop:witness-model-properties}, we know that $\nu \in \SD{\mathcal M}$. 
+    is defined. By assumption, $\mathcal M \in \PSEMs(\nu)$ and $\nu$ is a witness to $\mu \models \Diamond \Ar$. Thus, by \cref{prop:witness-model-properties}, we know that $\nu \in \SD{\mathcal M}$. 
     So in particular, all equations of $\mathcal M$ hold for all joint settings $(\mat u, \omega) \in \V(\X \cup \U)$ in the support of $\nu$. But the support of the conditional distribution $\nu \mid \doXx$ is a subset of the support of $\nu$, so all equations of $\mathcal M$ also hold in the conditioned distribution.  
     Furthermore, 
         the event $\doXx$ is the event in which, for all $X \in \mat X$, the variable $U_X$ takes on a value such that $f_X(\ldots, U_X,\ldots) = \mat x[X]$.  
@@ -7276,7 +7274,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 % \begin{lproof}
 %     \label{proof:causal-mrf}
 %     1.
-%     Suppose $\mu \models \Ar_G$, $\bar\mu(\U,\X)$ is a witness to this, and $\mathcal M \in \PSEMs_{\Ar_G \!}(\bar\mu)$. 
+%     Suppose $\mu \models  \Diamond \Ar_G$, $\bar\mu(\U,\X)$ is a witness to this, and $\mathcal M \in \PSEMs_{\Ar_G \!}(\bar\mu)$. 
 % 
 %     \textbf{($\implies$).}
 %     Suppose $\mat X \CI_G \mat Y \mid \mat Z$, meaning every path from $\mat X$ to $\mat Y$ in $G$ goes through $\mat Z$.
@@ -7452,7 +7450,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 \recall{theorem:sdef-le0}
 \begin{lproof}
         \label{proof:sdef-le0}
-    Suppose that $\mu \models \Ar$, meaning that there is a witness $\nu(\X, \U)$ that extends $\mu$, and has properties (a-c) of \cref{defn:qim}. 
+    Suppose that $\mu \models \Diamond \Ar$, meaning that there is a witness $\nu(\X, \U)$ that extends $\mu$, and has properties (a-c) of \cref{defn:qim}. 
     For each \arc\ a, since
     $\nu \models (\Src a, U_a) \tto \Tgt a$, 
     we have
@@ -7700,11 +7698,11 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 %     if we \emph{intervene} instead of conditioning.
 % 
 % \begin{linked}{prop}{causal-mrf}
-%     % Then $\mu \models \Ar_G$ if and only if,
+%     % Then $\mu \models  \Diamond \Ar_G$ if and only if,
 %     % for every witness $\bar\mu$
 %     % \begin{enumerate}
 %     % \item 
-%     % If $\mu \models \Ar_G$
+%     % If $\mu \models  \Diamond \Ar_G$
 %     %  then for every witness $\bar\mu$ and causal model $\mathcal M \in \PSEMs_{\Ar_G}(\bar\mu)$,
 %     % \[
 %     % \mat X \CI_G \mat Y \mid \mat Z
@@ -7712,14 +7710,14 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 %     % \forall \mat z \in \V(\mat Z).~~
 %     % \bar\mu \models \mat X \CI \mat Y \mid \mathrm{do}_{\mathcal M}(\mat Z = \mat z).
 %     % \]
-%     % \item Conversely, if $\mu \not\models \Ar_G$, then 
+%     % \item Conversely, if $\mu \not\models  \Diamond \Ar_G$, then 
 %     % there does not exist a causal model $\mathcal M$ giving rise to $\mu$ that has this property.
 %     % \end{enumerate}
 %     Let $G$ be an undirected graph whose vertices correspond to variables $\X$. 
 %     \begin{enumerate}
 %         \item Let $\mu(\X)$ be a positive distribution (i.e., $\forall \mat x \in \V(\X).~\mu(\X{=}\mat x) > 0$).
 %         % Suppose $\mat X, \mat Y, \mat Z \subseteq \X$ are such that  $\mat X \CI_G \mat Y \mid \mat Z$.
-%         If $\mu \models \Ar_G$, then 
+%         If $\mu \models  \Diamond \Ar_G$, then 
 %         for every witness $\bar\mu$ and causal model $\mathcal M \in \PSEMs_{\Ar_G}(\bar\mu)$,
 %         whenever $\mat X, \mat Y, \mat Z \subseteq \X$ are such that  $\mat X \CI_G \mat Y \mid \mat Z$, 
 %         it is the case that
@@ -7728,7 +7726,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
 %         \item
 %         % Conversely, let $G$ be an undirected graph, and $\mu(\X)$ a distribution over values of its vertices. 
 %         Convesely, there exists some distribution $\mu(\X)$
-%         If $\mu \not \models \Ar_G$, then 
+%         If $\mu \not \models  \Diamond \Ar_G$, then 
 %         % If $\bar\mu \models \mat X \CI \mat Y \mid \mathrm{do}_{\mathcal M}(\mat Z = \mat z)$
 % 
 %     \end{enumerate}
@@ -7904,7 +7902,7 @@ The following, slightly more general result,
     is an immediate correlary of \cref{theorem:func}(c).
 
 \begin{prop}
-    $\mu \models \Ar \sqcup \{ \ed1{}X, \ed2{}X \}$ if and only if $\mu \models \Ar$ and
+    $\mu \models \Diamond \Ar \sqcup \{ \ed1{}X, \ed2{}X \}$ if and only if $\mu \models \Diamond \Ar$ and
     %  $\H_\mu(X) = 0$.
     $\mu \models \varnothing \tto X$. 
 \end{prop}
@@ -7915,7 +7913,7 @@ Furthermore, our counterexample also shows that
 neither of the two properties we consider in the main text
     (requiring that $\Ar$ is \partl, or that the \scibility\ with $\mu$ is even) 
     are enough to ensure this. 
-That is, there are \partl\ graphs $\Ar$ such that $\mu \emodels \Ar$ but $\mu \not\models \Ar \sqcup \{ \ed1XY, \ed2XY \}$.
+That is, there are \partl\ graphs $\Ar$ such that $\mu \emodels \Ar$ but $\mu \not\models  \Diamond \Ar \sqcup \{ \ed1XY, \ed2XY \}$.
  % for which \cref{theorem:func} (b) does not hold. 
 
 \begin{example}
@@ -8077,7 +8075,7 @@ More formally:
     %joe4: added next line
     % If $M$ is a SEM, then
     If $M$ is a SEM, then
-    $\mu(\enV,\U) \models \Ar_{M}$ 
+    $\mu(\enV,\U) \models \Diamond \Ar_{M}$ 
     %oli5: compressing
         % if and only if 
         iff
@@ -8184,7 +8182,7 @@ defined inductively over unions of independent mechanisms.
 
 We have now built up a body of examples, but it is still not clear
     how to compute \scibility.
-In other words, it is still not clear how to solve the decision problem: given $\mu$ and $\Ar$, determine whether or not $\mu \models \Ar$.
+In other words, it is still not clear how to solve the decision problem: given $\mu$ and $\Ar$, determine whether or not $\mu \models  \Diamond \Ar$.
 In this section, we discuss one approach to this problem. 
 
 % For cyclic graphs, it can be difficult to construct witnesses
@@ -8225,17 +8223,17 @@ For example, take the graph
 
 
 \begin{conj}
-    If $\mu_0 \models \Ar$, and $\mu'$ lies on the path $\mu(t)$ of
-    gradient flow minimizing $\SDef_{\Ar}(\mu')$, starting at $\mu(0) = \mu_0$, then $\mu' \models \Ar$.
+    If $\mu_0 \models \Diamond \Ar$, and $\mu'$ lies on the path $\mu(t)$ of
+    gradient flow minimizing $\SDef_{\Ar}(\mu')$, starting at $\mu(0) = \mu_0$, then $\mu' \models  \Diamond \Ar$.
 \end{conj}
 
 The following has emperical support.
 % using the null value construction desecribed in \cref{sec:null}.
 
 \begin{conj}
-    % If $\mu \models \Ar$
+    % If $\mu \models \Diamond \Ar$
     The distribution (s?)
-    $\hat \mu := \arg\min_{\mu : \mu \models \Ar} \kldiv{\mu}{\hat\mu}$
+    $\hat \mu := \arg\min_{\mu : \mu \models  \Diamond \Ar} \kldiv{\mu}{\hat\mu}$
     have the same information profile as $\mu$. 
 \end{conj}
 
@@ -8281,7 +8279,7 @@ This intuition is made precise, and generalized to \scibility\ witnesses (rather
 
 \begin{defn}
         \label{defn:esim-compat}
-    We say a witness $\nu(\U,\X)$ to $\mu \models \Ar$ is \emph{even}, iff
+    We say a witness $\nu(\U,\X)$ to $\mu \models \Diamond \Ar$ is \emph{even}, iff
     it satisfies properties (a,b) of \cref{defn:qim}, and also
     the following strengthening of property (c):
     \begin{enumerate}[start=4,label={(\alph*)}, nosep]
@@ -8466,7 +8464,7 @@ Although has an enormous benefit of not requiring an infemum.
 
 $\kappa_\Ar$ is a (possibly infinite) piecewise constant function of $\mu$ with finitely many pieces,
 %oli11:
-and finite when $\mu \models \Ar$. 
+and finite when $\mu \models  \Diamond \Ar$. 
 
 %oli15: even if this works out, there's not enough space. 
 %oli14*: I'm not done here, and unsure exactly how this will work out. I get the sense that this construction might connect nicely to some things we said before and will say in the future (note the extra arcc \U ->> \X needed to make IDef turn into SIMInc, for instance). 

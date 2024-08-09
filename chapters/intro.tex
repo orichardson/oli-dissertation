@@ -30,13 +30,20 @@ For those of us who prize logic and rationality (including, famously,
 \citet{descartes}),
 perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
-The foundations of microeconomics
+The foundational \newmaterial{principles} of microeconomics
 \unskip\footnote{\forjoe{
     I just verified that this discussion is at the beginning of my microeconomics textbook.  
     The concept is sometimes referred to by the latin \emph{De gustibus Non Est Disputandum}, perhaps in part due to the eponymous seminal paper (\url{https://www.jstor.org/stable/1807222}).
     Would referencing it above be enough? 
 }}
-entitle us to our own tastes (and beliefs, to some extent), but only if they admit a consistent internal logic.
+entitle us to our own tastes
+    \newmaterial{%
+    \citep{de-gustibus-non-est-disputandum77stigler}
+    %  (and beliefs, to some extent), 
+    \unskip, and beliefs, to some extent
+    \citep{VnMR44theory-of-games-eb}, %, Savage
+    }%
+    but only if they admit a consistent internal logic.
 For without one, we risk being swindled \citep{sep-dutch-book} or misled 
 % \citep{explosion},
 % \citep{priest1996paraconsistent}, 
@@ -54,15 +61,15 @@ if not humiliated \citep{finocchiaro1981fallacies,russell1902letter}.
 
 % Computer scientists who build cognition from scratch, have capitalized on an opportunity to not only avoid contradictions, but  build frameworks where they're impossible by design. 
 % Computer scientists like us, who build cognition from scratch, have capitalized on an opportunity to eliminate contradictions in artificial agents altogether, by using epistemic representations that are consistent by design.
-Economists, seeking to characterize rational thought, have established  probability%
+Economists, seeking to characterize rational thought, have established probability%
 ---a representation that allows for uncertainty but cannot encode conflicting information---%
 as the gold standard for representing beliefs.
 % by using it, one can express uncertainty in a way that is guaranteed to be self-consistent. 
-% Computer scientists, making use of such representations, have capitalized on an oportunity to eliminate inconsistency in artifical agents altogether. 
-Computer scientists,
-    by using such representations to build artificial minds,
-    have capitalized on an opportunity to 
-        eliminate inconsistency in artifical agents altogether. 
+% Computer scientists, making use of such representations, have capitalized on an opportunity to eliminate inconsistency in artificial agents altogether. 
+% Computer scientists, by using such representations to build artificial minds, have capitalized on an opportunity to eliminate inconsistency in artificial agents altogether. 
+\newmaterial{%
+By using such representations to build artificial minds, computer scientists have capitalized on an opportunity to eliminate inconsistency in artificial agents altogether. 
+}%
 Theorists are careful to prove things about clearly defined (probabilistic) models, 
 while practitioners endeavor to build systems
     % that represent a single coherent probability distribution.
@@ -94,9 +101,7 @@ several different ones that could, in principle, disagree.
 % We would rather use 
 It is better to use one library for telling time than two.
 % And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
-% \newmaterial{%
 % The goal of a learned statistical model is to distil messy and possibly conflicting data into the parameters of a single coherent probabilistic model. 
-% }%
 Why?
 % Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
 Because 
@@ -109,13 +114,18 @@ this way there can be no conflict,
 % and so our systems become immune to 
 % granting our systems invulnerability to
 % and so this makes our systems immune to
-making our systems immune to
+% making our systems immune to
+% immunizing our systems against
+\newmaterial{%
+rendering our systems invulnerable to
 % our shared affliction: 
+our own affliction of
+}%
 inconsistency.
 % invulnerability to our one common enemy: inconsistency.
 
-% Yet this invulnerability comes with shackles.
-Yet this immunity comes with shackles.
+Yet this invulnerability comes with shackles.
+% Yet this immunity comes with shackles.
 Would \emph{you} trade \emph{your} freedom to see things from two angles at once---to puzzle over paradoxes, to experience deep surprise and be challenged by internal conflict---for a guarantee of self-consistency?
 %
 In order to always present a consistent front, it is necessary to fully process new information before moving on. Mulling is prohibited, as
@@ -268,8 +278,8 @@ additional papers in earlier stages of the peer review process
 and a trove of original unpublished notes. 
 
 
-% \textbf{\newmaterial{A Universal Model.}}
-% \textbf{\newmaterial{A Natural and Especially General Model.}}
+% \textbf{{A Universal Model.}}
+% \textbf{{A Natural and Especially General Model.}}
 \Cref{part:univ-model} is about subjective representations of knowledge and uncertainty. 
 %
 \Cref{chap:pdg-repr} introduces the key mathematical object at the heart of this dissertation, called a \emph{probabilistic dependency graph (PDG)}. 
@@ -290,7 +300,7 @@ As we shall see, qualitative mechanism independence is closely related to (and c
 To summarize, \cref{part:univ-model} establishes PDGs as a sweeping generalization of classical knowledge and uncertainty representations, especially those that have formed the backbone of AI systems in the last 25 years. 
 
 
-% \textbf{\newmaterial{A Universal Objective.}}
+% \textbf{{A Universal Objective.}}
 % As we will see in \cref{part:univ-objective}, 
 In \cref{part:univ-objective}, we will see that
 PDGs also turn out to capture more modern learned representations, 
@@ -323,7 +333,7 @@ This idea turns out to be a generalization of {belief propagation} that applies 
 % Perhaps surprisingly, training, inference, and the production of adversarial examples, are all instances of this simple recipe. 
 
 
-% \textbf{\newmaterial{Algorithms, Logic, and Complexity.}}
+% \textbf{{Algorithms, Logic, and Complexity.}}
 \Cref{part:algo-logic-complexity} develops algorithms and reasoning techniques for PDGs.
 % \Cref{part:algo-logic-complexity} develops useful algorithms and connections between the computational problems that PDGs pose.  
 \Cref{part:univ-model} positions PDG semantics as a potentially quite useful generalization of traditional graphical models, but to actualize any of that potential, we need to able to do inference on them;
@@ -337,11 +347,12 @@ In \cref{chap:reason}, we then flesh out a
     (\cref{chap:one-true-loss,chap:QIM}),
     called \emph{monotonicity of inconsistency}: 
     believing more things cannot make you any less inconsistent. 
-This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
+% This turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities in the literature, but also forms the basis of a \emph{logic} that, unlike most logics, does not become trivial starting from inconsistent premises.
+This principle turns out to not only be the basis of an intuitive visual calculus for deriving important inequalities, but also forms the basis of an inconsistency-tolerant probabilistic logic. 
 
 
 \iffoundations
-% \textbf{\newmaterial{Foundations.}}
+% \textbf{{Foundations.}}
 \Cref{part:foundations} develops foundational concepts that underlie the theory of PDGs presented in the previous chapters. 
 In \cref{chap:conf}, we develop a generic framework for describing the notion of \emph{(learner's) confidence} that underlies the definition of a PDG---a concept that is fundamentally different from probability, but complements it.
 In \cref{chap:relent-soup}, we describe several ways in which PDGs fit into the general framework developed in \cref{chap:conf}.
@@ -362,11 +373,9 @@ Finally, we conclude with discussion and open questions in \cref{chap:end}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Themes and Motifs}
 
-% \oldnewmaterial{%
 % Before we get to the primary thread of the dissertation,
 % which we will overview in \cref{sec:overview-of-results},
 % we first prime the reader to notice a few recurring themes.
-% }% 
 
 % Our last order of business before starting in earnest is to prime ourselves to notice some important recurring themes. 
 Before embarking in earnest, we first prime ourselves to notice some important recurring themes. 
@@ -486,7 +495,7 @@ A few examples of the distinction we're getting at are given below.
 % others may find it confusing or find it to be a false equivalence. 
     % others may find the analogy between these concepts resonates less.
 The concepts on the right ``implement'' or ``realize'' the ones on the left, filling them out with the details needed to make them concrete.
-\unskip\footnote{\newmaterial{%
+\unskip\footnote{{%
 The identification between propositions and types \citep{MARTINLOF197573} is a particularly well-celebrated aspect of the Curry-Howard correspondence \citep{curry-howard}.
 % The other instances of this distinction are 
 }}
@@ -594,18 +603,14 @@ Not only can PDGs capture a great many things
 \unskip, but they also encompass many natural ``obvious generalizations'' of themselves (\cref{sec:alt-pdgs}). 
 If this abstract statement seems puzzling, recall that Turing machines (TMs) not only capture other notions of computation, but also capture many natural variants of TMs that seem on the surface to make them more expressive.  
 Yet ``generalized'' TMs with multiple tapes, multiple heads, tapes of higher dimension, and even non-determinism---are all (semantically) equivalent to ordinary TMs. 
-% \oldnewmaterial{%
 %     % Being equivalent to 
-% This property---invariance under obvious ``geneneralizations''---makes objects such as TMs and PDGs particularly special. 
-% }
+% This property---invariance under obvious ``generalizations''---makes objects such as TMs and PDGs particularly special. 
 %
 PDGs push the idea even further:
 % PDGs push this idea even further.
 % Not only is it the case that there are many different ways of specifying a PDG that are all equivalent, 
 % but also there are also several different semantics, 
-% \oldnewmaterial{%
 % seemingly carrying different amounts of information,
-% }%
 % that also turn out to all be equivalent.     
 they also have several different semantics, seemingly carrying different amounts of information, that turn out to be equivalent as well (\cref{chap:inc-infer-connection}). 
 These equivalences suggest that PDGs 
@@ -627,9 +632,7 @@ But before we get into the details, we should review some math.
     \Cref{part:univ-objective} explores a different aspect
         in which PDGs are universal: minimizing inconsistency appears to be a \emph{universal objective}. 
     }%
-    % \oldnewmaterial{%
     % This also suggests that the PDG representation might be special.
     % Indeed, as we will discover in \cref{part:univ-model},
     %     PDGs naturally capture an incredibly 
     %     wide array of standard epistemic representations.
-    % }%

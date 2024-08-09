@@ -21,10 +21,8 @@
 \newmaterial{%
 % So as not to keep anyone in suspense, the \emph{universal objective} after which this part is named 
 % So as not to keep anyone in suspense, this \emph{universal objective}
-The \emph{universal objective} 
-    % at hand
-    that is the subject of \cref{part:univ-objective}
-    is to minimize inconsistency.  
+% The \emph{universal objective} that is the subject of \cref{part:univ-objective} is to minimize inconsistency.  
+The thesis of \cref{part:univ-objective} is that minimizing inconsistency is a \emph{universal objective}.  
     % \newmaterial{%
 % In what sense 
 It may seem plausible that this is a good idea, but what justifies calling it ``universal''?
@@ -33,6 +31,7 @@ To a discerning eye, our usage of the word \emph{universal}
     can be read in several different ways. 
 Yet these different readings are closely related and reinforce one another; we argue that they are different aspects of a single coherent concept.
 %
+
 \begin{enumerate}
 \item
 From the very beginning (\cref{sec:defend-inconsist,sec:pdg-intro-examples}), we have argued that inconsistency is worth representing, 
@@ -51,9 +50,9 @@ This is the first and most important
     sense in which minimizing inconsistency is a \emph{universal} objective. 
 As we shall soon see, 
     % is the first sense in which it is universal,
-this shared scorn for inconsistency makes the concept
+this shared (``universally held'') scorn for inconsistency makes the concept
     particularly useful.
-% , as will 
+% , as will
         % see in \cref{part:univ-objective}.
     % soon see.
 % This is the first sense in which wanting to minimize inconsistency is universal: everyone thinks it is a good idea. 
@@ -63,47 +62,58 @@ this shared scorn for inconsistency makes the concept
 \item
 We saw in \cref{part:univ-model} that PDGs capture an enormous variety of epistemic representations in use.
 % Because PDGs can express so many different states of mind,
-It follows that our formal definition of \emph{inconsistency} \cref{eqn:inconsistency-defn} also applies in a wide variety of contexts.
+It follows that our formal definition of \emph{inconsistency} \cref{eqn:inconsistency-defn} also applies in a wide variety of contexts
+    (making the notion ``universally applicable'').
 % this is the second sense in which minimizing inconsistency is universal.
 % this broad applicability is a second aspect of the universality of 
 
 \item
 The technical results in the coming part (\cref{part:univ-objective}) demonstrate that
 % This second sense is bolstered by the third one: 
-many standard measures of discrepancy, loss, and conflict, can be viewed as measuring the inconsistency of the appropriate PDG (\cref{chap:one-true-loss});
-and meanwhile many computations of interest---%
+many standard measures of discrepancy, loss, and conflict, can be viewed as measuring the inconsistency of the appropriate PDG (\cref{chap:one-true-loss}), 
+    so inconsistency can be viewed as a ``universal'' loss function.
+Meanwhile, many computations of interest---%
 especially those that form the basis of decision making and modern machine learning and AI systems---%
 can be viewed as approaches to inconsistency minimization
-(\cref{chap:LIR}).
+    (\cref{chap:LIR}),
+    and so minimizing inconsistency is a ``universal objective'' in that the most celebrated algorithms in AI can be written as approaches to inconsistency minimization.
 
-% \item 
-% The way we measure inconsistency is principled and does not require arbitrary choices. Every aspect of the formula is well-motivated, and can be defended both axiomatically. 
+\item 
+The way we measure inconsistency is natural and does not require arbitrary choices. Every aspect of the formula is well-motivated and can be defended from first principles (making it a ``universal construction''). 
 \end{enumerate} 
 
 
-These three notions of universality, while separable in principle, are in this case entangled aspects of a single overarching concept.
+These four notions of universality, while separable in principle, are in this case entangled aspects of a single overarching concept.
 % :
 % \begin{quotation}
 % minimizing inconsistency is always an appropriate thing to do. 
 % \end{quotation} 
-The fact that the notion of inconsistency is so broadly applicable (the second sense of universality) is precisely why it makes sense for it to be so widely reviled (the first sense), and to explain so many different popular learning and inference procedures used in practice (the third sense). 
-The fact that inconsistency is so widely revield (the first sense of universality) explains why it is so often used in practice (the third sense);
+% The fact that inconsistency is so broadly applicable (the second sense of universality) is precisely why it is possible for it to be so widely reviled (the first sense), and for it to explain so many different popular learning and inference procedures used in practice (the third sense). 
+The fact that inconsistency is so broadly applicable (sense 2) is precisely why it is possible for it to be so widely reviled (sense 1), and for it to explain so many different popular learning and inference procedures used in practice (sense 3). 
+% The fact that inconsistency is so widely reviled (the first sense of universality) explains why it is so often used in practice (the third sense);
+The fact that inconsistency is so widely reviled (sense 1) explains why it is so often used in practice (sense 3);
  % and possible only because it applies to so many contexts (meaning 2). 
-conversely, the fact that current practice can largely be viewed as inconsistency resolution 
-% (the third sense)
- can be viewed as an empirical argument bolstering the case that inconsistency is universally reviled 
- % (meaning 1)
+% conversely, the fact that current practice can be viewed as inconsistency resolution 
+conversely, the fact that so many minimization objectives in AI can be fruitfully represented as inconsistencies
+% while the converse
+(sense 3)
+can be taken as as an empirical argument bolstering the case that, in practice, everyone wants to minimize inconsistency (sense 1)
 \unskip. 
 % The fact that it makes sense in so many contexts (meaning 2) is precisely 
-%     why it makes sense for it to be universally revialed (sense 2) what enables it to be used in practice (meaning 3).
+%     why it makes sense for it to be universally reviled (sense 2) what enables it to be used in practice (meaning 3).
+The fact that the construction is natural (universal in the fourth sense) makes it more plausible that it might be objectively a good idea to optimize, and explains why it applies so universally (in the second sense) and captures so many different loss functions (is universal in the third sense)---and the converse bolsters our claim that the inconsistency is a natural construction. 
 
 % By viewing identity of the value holder as part of the context, the fact that inconsistency makes sense in so many contexts (meaning 2) .
 
-To summarize, it is already well appreciated that inconsistency is problematic.
+% To summarize, all four notions are different entangled aspects of a single concept: it is 
+%  it is already universally appreciated that inconsistency is problematic; 
  % (and so minimizing it is universal objective, in sense 1). 
 % We saw in \cref{part:univ-model} that PDGs can capture seemingly every standard representation of mental state, an. 
-We proceed with the primary subject of the chapter: we will show that the overwhelmingly agreed-upon practices of building artificial intelligence can largely be cast as inconsistency minimization (the third sense in which inconsistency is a universal objective). 
-This simultaneously (a) augments our theoretical arguments that inconsistency is problematic by showing that in practice people build intelligent systems by minimizing inconsistency, and (b) provides a principled way of choosing objectives even in situations when there is not an overwhelmingly popular standard to fall back upon.
+We now turn to the primary task of \cref{part:univ-objective}: establishing that inconsistency is universal in the third sense: that the overwhelmingly agreed-upon practices of developing and working with artificial intelligence can be fruitfully cast as inconsistency resolution. 
+In doing so, we will start to see how inconsistency also provides a principled way of choosing an objective (universal in senses 1 and 4) in any context (sense 2).
+% This simultaneously (a) augments our theoretical arguments that inconsistency is problematic by showing that in practice people build intelligent systems by minimizing inconsistency, and (b) provides a principled way of choosing objectives even in situations when there is not an overwhelmingly popular standard to fall back upon.
+Ultimately, minimizing inconsistency emerges as a universally appropriate, applicable, useful, and natural objective---or, for short, a \emph{universal} one. 
+
 
 % Thus, it can be viewed as an empirical argument that, in practice, 
 % people do want to reduce inconsistency in essentially every context (meaning 1). 

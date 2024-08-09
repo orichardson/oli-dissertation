@@ -441,7 +441,6 @@ on the right of \Cref{fig:grok-combine}.
 % The union of the two PDGs, even with overlapping nodes, is still a PDG.
 % This is not the case in general for BNs.
 % 
-\newmaterial{%
 By joining the two PDGs together, we get another PDG---which is not the case in general for BNs.
 % Note that the PDG that Grok used to represent her two different sources of information (the mother's wisdom and the study) regarding the distribution of $C$ is a \emph{multigraph}: there are two
 % arcs from $T$ to $C$, with inconsistent information.
@@ -454,7 +453,6 @@ Note that the resulting PDG has two distinct two arcs from $T$ to $C$
     that are inconsistent.
 Specifically, there is no distribution $\mu(C,T)$ for which $\mu(T|C)$ equals both $p$ and $q$. 
 Observe once again that this inconsistency is possible because we now have two distinct beliefs about $C$.
-}%
 % Had we not allowed multigraphs, we would have needed to choose between the two arcs, or represent the information some other (arguably less natural) way. 
 % As we are already allowing
 % inconsistency, merely recording both is much more in keeping with the way we
@@ -682,11 +680,9 @@ We now give an overview of important alternative variants.
 	Indeed, a PDG can be equivalently defined with two distinct kinds of arcs, each of which only play one role. An arc that plays both roles can be separated into two separate arcs, one for each kind of information. Conversely, an arc with only one kind of information can be specified by spacing $\alpha = 0$ or $\beta = 0$ to nullify the other kind of information, as appropriate. 
 	%
 	We have opted for combined edges because certain semantic and inference properties of PDGs are easier to describe in this presentation (e.g., \cref{theorem:limit-uniq,theorem:wfg-is-pdg,theorem:approx-infer}).
-    \newmaterial{%
     However,
         in some cases it may be wise to separate PDGs before combining them, 
         as discussed in \cref{sec:pdg-combine}. 
-    }%
 
 
     \item 
@@ -816,14 +812,12 @@ How should we combine independent sources of information?
 As illustrated by \cref{ex:grok-union}, a significant advantage of PDGs is their modularity:
 % we can combine the information in $\dg M_1$ and $\dg M_2$ 
 there is a simple way to combine the information in $\dg M_1$ and $\dg M_2$: take the union of their variables and the disjoint union of their arcs (and associated data) to get a new PDG, denoted $\dg M_1 + \dg M_2$.
-\newmaterial{%
 We call this the \emph{sum} or \emph{join} of $\dg M_1$ and $\dg M_2$, 
     and it is appropriate when the information in the two PDGs is independent. 
 % (As we will son see, )
 % We first give the formal details of this operation, 
 %     and then caution a modeler to think carefully about whether or not
 %     this is 
-}%
 
 % \paragraph{Formal Details of PDG Sums.}
 To be completely precise, it's helpful to first make a preliminary definition:	
@@ -893,7 +887,6 @@ its sole purpose is to ensure that we do not accidentally identify variables in 
 	% 	% f \sqcup g ( \mathrm{inr}(x)) := g(x).
 	% 	\qedhere
 	% \]
-    % \newmaterial{%
 	where, for $f : A \to X$ and $g : B \to X$, the function 
         $f \sqcup g : A \sqcup B \to X$
 	is given by
@@ -939,9 +932,7 @@ For instance, one needs to take care that two variables are not implicitly consi
 % It is important to keep in mind, however, that this means treating the information in the PDGs 
 For the quantitative data (i.e., the parameters $\mathbb P$ and $\bbeta$), this is precisely how one would want to combine independent observations. 
 % Independently combining
-\newmaterial{%
 Merely joining
-}%
 the qualitative information, however, may not always 
     have the intended effect.
  % if there is any overlap. 
@@ -1006,10 +997,8 @@ In that context, we will also see that the
 % We will explore this in \cref{ex:overdet}. 
 
 %TODO: Convex combination of 
-% \newmaterial{%
 % Recall that we may identify a graph $G$ with its adjacency matrix, 
 %     i.e., the vector of weights over all possible arcs that places 
-% }%
 It is worth mentioning that \emph{convex combinations} of qualitative parameters $\balpha$ actually \emph{do} work as one might hope. 
 If you believe that there's a 60\% chance that the causal graph is $G_1$, and a 40\% chance that the causal graph is $G_2$,  
 % there is no problem with taking  $\balpha$ to be
@@ -1034,7 +1023,6 @@ then $\balpha$ will still encode those shared independencies.
 
 % Still, despite the caution, there are also some cases where independent combination is appropriate even for causal information. 
 % We now proceed with the formal details of PDG sums. 
-% \newmaterial{%
 % There are also cases where PDG sums are appropriate even for causal information. 
 % To be precise: taking the sum is appropriate if the two models describe underlying mechanims that are in fact independent of one another. 
 % This is especially appropriate when the two hypergraphs
@@ -1061,7 +1049,6 @@ then $\balpha$ will still encode those shared independencies.
 % One may want to keep two mechanisms distinct even if they are parallel, if they are known to be different and simultaneously present. 
 % For instance, if the presence of a compound (whose concentration is the variable $X$) is known to inhibit an enzyme (whose activity is the variable $Y$) in two unrelated ways, then a combined model should include both mechanisms. 
 % We discuss the meaning of parallel mechanisms in more detail in \cref{chap:QIM}. 
-% }%
 
 
 
@@ -1396,7 +1383,7 @@ of distribution $\mu(\X)$, with respect to a directed (hyper)graph $(\X,\Ar)$ is
 	\SDef_{\!\Ar}(\mu) := \sum_{\ed aXY \in \Ar}
         \alpha_a
         \H_\mu(Y\mid X) ~- \H_\mu(\X). 
-	\label{eqn:alt-extra}
+	\label{eqn:sdef}
 \end{equation}
 % (Recall that $H_\mu(Y\mid X)$, the \emph{conditional entropy of $Y$ given $X$}, is defined as $- \sum_{x,y \in \V(X,Y)} \mu(x,y) \log \mu(y\mid x)$.)
 For a PDG ${\dg M}$, we take $\SDef_{\dg M} := \SDef_{\!\Ar^{\dg M}}$
@@ -2165,7 +2152,7 @@ PDGs can capture the full exponential family of a factor graph,
     $(\Ar^{\dg M}, \alpha^{\dg M})$, and is given by
     \begin{equation}
     	\SDef_{\dg M}(\mu) := \sum_{\ed aXY \in \Ar} \alpha_a \H_\mu(Y\mid X) - \H(\mu). 
-    	\label{eqn:alt-extra2}
+    	\label{eqn:sdef2}
     \end{equation}
     Thus, the conditional entropy $\H_\mu(Y\mid X)$ associated with the
     arc $\ed aXY$ is multiplied by the weight $\alpha_a$ of that arc.

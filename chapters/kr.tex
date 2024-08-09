@@ -421,9 +421,7 @@ Semantically, the PDG $\dg M_s$ has almost all of the properties we have seen in
 Despite the similarity so far, there is a big difference between hard and soft constraints:
     values of $x$ that have intermediate satisfaction scores $s(x) \in (0,1)$,
     while not fully consistent, are still possible.
-% \newmaterial{%
 Indeed, such values of $x$ may even be probable 
-% }%
 in the optimal distribution, 
     % when the context is inconsistent enough. 
     if that happens to be the best way to resolve an inconsistency.
@@ -547,7 +545,6 @@ we have:
 \begin{prop}
     Suppose that $p(X)$ and $q(Y)$ are probability distribuitons. 
     Given a distance measure $d : \V(X,Y) \to [0,\infty]$, 
-    \newmaterial{%
     define a soft constraint according to 
     $(x,y)\mapsto e^{-d(x,y)}$, 
     which results in a cpd
@@ -555,7 +552,6 @@ we have:
     The (observational) inconsistency of these of these pieces of information is
     the Wasserstein distance $W_1(p,q)$. That is,
     % be a similarity measure.
-    }%
     % Interpreting $\hat d$ as a soft constraint, we have:
     \[
         \aar[\Big]{\dg M_{\hat d} + p! + q!}_0 =
@@ -1079,12 +1075,10 @@ This is because, generaly speaking, PDGs force you to make your modeling choices
 In \cref{ex:coin}, the PDG representation lead us to a space which, upon applying the principle of maximum entropy (or better yet, of minimum information deficiency) gives an answer that appears eminantly more reasonable than the simplest model we found without the PDG. 
 % It is worth noting that the naive space is not even 
 % It is difficult to imagine how one could even obtain the naive 
-\newmaterial{%
 % Indeed, it appears impossible to obtain a representation 
 % that leads 50/50 maximum entropy presumption when using a PDG.
 Indeed, with a PDG, it appears impossible to get the counter-intuitive
 application of maximum-entropy that assumes the coin to be fair.
-}%
 % \Cref{ex:coin} is far from a proof that using PDGs leads to representations that are more appropriate in which to apply the principle of maximum entropy, 
 %     but it is a
 % is just one (more) piece of supporting evidence, adding it to a pile that includes \cref{theorem:bns-are-pdgs}. 
@@ -1279,9 +1273,11 @@ Indeed, as we will see in \cref{chap:one-true-loss,chap:LIR}, the PDG formalism 
 Visually, it is uncommon to use the notation of graphical models to describe the architecture of neural networks; instead, the standard is to represent operations and layers of a neural network as nodes, and their connections as edges---like a circuit diagram.
 In many cases, the duals of these diagrams, appropriately annotated with the network parameters, are literally PDGs.
 
+\temphide{%
 \TODO[TODO: diagram here would be nice touch!]
 
 \forjoe{This is not my priority; if it gets done that would be great, but there are other more improtant things at the moment. If I don't have time to do this properly, I will delete this at the end; no need to highlight it. }
+}%
 
 
 

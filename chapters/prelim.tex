@@ -278,7 +278,7 @@ A \emph{cone} is something between a linear space and a convex set: a linear spa
 It follows that linear spaces are cones, and cones are convex.
 
 
-\newmaterial{%
+\oldnewmaterial{%
 \paragraph{Relations}
     \label{primer:relations}
 Let $\mathcal X = \{ X_1, \ldots, X_n \}$ be variables,
@@ -545,9 +545,7 @@ p(x) ~=~ p|x ~=~ p(Y | X{=}x) ~=~ p(Y | x) \quad \in \Delta \V Y.
 % Cpds are also called \emph{channels} in information theory. 
 Just like we write $\mu(X)$ for a distribution over the values of $X$, we
 write $p(Y|X)$ for a cpd on $Y$ given $X$. 
-\oldnewmaterial{%
 If $p(Y|x)$ gives probability one to a single value of $Y$ for all $x \in \V\!X$, then $p(Y|X)$ is \emph{deterministic}, and has the same meaning as the function $f : \V\!X \to \V\mskip-2muY$ that maps $x$ to the value $y$ for which $p(Y|x)$ has probability one.  Conversely, given a function $f : X \to Y$, we write $\delta\!f(Y|X)$ for the corresponding deterministic cpd. 
-}
 In the finite case, cpds coincide with \emph{stochastic matrices}: matrices whose columns correspond to values of $Y$, rows correspond to values of $X$, and such that the sum of each row equals 1. 
 % We will sometimes define cpds via 
 % We will use alternate notation (such as $\mat P_{Y|X}$) when we want to view $p(Y|X)$ as a matrix.
@@ -792,22 +790,20 @@ $
 $
 This function $f$ is called the \emph{Radon-Nikodym derivative} of $\mu$ with respect to $\nu$, and is denoted $\frac{\mathrm d\mu}{\mathrm d\nu} := f$.
 \unskip\footnote{%
-    \newmaterial{%
-        If it's not the case that $\mu \ll \nu$, then 
-        we can still define $\frac{\mathrm d\mu}{\mathrm d\nu}$ as a function
-        to the extended reals. 
-        Let $U_0$ be the union of all measurable sets $U$ for which $\nu(U) = 0$ but $\mu(U) > 0$,
-        and let $\nu|_{\Omega \setminus U_0}:= U \mapsto \nu(U \setminus U_0)$ be the restriction of $\nu$ to the maximal subset of $\Omega$ for which $\mu$ is absolutely continuous with respect to $\nu$. 
-        In this case, we define:
-        \[
-            \frac{\mathrm d\mu}{\mathrm d\nu} :=
-                \begin{cases}
-                    \infty & \text{ if } \omega \in U_0 \\
-                    \frac{\mathrm d\nu|_{\Omega\setminus U_0}}{\mathrm d\mu|_{\Omega\setminus U_0}}&
-                        \text{ otherwise.}
-                \end{cases}
-        \]
-    }
+    If it's not the case that $\mu \ll \nu$, then 
+    we can still define $\frac{\mathrm d\mu}{\mathrm d\nu}$ as a function
+    to the extended reals. 
+    Let $U_0$ be the union of all measurable sets $U$ for which $\nu(U) = 0$ but $\mu(U) > 0$,
+    and let $\nu|_{\Omega \setminus U_0}:= U \mapsto \nu(U \setminus U_0)$ be the restriction of $\nu$ to the maximal subset of $\Omega$ for which $\mu$ is absolutely continuous with respect to $\nu$. 
+    In this case, we define:
+    \[
+        \frac{\mathrm d\mu}{\mathrm d\nu} :=
+            \begin{cases}
+                \infty & \text{ if } \omega \in U_0 \\
+                \frac{\mathrm d\nu|_{\Omega\setminus U_0}}{\mathrm d\mu|_{\Omega\setminus U_0}}&
+                    \text{ otherwise.}
+            \end{cases}
+    \]
 }
 
 In this more general setting, we no longer require $\V\!X$ to be a finite set, but in exchange, we require some structure: $\V\!X$ has to be a measurable space (i.e., come equipped with a $\sigma$-algebra).
@@ -999,12 +995,10 @@ For example:
         \path[every loop/.style={}] (c) edge[loop above] (c);
     \end{tikzpicture}~.
 \]
-\newmaterial{
 % For this reason, 
 In many contexts, this observation leads to a natural generalization in which the numbers in this matrix need not be integers, but are \emph{weights} of a different kind.  The only key feature is that a weight of zero should be indistinguishable from the absence of an edge. 
 % This weighted analogue of a graph is a direct analogue of 
 This is precisely how \emph{confidence} works in the definition and semantics of PDGs (\cref{sec:formal+syntax,sec:semantics}).
-}
 
 
 \commentout{%
@@ -1166,9 +1160,7 @@ Despite this, we are not aware of
 % any published work on subject.
 % substantial work on the subject.
 any thorough treatment of duality in directed hypergraphs. 
-% \oldnewmaterial{%
 % We mention it here because some representations of interest 
-% }%
 
 \begin{defn}
     The \emph{dual} of a directed hypergraph $\mathcal H = (N, \Ar)$ is 
@@ -1427,10 +1419,8 @@ What follows is really a barebones sketch of the graphical models context for th
 A \emph{qualitative Bayesian Network} (qualitative BN) is an acyclic directed graph $G = (\X, A)$ over a set of variables $\X$. 
 An arc $X {\to} Y \in A$ intuitiely reflects a possibility that $X$ can influence $Y$. 
 % The absence of an arc, then, reflects a kind of (conditional) independence. 
-\oldnewmaterial{%
-    Intuitively, each variable should be thought of as being associated with a process
+Intuitively, each variable should be thought of as being associated with a process
     that produces it in a way that depends jointly on all of its parents. 
-}
 The absence of an arc, then, in context, reflects a kind of independence. 
 % One standard way to say this is that
 % Here is one standard description of these independencies: 
@@ -1581,10 +1571,8 @@ We will see more details in \cref{sec:factor-graphs}.
 Many other graphical models have been proposed as well, although
 the vast majority are variants on the two we have already described. 
 We now give a quick overview of some of these representations, although this list is far from complete. 
-\newmaterial{%
 % These models make only minor appearances in the text, but knowing about them may nontheless be helpful for situating PDGs in the literature. 
 While these models play only a minor role in this dissertation, it may be useful to know about them so as to situate PDGs in the literature.
-}%
 % There are other ways of describing 
 
 The most important for our purposes, will be \emph{conditional} Bayesian Networks and \emph{causal} Bayesian Networks, both of which are called CBNs, and, fortuantely, both of which make the same modification: marking some variables as ``observed'' so that they do not require probability distributions. 
@@ -1868,10 +1856,8 @@ Moreover, we do not have to lower our standards for
     (conditional) mutual information, which works just as before:
     it is non-negative and zero iff there is a (conditional) independence. 
 
-% \newmaterial{
 %     \TODO
 %     % mention it's because the constants cancel
-% }
 % Although not possible in the finite case, it is worth noting that this quantity can be negative in general (because it is possible that $\frac{\mathrm d \mu(X)}{\mathrm d \lambda_X}(x) > 1$), 
 
 
@@ -1908,9 +1894,7 @@ At a high level, this is because
 Imagine, for example, that our friend is undergoing a secret but important evaluation, 
 and we know nothing about her score except that it will be a number between 1 and 5.
 % It would be inappropriate to assume that she will scored a 5 (or a 1) simply because it's consistent with what we know, because that does not adequately represent our ignorance. 
-\newmaterial{%
 It would be perfectly consistent to assume that her score will be 5 (with probability 1), but this seems inapropriate, as it does not adequately represent our ignorance.
-}%
 The principle of maximum entropy implies that we should assume a uniform distribution over scores until we learn more.  
 % If we discover that the average score is a 4, then the maximum entropy distribution 
 
@@ -1962,9 +1946,7 @@ $\H_\mu(X)$, $\H_\mu(X,Y)$, and $\H_\mu(Y|X)$, however,
     are not functions of the values of $X$ and $Y$, but rather functions of (the identities of) the variables themselves. 
 Indeed, it makes no sense to feed values $(x,y) \in \V(X,Y)$ to these concepts.
 % In other words, they operate on the qualitative aspect of a variable, not its quantitative aspect. 
-% \newmaterial{%
 In other words, entropy and mutual information operate on the \emph{qualitative} aspect of a variable, not its quantitative aspect. 
-% }
 
 A second reason to view entropy as structural appears in its general definition \eqref{eq:gen-entropy}.
 There, the derivative is taken with respect to structural information about the variable: the base measure, which describes only agreed-upon coordinates, not observational data about what is likely. 

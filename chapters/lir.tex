@@ -102,7 +102,7 @@ We formalize the process
 
 Our approach leans heavily on the theory of PDGs
         % \citep{pdg-aaai}.
-        (\cref{chap:PDG-repr}).
+        (\cref{chap:pdg-repr}).
 % In addition, PDG semantics
 % As illustrated in \cref{chap:one-true-loss},
 As we have seen, there is a natural way
@@ -579,9 +579,7 @@ A more general approach is to choose
     % a control mask $\chi \in [0,\infty]^{\Ar}$.
     an \emph{attention mask} $\varphi \in \mathbb R^{\Ar}$ and
     a \emph{control mask} $\chi \in [0,\infty]^{\Ar}$;
-% \newmaterial{%
     % these are continuous  which one attends fully to precisely the subset $A$ while controlling the subset $C$. 
-% }%
 % Large $\varphi(a)$ makes $a$ salient while $\varphi(a) \!=\! 0$ keeps it out of mind;
 Large $\varphi(a)$ makes $a$ salient, while $\varphi(a) = 0$
     keeps it out of the picture.
@@ -1246,10 +1244,8 @@ The goal is to train a network $G$ to generate images that cannot be distinguish
 % aims to classify images as real or fake.
 % The training process involves a second network,
 More precisely, 
-\oldnewmaterial{%
 represent the generator network with a distribution $G(X_\fake)$ over fake images,
 and suppose we have training data in the form of an empirical distribution $\pdata(X_\real)$ over real images. 
-}%
 Define $X$ to be either an image $X_{\fake}\sim G$ or from a dataset
     $X_\real \sim \pdata$, based on the outcome a fair coin flip $C$.
 The key component in the architecture is a second network,
@@ -1335,14 +1331,13 @@ $, where
 \[
 \mathcal L^{\text{GAN}}(G,D) := 
     % \Ex_{\vphantom{|}x \mathrlap{\sim \pdata}}
-    \Ex_{\vphantom{|}x \sim \pdata}
-    \;[\, \log D(x) \, ] + \Ex_{\vphantom{|} x' \sim G} \, [\,\log (1- D(x')) \,],
+    \Ex_{\vphantom{|}x \,\sim\, \pdata} \,[\, \log D(x) \, ] + \Ex_{\vphantom{|} x'\,\sim\, G} \, [\,\log (1- D(x')) \,],
 \]
-and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X={x})$. 
+and $D(x)$ stands for the conditional probability $D(C{=}1 \mid X{=}x)$. 
 The standard theoretical justification of this loss function 
 is based on the following observations \citep{goodfellow2020generative}:
 \begin{enumerate}[nosep]
-    \item For fixed $G$, the optimal discriminator predicts $D^*(x) = \frac{G(X)}{G(x) + \pdata(x)}$;
+    \item For fixed $G$, the optimal discriminator predicts $D^*(x) = \frac{G(x)}{G(x) + \pdata(x)}$;
     \item For the optimal generator, $\mathcal L^{\text{GAN}}$ becomes equivalent to the Jesnen-Shanon divergence \citep{MENENDEZ1997307} between $\pdata$ and $G$.
     \item There is a unique global Nash Equilibrium, in which $G(X) = \pdata(X)$ and $D(C | X) = e(C|X)$. 
 \end{enumerate}
@@ -1930,7 +1925,8 @@ In \cref{sec:reverse-engineer,sec:soft-constraint-widget} it was established tha
 albeit by articulating some questionable probabilistic beliefs. 
 % You should care about it because we've already established this construction (sections 4.2.2 and 6.8) as a way of representing something like a utility or a cost.  Yes, it may seem strange, but if you buy into the perspective of the dissertation, this is because agents with preferences are already strange.  Thus, a natural question becomes: what does inconsistency resolution mean in this context? Perhaps surprisingly, it means expected utility maximization, at least if confident in one's beliefs. 
 \newmaterial{%
-For the moment, let us entertain the possibility that these strange probabilistic beliefs are in fact an appropriate way to encode preferences. 
+For the moment, let us entertain the possibility that these strange probabilistic beliefs are in fact an appropriate way to encode preferences.
+% (Perhaps this model is appropriate, but looks unnatural only because preferences themselves are unnatural).
 % (Perhaps it looks strange because preferences themselves are strange.)
 % A natural 
 A natural question then emerges: what does it mean to make decisions to as to minimize inconsistency in this context? 
@@ -1966,13 +1962,16 @@ It is easy to model this information with a PDG:
             \mergearr[arr1,->] SAO
         \node[below=1pt of center-SAO]{$\tau$};
         % \node[dpad1] (T) at (5.5,0) {$\Tru$};
-    \end{tikzpicture}
+    \end{tikzpicture}~,
 \end{center}
 
-
+\newmaterial{%
+where $\V U = \mathbb R$. 
 % All that's missing is a connection 
 % However, this is just a description of what
-What's missing is any sort of encoding of the fact that higher utilities
+What's missing is a way to encode of the idea 
+}%
+that higher utilities
 are ``better'' than lower ones. 
 For this, we can add a ``soft constraint'' (see \cref{sec:constraint-widget}) that is violated less at higher utilities than lower ones.
 At a technical level, recall that this means 
@@ -2029,25 +2028,41 @@ where  $\beta_p$ is your confidence in your prior probabilistic belief $p(S)$, a
     \end{enumerate}
 \end{linked}
 
-We suspect it will also be possible to implement other decision rules such as minimax or maximin, but like GAN training, these objectives that look like ``two-player games'' require two different focuses of LIR. 
-We leave the details and implications of this to future work.
+% We suspect that it may also be possible to implement other decision rules such as minimax or maximin, but like GAN training, these objectives that look like ``two-player games'' require two different focuses of LIR. 
+We suspect that it may also be possible to implement other decision rules such as minimax or maximin.
+Like the GAN objective however, these decision rules look like two-player games, and so will likely require two different focuses of LIR, rather than just one. 
+% We leave a careful exploration of to future work.
+We leave a careful exploration of this avenue to future work.
 
-We conclude our discussion of decision theory with a higher-level obseravation. 
-When there is conflict between your preferences, beliefs, and actions
+We conclude our discussion of decision theory with a high level obseravation. 
 \newmaterial{%
-(in the sense that a PDG that represents all three is inconsistent),
+One's preferences, beliefs, and actions can be jointly modeled with a PDG. 
+% Suppose that the 
+When that PDG is inconsistent (i.e., there is a conflict between your preferences, beliefs, and actions),
 }%
+% When there is conflict between your preferences, beliefs, and actions
+% (in the sense that the PDG that represents all three is inconsistent),
 there are, in principle, three possible resolutions.
-You can change your action to maximize your expected utility, which is thought of as the rational thing to do.
-You can also change your preferences to become happy with how things currently are, which is perhaps a more zen perspective. 
-These two resolutions are two halves of the Serenity Prayer \citep{serenity-prayer}:
+% You can change your action to 
+You can 
+\newmaterial{%
+resolve the inconsistency by changing your action, 
+    which amounts to maximizing expected utility (\cref{prop:eu+maxmax}.1);
+    this is thought of as the {rational} approach.
+    % maximize your expected utility, which is thought of as the rational thing to do.
+Alternatively, 
+    you can change your preferences so as to become content with your current situation, 
+}%
+% You can also change your preferences to become happy with how things currently are, 
+    which is perhaps a more zen perspective. 
+Observe that these two resolutions to the internal conflict are two halves of the famous Serenity Prayer \citep{serenity-prayer}:
 
 \begin{quotation}\it
     Oh, God, give us the courage to change what must be altered, serenity to accept what can not be helped, and insight to know the one from the other.
 \end{quotation}
 
-There is also a third way to resolve the inconsistency, which is arguably significantly worse: you can change your beliefs about what state you are in. 
-Unfortunately, this kind of self delusion only creates more inconsistency with future observations, and is seldom a good idea.  
+Finally, the third way to resolve the inconsistency, involves changing your beliefs about what state you are in, i.e., wishful thinking. 
+Unfortunately, this kind of self delusion typically only leads to more inconsistency in the future, and is seldom a good idea.  
 This is one more reason that it can be beneficial to carefully select only small local of the picture to control while resolving inconsistencies.
 
 
