@@ -1924,13 +1924,11 @@ In \cref{sec:reverse-engineer,sec:soft-constraint-widget} it was established tha
 % albeit with some strange 
 albeit by articulating some questionable probabilistic beliefs. 
 % You should care about it because we've already established this construction (sections 4.2.2 and 6.8) as a way of representing something like a utility or a cost.  Yes, it may seem strange, but if you buy into the perspective of the dissertation, this is because agents with preferences are already strange.  Thus, a natural question becomes: what does inconsistency resolution mean in this context? Perhaps surprisingly, it means expected utility maximization, at least if confident in one's beliefs. 
-\newmaterial{%
 For the moment, let us entertain the possibility that these strange probabilistic beliefs are in fact an appropriate way to encode preferences.
 % (Perhaps this model is appropriate, but looks unnatural only because preferences themselves are unnatural).
 % (Perhaps it looks strange because preferences themselves are strange.)
 % A natural 
 A natural question then emerges: what does it mean to make decisions to as to minimize inconsistency in this context? 
-}%
 In this section, we show that the standard picture of rational decision making---that is, expected utility maximization---can be viewed as the pursuit of consistency in this probabilistic model. 
 
 Suppose we are trying to choose an action (i.e., control a variable $A$). 
@@ -1948,7 +1946,7 @@ a belief $p(S)$ about the current state of the world,
 and 
 \item  a utility function $u : \V O \to \mathbb R$ on possible outcomes. 
 \end{enumerate}
-It is easy to model this information with a PDG:
+It is easy to encode this information in a PDG:
 
 \begin{center}
     \begin{tikzpicture}
@@ -1962,15 +1960,13 @@ It is easy to model this information with a PDG:
             \mergearr[arr1,->] SAO
         \node[below=1pt of center-SAO]{$\tau$};
         % \node[dpad1] (T) at (5.5,0) {$\Tru$};
-    \end{tikzpicture}~,
+    \end{tikzpicture}~.
 \end{center}
 
-\newmaterial{%
-where $\V U = \mathbb R$. 
+% where $\V U = \mathbb R$. 
 % All that's missing is a connection 
 % However, this is just a description of what
-What's missing is a way to encode of the idea 
-}%
+What's missing is a way to encode the idea 
 that higher utilities
 are ``better'' than lower ones. 
 For this, we can add a ``soft constraint'' (see \cref{sec:constraint-widget}) that is violated less at higher utilities than lower ones.
@@ -2034,25 +2030,21 @@ Like the GAN objective however, these decision rules look like two-player games,
 % We leave a careful exploration of to future work.
 We leave a careful exploration of this avenue to future work.
 
-We conclude our discussion of decision theory with a high level obseravation. 
-\newmaterial{%
+We conclude our discussion of decision theory with a high-level obseravation. 
 One's preferences, beliefs, and actions can be jointly modeled with a PDG. 
 % Suppose that the 
 When that PDG is inconsistent (i.e., there is a conflict between your preferences, beliefs, and actions),
-}%
 % When there is conflict between your preferences, beliefs, and actions
 % (in the sense that the PDG that represents all three is inconsistent),
 there are, in principle, three possible resolutions.
 % You can change your action to 
 You can 
-\newmaterial{%
 resolve the inconsistency by changing your action, 
     which amounts to maximizing expected utility (\cref{prop:eu+maxmax}.1);
     this is thought of as the {rational} approach.
     % maximize your expected utility, which is thought of as the rational thing to do.
 Alternatively, 
     you can change your preferences so as to become content with your current situation, 
-}%
 % You can also change your preferences to become happy with how things currently are, 
     which is perhaps a more zen perspective. 
 Observe that these two resolutions to the internal conflict are two halves of the famous Serenity Prayer \citep{serenity-prayer}:
@@ -2061,9 +2053,16 @@ Observe that these two resolutions to the internal conflict are two halves of th
     Oh, God, give us the courage to change what must be altered, serenity to accept what can not be helped, and insight to know the one from the other.
 \end{quotation}
 
-Finally, the third way to resolve the inconsistency, involves changing your beliefs about what state you are in, i.e., wishful thinking. 
+Finally, the third way to resolve the inconsistency involves changing your beliefs about what state you are in, i.e., wishful thinking. 
 Unfortunately, this kind of self delusion typically only leads to more inconsistency in the future, and is seldom a good idea.  
-This is one more reason that it can be beneficial to carefully select only small local of the picture to control while resolving inconsistencies.
+% This is one more reason that it can be beneficial to carefully select only small local of the picture to control while resolving inconsistencies.
+\newmaterial{%
+It also illustrates how,
+    in the process of resolving inconsistency,
+    restricting control to a small set of parameters can be 
+        appropriate (and not just a computational shortcut).
+    % while resolving inconsistency.
+}%
 
 
 \section{Discussion and Future Work}

@@ -2,7 +2,7 @@
 
 % How should you 
 % We have just
-In the previous two chapters, we come to understand a great deal about how to reason \emph{about} PDGs, and the connections between their semantics.
+In the last two chapters, we have come to understand a great deal about how to reason \emph{about} PDGs.
 Yet, through a handful of simple rules for manipulating PDGs, a great deal of probabilistic reasoning can be done \emph{internally} within a PDG.  
 % In this chapter, we will  
 We have already seen some important examples.
@@ -96,8 +96,10 @@ One might imagine that an edge $A{\to}B$
 %oli1: to help you see why the above is true: an edge in a BN indicates the possibility of dependence, not the necessity of dependence; if all variables are independent, it is consistent with every BN structure. 
 
 Hypergraphs, both with semantics in terms of QIM-compatibility (the subject of \cref{chap:QIM}) and in terms of $\SDef$, however, are monotonic in the directions we expect of knowledge.
-In \cref{sec:qual-monotone}, we establish a stronger directed notion of 
-
+But it turns out that more is true. 
+In \cref{sec:qual-monotone}, we establish a stronger notion of qualitative monotonicity that makes use of the directed nature of a hypregraph. 
+We then provide a complementary notion of qualitative equivalence (\cref{sec:QIM-equivalence}). 
+These two qualitative ``inference rules'' can be combined to form a formal system for reasoning about qualitative aspects of probability. 
 
 %oli22*: moved full section to the appendix
 % \subsection{Monotonicity of Structural Compatibility}
@@ -148,7 +150,7 @@ In \cref{sec:qual-monotone}, we establish a stronger directed notion of
 %Monotonicity of (quantitative) PDG inconsistency
 % The fact that (quantitative) PDG inconsistency  is monotonic
 % is a powerful reasoning principle that can be used to prove many important inequalities \citep{one-true-loss}. 
-Recall from \cref{chap:one-true-loss} that, by simple applications of a rule called \emph{monotonicity of (observational) inconsistency} (\cref{lemma:!}, we were able to derive things such as variational bounds, inequalities between statistical divergences, and properties such as the data processing inequality. 
+Recall from \cref{chap:one-true-loss} that, by simple applications of a rule called \emph{monotonicity of (observational) inconsistency} (\cref{lemma:!}), we were able to derive things such as variational bounds, inequalities between statistical divergences, and properties such as the data-processing inequality. 
 In this section, we develop a related principle for qualitative information in a hypergraph, that applies to both \scibility\ and the function $\SDef$.
 %joe4*: I have no idea what's going on in this section.  At one point I
 %sent you an email explaining why I thought nonpartitional models
@@ -982,7 +984,13 @@ We emphasize that \cref{theorem:mrf-bn-monotone-impossible} has implications for
 % Some classes of graphical models appear to defy the theorem, and so it is worth looking into this carefully.
 % We now address some conceptual implications of \cref{theorem:mrf-bn-monotone-impossible} 
 % We reconcile \cref{theorem:mrf-bn-monotone-impossible} for two classes of graphical models: PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
-We reconcile \cref{theorem:mrf-bn-monotone-impossible} with PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
+% We reconcile \cref{theorem:mrf-bn-monotone-impossible} with PDGs and Dependency Networks (DNs), which may at first appear to contradict the theorem.
+\newmaterial{%
+Yet some graphical models may appear to defy the theorem,
+    seemingly exhibiting all three properties. 
+We now reconcile \cref{theorem:mrf-bn-monotone-impossible} with 
+    two such models: PDGs, and Dependency Networks (DNs). 
+}%
 
 \paragraph{Probabilistic Dependency Graphs}
 PDGs capture BNs and MRFs
@@ -1004,7 +1012,7 @@ When $G$ is an undirected graph, $\Ar_G$ is the structure of a consistent DN.
 The semantics of such a DN,
 which intuitively describe an independent mechanism on each \arc,
 coincide with the MRFs for $G$ (at least for positive distributions). 
-In more detail, DN semantics are given by the fixed point of a markov chain that repeatedly generates independent samples along the \arc s of $\Ar_G$ for some (typically cyclic) directed graph $G$. The precise definition requires an order in which to do sampling. Although this choice doesn't matter for the ``consistent DNs'' that represent MRFs, it does in general. With a fixed sampling order, the DN is monotonic and captures MRFs, but can represent only BNs for which that order is a topological sort.
+In more detail, DN semantics are given by the fixed point of a Markov chain that repeatedly generates independent samples along the \arc s of $\Ar_G$ for some (typically cyclic) directed graph $G$. The precise definition requires an order in which to do sampling. Although this choice doesn't matter for the ``consistent DNs'' that represent MRFs, it does in general. With a fixed sampling order, the DN is monotonic and captures MRFs, but can represent only BNs for which that order is a topological sort.
 
 
 
@@ -1017,7 +1025,7 @@ In more detail, DN semantics are given by the fixed point of a markov chain that
 
 We now begin to explore what it means for two hypergraphs to be \emph{equivalent},
     at least as far as QIM-compatibility (\cref{defn:qim}) is concerned.
-An obvious candidate definition would be to call two hypergraphs $\Ar_1$ and $\Ar_2$ are QIM-equivalent if they are compatible with same distributions ($\mu \models \Diamond\Ar_1$ iff $\mu \models \Diamond \Ar_2$),
+One obvious idea is to consider two hypergraphs $\Ar_1$ and $\Ar_2$ equivalent iff they are compatible with same distributions ($\mu \models \Diamond\Ar_1$ iff $\mu \models \Diamond \Ar_2$),
     but this isn't quite right. 
 We have to deal with context. 
 It is easy to see that
@@ -1270,8 +1278,8 @@ and beyond.
 It becomes even more useful in tandem
     %oli6:
     % an analogue of implication, which we describe next. 
-    with the definition of monotonicity presented in \cref{sec:monotone},
-    which is an analogue of implication. 
+    with the definition of monotonicity presented in the 
+    previous subsection (\cref{sec:qual-monotone}).
     
 %oli2: note that the material below, which you previously grouped with the material above and commented out, is a segue to the material on monotonicity.  Whether or not we include it is independent of whose approach we take to describing the conjecture above. 
 %oli3: ... and I think it's not all that valuable. I wrote a shorter transition above.
@@ -1289,19 +1297,19 @@ It becomes even more useful in tandem
 \section{A Logic Based on PDGs}
     \label{sec:pdg-logic}
 
-% We have 
-So far in this chapter, 
-    we have treated the two aspects of PDGs separately, and developed
-    separate reasoning principles for each aspect. 
-We saw in \cref{sec:quant-monotone} an exploration of 
-    \emph{observational}
-    the proof language based on monotonicity that powered 
+% So far in this chapter, we have treated the two aspects of PDGs separately, and developed separate reasoning principles for each aspect. 
+\newmaterial{%
+In the previous section (\cref{sec:qual-monotone}) we developed a 
+    monotonicity principle that applies to directed structural information.
+Recall this was inspired by an analogous reasoning principle for observational information (\cref{lemma:!}).
+}%
+    % that quantitative inconsistency 
+    % the proof language based on monotonicity that powered 
     % seen that there is a natural notion of monotonicity
     % in the observation
-Then, in  \cref{sec:qual-monotone} we saw a different monotonicty principle that applies to directed structural information. 
- % analogue of monotonicity for structural information in a hypergraph, 
+% analogue of monotonicity for structural information in a hypergraph, 
 In this section, we put the two together. 
-The result forms the beginnings of an inconsistency-tolerant logic. 
+The result is the beginning of an inconsistency-tolerant logic. 
 
 
 % \subsection{PDG Entailment: A Natural Preorder on PDGs}
@@ -1311,7 +1319,9 @@ Some logical statements are stronger than others. If $\varphi$ says strictly mor
 % An important aspect of implication is that it is \emph{context-free}: any implication can be turned into 
 We are interested in developing a similar notion of implication for PDGs.
 It might seem that \cref{lemma:!} provides us with one---but simply because $\aar{\dg M_1} \ge \aar{\dg M_2}$ doesn't seem to be strong enough. 
-The reason why is that implication allows for substitution in within context. For instance, if $\varphi \Rightarrow \psi$, then 
+%
+A key feature implication (or equivalence) is that it allows for in-context substitution.
+For instance, if $\varphi \Rightarrow \psi$, then 
 $\varphi \land \varphi' \Rightarrow \psi \land \varphi'$
 and
 $\varphi \lor \varphi' \Rightarrow \psi \lor \varphi'$, no matter what we take $\psi'$ to be.
@@ -1355,7 +1365,10 @@ This motivates the following definition, which corrects for this by explicitly t
     \end{linked}
     % I believe the following are true (although I need to come back and verify this):
     
-    Some more properties of the entailment relation, for general PDGs.
+    % Some more properties of the entailment relation, for general PDGs.
+     % properties of the entailment relation, for general PDGs.
+    % The entailment relation has  for general PDGs. 
+    More generally, applied to arbitrary PDGs, our entailment relation has some intuitive properties. 
     
     \begin{linked}{prop}{entail-properties}
         \begin{enumerate}[parsep=0pt,topsep=0pt]
@@ -1382,16 +1395,18 @@ This motivates the following definition, which corrects for this by explicitly t
     
     If both $\dg M_1 \models \dg M_2$ and $\dg M_2 \models \dg M_1$, 
         then we say the two PDGs $\dg M_1$ and $\dg M_2$ are \emph{equivalent}, and write $\dg M_1 \equiv \dg M_2$.
-    Two PDGs are eqivalent if the respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
+    Two PDGs are eqivalent if they respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
     Intuitively, $\dg M_1 \equiv \dg M_2$ iff $\dg M_1$ and $\dg M_2$ are equally (in)consistent no matter how one alters them, so long as both are altered in the same way. 
+    
+\TODO[ TODO: introduce $(2) \dg M$ if not defined]
     
 \begin{linked}{prop}{sem-equiv-properties}
     \begin{enumerate}[parsep=0pt]
         \item For all distributions $p(X)$, $p(X) + p(Y|X) \equiv p(X,Y)$. 
         \item If $\dg M_1 \equiv \dg M_2$, then their mixtures are also equivalent:
             $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$. 
-        \item $\dg M + \dg M \equiv 2 \dg M$. 
-            Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $2 \dg M$ has all confidences doubled. 
+        \item $\dg M + \dg M \equiv (2) \dg M$. 
+            Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $(2) \dg M$ has all confidences doubled. 
     \end{enumerate}
 \end{linked}
 
@@ -1429,7 +1444,10 @@ However, it may also be too strict a requirement.
     % \item 
     When $\dg M_1 + \X_2 \equiv \dg M_2 + \X_1$,
     we call $\dg M_1$ and $\dg M_2$ \emph{congruent modulo variables}, and write $\dg M_1 \cong_\X \dg M_2$.
-    This definition places the two PDGs on the same set of variables before comparison.  All PDGs with $\balpha = \bbeta = 0$ are congruent to the empty PDG, modulo variables. 
+    This definition 
+    % places the two PDGs on the same set of variables before comparison.
+    effectively ensures that the two PDGs have the same set of variables before comparing them. 
+    All PDGs with $\balpha = \bbeta = 0$ are congruent to the empty PDG, modulo variables. 
     % 
     % \item 
     % A somewhat orthogonal concern is that variable identities. 
@@ -1593,7 +1611,7 @@ It follows, for example, that the empty PDG entails any PDG that only contains v
 
 
 The bottom (or initial) element(s) of the entailment order are easily identified;
-like in propositional logic, they are the (most extreme) contradictions contradictions.
+like in propositional logic, they are the (most extreme) contradictions.
 Every such PDG is equivalent to
 $\dg{\False} := \begin{tikzpicture}
     \node[dpadinline] (X) {$X$};
@@ -1602,9 +1620,9 @@ $\dg{\False} := \begin{tikzpicture}
 \end{tikzpicture}$,
 which has $\aar{\dg{\False}}= \infty$, and satisfies $\False \models \dg M$ for all $\dg M$. 
 
-Are there largest PDGs in this order?  What is the analogue of ``true''?--is it the empty PDG? 
+Are there largest PDGs in this order?  What is the analogue of ``true''? Is it the empty PDG? 
 Clearly not, because $\dg M \models 0$ only if $\dg M$ is qualitatively complete. 
-It turns out there is such a ``most annodyne'' PDG if and only if
+It turns out there is such a ``most anodyne'' PDG if and only if
 the collection of all possible variables is a PDG.
 Concretely, let $\mathcal U$ be a ``universe of all possible variables''.  
 Then every PDG $\dg M$ with variables $\X \subseteq \mathcal U$ satisfies $\dg M \models \mathcal U$. 
@@ -1649,6 +1667,9 @@ Similarly, if
 As usual, we can introduce conjunction by
     defining $\dg M \models \varphi \land \varphi'$ iff
     $\dg M \models \varphi$ and $\dg M \models \varphi'$.
+
+\TODO
+    
 So, for example, 
     $\dg M_1 \models (\dg M_2 \Rightarrow \dg M_3)$
     states that if $\dg M_1 \models \dg M_2$, then $\dg M_1 \models \dg M_3$. 
@@ -1790,7 +1811,7 @@ Now some other examples.
 \section{Discussion}
 
 We have seen natural qualitative analogues of monotonicity and equivalence (\cref{sec:qual-monotone,sec:QIM-equivalence}). 
-Our key contributions in this section are a pair of two reasoning principles that can prove phenomena such as BN equivalence (\cref{theorem:bn-completeness}), and help us begin to make sense of cyclic structures from the opposite direction as studied in \cref{sec:qim-info}. 
+Our key contributions in this section are a pair of reasoning principles that can prove phenomena such as BN equivalence (\cref{theorem:bn-completeness}), and help us begin to make sense of cyclic structures from the opposite direction as studied in \cref{sec:qim-info}. 
 We also derive an impossibility result (\cref{theorem:mrf-bn-monotone-impossible}) showing that, while undireted and directed models are both monotonic in a way, there is no way to monotonically capture both at the same time.
 We then developed general notions of PDG entailment and equivalence (\cref{sec:pdg-logic}), and began to use them as the basis of a logic.
 

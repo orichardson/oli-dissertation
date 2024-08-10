@@ -11,14 +11,6 @@
 
 
 
-
-
-
-
-
-
-
-\newmaterial{%
 % So as not to keep anyone in suspense, the \emph{universal objective} after which this part is named 
 % So as not to keep anyone in suspense, this \emph{universal objective}
 % The \emph{universal objective} that is the subject of \cref{part:univ-objective} is to minimize inconsistency.  
@@ -26,7 +18,8 @@ The thesis of \cref{part:univ-objective} is that minimizing inconsistency is a \
     % \newmaterial{%
 % In what sense 
 It may seem plausible that this is a good idea, but what justifies calling it ``universal''?
-To a discerning eye, our usage of the word \emph{universal} 
+% To a discerning eye, our usage of the word \emph{universal} 
+Upon close examination, our usage of the word \emph{universal} 
 % captures  four closely related concepts. 
     can be read in several different ways. 
 Yet these different readings are closely related and reinforce one another; we argue that they are different aspects of a single coherent concept.
@@ -71,12 +64,25 @@ It follows that our formal definition of \emph{inconsistency} \cref{eqn:inconsis
 The technical results in the coming part (\cref{part:univ-objective}) demonstrate that
 % This second sense is bolstered by the third one: 
 many standard measures of discrepancy, loss, and conflict, can be viewed as measuring the inconsistency of the appropriate PDG (\cref{chap:one-true-loss}), 
-    so inconsistency can be viewed as a ``universal'' loss function.
-Meanwhile, many computations of interest---%
+    % so inconsistency can be viewed as a ``universal loss function''.
+\newmaterial{%
+    effectively positioning inconsistency as a ``universal loss function''.
+}%
+Furthermore, many computations of interest---%
 especially those that form the basis of decision making and modern machine learning and AI systems---%
 can be viewed as approaches to inconsistency minimization
     (\cref{chap:LIR}),
-    and so minimizing inconsistency is a ``universal objective'' in that the most celebrated algorithms in AI can be written as approaches to inconsistency minimization.
+    \commentout{%
+    and so minimizing inconsistency is a ``universal objective'' in that
+    the most celebrated algorthms in AI
+    can be viewed as approaches to inconsistency minimization.
+    }%
+    % some key algorithms in AI
+    % many key of the most important algorithms in AI
+    % hese algorithms can be derived as approaches to minimizing inconsistency.
+\newmaterial{%
+    revealing inconsistency to be a ``universal objective'' underlying key algorithms in AI. 
+}%
 
 \item 
 The way we measure inconsistency is natural and does not require arbitrary choices. Every aspect of the formula is well-motivated and can be defended from first principles (making it a ``universal construction''). 
@@ -117,7 +123,6 @@ Ultimately, minimizing inconsistency emerges as a universally appropriate, appli
 
 % Thus, it can be viewed as an empirical argument that, in practice, 
 % people do want to reduce inconsistency in essentially every context (meaning 1). 
-}%
 % Here, we argue that minimizing inconsistency is a \emph{universal objective}: it applies in almost any context, and reducing inconsistency is essentially always an appropriate thing to do.
 
 
