@@ -1398,27 +1398,6 @@ This motivates the following definition, which corrects for this by explicitly t
     Two PDGs are eqivalent if they respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
     Intuitively, $\dg M_1 \equiv \dg M_2$ iff $\dg M_1$ and $\dg M_2$ are equally (in)consistent no matter how one alters them, so long as both are altered in the same way. 
     
-\TODO[ TODO: introduce $(2) \dg M$ if not defined]
-    
-\begin{linked}{prop}{sem-equiv-properties}
-    \begin{enumerate}[parsep=0pt]
-        \item For all distributions $p(X)$, $p(X) + p(Y|X) \equiv p(X,Y)$. 
-        \item If $\dg M_1 \equiv \dg M_2$, then their mixtures are also equivalent:
-            $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$. 
-        \item $\dg M + \dg M \equiv (2) \dg M$. 
-            Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $(2) \dg M$ has all confidences doubled. 
-    \end{enumerate}
-\end{linked}
-
-% Taking only the binary aspect of this logic into account, we might want
-This last property is rather interesting, because it shows that the set-of-distribution semantics $\SD{-}$ of a PDG does not capture important distinctions between PDGs. 
-If $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then one might hope to find that
-$\dg M_1 \models \dg M_2$---but this is not true.%
-    \footnote{For instance, $\SD{\dg M} = \SD{(2) \dg M}$, but $\dg M \not\models (2) \dg M$.}
-% but it is the case that
-% but it is true, in this case, that
-% $(\infty) \dg M_1 \models (\infty) \dg M_2$. 
-    
 
 From its definition, it is clear that $\equiv$ is symmetric.
 Thus transitivity and reflexivity of $\models$ (above), imply that
@@ -1447,7 +1426,10 @@ However, it may also be too strict a requirement.
     This definition 
     % places the two PDGs on the same set of variables before comparison.
     effectively ensures that the two PDGs have the same set of variables before comparing them. 
-    All PDGs with $\balpha = \bbeta = 0$ are congruent to the empty PDG, modulo variables. 
+    All PDGs with $\balpha = \bbeta = \mat 0$ are congruent to the empty PDG, modulo variables,
+    \newmaterial{%
+    which (like the empty set of variables) we denote $\varnothing$. 
+    }%
     % 
     % \item 
     % A somewhat orthogonal concern is that variable identities. 
@@ -1457,6 +1439,63 @@ However, it may also be too strict a requirement.
     % there exists a bijection $\iota : \X_1 \to \X_2$ and an indexed family of bijections $\{\psi_{X} : \V(X) \to \V(\iota(X)) \}_{X \in \X_1}$ such that 
     % 
 % \end{itemize}
+
+\newmaterial{%
+\begin{linked}{prop}{cong-modX-equiv}
+    The relation $\cong_\X$ is an equivalence relation.
+\end{linked}
+
+
+
+% \pargraph{A Vector Space over PDGs.}
+    \label{sec:pdg-vecspace}
+Back in \cref{sec:pdg-combine}, we mentioned that PDGs
+    with sum effectively form a vector space. 
+With this definition of congruence, we can finally make this precise. 
+% Let $\mathfrak P$ 
+% We already have the definition of the operation 
+Addition of PDGs is of course provided by sum; 
+    scalar multiplication is done by scaling the confidence vectors $\balpha$ and $\bbeta$. 
+More precisely, to scale $\dg M$ by $r \in \mathbb R$, 
+is to form a PDG $(r) \dg M$
+with confidences $\beta_a' = r \cdot \beta_a$ and $\alpha_a' = r \cdot \alpha_a$, where $\beta_a$ and $\alpha_a$ are the confidences of arc $a$ in $\dg M$. 
+
+\begin{linked}{prop}{pdg-vecspace}
+    The collection of PDGs with finite confidences,
+        modulo the equivalence relation $\equiv_{\X}$,
+    together with sums and scalar multiplication as above, 
+        form a real vector space. 
+\end{linked}
+
+% With this definition in place, 
+% This notion of a vector space also allows us to
+% With that intuition in mind, 
+% This view of PDGs as elements of a vector 
+With that view of PDGs in mind, we can now describe
+    of the most important non-trivial ways that two PDGs can be equivalent. 
+}%
+
+\begin{linked}{prop}{sem-equiv-properties}
+    \begin{enumerate}[parsep=0pt]
+        \item For all distributions $p(X)$, $p(X) + p(Y|X) \equiv p(X,Y)$. 
+        \item If $\dg M_1 \equiv \dg M_2$, then their mixtures are also equivalent:
+            $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$. 
+        \item $\dg M + \dg M \equiv (2) \dg M$. 
+        In other words, duplicatng every arc (and associated data) is equivalent to doubling every confidence. 
+        % Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $(2) \dg M$ has all confidences doubled. 
+    \end{enumerate}
+\end{linked}
+
+% Taking only the binary aspect of this logic into account, we might want
+This last property is rather interesting, because it shows that the set-of-distribution semantics $\SD{-}$ of a PDG does not capture important distinctions between PDGs. 
+If $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then one might imagine that
+$\dg M_1 \models \dg M_2$.
+Yet this is not true in general
+    because, for instance,
+    $\SD{\dg M} = \SD{(2) \dg M}$, but $\dg M \not\models (2) \dg M$.
+% but it is the case that
+% but it is true, in this case, that
+% $(\infty) \dg M_1 \models (\infty) \dg M_2$. 
 
 
 
@@ -1504,13 +1543,14 @@ We can also add entailments together.
 % }%
 
 \begin{coro}
-    If $\dg M_1 \models 0$ and $\dg M_2 \models 0$, then $\dg M_1 + \dg M_2 \models 0$. 
-    This is because $0$ is an idempotent PDG:  $0 \equiv 0+ 0$. 
+    If $\dg M_1 \models \varnothing$ and $\dg M_2 \models \varnothing$, then $\dg M_1 + \dg M_2 \models \varnothing$. 
+    This is because $\varnothing$ is an idempotent PDG:
+    $\varnothing \equiv \varnothing + \varnothing$. 
 \end{coro}
 
 % 
 % \paragraph{\color{red} Trivial PDG.}
-Thus the PDGs that entail the trivial PDG are closed under addition. 
+Thus, the PDGs that entail the trivial PDG are closed under addition. 
 Do all PDGs have this property? 
 As a point of comparison, in propositional logic, every proposition entails true. 
 So, in this setting, is it the case that $\dg M \models 0$ for all $\dg M$---that is, do we have
@@ -1613,8 +1653,8 @@ It follows, for example, that the empty PDG entails any PDG that only contains v
 The bottom (or initial) element(s) of the entailment order are easily identified;
 like in propositional logic, they are the (most extreme) contradictions.
 Every such PDG is equivalent to
-$\dg{\False} := \begin{tikzpicture}
-    \node[dpadinline] (X) {$X$};
+$\dg{\False} := \begin{tikzpicture}[center base]
+    \node[dpad0] (X) {$X$};
     \draw[arr1, <<-] (X) to node[pos=0.7,inner sep=1pt, above]{$\delta_{0}$} + (-1,0);
     \draw[arr1, <<-] (X) to node[pos=0.7,inner sep=1pt, above]{$\delta_{1}$} +(1,0);
 \end{tikzpicture}$,
@@ -1632,41 +1672,39 @@ Then every PDG $\dg M$ with variables $\X \subseteq \mathcal U$ satisfies $\dg M
 % \subsection{``Propositional'' PDG Logic}
 
 
+\paragraph{Adding Classical Connectives.}
 % We now use the preorder defined in the previous section to build up an inconsistency-tolerant analogue of propositional logic. 
+
 Starting with the entailment operation and introducing usual connectives, we 
     can obtain a propositional logic whose primitive formulas are PDGs.
-We adopt the usual convention of writing 
-``$\models \varphi$'' if $\dg M \models \varphi$ for all PDGs $\dg M$. 
-% Observe that something nice happens: 
-% \begin{align*}
-%     0 \models \varphi \iff \models \varphi
-% \end{align*}
+\commentout{ We adopt the usual convention of writing ``$\models \varphi$'' if $\dg M \models \varphi$ for all PDGs $\dg M$. }%
 
 \commentout{%
-\textbf{Exploring the Set-of-Distribution Semantics.}
-% In a sense, PDGs themselves already encode a set of probabilistic models: the 
-% collection $\SD{\dg M}$ of distributions consistent with them. In many
-% ways, this seems like the intension of a formula formula.  
-Because $\SD{-}$ is a feature of just the observational/quantitative
-half of a PDG, let's ignore $\SDef$ for now, and assume $\gamma = 0$. 
+    \textbf{Exploring the Set-of-Distribution Semantics.}
+    % In a sense, PDGs themselves already encode a set of probabilistic models: the 
+    % collection $\SD{\dg M}$ of distributions consistent with them. In many
+    % ways, this seems like the intension of a formula formula.  
+    Because $\SD{-}$ is a feature of just the observational/quantitative
+    half of a PDG, let's ignore $\SDef$ for now, and assume $\gamma = 0$. 
 
-Taking only the binary aspect of this logic into account, we might want
-it to be the case that if $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then
-$\dg M_1 \models \dg M_2$. This is not true,%
-    \footnote{For instance, $\SD{\dg M} = \SD{(2) \dg M}$, but $\dg M \not\models (2) \dg M$.}
-% but it is the case that
-but it is true, in this case, that
-$(\infty) \dg M_1 \models (\infty) \dg M_2$. 
-Similarly, if 
+    Taking only the binary aspect of this logic into account, we might want
+    it to be the case that if $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then
+    $\dg M_1 \models \dg M_2$. This is not true,%
+        \footnote{For instance, $\SD{\dg M} = \SD{(2) \dg M}$, but $\dg M \not\models (2) \dg M$.}
+    % but it is the case that
+    but it is true, in this case, that
+    $(\infty) \dg M_1 \models (\infty) \dg M_2$. 
+    Similarly, if 
 }%
 
 
 % \subsubsection{Defining Classical Connectives}
-\paragraph{Adding Classical Connectives.}
 % \textbf{Approach 1.}
 As usual, we can introduce conjunction by
     defining $\dg M \models \varphi \land \varphi'$ iff
     $\dg M \models \varphi$ and $\dg M \models \varphi'$.
+We can also continue with $\lnot$ and then define other connectives
+    ($\lor, \Rightarrow, \Leftrightarrow$) in terms of ($\land, \lnot$).    
 
 \TODO
     
@@ -1685,12 +1723,14 @@ So, for example,
         \qquad
         \models (p(X) + q(X)) \Rightarrow p(X).
     \]
-We can also continue with $\lnot$ and then define other connectives
-    ($\lor, \Rightarrow, \Leftrightarrow$) in terms of ($\land, \lnot$).    
-But the usual definition of $\dg M \models \lnot \varphi$ iff 
-    $\dg M \not\models \varphi$,
-    is not so well-behaved.
-% For instance, ...
+% But the usual definition of ,
+But this definition of $\lnot$, 
+    \newmaterial{%
+    and the composite formulas built using it (e.g., those using $\Rightarrow, \Leftrightarrow$),
+    . 
+    }%
+    % is not so well-behaved.
+    % For instance, ...
 We know for example that $ \dg M \not \models (2) \dg M$ (at least, when $\balpha,\bbeta > \mat 0$), 
 yet it seems bizarre to say that $\dg M \models \lnot (2) \dg M$: the two PDGs say the same thing, just with different strengths! 
 
@@ -1827,6 +1867,7 @@ While we have only skimmed the surface of what can be done with these reasoning 
     \section{Proofs}
 
     \begin{lemma}
+            \label{lem:sum-info-formula}
         $\bbr{\dg M_1 + \dg M_2}_\gamma =
             \bbr{\dg M_1}_\gamma(\X_1) + \bbr{\dg M_2}_\gamma(\X_2) 
                 + \gamma \I_\mu(\X_1; \X_2| \X_1 \cap \X_2).$
@@ -1865,8 +1906,9 @@ While we have only skimmed the surface of what can be done with these reasoning 
                 &\ge \OInc_{\dg M_2}(\mu_2) + \SDef_{\dg M_2}(\mu_2) = \bbr{\dg M_2}_\gamma(\mu_2).
         \end{align*}
         % This shows us that
-        Let $\dg M'$ be an arbitrary PDG, with variables $\X'$.
-        With some calculation, we find that 
+        Let $\dg M'$ be an arbitrary PDG with variables $\X'$.
+        % With some calculation, we find that 
+        With some calculation, we find:
         \begin{align*}
             &\aar[\big]{\,\dg M_1 + \dg M'\,}_\gamma \\
                 &= \inf_{\mu \in \Delta\V(\X_1 \cup\X')}\, \Big( 
@@ -2075,6 +2117,122 @@ While we have only skimmed the surface of what can be done with these reasoning 
                 \qedhere
         \end{align*}
     \end{lproof}
+    
+    
+    \recall{prop:cong-modX-equiv}
+    \begin{lproof} \label{proof:cong-modX-equiv}
+        Reflexivity and symmetry are immediate. For transitivity, suppose that $\dg M_1 \cong_\X \dg M_2$ and $\dg M_2 \cong_\X \dg M_3$. 
+        This means that
+            $\dg M_1 + \X_2 \equiv \dg M_2 + \X_1$ and $\dg M_2 + \X_3 \equiv \dg M_3 + \X_2$. 
+        Since each pair of PDGs is equivalent in every context (by definition of $\equiv$),
+        % the first pair are equivalent if we include the variables $\X_3$ in both PDGs, and the second pair remain equivalent including the varialbes $\X_2$ in both PDGs. 
+        We can add $\X_3$ to the equivalence and $\X_1$ to the second one, to find
+        \[
+            \dg M_1 + \X_2 + \X_3 \equiv \dg M_2 + \X_1 + \X_3
+            % $ and $
+            \quad\text{and}\quad
+            \dg M_2 + \X_3 + \X_1 \equiv \dg M_3 + \X_2 + \X_1. 
+        \]
+        Combining the two with transitivity, we find that 
+        $\dg M_1 + \X_2 + \X_3 \cong \dg M_3 + \X_2 + \X_1$.
+        % Thus, $\dg M_1$ and $\dg M_3$ would be equivalent modulo variables, in the presence of $\X_2$.
+            
+        % Let $\mu(\X_1,\X_2,\X_3)$ be any joint distribution over the variables of all three PDGs. 
+        By \cref{theorem:sem-equiv},
+        it follows that
+        $
+            \bbr{\dg M_1 + \X_2 \cup \X_3}_\gamma(\mu) = 
+            \bbr{\dg M_3 + \X_2 \cup \X_1}_\gamma(\mu) 
+        $
+        for all $\gamma$ and every joint distribution $\mu(\X_1,\X_2,\X_3)$ over the variables of all three PDGs. 
+        % But we can also directly calculate that
+        % At the same time, by \cref{lem:sum-info-formula}, we also know that
+        At the same time, using the definition of the scoring function, we also know that
+        \begin{align*}
+            \bbr{\dg M_1 + \X_2 \cup \X_3}_\gamma(\mu) &= \bbr{\dg M_1}(\mu(\X_1))
+                + \gamma \H_\mu( \X_1 )
+                - \gamma \H_\mu( \X_2, \X_3, \X_1) \\ 
+                     \text{and}\quad
+        % \end{align*}
+        % and symmetrically
+        % \begin{align*}
+            \bbr{\dg M_3 + \X_2 \cup \X_1}_\gamma(\mu) &= \bbr{\dg M_3}(\mu(\X_3))
+                + \gamma \H_\mu(\X_3) - \gamma \H_\mu( \X_1, \X_2, \X_3).
+        \end{align*}
+        Setting the two equal to each other and adding $\gamma \H_\mu(\X_1,\X_2,\X_3)$ to both sides, we find that
+        $
+        \bbr{\dg M_1}(\mu(\X_1))
+            + \gamma \H_\mu( \X_1 ) = 
+        \bbr{\dg M_3}(\mu(\X_3))
+            + \gamma \H_\mu(\X_3).
+        $
+        % Since adding $\X_3$ to $\dg M_1$ has the effect of 
+        % adding $-\gamma \H_\mu(\X_3\mid \X_1)$ 
+        Therefore,
+        \begin{align*}
+        \bbr{\dg M_1 + \X_3}_\gamma(\mu(\X_1\cup\X_3))
+            &= \bbr{\dg M_1}_\gamma(\mu(\X_1)) - \gamma \H_\mu(\X_3 \mid \X_1) \\
+            &= \bbr{\dg M_1}_\gamma(\mu(\X_1)) + \gamma \H_\mu(\X_1) - \gamma \H_\mu(\X_3, \X_1) \\
+            &= \bbr{\dg M_3}_\gamma(\mu(\X_3)) + \gamma \H_\mu(\X_3) - \gamma \H_\mu(\X_3, \X_1) \\
+            &= \bbr{\dg M_3}_\gamma(\mu(\X_3)) - \gamma \H_\mu(\X_1 \mid \X_3) 
+            = \bbr{\dg M_1 + \X_3}_\gamma(\mu(\X_1\cup\X_3)).
+        \end{align*}
+        Finally, we can apply \cref{theorem:sem-equiv} in the other direction
+        (since every distribution $\mu'$ over $\X_1 \cup \X_3$ can be written as the marginal of some distribution over $\X_1 \cup \X_2 \cup\X_3$)
+        to conclude that $\dg M_1 + \X_3 \equiv \dg M_3 + \X_1$, meaning that
+        $\dg M_1 \cong_\X \dg M_3$. Thus, congruence modulo variables is transitive, making it an equivalence relation.
+    \end{lproof}
+    
+    
+    \recall{prop:pdg-vecspace}
+    \begin{lproof}\label{proof:pdg-vecspace}
+        \textbf{Well-Definedness.}
+        For completeness, it is important to first verify that PDG sums and scalar multiplication are well-defined 
+        on the equivalence class of PDGs.
+        %
+        In other words, we must show that, whenever $\dg M_1 \cong_\X \dg M_1'$ and $\dg M_2 \cong_\X \dg M_2'$, 
+        it is also true that $\dg M_1 + \dg M_2 \cong_\X \dg M_1' + \dg M_2'$ and  $(r) \dg M_1 \cong_\X (r) \dg M_1'$. 
+        This is straightforward.
+        Our two assumptions can be rewritten as
+        $\dg M_1 + \X_1' \equiv \dg M_1' + \X_1$
+        and 
+        $\dg M_2 + \X_2' \equiv \dg M_2' + \X_2$. 
+        Since entailments can be added (\cref{prop:entail-sum}), so can 
+            equivalences (as they are bi-directional entailments), and therefore
+        % For the first of the two (well-definedness of sums), 
+        $(\dg M_1 + \dg M_2) + (\X_1' \cup \X_2') \equiv (\dg M_1' + \dg M_2') + (\X_1 \cup \X_2)$,
+        proving the first of the two properties of interest.
+        % In the second case, 
+        % To do the same for scalar 
+        For the second property, 
+        % simply observe that 
+        we directly examine the scoring function to see that
+        \begin{align*}
+            \bbr{(r) (\dg M_1 + \X_1')}_\gamma (\mu)
+            % \bbr{(r) \dg M_1 + \X_1}_\gamma 
+            &= (r) (\bbr{\dg M_1}_\gamma + \gamma \H_\mu(\X_1))  - \gamma \H_\mu(\X_1, \X_1') \\
+            &= (r) (\bbr{\dg M_1'}_\gamma + \gamma \H_\mu(\X_1'))  - \gamma \H_\mu(\X_1, \X_1') \\
+            &= \bbr{(r) (\dg M_1' + \X_1)}_\gamma (\mu).
+        \end{align*}
+        % In the latter case, we know that  
+        % and thus $(r) (\dg M_1 + \X_1') = (r) \dg M_1 + \X_1' \equiv $
+        
+        % \textbf{Vector Space Properties.}
+        We now show that PDGs up to congruence modulo variables (with these operations)
+        satisfy the vector space axioms. 
+        
+        \textbf{Associativity and Commutativity.}
+        \textbf{Identity element.}
+        \textbf{Inverse elements.} !! not true for $\beta = \infty$. 
+        \textbf{Comptibility with scalar multiplication}
+        \textbf{Scalar identity is field identity.}
+        \textbf{Distributivity for scalar addition.}
+        \textbf{Distributivity for vector addition.}
+        
+        \TODO
+        
+    \end{lproof}
+
 
 
     \section{Negative Results and Anti-Conjectures}

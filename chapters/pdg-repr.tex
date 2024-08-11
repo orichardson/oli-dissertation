@@ -901,8 +901,25 @@ its sole purpose is to ensure that we do not accidentally identify variables in 
 	\]
 \end{defn}
 
+\newmaterial{%
+%%%%% WHAT'S MISSING IS THE FACT THAT THERE IS NO INVERSE TO ADDING A VARIABLE.
+This operation is called a \emph{sum}
+    in part because PDGs 
+    over a fixed set of variables $\X$
+    effectively form a real (infinite-dimensional)
+    vector space with this operation.
+We will make this precise in \cref{sec:pdg-vecspace}. 
+    % and scala multiplication for     
+    % in which addition is given by a sum of PDGs,
+    % scalar multiplication scales the confidence vectors
+    % vectors $\balpha$ and $\bbeta$, 
+    % and the identity element is the PDG containing only the variables $\X$. 
+}%
+% In addition to this \emp
 
-\commentout{
+
+
+\commentout{%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 As mentioned above, combining PDGs is simpler (and circumvents $\V$-compatibility) if PDGs are defined through a set of variables $\X$. 
 Given
 $\dg M_1 = (\X_1, \Ar_1, \mathbb P_1, \balpha_1,\bbeta_1)$ and
@@ -922,7 +939,7 @@ in this case, $\V$-compatibility is handled automatically by
 the meaning of variable equality. 
 While the formalism is simpler, this approach really just sweeps the issue under the rug. 
 For instance, one needs to take care that two variables are not implicitly considered unequal simply because because they come from different contexts.
-}%
+}%%%%%%%%%%%%%%%%%%%%%%%%
 % and nor are they considered equal simply because they happen to have been given the same generic name ($X$) by two people modeling different things.  
 
 % Quantitatively, the resulting PDG is 
