@@ -337,10 +337,122 @@ For PDGs of bounded treewidth, the two problems are equivalent, and can be solve
 % \begin{subappendices}
 % \relax
 % \section{Reductions}
-\section{The Reductions}
+\section{Proofs and Reductions}
     \label{proofs:the-reductions}
-    
-\subsection{Hardness }
+   
+    \recall{theorem:approx-infer}
+    \begin{lproof}  \label{proof:approx-infer}
+        \Cref{theorem:main} gives us an approximation to a calibrated
+        \actree\ that represents the distribution of interest,
+        and \cref{lem:logeps-conditioner} allows us to approximate conditional probabilities
+        once we can approximate unconditional ones.     
+        The final ingredient is tto approximate unconditional
+        probabilities using an approximate \actree. 
+        
+        Concretely, suppose that we are
+        looking to find $\mu^*(X{=}x)$, where $\mu^* \in \bbr{\dg M}_\gamma$. 
+        Once we have a \cactree\ $\bmu$ that represents $\mu^*$, 
+        calculating a marginal $\mu^*(X{=}x)$ (exactly) from $\bmu$ 
+        can be done with standard methods \parencite[][\S 10.3.3]{KF09}.
+        In the worst case, it requires taking a marginal of every cluster,
+        which can be done in $O(|\V\C|) \subseteq O(N V^{T+1})$ arithmetic operations. 
+        
+        The wrinkle is that $\bmu$ only \emph{approximately} represents $\mu^*$, 
+            in the sense that there is some $\bmu^*$ that does represent $\mu^*$ such that the L2 norm of $\bmu^* - \bmu$ is small. 
+        As usual, we write $\bmu_C$ for the components of $\bmu$ that
+            are associated with cluster $C$.
+        For each $C \in \C$, let $E_{C}$ denote the event that 
+        $(X \cap C) = x|_{C}$. 
+        That is, the variables of $X$ that lie in cluster $C$ take the values
+        prescribed by $x$. Then    
+        \begin{align*}
+            \big| \Pr\nolimits_{\!\bmu}(X{=}x) - \Pr\nolimits_{\!\bmu^*}(X{=}x) \big|
+            ~&\le~ \sum_{C \in \C} \big|
+                \Pr\nolimits_{\!\bmu^*_C}(E_C) - 
+                \Pr\nolimits_{\!\bmu_C}(E_C)
+            \big|
+            \\
+            ~&\le~
+            \sum_{C \in \C} \big\Vert \bmu^*_C - \bmu_C \big\Vert_1
+            ~=~
+            \big\Vert \bmu^* - \bmu \big\Vert_1
+            ~.
+        \end{align*}
+        
+        
+        Applying the L2-L1 norm inequality to the vector $\bmu - \bmu^*$, 
+        we find
+        \begin{align*}
+            \big\Vert \bmu - \bmu^* \big\Vert_1
+            \le 
+            \big\Vert \bmu - \bmu^* \big\Vert_2 \sqrt{|\V\C|}
+            \le \sqrt{N V^{T+1}} \big\Vert \bmu - \bmu^* \big\Vert_2.
+        \end{align*}
+        Thus, to answer unconditional queries about $X$ within (absolute) precision
+        $\epsilon$, it suffices to find a \actree\ within $\epsilon / \sqrt{N V^{T+1}}$
+        of $\bmu^*$ by L2 norm. 
+        
+        From the proof of \cref{theorem:main}, we know that we can find
+        such a $\bmu$ 
+        in
+        \begin{align*}
+            O\bigg( 
+                (N{+}A)^4 V^{4(T+1)}
+                \log \Big( \frac{(N{+}A)^4 V^{4(T+1)}\cdot N^{\frac12} V^{\frac{T+1}{2}}}{\epsilon} \frac{\beta^{\max}}{\beta^{\min}} + \log \frac1{p^{\min}} \Big) 
+            \bigg) \\
+            ~\subseteq~
+            \tilde O\bigg( 
+                (N{+}A)^4 V^{4(T+1)}
+                \Big(
+                \log \frac1\epsilon + \log \frac{\beta^{\max}}{\beta^{\min}}\Big) 
+            \bigg) \\
+            ~\subseteq~
+            \tilde O_{\text{BP}}\Big(|\V\!\Ar + \V \C|^{4}\log \frac{1}{\epsilon} \Big)
+        \end{align*}
+        arithmetic operations,
+        which dominates the number of operations required to then find the marginal probability $\Pr_{\!\bmu}(X{=}x)$ given the \actree\ $\bmu$.
+        Thus, the complexity of finding unconditional probabilities is the same. 
+        The arithmetic operations need to be done to precision at most $k \in O(\log\nf1\epsilon)$, and can be done in time $O(k\log k)$. 
+        Thus, unconditional inference can be done in 
+        \begin{align*}
+            O\bigg( 
+                \begin{matrix}{}(N{+}A)^{4.5} \\ V^{4.5(T+1)}\end{matrix}
+                \log \Big( \frac{(N{+}A)^4 V^{4(T+1)}\cdot N^{\frac12} V^{\frac{T+1}{2}}}{\epsilon} \frac{\beta^{\max}}{\beta^{\min}} + \log \frac1{p^{\min}} \Big) 
+                \log\frac{1}{\epsilon} \log\log\frac{1}{\epsilon}
+            \bigg) \\
+            ~\subseteq~
+            \tilde O\bigg( 
+                (N{+}A)^4 V^{4(T+1)}
+                \Big(
+                \log \frac1\epsilon + \log \frac{\beta^{\max}}{\beta^{\min}}\Big) 
+                \log \frac1\epsilon
+            \bigg)
+            \quad\text{time}. 
+        \end{align*}
+        
+        \def\mustar{\mu^{\mskip-2mu*\!}}
+        Now that we have characterized the cost of unconditional inference, we can apply \cref{lem:logeps-conditioner} with $\Phi := (N+A)^4 V^{4(T+1)}$,
+        $k = 2$,
+        $K_0 = 0$, 
+        $K_1 := \log \Phi + \log \frac{\beta^{\max}}{\beta^{\min}} + \log \log \frac1{p^{\min}}$, 
+        and
+        $K_2 = 1$
+        to find that conditional probabilities can be found in
+        \begin{align*}
+            \tilde O \bigg(\! (N{+}A)^4\,V^{4(T+1)} 
+            \log \frac1{\epsilon\,\mustar(x)}
+            \Big(
+                  \log \frac{\beta^{\max}}{\beta^{\min}} 
+                   + \log \frac1{\epsilon\, \mustar(x)} 
+             \Big)\bigg) 
+            \quad \text{time},
+        \end{align*}
+        where $\mustar(x)$ is shorthand for
+        $\mu^*(X{=}x)$. 
+    \end{lproof}
+        
+
+\subsection{Hardness}
     \label{proofs:hardness-results}
 
 We now turn to \cref{theorem:consistent-NP-hard}. We begin by proving
@@ -398,6 +510,7 @@ by reduction to SAT and \#SAT, respectively.
 
 	\begin{iclaim} \label{claim:separate-inc-varphi}
 		$\OInc_{\dg M_\varphi}\!(\mu) =
+        \singlespacingmath
 		\begin{cases}
 			0 & \text{if}~  \Supp \mu \subseteq \bbr{\varphi} \times \{ \mat 1\} \\
 			\infty & \text{otherwise.}
@@ -417,7 +530,7 @@ by reduction to SAT and \#SAT, respectively.
         \]
 		% \quad\parbox{1.4in}{\centering and in particular, \\ if $\Omega$ is binary,}\quad
         and in particular, if $\Omega$ is binary, 
-        \[
+        \[\singlespacingmath
 			\kldiv[\big]{\mu(\Omega)}{\delta_\omega} = \begin{cases}
 				0 &  \text{if}~\mu(\omega) = 1 ; \\
 				\infty & \text{otherwise}.
@@ -435,11 +548,12 @@ by reduction to SAT and \#SAT, respectively.
 		Condensing and rearranging slightly, we have shown that
 		\[
 			\OInc_{\dg M_\varphi}(\mu) =
+            \singlespacingmath
 			\begin{cases}
 				0 & \text{if}~  \mat x \models \varphi~\text{and}~\mat c = \mat 1
 				 	~\text{for all}~(\mat x, \mat c) \in \Supp \mu\\
 				\infty & \text{otherwise}
-			\end{cases}~.
+			\end{cases}~.\popQED
 		\]
 	\end{lproof}
 

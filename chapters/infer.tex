@@ -1570,19 +1570,19 @@ we are optimistic that
 
 \section{Proofs}
 
-Our results fall broadly into three categories:
-\begin{enumerate}
+The results of \cref{chap:infer} fall broadly into two categories:
+\begin{enumerate}[nosep]
     \item Foundational results about PDGs that we needed to prove to get an
         inference procedure, but which are likely to be generally useful
         for anyone working with PDGs
             (\cref{proofs:novel-pdg-results});
     \item Correctness and efficiency results, showing that the optimization
         problems we present in the body of the chapter give the correct answers,
-        and that they can be formulated and solved in polynomial time;
-            (\cref{proofs:expcone-efficient-correct})
-    \item Hardness results, i.e., \cref{theorem:inf-via-inc-oracle} and
-    the constructions and lemmas needed to support it
-        (\cref{proofs:hardness-results}).
+        and that they can be formulated and solved in polynomial time
+            (\cref{proofs:expcone-efficient-correct}).
+    % \item Hardness results, i.e., \cref{theorem:inf-via-inc-oracle} and
+    % the constructions and lemmas needed to support it
+    %     (\cref{proofs:hardness-results}).
 \end{enumerate}
 
 % \subsection{Novel Results about PDGs}
@@ -3448,116 +3448,6 @@ solve the $\zogamma$-inference problem, and $0^+$-inference, respectively.
     \end{align*}
 \end{lproof}
 
-\recall{theorem:approx-infer}
-\begin{lproof}  \label{proof:approx-infer}
-    \Cref{theorem:main} gives us an approximation to a calibrated
-    \actree\ that represents the distribution of interest,
-    and \cref{lem:logeps-conditioner} allows us to approximate conditional probabilities
-    once we can approximate unconditional ones.     
-    The final ingredient is tto approximate unconditional
-    probabilities using an approximate \actree. 
-    
-    Concretely, suppose that we are
-    looking to find $\mu^*(X{=}x)$, where $\mu^* \in \bbr{\dg M}_\gamma$. 
-    Once we have a \cactree\ $\bmu$ that represents $\mu^*$, 
-    calculating a marginal $\mu^*(X{=}x)$ (exactly) from $\bmu$ 
-    can be done with standard methods \parencite[][\S 10.3.3]{KF09}.
-    In the worst case, it requires taking a marginal of every cluster,
-    which can be done in $O(|\V\C|) \subseteq O(N V^{T+1})$ arithmetic operations. 
-    
-    The wrinkle is that $\bmu$ only \emph{approximately} represents $\mu^*$, 
-        in the sense that there is some $\bmu^*$ that does represent $\mu^*$ such that the L2 norm of $\bmu^* - \bmu$ is small. 
-    As usual, we write $\bmu_C$ for the components of $\bmu$ that
-        are associated with cluster $C$.
-    For each $C \in \C$, let $E_{C}$ denote the event that 
-    $(X \cap C) = x|_{C}$. 
-    That is, the variables of $X$ that lie in cluster $C$ take the values
-    prescribed by $x$. Then    
-    \begin{align*}
-        \big| \Pr\nolimits_{\!\bmu}(X{=}x) - \Pr\nolimits_{\!\bmu^*}(X{=}x) \big|
-        ~&\le~ \sum_{C \in \C} \big|
-            \Pr\nolimits_{\!\bmu^*_C}(E_C) - 
-            \Pr\nolimits_{\!\bmu_C}(E_C)
-        \big|
-        \\
-        ~&\le~
-        \sum_{C \in \C} \big\Vert \bmu^*_C - \bmu_C \big\Vert_1
-        ~=~
-        \big\Vert \bmu^* - \bmu \big\Vert_1
-        ~.
-    \end{align*}
-    
-    
-    Applying the L2-L1 norm inequality to the vector $\bmu - \bmu^*$, 
-    we find
-    \begin{align*}
-        \big\Vert \bmu - \bmu^* \big\Vert_1
-        \le 
-        \big\Vert \bmu - \bmu^* \big\Vert_2 \sqrt{|\V\C|}
-        \le \sqrt{N V^{T+1}} \big\Vert \bmu - \bmu^* \big\Vert_2.
-    \end{align*}
-    Thus, to answer unconditional queries about $X$ within (absolute) precision
-    $\epsilon$, it suffices to find a \actree\ within $\epsilon / \sqrt{N V^{T+1}}$
-    of $\bmu^*$ by L2 norm. 
-    
-    From the proof of \cref{theorem:main}, we know that we can find
-    such a $\bmu$ 
-    in
-    \begin{align*}
-        O\bigg( 
-            (N{+}A)^4 V^{4(T+1)}
-            \log \Big( \frac{(N{+}A)^4 V^{4(T+1)}\cdot N^{\frac12} V^{\frac{T+1}{2}}}{\epsilon} \frac{\beta^{\max}}{\beta^{\min}} + \log \frac1{p^{\min}} \Big) 
-        \bigg) \\
-        ~\subseteq~
-        \tilde O\bigg( 
-            (N{+}A)^4 V^{4(T+1)}
-            \Big(
-            \log \frac1\epsilon + \log \frac{\beta^{\max}}{\beta^{\min}}\Big) 
-        \bigg) \\
-        ~\subseteq~
-        \tilde O_{\text{BP}}\Big(|\V\!\Ar + \V \C|^{4}\log \frac{1}{\epsilon} \Big)
-    \end{align*}
-    arithmetic operations,
-    which dominates the number of operations required to then find the marginal probability $\Pr_{\!\bmu}(X{=}x)$ given the \actree\ $\bmu$.
-    Thus, the complexity of finding unconditional probabilities is the same. 
-    The arithmetic operations need to be done to precision at most $k \in O(\log\nf1\epsilon)$, and can be done in time $O(k\log k)$. 
-    Thus, unconditional inference can be done in 
-    \begin{align*}
-        O\bigg( 
-            \begin{matrix}{}(N{+}A)^{4.5} \\ V^{4.5(T+1)}\end{matrix}
-            \log \Big( \frac{(N{+}A)^4 V^{4(T+1)}\cdot N^{\frac12} V^{\frac{T+1}{2}}}{\epsilon} \frac{\beta^{\max}}{\beta^{\min}} + \log \frac1{p^{\min}} \Big) 
-            \log\frac{1}{\epsilon} \log\log\frac{1}{\epsilon}
-        \bigg) \\
-        ~\subseteq~
-        \tilde O\bigg( 
-            (N{+}A)^4 V^{4(T+1)}
-            \Big(
-            \log \frac1\epsilon + \log \frac{\beta^{\max}}{\beta^{\min}}\Big) 
-            \log \frac1\epsilon
-        \bigg)
-        \quad\text{time}. 
-    \end{align*}
-    
-    \def\mustar{\mu^{\mskip-2mu*\!}}
-    Now that we have characterized the cost of unconditional inference, we can apply \cref{lem:logeps-conditioner} with $\Phi := (N+A)^4 V^{4(T+1)}$,
-    $k = 2$,
-    $K_0 = 0$, 
-    $K_1 := \log \Phi + \log \frac{\beta^{\max}}{\beta^{\min}} + \log \log \frac1{p^{\min}}$, 
-    and
-    $K_2 = 1$
-    to find that conditional probabilities can be found in
-    \begin{align*}
-        \tilde O \bigg(\! (N{+}A)^4\,V^{4(T+1)} 
-        \log \frac1{\epsilon\,\mustar(x)}
-        \Big(
-              \log \frac{\beta^{\max}}{\beta^{\min}} 
-               + \log \frac1{\epsilon\, \mustar(x)} 
-         \Big)\bigg) 
-        \quad \text{time},
-    \end{align*}
-    where $\mustar(x)$ is shorthand for
-    $\mu^*(X{=}x)$. 
-\end{lproof}
 
 \section{The Convex-Concave Procedure, and Implementation Details}
     \label{sec:cccp}
