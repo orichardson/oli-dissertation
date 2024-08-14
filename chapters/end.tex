@@ -27,20 +27,24 @@ Indeed, learning, inference, and
 
 In \cref{part:algo-logic-complexity}, we saw how these two views of PDGs---as a very general kind of probabilistic model, and as a universal objective function (the foci of \cref{part:univ-model,part:univ-objective}, respectively) are in fact two faces of the same concept, both semantically and algorithmically (\cref{chap:inc-infer-connection}). 
 We also gave polynomial algorithm for inference in PDGs that have bounded treewidth (\cref{chap:infer}), finally solving both problems. 
-{\color{red}%
+% {\color{red}%
 We also develop useful principles for manipulating PDGs, 
     allowing them to function as a visual proof language (\cref{chap:reason}).
-}%
+% }%
 
 
 % \commentout{%
-\paragraph{Sewing Things Back Together, with Self-Consistency.}
+\paragraph{Sewing things back together, with self-consistency.}
 \def\selfconsist{\xi}
 We conclude our summary by reframing a handful of our simpler results in slightly different form.
 A PDG's degree observational inconsistency is a number in $[0,\infty]$;
 it is also additive, in the sense that $\aar{\dg M_1 + \dg M_2} = \aar{\dg M_1} + \aar{\dg M_2}$ when $\dg M_1, \dg M_2$ are PDGs over disjoint sets of variables. 
-As shown in \cref{chap:conf},
-additive measures in the range $[0,\infty]$ 
+\iffoundations
+    As shown in \cref{chap:conf}, additive measures
+\else
+    Additive measures
+\fi
+in the range $[0,\infty]$ 
 can be equivalently represented as multiplicative measures in $[0,1]$.
 % and the set of such isomorphisms itself is isomorphic to $(0,\infty)$. 
 % For $k > 0$, 
@@ -78,7 +82,7 @@ The following facts are either immediate or follow immediately from a result in 
     \item 
     A flat out logical contradiction has $\selfconsist\{\False\} = 0$ because it is completely inconsistent, while a collection of fully consistent probabilistic information $\dg M$ (such as a Bayesian Network or probability distribution) has $\selfconsist\{ \dg M \} = 1$. 
 
-    \item If $U$ is an event, then $\selfconsist\{U\} = {\singlespacing\begin{cases}
+    \item If $U$ is an event, then $\selfconsist\{U\} = {\singlespacingmath \begin{cases}
         0 & \text{ if } U = \emptyset \\
         1 & \text{ if } U \ne \emptyset
     \end{cases}}$
@@ -144,7 +148,7 @@ But the theory is still in its infancy,
     and we are still a far away from having fully developing its limits and applications. 
 We conclude with just a few of these avenues for future work.
 
-\paragraph{Capturing Even More Modeling Formalisms.}
+\paragraph{Capturing even more modeling formalisms.}
 There is no reason to think that the material presented here reflects the limits of what PDGs can represent. 
 %
 For instance, PDGs can capture relations (\cref{sec:constraint-widget}), so it makes sense to wonder whether they can capture relational databases
@@ -175,7 +179,7 @@ So far, even less said for a relationship between PDGs and transformers.
 % Owing to their capabilities and dominance,
 Still, it is a question worth taking seriously, if one believes in the promise of PDGs as a foundation for modern probabilistic AI systems.      
 
-\paragraph{Further Investigation into Qualitative PDGs.}
+\paragraph{Further investigation into qualitative PDGs.}
 \Cref{sec:qim-info} explores how one (perhaps surprising) way in which the qualitative information in a PDG is deeply related to the notion of mechanism independence (\cref{defn:qim}).
 We suspect there may be more to the story. 
 % First, an analogue of the principle of maximum entropy leads us to
@@ -198,7 +202,7 @@ can we square this with our understanding of $\alpha$ as representing independen
  % This observation raises more questions than it answers, 
 
 
-\paragraph{Further Investigation into PDG Inferece.}
+\paragraph{Further investigation into PDG inference.}
 As mentioned in the conclusion to \cref{chap:infer}, we now have an $\tilde O(N^{2.9})$ approach to inference in the case of bounded treewidth,
 % This is still a significant gap, that leaves PDGs trailing far behind other graphical models with analogous inference approaches
 which is still significantly worse than the $\tilde O(N^1)$ algorithms for other graphical models with analogous inference approaches.
@@ -216,7 +220,7 @@ The inference problem remains open in cases where structural information plays a
 There are many different approaches to inference in traditional graphical models;
 see Chapters 9-14 of \citet{KF09} for a survey of them.
 Our approach to inference in PDG is closely related to the techniques developed in Chapter 11. But what of analogues of the other approaches? 
-Particle-based and MCMC methods in particular (the analogue of Chaapter 12 [ibid])
+Particle-based and MCMC methods in particular (the analogue of Chapter 12 [ibid])
 for PDGs remain almost completely unexplored; can these techniques be adapted for use in PDGs?
 %    
 %
@@ -245,7 +249,7 @@ Might it be possible to automate the
     
 % \paragraph{Other Approaches to (Approximate) Inference.}
 % \paragraph{Deeper Exploration of Theoretical Connections to Other Fields.}
-\paragraph{Deepening Theoretical Roots.}
+\paragraph{Deepening theoretical roots.}
 % There's no reason to think that this is 
 % 
 \iffoundations
@@ -260,7 +264,6 @@ Might it be possible to automate the
 \else
     % \TODO
     %
-    \newmaterial{%
     An astute reader with training in pure mathematics may have noticed a similarity between PDGs and (commutative) diagrams.
     Indeed, technically speaking, there is a simple definition of a PDG as a diagram (i.e., a certain kind of functor) in a category of probabilistic transitions. 
     This observation raises many interesting questions about the category theory of PDGs, which we are only just beginning to explore.
@@ -272,12 +275,11 @@ Might it be possible to automate the
     We suspect such a connection may exist; after all, there are elegant characterizations of relative entropy \citep{baez2014bayesiancharacterizationrelativeentropy} 
         and of information loss \citep[Theorem 12.4.9]{leinster2021entropy}, which are the building blocks of PDG semantics, in categorical terms. 
     Making this connection properly may also require developing a more general theory of confidence, which is also the subject of ongoing work. 
-    }%
 \fi
 
 Yet the most important future work lies in application rather than theory.
 
-\section{Impact: Implementing and Applying the Theory}
+\section{Implementing and Applying the Theory}
 
 % The material here has been conceptual, mathematically technical, and sometimes philosophical.
 This material has been conceptual, mathematical, and at times philosophical.
@@ -309,7 +311,7 @@ a secondary artifact of this research program has been a general-purpose Python 
     % in the discrete case
     {\small\url{https://github.com/orichardson/pdg}}.
 % I cannot highly enough recommend implementing one's math; to a reader who wonders why bother testing something when you could prove it, I say it's better to have two ways of understanding things than it is to have just one. 
-% Implementing the math has been imensely helpful for the development of these ideas---after all, it's better to have two ways of understanding things than it is to have just one. 
+% Implementing the math has been immensely helpful for the development of these ideas---after all, it's better to have two ways of understanding things than it is to have just one. 
 %
 % But much of the work
 % While some of the ideas 
@@ -365,10 +367,12 @@ an inhumanly clever psychopath to maximize some metric of profit, productivity, 
 % The concern stems from 
 % Are there natural, universal values?
 % According to the standard microeconomic theory, the answer is no: an agent is entitled to its own preference, morals, goals, and values. 
-According to the standard microeconomic theory, an agent is entitled to its own preferences and values.
-Unfortunately, with deft implementation and taken to an extreme, most values would be catastrophic for humans \citep{bostrom-superintelligence}. 
+According to standard economic theory, an agent is entitled to its own preferences
+    \newmaterial{(in the form of a utility function)}.
+Unfortunately, with deft implementation and taken to an extreme, most 
+    utility functions would be catastrophic for humans \citep{bostrom-superintelligence}. 
 % Unfortunately most values, implemented deftly and taken to an extreme, would be catastrophic for humans.
-It would seem our only hope is to align the AI to values of its users;
+It seems that we need to align the AI to values of its users;
     % current practice is therefore to fine-tune trained models to imbue them
     hence the effort to imbue models with 
     ``human preferences'' \citep{christiano2017deep}.
@@ -381,22 +385,19 @@ It would seem our only hope is to align the AI to values of its users;
 % what if there's something wrong about the way we think about value?
 % But what if our very understanding of value was flawed.
 But is this fair?
-Will it privilege high-minded ideals such as truth?
-Do we want to give the enormous responsibility of selecting AI values to the users who provide the most feedback?
+Will it privilege ideals such as truth?
+% Do we really want to entrust the enormous responsibility of selecting AI values to the users who provide the most feedback?
+Do we really want to model AI values on the preferences of users who most actively provide feedback?
 % The outlook appears bleak.
-\newmaterial{%
 Our prospects of finding the ``right values'' appear bleak.
-}%
 
 Yet, in light of what we have seen in this thesis, there may be another way to approach the problem.
 It is easier to think critically about beliefs than values.
 While beliefs can be 
-\newmaterial{%
     tested by reality and supported by argument,
     % it is difficult 
     % in general to take a principled stand in favor of a value.
-    the same is not true of values in general. 
-}%
+    the same is not true of preferences or values in general. 
 % it is difficult in general to take a principled stand in favor of a value.
 Yet \emph{the desire to hold
     consistent beliefs} is a uniquely principled kind of value,
@@ -405,22 +406,23 @@ Yet \emph{the desire to hold
 %
 %
 % Moreover, much of the current practice of building AI systems can be done with this value alone. 
-\newmaterial{%
-Moreover, by appealing only to beliefs (which are subject to analysis and revision) and this one particularly special value, we can still 
-    %  much of the current practice of artificial intelligence can be done .
-    recover the core elements of modern artificial intelligence (as shown in \cref{chap:one-true-loss,chap:LIR}). 
-% Moreover, this value alone (together with much of the current practice of artificial intelligence can be done by appeal to this value alone.
-}%
-% By representing inconsistent beliefs, 
-So perhaps our AIs do not need to take a mathematically undefended stand in the space of values at all. 
-Maybe, if we are careful, we may be able to lean 
-    solely on (possibly inconsistent)
-    beliefs and a single \emph{universal} value: 
-% \begin{center}
-% \\\hfill
-the pursuit of self-consistency.
-% \end{center}
-% As we have seen, this way of thinking provides deep insights into 
+Moreover, by appealing only to beliefs (which are subject to audit, analysis, and testing)
+    and this one particularly palatable value, we can still 
+    %  much of the current practice of artificial intelligence can be done 
+    recover many of the core elements of modern artificial intelligence
+    (including all manner of learning and inference procedures, as shown in \cref{chap:one-true-loss,chap:LIR}). 
+%
+%
+% So perhaps our AIs do not need to take a mathematically undefended stand in the space of values at all. 
+So perhaps ``value alignment'' is the wrong way to think about the problem: maybe AI does not require
+% (mathematically undefended)
+utilities at all.  
+% take a mathematically undefended stand in the space of at all. 
+% While 
+Perhaps it could be safer to build AI systems primarily using 
+    trustworthy or testable (if possibly inconsistent)
+    beliefs and a single \emph{universal} objective: 
+    the pursuit of self-consistency.
 
 
 \commentout{

@@ -462,6 +462,10 @@
    \belowdisplayskip \abovedisplayskip
 }
 
+
+\newcommand{\singlespacingmath}{ \renewcommand{\baselinestretch}{1.208333}\selectfont}
+\newcommand{\singlespacingplusmath}{ \renewcommand{\baselinestretch}{1.5}\selectfont}
+
 \newcommand{\realsinglespacing}{%
   \let\CS=\@currsize\renewcommand{\baselinestretch}{1.0}\CS}
 \newcommand{\singlespacing}{%

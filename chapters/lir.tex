@@ -739,7 +739,7 @@ But it also does something interesting at the two extremes.
 At on extreme, if \textsc{Refocus} produces small $\chi$
     then it is well-approximated by a single gradient descent step of size $\chi$;
     thus, when control values are small, LIR performs local gradient-based search.
-At the oppposite extreme, if $\chi$ is infinite in every component,
+At the opposite extreme, if $\chi$ is infinite in every component,
     then the final line
 % then $\chi=\infty$ finds
     % a parameter setting that globally minimizes inconsistency
@@ -810,7 +810,7 @@ some historically important algorithms that are instances of LIR.
 % \section{Local Inconsistency Resolution in Machine Learning}
 \section{Learning, Inference, and the Pursuit of Consistency}
 
-In \cref{chap:one-true-loss}, we found that standard loss fuctions can be viewed as the inconsistency of a PDG.
+In \cref{chap:one-true-loss}, we found that standard loss functions can be viewed as the inconsistency of a PDG.
 This observation is suggestive, but doesn't say anything about what should be do once you calculate the degree of inconsistency. 
 % The primary use of a loss function is to train statistical models using data. 
 The primary motivation for the LIR algorithm has been to operationalize
@@ -1368,7 +1368,7 @@ then the inconsistency becomes $-\mathcal L^{\text{GAN}}$, which is easier to ca
 % while the generator has control over $G$.
 
 \textbf{The Generator's Focus.}
-When the focusis on generation, we have control over $G$.
+When the focus is on generation, we have control over $G$.
 If we ignore $D$ attends only to $e$, then inconsistency
     is the Jensen-Shannon Divergence between $G$ and $\pdata$,
     coinciding with a standard argument for GANs. 
@@ -1452,7 +1452,7 @@ $
 \{ m_{X \sto a}, m_{a \sto X}\}_{X \in \X, a \in \partial X},
 $, 
 two for each pair $(a, X)$ of factor $a$ and variable $X$ in the scope of $X$.
-Each message is an (unnormalized) distribution over the correspondig variable ($X$).
+Each message is an (unnormalized) distribution over the corresponding variable ($X$).
 % each of which are (unnormalized) distributions over $X$,
 % for each pair $(a, X)$ with $a \in \partial X$,
 % for each pair $(X, a \in \partial X)$.
@@ -1708,7 +1708,7 @@ The traditional depiction of messages
     % \]
     The attention mask $\varphi_j$ for focus $j$ is given by:
     \[
-        \varphi_j(a) :=  {\singlespacing\begin{cases}
+        \varphi_j(a) :=  {\singlespacingplusmath \begin{cases}
             \binom 11 & \text{ if } a \in A_{j} \setminus C_{j} \\
             \binom 10 & \text{ if } a \in C_{j} \\
             \binom 00 & \text{otherwise}
@@ -2030,7 +2030,7 @@ Like the GAN objective however, these decision rules look like two-player games,
 % We leave a careful exploration of to future work.
 We leave a careful exploration of this avenue to future work.
 
-We conclude our discussion of decision theory with a high-level obseravation. 
+We conclude our discussion of decision theory with a high-level observation. 
 One's preferences, beliefs, and actions can be jointly modeled with a PDG. 
 % Suppose that the 
 When that PDG is inconsistent (i.e., there is a conflict between your preferences, beliefs, and actions),
@@ -2056,13 +2056,11 @@ Observe that these two resolutions to the internal conflict are two halves of th
 Finally, the third way to resolve the inconsistency involves changing your beliefs about what state you are in, i.e., wishful thinking. 
 Unfortunately, this kind of self delusion typically only leads to more inconsistency in the future, and is seldom a good idea.  
 % This is one more reason that it can be beneficial to carefully select only small local of the picture to control while resolving inconsistencies.
-\newmaterial{%
 It also illustrates how,
     in the process of resolving inconsistency,
     restricting control to a small set of parameters can be 
         appropriate (and not just a computational shortcut).
     % while resolving inconsistency.
-}%
 
 
 \section{Discussion and Future Work}
@@ -2383,7 +2381,7 @@ which is convex in $(\mat A, b, \frac1{\sigma^2})$.  Now, for the proof.
     % Since $\varphi \ge 0$ and $\bbeta  > 0$ this is effectively just the inconsistency of a PDG.
 \end{lproof}
 
-\textbf{\cref{prop:bp}.}\textit{
+\textbf{\cref{prop:bp}.}{\it
 If \textsc{Refocus} selects a view non-deterministically from
 $\{ a\sto\mskip-2mu X, X\! \sto a, X\}_{X \in \X, a \in \partial X}$
 with $\varphi, \chi$ as above, and $\gamma=1$, then

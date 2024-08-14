@@ -400,9 +400,9 @@ There, cross entropy loss is perhaps even more dominant---and it is essentially 
 instantiation of log-likelihood, which in practice is the most common setting 
 for machine learning altogether.  Analogous results hold for all combinations
 of the three axes we have described:
+{\small
 \[
-    \singlespacing
-    \small
+    \singlespacingmath
     \bigg\{
     \begin{array}{@{}c@{}}
         \text{unconditional}\\
@@ -435,8 +435,9 @@ of the three axes we have described:
         \text{partial info}\\
         \text{(latent variable)}
     \end{array}
-    \bigg\}\!;
+    \bigg\};
 \]
+}
 See figure \cref{fig:entropy-cube} for an illustration.
 
 \begin{figure}
@@ -2180,7 +2181,7 @@ As promised, we now give the simultaneous generalization of the surprisal result
 				{\delta_{f=h}(X)  D(X)}
 				{D(f\!=\!h)\cdot D(X)} \\
 		&\backtab= \beta \Ex_{ D \mid f=h} \log \frac{1}{D(f\!=\!h)}
-			& \hspace{-2em}{\singlespacing\left[ \begin{tabular}{c}
+			& \hspace{-2em}{\singlespacingmath \left[ \begin{tabular}{c}
 				since $\delta_{f=h}(x) = 1$ for all $x$  that \\
 				 contribute to the expectation \end{tabular} \right]} \\
 		&\backtab= - \beta\, \log D(f=h)
@@ -3010,7 +3011,7 @@ We now enumerate the (in)equalities to prove them.
 			&= \OInc_{\dg M_1}(\mu(X)) + (\beta\!+\!\zeta) \Ex_{x \sim \mu}\kldiv{\mu(Y|x)}{f(Y|x)}
 				\\
 			&= \aar{\dg M_1}
-				& \hspace{-4in}{\singlespacing\Big[\begin{array}{c}
+				& \hspace{-4in}{\singlespacingmath \Big[\begin{array}{c}
 					\text{as $\mu(Y|x) = f(Y|x)$ wherever $\mu(x)>0$,}\\
 					\text{and $\mu(X)$ minimizes $\OInc_{\dg M_1}$}
 			\end{array}\Big]}.

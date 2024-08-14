@@ -30,19 +30,21 @@ For those of us who prize logic and rationality (including, famously,
 \citet{descartes}),
 perhaps most terrifying of all is the possibility that your own internal thoughts might not even be self-consistent.
 If there is one thing on which we can all agree, it is a contempt for inconsistency.
-The foundational \newmaterial{principles} of microeconomics
-\unskip\footnote{\forjoe{
-    I just verified that this discussion is at the beginning of my microeconomics textbook.  
-    The concept is sometimes referred to by the latin \emph{De gustibus Non Est Disputandum}, perhaps in part due to the eponymous seminal paper (\url{https://www.jstor.org/stable/1807222}).
-    Would referencing it above be enough? 
-}}
+The foundational {principles} of decision theory 
+% and microeconomics
+% \unskip\footnote{\forjoe{
+%     I just verified that this discussion is at the beginning of my microeconomics textbook.  
+%     The concept is sometimes referred to by the latin \emph{De gustibus Non Est Disputandum}, perhaps in part due to the eponymous seminal paper (\url{https://www.jstor.org/stable/1807222}).
+%     Would referencing it above be enough? 
+% }}
 entitle us to our own preferences
     \citep{de-gustibus-non-est-disputandum77stigler}
     %  (and beliefs, to some extent), 
     \unskip, and beliefs, to some extent
     % \citep{VnMR44theory-of-games-eb}, %, Savage
     \citep{Savage51}
-    but only if they admit a consistent internal logic.
+    % but only if they admit a consistent internal logic.
+    but only if they have a certain internal consistency.
 For without one, we risk being swindled \citep{sep-dutch-book} or misled 
 % \citep{explosion},
 % \citep{priest1996paraconsistent}, 
@@ -60,9 +62,10 @@ if not humiliated \citep{finocchiaro1981fallacies,russell1902letter}.
 
 % Computer scientists who build cognition from scratch, have capitalized on an opportunity to not only avoid contradictions, but  build frameworks where they're impossible by design. 
 % Computer scientists like us, who build cognition from scratch, have capitalized on an opportunity to eliminate contradictions in artificial agents altogether, by using epistemic representations that are consistent by design.
-Economists, seeking to characterize rational thought, have established probability%
+Economists, 
+seeking to characterize rational thought, have established probability%
 ---a representation that allows for uncertainty but cannot encode conflicting information---%
-as the gold standard for representing beliefs \citep{ramsey1926truth}.
+as the gold standard for representing beliefs \citep{ramsey1926truth,Savage51}.
 % by using it, one can express uncertainty in a way that is guaranteed to be self-consistent. 
 % Computer scientists, making use of such representations, have capitalized on an opportunity to eliminate inconsistency in artificial agents altogether. 
 % Computer scientists, by using such representations to build artificial minds, have capitalized on an opportunity to eliminate inconsistency in artificial agents altogether. 
@@ -74,7 +77,7 @@ while practitioners endeavor to build systems
         view of the world. 
 % Inconsistency should impossible by design.
 % Even programmers agree: when possible, it is best to eliminate conflict by design. 
-Modern ideals of ``good code'' agree: it is better to eliminate the potential for conflict by design, than it is to handle inconsistency at while the code is running. 
+Modern ideals of ``good code'' agree: it is better to eliminate the potential for conflict by design, than to handle inconsistency while the code is running. 
 %
 % Theorists are careful to prove things about clearly defined models,
 % while applied computer scientists have long built artificial agents
@@ -92,18 +95,18 @@ several different ones that could, in principle, disagree.
     While it can be helpful to have different procedures for different regimes, it is still best to exclusively use a single procedure in each regime, 
     or better yet, 
     combine them into a single procedure with all of the benefits. 
-}%
+}
 % We would rather use 
 It is better to use one library for telling time than two.
 % And no matter how many parameters we add, the goal is to parameterize a single coherent probability distribution. 
-% The goal of a learned statistical model is to distil messy and possibly conflicting data into the parameters of a single coherent probabilistic model. 
+% The goal of a learned statistical model is to distill messy and possibly conflicting data into the parameters of a single coherent probabilistic model. 
 Why?
 % Because computing things in just one way grants an invulnerability to our one common enemy: inconsistency.
 Because 
 % by cal things in just one way, 
 % with just one one way of viewing any given quantity, 
 %     there can be no conflict, 
-this way there can be no conflict,
+% this way there can be no conflict,
 % it becomes impossible to get conflicting 
 % granting
 % and so our systems become immune to 
@@ -112,10 +115,12 @@ this way there can be no conflict,
 % making our systems immune to
 % immunizing our systems against
 \newmaterial{%
-rendering our systems invulnerable to
-% our shared affliction: 
-our own affliction of
+% rendering
+this renders 
 }%
+our systems invulnerable to
+% our shared affliction: 
+% our own affliction of
 inconsistency.
 % invulnerability to our one common enemy: inconsistency.
 
@@ -138,16 +143,18 @@ So if (through no fault of your own) you do happen to be wrong about how the wor
 % Running a budget surplus works well, until you fall ill or need to buy a house.
 
 % Engineers and computer scientists generally agree that \emph{redundancy}---by which we mean multiple independent approaches, tests, and safeguards that all point in the same direction---is highly desirable. 
-Engineers and computer scientists 
-% At the same time, engineers and computer scientists 
-generally agree that \emph{redundancy}---that is, the presence of multiple independent approaches, tests, and safeguards that all agree---is highly desirable. 
+
+% Engineers and computer scientists generally agree that \emph{redundancy}---that is, the presence of multiple independent approaches, tests, and safeguards that all agree---is highly desirable. 
+\newmaterial{%
+It is generally agreed that having multiple independent approaches that give the same result is a virtue, and can increase confidence.
+}%. 
 % But, in a sense, redundancy and inconsistency are opposite sides of the same coin. 
 % In some sense, the opposite of inconsistency is \emph{redundancy}, which engineers and computer scientists agree is generally positive. 
 % % Another problem consistent by construction is that they also have no redundancy, which makes them fragile.
 % % Apparently unfazed by the prospect of representing inconsistency, the cryptographers distributed systems people 
 % But consistent-by-construction representations are also redundancy-free, by construction. 
 % For if we have two different representations that could conceivably agree, producing redundancy, then those two representations could conceivably be inconsistent with one another. 
-But, in a sense, \newmaterial{(the potential for)} redundancy and \newmaterial{(the potential for)} inconsistency are opposite sides of the same coin. 
+But, in a sense, (the potential for) \newmaterial{confirmation} and (the potential for) inconsistency are opposite sides of the same coin. 
 For if we use only representations that avoid inconsistency 
     % by  making disagreement impossible,
     by preempting the possibility of distinct answers
@@ -155,21 +162,21 @@ For if we use only representations that avoid inconsistency
     % then there are no two meaningfully distinct,
     % and so there can be no redundancy, either. 
     then we also cannot have meaningful agreement, 
-        and hence no redundancy. 
-\newmaterial{%
+        and hence no
+        % redundancy. 
+        \newmaterial{confirmation}. 
+\oldnewmaterial{%
 % If we want to allow for the possibility of a nontrivial theorem 
 We would like independent experiments to confirm the values of fundamental constants---but this means we must brace for the possibility that the experiments could have different outcomes. 
 % If it is non-trivial to prove 
 % If we want there to be non-trivial theorems 
-We would like to have theorems stating that two different approaches give the same answer---but 
-    % if a theorem is non-trivial, then 
-    the representation itself cannot guarantee that the two views are redundant; without the proof of the theorem, they may well instead have been inconsistent. 
+    \commentout{We would like to have theorems stating that two different approaches give the same answer---but the representation itself cannot guarantee that the two views are redundant; without the proof of the theorem, they may well instead have been inconsistent.}
 }%
 % are also redundancy-free, by construction. 
 Without opportunity for internal conflict, there can be no opportunity for internal agreement; 
 it is the 
 potential for
-disagrement that makes agreement valuable. 
+disagreement that makes agreement valuable. 
 % The only way to eliminate the possibility  opportunity for internal conflict, then there is also no opportunity for internal agreement. 
 
 
@@ -375,7 +382,7 @@ Finally, we conclude with discussion and open questions in \cref{chap:end}.
 % Our last order of business before starting in earnest is to prime ourselves to notice some important recurring themes. 
 Before embarking in earnest, we first prime ourselves to notice some important recurring themes. 
 Some of these patterns have been important guiding principles;
-    others surprised us by their recurrance. 
+    others surprised us by their recurrence. 
 By recognizing these patterns, it may be easier to digest the material that succeeds them. 
 
 
@@ -503,7 +510,7 @@ Similarly, it is often possible to chain together theorems without knowing their
 % for this distinction and its role in probabilistic modeling. 
 % for the analogy, and moreover, the importance of the underling distinction for probabilistic modeling. 
 
-The same conceptual division plays a fundemental role in probabilistic modeling. 
+The same conceptual division plays a fundamental role in probabilistic modeling. 
 In the graphical models community, the two types of information are known as \emph{qualitative} and \emph{quantitative}; the former traditionally refers to the graphical structure of the model and corresponding independencies, while the latter refers to 
 % specific values that the variables can take on, 
     the concrete probabilistic information involved which annotates the model,
@@ -612,7 +619,7 @@ These equivalences suggest that PDGs
 % are a
 % natural and particularly special
 % natural and particularly special representation
-might be a fundemental representation. 
+might be a fundamental representation. 
 % \forjoe{What's wrong with particularly special? I think these properties definitely make PDGs particularly special. It's very unusual for an object to equal so many generalizations of itself, and is certaintly suggestive that there's something deep going on!}
 
 % But first, we should review some math. 

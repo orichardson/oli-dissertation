@@ -523,8 +523,7 @@ is a tuple $\dg M = (\N,\Ar,\V,\mathbb P, \balpha, \bbeta)$, where
 
 \item[$\balpha$] 
 	% \notation{$:\Ar \to \mathbb R$}
-associates to each arc $\ed aXY$ a number $\alpha_a$ which,
-roughly speaking, is the modeler's confidence in the functional
+associates to each arc $\ed aXY$ a real number $\alpha_a$ which represents the modeler's confidence in the functional
 dependence of $Y$ on $X$ implicit in $a$; 
 \item[$\bbeta$] 
     % \notation{$:\Ar \to \Rext$}
@@ -891,7 +890,7 @@ its sole purpose is to ensure that we do not accidentally identify variables in 
         $f \sqcup g : A \sqcup B \to X$
 	is given by
 	\[
-		f \sqcup g := \left\{\singlespacing\begin{array}{c}
+		f \sqcup g := \left\{\singlespacingmath\begin{array}{c}
 			(A,a) \mapsto f(a) \\
 			(B,b) \mapsto g(b)
 		\end{array} \right.
@@ -1294,6 +1293,13 @@ To determine your degree of confidence in information
 ask yourself: how many times would I have to hear this independently from a person like Bob, before I got to this level of trust? The answer to that question is the value of $\beta$. 
 Thus, $\beta = 2$ on an arc $X \to Y$ is (quantitatively) indistinguishable from two distinct arcs from $X \to Y$. 
 % For information less trustworthy than Bob, ask yourself the reciprocal question: 
+
+\newmaterial{%
+Finally, although we typically focus on positive confidence, 
+	our formalism also allows for negative confidences.
+A confidence $\beta < 0$ on a cpd $p$ encodes an \emph{active distrust} of $p$, and semantically, means distributions are more consistent with this belief if they are further from satisfying $p$. 
+In our previous analogy, if you currently distrust $p$ but would feel neutral towards it if someone like Bob were to tell you that it is correct, then you should select  $\beta=-1$.
+}%
 
 \paragraph{Qualitative/Structural Scoring.}
 	\label{ssec:qual-scoring}

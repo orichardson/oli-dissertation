@@ -261,7 +261,7 @@ that leaves $\Tru$ implicit, so that the binary relation $R(\var X,\var Y)$ and 
 \end{center}
 respectively, in PDG notation.
 Where does this notation come from?
-Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well surpress it. 
+Intuitively, the variable $\Tru$ is uninteresting because it always takes the value $\trut$, so we may as well suppress it. 
 So, visually, all we have done is to shrink the variable $\Tru$ to a single point, and suppress the label $\trut$ on the event $\Tru{=}\trut$.
 What remains are a pair of double-headed arcs joined head-to-head,
 visually encoding the potential for epistemic
@@ -709,12 +709,12 @@ In addition to $\hat p$ and the new variables, this PDG
                 0 & 1 
             \end{idxmat}
             \\[2ex]
-            s_1(\XxYyshort|X,Y) &:= \delta{\singlespacing\begin{cases}
+            s_1(\XxYyshort|X,Y) &:= \delta{\singlespacingmath\begin{cases}
                 x & \text{if $X = x$} \\
                 y & \text{if $X \ne x$ and $Y=y$} \\
                 \lnot y & \text{if $X \ne x$ and $Y\ne y$} \\
             \end{cases}}\\
-            s_2(\Yyshort|Y) &:= \delta{\singlespacing\begin{cases}
+            s_2(\Yyshort|Y) &:= \delta{\singlespacingmath\begin{cases}
                 y & \text{if $Y=y$} \\
                 \lnot y & \text{if $Y\ne y$} \\
             \end{cases}}
@@ -798,7 +798,9 @@ This can be a useful thing to model. For instance, it exactly describes
 A second, more abstract use for this primitive is to enrich PDGs with another notion of confidence. 
 By adding a guard variable $G_a$ for each $a \in \Ar$, and asserting that each $G_a = 1$ occurs with probability $1 - \epsilon_a$ (for some $\epsilon_a \in [0,1]$), it becomes possible to articulate a different and more standard kind of probability-based confidence in the reliability of each cpd.
 (Observe that the special case in which each $\epsilon_a= 0$ is the definition of a PDG we already have.)
+\iffoundations
 We discuss the difference between approaches like this and the meaning of our primitive $\beta$ in \cref{chap:conf,chap:relent-soup}. 
+\fi
 
 Technically speaking, the specification of $p(B|A)$ under the condition that $G = 1$ is really no different from a cpd $p(B|A, G{=}1)$.
 Gven that we have already proved that PDGs an represent arbitrary conditional probabilities, it is entirely expected that PDGs can represent this too. 
@@ -941,11 +943,11 @@ A widget for it is illustrated in \cref{fig:guard-variable}.
             % \hat b &\text { is defined analogously,}
                 % \text{ where $p =$}
                 % \\[2ex]
-            s_2(\underline Y_y | Y) := {\singlespacing\begin{cases}
+            s_2(\underline Y_y | Y) := {\singlespacingmath\begin{cases}
                 \delta_y & \text{if $Y=y$} \\
                 \texttt{(null)} & \text{if $Y\ne y$} 
             \end{cases}} \quad \text{ and } \quad
-            s_4(\overline Y_y | Y) := {\singlespacing\begin{cases}
+            s_4(\overline Y_y | Y) := {\singlespacingmath\begin{cases}
                 \texttt{(null)} & \text{if $Y=y$} \\
                 \delta_{\lnot y} & \text{if $Y\ne y$} 
             \end{cases}}\\
@@ -957,7 +959,7 @@ A widget for it is illustrated in \cref{fig:guard-variable}.
             \mathllap{\text{and}~~} 
                 s_1(X_x\overline Y_y|X,\overline Y_y) = 
                 s_3(X_x\underline Y_y|X,\underline Y_y) = 
-                \delta{\singlespacing\begin{cases}
+                \delta{\singlespacingmath\begin{cases}
                 x & \text{if $X = x$} \\
                 y & \text{if $X \ne x$ and $Y_y=y$} \\
                 \lnot y & \text{if $X \ne x$ and $Y\ne y$} \\
@@ -992,7 +994,10 @@ Probability is the dominant way of talking about epistemic uncertainty
 in economics and computer science, but it is far from the only one \citep{halpern-RAU}.
 Probability---at least, in the form of a joint distribution $\mu$---has some shortcomings. 
 One of the biggest is its inability to represent ignorance well
-    (a point we will return to in \cref{chap:conf}).
+\iffoundations
+    (a point we will return to in \cref{chap:conf})
+\fi
+\unskip.
 This has lead many to develop generalizations of probability better suited to representing ignorance \citep{shafer1990probability,Walley1991-SRIP}.
 It turns out that several of the most celebrated generalizations of probabilities can be viewed as special cases of PDGs. 
 
@@ -1411,7 +1416,7 @@ In many cases, the duals of these diagrams, appropriately annotated with the net
     The inequality is immediate; it is an instance of monotonicity of inconsistency
     % \cite[Lemma 1]{one-true-loss},
     \cref{lemma!},
-    which we will discuss in depth in \cref{sec:monotone}. Intuitively: believing more cannot make you any less
+    which we discuss further in \cref{chap:reason}. Intuitively: believing more cannot make you any less
     inconsistent.  We now prove that equality holds iff there is a minimizer with the appropriate conditional probability.
 
     $(\impliedby)$. Suppose there is some $\mu \in \bbr{\dg M}^*_\gamma$ with $\mu(Y{=}y|X{=}x) = p$.

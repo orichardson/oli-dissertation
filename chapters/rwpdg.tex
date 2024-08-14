@@ -13,7 +13,7 @@ When reasoning this way, the PDG is analogous to a logical expression, and monot
 In this chapter, we deepen our exploration of this kind of reasoning technique, developing an analogous principle for qualitative information in a directed hypergraph (\cref{sec:qual-monotone}).
 It turns out that both the qualitative scoring function $\SDef$ (\eqref{eqn:sdef}) and QIM-compatibility (the subject of \cref{chap:QIM})) are monotonic in this way. 
 We then develop a notion of qualitative equivalence (\cref{sec:QIM-equivalence}).
-Finally, in \cref{sec:logic}, we combine our qualitative and quantitative reasoning principles to define a natural pre-order on PDGs, which shows promise as the basis of an inconsistency-tolerant logic. 
+Finally, in \cref{sec:pdg-logic}, we combine our qualitative and quantitative reasoning principles to define a natural pre-order on PDGs, which shows promise as the basis of an inconsistency-tolerant logic. 
 
 % Related monotonicity properties hold of many natural epistemic representations.
 % One classical representation of knowledge is a list of formulas
@@ -97,7 +97,7 @@ One might imagine that an edge $A{\to}B$
 
 Hypergraphs, both with semantics in terms of QIM-compatibility (the subject of \cref{chap:QIM}) and in terms of $\SDef$, however, are monotonic in the directions we expect of knowledge.
 But it turns out that more is true. 
-In \cref{sec:qual-monotone}, we establish a stronger notion of qualitative monotonicity that makes use of the directed nature of a hypregraph. 
+In \cref{sec:qual-monotone}, we establish a stronger notion of qualitative monotonicity that makes use of the directed nature of a hypergraph. 
 We then provide a complementary notion of qualitative equivalence (\cref{sec:QIM-equivalence}). 
 These two qualitative ``inference rules'' can be combined to form a formal system for reasoning about qualitative aspects of probability. 
 
@@ -114,7 +114,7 @@ These two qualitative ``inference rules'' can be combined to form a formal syste
     \label{sec:qual-monotone}
 
 
-%oli4: should I add eeven more motivation? I feel it distracts from the current story, but it still might help to motivate. Maybe the below should go elsewhere...
+%oli4: should I add  more motivation? I feel it distracts from the current story, but it still might help to motivate. Maybe the below should go elsewhere...
 %joe5*: You should definitely add motivation.  But motivating this
 %section by an appeal to cyclic models, which you haven't spent any
 %time discussing in this paper, is not good at all.  The fact that
@@ -141,7 +141,7 @@ These two qualitative ``inference rules'' can be combined to form a formal syste
     Holding beliefs $p(X)$ and $p(Y|X)$, 
     for example, is observationally equivalent to holding a single belief $p(X,Y)$ or beliefs $p(Y)$ and $p(Y|X)$.
 }
-%joe5: The reader will have no clue of what "nmonotocity of inconsistency" is.
+%joe5: The reader will have no clue of what "monotonicity of inconsistency" is.
 %oli6: That's why I'm describing what it is.  And then I give a reference. You definitely aren't expected to know what "monotonicity of inconsistency" is here. To clarify, I am moving the reference to the beginning of the sentence, from the end.
 % Monotonicity of inconsistency is a more powerful reasoning principle: many important statistical relationships (e.g., the data processing inequality and the evidence lower bound) can be proved directly, using only the fact that more beliefs cannot decrease inconsistency, and equivalences like the one above \citep{one-true-loss}.
 %
@@ -156,7 +156,7 @@ In this section, we develop a related principle for qualitative information in a
 %sent you an email explaining why I thought nonpartitional models
 %weren't good models of causality.  I'm not convinced by the
 %connection to models with constraints at all.   It might be better to
-%restrict this section to partional models, where causality is well
+%restrict this section to partitional models, where causality is well
 %understood, and cut this subsection altogether.
 %oli5: You are right not to be convinced by this subsection, which isn't very precise right now. Your suggestion to remove this section has been noted, and I'm not a priori opposed to it, but after reading your paper on causal models with constraints more carefully last week, I'm even more certain than I was before, that there's a deep connection here. (But I wasn't able to formulate "the one appropriate thing to prove", in part because your paper isn't clear about how the concept interacts with probabilities.) I think it's still worth saying a few words if we have space.
 %
@@ -223,10 +223,10 @@ In this section, we develop a related principle for qualitative information in a
 % good news given that functions and mappings work.  Inputs and 
 % outputs play opposite roles. 
 %    Second, this will be useful for a running example of a 3-cycle, 
-% which is one of the things we're buliding towards, as described in the
+% which is one of the things we're building towards, as described in the
 % introduction. 
 %    Finally, the last theorem (5/6) is more important than it looks
-% at first. The "positive MRF capture" and "negative BN captue" are
+% at first. The "positive MRF capture" and "negative BN capture" are
 % weaker than "capturing MRFs" and "capturing BNs", so these words
 % actually strengthen the result, not weaken it. 
 % The high-level of the theorem is: there's no "natural" (in particular,
@@ -345,7 +345,7 @@ a function $f : A \to B$ can be regarded as one of type $A'\to B'$.
 %than it helps.  I just cut it.
 %oli1*: I think the fact that inputs work the opposite ways is actually
 % the punchline. I've shortened it and moved it above.
-% (Anti)symmetrically, if $A' \sqsubseteq A$, then $f$ can be used as a funciton from $A'$ to $B$
+% (Anti)symmetrically, if $A' \sqsubseteq A$, then $f$ can be used as a function from $A'$ to $B$
 %oli1: shortening
 % (This may be easier to see in the diagrammatic construction below, where ${\color{gray}\hookrightarrow}$ indicates the subtype inclusion.)
 %oli5:
@@ -368,7 +368,7 @@ This is depicted to the right.
 % \]
 %oli5: merging paragraphs
 %
-% These principiles of function variance also apply in our setting.
+% These principles of function variance also apply in our setting.
 The same principle applies in our setting.
 %oli1:
 % have a natural analogue  in our setting, which we call structural weakening.
@@ -517,10 +517,10 @@ in $\Ar_G$.
 %     is structurally monotonic, we have the tools
 %     we need to at least partially understand more examples,
 %     and cyclic graphs in particular.
-% Structural montonicity is a helpful tool for understanding cyclic graphs.
+% Structural monotonicity is a helpful tool for understanding cyclic graphs.
 %oli6:
-% Structural montonicity is a helpful tool for understanding \scibility\ with respect to cyclic graphs.
-%oli6.2: May as well make coreference easier, since it doesn't cost us a line
+% Structural monotonicity is a helpful tool for understanding \scibility\ with respect to cyclic graphs.
+%oli6.2: May as well make co-reference easier, since it doesn't cost us a line
 % It 
 %oli21: 
 % \Cref{theorem:strong-mono}
@@ -550,7 +550,7 @@ which are really about monotonicity.
     % a set of \arc s
     a \hgraph\ 
     that can already represent any distribution, i.e.,
-    %oli4: no more displaymode, to save a line
+    %oli4: no more \displaymode, to save a line
     % \[
     \begin{tikzpicture}[center base]
         \node[dpadinline] (X) {$X$};
@@ -691,7 +691,7 @@ which are really about monotonicity.
 % which is fundamentally a much better match to directed models,
 % goes a long ways for undirected models as well.
 %joe1*: In what sense can we "handle" cycles.
-%oli1: I just mean that our definition applies for cylcic graphs.  I'll try to change the wording to clarify.
+%oli1: I just mean that our definition applies for cyclic graphs.  I'll try to change the wording to clarify.
 % Now that we can handle cycles, it is natural to wonder whether our definition can capture undirected models.
 % Again by monotonicity, it is easy to see that the complete graph 
 %oli21: compressing
@@ -710,9 +710,9 @@ Because \scibility\ applies to cyclic structures,  one might wonder if
 Undirected edges $A {-} B$ are commonly identified
 %oli6: answering your question above:
 % with a pair of directed edges $\{ A{\to}B, B{\to}A\}$,
-with a (cylic) pair of directed edges $\{ A{\to}B, B{\to}A\}$,
+with a (cyclic) pair of directed edges $\{ A{\to}B, B{\to}A\}$,
 %joe5: ?? Where did you do this in Equation (2):
-%oli6: Equation (2) is the conversion of graphs to directed hypergraphs; looking at it closely should reveal why it's implicitly identifying an unorded edge with a pair of directed edges in each direction.
+%oli6: Equation (2) is the conversion of graphs to directed hypergraphs; looking at it closely should reveal why it's implicitly identifying an unordered edge with a pair of directed edges in each direction.
 as we have implicitly done in
 %oli21: 
 % \cref{defn:graph-to-hypergraph}.
@@ -756,7 +756,7 @@ $\Ar_G$ shown on the left.
 %oli6: ok
     % Applying \cref{defn:qim} to the resulting \hgraph\ $\Ar_G$, however,
     % does not match any of the three standard Markov properties
-    %     which define semantics for MRFS \citep{lauritzen}.
+    %     which define semantics for MRFs \citep{lauritzen}.
 %oli21: cutting QIM
 % \Scibility\
 Compatibility
@@ -764,7 +764,7 @@ with $\Ar_G$, however, does not coincide with any of the standard Markov propert
 %oli6: can be simplified
  % for the MRF corresponding to $G$ \citep{lauritzen-mrf-indeps}.
 corresponding to $G$
-    \citep{lauritzen-mrf-indeps}.
+    \citep{KF09}.
     % \citep{KF09}.
 %oli15: adding, for clarity
 %oli21: not helpful; removing. 
@@ -783,7 +783,7 @@ This may appear to be a flaw in \cref{defn:qim} (\scibility), but it is unavoida
 % While both Bayesian Networks (directed graphical models)
 %     and Markov Random Fields (undirected graphical models)
 %     are both monotonic on their own,
-%     it is impossible to capure both BNs and MRFs monotoncially together.
+%     it is impossible to capture both BNs and MRFs monotoncially together.
 While both BNs and MRFs are monotonic, it is impossible to capture both classes with a monotonic definition.
 % The proof is a straightforward application of monotonicity.
 % and one instance of a graphical proof technique.
@@ -870,7 +870,7 @@ of monotonicity (\cref{theorem:strong-mono}).
 % {\renewcommand*{\proofname}{Proof Sketch}
 % \begin{proof}
 %oli21: expanding
-Assume montonicity and positive BN capture. 
+Assume monotonicity and positive BN capture. 
 Let $\muxor(A,B,C)$ be the joint distribution in which 
 %oli3: two variables
 $A$ and $C$ are independent fair coins, and
@@ -923,14 +923,14 @@ $\muxor \not\models A \CI C \mid B$.
 %
 %joe3*: Perhaps you found it surprising, but I suspect that most
 %readers won't appreciate the points you made.  I have no clue what
-%the connection is between the first paragfraph and the result, let
+%the connection is between the first paragraph and the result, let
 %alone why it should make me feel the result is surprising.  The same
 %goes for the second paragraph (although at least I understand better
 %what it's saying).  If all readers were clones of you, this might
 %interest them.  I strongly suspect that for most readers, these two
 %paragraphs detract from the paper.
 %oli3: ok, I'll try to distill these paragraphs to something that others can find more useful. 
-% We found this result surprising, for two reasons. First, for an undirected graph, $\Ar_G$ is a consistent dependency network stucture \citep{heckerman2000dependency} that corresponds exactly to that Markov Network (for positive distributions), intuitively by placing independent mechanisms along each \arc. This is because dependency networks with a fixed sampling order only capture those BNs consistent with that order, and if the order changes depending on the graph, then the definition is not monotonic. 
+% We found this result surprising, for two reasons. First, for an undirected graph, $\Ar_G$ is a consistent dependency network structure \citep{heckerman2000dependency} that corresponds exactly to that Markov Network (for positive distributions), intuitively by placing independent mechanisms along each \arc. This is because dependency networks with a fixed sampling order only capture those BNs consistent with that order, and if the order changes depending on the graph, then the definition is not monotonic. 
 %joe5
 %We found this result surprising for a few reasons.
 %First, if $G$ is an undirected graph then $\Ar_G$ is the structure of
@@ -945,9 +945,9 @@ $\muxor \not\models A \CI C \mid B$.
 %confuse lots of readers.  You're basically saying to the (very small)
 %set of readers who may be confused "here's why you shouldn't be
 %confused", at the price of confusing many other readers, who didn't
-%caref about this at all.  But not that, at the end of this section,
+%care about this at all.  But not that, at the end of this section,
 %you basically have one result, that is no where close to the results
-%of other sections in terms of conceptual imporance.   I would cut this
+%of other sections in terms of conceptual importance.   I would cut this
 %section altogether.  It makes the paper worse.
 %oli21*: I see where you're coming from. I agree that this next part is nowhere near valuable enough to keep in the main paper at this point. I still think that the section itself is valuable though. It's not as valuable, but it's also shorter.  It will ultimately take up less than one page. 
 %joe17*: I'm not talking about "valuable".  I'm saying that adding this
@@ -959,7 +959,7 @@ $\muxor \not\models A \CI C \mid B$.
 %better, and I don't know how to convince you.  Please talk to Spencer.
 %oli21*: adding replacement and link to appendix, where the technical discussion to un-confuse the very small subset of graphical-model  readers, will be at home. 
 %joe17*: I feel strongly that this should be cut.  I don't even know
-%what "qualitative smeantics of any graphical model" even means.  Do
+%what "qualitative semantics of any graphical model" even means.  Do
 %all graphical models have qualitative semantics?  On top of that, we
 %should talk about "lesser-known models".  After all the work you've
 %gone through to cut material, this is an easy cut that should
@@ -985,12 +985,10 @@ We emphasize that \cref{theorem:mrf-bn-monotone-impossible} has implications for
 % We now address some conceptual implications of \cref{theorem:mrf-bn-monotone-impossible} 
 % We reconcile \cref{theorem:mrf-bn-monotone-impossible} for two classes of graphical models: PDGs and Dependency Networks (DNs), which may at first appear to defy the theorem.
 % We reconcile \cref{theorem:mrf-bn-monotone-impossible} with PDGs and Dependency Networks (DNs), which may at first appear to contradict the theorem.
-\newmaterial{%
-Yet some graphical models may appear to defy the theorem,
+Yet some graphical models may appear to \ifjoewording contradict \else defy \fi the theorem,
     seemingly exhibiting all three properties. 
 We now reconcile \cref{theorem:mrf-bn-monotone-impossible} with 
     two such models: PDGs, and Dependency Networks (DNs). 
-}%
 
 \paragraph{Probabilistic Dependency Graphs}
 PDGs capture BNs and MRFs
@@ -999,7 +997,7 @@ PDGs capture BNs and MRFs
 with a monotonic scoring function.
 But keep in mind that, while the independencies and observational information can be easily separated for a BN, the same is not true of a factor graph.
 % Perhaps PDGs do not capture MRFs on a purely qualitative level? 
-Capturing a quantiative MRF is not the same as capturing its independencies.
+Capturing a quantitative MRF is not the same as capturing its independencies.
 The independence property exploited by the PDG inference procedure \cref{theorem:markov-property} is the same as that of a MRF with the same structure. 
 The subtlety here is that the independencies exploited for PDG inference only need to be sound, not complete. 
 That is, a PDG's underlying \hgraph\ $\Ar$ may well imply more independencies than the inference procedure exploits. 
@@ -1214,7 +1212,7 @@ characterizes when two qualitative BNs satisfy the same set of
 independencies.  More specifically, we conjecture that if 
 two qualitative Bayesian Networks describe the same set of
 independencies, then they can 
-be provd equivalent using only instances of \cref{prop:equiv-factorizations}.
+be proved equivalent using only instances of \cref{prop:equiv-factorizations}.
 %oli2: I'm happy to use this text if the conjecture remains a conjecture,
 % but I also think it should be provable, independently interesting, and
 % immediately justify the claims above that the Proposition is useful.
@@ -1299,9 +1297,9 @@ It becomes even more useful in tandem
 
 % So far in this chapter, we have treated the two aspects of PDGs separately, and developed separate reasoning principles for each aspect. 
 \newmaterial{%
-In the previous section (\cref{sec:qual-monotone}) we developed a 
-    monotonicity principle that applies to directed structural information.
-Recall this was inspired by an analogous reasoning principle for observational information (\cref{lemma:!}).
+In the previous section (\cref{sec:qual-monotone}), we developed a 
+    monotonicity principle for the structural information in a directed hypergraph.
+Recall that this endeavor was inspired by an analogous reasoning principle for observational information (\cref{lemma:!}).
 }%
     % that quantitative inconsistency 
     % the proof language based on monotonicity that powered 
@@ -1320,7 +1318,7 @@ Some logical statements are stronger than others. If $\varphi$ says strictly mor
 We are interested in developing a similar notion of implication for PDGs.
 It might seem that \cref{lemma:!} provides us with one---but simply because $\aar{\dg M_1} \ge \aar{\dg M_2}$ doesn't seem to be strong enough. 
 %
-A key feature implication (or equivalence) is that it allows for in-context substitution.
+A key feature of implication (or equivalence) is that it allows for in-context substitution.
 For instance, if $\varphi \Rightarrow \psi$, then 
 $\varphi \land \varphi' \Rightarrow \psi \land \varphi'$
 and
@@ -1360,7 +1358,7 @@ This motivates the following definition, which corrects for this by explicitly t
     \begin{linked}{prop}{entailment}
     \begin{enumerate}[parsep=0pt,itemsep=0.2ex]
         \item Marginals are entailed by joint distributions, e.g., $p(X,Y) \models p(X)$.
-        \item Weaker constraints are entailed by larger ones, e.g., $(XY {=}xy) \models (X{=}x)$. 
+        \item Weaker constraints are entailed by stronger ones, e.g., $(XY {=}xy) \models (X{=}x)$. 
     \end{enumerate}   
     \end{linked}
     % I believe the following are true (although I need to come back and verify this):
@@ -1395,7 +1393,7 @@ This motivates the following definition, which corrects for this by explicitly t
     
     If both $\dg M_1 \models \dg M_2$ and $\dg M_2 \models \dg M_1$, 
         then we say the two PDGs $\dg M_1$ and $\dg M_2$ are \emph{equivalent}, and write $\dg M_1 \equiv \dg M_2$.
-    Two PDGs are eqivalent if they respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
+    Two PDGs are equivalent if they respond the same way to all probes $\dg M'$ and all choices of $\gamma$.
     Intuitively, $\dg M_1 \equiv \dg M_2$ iff $\dg M_1$ and $\dg M_2$ are equally (in)consistent no matter how one alters them, so long as both are altered in the same way. 
     
 
@@ -1404,11 +1402,9 @@ Thus transitivity and reflexivity of $\models$ (above), imply that
 $\equiv$ is an equivalence relation. Moreover, it is the same equivalence relation as equality of scoring function semantics!
 
 \begin{linked}{theorem}{sem-equiv}
-    $\dg M_1 \equiv \dg M_2$ iff $\bbr{\dg M_1} = \bbr{\dg M_2}$.
-    % \footnote{More explicitly, these two objects are functions of 
-    %     $\gamma$, and equal iff $\bbr{\dg M_1}_\gamma = \bbr{\dg M_2}_\gamma$
-    %     for all $\gamma \ge 0$.}
-    That is, $\dg M_1 \equiv \dg M_2$ if and only if 
+    % $\dg M_1 \equiv \dg M_2$ iff $\bbr{\dg M_1} = \bbr{\dg M_2}$.
+    % That is,
+    $\dg M_1 \equiv \dg M_2$ if and only if 
     $\dg M_1$ and $\dg M_2$ have the same set of variables $\X$, and
     $\bbr{\dg M_1}_\gamma(\mu) = \bbr{\dg M_2}_\gamma(\mu)$
     for all $\gamma \ge 0$ and $\mu \in \Delta\V\!\X$.
@@ -1456,38 +1452,43 @@ With this definition of congruence, we can finally make this precise.
 % We already have the definition of the operation 
 Addition of PDGs is of course provided by sum; 
     scalar multiplication is done by scaling the confidence vectors $\balpha$ and $\bbeta$. 
-More precisely, to scale $\dg M$ by $r \in \mathbb R$, 
-is to form a PDG $(r) \dg M$
-with confidences $\beta_a' = r \cdot \beta_a$ and $\alpha_a' = r \cdot \alpha_a$, where $\beta_a$ and $\alpha_a$ are the confidences of arc $a$ in $\dg M$. 
+More precisely, to scale $\dg M$ by $r \in \mathbb R$ 
+is to form a new PDG $(r) \dg M$
+with confidences $\beta_a' :=  r \cdot \beta_a$ and $\alpha_a' := r \cdot \alpha_a$, where $\beta_a$ and $\alpha_a$ are the confidences of arc $a$ in $\dg M$.%
+    \footnote{The scaling is defined if either $r \ge 0$ or $\bbeta < \infty$, and undefined otherwise.}
 
 \begin{linked}{prop}{pdg-vecspace}
-    The collection of PDGs with finite confidences,
-        modulo the equivalence relation $\equiv_{\X}$,
-    together with sums and scalar multiplication as above, 
-        form a real vector space. 
+    The collection of PDGs with finite confidences 
+    % over a fixed set $\X$ of variables, 
+        modulo the equivalence relation $\cong_{\X}$,
+    % together with sums and scalar multiplication as above, 
+    equipped with the sum and scaling operations described above,
+    form a real vector space.
 \end{linked}
 
 % With this definition in place, 
 % This notion of a vector space also allows us to
 % With that intuition in mind, 
 % This view of PDGs as elements of a vector 
-With that view of PDGs in mind, we can now describe
-    of the most important non-trivial ways that two PDGs can be equivalent. 
+With that view of PDGs in mind, we can now more compactly describe some
+% Now that we have that definition of PDG 
+    non-trivial ways that two PDGs can be equivalent. 
 }%
 
 \begin{linked}{prop}{sem-equiv-properties}
-    \begin{enumerate}[parsep=0pt]
-        \item For all distributions $p(X)$, $p(X) + p(Y|X) \equiv p(X,Y)$. 
-        \item If $\dg M_1 \equiv \dg M_2$, then their mixtures are also equivalent:
-            $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$. 
+    \begin{enumerate}[parsep=0pt,left=1em]
+        \item $p(X) + p(Y|X) \equiv p(X,Y)$ for all distributions $p(X,Y)$. 
+        \item If $\dg M_1 \equiv \dg M_2$, then
+            $\dg M_1 \equiv (1-\alpha) \dg M_1 + (\alpha) \dg M_2 \equiv \dg M_2$
+            for all $\alpha \in [0,1]$. 
         \item $\dg M + \dg M \equiv (2) \dg M$. 
-        In other words, duplicatng every arc (and associated data) is equivalent to doubling every confidence. 
+        In other words, duplicating every arc (and associated data) is equivalent to doubling every confidence. 
         % Compared to $\dg M$, the PDG $\dg M + \dg M$ contains two copies of each arc, while $(2) \dg M$ has all confidences doubled. 
     \end{enumerate}
 \end{linked}
 
 % Taking only the binary aspect of this logic into account, we might want
-This last property is rather interesting, because it shows that the set-of-distribution semantics $\SD{-}$ of a PDG does not capture important distinctions between PDGs. 
+This last property has an interesting implication: it shows that the set-of-distribution semantics $\SD{-}$ of a PDG does not capture important distinctions between PDGs. 
 If $\SD{\dg M_1} \subseteq \SD{\dg M_2}$, then one might imagine that
 $\dg M_1 \models \dg M_2$.
 Yet this is not true in general
@@ -1505,27 +1506,7 @@ We can also add entailments together.
     If $\dg M_1 \models \dg M_3$ and $\dg M_2 \models \dg M_4$, then
     $\dg M_1 + \dg M_2 \models \dg M_3 + \dg M_4$.
 \end{linked}
-\begin{lproof}\label{proof:entail-sum}
-    % Suppose  $c_1, c_2 > 0$, $\dg M_1 \models 0$, and $\dg M_2 \models 0$.
-    % Then $\forall \dg M''$, we have $\aar{\dg M_1 + \dg M''}_\gamma \ge \aar{\dg M''}$. 
-    % In particular, for any $\dg M'$, we can set $\dg M'' := \dg M' + \dg M_2$, 
-    % and thus
-    % \[
-    % \aar[\big]{\dg M_1 + \dg M_2 + \dg M'}_\gamma ~~\ge~~ \aar[\big]{\dg M_2 + \dg M'}_\gamma
-    %     ~~\ge~~ \aar[\big]{\dg M'}_\gamma
-    % .3
-    % \]
-    Suppose $\dg M_1 \models \dg M_3$, and $\dg M_2 \models \dg M_4$.
-    Then $\forall \dg M''$, we have $\aar{\dg M_1 + \dg M''}_\gamma \ge \aar{\dg M_3 + \dg M''}$. 
-    In particular, for any $\dg M'$, we can set $\dg M'' := \dg M' + \dg M_2$, 
-    and thus
-    \[
-    \aar[\big]{\dg M_1 + \dg M_2 + \dg M'}_\gamma ~~\ge~~ \aar[\big]{\dg M_3 + \dg M_2 + \dg M'}_\gamma
-        ~~\ge~~ \aar[\big]{\dg M_3 + \dg M_4 + \dg M'}_\gamma
-    .
-    \qedhere
-    \]
-\end{lproof}
+
 
 % \temphide{%
 %     One way of defining subtraction is to add the negated second argument.
@@ -1643,9 +1624,9 @@ cannot make you any more inconsistent.
     If $\X_1 \subseteq \X_2$, then $\X_1 \models \X_2$. 
 \end{prop}
 
-It follows, for example, that the empty PDG entails any PDG that only contains variables, 
-    i.e., $0 \models \X$ for any set of variables $\X$. 
-(It might be worth noting that, as PDGs, $\X_1 + \X_2 = \X_1 - \X_2  = \X_1 \cup \X_2$ are all the same.)
+It follows, for example, that the empty PDG $\varnothing$ entails any PDG that only contains variables, 
+    i.e., $\varnothing \models \X$ for any set of variables $\X$. 
+% (It might be worth noting that, as PDGs, $\X_1 + \X_2 = \X_1 - \X_2  = \X_1 \cup \X_2$ are all the same.)
 % If $\X_1 \subseteq \X_2$, it is also perhaps interesting that
 % $\X_1 - \X_2$ is 
 
@@ -1659,9 +1640,10 @@ $\dg{\False} := \begin{tikzpicture}[center base]
     \draw[arr1, <<-] (X) to node[pos=0.7,inner sep=1pt, above]{$\delta_{1}$} +(1,0);
 \end{tikzpicture}$,
 which has $\aar{\dg{\False}}= \infty$, and satisfies $\False \models \dg M$ for all $\dg M$. 
-
-Are there largest PDGs in this order?  What is the analogue of ``true''? Is it the empty PDG? 
-Clearly not, because $\dg M \models 0$ only if $\dg M$ is qualitatively complete. 
+%
+Are there largest PDGs in this order?  In other words, what is the analogue of ``true''? 
+    Is it the empty PDG? 
+Evidently not, because $\dg M \models 0$ only if $\dg M$ is qualitatively complete. 
 It turns out there is such a ``most anodyne'' PDG if and only if
 the collection of all possible variables is a PDG.
 Concretely, let $\mathcal U$ be a ``universe of all possible variables''.  
@@ -1677,8 +1659,7 @@ Then every PDG $\dg M$ with variables $\X \subseteq \mathcal U$ satisfies $\dg M
 
 Starting with the entailment operation and introducing usual connectives, we 
     can obtain a propositional logic whose primitive formulas are PDGs.
-\commentout{ We adopt the usual convention of writing ``$\models \varphi$'' if $\dg M \models \varphi$ for all PDGs $\dg M$. }%
-
+% \commentout{ 
 \commentout{%
     \textbf{Exploring the Set-of-Distribution Semantics.}
     % In a sense, PDGs themselves already encode a set of probabilistic models: the 
@@ -1703,60 +1684,86 @@ Starting with the entailment operation and introducing usual connectives, we
 As usual, we can introduce conjunction by
     defining $\dg M \models \varphi \land \varphi'$ iff
     $\dg M \models \varphi$ and $\dg M \models \varphi'$.
-We can also continue with $\lnot$ and then define other connectives
-    ($\lor, \Rightarrow, \Leftrightarrow$) in terms of ($\land, \lnot$).    
-
-\TODO
-    
-So, for example, 
-    $\dg M_1 \models (\dg M_2 \Rightarrow \dg M_3)$
-    states that if $\dg M_1 \models \dg M_2$, then $\dg M_1 \models \dg M_3$. 
+\newmaterial{%
+The standard approach would  be
+    to continue by defining $\dg M \models \lnot \varphi$ iff it is not the case that $\dg M \models \varphi$, and then define other connectives
+    $\{\lor, \Rightarrow, \Leftrightarrow\}$ in terms of $\{\land, \lnot\}$.    
+% For example, 
+%     $\dg M_1 \models (\dg M_2 \Rightarrow \dg M_3)$
+%     would have the standard meaning of material implication:
+%     if $\dg M_1 \models \dg M_2$, then $\dg M_1 \models \dg M_3$. 
     %
     % The equivalent of ``no assumptions'' or true, as discussed above,
     % is the universe $\mathcal U$ of all variables.
     % These definitions let us 
-    This lets us prove things like
+    % This lets us prove things like
+With these definitions, we can prove things such as:
+}%
     \[
         \models p(X,Y) \Leftrightarrow p(X) + p(Y|X)
         \qquad
         \text{and}
         \qquad
-        \models (p(X) + q(X)) \Rightarrow p(X).
+        \models (p(X) + q(X)) \Rightarrow p(X),
     \]
+where $\models \varphi$ is standard notation indicating that $\dg M \models \varphi$ for all $\dg M$. 
+% }%
+%
+
 % But the usual definition of ,
-But this definition of $\lnot$, 
-    \newmaterial{%
-    and the composite formulas built using it (e.g., those using $\Rightarrow, \Leftrightarrow$),
-    . 
-    }%
+% \newmaterial{%
+But while material implication seems to beahve reasonably,
+    % and the composite formulas built using it (e.g., those using $\Rightarrow, \Leftrightarrow$),
+    the negation on which it is built seems somewhat problematic. 
+    % }%
     % is not so well-behaved.
     % For instance, ...
 We know for example that $ \dg M \not \models (2) \dg M$ (at least, when $\balpha,\bbeta > \mat 0$), 
-yet it seems bizarre to say that $\dg M \models \lnot (2) \dg M$: the two PDGs say the same thing, just with different strengths! 
+yet it seems bizarre to say that $\dg M \models \lnot (2) \dg M$; the two PDGs say the same thing, just with different strengths! 
+\newmaterial{%
+Perhaps there is a sense in which this conception of negation is appropriate that we have not yet fully understood.  
+% Perhaps the difference between 
+Perhaps there is a significant difference between
+    $\dg M \not \models \varphi$ 
+    and 
+    $\dg M \models \lnot \varphi$,
+    as there is in modal logic (due to a hidden quantifier). 
+Or perhaps, as in intuitionistic logic, 
+    it is more fruitful to start with implication, and negation itself is fundementally less useful than in classical logic.
+% In any case, there are clearly 
+% Whatever the resolution, we are certainly interested in 
+% In any of these cases, it is clear 
+We leave a thorough investigation of these different approaches to future work.
+% Instead, 
+Whatever the outcome of that investigation, it is clear that the natural preorder on PDGs can in principle be augmented with logical connectives, forming the basis of a new kind of inconsistency-tolerant logic. 
+}%
 
-    
-% \textbf{Approach 2.}
-\def\entimp{\overset{\smash{\!\!\bullet}}\Rightarrow}
-Often outside of classical logic, it is more natural to start with 
-    implication instead of negation.
-Here is an alternate conception of implication that more closely
-    follows the intuition we had for entailment.
-% We might to say something along the lines of
-Define
-\[ \dg M \models \varphi \entimp \varphi' \qquad\text{if and only if}\qquad
-    \dg M + \varphi \models \dg M + \varphi'. \] 
-In words: a formula $\varphi$ implies another formula $\varphi'$ in context $\dg M$ 
-    iff $\varphi$ with context $\dg M$ entails $\varphi'$ with context $\dg M$. 
-One nice proprerty of this definition: $\dg M_1 \models \dg M_2$ becomes
-    equivalent to $\models \dg M_1 \entimp \dg M_2$.
-%
-This definition has a very significant drawback, however:
-it only makes sense if $\varphi$ and $\varphi'$ are themselves PDGs (or at least,
-    can be added to $\dg M$ to form a new PDG). 
-This would rule out
-    ``synthetic'' logical connectives such as $\land$ and $\lnot$
-    inside an implication.
-Thus, the logic inside a connective $\entimp$ collapses to ordinary constructions on PDGs themselves.        
+\temphide{%
+    \def\entimp{\overset{\smash{\!\!\bullet}}\Rightarrow}
+    Often outside of classical logic, 
+        it is sometimes more natural to start with 
+        implication than negation.
+    % Here is an alternate conception of implication that more closely
+    %     follows the intuition we had for entailment.
+    % We might to say something along the lines of
+    % Define
+    % An alternative conception of implication is given by defining
+    Here is an alternate definition of implication that aligns more closely with our intuition for entailment:
+    \[ \dg M \models \varphi \entimp \varphi' \qquad\text{if and only if}\qquad
+        \dg M + \varphi \models \dg M + \varphi'. \] 
+    % In words: a formula $\varphi$ implies another formula $\varphi'$ in context $\dg M$ 
+    %     iff $\varphi$ with context $\dg M$ entails $\varphi'$ with context $\dg M$. 
+    One nice proprerty of this definition is that $\dg M_1 \models \dg M_2$ becomes
+        equivalent to $\models \dg M_1 \entimp \dg M_2$.
+    %
+    This definition has a very significant drawback, however:
+    it only makes sense if $\varphi$ and $\varphi'$ are themselves PDGs (or at least,
+        can be added to $\dg M$ to form a new PDG). 
+    This would rule out
+        ``synthetic'' logical connectives such as $\land$ and $\lnot$
+        inside an implication.
+    % Thus, the logic inside a connective $\entimp$ collapses to ordinary constructions on PDGs themselves.        
+}%
 
 \temphide{%
     
@@ -1853,14 +1860,16 @@ Now some other examples.
 We have seen natural qualitative analogues of monotonicity and equivalence (\cref{sec:qual-monotone,sec:QIM-equivalence}). 
 Our key contributions in this section are a pair of reasoning principles that can prove phenomena such as BN equivalence (\cref{theorem:bn-completeness}), and help us begin to make sense of cyclic structures from the opposite direction as studied in \cref{sec:qim-info}. 
 We also derive an impossibility result (\cref{theorem:mrf-bn-monotone-impossible}) showing that, while undireted and directed models are both monotonic in a way, there is no way to monotonically capture both at the same time.
-We then developed general notions of PDG entailment and equivalence (\cref{sec:pdg-logic}), and began to use them as the basis of a logic.
+We then developed general notions of PDG entailment and equivalence (\cref{sec:pdg-logic}), 
+% and began to use them as the basis of a logic.
+and showed how they could be augmented with logical connectives.
 
 
 We still have a great deal of work ahead of us. 
 One particularly exciting direction is that of epistemic logic, which appears to be implementable through parametric PDGs and focus/attention masks as laid out in \cref{chap:LIR}. 
 %
 Another is that of linear logic. Since this logic is sensitive to quantities, and there seem to be multiple kinds of conjunctions, it would make sense if there were a deep relationship there as well.
-While we have only skimmed the surface of what can be done with these reasoning principles, it is clear that PDGs can be a useful visual proof language, and have promise as the basis of an inconsistency-tolerant logic. 
+While we have only skimmed the surface of what can be done with these reasoning principles, it is clear that PDGs can be a formal visual language for probabilistic information, and have promise as the basis of an inconsistency-tolerant logic. 
 
 \begin{subappendices}
     
@@ -1872,7 +1881,7 @@ While we have only skimmed the surface of what can be done with these reasoning 
             \bbr{\dg M_1}_\gamma(\X_1) + \bbr{\dg M_2}_\gamma(\X_2) 
                 + \gamma \I_\mu(\X_1; \X_2| \X_1 \cap \X_2).$
     \end{lemma}
-    This was an intermediate result in \hyperref[proof:theorem:markov-property]{the proof of} \cref{theorem:markov-property}.
+    This was an intermediate result in \hyperref[proof:markov-property]{the proof of} \cref{theorem:markov-property}.
 
     % \begin{defn}
     %     If $\dg M_1 + \dg M_2 \equiv \dg M_1 \sqcup \dg M_2$, then 
@@ -1954,25 +1963,41 @@ While we have only skimmed the surface of what can be done with these reasoning 
     So, by \cref{lem:commonvar-dominance}, we have $p(X,Y) \models p(X)$.
 
 
-    \paragraph{ Hard Constraints.}
-    First, observe that
-     % If $X=x$ implies $Y=y$, we can 
-     % If $\bbr{\dg M_1}_
-     \[
-        \OInc_{XY{=}xy}(\mu(XY)) = \infty \mathbbm1[\mu(XY{=}xy) < 1]
-        \ge
-        \infty \mathbbm1[\mu(X{=}x) < 1] = \OInc_{X{=}x}(\mu(X))
-    \]
-    % Since $\SDef$ of both PDGs is the negative entropy of the
-    In other words, the only distribution attaining a finite $\OInc$
-    for $XY = xy$ is the point mass $\delta_{xy}$; thus this
-    is the only candidate distribution $\mu$ which 
-    $\bbr{X=x}_\gamma(\mu)$ could be larger. But this distribution
-    has no entropy, thus $\bbr{XY=xy}_\gamma(\delta_{xy}) = 0 
-        = \bbr{XY=xy}_\gamma(\delta_{xy})$. 
-    Thus, 
-        $\bbr{XY=xy}_\gamma(\mu) \ge \bbr{X=x}_\gamma(\mu)$ for \emph{all}
-        distributions $\mu$, showing $XY=xy \models X=x$. 
+    \paragraph{Constraints.}
+    \newmaterial{%
+    % Without loss of generality, we can assume that both constraints are of the form $\mat X{=}\mat x$,
+        % where $\mat X$ is a set of variables and $\mat x$ is a joint setting of those variables.
+    % If ei is not of this form already, we can always introduce a new variable $Y$ that takes  
+    Suppose $C_1$ and $C_2$ are both constraints over the variables $\X$, 
+        with $C_1$ weaker than $C_2$ (i.e., $C_2 \subseteq C_1 \subseteq \V \!\X$).
+    Let $\dg M_1$ be the PDG representing $C_1$, and $\dg M_2$ be the PDG representing $C_2$. Both PDGs have variables $\X \cup \{\Tru\}$, where $\V \Tru = \{ \trut,\truf\}$ (see \cref{sec:constraint-widget}). 
+    For any distribution $\mu(\X, \Tru)$, we have already seen that
+        $\OInc_{\dg M_1}(\mu) = \infty \cdot \mathbbm 1[ \mu(C_1) < 1]$
+    and analogously for the other constraint. 
+    But since $C_2 \subseteq C_1$, we know that $\mu(C_2) \le \mu(C_1)$, and thus 
+    $\mu(C_1) < 1 \implies \mu(C_2) < 1$. 
+    Therefore $\bbr{\dg M_2}_\gamma(\mu) \ge \bbr{\dg M_1}_\gamma(\mu)$ for all $\mu$, 
+        implying that $\dg M_2 \models \dg M_1$. 
+    }%
+    
+    % First, observe that
+    %  % If $X=x$ implies $Y=y$, we can 
+    %  % If $\bbr{\dg M_1}_
+    %  \[
+    %     \OInc_{XY{=}xy}(\mu(XY)) = \infty \mathbbm1[\mu(XY{=}xy) < 1]
+    %     \ge
+    %     \infty \mathbbm1[\mu(X{=}x) < 1] = \OInc_{X{=}x}(\mu(X))
+    % \]
+    % % Since $\SDef$ of both PDGs is the negative entropy of the
+    % In other words, the only distribution attaining a finite $\OInc$
+    % for $XY = xy$ is the point mass $\delta_{xy}$; thus this
+    % is the only candidate distribution $\mu$ which 
+    % $\bbr{X=x}_\gamma(\mu)$ could be larger. But this distribution
+    % has no entropy, thus $\bbr{XY=xy}_\gamma(\delta_{xy}) = 0 
+    %     = \bbr{XY=xy}_\gamma(\delta_{xy})$. 
+    % Thus, 
+    %     $\bbr{XY=xy}_\gamma(\mu) \ge \bbr{X=x}_\gamma(\mu)$ for \emph{all}
+    %     distributions $\mu$, showing $XY=xy \models X=x$. 
     % 
     % \begin{align*}
     %     \bbr{XY=xy}_\gamma(\mu) &= -\gamma \log \#\big| w : XY(w) = xy \big|
@@ -1983,9 +2008,6 @@ While we have only skimmed the surface of what can be done with these reasoning 
     % which is backwards. While OInc ensures the set of distributions
     % is smaller for the joint constraint (and hence a larger score),
     % the freedom to choose the other variable makes the qualitative part
-
-
-
     \end{lproof}
 
 
@@ -2011,7 +2033,7 @@ While we have only skimmed the surface of what can be done with these reasoning 
 
     \recall{prop:sem-equiv-properties}
 \begin{lproof}\label{proof:sem-equiv-properties}
-    \textbf{Equivalence of conditional/marginal and Joint.}\\
+    \textbf{Equivalence of conditional+marginal and joint distributions.}\\
     % Both of the following are well-known:
     % Clearly
     \begin{minipage}{0.5\linewidth}
@@ -2082,7 +2104,7 @@ While we have only skimmed the surface of what can be done with these reasoning 
         % First, we show that $\dg M_1$ and $\dg M_2$ have the same set of variables.
         We begin by showing that $\X_1 = \X_2$ (up to constant variables, that can take only one value). 
         In search of a contradiction,
-        suppose there is a variable $X$ be a variable present in one PDG but not the other;
+        suppose that there is a variable $X$ present in one PDG but not the other;
         without loss of generality, suppose $X \in \X_1 \setminus \X_2$. 
         Then in particular, we must have $\aar{\dg M_1} = \aar{\dg M_2}$,
         and also $\aar{\dg M_1 + X} = \aar{\dg M_2 + X}$. But $X \in \X_1$,
@@ -2091,11 +2113,10 @@ While we have only skimmed the surface of what can be done with these reasoning 
         Since $X \notin \X_2$, the minimizer of 
         $\bbr{\dg M_2 + X}_\gamma(\mu(X,\X_2))$ is realized when $X$ and $\X_2$ are independent \cite[Theorem 5]{pdg-infer}.
         This means that $\aar{\dg M_2 + X}_\gamma = \aar{\dg M_2}_\gamma - \gamma \H(\mathrm{Unif}(X))$.
-        By selecting $\gamma > 0$, we discover that
-        find a contradiction, unless $X$ can only take one value. 
+        By selecting $\gamma > 0$ we discover a contradiction, unless $X$ can only take one value. 
             
         So far we have shown that $\dg M_1$ and $\dg M_2$ have the same set of (nontrivial) variables; we now show that they have the same scoring function. For any $\gamma \ge 0$ and $\mu \in \Delta\V\!\X$,
-            the definition of $\equiv$ with a choice of $\dg M' = \mu!$ gives
+            the definition of $\equiv$ with a choice of $\dg M' = \mu!$ (shorthand for the PDG consisting of the distribution $\mu$ confidence $\beta = \infty$) gives
             us the middle equality in the following.
         \begin{align*}
             \bbr{\dg M_1}_\gamma(\mu) = 
@@ -2124,8 +2145,8 @@ While we have only skimmed the surface of what can be done with these reasoning 
         Reflexivity and symmetry are immediate. For transitivity, suppose that $\dg M_1 \cong_\X \dg M_2$ and $\dg M_2 \cong_\X \dg M_3$. 
         This means that
             $\dg M_1 + \X_2 \equiv \dg M_2 + \X_1$ and $\dg M_2 + \X_3 \equiv \dg M_3 + \X_2$. 
-        Since each pair of PDGs is equivalent in every context (by definition of $\equiv$),
-        % the first pair are equivalent if we include the variables $\X_3$ in both PDGs, and the second pair remain equivalent including the varialbes $\X_2$ in both PDGs. 
+        Since each pair of PDGs is equivalent in every context (by definition),
+        % the first pair are equivalent if we include the variables $\X_3$ in both PDGs, and the second pair remain equivalent including the variables $\X_2$ in both PDGs. 
         We can add $\X_3$ to the equivalence and $\X_1$ to the second one, to find
         \[
             \dg M_1 + \X_2 + \X_3 \equiv \dg M_2 + \X_1 + \X_3
@@ -2217,45 +2238,76 @@ While we have only skimmed the surface of what can be done with these reasoning 
         % In the latter case, we know that  
         % and thus $(r) (\dg M_1 + \X_1') = (r) \dg M_1 + \X_1' \equiv $
         
-        % \textbf{Vector Space Properties.}
-        We now show that PDGs up to congruence modulo variables (with these operations)
-        satisfy the vector space axioms. 
-        
-        \textbf{Associativity and Commutativity.}
-        \textbf{Identity element.}
-        \textbf{Inverse elements.} !! not true for $\beta = \infty$. 
-        \textbf{Comptibility with scalar multiplication}
-        \textbf{Scalar identity is field identity.}
-        \textbf{Distributivity for scalar addition.}
-        \textbf{Distributivity for vector addition.}
-        
-        \TODO
-        
+        \textbf{Vector Space Properties.}
+        % Now that we've taken care of the implicit well-definedness property, 
+        % We now show that PDGs up to congruence modulo variables (with these operations)
+        % satisfy the vector space axioms. 
+        The vector space axioms themselves are all straightforward to verify, 
+        and largely they follow from the fact that $\balpha = [\alpha_a]_{a \in \Ar}$ and $\bbeta = [\beta_a]_{a \in \Ar}$ are themselves real vectors. 
+        %
+        Very quickly: PDG sums are clearly associative and commutative, up to the scoring function semantics (which results in a sum over arcs, which is associative and commutative). 
+        It is obvious that one is the scalar identity, and that $\varnothing$ is the additive identity.$\dg M + (-1) \dg M \cong_{\X} \varnothing$, since all terms in the scoring function cancel. Compatibility with scalar multiplication, as well as both kinds of distributivity, are also immediate.
+        %
+        % \textbf{Associativity and Commutativity.}
+        % \textbf{Identity element.}
+        % \textbf{Inverse elements.} !! not true for $\beta = \infty$. 
+        % \textbf{Compatibility with scalar multiplication}
+        % \textbf{Scalar identity is field identity.}
+        % \textbf{Distributivity for scalar addition.}
+        % \textbf{Distributivity for vector addition.}
+        % \TODO
     \end{lproof}
 
 
+    \recall{prop:entail-sum}
+    \begin{lproof}\label{proof:entail-sum}
+        % Suppose  $c_1, c_2 > 0$, $\dg M_1 \models 0$, and $\dg M_2 \models 0$.
+        % Then $\forall \dg M''$, we have $\aar{\dg M_1 + \dg M''}_\gamma \ge \aar{\dg M''}$. 
+        % In particular, for any $\dg M'$, we can set $\dg M'' := \dg M' + \dg M_2$, 
+        % and thus
+        % \[
+        % \aar[\big]{\dg M_1 + \dg M_2 + \dg M'}_\gamma ~~\ge~~ \aar[\big]{\dg M_2 + \dg M'}_\gamma
+        %     ~~\ge~~ \aar[\big]{\dg M'}_\gamma
+        % .3
+        % \]
+        Suppose $\dg M_1 \models \dg M_3$, and $\dg M_2 \models \dg M_4$.
+        Then $\forall \dg M''$, we have $\aar{\dg M_1 + \dg M''}_\gamma \ge \aar{\dg M_3 + \dg M''}$. 
+        In particular, for any $\dg M'$, we can set $\dg M'' := \dg M' + \dg M_2$, 
+        and thus
+        \[
+        \aar[\big]{\dg M_1 + \dg M_2 + \dg M'}_\gamma ~~\ge~~ \aar[\big]{\dg M_3 + \dg M_2 + \dg M'}_\gamma
+            ~~\ge~~ \aar[\big]{\dg M_3 + \dg M_4 + \dg M'}_\gamma
+        .
+        \qedhere
+        \]
+    \end{lproof}
 
-    \section{Negative Results and Anti-Conjectures}
-    \begin{falsity}\label{more-examples}\begin{enumerate}
-        \item If $\dg B$ is the PDG form of a BN, which determines distribution
+
+    \temphide{%
+    \section*{Some Instructive Negative Results}
+    We conclude with a few statements that might at first sound true, but are not. 
+
+    \begin{falsity}\label{more-examples}
+        % \begin{enumerate}
+        % \item 
+        If $\dg B$ is the PDG form of a BN, which determines distribution
             $\Pr_{\dg B}$, then $\dg B \models \Pr_{\dg B}$. 
         Moreover, $\Pr_{\dg B} \models \dg B$, and thus $\dg B \equiv \Pr_{\dg B}$. 
-        
         % \item {\it (conjecture)}
         % \item 
-    \end{enumerate}   
+    % \end{enumerate}   
     \end{falsity}
 
-    1. cannot be true because by selecting $\Pr_{\dg B}$ we have lost
+    This cannot be true because by selecting $\Pr_{\dg B}$ we have lost
     the ability to control the relative weight of independence and cpds;
-    it's all mushed together, and this will only hold at $\gamma = 1$.
+    it's all mushed together; the equivalence only holds at $\gamma = 1$.
 
     \begin{falsity}
         If $\dg M \models 0$, then $(\alpha) \dg M \models 0$ for all 
         $\alpha \ge 0$. 
     \end{falsity}
     % I think this might be true, actually.
-    This can't be true; for $\alpha=0$, it reduces to $\X^{\dg M} \models 0$, which is false. 
+    This can't be true; for $\alpha=0$, it reduces to $\X^{\dg M} \models \varnothing$, which is false. 
     % This is false, because if $\dg M = ( {\to} X)$, then $\bbr{\dg M} = 0$
 
     Corollary: the following is false. 
@@ -2263,7 +2315,7 @@ While we have only skimmed the surface of what can be done with these reasoning 
         If $\dg M_1 \models \dg M_2$, then $(r) \dg M_1 \models (r) \dg M_2$, 
         for all $r \ge 0$. 
     \end{falsity}
-    Chosing $\dg M_2 = 0$ would imply the previous false result.
+    Choosing $\dg M_2 = 0$ would imply the previous false result.
 
 
     We can show that ${\to} X \models 0$, but not necessarily the reverse.
@@ -2272,6 +2324,6 @@ While we have only skimmed the surface of what can be done with these reasoning 
     Then $\aar{\dg M' + {\to} X} \ge \aar{\dg M'}$ by domination, and the
     inequality is strict for ``most'' choices of $\dg M'$.
     So either way $\aar{{\to}X + \dg M'} \ge \aar{0 + \dg M'}$, so ${\to X} \models 0$.
-
+    }%
 
 \end{subappendices}

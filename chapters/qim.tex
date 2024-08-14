@@ -2211,7 +2211,7 @@ $\SD{\mathcal M} := $
     %oli3: reverting to above
         % \nu {\,\in\,} \Delta(\V(\enV \cup \, \U))
             ~\bigg|~
-        {\singlespacing
+        {\singlespacingmath
         \begin{array}{l}
             %oli2: swapped order of two equations to match English
             \forall Y \!\in\! \enV.~~
@@ -2990,12 +2990,12 @@ What about causal models that are not fully randomized, and \hgraph s that are n
 \begin{prop} \label{prop:sc-psem-corresp}
      If $(\N, \Ar)$ is a \hgraph\ whose targets are distinct singletons, then $\mu \models \Diamond \Ar$ iff $\mu$ can arise from a randomized PSEM of dependency structure $\Ar$. 
  \end{prop}
- \commentout{%oli18: second version; decided instead to go with the first one, above.
-     \begin{prop} \label{prop:sc-psem-corresp}
-         % If $(\N, \Ar)$ is a \hgraph\ whose targets are distinct singletons, then
-         If $\Ar = \Ar_{\cal M}$ for some PSEM $\cal M$, then $\mu \models \Diamond \Ar$ iff $\mu$ can arise from a (possibly different) randomized PSEM of the same dependency structure $\Ar$. 
-     \end{prop}
-    }%
+%  \commentout{%oli18: second version; decided instead to go with the first one, above.
+%      \begin{prop} \label{prop:sc-psem-corresp}
+%          % If $(\N, \Ar)$ is a \hgraph\ whose targets are distinct singletons, then
+%          If $\Ar = \Ar_{\cal M}$ for some PSEM $\cal M$, then $\mu \models \Diamond \Ar$ iff $\mu$ can arise from a (possibly different) randomized PSEM of the same dependency structure $\Ar$. 
+%      \end{prop}
+%     }%
 
 This is just \cref{prop:sc-graph-arise} 
 for the graph of the PSEM's ``\emph{depends on}'' relation,
@@ -6222,7 +6222,7 @@ The upper bound is tight in general, and shows that $\SIMInc_{\!\Ar}$ can be equ
         % \SIMInc_{\Ar,\boldsymbol\lambda_0}(\mu)
         \SIMInc_{\Ar}(\mu)
         = \min \Big\{\ \SDef_{\!\Ar^\dagger}(\nu) : 
-            {\singlespacing\begin{array}{c}
+            {\singlespacingmath\begin{array}{c}
             \nu \in  \Delta\V(\X,
             %oli10:
                 % \hat \U_\Ar^\X
@@ -6870,7 +6870,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 \end{lproof}
 
 % \newpage
-\subsection{Causality Results of \cref{sec:causal}}
+\subsection{Causality Results of \texorpdfstring{\cref{sec:causal}}{Section \ref*{sec:causal}}}
 %oli15*: proof
 \recall{prop:sc-graph-arise}
 \begin{lproof}\label{proof:sc-graph-arise}
@@ -7089,7 +7089,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
                 &\text{[ since $\doXx$ depends only on $\U$ ]}
                 \\
             &= P(\U_{\mat X}) P(\U_{\mat Z}) 
-                &\left[~\parbox{6cm}{\singlespacing since $\doXx$ depends only on $\U_{\mat X}$, while $\U_{\mat X}$ and $\U_{\mat Z}$ are independent in $\nu$ (by the witness condition).}~\right]
+                &\left[~\parbox{6cm}{\singlespacingmath since $\doXx$ depends only on $\U_{\mat X}$, while $\U_{\mat X}$ and $\U_{\mat Z}$ are independent in $\nu$ (by the witness condition).}~\right]
                 \\
             &= P(\U_{\mat X}, \U_{\mat Z})
                 & [\text{ for the same reason as above }].
@@ -7108,7 +7108,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
     \[
         \mathcal F_{\mat X \gets \mat x} (\mat u) 
         := \left\{ \omega \in \V(\X) ~\middle|~
-        {\singlespacingplus\begin{array}{rl}
+        {\singlespacingplusmath \begin{array}{rl}
             \forall X \in \mat X.~& \omega[X] = \mat x[X]\\
             \forall Y \in \X \setminus \mat X.~&\omega[Y] = f_X(\omega[\X \setminus Y], \mat u) 
         \end{array}}
@@ -7294,7 +7294,7 @@ and thus $\mu \models \Diamond \Ar ~\land~ X {\tto} Y$ as promised.
 
 
 
-\subsection{Information Theoretic Results of \Cref{sec:qim-info}}
+\subsection{Information Theoretic Results of \texorpdfstring{\Cref{sec:qim-info}}{Section~\ref*{sec:qim-info}}}
 %oli14*: writing up proof of the bound that I view as the centerpiece of section 5. 
 To prove \cref{theorem:sdef-le0} and \cref{theorem:siminc-idef-bounds}(a), we will need the following Lemma. 
 
@@ -7318,28 +7318,6 @@ The following fact, known as the \emph{chain rule for mutual information} will a
             &\text{(the MI chain rule).}
             \label{eq:chain-rule-mi}
     \end{align}
-    
-    % 
-    % First, observe that, for all variables $A,B$,
-    % \begin{align*}
-    %     \I(X; A) + \I(X; B) 
-    %         &= \I(X ; A,B) + \I(A ; B ; X)
-    %     \\
-    %     &\le \I(X ; A,B) + \I(A ; B)
-    % \end{align*}
-    % The inequality above follows from the fact that $\I(A;B;X) = \I(A;B) - \I(A;B|X)$, with $\I(A;B|X) \ge 0$.  
-    % The first equality is an identity that is easily read off of an information diagram; for concreteness,  
-    % it can also be derived by summing the following two better-known identities:
-    % \begin{align}
-    %     \I(Y_1 ; Y_2 ; X) &= 
-    %         \I(Y_1 ; X) - \I(Y_1 ; X \mid Y_2)
-    %         &\text{(one definition of $\I(Y_1; Y_2; Y_3)$)}
-    %         \label{eq:interactinfo-defn}
-    %     \\
-    %     \I(X; Y_1, Y_2) &= \I(X;Y_2) + \I(X;Y_1 \mid Y_2)
-    %         &\text{(the ``chain rule'' of mutual information).}
-    %         \label{eq:chain-rule-mi}
-    % \end{align}
     
     We prove this by induction on $n$. In the base case ($n=1$), 
     we must show that $\I(X;Y)  \le \I(X;Y) + \H(Y) - \H(Y)$, which is an obvious tautology. 
@@ -7369,13 +7347,13 @@ The following fact, known as the \emph{chain rule for mutual information} will a
         &= \I(X;  Y_{k+1} \mid \mat Y_{1:k}) + \I(\mat Y_{1:k} ;  Y_{k+1})
             & \big[\text{ by MI chain rule \eqref{eq:chain-rule-mi} } \big] \\
         &= \left\{
-        {\singlespacingplus\begin{array}{cc}
+        {\singlespacingplusmath \begin{array}{cc}
         \I(X ; \mat Y_{1:k+1})  & + \H(Y_{k+1}) - \H( \mat Y_{1:k+1}) \\
          - \I(X ; \mat Y_{1:k})  & + \H( \mat Y_{1:k} )           
         \end{array}}
         \right.
         & \!\bigg[
-        {\singlespacing
+        {\singlespacingmath
         \begin{array}{c}
         \text{left: one more MI chain rule \eqref{eq:chain-rule-mi};} \\
         \text{right: defn of mutual information}    
@@ -7386,49 +7364,6 @@ The following fact, known as the \emph{chain rule for mutual information} will a
     
     Observe: adding this inequality to our inductive hypothesis (IH$_k$) yields (IH$_{k+1}$)!
     So, by induction, the lemma holds for all $k$. \qedhere
-    %
-    \commentout{% see the better proof above.
-    We start by proving this in the special case where $n=2$, and later use the result to prove the lemma for all $n$. 
-    When $n=2$, we must prove that
-    \[
-    \I(Y_1;X) + \I(Y_2; X) \le \H(X) +  \H(Y_1) + \H(Y_2) - \H(Y_1,Y_2).
-    \]
-    % $\I(Y_1;X) + \I(Y_2; X) \le \H(X) + \I(Y_1;Y_2)$
-    % (because $\I(Y_1;Y_2) = \H(Y_1) + \H(Y_2) - \H(Y_1,Y_2)$).
-    % The last three terms are just the definition of $$.
-    We calculate:
-    \begin{align*}
-        &\H(X) +  \H(Y_1) + \H(Y_2) - \H(Y_1,Y_2) \\
-        &= \H(X) + \I(Y_1; Y_2) 
-            &\text{by definition of $\I(Y_1;Y_2)$}
-        \\
-        &= \H(X) + \I(Y_1 ; Y_2 \mid X) + \I(Y_1 ; Y_2 ; X) 
-            &\text{by definition of $\I(Y_1;Y_2;X)$}
-        \\
-        &\ge \H(X) + \I(Y_1 ; Y_2 ; X) 
-            &\text{since $\I(Y_1;Y_2\mid X) \ge 0$}
-        \\
-        &\ge \I(X ; Y_1,Y_2) + \I(Y_1 ; Y_2 ; X)  
-            &\text{as $\H(X) \ge \I(X;Z)$ for any $Z$}
-        \\
-        &= \I(X; Y_1) + \I(X; Y_2).
-    \end{align*}
-    The final step is the hardest to see symbolically, but it is an identity that is very easy to read off of an information diagram. 
-    For those who prefer algebra, 
-        it can be derived from the following two, better-known identities:
-    \begin{align}
-        \I(Y_1 ; Y_2 ; X) &= 
-            \I(Y_1 ; X) - \I(Y_1 ; X \mid Y_2)
-            &\text{(one definition of $\I(Y_1; Y_2; Y_3)$)}
-            \label{eq:interactinfo-defn}
-        \\
-        \I(X; Y_1, Y_2) &= \I(X;Y_2) + \I(X;Y_1 \mid Y_2)
-            &\text{(the ``chain rule'' of mutual information).}
-            \label{eq:chain-rule-mi}
-    \end{align}
-    Specifically, the sum of \eqref{eq:interactinfo-defn} and \eqref{eq:chain-rule-mi} gives the final step of the previous manipulation. 
-    This concludes the proof of the lemma, in the case of $n=2$. 
-    }%
 \end{lproof}
 
 % \begin{lemma}
@@ -7478,7 +7413,7 @@ The following fact, known as the \emph{chain rule for mutual information} will a
         \\
         &= \I_\nu(\X ; \U) 
             &
-            {\singlespacing\hspace{-1.5cm}
+            {\singlespacingmath \hspace{-1.5cm}
             \begin{array}{r}\text{ since $\U$ are independent}\\
                 \text{ (per condition (b) of \cref{defn:qim})} \end{array}
             }
