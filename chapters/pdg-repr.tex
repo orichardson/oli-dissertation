@@ -1285,21 +1285,19 @@ This is why \cref{prop:sd-is-zeroset} requires $\bbeta$ to be nonzero.
 At the the upper extreme, a large (or even infinite) value of $\beta_a$ indicates high (or absolute) confidence in $\p_a$. 
 By default, we assume an intermediate value of confidence $\beta = 1$, which is just a convenient choice of units---what’s important are the magnitudes of $\beta$ relative to one another.
 
-Here's an concrete way to think about it.
+Here is a concrete way to think about it.
 In your head, fix a reference person---someone who is worth listening to a little bit, but far from infallible---and call that degree of trust ``$\beta = 1$''. 
 Let's call this person Bob. 
-To determine your degree of confidence in information
+To determine your degree of confidence in some piece of information,
     % more trustworthy than Bob, 
 ask yourself: how many times would I have to hear this independently from a person like Bob, before I got to this level of trust? The answer to that question is the value of $\beta$. 
 Thus, $\beta = 2$ on an arc $X \to Y$ is (quantitatively) indistinguishable from two distinct arcs from $X \to Y$. 
 % For information less trustworthy than Bob, ask yourself the reciprocal question: 
 
-\newmaterial{%
 Finally, although we typically focus on positive confidence, 
-	our formalism also allows for negative confidences.
+	our formalism also allows for negative confidences as well.
 A confidence $\beta < 0$ on a cpd $p$ encodes an \emph{active distrust} of $p$, and semantically, means distributions are more consistent with this belief if they are further from satisfying $p$. 
 In our previous analogy, if you currently distrust $p$ but would feel neutral towards it if someone like Bob were to tell you that it is correct, then you should select  $\beta=-1$.
-}%
 
 \paragraph{Qualitative/Structural Scoring.}
 	\label{ssec:qual-scoring}
